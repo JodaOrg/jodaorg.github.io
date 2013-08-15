@@ -6,6 +6,10 @@ subtitle: The Joda project
 
 The Joda project provides quality low-level libraries for the Java platform.
 
+#### Projects
+
+These are the projects:
+
 - [Joda-Time](http://joda-time.sourceforge.net/) - Basic types for Date and Time
 - [Joda-Money](http://joda-money.sourceforge.net/) - Basic types for Money
 - [Joda-Beans](http://joda-beans.sourceforge.net/) - Next generation JavaBeans
@@ -15,4 +19,5 @@ The Joda project provides quality low-level libraries for the Java platform.
 #### Authors
 
 The projects have various authors and contributors.
-Overall, they are curated and managed by Stephen Colebourne, aka [jodastephen](https://github.com/jodastephen).
+They are curated and managed by [Stephen Colebourne](http://www.linkedin.com/in/stephencolebourne),
+aka [jodastephen](https://github.com/jodastephen).
