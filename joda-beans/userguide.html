@@ -147,13 +147,13 @@ The Joda-Bean API is based around a model of properties in the Java programming 
 </p>
 
 <p>
-All beans implement the <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/Bean.html">Bean</a> interface.
+All beans implement the <a href="apidocs/org/joda/beans/Bean.html">Bean</a> interface.
 This defines a minimal API for all beans, providing the ability to obtain the property names and a named property.
 The interface also provides access to the <i>meta-bean</i> (see below).
 </p>
 
 <p>
-The bean provides access to instances of the <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/Property.html">Property</a>
+The bean provides access to instances of the <a href="apidocs/org/joda/beans/Property.html">Property</a>
 interface for each property.
 Each property object holds a reference to the bean that the property is part of.
 This means that there are simple methods to get and set the value of the property which directly affect the underlying bean.
@@ -161,7 +161,7 @@ The property also provides methods to get the property name, the underlying bean
 </p>
 
 <p>
-The <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/MetaBean.html">MetaBean</a> interface defines
+The <a href="apidocs/org/joda/beans/MetaBean.html">MetaBean</a> interface defines
 the meta-bean. The &quot;meta&quot; name indicates that this is a higher level description of the bean itself.
 In fact, the meta-bean is the equivalent to <tt>java.lang.Class</tt> for beans - there is only one meta-bean object
 for all instances of the bean.
@@ -169,7 +169,7 @@ The meta-bean API provides access to the name of the bean, it's type, a builder 
 </p>
 
 <p>
-The <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/MetaProperty.html">MetaProperty</a> interface
+The <a href="apidocs/org/joda/beans/MetaProperty.html">MetaProperty</a> interface
 is the main definition of a property.
 It is at the &quot;meta&quot; level, describing the property without holding a references to any specific instance of a bean.
 As such, it is effectively the equivalent to <tt>java.lang.reflect.Field</tt> for a single property on a bean - there is only
@@ -205,14 +205,14 @@ The meta-property API is also more comprehensive than the property API.
 
 <p>
 Beans are normal Java objects and can be created from scratch using constructors.
-Frameworks may wish to use the <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/BeanBuilder.html">BeanBuilder</a> interface
+Frameworks may wish to use the <a href="apidocs/org/joda/beans/BeanBuilder.html">BeanBuilder</a> interface
 which provides a way to build the bean.
 The builder is obtained from the meta-bean.
 Each property is then set before calling <tt>build</tt>.
 </p>
 
 <p>
-A selection of utilities is available on <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/JodaBeanUtils.html">JodaBeanUtils</a>.
+A selection of utilities is available on <a href="apidocs/org/joda/beans/JodaBeanUtils.html">JodaBeanUtils</a>.
 This includes the ability to lookup a meta-bean from a <tt>java.lang.Class</tt>, access to the Joda-Convert string converter and methods
 to extract the types of lists and maps using reflection on generics.
 </p>
@@ -241,12 +241,12 @@ The conversion between the string and the type of the property, such as <tt>int<
 
 <p>
 Joda-Beans provides the ability to chain properties together using
-<a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/query/ChainedBeanQuery.html">ChainedBeanQuery</a>.
+<a href="apidocs/org/joda/beans/query/ChainedBeanQuery.html">ChainedBeanQuery</a>.
 This is an immutable class that allows a list of &quot;queries&quot; to be passed in.
 </p>
 
 <p>
-Each query is an instance of <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/BeanQuery.html">BeanQuery</a>.
+Each query is an instance of <a href="apidocs/org/joda/beans/BeanQuery.html">BeanQuery</a>.
 All meta-properties implement this interface, thus they can be passed directly to <tt>ChainedBeanQuery</tt>.
 </p>
 
@@ -273,7 +273,7 @@ where the query setup was separate from the actual query.
 <p>
 It is possible to write a Joda-Bean by hand - they are just normal Java interfaces defining an API for JavaBeans.
 There are some base classes that assist as well as some standard map-based implementations, notably
-<a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/impl/flexi/FlexiBean.html">FlexiBean</a>.
+<a href="apidocs/org/joda/beans/impl/flexi/FlexiBean.html">FlexiBean</a>.
 It is more common to use the code generator, however the generator is optional.
 </p>
 
@@ -305,13 +305,13 @@ The generator has the following requirements:
 
 <ul>
 
-<li>The class must be annotated with <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/BeanDefinition.html">BeanDefinition</a></li>
+<li>The class must be annotated with <a href="apidocs/org/joda/beans/BeanDefinition.html">BeanDefinition</a></li>
 
-<li>The class must extend <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/impl/direct/DirectBean.html">DirectBean</a>, directly or indirectly</li>
+<li>The class must extend <a href="apidocs/org/joda/beans/impl/direct/DirectBean.html">DirectBean</a>, directly or indirectly</li>
 
 <li>The class must be a normal top-level class, nested/inner classes and multiple classes per file are not supported</li>
 
-<li>Each property field must be annotated with <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/PropertyDefinition.html">PropertyDefinition</a></li>
+<li>Each property field must be annotated with <a href="apidocs/org/joda/beans/PropertyDefinition.html">PropertyDefinition</a></li>
 
 <li>Each property field must be be private</li>
 
@@ -320,7 +320,7 @@ The generator has the following requirements:
 
 <p>
 It is possible to declare a property without it having a matching field.
-To do this, annotate the getter with <a class="externalLink" href="http://www.joda.org/joda-beans/apidocs/org/joda/beans/DerivedProperty.html">DerivedProperty</a>.
+To do this, annotate the getter with <a href="apidocs/org/joda/beans/DerivedProperty.html">DerivedProperty</a>.
 Apart from the absence of a field, a derived property is very similar to a normal read-only property.
 </p>
 
