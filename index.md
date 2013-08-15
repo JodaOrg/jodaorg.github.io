@@ -10,11 +10,11 @@ The Joda project provides quality low-level libraries for the Java platform.
 
 These are the projects:
 
-- [Joda-Time](http://joda-time.sourceforge.net/) - Basic types for Date and Time
-- [Joda-Money](http://joda-money.sourceforge.net/) - Basic types for Money
-- [Joda-Beans](http://joda-beans.sourceforge.net/) - Next generation JavaBeans
-- [Joda-Convert](http://jodaorg.github.io/joda-convert/) - String to Object conversion
-- [Joda-Primitives](http://joda-primitives.sourceforge.net/) - Primitive collections
+- [Joda-Time](http://www.joda.org/joda-time/) - Basic types for Date and Time
+- [Joda-Money](http://www.joda.org/joda-money/) - Basic types for Money
+- [Joda-Beans](http://www.joda.org/joda-beans/) - Next generation JavaBeans
+- [Joda-Convert](http://www.joda.org/joda-convert/) - String to Object conversion
+- [Joda-Primitives](http://www.joda.org/joda-primitives/) - Primitive collections
 
 #### Authors
 
