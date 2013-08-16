@@ -1,0 +1,773 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>ConverterManager (Joda-Time 2.3-SNAPSHOT API)</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ConverterManager (Joda-Time 2.3-SNAPSHOT API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ConverterManager.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../org/joda/time/convert/Converter.html" title="interface in org.joda.time.convert"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/joda/time/convert/ConverterManager.html" target="_top">Frames</a></li>
+<li><a href="ConverterManager.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">org.joda.time.convert</div>
+<h2 title="Class ConverterManager" class="title">Class ConverterManager</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>org.joda.time.convert.ConverterManager</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public final class <span class="strong">ConverterManager</span>
+extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">ConverterManager controls the date and time converters.
+ <p>
+ This class enables additional conversion classes to be added via
+ <a href="../../../../org/joda/time/convert/ConverterManager.html#addInstantConverter(org.joda.time.convert.InstantConverter)"><code>addInstantConverter(InstantConverter)</code></a>, which may replace an
+ existing converter. Similar methods exist for duration, time period and
+ interval converters.
+ <p>
+ This class is threadsafe, so adding/removing converters can be done at any
+ time. Updating the set of convertors is relatively expensive, and so should
+ not be performed often.
+ <p>
+ The default instant converters are:
+ <ul>
+ <li>ReadableInstant
+ <li>String
+ <li>Calendar
+ <li>Date (includes sql package subclasses)
+ <li>Long (milliseconds)
+ <li>null (now)
+ </ul>
+ 
+ The default partial converters are:
+ <ul>
+ <li>ReadablePartial
+ <li>ReadableInstant
+ <li>String
+ <li>Calendar
+ <li>Date (includes sql package subclasses)
+ <li>Long (milliseconds)
+ <li>null (now)
+ </ul>
+ 
+ The default duration converters are:
+ <ul>
+ <li>ReadableDuration
+ <li>ReadableInterval
+ <li>String
+ <li>Long (milliseconds)
+ <li>null (zero ms)
+ </ul>
+
+ The default time period converters are:
+ <ul>
+ <li>ReadablePeriod
+ <li>ReadableInterval
+ <li>String
+ <li>null (zero)
+ </ul>
+ 
+ The default interval converters are:
+ <ul>
+ <li>ReadableInterval
+ <li>String
+ <li>null (zero-length from now to now)
+ </ul></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>1.0</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#ConverterManager()">ConverterManager</a></strong>()</code>
+<div class="block">Restricted constructor.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#addDurationConverter(org.joda.time.convert.DurationConverter)">addDurationConverter</a></strong>(<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;converter)</code>
+<div class="block">Adds a converter to the set of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#addInstantConverter(org.joda.time.convert.InstantConverter)">addInstantConverter</a></strong>(<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;converter)</code>
+<div class="block">Adds a converter to the set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#addIntervalConverter(org.joda.time.convert.IntervalConverter)">addIntervalConverter</a></strong>(<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;converter)</code>
+<div class="block">Adds a converter to the set of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#addPartialConverter(org.joda.time.convert.PartialConverter)">addPartialConverter</a></strong>(<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;converter)</code>
+<div class="block">Adds a converter to the set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#addPeriodConverter(org.joda.time.convert.PeriodConverter)">addPeriodConverter</a></strong>(<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;converter)</code>
+<div class="block">Adds a converter to the set of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getDurationConverter(java.lang.Object)">getDurationConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<div class="block">Gets the best converter for the object specified.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getDurationConverters()">getDurationConverters</a></strong>()</code>
+<div class="block">Gets a copy of the list of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/convert/ConverterManager.html" title="class in org.joda.time.convert">ConverterManager</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getInstance()">getInstance</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getInstantConverter(java.lang.Object)">getInstantConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<div class="block">Gets the best converter for the object specified.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getInstantConverters()">getInstantConverters</a></strong>()</code>
+<div class="block">Gets a copy of the set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getIntervalConverter(java.lang.Object)">getIntervalConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<div class="block">Gets the best converter for the object specified.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getIntervalConverters()">getIntervalConverters</a></strong>()</code>
+<div class="block">Gets a copy of the list of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getPartialConverter(java.lang.Object)">getPartialConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<div class="block">Gets the best converter for the object specified.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getPartialConverters()">getPartialConverters</a></strong>()</code>
+<div class="block">Gets a copy of the set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getPeriodConverter(java.lang.Object)">getPeriodConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<div class="block">Gets the best converter for the object specified.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#getPeriodConverters()">getPeriodConverters</a></strong>()</code>
+<div class="block">Gets a copy of the list of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#removeDurationConverter(org.joda.time.convert.DurationConverter)">removeDurationConverter</a></strong>(<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;converter)</code>
+<div class="block">Removes a converter from the set of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#removeInstantConverter(org.joda.time.convert.InstantConverter)">removeInstantConverter</a></strong>(<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;converter)</code>
+<div class="block">Removes a converter from the set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#removeIntervalConverter(org.joda.time.convert.IntervalConverter)">removeIntervalConverter</a></strong>(<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;converter)</code>
+<div class="block">Removes a converter from the set of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#removePartialConverter(org.joda.time.convert.PartialConverter)">removePartialConverter</a></strong>(<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;converter)</code>
+<div class="block">Removes a converter from the set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#removePeriodConverter(org.joda.time.convert.PeriodConverter)">removePeriodConverter</a></strong>(<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;converter)</code>
+<div class="block">Removes a converter from the set of converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/convert/ConverterManager.html#toString()">toString</a></strong>()</code>
+<div class="block">Gets a debug representation of the object.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="ConverterManager()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ConverterManager</h4>
+<pre>protected&nbsp;ConverterManager()</pre>
+<div class="block">Restricted constructor.</div>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getInstance()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInstance</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/convert/ConverterManager.html" title="class in org.joda.time.convert">ConverterManager</a>&nbsp;getInstance()</pre>
+</li>
+</ul>
+<a name="getInstantConverter(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInstantConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;getInstantConverter(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<div class="block">Gets the best converter for the object specified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the converter to use</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no suitable converter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if multiple converters match the type
+ equally well</dd></dl>
+</li>
+</ul>
+<a name="getInstantConverters()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInstantConverters</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>[]&nbsp;getInstantConverters()</pre>
+<div class="block">Gets a copy of the set of converters.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the converters, a copy of the real data, never null</dd></dl>
+</li>
+</ul>
+<a name="addInstantConverter(org.joda.time.convert.InstantConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addInstantConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;addInstantConverter(<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;converter)
+                                     throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Adds a converter to the set of converters. If a matching converter is
+ already in the set, the given converter replaces it. If the converter is
+ exactly the same as one already in the set, no changes are made.
+ <p>
+ The order in which converters are added is not relevent. The best
+ converter is selected by examining the object hierarchy.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to add, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="removeInstantConverter(org.joda.time.convert.InstantConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeInstantConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;removeInstantConverter(<a href="../../../../org/joda/time/convert/InstantConverter.html" title="interface in org.joda.time.convert">InstantConverter</a>&nbsp;converter)
+                                        throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Removes a converter from the set of converters. If the converter was
+ not in the set, no changes are made.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to remove, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getPartialConverter(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPartialConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;getPartialConverter(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<div class="block">Gets the best converter for the object specified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the converter to use</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no suitable converter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if multiple converters match the type
+ equally well</dd></dl>
+</li>
+</ul>
+<a name="getPartialConverters()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPartialConverters</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>[]&nbsp;getPartialConverters()</pre>
+<div class="block">Gets a copy of the set of converters.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the converters, a copy of the real data, never null</dd></dl>
+</li>
+</ul>
+<a name="addPartialConverter(org.joda.time.convert.PartialConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addPartialConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;addPartialConverter(<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;converter)
+                                     throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Adds a converter to the set of converters. If a matching converter is
+ already in the set, the given converter replaces it. If the converter is
+ exactly the same as one already in the set, no changes are made.
+ <p>
+ The order in which converters are added is not relevent. The best
+ converter is selected by examining the object hierarchy.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to add, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="removePartialConverter(org.joda.time.convert.PartialConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removePartialConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;removePartialConverter(<a href="../../../../org/joda/time/convert/PartialConverter.html" title="interface in org.joda.time.convert">PartialConverter</a>&nbsp;converter)
+                                        throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Removes a converter from the set of converters. If the converter was
+ not in the set, no changes are made.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to remove, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getDurationConverter(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDurationConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;getDurationConverter(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<div class="block">Gets the best converter for the object specified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the converter to use</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no suitable converter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if multiple converters match the type
+ equally well</dd></dl>
+</li>
+</ul>
+<a name="getDurationConverters()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDurationConverters</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>[]&nbsp;getDurationConverters()</pre>
+<div class="block">Gets a copy of the list of converters.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the converters, a copy of the real data, never null</dd></dl>
+</li>
+</ul>
+<a name="addDurationConverter(org.joda.time.convert.DurationConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addDurationConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;addDurationConverter(<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;converter)
+                                       throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Adds a converter to the set of converters. If a matching converter is
+ already in the set, the given converter replaces it. If the converter is
+ exactly the same as one already in the set, no changes are made.
+ <p>
+ The order in which converters are added is not relevent. The best
+ converter is selected by examining the object hierarchy.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to add, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="removeDurationConverter(org.joda.time.convert.DurationConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeDurationConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;removeDurationConverter(<a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert">DurationConverter</a>&nbsp;converter)
+                                          throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Removes a converter from the set of converters. If the converter was
+ not in the set, no changes are made.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to remove, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getPeriodConverter(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPeriodConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;getPeriodConverter(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<div class="block">Gets the best converter for the object specified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the converter to use</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no suitable converter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if multiple converters match the type
+ equally well</dd></dl>
+</li>
+</ul>
+<a name="getPeriodConverters()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPeriodConverters</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>[]&nbsp;getPeriodConverters()</pre>
+<div class="block">Gets a copy of the list of converters.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the converters, a copy of the real data, never null</dd></dl>
+</li>
+</ul>
+<a name="addPeriodConverter(org.joda.time.convert.PeriodConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addPeriodConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;addPeriodConverter(<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;converter)
+                                   throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Adds a converter to the set of converters. If a matching converter is
+ already in the set, the given converter replaces it. If the converter is
+ exactly the same as one already in the set, no changes are made.
+ <p>
+ The order in which converters are added is not relevent. The best
+ converter is selected by examining the object hierarchy.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to add, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="removePeriodConverter(org.joda.time.convert.PeriodConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removePeriodConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;removePeriodConverter(<a href="../../../../org/joda/time/convert/PeriodConverter.html" title="interface in org.joda.time.convert">PeriodConverter</a>&nbsp;converter)
+                                      throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Removes a converter from the set of converters. If the converter was
+ not in the set, no changes are made.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to remove, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="getIntervalConverter(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIntervalConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;getIntervalConverter(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<div class="block">Gets the best converter for the object specified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the converter to use</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if no suitable converter</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if multiple converters match the type
+ equally well</dd></dl>
+</li>
+</ul>
+<a name="getIntervalConverters()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIntervalConverters</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>[]&nbsp;getIntervalConverters()</pre>
+<div class="block">Gets a copy of the list of converters.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the converters, a copy of the real data, never null</dd></dl>
+</li>
+</ul>
+<a name="addIntervalConverter(org.joda.time.convert.IntervalConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addIntervalConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;addIntervalConverter(<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;converter)
+                                       throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Adds a converter to the set of converters. If a matching converter is
+ already in the set, the given converter replaces it. If the converter is
+ exactly the same as one already in the set, no changes are made.
+ <p>
+ The order in which converters are added is not relevent. The best
+ converter is selected by examining the object hierarchy.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to add, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="removeIntervalConverter(org.joda.time.convert.IntervalConverter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeIntervalConverter</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;removeIntervalConverter(<a href="../../../../org/joda/time/convert/IntervalConverter.html" title="interface in org.joda.time.convert">IntervalConverter</a>&nbsp;converter)
+                                          throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+<div class="block">Removes a converter from the set of converters. If the converter was
+ not in the set, no changes are made.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>converter</code> - the converter to remove, null ignored</dd>
+<dt><span class="strong">Returns:</span></dt><dd>replaced converter, or null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd></dl>
+</li>
+</ul>
+<a name="toString()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<div class="block">Gets a debug representation of the object.</div>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ConverterManager.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../org/joda/time/convert/Converter.html" title="interface in org.joda.time.convert"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/joda/time/convert/DurationConverter.html" title="interface in org.joda.time.convert"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/joda/time/convert/ConverterManager.html" target="_top">Frames</a></li>
+<li><a href="ConverterManager.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Joda-Time - 
-  Java date and time API - Home</title>
+  Java date and time API - Period</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -12,7 +12,6 @@
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
       <meta name="author" content="Stephen Colebourne" />
-      <meta name="author" content="Al Major" />
     <meta name="Date-Revision-yyyymmdd" content="20130816" />
     <meta http-equiv="Content-Language" content="en" />
         
@@ -56,8 +55,8 @@
                                 <h5>Joda Time</h5>
                   <ul>
                   <li class="none">
-            <strong>Overview</strong>
-          </li>
+                          <a href="index.html" title="Overview">Overview</a>
+            </li>
                   <li class="none">
                           <a href="quickstart.html" title="Quick start guide">Quick start guide</a>
             </li>
@@ -95,8 +94,8 @@
                           <a href="key_duration.html" title="Duration">Duration</a>
             </li>
                   <li class="none">
-                          <a href="key_period.html" title="Period">Period</a>
-            </li>
+            <strong>Period</strong>
+          </li>
                   <li class="none">
                           <a href="key_chronology.html" title="Chronology">Chronology</a>
             </li>
@@ -199,237 +198,215 @@
  
 
 <div class="section">
-<h2>Joda Time - Java date and time API<a name="Joda_Time_-_Java_date_and_time_API"></a></h2>
+<h2>Period<a name="Period"></a></h2>
+
 
 <p>
-Joda-Time provides a quality replacement for the Java <i>date</i>
-and <i>time</i> classes. The design allows for multiple <i>calendar</i>
-systems, while still providing a simple API.
-The 'default' calendar is the <a href="cal_iso.html">ISO8601</a> standard which
-is used by XML. The Gregorian, Julian, Buddhist, Coptic, Ethiopic and Islamic systems
-are also included, and we welcome further additions. Supporting classes include
-time zone, duration, format and parsing.
+A <i>period</i> in Joda-Time represents a period of time defined in terms of fields,
+for example, 3 years 5 months 2 days and 7 hours.
+This differs from a <a href="key_duration.html">duration</a> in that it is inexact in terms of milliseconds.
+A period can only be resolved to an exact number of milliseconds by specifying the
+<a href="key_instant.html">instant</a> (including chronology and time zone) it is relative to.
 </p>
 
 <p>
-As a flavour of Joda-Time, here's some example code:
+Periods do not have a <a href="key_chronology.html">chronology</a> or time zone.
+They can be added to an <a href="key_instant.html">instant</a>, or to either
+end of an interval to change those objects.
+In datetime maths you could say:
 </p>
 <div class="source">
 <pre>
-public boolean isAfterPayDay(<a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a> datetime) {
-  if (datetime.getMonthOfYear() == 2) {   // February is month 2!!
-    return datetime.getDayOfMonth() &gt; 26;
-  }
-  return datetime.getDayOfMonth() &gt; 28;
-}
-
-public <a href="apidocs/org/joda/time/Days.html"><b>Days</b></a> daysToNewYear(<a href="apidocs/org/joda/time/LocalDate.html"><b>LocalDate</b></a> fromDate) {
-  <a href="apidocs/org/joda/time/LocalDate.html"><b>LocalDate</b></a> newYear = fromDate.plusYears(1).withDayOfYear(1);
-  return <a href="apidocs/org/joda/time/Days.html"><b>Days</b></a>.daysBetween(fromDate, newYear);
-}
-
-public boolean isRentalOverdue(<a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a> datetimeRented) {
-  <a href="apidocs/org/joda/time/Period.html"><b>Period</b></a> rentalPeriod = new <a href="apidocs/org/joda/time/Period.html"><b>Period</b></a>().withDays(2).withHours(12);
-  return datetimeRented.plus(rentalPeriod).isBeforeNow();
-}
-
-public String getBirthMonthText(<a href="apidocs/org/joda/time/LocalDate.html"><b>LocalDate</b></a> dateOfBirth) {
-  return dateOfBirth.monthOfYear().getAsText(Locale.ENGLISH);
-}
+      instant  +  period  =  instant
 </pre></div>
-<!-- public boolean isDoubleShift(<a href="apidocs/org/joda/time/LocalTime.html"><b>LocalTime</b></a> startTime, <a href="apidocs/org/joda/time/LocalTime.html"><b>LocalTime</b></a> endTime) {
-  <a href="apidocs/org/joda/time/Hours.html"><b>Hours</b></a> hoursBetween = <a href="apidocs/org/joda/time/Hours.html"><b>Hours</b></a>.hoursBetween(time1, time2);
-  return hoursBetween.isGreaterThan(<a href="apidocs/org/joda/time/Hours.html"><b>Hours</b></a>.EIGHT);
-}
-public boolean isJoinedInLastThreeMonths(<a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a> datetimeJoined) {
-  <a href="apidocs/org/joda/time/Interval.html"><b>Interval</b></a> last3Months = new <a href="apidocs/org/joda/time/Interval.html"><b>Interval</b></a>(<a href="apidocs/org/joda/time/Months.html"><b>Months</b></a>.THREE, new <a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a>());
-  return last3Months.contains(datetimeJoined);
-} -->
-Version 2.2 was released on 2013-03-08 -
-<a href="download.html">Download now</a>
+
+
+<p>
+For example, consider a period of 1 month.
+If you add this period to the 1st February (ISO) then you will get the 1st March.
+If you add the same period to the 1st March you will get the 1st April.
+But the duration added (in milliseconds) in these two cases is very different.
+</p>
+
+<p>
+As a second example, consider adding 1 day at the daylight savings boundary.
+If you use a period to do the addition then either 23 or 25 hours will be added as appropriate.
+If you had created a duration equal to 24 hours, then you would end up with the wrong result.
+</p>
+
+<p>
+The Joda-Time library defines two types of implementation of the period concept.
+The first type can only store a single-field, such as days or hours, but not both.
+The second type can store any-field, expressing a value such as 5 months 8 days and 7 hours.
+</p>
+
+
+<div class="section">
+<h3>Single field Periods<a name="Single_field_Periods"></a></h3>
+
+<p>
+The first type, single-field periods, is new to version 1.4 of Joda-Time.
+These classes - <tt>Years</tt>, <tt>Months</tt>, <tt>Weeks</tt>,
+<tt>Days</tt>, <tt>Hours</tt>, <tt>Minutes</tt>, <tt>Seconds</tt> -
+all follow a very similar design, and only store the single field as implied by
+their name. Thus a <tt>Days</tt> object can only store a number of days.
+</p>
+
+<p>
+These classes can be useful when you want to write an API that must specifically take
+in a period measured in a particular unit. For example, a travel website where you are
+given the option of travelling &#xb1;1 days or &#xb1;3 days could store this
+information in a <tt>Days</tt> object.
+</p>
+
+<p>
+These classes provide static factory methods rather than constructors.
+For <tt>Days</tt> these include <tt>daysBetween(startDate, endDate)</tt> to
+obtain the number of whole days between two dates or datetimes, and 
+<tt>daysIn(interval)</tt> to obtain the number of whole days in an interval.
+In addition, there are a range of constants, such as <tt>Days.ZERO</tt> and
+<tt>Days.ONE</tt>. The factory method <tt>days(int)</tt> either returns
+a constant, or creates a new instance as appropriate.
+</p>
+
+<p>
+The single-field classes include basic mathemaical operator support.
+For <tt>Days</tt> this includes <tt>plus(int)</tt>, <tt>plus(Days)</tt>,
+<tt>multipliedBy(int)</tt>, <tt>dividedBy(int)</tt> and <tt>negated()</tt>.
+All operations return a new instance, as <tt>Days</tt> is immutable.
+The single-field classes are also comparable.
+</p>
+
+<p>
+Converting between different types of period is a difficult problem.
+One day is not always equal to 24 hours. (It might be 23 or 25 at daylight savings time change.)
+However, many applications have business rules that assume a 24 hour day and so on.
+To support this, <tt>Days</tt> has methods named <tt>toStandardHours()</tt> and
+so on which convert the number of days to a number of hours assuming a 24 hour day.
+The word 'standard' is being specifically used in the method name to remind users of the assumption.
+</p>
+</div>
+
+
+<div class="section">
+<h3>Any field Periods<a name="Any_field_Periods"></a></h3>
+
+<p>
+The second type of period is the any-field period.
+These are implemented by the <tt>Period</tt> and <tt>MutablePeriod</tt> classes.
+Internally, they store a set of <tt>int</tt> fields, one for each field.
+The standard set of fields in a period are years, months, weeks, days, hours, minutes, seconds and millis.
+The <a href="apidocs/org/joda/time/PeriodType.html">PeriodType</a> class allows this set
+of fields to be restricted, for example to elimate weeks.
+This is significant when converting a duration or interval to a period, as the calculation
+needs to know which period fields it should populate.
+</p>
+
+<p>
+The <tt>Period</tt> class is useful when you want to write an API that can take
+a period that probably contains more than one field. However, to be even more general,
+your API could define itself to accept a <tt>ReadablePeriod</tt>, and then the
+calling code could pass in either a <tt>Period</tt> or a single field period like
+<tt>Days</tt>.
+</p>
+
+<p>
+Methods exist on <tt>Period</tt> to obtain each field value.
+There are also methods to change a field value, such as <tt>withDays(int)</tt>.
+They are named 'with' as they return a new <tt>Period</tt> object, due to immutability.
+</p>
+
+<p>
+You cannot compare any-field periods for order, as there is no sensible comparison strategy.
+Instead, you need to convert the period to a <tt>Duration</tt> based on a specific date
+and then compare the duration.
+</p>
+</div>
 
 </div>
 
 
-
 <div class="section">
-<h2>Why Joda Time?<a name="Why_Joda_Time"></a></h2>
+<h2>Using Periods in Joda-Time<a name="Using_Periods_in_Joda-Time"></a></h2>
 
 <p>
-Joda-Time has been created to radically change date and time handling in Java.
-The JDK classes Date and Calendar are very badly designed, have had numerous bugs
-and have odd performance effects.
-Here are some of our reasons for developing and using Joda-Time:
+Within Joda-Time a period is represented by the
+<a href="apidocs/org/joda/time/ReadablePeriod.html">ReadablePeriod</a> interface.
+There are nine implementations of the interface provided:
 </p>
 <ul>
 
-<li><b>Easy to Use</b>.
-Calendar makes accessing 'normal' dates difficult, due to the lack of simple methods.
-Joda-Time has straightforward <a href="field.html">field accessors</a> such as
-<tt>getYear()</tt> or <tt>getDayOfWeek()</tt>.</li>
+<li><a href="apidocs/org/joda/time/Period.html">Period</a> -
+An immutable implementation</li>
 
+<li><a href="apidocs/org/joda/time/MutablePeriod.html">MutablePeriod</a> -
+A mutable implementation</li>
 
-<li><b>Easy to Extend</b>.
-The JDK supports multiple calendar systems via subclasses of <tt>Calendar</tt>.
-This is clunky, and in practice it is very difficult to write another calendar system.
-Joda-Time supports multiple calendar systems via a pluggable system based on the
-<tt>Chronology</tt> class.</li>
+<li><a href="apidocs/org/joda/time/Years.html">Years</a> -
+An immutable years-only implementation</li>
 
+<li><a href="apidocs/org/joda/time/Months.html">Months</a> -
+An immutable months-only implementation</li>
 
-<li><b>Comprehensive Feature Set</b>.
-The library is intended to provide all the functionality that is required for date-time
-calculations. It already provides out-of-the-box features, such as support for oddball
-date formats, which are difficult to replicate with the JDK.</li>
+<li><a href="apidocs/org/joda/time/Weeks.html">Weeks</a> -
+An immutable weeks-only implementation</li>
 
+<li><a href="apidocs/org/joda/time/Days.html">Days</a> -
+An immutable days-only implementation</li>
 
-<li><b>Up-to-date Time Zone calculations</b>.
-The <a href="timezones.html">time zone implementation</a> is based on
-the public <a class="externalLink" href="http://www.iana.org/time-zones">tz database</a>, which is
-updated several times a year. New Joda-Time releases incorporate all changes
-made to this database. Should the changes be needed earlier,
-<a href="tz_update.html">manually updating the zone data</a> is easy.</li>
+<li><a href="apidocs/org/joda/time/Hours.html">Hours</a> -
+An immutable hours-only implementation</li>
 
+<li><a href="apidocs/org/joda/time/Minutes.html">Minutes</a> -
+An immutable minutes-only implementation</li>
 
-<li><b>Calendar support</b>.
-The library currently provides 8 calendar systems. More will be added in the future.</li>
-
-
-<li><b>Easy interoperability</b>.
-The library internally uses a millisecond instant which is identical to the JDK and similar
-to other common time representations. This makes interoperability easy, and Joda-Time comes
-with out-of-the-box JDK interoperability.</li>
-
-
-<li><b>Better Performance Characteristics</b>.
-Calendar has strange performance characteristics as it recalculates fields at unexpected moments.
-Joda-Time does only the minimal calculation for the field that is being accessed.</li>
-
-
-<li><b>Good Test Coverage</b>.
-Joda-Time has a comprehensive set of developer tests, providing assurance of the library's quality.</li>
-
-
-<li><b>Complete Documentation</b>.
-There is a full <a href="userguide.html">User Guide</a> which provides an overview and covers
-common usage scenarios. The <a href="apidocs/index.html">javadoc</a>
-is extremely detailed and covers the rest of the API.</li>
-
-
-<li><b>Maturity</b>.
-The library has been under active development since 2002.
-Although it continues to be improved with the addition of new features and
-bug-fixes, it is a mature and reliable code base.
-A number of <a href="related.html">related projects</a> are now available.</li>
-
-
-<li><b>Open Source</b>.
-Joda-Time is licenced under the business friendly <a href="license.html">Apache License Version 2.0</a>.</li>
+<li><a href="apidocs/org/joda/time/Seconds.html">Seconds</a> -
+An immutable seconds-only implementation</li>
 </ul>
+We recommend the immutable implementation for general usage.
 
-</div>
 
+<p>
+The code can be used in various ways:
+</p>
+<div class="source">
+<pre>
+DateTime start = new DateTime(2004, 12, 25, 0, 0, 0, 0);
+DateTime end = new DateTime(2006, 1, 1, 0, 0, 0, 0);
+
+// period of 1 year and 7 days
+Period period = new Period(start, end);
+
+// calc will equal end
+DateTime calc = start.plus(period);
+
+// able to calculate whole days between two dates easily
+Days days = Days.daysBetween(start, end);
+
+// able to calculate whole months between two dates easily
+Months months = Months.monthsBetween(start, end);
+</pre></div>
+
+
+<p>
+Note that the interface <tt>ReadablePeriod</tt> should not be used like the collections API.
+The interface only contains the core subset of the operations.
+Instead, you should usually refer directly to the implementation classes in your APIs.
+</p>
 
 
 <div class="section">
-<h2>Documentation<a name="Documentation"></a></h2>
+<h3>Nulls<a name="Nulls"></a></h3>
 
 <p>
-Various documentation is available:
+Joda-Time defines a null period as a zero length period.
+Thus, when a method is defined as taking a <tt>ReadablePeriod</tt>, passing null in
+will be the same as passing in a zero length period.
 </p>
-<ul>
-
-<li>Two user guides - <a href="quickstart.html">quick</a> and <a href="userguide.html">full</a></li>
-
-<li>The key concepts and chronology documents in the left navigation area</li>
-
-<li>The <a href="apidocs/index.html">Javadoc</a></li>
-
-<li>Information on <a href="installation.html">downloading and installing</a> Joda-Time</li>
-
-<li>The <a href="faq.html">FAQ</a> list</li>
-
-<li>The <a class="externalLink" href="https://github.com/JodaOrg/joda-time">GitHub</a> source repository</li>
-</ul>
+</div>
 
 </div>
 
-
-
-<div class="section">
-<h2>Releases<a name="Releases"></a></h2>
-
-<p>
-<a href="download.html">Release 2.2</a>
-is the current latest release.
-This release is an evolution of the 1.x codebase, not a major rewrite.
-It is considered stable and worthy of the 2.x tag.
-</p>
-
-<p>
-Version 2.2 is a bugfix release compatible with version 2.1.
-See the <a href="upgradeto220.html">upgrade notes</a> for full details.
-</p>
-
-<p>
-Version 2.x is almost completely source and binary compatible with version 1.x.
-Key changes include the use of JDK 1.5 or later, generics, and the removal of some (but not all)
-deprecated methods. See the <a href="upgradeto200.html">upgrade notes</a> for full details
-including information on the corner cases that are not compatible.
-</p>
-
-<p>
-We will support the 2.x product line using standard Java mechanisms.
-The main public API will remain backwards compatible for both source and binary in the 2.x stream.
-The version number will change to 3.0 to indicate a significant change in compatibility.
-</p>
-
-<p>
-Available in <a class="externalLink" href="http://search.maven.org/#artifactdetails|joda-time|joda-time|2.2|jar">Maven Central</a>.
-</p>
-
-
-<p>
-<a class="externalLink" href="https://sourceforge.net/projects/joda-time/files/joda-time/1.6.2/">Release 1.6.2</a>
-is the last v1.x release.
-It is compatible with JDK 1.4.
-Given that v2.x is essentially compatible with v1.6.2, there are no current plans for further
-releases in the v1.x product line.
-</p>
-
-</div>
-
-
-
-<div class="section">
-<h2>Support<a name="Support"></a></h2>
-
-<p>
-Support on bugs, library usage or enhancement requests is available on a best efforts basis.
-</p>
-
-<p>
-To suggest enhancements or contribute, please <a class="externalLink" href="https://github.com/JodaOrg/joda-time">fork the source code</a> on GitHub.
-Alternatively, use GitHub <a class="externalLink" href="https://github.com/JodaOrg/joda-time/issues">issues</a>.
-</p>
-
-<p>
-The older mechanisms of the joda-interest <a href="mail-lists.html">mailing list</a>
-and the joda-time <a class="externalLink" href="http://sourceforge.net/projects/joda-time/forums/forum/337835">forums</a>
-do still exist, but are deprecated.
-</p>
-
-<p>
-<br />
-</p>
-
-<p>
-<br />
-</p>
-
-<p>
-<br />
-</p>
-</div>
 
 
       </div>

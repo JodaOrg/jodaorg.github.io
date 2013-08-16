@@ -1,0 +1,672 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>DateTimeFormat (Joda-Time 2.3-SNAPSHOT API)</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="DateTimeFormat (Joda-Time 2.3-SNAPSHOT API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/DateTimeFormat.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev Class</li>
+<li><a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/joda/time/format/DateTimeFormat.html" target="_top">Frames</a></li>
+<li><a href="DateTimeFormat.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">org.joda.time.format</div>
+<h2 title="Class DateTimeFormat" class="title">Class DateTimeFormat</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li>org.joda.time.format.DateTimeFormat</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public class <span class="strong">DateTimeFormat</span>
+extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Factory that creates instances of DateTimeFormatter from patterns and styles.
+ <p>
+ Datetime formatting is performed by the <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format"><code>DateTimeFormatter</code></a> class.
+ Three classes provide factory methods to create formatters, and this is one.
+ The others are <a href="../../../../org/joda/time/format/ISODateTimeFormat.html" title="class in org.joda.time.format"><code>ISODateTimeFormat</code></a> and <a href="../../../../org/joda/time/format/DateTimeFormatterBuilder.html" title="class in org.joda.time.format"><code>DateTimeFormatterBuilder</code></a>.
+ <p>
+ This class provides two types of factory:
+ <ul>
+ <li><a href="../../../../org/joda/time/format/DateTimeFormat.html#forPattern(java.lang.String)"><code>Pattern</code></a> provides a DateTimeFormatter based on
+ a pattern string that is mostly compatible with the JDK date patterns.
+ <li><a href="../../../../org/joda/time/format/DateTimeFormat.html#forStyle(java.lang.String)"><code>Style</code></a> provides a DateTimeFormatter based on a
+ two character style, representing short, medium, long and full.
+ </ul>
+ <p>
+ For example, to use a patterm:
+ <pre>
+ DateTime dt = new DateTime();
+ DateTimeFormatter fmt = DateTimeFormat.forPattern("MMMM, yyyy");
+ String str = fmt.print(dt);
+ </pre>
+
+ The pattern syntax is mostly compatible with java.text.SimpleDateFormat -
+ time zone names cannot be parsed and a few more symbols are supported.
+ All ASCII letters are reserved as pattern letters, which are defined as follows:
+ <blockquote>
+ <pre>
+ Symbol  Meaning                      Presentation  Examples
+ ------  -------                      ------------  -------
+ G       era                          text          AD
+ C       century of era (&gt;=0)         number        20
+ Y       year of era (&gt;=0)            year          1996
+
+ x       weekyear                     year          1996
+ w       week of weekyear             number        27
+ e       day of week                  number        2
+ E       day of week                  text          Tuesday; Tue
+
+ y       year                         year          1996
+ D       day of year                  number        189
+ M       month of year                month         July; Jul; 07
+ d       day of month                 number        10
+
+ a       halfday of day               text          PM
+ K       hour of halfday (0~11)       number        0
+ h       clockhour of halfday (1~12)  number        12
+
+ H       hour of day (0~23)           number        0
+ k       clockhour of day (1~24)      number        24
+ m       minute of hour               number        30
+ s       second of minute             number        55
+ S       fraction of second           number        978
+
+ z       time zone                    text          Pacific Standard Time; PST
+ Z       time zone offset/id          zone          -0800; -08:00; America/Los_Angeles
+
+ '       escape for text              delimiter
+ ''      single quote                 literal       '
+ </pre>
+ </blockquote>
+ The count of pattern letters determine the format.
+ <p>
+ <strong>Text</strong>: If the number of pattern letters is 4 or more,
+ the full form is used; otherwise a short or abbreviated form is used if
+ available.
+ <p>
+ <strong>Number</strong>: The minimum number of digits. Shorter numbers
+ are zero-padded to this amount.
+ <p>
+ <strong>Year</strong>: Numeric presentation for year and weekyear fields
+ are handled specially. For example, if the count of 'y' is 2, the year
+ will be displayed as the zero-based year of the century, which is two
+ digits.
+ <p>
+ <strong>Month</strong>: 3 or over, use text, otherwise use number.
+ <p>
+ <strong>Zone</strong>: 'Z' outputs offset without a colon, 'ZZ' outputs
+ the offset with a colon, 'ZZZ' or more outputs the zone id.
+ <p>
+ <strong>Zone names</strong>: Time zone names ('z') cannot be parsed.
+ <p>
+ Any characters in the pattern that are not in the ranges of ['a'..'z']
+ and ['A'..'Z'] will be treated as quoted text. For instance, characters
+ like ':', '.', ' ', '#' and '?' will appear in the resulting time text
+ even they are not embraced within single quotes.
+ <p>
+ DateTimeFormat is thread-safe and immutable, and the formatters it returns
+ are as well.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>1.0</dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/joda/time/format/ISODateTimeFormat.html" title="class in org.joda.time.format"><code>ISODateTimeFormat</code></a>, 
+<a href="../../../../org/joda/time/format/DateTimeFormatterBuilder.html" title="class in org.joda.time.format"><code>DateTimeFormatterBuilder</code></a></dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#DateTimeFormat()">DateTimeFormat</a></strong>()</code>
+<div class="block">Constructor.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#forPattern(java.lang.String)">forPattern</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pattern)</code>
+<div class="block">Factory to create a formatter from a pattern string.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#forStyle(java.lang.String)">forStyle</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style)</code>
+<div class="block">Factory to create a format from a two character style pattern.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#fullDate()">fullDate</a></strong>()</code>
+<div class="block">Creates a format that outputs a full date format.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#fullDateTime()">fullDateTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a full datetime format.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#fullTime()">fullTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a full time format.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#longDate()">longDate</a></strong>()</code>
+<div class="block">Creates a format that outputs a long date format.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#longDateTime()">longDateTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a long datetime format.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#longTime()">longTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a long time format.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#mediumDate()">mediumDate</a></strong>()</code>
+<div class="block">Creates a format that outputs a medium date format.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#mediumDateTime()">mediumDateTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a medium datetime format.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#mediumTime()">mediumTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a medium time format.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#patternForStyle(java.lang.String, java.util.Locale)">patternForStyle</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style,
+               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<div class="block">Returns the pattern used by a particular style and locale.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#shortDate()">shortDate</a></strong>()</code>
+<div class="block">Creates a format that outputs a short date format.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#shortDateTime()">shortDateTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a short datetime format.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeFormat.html#shortTime()">shortTime</a></strong>()</code>
+<div class="block">Creates a format that outputs a short time format.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="DateTimeFormat()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DateTimeFormat</h4>
+<pre>protected&nbsp;DateTimeFormat()</pre>
+<div class="block">Constructor.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>1.1 (previously private)</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="forPattern(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forPattern</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;forPattern(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pattern)</pre>
+<div class="block">Factory to create a formatter from a pattern string.
+ The pattern string is described above in the class level javadoc.
+ It is very similar to SimpleDateFormat patterns.
+ <p>
+ The format may contain locale specific output, and this will change as
+ you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.
+ For example:
+ <pre>
+ DateTimeFormat.forPattern(pattern).withLocale(Locale.FRANCE).print(dt);
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>pattern</code> - pattern specification</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the formatter</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the pattern is invalid</dd></dl>
+</li>
+</ul>
+<a name="forStyle(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forStyle</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;forStyle(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style)</pre>
+<div class="block">Factory to create a format from a two character style pattern.
+ <p>
+ The first character is the date style, and the second character is the
+ time style. Specify a character of 'S' for short style, 'M' for medium,
+ 'L' for long, and 'F' for full.
+ A date or time may be ommitted by specifying a style character '-'.
+ <p>
+ The returned formatter will dynamically adjust to the locale that
+ the print/parse takes place in. Thus you just call
+ <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> and the Short/Medium/Long/Full
+ style for that locale will be output. For example:
+ <pre>
+ DateTimeFormat.forStyle(style).withLocale(Locale.FRANCE).print(dt);
+ </pre></div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>style</code> - two characters from the set {"S", "M", "L", "F", "-"}</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the formatter</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the style is invalid</dd></dl>
+</li>
+</ul>
+<a name="patternForStyle(java.lang.String, java.util.Locale)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>patternForStyle</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;patternForStyle(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style,
+                     <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</pre>
+<div class="block">Returns the pattern used by a particular style and locale.
+ <p>
+ The first character is the date style, and the second character is the
+ time style. Specify a character of 'S' for short style, 'M' for medium,
+ 'L' for long, and 'F' for full.
+ A date or time may be ommitted by specifying a style character '-'.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>style</code> - two characters from the set {"S", "M", "L", "F", "-"}</dd><dd><code>locale</code> - locale to use, null means default</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the formatter</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the style is invalid</dd><dt><span class="strong">Since:</span></dt>
+  <dd>1.3</dd></dl>
+</li>
+</ul>
+<a name="shortDate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>shortDate</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;shortDate()</pre>
+<div class="block">Creates a format that outputs a short date format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="shortTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>shortTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;shortTime()</pre>
+<div class="block">Creates a format that outputs a short time format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="shortDateTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>shortDateTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;shortDateTime()</pre>
+<div class="block">Creates a format that outputs a short datetime format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="mediumDate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mediumDate</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;mediumDate()</pre>
+<div class="block">Creates a format that outputs a medium date format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="mediumTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mediumTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;mediumTime()</pre>
+<div class="block">Creates a format that outputs a medium time format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="mediumDateTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mediumDateTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;mediumDateTime()</pre>
+<div class="block">Creates a format that outputs a medium datetime format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="longDate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>longDate</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;longDate()</pre>
+<div class="block">Creates a format that outputs a long date format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="longTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>longTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;longTime()</pre>
+<div class="block">Creates a format that outputs a long time format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="longDateTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>longDateTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;longDateTime()</pre>
+<div class="block">Creates a format that outputs a long datetime format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="fullDate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fullDate</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;fullDate()</pre>
+<div class="block">Creates a format that outputs a full date format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="fullTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fullTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;fullTime()</pre>
+<div class="block">Creates a format that outputs a full time format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+<a name="fullDateTime()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>fullDateTime</h4>
+<pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;fullDateTime()</pre>
+<div class="block">Creates a format that outputs a full datetime format.
+ <p>
+ The format will change as you change the locale of the formatter.
+ Call <a href="../../../../org/joda/time/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>DateTimeFormatter.withLocale(Locale)</code></a> to switch the locale.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the formatter</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/DateTimeFormat.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../index-all.html">Index</a></li>
+<li><a href="../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev Class</li>
+<li><a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../index.html?org/joda/time/format/DateTimeFormat.html" target="_top">Frames</a></li>
+<li><a href="DateTimeFormat.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+</body>
+</html>

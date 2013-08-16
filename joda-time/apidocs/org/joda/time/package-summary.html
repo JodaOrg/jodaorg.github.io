@@ -1,0 +1,683 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>org.joda.time (Joda-Time 2.3-SNAPSHOT API)</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="org.joda.time (Joda-Time 2.3-SNAPSHOT API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+<li><a href="package-use.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev Package</li>
+<li><a href="../../../org/joda/time/base/package-summary.html">Next Package</a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?org/joda/time/package-summary.html" target="_top">Frames</a></li>
+<li><a href="package-summary.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;org.joda.time</h1>
+<div class="docSummary">
+<div class="block">
+Provides support for dates, times, time zones, durations, intervals, and
+partials.</div>
+</div>
+<p>See:&nbsp;<a href="#package_description">Description</a></p>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeUtils.MillisProvider.html" title="interface in org.joda.time">DateTimeUtils.MillisProvider</a></td>
+<td class="colLast">
+<div class="block">A millisecond provider, allowing control of the system clock.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadableDateTime.html" title="interface in org.joda.time">ReadableDateTime</a></td>
+<td class="colLast">
+<div class="block">Defines an instant in time that can be queried using datetime fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a></td>
+<td class="colLast">
+<div class="block">Defines an exact duration of time in milliseconds.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a></td>
+<td class="colLast">
+<div class="block">Defines an instant in the datetime continuum.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadableInterval.html" title="interface in org.joda.time">ReadableInterval</a></td>
+<td class="colLast">
+<div class="block">Readable interface for an interval of time between two instants.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></td>
+<td class="colLast">
+<div class="block">Defines a partial time that does not support every datetime field, and is
+ thus a local time.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a></td>
+<td class="colLast">
+<div class="block">Defines a time period specified in terms of individual duration fields
+ such as years and days.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadWritableDateTime.html" title="interface in org.joda.time">ReadWritableDateTime</a></td>
+<td class="colLast">
+<div class="block">Defines an instant in time that can be queried and modified using datetime fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadWritableInstant.html" title="interface in org.joda.time">ReadWritableInstant</a></td>
+<td class="colLast">
+<div class="block">Defines an instant in the datetime continuum that can be queried and modified.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadWritableInterval.html" title="interface in org.joda.time">ReadWritableInterval</a></td>
+<td class="colLast">
+<div class="block">Writable interface for an interval.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/ReadWritablePeriod.html" title="interface in org.joda.time">ReadWritablePeriod</a></td>
+<td class="colLast">
+<div class="block">Defines a duration of time that can be queried and modified using datetime fields.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a></td>
+<td class="colLast">
+<div class="block">Chronology provides access to the individual date time fields for a
+ chronological calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></td>
+<td class="colLast">Deprecated
+<div class="block"><i>The time of midnight does not exist in some time zones
+ where the daylight saving time forward shift skips the midnight hour.</i></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateMidnight.Property.html" title="class in org.joda.time">DateMidnight.Property</a></td>
+<td class="colLast">
+<div class="block">DateMidnight.Property binds a DateMidnight to a DateTimeField allowing powerful
+ datetime functionality to be easily accessed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></td>
+<td class="colLast">
+<div class="block">DateTime is the standard implementation of an unmodifiable datetime class.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTime.Property.html" title="class in org.joda.time">DateTime.Property</a></td>
+<td class="colLast">
+<div class="block">DateTime.Property binds a DateTime to a DateTimeField allowing powerful
+ datetime functionality to be easily accessed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeComparator.html" title="class in org.joda.time">DateTimeComparator</a></td>
+<td class="colLast">
+<div class="block">DateTimeComparator provides comparators to compare one date with another.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeConstants.html" title="class in org.joda.time">DateTimeConstants</a></td>
+<td class="colLast">
+<div class="block">DateTimeConstants is a non-instantiable class of constants used in
+ the date time system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeField.html" title="class in org.joda.time">DateTimeField</a></td>
+<td class="colLast">
+<div class="block">Defines the calculation engine for date and time fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a></td>
+<td class="colLast">
+<div class="block">Identifies a field, such as year or minuteOfHour, in a chronology-neutral way.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeUtils.html" title="class in org.joda.time">DateTimeUtils</a></td>
+<td class="colLast">
+<div class="block">DateTimeUtils provide public utility methods for the date-time library.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></td>
+<td class="colLast">
+<div class="block">DateTimeZone represents a time zone.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Days.html" title="class in org.joda.time">Days</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of days.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></td>
+<td class="colLast">
+<div class="block">An immutable duration specifying a length of time in milliseconds.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></td>
+<td class="colLast">
+<div class="block">Defines the calculation engine for duration fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/DurationFieldType.html" title="class in org.joda.time">DurationFieldType</a></td>
+<td class="colLast">
+<div class="block">Identifies a duration field, such as years or minutes, in a chronology-neutral way.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Hours.html" title="class in org.joda.time">Hours</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of hours.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/Instant.html" title="class in org.joda.time">Instant</a></td>
+<td class="colLast">
+<div class="block">Instant is the standard implementation of a fully immutable instant in time.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Interval.html" title="class in org.joda.time">Interval</a></td>
+<td class="colLast">
+<div class="block">Interval is the standard implementation of an immutable time interval.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/JodaTimePermission.html" title="class in org.joda.time">JodaTimePermission</a></td>
+<td class="colLast">
+<div class="block">JodaTimePermission is used for securing global method calls in the Joda-Time
+ library.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></td>
+<td class="colLast">
+<div class="block">LocalDate is an immutable datetime class representing a date
+ without a time zone.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/LocalDate.Property.html" title="class in org.joda.time">LocalDate.Property</a></td>
+<td class="colLast">
+<div class="block">LocalDate.Property binds a LocalDate to a DateTimeField allowing
+ powerful datetime functionality to be easily accessed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></td>
+<td class="colLast">
+<div class="block">LocalDateTime is an unmodifiable datetime class representing a
+ datetime without a time zone.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/LocalDateTime.Property.html" title="class in org.joda.time">LocalDateTime.Property</a></td>
+<td class="colLast">
+<div class="block">LocalDateTime.Property binds a LocalDateTime to a DateTimeField allowing
+ powerful datetime functionality to be easily accessed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></td>
+<td class="colLast">
+<div class="block">LocalTime is an immutable time class representing a time
+ without a time zone.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/LocalTime.Property.html" title="class in org.joda.time">LocalTime.Property</a></td>
+<td class="colLast">
+<div class="block">LocalTime.Property binds a LocalTime to a DateTimeField allowing
+ powerful datetime functionality to be easily accessed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Minutes.html" title="class in org.joda.time">Minutes</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of minutes.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/MonthDay.html" title="class in org.joda.time">MonthDay</a></td>
+<td class="colLast">
+<div class="block">MonthDay is an immutable partial supporting the monthOfYear and dayOfMonth fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/MonthDay.Property.html" title="class in org.joda.time">MonthDay.Property</a></td>
+<td class="colLast">
+<div class="block">The property class for <code>MonthDay</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/Months.html" title="class in org.joda.time">Months</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of months.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/MutableDateTime.html" title="class in org.joda.time">MutableDateTime</a></td>
+<td class="colLast">
+<div class="block">MutableDateTime is the standard implementation of a modifiable datetime class.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/MutableDateTime.Property.html" title="class in org.joda.time">MutableDateTime.Property</a></td>
+<td class="colLast">
+<div class="block">MutableDateTime.Property binds a MutableDateTime to a
+ DateTimeField allowing powerful datetime functionality to be easily
+ accessed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/MutableInterval.html" title="class in org.joda.time">MutableInterval</a></td>
+<td class="colLast">
+<div class="block">MutableInterval is the standard implementation of a mutable time interval.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/MutablePeriod.html" title="class in org.joda.time">MutablePeriod</a></td>
+<td class="colLast">
+<div class="block">Standard mutable time period implementation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Partial.html" title="class in org.joda.time">Partial</a></td>
+<td class="colLast">
+<div class="block">Partial is an immutable partial datetime supporting any set of datetime fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/Partial.Property.html" title="class in org.joda.time">Partial.Property</a></td>
+<td class="colLast">
+<div class="block">The property class for <code>Partial</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></td>
+<td class="colLast">
+<div class="block">An immutable time period specifying a set of duration field values.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/PeriodType.html" title="class in org.joda.time">PeriodType</a></td>
+<td class="colLast">
+<div class="block">Controls a period implementation by specifying which duration fields are to be used.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Seconds.html" title="class in org.joda.time">Seconds</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of seconds.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a></td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use LocalTime which has a much better internal implementation and
+  has been available since 1.3</i></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/TimeOfDay.Property.html" title="class in org.joda.time">TimeOfDay.Property</a></td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use LocalTime which has a much better internal implementation</i></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/Weeks.html" title="class in org.joda.time">Weeks</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of weeks.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/YearMonth.html" title="class in org.joda.time">YearMonth</a></td>
+<td class="colLast">
+<div class="block">YearMonth is an immutable partial supporting the year and monthOfYear fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/YearMonth.Property.html" title="class in org.joda.time">YearMonth.Property</a></td>
+<td class="colLast">
+<div class="block">The property class for <code>YearMonth</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/YearMonthDay.html" title="class in org.joda.time">YearMonthDay</a></td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use LocalDate which has a much better internal implementation and
+  has been available since 1.3</i></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/YearMonthDay.Property.html" title="class in org.joda.time">YearMonthDay.Property</a></td>
+<td class="colLast">Deprecated
+<div class="block"><i>Use LocalDate which has a much better internal implementation</i></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/Years.html" title="class in org.joda.time">Years</a></td>
+<td class="colLast">
+<div class="block">An immutable time period representing a number of years.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Exception</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../org/joda/time/IllegalFieldValueException.html" title="class in org.joda.time">IllegalFieldValueException</a></td>
+<td class="colLast">
+<div class="block">Exception thrown when attempting to set a field outside its supported range.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../org/joda/time/IllegalInstantException.html" title="class in org.joda.time">IllegalInstantException</a></td>
+<td class="colLast">
+<div class="block">Exception thrown when attempting to create an instant or date-time that cannot exist.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a name="package_description">
+<!--   -->
+</a>
+<h2 title="Package org.joda.time Description">Package org.joda.time Description</h2>
+<div class="block"><p>
+Provides support for dates, times, time zones, durations, intervals, and
+partials. This package aims to fully replace the Java <code>Date</code>,
+<code>Calendar</code>, and <code>TimeZone</code> classes. This implementation
+covers both the Gregorian/Julian calendar system and the ISO8601
+standard. Additional calendar systems and extensions can be created as well.
+</p>
+<p>
+The ISO8601 standard is the international standard for dates, times, durations,
+and intervals. It defines text representations, the first day of the week as
+Monday, and the first week in a year as having a Thursday in it. This standard
+is being increasingly used in computer interchange and is the agreed format for
+XML. For most uses, the ISO standard is the same as Gregorian, and is thus the
+preferred format.
+</p>
+
+<h4>Interfaces</h4>
+<p>
+The main API concepts are defined by interfaces:
+</p>
+<ul>
+<li><code>ReadableInstant</code> - an instant in time
+<li><code>ReadableDateTime</code> - an instant in time with field accessors such as dayOfWeek
+<li><code>ReadablePartial</code> - a definition for local times that are not defined to the millisecond, such as the time of day
+<li><code>ReadableDuration</code> - a duration defined in milliseconds
+<li><code>ReadablePeriod</code> - a time period defined in fields such as hours and minutes
+<li><code>ReadableInterval</code> - a period of time between two instants
+</ul>
+<ul>
+<li><code>ReadWritableInstant</code> - an instant that can be modified
+<li><code>ReadWritableDateTime</code> - a datetime that can be modified
+<li><code>ReadWritablePeriod</code> - a time period that can be modified
+<li><code>ReadWritableInterval</code> - an interval that can be modified
+</ul>
+<p>
+These define the public interface to dates, times, periods, intervals and durations.
+As with <code>java.util.Date</code> and <code>Calendar</code>, the design is
+millisecond based with an epoch of 1970-01-01.
+This should enable easy conversions.
+</p>
+
+<h4>Implementations</h4>
+<p>
+The basic implementation of the <code>ReadableInstant</code> interface is
+<code>Instant</code>. This is a simple immutable class that stores the
+millisecond value and integrates with Java Date and Calendar.
+The class follows the definition of the millisecond instant fully, thus
+it references the ISO-8601 calendar system and UTC time zone.
+If you are dealing with an instant in time but do not know, or do not want to specify,
+which calendar system it refers to, then you should use this class.
+</p>
+<p>
+The main implementation class for datetimes is the <code>DateTime</code> class.
+This implements the <code>ReadableDateTime</code> interface, providing
+convenient methods to access the fields of the datetime. Conversion methods
+allow integration with the Java Date and Calendar classes.
+</p>
+<p>
+Like <code>Instant</code>, <code>DateTime</code> is <i>immutable</i>, and it
+can be used safely in a multi-threaded environment. 
+In order to be fully immutable, key clases are declared as final.
+Abstract superclasses are provided should you need to define your own implementations.
+</p>
+<p>
+The concrete implementations of the <code>ReadWritable...</code> interfaces are
+named the same as their immutable counterparts, but with a "Mutable" prefix.
+For example, <code>MutableDateTime</code> implements
+<code>ReadWritableDateTime</code>, making datetime editing easy.
+Note that it is possible to use the immutable DateTime for modifying datetimes,
+however each modification method returns a new instance of DateTime.
+</p>
+
+<h4>Interface usage</h4>
+<p>
+The interfaces in Joda-Time are not designed to operate in the same way as those
+in the Java Collections Framework (List/Map/Set etc).
+The Joda-Time interfaces represent a core subset of the functionality available
+via the actual classes.
+Thus, much of the work of an application will probably use methods on the class, not
+on the interface.
+Your application must determine whether it should define dates in terms of the
+interfaces, or in terms of the classes.
+</p>
+<p>
+The interfaces provide simple methods to access an instance of the immutable class,
+which is implemented either via typecast or object creation.
+Thus, if you hold a reference to a ReadableInstant, and you call the method
+<code>toDateTime()</code>, the same instance will be returned (typecast) if it
+already was a DateTime.
+
+<h4>Chronologies and Fields</h4>
+<p>
+In order to enable the package to be easily extended, each field of the
+datetime, such as the month, is calculated by an implementation of
+<code>DateTimeField</code>. Likewise, duration fields are calculated by
+specialized <code>DurationField</code> instances. If desired, users can write
+their own implementations to retrieve an unusual field from the millisecond
+value.
+</p>
+<p>
+The datetime and duration fields that together represent a calendar system are
+grouped into a <code>Chronology</code>. The chronology represents all the
+information to convert from a millisecond value to human understandable fields
+in a specific calendar system. Chronologies are provided for ISO,
+Gregorian/Julian (GJ), Buddhist, Coptic and Ethiopic.
+More implementations are sought from the community.
+</p>
+<p>
+The chronology and field classes are singletons.
+This design results in a low overhead on the date and time classes.
+The Java <code>Calendar</code> class performs poorly because it has many internal
+fields that are constantly kept in sync.
+This design only calculates fields when required, resulting in lightweight and
+simple date time classes.
+</p>
+<p>
+When reviewing the library for the first time, it is easy to mistake the number
+of classes with complexity.
+The library is in fact clearly divided between user packages and implementation packages
+in the javadoc.
+Most users will should not need to be concerned with the back-end implementation.
+</p>
+
+<h4>Partials</h4>
+<p>
+Partials are like instants, except they do not completely specify a point in
+time. The main interface is <code>ReadablePartial</code>.
+</p>
+<p>
+The main implementations are:
+<ul>
+<li><code>LocalTime</code> - A class storing a local time without a date</li>
+<li><code>LocalDate</code> - A class storing a local date without a time</li>
+<li><code>LocalDateTime</code> - A class storing a local datetime</li>
+<li><code>Partial</code> - A class storing any combination of datetime fields, such as dayOfMonth and dayOfWeek</li>
+</ul>
+For consistency, the API of each partial class is similar to that of an instant class.
+</p>
+<p>
+All partial implementations represent a local time, in other words without a time zone.
+Thus, to convert a partial to an instant (which does contain a time zone) requires adding a zone.
+</p>
+
+<h4>Formatting</h4>
+<p>
+Formatting is provided by the <code>format</code> subpackage. Comprehensive
+support is provided for outputting dates and times in multiple formats. A
+pattern similar to Java <code>SimpleDateFormat</code> can be used, but a more
+advanced programmatic technique is available via the builder classes.
+</p></div>
+</div>
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+<li><a href="package-use.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev Package</li>
+<li><a href="../../../org/joda/time/base/package-summary.html">Next Package</a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?org/joda/time/package-summary.html" target="_top">Frames</a></li>
+<li><a href="package-summary.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+</body>
+</html>

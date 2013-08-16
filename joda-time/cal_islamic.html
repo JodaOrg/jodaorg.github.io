@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Joda-Time - 
-  Java date and time API - Home</title>
+  Java date and time API - Islamic calendar system</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -12,7 +12,6 @@
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
       <meta name="author" content="Stephen Colebourne" />
-      <meta name="author" content="Al Major" />
     <meta name="Date-Revision-yyyymmdd" content="20130816" />
     <meta http-equiv="Content-Language" content="en" />
         
@@ -56,8 +55,8 @@
                                 <h5>Joda Time</h5>
                   <ul>
                   <li class="none">
-            <strong>Overview</strong>
-          </li>
+                          <a href="index.html" title="Overview">Overview</a>
+            </li>
                   <li class="none">
                           <a href="quickstart.html" title="Quick start guide">Quick start guide</a>
             </li>
@@ -125,8 +124,8 @@
                           <a href="cal_gj.html" title="GregorianJulian">GregorianJulian</a>
             </li>
                   <li class="none">
-                          <a href="cal_islamic.html" title="Islamic">Islamic</a>
-            </li>
+            <strong>Islamic</strong>
+          </li>
                   <li class="none">
                           <a href="cal_julian.html" title="Julian">Julian</a>
             </li>
@@ -199,237 +198,128 @@
  
 
 <div class="section">
-<h2>Joda Time - Java date and time API<a name="Joda_Time_-_Java_date_and_time_API"></a></h2>
+<h2>Islamic calendar system<a name="Islamic_calendar_system"></a></h2>
 
 <p>
-Joda-Time provides a quality replacement for the Java <i>date</i>
-and <i>time</i> classes. The design allows for multiple <i>calendar</i>
-systems, while still providing a simple API.
-The 'default' calendar is the <a href="cal_iso.html">ISO8601</a> standard which
-is used by XML. The Gregorian, Julian, Buddhist, Coptic, Ethiopic and Islamic systems
-are also included, and we welcome further additions. Supporting classes include
-time zone, duration, format and parsing.
+The Islamic, or Hijri, calendar system is a Lunar calendar used
+in many Muslim countries.
 </p>
 
 <p>
-As a flavour of Joda-Time, here's some example code:
+The Islamic calendar system is a lunar calendar based on observation.
+The observation aspect of the calendar means that a new month can only
+be declared based on human observations of the moon, something
+which can obviously vary and is unsuited to computer calculation.
 </p>
+
+<p>
+Joda-Time implements the arithmetic Islamic calendar, which is an 
+approximation of the actual calendar.
+There are 12 months, each of 29 or 30 days, making a year of 354 days, or 355 in a leap year.
+The days in the month alternate, with the first month having 30 days,
+the second 29 days and so on.
+In a leap year, the twelfth month has 30 days instead of the normal 29.
+</p>
+
+<p>
+The definition of a leap year in the Islamic calendar varies.
+All agree on a 30 year cycle, however which years within the 30 are leap
+varies by the leap year pattern:
+</p>
+
+<table border="0" class="bodyTable">
+
+<tr class="a">
+
+<td>15-based</td>
+
+<td>2, 5, 7, 10, 13, 15, 18, 21, 24, 26, 29</td>
+</tr>
+
+<tr class="b">
+
+<td>16-based</td>
+
+<td>2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29</td>
+</tr>
+
+<tr class="a">
+
+<td>Indian</td>
+
+<td>2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29</td>
+</tr>
+
+<tr class="b">
+
+<td>Habash al-Hasib</td>
+
+<td>2, 5, 8, 11, 13, 16, 19, 21, 24, 27, 30</td>
+</tr>
+</table>
+
+<p>
+Joda-Time allows you to choose between these leap year patterns.
+The 16-based algorithm is the most commonly used, and is the default.
+Note that Microsoft uses the 15-based pattern, and calls it the 'Kuwaiti algorithm'.
+</p>
+
+<p>
+The epoch of the calendar system is 0622-07-16 (Julian) which is therefore 0001-01-01 (Islamic).
+The current (and only implemented) era is 'AH' (Anno Hegirae).
+</p>
+
+<p>
+Days of the week are named 'the first day', 'the second day' and so on, where
+Sunday is the first day.
+The day of the week value (numeric) returned by Joda-Time however, is the same
+as the ISO day of week definition.
+Thus Sunday will return the numeric value 7, and Monday will return the numeric value 1.
+</p>
+
+<p>
+A day in the Islamic calendar begins at sunset on the previous 'day'.
+Joda-Time does not model this, thus times and date rollover follow standard
+ISO definitions, in other words starting at midnight.
+</p>
+
+<p>
+References
+</p>
+<ul>
+
+<li>Calendrical Calculations - Millenium Edition - ISBN 0521777526</li>
+
+<li><a class="externalLink" href="http://en.wikipedia.org/wiki/Islamic_calendar">Wikipedia - Islamic Calendar</a></li>
+
+<li><a class="externalLink" href="http://www.staff.science.uu.nl/~gent0113/islam/islam_tabcal.htm">Islamic calendar converter</a></li>
+</ul>
+
+</div>
+
+
+<div class="section">
+<h2>Using Islamic chronology in Joda-Time<a name="Using_Islamic_chronology_in_Joda-Time"></a></h2>
+
+<p>
+Within Joda-Time the Islamic calendar system can be used by obtaining an
+instance of <a href="apidocs/org/joda/time/chrono/IslamicChronology.html">IslamicChronology</a>.
+This is normally created via the
+<a href="apidocs/org/joda/time/chrono/IslamicChronology.html#getInstance">IslamicChronology.getInstance()</a> factory.
+The chronology is then passed into the constructors of the main date and time classes.
+</p>
+
 <div class="source">
 <pre>
-public boolean isAfterPayDay(<a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a> datetime) {
-  if (datetime.getMonthOfYear() == 2) {   // February is month 2!!
-    return datetime.getDayOfMonth() &gt; 26;
-  }
-  return datetime.getDayOfMonth() &gt; 28;
-}
+// setup date object for midday on May Day 2004 (ISO year 2004)
+DateTime dtISO = new DateTime(2004, 5, 1, 12, 0, 0, 0);
 
-public <a href="apidocs/org/joda/time/Days.html"><b>Days</b></a> daysToNewYear(<a href="apidocs/org/joda/time/LocalDate.html"><b>LocalDate</b></a> fromDate) {
-  <a href="apidocs/org/joda/time/LocalDate.html"><b>LocalDate</b></a> newYear = fromDate.plusYears(1).withDayOfYear(1);
-  return <a href="apidocs/org/joda/time/Days.html"><b>Days</b></a>.daysBetween(fromDate, newYear);
-}
-
-public boolean isRentalOverdue(<a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a> datetimeRented) {
-  <a href="apidocs/org/joda/time/Period.html"><b>Period</b></a> rentalPeriod = new <a href="apidocs/org/joda/time/Period.html"><b>Period</b></a>().withDays(2).withHours(12);
-  return datetimeRented.plus(rentalPeriod).isBeforeNow();
-}
-
-public String getBirthMonthText(<a href="apidocs/org/joda/time/LocalDate.html"><b>LocalDate</b></a> dateOfBirth) {
-  return dateOfBirth.monthOfYear().getAsText(Locale.ENGLISH);
-}
+// find out what the same instant is using the Islamic Chronology
+DateTime dtIslamic = dtISO.withChronology(IslamicChronology.getInstance());
 </pre></div>
-<!-- public boolean isDoubleShift(<a href="apidocs/org/joda/time/LocalTime.html"><b>LocalTime</b></a> startTime, <a href="apidocs/org/joda/time/LocalTime.html"><b>LocalTime</b></a> endTime) {
-  <a href="apidocs/org/joda/time/Hours.html"><b>Hours</b></a> hoursBetween = <a href="apidocs/org/joda/time/Hours.html"><b>Hours</b></a>.hoursBetween(time1, time2);
-  return hoursBetween.isGreaterThan(<a href="apidocs/org/joda/time/Hours.html"><b>Hours</b></a>.EIGHT);
-}
-public boolean isJoinedInLastThreeMonths(<a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a> datetimeJoined) {
-  <a href="apidocs/org/joda/time/Interval.html"><b>Interval</b></a> last3Months = new <a href="apidocs/org/joda/time/Interval.html"><b>Interval</b></a>(<a href="apidocs/org/joda/time/Months.html"><b>Months</b></a>.THREE, new <a href="apidocs/org/joda/time/DateTime.html"><b>DateTime</b></a>());
-  return last3Months.contains(datetimeJoined);
-} -->
-Version 2.2 was released on 2013-03-08 -
-<a href="download.html">Download now</a>
 
 </div>
 
-
-
-<div class="section">
-<h2>Why Joda Time?<a name="Why_Joda_Time"></a></h2>
-
-<p>
-Joda-Time has been created to radically change date and time handling in Java.
-The JDK classes Date and Calendar are very badly designed, have had numerous bugs
-and have odd performance effects.
-Here are some of our reasons for developing and using Joda-Time:
-</p>
-<ul>
-
-<li><b>Easy to Use</b>.
-Calendar makes accessing 'normal' dates difficult, due to the lack of simple methods.
-Joda-Time has straightforward <a href="field.html">field accessors</a> such as
-<tt>getYear()</tt> or <tt>getDayOfWeek()</tt>.</li>
-
-
-<li><b>Easy to Extend</b>.
-The JDK supports multiple calendar systems via subclasses of <tt>Calendar</tt>.
-This is clunky, and in practice it is very difficult to write another calendar system.
-Joda-Time supports multiple calendar systems via a pluggable system based on the
-<tt>Chronology</tt> class.</li>
-
-
-<li><b>Comprehensive Feature Set</b>.
-The library is intended to provide all the functionality that is required for date-time
-calculations. It already provides out-of-the-box features, such as support for oddball
-date formats, which are difficult to replicate with the JDK.</li>
-
-
-<li><b>Up-to-date Time Zone calculations</b>.
-The <a href="timezones.html">time zone implementation</a> is based on
-the public <a class="externalLink" href="http://www.iana.org/time-zones">tz database</a>, which is
-updated several times a year. New Joda-Time releases incorporate all changes
-made to this database. Should the changes be needed earlier,
-<a href="tz_update.html">manually updating the zone data</a> is easy.</li>
-
-
-<li><b>Calendar support</b>.
-The library currently provides 8 calendar systems. More will be added in the future.</li>
-
-
-<li><b>Easy interoperability</b>.
-The library internally uses a millisecond instant which is identical to the JDK and similar
-to other common time representations. This makes interoperability easy, and Joda-Time comes
-with out-of-the-box JDK interoperability.</li>
-
-
-<li><b>Better Performance Characteristics</b>.
-Calendar has strange performance characteristics as it recalculates fields at unexpected moments.
-Joda-Time does only the minimal calculation for the field that is being accessed.</li>
-
-
-<li><b>Good Test Coverage</b>.
-Joda-Time has a comprehensive set of developer tests, providing assurance of the library's quality.</li>
-
-
-<li><b>Complete Documentation</b>.
-There is a full <a href="userguide.html">User Guide</a> which provides an overview and covers
-common usage scenarios. The <a href="apidocs/index.html">javadoc</a>
-is extremely detailed and covers the rest of the API.</li>
-
-
-<li><b>Maturity</b>.
-The library has been under active development since 2002.
-Although it continues to be improved with the addition of new features and
-bug-fixes, it is a mature and reliable code base.
-A number of <a href="related.html">related projects</a> are now available.</li>
-
-
-<li><b>Open Source</b>.
-Joda-Time is licenced under the business friendly <a href="license.html">Apache License Version 2.0</a>.</li>
-</ul>
-
-</div>
-
-
-
-<div class="section">
-<h2>Documentation<a name="Documentation"></a></h2>
-
-<p>
-Various documentation is available:
-</p>
-<ul>
-
-<li>Two user guides - <a href="quickstart.html">quick</a> and <a href="userguide.html">full</a></li>
-
-<li>The key concepts and chronology documents in the left navigation area</li>
-
-<li>The <a href="apidocs/index.html">Javadoc</a></li>
-
-<li>Information on <a href="installation.html">downloading and installing</a> Joda-Time</li>
-
-<li>The <a href="faq.html">FAQ</a> list</li>
-
-<li>The <a class="externalLink" href="https://github.com/JodaOrg/joda-time">GitHub</a> source repository</li>
-</ul>
-
-</div>
-
-
-
-<div class="section">
-<h2>Releases<a name="Releases"></a></h2>
-
-<p>
-<a href="download.html">Release 2.2</a>
-is the current latest release.
-This release is an evolution of the 1.x codebase, not a major rewrite.
-It is considered stable and worthy of the 2.x tag.
-</p>
-
-<p>
-Version 2.2 is a bugfix release compatible with version 2.1.
-See the <a href="upgradeto220.html">upgrade notes</a> for full details.
-</p>
-
-<p>
-Version 2.x is almost completely source and binary compatible with version 1.x.
-Key changes include the use of JDK 1.5 or later, generics, and the removal of some (but not all)
-deprecated methods. See the <a href="upgradeto200.html">upgrade notes</a> for full details
-including information on the corner cases that are not compatible.
-</p>
-
-<p>
-We will support the 2.x product line using standard Java mechanisms.
-The main public API will remain backwards compatible for both source and binary in the 2.x stream.
-The version number will change to 3.0 to indicate a significant change in compatibility.
-</p>
-
-<p>
-Available in <a class="externalLink" href="http://search.maven.org/#artifactdetails|joda-time|joda-time|2.2|jar">Maven Central</a>.
-</p>
-
-
-<p>
-<a class="externalLink" href="https://sourceforge.net/projects/joda-time/files/joda-time/1.6.2/">Release 1.6.2</a>
-is the last v1.x release.
-It is compatible with JDK 1.4.
-Given that v2.x is essentially compatible with v1.6.2, there are no current plans for further
-releases in the v1.x product line.
-</p>
-
-</div>
-
-
-
-<div class="section">
-<h2>Support<a name="Support"></a></h2>
-
-<p>
-Support on bugs, library usage or enhancement requests is available on a best efforts basis.
-</p>
-
-<p>
-To suggest enhancements or contribute, please <a class="externalLink" href="https://github.com/JodaOrg/joda-time">fork the source code</a> on GitHub.
-Alternatively, use GitHub <a class="externalLink" href="https://github.com/JodaOrg/joda-time/issues">issues</a>.
-</p>
-
-<p>
-The older mechanisms of the joda-interest <a href="mail-lists.html">mailing list</a>
-and the joda-time <a class="externalLink" href="http://sourceforge.net/projects/joda-time/forums/forum/337835">forums</a>
-do still exist, but are deprecated.
-</p>
-
-<p>
-<br />
-</p>
-
-<p>
-<br />
-</p>
-
-<p>
-<br />
-</p>
-</div>
 
 
       </div>

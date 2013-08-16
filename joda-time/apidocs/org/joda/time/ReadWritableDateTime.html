@@ -1,0 +1,759 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>ReadWritableDateTime (Joda-Time 2.3-SNAPSHOT API)</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ReadWritableDateTime (Joda-Time 2.3-SNAPSHOT API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ReadWritableDateTime.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../org/joda/time/ReadWritableInstant.html" title="interface in org.joda.time"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?org/joda/time/ReadWritableDateTime.html" target="_top">Frames</a></li>
+<li><a href="ReadWritableDateTime.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">org.joda.time</div>
+<h2 title="Interface ReadWritableDateTime" class="title">Interface ReadWritableDateTime</h2>
+</div>
+<div class="contentContainer">
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&gt;, <a href="../../../org/joda/time/ReadableDateTime.html" title="interface in org.joda.time">ReadableDateTime</a>, <a href="../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>, <a href="../../../org/joda/time/ReadWritableInstant.html" title="interface in org.joda.time">ReadWritableInstant</a></dd>
+</dl>
+<dl>
+<dt>All Known Implementing Classes:</dt>
+<dd><a href="../../../org/joda/time/MutableDateTime.html" title="class in org.joda.time">MutableDateTime</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public interface <span class="strong">ReadWritableDateTime</span>
+extends <a href="../../../org/joda/time/ReadableDateTime.html" title="interface in org.joda.time">ReadableDateTime</a>, <a href="../../../org/joda/time/ReadWritableInstant.html" title="interface in org.joda.time">ReadWritableInstant</a></pre>
+<div class="block">Defines an instant in time that can be queried and modified using datetime fields.
+ <p>
+ The implementation of this interface will be mutable.
+ It may provide more advanced methods than those in the interface.
+ <p>
+ Methods in your application should be defined using <code>ReadWritableDateTime</code>
+ as a parameter if the method wants to manipulate and change a date in simple ways.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>1.0</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addDays(int)">addDays</a></strong>(int&nbsp;days)</code>
+<div class="block">Add a number of days to the date.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addHours(int)">addHours</a></strong>(int&nbsp;hours)</code>
+<div class="block">Add a number of hours to the date.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addMillis(int)">addMillis</a></strong>(int&nbsp;millis)</code>
+<div class="block">Add a number of milliseconds to the date.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addMinutes(int)">addMinutes</a></strong>(int&nbsp;minutes)</code>
+<div class="block">Add a number of minutes to the date.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addMonths(int)">addMonths</a></strong>(int&nbsp;months)</code>
+<div class="block">Add a number of months to the date.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addSeconds(int)">addSeconds</a></strong>(int&nbsp;seconds)</code>
+<div class="block">Add a number of seconds to the date.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addWeeks(int)">addWeeks</a></strong>(int&nbsp;weeks)</code>
+<div class="block">Add a number of weeks to the date.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addWeekyears(int)">addWeekyears</a></strong>(int&nbsp;weekyears)</code>
+<div class="block">Add a number of weekyears to the date.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#addYears(int)">addYears</a></strong>(int&nbsp;years)</code>
+<div class="block">Add a number of years to the date.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setDate(int, int, int)">setDate</a></strong>(int&nbsp;year,
+       int&nbsp;monthOfYear,
+       int&nbsp;dayOfMonth)</code>
+<div class="block">Set the date from fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setDateTime(int, int, int, int, int, int, int)">setDateTime</a></strong>(int&nbsp;year,
+           int&nbsp;monthOfYear,
+           int&nbsp;dayOfMonth,
+           int&nbsp;hourOfDay,
+           int&nbsp;minuteOfHour,
+           int&nbsp;secondOfMinute,
+           int&nbsp;millisOfSecond)</code>
+<div class="block">Set the date and time from fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setDayOfMonth(int)">setDayOfMonth</a></strong>(int&nbsp;dayOfMonth)</code>
+<div class="block">Set the day of the month to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setDayOfWeek(int)">setDayOfWeek</a></strong>(int&nbsp;dayOfWeek)</code>
+<div class="block">Set the day of week to the specified value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setDayOfYear(int)">setDayOfYear</a></strong>(int&nbsp;dayOfYear)</code>
+<div class="block">Set the day of year to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setHourOfDay(int)">setHourOfDay</a></strong>(int&nbsp;hourOfDay)</code>
+<div class="block">Set the hour of the day to the specified value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setMillisOfDay(int)">setMillisOfDay</a></strong>(int&nbsp;millisOfDay)</code>
+<div class="block">Set the millis of the day to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setMillisOfSecond(int)">setMillisOfSecond</a></strong>(int&nbsp;millisOfSecond)</code>
+<div class="block">Set the millis of the second to the specified value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setMinuteOfDay(int)">setMinuteOfDay</a></strong>(int&nbsp;minuteOfDay)</code>
+<div class="block">Set the minute of the day to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setMinuteOfHour(int)">setMinuteOfHour</a></strong>(int&nbsp;minuteOfHour)</code>
+<div class="block">Set the minute of the hour to the specified value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setMonthOfYear(int)">setMonthOfYear</a></strong>(int&nbsp;monthOfYear)</code>
+<div class="block">Set the month of the year to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setSecondOfDay(int)">setSecondOfDay</a></strong>(int&nbsp;secondOfDay)</code>
+<div class="block">Set the second of the day to the specified value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setSecondOfMinute(int)">setSecondOfMinute</a></strong>(int&nbsp;secondOfMinute)</code>
+<div class="block">Set the second of the minute to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setTime(int, int, int, int)">setTime</a></strong>(int&nbsp;hour,
+       int&nbsp;minuteOfHour,
+       int&nbsp;secondOfMinute,
+       int&nbsp;millisOfSecond)</code>
+<div class="block">Set the time from fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setWeekOfWeekyear(int)">setWeekOfWeekyear</a></strong>(int&nbsp;weekOfWeekyear)</code>
+<div class="block">Set the week of weekyear to the specified value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setWeekyear(int)">setWeekyear</a></strong>(int&nbsp;weekyear)</code>
+<div class="block">Set the weekyear to the specified value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/ReadWritableDateTime.html#setYear(int)">setYear</a></strong>(int&nbsp;year)</code>
+<div class="block">Set the year to the specified value.</div>
+</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.joda.time.ReadableDateTime">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.joda.time.<a href="../../../org/joda/time/ReadableDateTime.html" title="interface in org.joda.time">ReadableDateTime</a></h3>
+<code><a href="../../../org/joda/time/ReadableDateTime.html#getCenturyOfEra()">getCenturyOfEra</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getDayOfMonth()">getDayOfMonth</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getDayOfWeek()">getDayOfWeek</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getDayOfYear()">getDayOfYear</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getEra()">getEra</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getHourOfDay()">getHourOfDay</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getMillisOfDay()">getMillisOfDay</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getMillisOfSecond()">getMillisOfSecond</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getMinuteOfDay()">getMinuteOfDay</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getMinuteOfHour()">getMinuteOfHour</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getMonthOfYear()">getMonthOfYear</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getSecondOfDay()">getSecondOfDay</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getSecondOfMinute()">getSecondOfMinute</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getWeekOfWeekyear()">getWeekOfWeekyear</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getWeekyear()">getWeekyear</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getYear()">getYear</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getYearOfCentury()">getYearOfCentury</a>, <a href="../../../org/joda/time/ReadableDateTime.html#getYearOfEra()">getYearOfEra</a>, <a href="../../../org/joda/time/ReadableDateTime.html#toDateTime()">toDateTime</a>, <a href="../../../org/joda/time/ReadableDateTime.html#toMutableDateTime()">toMutableDateTime</a>, <a href="../../../org/joda/time/ReadableDateTime.html#toString(java.lang.String)">toString</a>, <a href="../../../org/joda/time/ReadableDateTime.html#toString(java.lang.String, java.util.Locale)">toString</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.joda.time.ReadWritableInstant">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.joda.time.<a href="../../../org/joda/time/ReadWritableInstant.html" title="interface in org.joda.time">ReadWritableInstant</a></h3>
+<code><a href="../../../org/joda/time/ReadWritableInstant.html#add(org.joda.time.DurationFieldType, int)">add</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#add(long)">add</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#add(org.joda.time.ReadableDuration)">add</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#add(org.joda.time.ReadableDuration, int)">add</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#add(org.joda.time.ReadablePeriod)">add</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#add(org.joda.time.ReadablePeriod, int)">add</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#set(org.joda.time.DateTimeFieldType, int)">set</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#setChronology(org.joda.time.Chronology)">setChronology</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#setMillis(long)">setMillis</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#setMillis(org.joda.time.ReadableInstant)">setMillis</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#setZone(org.joda.time.DateTimeZone)">setZone</a>, <a href="../../../org/joda/time/ReadWritableInstant.html#setZoneRetainFields(org.joda.time.DateTimeZone)">setZoneRetainFields</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.joda.time.ReadableInstant">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.joda.time.<a href="../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a></h3>
+<code><a href="../../../org/joda/time/ReadableInstant.html#equals(java.lang.Object)">equals</a>, <a href="../../../org/joda/time/ReadableInstant.html#get(org.joda.time.DateTimeFieldType)">get</a>, <a href="../../../org/joda/time/ReadableInstant.html#getChronology()">getChronology</a>, <a href="../../../org/joda/time/ReadableInstant.html#getMillis()">getMillis</a>, <a href="../../../org/joda/time/ReadableInstant.html#getZone()">getZone</a>, <a href="../../../org/joda/time/ReadableInstant.html#hashCode()">hashCode</a>, <a href="../../../org/joda/time/ReadableInstant.html#isAfter(org.joda.time.ReadableInstant)">isAfter</a>, <a href="../../../org/joda/time/ReadableInstant.html#isBefore(org.joda.time.ReadableInstant)">isBefore</a>, <a href="../../../org/joda/time/ReadableInstant.html#isEqual(org.joda.time.ReadableInstant)">isEqual</a>, <a href="../../../org/joda/time/ReadableInstant.html#isSupported(org.joda.time.DateTimeFieldType)">isSupported</a>, <a href="../../../org/joda/time/ReadableInstant.html#toInstant()">toInstant</a>, <a href="../../../org/joda/time/ReadableInstant.html#toString()">toString</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Comparable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a></h3>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="setYear(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setYear</h4>
+<pre>void&nbsp;setYear(int&nbsp;year)</pre>
+<div class="block">Set the year to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>year</code> - the year</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addYears(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addYears</h4>
+<pre>void&nbsp;addYears(int&nbsp;years)</pre>
+<div class="block">Add a number of years to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>years</code> - the years to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setWeekyear(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setWeekyear</h4>
+<pre>void&nbsp;setWeekyear(int&nbsp;weekyear)</pre>
+<div class="block">Set the weekyear to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>weekyear</code> - the weekyear</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addWeekyears(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addWeekyears</h4>
+<pre>void&nbsp;addWeekyears(int&nbsp;weekyears)</pre>
+<div class="block">Add a number of weekyears to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>weekyears</code> - the weekyears to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setMonthOfYear(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMonthOfYear</h4>
+<pre>void&nbsp;setMonthOfYear(int&nbsp;monthOfYear)</pre>
+<div class="block">Set the month of the year to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>monthOfYear</code> - the month of the year</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addMonths(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addMonths</h4>
+<pre>void&nbsp;addMonths(int&nbsp;months)</pre>
+<div class="block">Add a number of months to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>months</code> - the months to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setWeekOfWeekyear(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setWeekOfWeekyear</h4>
+<pre>void&nbsp;setWeekOfWeekyear(int&nbsp;weekOfWeekyear)</pre>
+<div class="block">Set the week of weekyear to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>weekOfWeekyear</code> - the week of the weekyear</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addWeeks(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addWeeks</h4>
+<pre>void&nbsp;addWeeks(int&nbsp;weeks)</pre>
+<div class="block">Add a number of weeks to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>weeks</code> - the weeks to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setDayOfYear(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDayOfYear</h4>
+<pre>void&nbsp;setDayOfYear(int&nbsp;dayOfYear)</pre>
+<div class="block">Set the day of year to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>dayOfYear</code> - the day of the year</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setDayOfMonth(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDayOfMonth</h4>
+<pre>void&nbsp;setDayOfMonth(int&nbsp;dayOfMonth)</pre>
+<div class="block">Set the day of the month to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>dayOfMonth</code> - the day of the month</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setDayOfWeek(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDayOfWeek</h4>
+<pre>void&nbsp;setDayOfWeek(int&nbsp;dayOfWeek)</pre>
+<div class="block">Set the day of week to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>dayOfWeek</code> - the day of the week</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addDays(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addDays</h4>
+<pre>void&nbsp;addDays(int&nbsp;days)</pre>
+<div class="block">Add a number of days to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>days</code> - the days to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setHourOfDay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setHourOfDay</h4>
+<pre>void&nbsp;setHourOfDay(int&nbsp;hourOfDay)</pre>
+<div class="block">Set the hour of the day to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>hourOfDay</code> - the hour of day</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addHours(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addHours</h4>
+<pre>void&nbsp;addHours(int&nbsp;hours)</pre>
+<div class="block">Add a number of hours to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>hours</code> - the hours to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setMinuteOfDay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMinuteOfDay</h4>
+<pre>void&nbsp;setMinuteOfDay(int&nbsp;minuteOfDay)</pre>
+<div class="block">Set the minute of the day to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>minuteOfDay</code> - the minute of day</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setMinuteOfHour(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMinuteOfHour</h4>
+<pre>void&nbsp;setMinuteOfHour(int&nbsp;minuteOfHour)</pre>
+<div class="block">Set the minute of the hour to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>minuteOfHour</code> - the minute of hour</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addMinutes(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addMinutes</h4>
+<pre>void&nbsp;addMinutes(int&nbsp;minutes)</pre>
+<div class="block">Add a number of minutes to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>minutes</code> - the minutes to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setSecondOfDay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSecondOfDay</h4>
+<pre>void&nbsp;setSecondOfDay(int&nbsp;secondOfDay)</pre>
+<div class="block">Set the second of the day to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>secondOfDay</code> - the second of day</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setSecondOfMinute(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSecondOfMinute</h4>
+<pre>void&nbsp;setSecondOfMinute(int&nbsp;secondOfMinute)</pre>
+<div class="block">Set the second of the minute to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>secondOfMinute</code> - the second of minute</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addSeconds(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addSeconds</h4>
+<pre>void&nbsp;addSeconds(int&nbsp;seconds)</pre>
+<div class="block">Add a number of seconds to the date.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>seconds</code> - the seconds to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setMillisOfDay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMillisOfDay</h4>
+<pre>void&nbsp;setMillisOfDay(int&nbsp;millisOfDay)</pre>
+<div class="block">Set the millis of the day to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>millisOfDay</code> - the millis of day</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setMillisOfSecond(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMillisOfSecond</h4>
+<pre>void&nbsp;setMillisOfSecond(int&nbsp;millisOfSecond)</pre>
+<div class="block">Set the millis of the second to the specified value.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>millisOfSecond</code> - the millis of second</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="addMillis(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addMillis</h4>
+<pre>void&nbsp;addMillis(int&nbsp;millis)</pre>
+<div class="block">Add a number of milliseconds to the date. The implementation of this
+ method differs from the <a href="../../../org/joda/time/ReadWritableInstant.html#add(long)"><code>ReadWritableInstant.add(long)</code></a> method in that a
+ DateTimeField performs the addition.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>millis</code> - the milliseconds to add</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setDate(int, int, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDate</h4>
+<pre>void&nbsp;setDate(int&nbsp;year,
+           int&nbsp;monthOfYear,
+           int&nbsp;dayOfMonth)</pre>
+<div class="block">Set the date from fields.
+ The time part of this object will be unaffected.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>year</code> - the year</dd><dd><code>monthOfYear</code> - the month of the year</dd><dd><code>dayOfMonth</code> - the day of the month</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setTime(int, int, int, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTime</h4>
+<pre>void&nbsp;setTime(int&nbsp;hour,
+           int&nbsp;minuteOfHour,
+           int&nbsp;secondOfMinute,
+           int&nbsp;millisOfSecond)</pre>
+<div class="block">Set the time from fields.
+ The date part of this object will be unaffected.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>hour</code> - the hour</dd><dd><code>minuteOfHour</code> - the minute of the hour</dd><dd><code>secondOfMinute</code> - the second of the minute</dd><dd><code>millisOfSecond</code> - the millisecond of the second</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any value is invalid</dd></dl>
+</li>
+</ul>
+<a name="setDateTime(int, int, int, int, int, int, int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setDateTime</h4>
+<pre>void&nbsp;setDateTime(int&nbsp;year,
+               int&nbsp;monthOfYear,
+               int&nbsp;dayOfMonth,
+               int&nbsp;hourOfDay,
+               int&nbsp;minuteOfHour,
+               int&nbsp;secondOfMinute,
+               int&nbsp;millisOfSecond)</pre>
+<div class="block">Set the date and time from fields.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>year</code> - the year</dd><dd><code>monthOfYear</code> - the month of the year</dd><dd><code>dayOfMonth</code> - the day of the month</dd><dd><code>hourOfDay</code> - the hour of the day</dd><dd><code>minuteOfHour</code> - the minute of the hour</dd><dd><code>secondOfMinute</code> - the second of the minute</dd><dd><code>millisOfSecond</code> - the millisecond of the second</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any value is invalid</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ReadWritableDateTime.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+<li><a href="../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../org/joda/time/ReadWritableInstant.html" title="interface in org.joda.time"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../../index.html?org/joda/time/ReadWritableDateTime.html" target="_top">Frames</a></li>
+<li><a href="ReadWritableDateTime.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+</body>
+</html>
