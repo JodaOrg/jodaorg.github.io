@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Joda-Time - 
-  Java date and time API - Gregorian calendar system</title>
+  Java date and time API - Upgrade from 2.2 to 2.3</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -118,8 +118,8 @@
                           <a href="cal_ethiopic.html" title="Ethiopic">Ethiopic</a>
             </li>
                   <li class="none">
-            <strong>Gregorian</strong>
-          </li>
+                          <a href="cal_gregorian.html" title="Gregorian">Gregorian</a>
+            </li>
                   <li class="none">
                           <a href="cal_gj.html" title="GregorianJulian">GregorianJulian</a>
             </li>
@@ -194,63 +194,135 @@
     <div id="bodyColumn">
       <div id="contentBox">
         
-
  
 
 <div class="section">
-<h2>Gregorian calendar system<a name="Gregorian_calendar_system"></a></h2>
+<h2>Upgrade<a name="Upgrade"></a></h2>
 
 <p>
-The Gregorian calendar system is calendar system used by most of the modern business world.
-It was first introduced on 1582-10-15 replacing the <a href="cal_julian.html">Julian</a> calendar.
-Gregorian rules define a leap year as once every four years, except every 100, but including every 400.
+These are the release notes and advice for upgrading Joda-Time from version 2.2 to version 2.3.
 </p>
-
-<p>
-The Gregorian chronology in Joda-Time is equivalent* to the ISO chronology, and uses
-Gregorian rules for all time. Thus it is not historically accurate before 1583.
-This also means that the Gregorian chronology does not correspond to the java class
-<tt>GregorianCalendar</tt>. See <a href="cal_gj.html">GregorianJulian</a> for a
-suitable replacement.
-</p>
-
-<p>
-* The Gregorian and ISO chronologies do in fact differ slightly.
-The Gregorian chronology defines a century as it is spoken,
-thus 2005 is in the 21st century.
-The ISO chronology defines a century as the first two digits of the year,
-thus 2005 has a century field of 20.
-</p>
-
-<p>
-References
-</p>
-<ul>
-
-<li>Calendrical Calculations - Millenium Edition - ISBN 0521777526</li>
-
-<li><a class="externalLink" href="http://en.wikipedia.org/wiki/Gregorian_calendar">Wikipedia - Gregorian Calendar</a></li>
-</ul>
-
-</div>
-
-
-<div class="section">
-<h2>Using Gregorian chronology in Joda-Time<a name="Using_Gregorian_chronology_in_Joda-Time"></a></h2>
-
-<p>
-Within Joda-Time the Gregorian calendar system can be used by obtaining an
-instance of <a href="apidocs/org/joda/time/chrono/GregorianChronology.html">GregorianChronology</a>.
-This is normally created using the factory method
-<a href="apidocs/org/joda/time/chrono/GregorianChronology.html#getInstance">GregorianChronology.getInstance()</a>.
-This is then passed into the constructors of the main date and time classes.
-</p>
-
 <div class="source">
 <pre>
-// setup date object for midday on Christmas 2004
-Chronology chrono = GregorianChronology.getInstance();
-DateTime dt = new DateTime(2004, 12, 25, 12, 0, 0, 0, chrono);
+Joda-Time version 2.3
+---------------------
+
+Joda-Time is a date and time handling library that seeks to replace the JDK
+Date and Calendar classes.
+
+This release contains enhancements, bug fixes and a time zone update.
+The release runs on JDK 5 or later.
+
+Joda-Time is licensed under the business-friendly Apache License Version 2.
+This is the same license as all of Apache, plus other open source projects such as Spring.
+The intent is to make the code available to the Java community with the minimum
+of restrictions. If the license causes you problems please contact the mailing list.
+
+**  Please also check out our related projects   **
+** http://www.joda.org/joda-time/related.html **
+
+
+Enhancements since 2.2
+----------------------
+- Interval/MutableInterval .isEqual() [#20]
+  Add method to compare intervals ignoring the chronology
+  https://github.com/JodaOrg/joda-time/issues/20
+
+- Chronology classes now define equals methods [#36]
+  Previously, the Chronology classes relied on caching in factory methods
+  to guarantee instances were singletons
+  Now, there are dedicated, normal, equals methods
+  This will aid weird cases where deserialization or similar avoids the caches
+  It will make no difference to most users
+
+- Maximum size for pattern cache [#49]
+  Sets a maximum size for the cache to avoid memory issues
+
+- Add LocalDateTime.toDate(TimeZone) [#48]
+  Provides an alternate way to create a java.util.Date that avoids some synchronization
+
+- Home page moved
+  http://www.joda.org/joda-time
+
+
+Compatibility with 2.2
+----------------------
+Build system - Yes
+
+Binary compatible - Yes
+
+Source compatible - Yes
+
+Serialization compatible - Yes
+
+Data compatible - Yes, except
+ - DateTimeZone data updated to version 2013d
+
+Semantic compatible - Yes, except
+ - DateTimeZone is now limited to offsets from -23:59:59.999 to +23:59:59.999
+
+ - BasicChronology now defines an equals method
+   This which would affect you if you subclassed it (unlikely)
+
+ - GJChronology now has a minimum cutover instant of 0001-01-01 (Gregorian)
+   Its unlikely you have it set earlier than this
+   If you did your code was broken anyway
+
+
+Deprecations since 2.2
+----------------------
+- DateMidnight [#41]
+  This class is flawed in concept
+  The time of midnight occasionally does not occur in some time-zones
+  This is a result of a daylight savings time from 00:00 to 01:00
+  DateMidnight is essentially a DateTime with a time locked to midnight
+  Such a concept is more generally a poor one to use, given LocalDate
+  Replace DateMidnight with LocalDate
+  Or replace it with DateTime, perhaps using the withTimeAtStartOfDay() method
+
+
+Bug fixes since 2.2
+-------------------
+- ZoneInfoCompiler and DateTimeZoneBuilder multi-threading [#18]
+  A thread local variable was previously only initialised in one thread causing NPE
+  https://github.com/JodaOrg/joda-time/issues/18
+
+- Short time-zone name parsing failed to match the longest name
+  This affected two short names where one is a short form of the second such as &quot;UT&quot; and &quot;UTC&quot;
+
+- Days.daysBetween fails for MonthDay [#22]
+  Incorrect calculation around leap years
+
+- DateTimeZone failed to validate offsets [#43]
+  Previously, there was little validation, resulting in the ability to create large offsets
+  Those offsets could fail in other parts of the library
+  Now, it is limited to -23:59:59.999 to +23:59:59.999
+
+- DateTimeZone.forOffsetHoursMinutes failed to allow offsets from -00:01 to -00:59 [#42]
+  The forOffsetHoursMinutes() method could not create an offset  from -00:01 to -00:59
+  This was due to an inappropriate design
+  A backwards compatible change to the input handling has been made
+  forOffsetHoursMinutes(0, -15) now creates -00:15
+
+- DateTimeFormatter.parseInto [#21]
+  Fix parseInto() where it obtains the default year for parsing from the ReadWritableInstant
+  Previously, the wrong year could be obtained at the start or end of the year in non UTC zones
+  Now obtains the year from the ReadWritableInstant using the chronology of the ReadWritableInstant
+
+- Better thread-safety in ISODateTimeFormat [#45]
+
+- Fix GJChronology.plus/minus across cutover and year zero [#28]
+  When subtracting a number of years from a date in the GJChronology there are two considerations
+  The cutover date might be crossed, and year zero might be crossed (there is no year zero in GJ)
+  Previously, each were handled separately, but not together. Now it is fixed
+  As part of this change, the minimum cutover instant was set to 0001-01-01 (Gregorian)
+
+
+Scala
+--------
+Joda-Time uses annotations from Joda-Convert.
+In the Java programming language, this dependency is optional, however in Scala it is not.
+Scala users must manually add the Joda-Convert v1.2 dependency.
 </pre></div>
 
 </div>
