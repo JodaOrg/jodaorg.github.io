@@ -18,6 +18,6 @@ These are the projects:
 
 #### Authors
 
-The projects have various authors and contributors.
+The projects have various authors and contributors.  
 They are curated and managed by [Stephen Colebourne](http://www.linkedin.com/in/stephencolebourne),
 aka [jodastephen](https://github.com/jodastephen).
