@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Interface org.joda.convert.StringConverter (Joda-Convert 1.4 API)</title>
+<title>Uses of Interface org.joda.convert.StringConverter (Joda-Convert 1.5 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Interface org.joda.convert.StringConverter (Joda-Convert 1.4 API)";
+        parent.document.title="Uses of Interface org.joda.convert.StringConverter (Joda-Convert 1.5 API)";
     }
 //-->
 </script>
@@ -23,7 +23,8 @@
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../org/joda/convert/package-summary.html">Package</a></li>
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../package-summary.html">Package</a></li>
 <li><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
 <li><a href="../package-tree.html">Tree</a></li>
@@ -66,6 +67,25 @@
 <div class="classUseContainer">
 <ul class="blockList">
 <li class="blockList">
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
+<caption><span>Packages that use <a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Package</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.joda.convert">org.joda.convert</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.joda.convert.factory">org.joda.convert.factory</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
 <ul class="blockList">
 <li class="blockList"><a name="org.joda.convert">
 <!--   -->
@@ -79,9 +99,21 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">StringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/StringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;T&gt;</code></td>
 <td class="colLast"><span class="strong">StringConvert.</span><code><strong><a href="../../../../org/joda/convert/StringConvert.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;cls)</code>
 <div class="block">Finds a suitable converter for the type.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><span class="strong">StringConvert.</span><code><strong><a href="../../../../org/joda/convert/StringConvert.html#findConverterNoGenerics(java.lang.Class)">findConverterNoGenerics</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a suitable converter for the type with open generics.</div>
 </td>
 </tr>
 </tbody>
@@ -103,6 +135,56 @@
 </tbody>
 </table>
 </li>
+<li class="blockList"><a name="org.joda.convert.factory">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a> in <a href="../../../../org/joda/convert/factory/package-summary.html">org.joda.convert.factory</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/joda/convert/factory/package-summary.html">org.joda.convert.factory</a> that return <a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">NumericObjectArrayStringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/factory/NumericObjectArrayStringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">NumericArrayStringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/factory/NumericArrayStringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">CharObjectArrayStringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/factory/CharObjectArrayStringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">ByteObjectArrayStringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/factory/ByteObjectArrayStringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">BooleanObjectArrayStringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/factory/BooleanObjectArrayStringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">BooleanArrayStringConverterFactory.</span><code><strong><a href="../../../../org/joda/convert/factory/BooleanArrayStringConverterFactory.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a converter by type.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
 </ul>
 </li>
 </ul>
@@ -114,7 +196,8 @@
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../../org/joda/convert/package-summary.html">Package</a></li>
+<li><a href="../../../../overview-summary.html">Overview</a></li>
+<li><a href="../package-summary.html">Package</a></li>
 <li><a href="../../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">Class</a></li>
 <li class="navBarCell1Rev">Use</li>
 <li><a href="../package-tree.html">Tree</a></li>

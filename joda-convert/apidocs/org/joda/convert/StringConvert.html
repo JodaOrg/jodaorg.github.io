@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>StringConvert (Joda-Convert 1.4 API)</title>
+<title>StringConvert (Joda-Convert 1.5 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="StringConvert (Joda-Convert 1.4 API)";
+        parent.document.title="StringConvert (Joda-Convert 1.5 API)";
     }
 //-->
 </script>
@@ -23,7 +23,8 @@
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../org/joda/convert/package-summary.html">Package</a></li>
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/StringConvert.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
@@ -146,7 +147,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/convert/StringConvert.html#StringConvert(boolean)">StringConvert</a></strong>(boolean&nbsp;includeJdkConverters)</code>
+<td class="colOne"><code><strong><a href="../../../org/joda/convert/StringConvert.html#StringConvert(boolean, org.joda.convert.StringConverterFactory...)">StringConvert</a></strong>(boolean&nbsp;includeJdkConverters,
+             <a href="../../../org/joda/convert/StringConverterFactory.html" title="interface in org.joda.convert">StringConverterFactory</a>...&nbsp;factories)</code>
 <div class="block">Creates a new conversion manager.</div>
 </td>
 </tr>
@@ -173,37 +175,61 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#convertToString(java.lang.Class, T)">convertToString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;cls,
-               T&nbsp;object)</code>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#convertToString(java.lang.Class, java.lang.Object)">convertToString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls,
+               <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
 <div class="block">Converts the specified object to a <code>String</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#convertToString(T)">convertToString</a></strong>(T&nbsp;object)</code>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#convertToString(java.lang.Object)">convertToString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
 <div class="block">Converts the specified object to a <code>String</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../org/joda/convert/StringConvert.html" title="class in org.joda.convert">StringConvert</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#create()">create</a></strong>()</code>
+<div class="block">Creates a new conversion manager including the extended standard set of converters.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#findConverter(java.lang.Class)">findConverter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;cls)</code>
 <div class="block">Finds a suitable converter for the type.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#findConverterNoGenerics(java.lang.Class)">findConverterNoGenerics</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Finds a suitable converter for the type with open generics.</div>
+</td>
+</tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#isConvertible(java.lang.Class)">isConvertible</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</code>
+<div class="block">Checks if a suitable converter exists for the type.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#register(java.lang.Class, org.joda.convert.StringConverter)">register</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;cls,
         <a href="../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;T&gt;&nbsp;converter)</code>
 <div class="block">Registers a converter for a specific type.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#register(java.lang.Class, org.joda.convert.ToStringConverter, org.joda.convert.FromStringConverter)">register</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;cls,
         <a href="../../../org/joda/convert/ToStringConverter.html" title="interface in org.joda.convert">ToStringConverter</a>&lt;T&gt;&nbsp;toString,
         <a href="../../../org/joda/convert/FromStringConverter.html" title="interface in org.joda.convert">FromStringConverter</a>&lt;T&gt;&nbsp;fromString)</code>
 <div class="block">Registers a converter for a specific type using two separate converters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/convert/StringConvert.html#registerFactory(org.joda.convert.StringConverterFactory)">registerFactory</a></strong>(<a href="../../../org/joda/convert/StringConverterFactory.html" title="interface in org.joda.convert">StringConverterFactory</a>&nbsp;factory)</code>
+<div class="block">Registers a converter factory.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -285,20 +311,23 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  actual conversions.</div>
 </li>
 </ul>
-<a name="StringConvert(boolean)">
+<a name="StringConvert(boolean, org.joda.convert.StringConverterFactory...)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>StringConvert</h4>
-<pre>public&nbsp;StringConvert(boolean&nbsp;includeJdkConverters)</pre>
+<pre>public&nbsp;StringConvert(boolean&nbsp;includeJdkConverters,
+             <a href="../../../org/joda/convert/StringConverterFactory.html" title="interface in org.joda.convert">StringConverterFactory</a>...&nbsp;factories)</pre>
 <div class="block">Creates a new conversion manager.
  <p>
  The convert instance is mutable in a thread-safe manner.
  Converters may be altered at any time, including the JDK converters.
  It is strongly recommended to only alter the converters before performing
- actual conversions.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>includeJdkConverters</code> - true to include the JDK converters</dd></dl>
+ actual conversions.
+ <p>
+ If specified, the factories will be queried in the order specified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>includeJdkConverters</code> - true to include the JDK converters</dd><dd><code>factories</code> - optional array of factories to use, not null</dd></dl>
 </li>
 </ul>
 </li>
@@ -309,39 +338,63 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="convertToString(java.lang.Object)">
+<a name="create()">
 <!--   -->
-</a><a name="convertToString(T)">
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre>public static&nbsp;<a href="../../../org/joda/convert/StringConvert.html" title="class in org.joda.convert">StringConvert</a>&nbsp;create()</pre>
+<div class="block">Creates a new conversion manager including the extended standard set of converters.
+ <p>
+ The returned converter is a new instance that includes additional converters:
+ <ul>
+ <li>JDK converters
+ <li><a href="../../../org/joda/convert/factory/NumericArrayStringConverterFactory.html" title="class in org.joda.convert.factory"><code>NumericArrayStringConverterFactory</code></a>
+ <li><a href="../../../org/joda/convert/factory/NumericObjectArrayStringConverterFactory.html" title="class in org.joda.convert.factory"><code>NumericObjectArrayStringConverterFactory</code></a>
+ <li><a href="../../../org/joda/convert/factory/CharObjectArrayStringConverterFactory.html" title="class in org.joda.convert.factory"><code>CharObjectArrayStringConverterFactory</code></a>
+ <li><a href="../../../org/joda/convert/factory/ByteObjectArrayStringConverterFactory.html" title="class in org.joda.convert.factory"><code>ByteObjectArrayStringConverterFactory</code></a>
+ <li><a href="../../../org/joda/convert/factory/BooleanArrayStringConverterFactory.html" title="class in org.joda.convert.factory"><code>BooleanArrayStringConverterFactory</code></a>
+ <li><a href="../../../org/joda/convert/factory/BooleanObjectArrayStringConverterFactory.html" title="class in org.joda.convert.factory"><code>BooleanObjectArrayStringConverterFactory</code></a>
+ </ul>
+ <p>
+ The convert instance is mutable in a thread-safe manner.
+ Converters may be altered at any time, including the JDK converters.
+ It is strongly recommended to only alter the converters before performing
+ actual conversions.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the new converter, not null</dd><dt><span class="strong">Since:</span></dt>
+  <dd>1.5</dd></dl>
+</li>
+</ul>
+<a name="convertToString(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToString</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertToString(T&nbsp;object)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertToString(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
 <div class="block">Converts the specified object to a <code>String</code>.
  <p>
  This uses <a href="../../../org/joda/convert/StringConvert.html#findConverter(java.lang.Class)"><code>findConverter(java.lang.Class&lt;T&gt;)</code></a> to provide the converter.</div>
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type to convert from</dd><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert, null returns null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - the object to convert, null returns null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the converted string, may be null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - (or subclass) if unable to convert</dd></dl>
 </li>
 </ul>
-<a name="convertToString(java.lang.Class,java.lang.Object)">
-<!--   -->
-</a><a name="convertToString(java.lang.Class, T)">
+<a name="convertToString(java.lang.Class, java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToString</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertToString(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;cls,
-                         T&nbsp;object)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertToString(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls,
+                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
 <div class="block">Converts the specified object to a <code>String</code>.
  <p>
  This uses <a href="../../../org/joda/convert/StringConvert.html#findConverter(java.lang.Class)"><code>findConverter(java.lang.Class&lt;T&gt;)</code></a> to provide the converter.
  The class can be provided to select a more specific converter.</div>
-<dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type to convert from</dd><dt><span class="strong">Parameters:</span></dt><dd><code>cls</code> - the class to convert from, not null</dd><dd><code>object</code> - the object to convert, null returns null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>cls</code> - the class to convert from, not null</dd><dd><code>object</code> - the object to convert, null returns null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the converted string, may be null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - (or subclass) if unable to convert</dd></dl>
@@ -364,6 +417,24 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - (or subclass) if unable to convert</dd></dl>
 </li>
 </ul>
+<a name="isConvertible(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isConvertible</h4>
+<pre>public&nbsp;boolean&nbsp;isConvertible(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</pre>
+<div class="block">Checks if a suitable converter exists for the type.
+ <p>
+ This performs the same checks as the <code>findConverter</code> methods.
+ Calling this before <code>findConverter</code> will cache the converter.
+ <p>
+ Note that all exceptions, including developer errors are caught and hidden.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>cls</code> - the class to find a converter for, null returns false</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if convertible</dd><dt><span class="strong">Since:</span></dt>
+  <dd>1.5</dd></dl>
+</li>
+</ul>
 <a name="findConverter(java.lang.Class)">
 <!--   -->
 </a>
@@ -374,7 +445,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Finds a suitable converter for the type.
  <p>
  This returns an instance of <code>StringConverter</code> for the specified class.
- This could be useful in other frameworks.
+ This is designed for user code where the <code>Class</code> object generics is known.
  <p>
  The search algorithm first searches the registered converters in the
  class hierarchy and immediate parent interfaces.
@@ -384,6 +455,49 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>the converter, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - (or subclass) if no converter found</dd></dl>
+</li>
+</ul>
+<a name="findConverterNoGenerics(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findConverterNoGenerics</h4>
+<pre>public&nbsp;<a href="../../../org/joda/convert/StringConverter.html" title="interface in org.joda.convert">StringConverter</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;findConverterNoGenerics(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls)</pre>
+<div class="block">Finds a suitable converter for the type with open generics.
+ <p>
+ This returns an instance of <code>StringConverter</code> for the specified class.
+ This is designed for framework usage where the <code>Class</code> object generics are unknown'?'.
+ The returned type is declared with <code>Object</code> instead of '?' to
+ allow the <a href="../../../org/joda/convert/ToStringConverter.html" title="interface in org.joda.convert"><code>ToStringConverter</code></a> to be invoked.
+ <p>
+ The search algorithm first searches the registered converters in the
+ class hierarchy and immediate parent interfaces.
+ It then searches for <code>ToString</code> and <code>FromString</code> annotations on the
+ specified class, class hierarchy or immediate parent interfaces.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>cls</code> - the class to find a converter for, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the converter, using <code>Object</code> to avoid generics, not null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - (or subclass) if no converter found</dd><dt><span class="strong">Since:</span></dt>
+  <dd>1.5</dd></dl>
+</li>
+</ul>
+<a name="registerFactory(org.joda.convert.StringConverterFactory)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>registerFactory</h4>
+<pre>public&nbsp;void&nbsp;registerFactory(<a href="../../../org/joda/convert/StringConverterFactory.html" title="interface in org.joda.convert">StringConverterFactory</a>&nbsp;factory)</pre>
+<div class="block">Registers a converter factory.
+ <p>
+ This will be registered ahead of all existing factories.
+ <p>
+ No new factories may be registered for the global singleton.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>factory</code> - the converter factory, not null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if trying to alter the global singleton</dd><dt><span class="strong">Since:</span></dt>
+  <dd>1.5</dd></dl>
 </li>
 </ul>
 <a name="register(java.lang.Class, org.joda.convert.StringConverter)">
@@ -508,7 +622,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../../../org/joda/convert/package-summary.html">Package</a></li>
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="class-use/StringConvert.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
