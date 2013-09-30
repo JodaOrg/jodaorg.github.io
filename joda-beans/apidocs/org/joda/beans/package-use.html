@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Package org.joda.beans (Joda-Beans 0.7.2-SNAPSHOT API)</title>
+<title>Uses of Package org.joda.beans (Joda-Beans 0.8 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Package org.joda.beans (Joda-Beans 0.7.2-SNAPSHOT API)";
+        parent.document.title="Uses of Package org.joda.beans (Joda-Beans 0.8 API)";
     }
 //-->
 </script>
@@ -129,6 +129,18 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.joda.beans.ser">org.joda.beans.ser</a></td>
+<td class="colLast">
+<div class="block">Serialization of Joda-Beans.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.joda.beans.ser.xml">org.joda.beans.ser.xml</a></td>
+<td class="colLast">
+<div class="block">Serialization of Joda-Beans using XML.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.joda.beans.test">org.joda.beans.test</a></td>
 <td class="colLast">
 <div class="block">Utility to assist with testing and comparing Joda-Beans.</div>
@@ -162,6 +174,16 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../org/joda/beans/class-use/DynamicBean.html#org.joda.beans">DynamicBean</a>
+<div class="block">A dynamic bean that allows properties to be added and removed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../org/joda/beans/class-use/DynamicMetaBean.html#org.joda.beans">DynamicMetaBean</a>
+<div class="block">A dynamic meta-bean which works with <code>DynamicBean</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../org/joda/beans/class-use/MetaBean.html#org.joda.beans">MetaBean</a>
 <div class="block">A meta-bean, defining those aspects of a bean which are not specific
  to a particular instance, such as the type and set of meta-properties.</div>
@@ -184,8 +206,8 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyReadWrite.html#org.joda.beans">PropertyReadWrite</a>
-<div class="block">An enumeration of read-write property types.</div>
+<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyStyle.html#org.joda.beans">PropertyStyle</a>
+<div class="block">An enumeration of property styles.</div>
 </td>
 </tr>
 </tbody>
@@ -282,8 +304,8 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyReadWrite.html#org.joda.beans.impl.direct">PropertyReadWrite</a>
-<div class="block">An enumeration of read-write property types.</div>
+<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyStyle.html#org.joda.beans.impl.direct">PropertyStyle</a>
+<div class="block">An enumeration of property styles.</div>
 </td>
 </tr>
 </tbody>
@@ -309,9 +331,8 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/joda/beans/class-use/MetaBean.html#org.joda.beans.impl.flexi">MetaBean</a>
-<div class="block">A meta-bean, defining those aspects of a bean which are not specific
- to a particular instance, such as the type and set of meta-properties.</div>
+<td class="colOne"><a href="../../../org/joda/beans/class-use/DynamicMetaBean.html#org.joda.beans.impl.flexi">DynamicMetaBean</a>
+<div class="block">A dynamic meta-bean which works with <code>DynamicBean</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -342,19 +363,13 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../org/joda/beans/class-use/MetaBean.html#org.joda.beans.impl.map">MetaBean</a>
-<div class="block">A meta-bean, defining those aspects of a bean which are not specific
- to a particular instance, such as the type and set of meta-properties.</div>
+<td class="colOne"><a href="../../../org/joda/beans/class-use/DynamicMetaBean.html#org.joda.beans.impl.map">DynamicMetaBean</a>
+<div class="block">A dynamic meta-bean which works with <code>DynamicBean</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../org/joda/beans/class-use/Property.html#org.joda.beans.impl.map">Property</a>
 <div class="block">A property that is linked to a specific bean.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyMap.html#org.joda.beans.impl.map">PropertyMap</a>
-<div class="block">A map of properties that is linked to a specific bean.</div>
 </td>
 </tr>
 </tbody>
@@ -407,8 +422,8 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyReadWrite.html#org.joda.beans.impl.reflection">PropertyReadWrite</a>
-<div class="block">An enumeration of read-write property types.</div>
+<td class="colOne"><a href="../../../org/joda/beans/class-use/PropertyStyle.html#org.joda.beans.impl.reflection">PropertyStyle</a>
+<div class="block">An enumeration of property styles.</div>
 </td>
 </tr>
 </tbody>
@@ -465,6 +480,41 @@
 <tr class="rowColor">
 <td class="colOne"><a href="../../../org/joda/beans/class-use/BeanQuery.html#org.joda.beans.query">BeanQuery</a>
 <div class="block">A query based on beans.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.joda.beans.ser">
+<!--   -->
+</a>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../org/joda/beans/package-summary.html">org.joda.beans</a> used by <a href="../../../org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colOne"><a href="../../../org/joda/beans/class-use/MetaProperty.html#org.joda.beans.ser">MetaProperty</a>
+<div class="block">A meta-property, defining those aspects of a property which are not specific
+ to a particular bean, such as the property type and name.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.joda.beans.ser.xml">
+<!--   -->
+</a>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../org/joda/beans/package-summary.html">org.joda.beans</a> used by <a href="../../../org/joda/beans/ser/xml/package-summary.html">org.joda.beans.ser.xml</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colOne"><a href="../../../org/joda/beans/class-use/Bean.html#org.joda.beans.ser.xml">Bean</a>
+<div class="block">A bean consisting of a set of properties.</div>
 </td>
 </tr>
 </tbody>

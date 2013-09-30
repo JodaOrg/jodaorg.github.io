@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Class Hierarchy (Joda-Beans 0.7.2-SNAPSHOT API)</title>
+<title>Class Hierarchy (Joda-Beans 0.8 API)</title>
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Class Hierarchy (Joda-Beans 0.7.2-SNAPSHOT API)";
+        parent.document.title="Class Hierarchy (Joda-Beans 0.8 API)";
     }
 //-->
 </script>
@@ -75,6 +75,8 @@
 <li><a href="org/joda/beans/integrate/freemarker/package-tree.html">org.joda.beans.integrate.freemarker</a>, </li>
 <li><a href="org/joda/beans/integrate/mongo/package-tree.html">org.joda.beans.integrate.mongo</a>, </li>
 <li><a href="org/joda/beans/query/package-tree.html">org.joda.beans.query</a>, </li>
+<li><a href="org/joda/beans/ser/package-tree.html">org.joda.beans.ser</a>, </li>
+<li><a href="org/joda/beans/ser/xml/package-tree.html">org.joda.beans.ser.xml</a>, </li>
 <li><a href="org/joda/beans/test/package-tree.html">org.joda.beans.test</a></li>
 </ul>
 </div>
@@ -91,7 +93,6 @@
 <li type="circle">org.joda.beans.impl.map.<a href="org/joda/beans/impl/map/MapBean.html" title="class in org.joda.beans.impl.map"><span class="strong">MapBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/DynamicBean.html" title="interface in org.joda.beans">DynamicBean</a>)</li>
 </ul>
 </li>
-<li type="circle">org.joda.beans.impl.map.<a href="org/joda/beans/impl/map/MapBeanPropertyMap.html" title="class in org.joda.beans.impl.map"><span class="strong">MapBeanPropertyMap</span></a> (implements org.joda.beans.<a href="org/joda/beans/PropertyMap.html" title="interface in org.joda.beans">PropertyMap</a>)</li>
 </ul>
 </li>
 <li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/BasicBean.html" title="class in org.joda.beans.impl"><span class="strong">BasicBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>)
@@ -104,6 +105,7 @@
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectBeanBuilder.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectBeanBuilder</span></a>&lt;T&gt;</li>
 </ul>
 </li>
+<li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">BasicImmutableBeanBuilder</span></a>&lt;T&gt; (implements org.joda.beans.<a href="org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;T&gt;)</li>
 <li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/BasicMetaBean.html" title="class in org.joda.beans.impl"><span class="strong">BasicMetaBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>)
 <ul>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectMetaBean.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectMetaBean</span></a></li>
@@ -118,6 +120,7 @@
 <li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/BasicProperty.html" title="class in org.joda.beans.impl"><span class="strong">BasicProperty</span></a>&lt;P&gt; (implements org.joda.beans.<a href="org/joda/beans/Property.html" title="interface in org.joda.beans">Property</a>&lt;P&gt;)</li>
 <li type="circle">org.joda.beans.test.<a href="org/joda/beans/test/BeanAssert.html" title="class in org.joda.beans.test"><span class="strong">BeanAssert</span></a></li>
 <li type="circle">org.joda.beans.gen.<a href="org/joda/beans/gen/BeanCodeGen.html" title="class in org.joda.beans.gen"><span class="strong">BeanCodeGen</span></a></li>
+<li type="circle">org.joda.beans.gen.<a href="org/joda/beans/gen/BeanGenConfig.html" title="class in org.joda.beans.gen"><span class="strong">BeanGenConfig</span></a></li>
 <li type="circle">org.joda.beans.integrate.mongo.<a href="org/joda/beans/integrate/mongo/BeanMongoDBObject.html" title="class in org.joda.beans.integrate.mongo"><span class="strong">BeanMongoDBObject</span></a> (implements com.mongodb.DBObject)</li>
 <li type="circle">freemarker.ext.beans.BeansWrapper (implements freemarker.template.ObjectWrapper)
 <ul>
@@ -131,8 +134,17 @@
 <li type="circle">org.joda.beans.query.<a href="org/joda/beans/query/ChainedBeanQuery.html" title="class in org.joda.beans.query"><span class="strong">ChainedBeanQuery</span></a>&lt;P&gt; (implements org.joda.beans.<a href="org/joda/beans/BeanQuery.html" title="interface in org.joda.beans">BeanQuery</a>&lt;P&gt;)</li>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectBean.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>)</li>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectMetaPropertyMap.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectMetaPropertyMap</span></a> (implements java.util.<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;)</li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser"><span class="strong">JodaBeanSer</span></a></li>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/JodaBeanUtils.html" title="class in org.joda.beans"><span class="strong">JodaBeanUtils</span></a></li>
+<li type="circle">org.joda.beans.ser.xml.<a href="org/joda/beans/ser/xml/JodaBeanXml.html" title="class in org.joda.beans.ser.xml"><span class="strong">JodaBeanXml</span></a></li>
+<li type="circle">org.joda.beans.ser.xml.<a href="org/joda/beans/ser/xml/JodaBeanXmlReader.html" title="class in org.joda.beans.ser.xml"><span class="strong">JodaBeanXmlReader</span></a></li>
+<li type="circle">org.joda.beans.ser.xml.<a href="org/joda/beans/ser/xml/JodaBeanXmlWriter.html" title="class in org.joda.beans.ser.xml"><span class="strong">JodaBeanXmlWriter</span></a></li>
 <li type="circle">org.joda.beans.impl.reflection.<a href="org/joda/beans/impl/reflection/ReflectiveMetaBean.html" title="class in org.joda.beans.impl.reflection"><span class="strong">ReflectiveMetaBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>)</li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser"><span class="strong">SerIteratorFactory</span></a>
+<ul>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/GuavaSerIteratorFactory.html" title="class in org.joda.beans.ser"><span class="strong">GuavaSerIteratorFactory</span></a></li>
+</ul>
+</li>
 <li type="circle">freemarker.template.WrappingTemplateModel
 <ul>
 <li type="circle">org.joda.beans.integrate.freemarker.<a href="org/joda/beans/integrate/freemarker/FreemarkerTemplateModel.html" title="class in org.joda.beans.integrate.freemarker"><span class="strong">FreemarkerTemplateModel</span></a> (implements freemarker.template.AdapterTemplateModel, freemarker.template.TemplateHashModelEx)</li>
@@ -146,6 +158,7 @@
 <li type="circle">org.joda.beans.<a href="org/joda/beans/Bean.html" title="interface in org.joda.beans"><span class="strong">Bean</span></a>
 <ul>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/DynamicBean.html" title="interface in org.joda.beans"><span class="strong">DynamicBean</span></a></li>
+<li type="circle">org.joda.beans.<a href="org/joda/beans/ImmutableBean.html" title="interface in org.joda.beans"><span class="strong">ImmutableBean</span></a></li>
 </ul>
 </li>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans"><span class="strong">BeanBuilder</span></a>&lt;T&gt;</li>
@@ -159,12 +172,19 @@
 <li type="circle">org.joda.beans.<a href="org/joda/beans/PropertyMap.html" title="interface in org.joda.beans"><span class="strong">PropertyMap</span></a></li>
 </ul>
 </li>
-<li type="circle">org.joda.beans.<a href="org/joda/beans/MetaBean.html" title="interface in org.joda.beans"><span class="strong">MetaBean</span></a></li>
+<li type="circle">org.joda.beans.<a href="org/joda/beans/MetaBean.html" title="interface in org.joda.beans"><span class="strong">MetaBean</span></a>
+<ul>
+<li type="circle">org.joda.beans.<a href="org/joda/beans/DynamicMetaBean.html" title="interface in org.joda.beans"><span class="strong">DynamicMetaBean</span></a></li>
+</ul>
+</li>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/Property.html" title="interface in org.joda.beans"><span class="strong">Property</span></a>&lt;P&gt;</li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser"><span class="strong">SerIterable</span></a></li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser"><span class="strong">SerIterator</span></a></li>
 </ul>
 <h2 title="Annotation Type Hierarchy">Annotation Type Hierarchy</h2>
 <ul>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/PropertyDefinition.html" title="annotation in org.joda.beans"><span class="strong">PropertyDefinition</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
+<li type="circle">org.joda.beans.<a href="org/joda/beans/ImmutableConstructor.html" title="annotation in org.joda.beans"><span class="strong">ImmutableConstructor</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/DerivedProperty.html" title="annotation in org.joda.beans"><span class="strong">DerivedProperty</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/BeanDefinition.html" title="annotation in org.joda.beans"><span class="strong">BeanDefinition</span></a> (implements java.lang.annotation.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/Annotation.html?is-external=true" title="class or interface in java.lang.annotation">Annotation</a>)</li>
 </ul>
@@ -174,7 +194,7 @@
 <ul>
 <li type="circle">java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang"><span class="strong">Enum</span></a>&lt;E&gt; (implements java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;T&gt;, java.io.<a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>)
 <ul>
-<li type="circle">org.joda.beans.<a href="org/joda/beans/PropertyReadWrite.html" title="enum in org.joda.beans"><span class="strong">PropertyReadWrite</span></a></li>
+<li type="circle">org.joda.beans.<a href="org/joda/beans/PropertyStyle.html" title="enum in org.joda.beans"><span class="strong">PropertyStyle</span></a></li>
 </ul>
 </li>
 </ul>

@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>BasicMetaBean (Joda-Beans 0.7.2-SNAPSHOT API)</title>
+<title>BasicMetaBean (Joda-Beans 0.8 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="BasicMetaBean (Joda-Beans 0.7.2-SNAPSHOT API)";
+        parent.document.title="BasicMetaBean (Joda-Beans 0.8 API)";
     }
 //-->
 </script>
@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../org/joda/beans/impl/BasicMetaProperty.html" title="class in org.joda.beans.impl"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -300,11 +300,14 @@ implements <a href="../../../../org/joda/beans/MetaBean.html" title="interface i
 <h4>metaProperty</h4>
 <pre>public&nbsp;&lt;R&gt;&nbsp;<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;R&gt;&nbsp;metaProperty(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/MetaBean.html#metaProperty(java.lang.String)">MetaBean</a></code></strong></div>
-<div class="block">Gets a meta-property by name.</div>
+<div class="block">Gets a meta-property by name.
+ <p>
+ The base interface throws an exception if the name is not recognised.
+ By contrast, the <code>DynamicMetaBean</code> subinterface creates the property on demand.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/joda/beans/MetaBean.html#metaProperty(java.lang.String)">metaProperty</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a></code></dd>
-<dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - the property type, optional, enabling auto-casting</dd><dt><span class="strong">Parameters:</span></dt><dd><code>propertyName</code> - the property name to retrieve, null throws NoSuchElementException</dd>
+<dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - the property type, optional, enabling auto-casting</dd><dt><span class="strong">Parameters:</span></dt><dd><code>propertyName</code> - the property name to retrieve, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the meta property, not null</dd></dl>
 </li>
 </ul>
@@ -367,7 +370,7 @@ implements <a href="../../../../org/joda/beans/MetaBean.html" title="interface i
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../org/joda/beans/impl/BasicMetaProperty.html" title="class in org.joda.beans.impl"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

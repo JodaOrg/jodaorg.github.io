@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Interface org.joda.beans.Bean (Joda-Beans 0.7.2-SNAPSHOT API)</title>
+<title>Uses of Interface org.joda.beans.Bean (Joda-Beans 0.8 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Interface org.joda.beans.Bean (Joda-Beans 0.7.2-SNAPSHOT API)";
+        parent.document.title="Uses of Interface org.joda.beans.Bean (Joda-Beans 0.8 API)";
     }
 //-->
 </script>
@@ -129,6 +129,12 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.joda.beans.ser.xml">org.joda.beans.ser.xml</a></td>
+<td class="colLast">
+<div class="block">Serialization of Joda-Beans using XML.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.joda.beans.test">org.joda.beans.test</a></td>
 <td class="colLast">
 <div class="block">Utility to assist with testing and comparing Joda-Beans.</div>
@@ -171,6 +177,12 @@
 <div class="block">A dynamic bean that allows properties to be added and removed.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ImmutableBean.html" title="interface in org.joda.beans">ImmutableBean</a></strong></code>
+<div class="block">An immutable bean consisting of a set of properties.</div>
+</td>
+</tr>
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -188,7 +200,24 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;&nbsp;<br>T</code></td>
-<td class="colLast"><span class="strong">JodaBeanUtils.</span><code><strong><a href="../../../../org/joda/beans/JodaBeanUtils.html#clone(T)">clone</a></strong>(T&nbsp;original)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">JodaBeanUtils.</span><code><strong><a href="../../../../org/joda/beans/JodaBeanUtils.html#clone(T)">clone</a></strong>(T&nbsp;original)</code>
+<div class="block">Clones a bean.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/joda/beans/package-summary.html">org.joda.beans</a> that return <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></td>
+<td class="colLast"><span class="strong">Bean.</span><code><strong><a href="../../../../org/joda/beans/Bean.html#clone()">clone</a></strong>()</code>
+<div class="block">Clones this bean, returning an independent copy.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -345,6 +374,12 @@
 <div class="block">Basic implementation of <code>BeanBuilder</code> that wraps a real bean.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl">BasicImmutableBeanBuilder</a>&lt;T extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</strong></code>
+<div class="block">Basic implementation of <code>BeanBuilder</code> that wraps a real bean.</div>
+</td>
+</tr>
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
@@ -436,6 +471,21 @@
 </a>
 <h3>Uses of <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a> in <a href="../../../../org/joda/beans/impl/direct/package-summary.html">org.joda.beans.impl.direct</a></h3>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../org/joda/beans/impl/direct/package-summary.html">org.joda.beans.impl.direct</a> with type parameters of type <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectBeanBuilder</a>&lt;T extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</strong></code>
+<div class="block">A builder implementation designed for use by the code generator.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
 <caption><span>Classes in <a href="../../../../org/joda/beans/impl/direct/package-summary.html">org.joda.beans.impl.direct</a> that implement <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -462,9 +512,32 @@
 <td class="colLast"><span class="strong">DirectMetaProperty.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectMetaProperty.html#get(org.joda.beans.Bean)">get</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><span class="strong">DirectMetaBean.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectMetaBean.html#propertyGet(org.joda.beans.Bean, java.lang.String, boolean)">propertyGet</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
+           <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
+           boolean&nbsp;quiet)</code>
+<div class="block">Gets the value of the property.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">DirectMetaBean.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectMetaBean.html#propertySet(org.joda.beans.Bean, java.lang.String, java.lang.Object, boolean)">propertySet</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
+           <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
+           <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value,
+           boolean&nbsp;quiet)</code>
+<div class="block">Sets the value of the property.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">DirectMetaProperty.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectMetaProperty.html#set(org.joda.beans.Bean, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">DirectMetaBean.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectMetaBean.html#validate(org.joda.beans.Bean)">validate</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean)</code>
+<div class="block">Validates the values of the properties.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -697,6 +770,59 @@
 <td class="colLast"><span class="strong">ChainedBeanQuery.</span><code><strong><a href="../../../../org/joda/beans/query/ChainedBeanQuery.html#of(org.joda.beans.BeanQuery, org.joda.beans.BeanQuery)">of</a></strong>(<a href="../../../../org/joda/beans/BeanQuery.html" title="interface in org.joda.beans">BeanQuery</a>&lt;? extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;&nbsp;prop1,
   <a href="../../../../org/joda/beans/BeanQuery.html" title="interface in org.joda.beans">BeanQuery</a>&lt;P&gt;&nbsp;prop2)</code>
 <div class="block">Obtains a chained query from two other queries.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.joda.beans.ser.xml">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a> in <a href="../../../../org/joda/beans/ser/xml/package-summary.html">org.joda.beans.ser.xml</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/joda/beans/ser/xml/package-summary.html">org.joda.beans.ser.xml</a> that return <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></td>
+<td class="colLast"><span class="strong">JodaBeanXmlReader.</span><code><strong><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlReader.html#read(java.io.InputStream)">read</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;input)</code>
+<div class="block">Reads and parses to a bean.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></td>
+<td class="colLast"><span class="strong">JodaBeanXmlReader.</span><code><strong><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlReader.html#read(java.io.Reader)">read</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;input)</code>
+<div class="block">Reads and parses to a bean.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></td>
+<td class="colLast"><span class="strong">JodaBeanXmlReader.</span><code><strong><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlReader.html#read(java.lang.String)">read</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;input)</code>
+<div class="block">Reads and parses to a bean.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/joda/beans/ser/xml/package-summary.html">org.joda.beans.ser.xml</a> with parameters of type <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="strong">JodaBeanXmlWriter.</span><code><strong><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlWriter.html#write(org.joda.beans.Bean)">write</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean)</code>
+<div class="block">Writes the bean to a string.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a></code></td>
+<td class="colLast"><span class="strong">JodaBeanXmlWriter.</span><code><strong><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlWriter.html#writeToBuilder(org.joda.beans.Bean)">writeToBuilder</a></strong>(<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean)</code>
+<div class="block">Writes the bean to the <code>StringBuilder</code>.</div>
 </td>
 </tr>
 </tbody>

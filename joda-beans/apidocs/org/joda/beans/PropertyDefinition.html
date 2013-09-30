@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>PropertyDefinition (Joda-Beans 0.7.2-SNAPSHOT API)</title>
+<title>PropertyDefinition (Joda-Beans 0.8 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="PropertyDefinition (Joda-Beans 0.7.2-SNAPSHOT API)";
+        parent.document.title="PropertyDefinition (Joda-Beans 0.8 API)";
     }
 //-->
 </script>
@@ -122,6 +122,12 @@ public @interface <span class="strong">PropertyDefinition</span></pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/beans/PropertyDefinition.html#type()">type</a></strong></code>
+<div class="block">The exposed type of the property.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/beans/PropertyDefinition.html#validate()">validate</a></strong></code>
 <div class="block">The validator to use.</div>
 </td>
@@ -161,6 +167,8 @@ public @interface <span class="strong">PropertyDefinition</span></pre>
  <li>'smart' - process intelligently - 'is' for boolean and 'get' for other types
  <li>'is' - generates isXxx()
  <li>'get' - generates getXxx()
+ <li>'clone' - generates getXxx() with a clone of the field (assumed to be of the correct type)
+ <li>'cloneCast' - generates getXxx() with a clone of the field with a cast to the property type
  <li>'manual' - a method named getXxx() must be manually provided at package scope or greater
  </ul></div>
 <dl>
@@ -193,7 +201,38 @@ public @interface <span class="strong">PropertyDefinition</span></pre>
  <li>'setClearAddAll' - generates setXxx() using field.clear() and field.addAll(newData)
  <li>'setClearPutAll' - generates setXxx() using field.clear() and field.putAll(newData)
  <li>'manual' - a method named setXxx() must be manually provided at package scope or greater
- </ul></div>
+ <li>a pattern, see below
+ </ul>
+ <p>
+ A pattern can be used for special behaviour.
+ The pattern is a complete piece of code.
+ For example, 'new Foo($value)' or '$field = $value.clone()'.<br/>
+ '$field' for the field to copy into.<br/>
+ '$value' for the value to copy from.<br/>
+ '&gt;&lt;' for the generics of the type including angle brackets.<br/>
+ '\n' for a new line (all lines must then include semi-colons).<br/></div>
+<dl>
+<dt>Default:</dt>
+<dd>"smart"</dd>
+</dl>
+</li>
+</ul>
+<a name="type()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre>public abstract&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type</pre>
+<div class="block">The exposed type of the property.
+ <p>
+ The style is used to control the exposed type of the property in
+ getters and setters, or similar.
+ <p>
+ This is used when the type of the field is not the same as the type
+ as should be used in public methods such as getters and setters.
+ <p>
+ By default, the declared type will be used as the exposed type.</div>
 <dl>
 <dt>Default:</dt>
 <dd>"smart"</dd>

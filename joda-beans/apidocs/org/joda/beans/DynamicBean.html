@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>DynamicBean (Joda-Beans 0.7.2-SNAPSHOT API)</title>
+<title>DynamicBean (Joda-Beans 0.8 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="DynamicBean (Joda-Beans 0.7.2-SNAPSHOT API)";
+        parent.document.title="DynamicBean (Joda-Beans 0.8 API)";
     }
 //-->
 </script>
@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../org/joda/beans/DerivedProperty.html" title="annotation in org.joda.beans"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../org/joda/beans/JodaBeanUtils.html" title="class in org.joda.beans"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../org/joda/beans/DynamicMetaBean.html" title="interface in org.joda.beans"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?org/joda/beans/DynamicBean.html" target="_top">Frames</a></li>
@@ -121,6 +121,19 @@ extends <a href="../../../org/joda/beans/Bean.html" title="interface in org.joda
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../org/joda/beans/DynamicMetaBean.html" title="interface in org.joda.beans">DynamicMetaBean</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/beans/DynamicBean.html#metaBean()">metaBean</a></strong>()</code>
+<div class="block">Gets the meta-bean representing the parts of the bean that are
+ common across all instances, such as the set of meta-properties.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;R&gt;&nbsp;<a href="../../../org/joda/beans/Property.html" title="interface in org.joda.beans">Property</a>&lt;R&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/beans/DynamicBean.html#property(java.lang.String)">property</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</code>
+<div class="block">Gets a property by name.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/beans/DynamicBean.html#propertyDefine(java.lang.String, java.lang.Class)">propertyDefine</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;propertyType)</code>
@@ -139,7 +152,7 @@ extends <a href="../../../org/joda/beans/Bean.html" title="interface in org.joda
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.joda.beans.<a href="../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></h3>
-<code><a href="../../../org/joda/beans/Bean.html#metaBean()">metaBean</a>, <a href="../../../org/joda/beans/Bean.html#property(java.lang.String)">property</a>, <a href="../../../org/joda/beans/Bean.html#propertyNames()">propertyNames</a></code></li>
+<code><a href="../../../org/joda/beans/Bean.html#clone()">clone</a>, <a href="../../../org/joda/beans/Bean.html#propertyNames()">propertyNames</a></code></li>
 </ul>
 </li>
 </ul>
@@ -155,6 +168,39 @@ extends <a href="../../../org/joda/beans/Bean.html" title="interface in org.joda
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="metaBean()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>metaBean</h4>
+<pre><a href="../../../org/joda/beans/DynamicMetaBean.html" title="interface in org.joda.beans">DynamicMetaBean</a>&nbsp;metaBean()</pre>
+<div class="block">Gets the meta-bean representing the parts of the bean that are
+ common across all instances, such as the set of meta-properties.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../org/joda/beans/Bean.html#metaBean()">metaBean</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>the meta-bean, not null</dd></dl>
+</li>
+</ul>
+<a name="property(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>property</h4>
+<pre>&lt;R&gt;&nbsp;<a href="../../../org/joda/beans/Property.html" title="interface in org.joda.beans">Property</a>&lt;R&gt;&nbsp;property(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</pre>
+<div class="block">Gets a property by name.
+ <p>
+ This will not throw an exception if the property name does not exist.
+ Whether a property is immediately created or not is implementation dependent.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../org/joda/beans/Bean.html#property(java.lang.String)">property</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></dd>
+<dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - the property type, optional, enabling auto-casting</dd><dt><span class="strong">Parameters:</span></dt><dd><code>propertyName</code> - the property name to retrieve, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the property, not null</dd></dl>
+</li>
+</ul>
 <a name="propertyDefine(java.lang.String, java.lang.Class)">
 <!--   -->
 </a>
@@ -208,7 +254,7 @@ extends <a href="../../../org/joda/beans/Bean.html" title="interface in org.joda
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../org/joda/beans/DerivedProperty.html" title="annotation in org.joda.beans"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../org/joda/beans/JodaBeanUtils.html" title="class in org.joda.beans"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../org/joda/beans/DynamicMetaBean.html" title="interface in org.joda.beans"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?org/joda/beans/DynamicBean.html" target="_top">Frames</a></li>
