@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>JodaBeanXmlWriter (Joda-Beans 0.8 API)</title>
+<title>JodaBeanXmlWriter (Joda-Beans 0.8.1 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="JodaBeanXmlWriter (Joda-Beans 0.8 API)";
+        parent.document.title="JodaBeanXmlWriter (Joda-Beans 0.8.1 API)";
     }
 //-->
 </script>
@@ -167,8 +167,22 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/joda/beans/ser/xml/JodaBeanXmlWriter.html#write(org.joda.beans.Bean, boolean)">write</a></strong>(<a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
+     boolean&nbsp;rootType)</code>
+<div class="block">Writes the bean to a string.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/joda/beans/ser/xml/JodaBeanXmlWriter.html#writeToBuilder(org.joda.beans.Bean)">writeToBuilder</a></strong>(<a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean)</code>
+<div class="block">Writes the bean to the <code>StringBuilder</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/joda/beans/ser/xml/JodaBeanXmlWriter.html#writeToBuilder(org.joda.beans.Bean, boolean)">writeToBuilder</a></strong>(<a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
+              boolean&nbsp;rootType)</code>
 <div class="block">Writes the bean to the <code>StringBuilder</code>.</div>
 </td>
 </tr>
@@ -237,15 +251,41 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>the XML, not null</dd></dl>
 </li>
 </ul>
+<a name="write(org.joda.beans.Bean, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;write(<a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
+           boolean&nbsp;rootType)</pre>
+<div class="block">Writes the bean to a string.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>bean</code> - the bean to output, not null</dd><dd><code>rootType</code> - true to output the root type</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the XML, not null</dd></dl>
+</li>
+</ul>
 <a name="writeToBuilder(org.joda.beans.Bean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>writeToBuilder</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;writeToBuilder(<a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean)</pre>
 <div class="block">Writes the bean to the <code>StringBuilder</code>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>bean</code> - the bean to output, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the builder, not null</dd></dl>
+</li>
+</ul>
+<a name="writeToBuilder(org.joda.beans.Bean, boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>writeToBuilder</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;writeToBuilder(<a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;bean,
+                           boolean&nbsp;rootType)</pre>
+<div class="block">Writes the bean to the <code>StringBuilder</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>bean</code> - the bean to output, not null</dd><dd><code>rootType</code> - true to output the root type</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the builder, not null</dd></dl>
 </li>
 </ul>

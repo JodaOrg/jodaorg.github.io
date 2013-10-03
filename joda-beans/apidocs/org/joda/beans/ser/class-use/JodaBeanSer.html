@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Class org.joda.beans.ser.JodaBeanSer (Joda-Beans 0.8 API)</title>
+<title>Uses of Class org.joda.beans.ser.JodaBeanSer (Joda-Beans 0.8.1 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Class org.joda.beans.ser.JodaBeanSer (Joda-Beans 0.8 API)";
+        parent.document.title="Uses of Class org.joda.beans.ser.JodaBeanSer (Joda-Beans 0.8.1 API)";
     }
 //-->
 </script>
@@ -147,6 +147,12 @@
 <div class="block">Returns a copy of this serializer with the specified pretty print new line.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
+<td class="colLast"><span class="strong">JodaBeanSer.</span><code><strong><a href="../../../../../org/joda/beans/ser/JodaBeanSer.html#withShortTypes(boolean)">withShortTypes</a></strong>(boolean&nbsp;shortTypes)</code>
+<div class="block">Returns a copy of this serializer with the short types flag set.</div>
+</td>
+</tr>
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -158,15 +164,17 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser">SerIterable</a></code></td>
-<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#createIterable(java.lang.String, org.joda.beans.ser.JodaBeanSer)">createIterable</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;metaTypeDescription,
-              <a href="../../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a>&nbsp;settings)</code>
-<div class="block">Creates an iterator wrapper for a meta-property value.</div>
+<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#createIterable(java.lang.String, org.joda.beans.ser.JodaBeanSer, java.util.Map)">createIterable</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;metaTypeDescription,
+              <a href="../../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a>&nbsp;settings,
+              <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;knownTypes)</code>
+<div class="block">Creates an iterator wrapper for a meta-type description.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser">SerIterable</a></code></td>
-<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#createIterable(java.lang.String, org.joda.beans.ser.JodaBeanSer)">createIterable</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;metaTypeDescription,
-              <a href="../../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a>&nbsp;settings)</code>
+<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#createIterable(java.lang.String, org.joda.beans.ser.JodaBeanSer, java.util.Map)">createIterable</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;metaTypeDescription,
+              <a href="../../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a>&nbsp;settings,
+              <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;knownTypes)</code>
 <div class="block">Creates an iterator wrapper for a meta-property value.</div>
 </td>
 </tr>

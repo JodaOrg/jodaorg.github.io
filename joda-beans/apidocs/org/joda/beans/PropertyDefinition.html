@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>PropertyDefinition (Joda-Beans 0.8 API)</title>
+<title>PropertyDefinition (Joda-Beans 0.8.1 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="PropertyDefinition (Joda-Beans 0.8 API)";
+        parent.document.title="PropertyDefinition (Joda-Beans 0.8.1 API)";
     }
 //-->
 </script>
@@ -165,6 +165,7 @@ public @interface <span class="strong">PropertyDefinition</span></pre>
  <ul>
  <li>'' - do not generate any form of getter
  <li>'smart' - process intelligently - 'is' for boolean and 'get' for other types
+ <li>'private' - process as per 'smart' but set scope as private
  <li>'is' - generates isXxx()
  <li>'get' - generates getXxx()
  <li>'clone' - generates getXxx() with a clone of the field (assumed to be of the correct type)
@@ -196,6 +197,7 @@ public @interface <span class="strong">PropertyDefinition</span></pre>
  <ul>
  <li>'' - do not generate any form of setter
  <li>'smart' - process intelligently - uses 'set' unless final, when it will use 'setClearAddAll'
+ <li>'private' - process as per 'smart' but set scope as private
   for common list types or 'setClearPutAll' for common map types and FlexiBean
  <li>'set' - generates setXxx()
  <li>'setClearAddAll' - generates setXxx() using field.clear() and field.addAll(newData)

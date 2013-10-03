@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Interface org.joda.beans.ser.SerIterator (Joda-Beans 0.8 API)</title>
+<title>Uses of Interface org.joda.beans.ser.SerIterator (Joda-Beans 0.8.1 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Interface org.joda.beans.ser.SerIterator (Joda-Beans 0.8 API)";
+        parent.document.title="Uses of Interface org.joda.beans.ser.SerIterator (Joda-Beans 0.8.1 API)";
     }
 //-->
 </script>
@@ -105,8 +105,9 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
-<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#collection(java.util.Collection, java.lang.Class)">collection</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll,
-          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType)</code>
+<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#collection(java.util.Collection, java.lang.Class, java.util.List)">collection</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;?&gt;&nbsp;coll,
+          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType,
+          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;valueTypeTypes)</code>
 <div class="block">Gets an iterator wrapper for <code>Collection</code>.</div>
 </td>
 </tr>
@@ -118,11 +119,19 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
-<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#create(java.lang.Object)">create</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
+<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#create(java.lang.Object, java.util.List)">create</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value,
+      <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;types)</code>
 <div class="block">Creates an iterator wrapper for an arbitrary value.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
+<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#create(java.lang.Object, java.util.List)">create</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value,
+      <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;types)</code>
+<div class="block">Creates an iterator wrapper for an arbitrary value.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
 <td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#create(java.lang.Object, org.joda.beans.MetaProperty, java.lang.Class)">create</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value,
       <a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;prop,
@@ -130,7 +139,7 @@
 <div class="block">Creates an iterator wrapper for a meta-property value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
 <td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#create(java.lang.Object, org.joda.beans.MetaProperty, java.lang.Class)">create</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value,
       <a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;prop,
@@ -138,32 +147,35 @@
 <div class="block">Creates an iterator wrapper for a meta-property value.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
 <td class="colLast"><span class="strong">SerIterable.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIterable.html#iterator()">iterator</a></strong>()</code>
 <div class="block">Obtains an iterator over the data.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
+<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#map(java.util.Map, java.lang.Class, java.lang.Class, java.util.List)">map</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;?,?&gt;&nbsp;map,
+   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;keyType,
+   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType,
+   <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;valueTypeTypes)</code>
+<div class="block">Gets an iterator wrapper for <code>Map</code>.</div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
-<td class="colLast"><span class="strong">SerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/SerIteratorFactory.html#map(java.util.Map, java.lang.Class, java.lang.Class)">map</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;?,?&gt;&nbsp;map,
-   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;keyType,
-   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType)</code>
-<div class="block">Gets an iterator wrapper for <code>Map</code>.</div>
+<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#multimap(com.google.common.collect.Multimap, java.lang.Class, java.lang.Class, java.util.List)">multimap</a></strong>(com.google.common.collect.Multimap&lt;?,?&gt;&nbsp;map,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;keyType,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;valueTypeTypes)</code>
+<div class="block">Gets an iterator wrapper for <code>Multimap</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
-<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#multimap(com.google.common.collect.Multimap, java.lang.Class, java.lang.Class)">multimap</a></strong>(com.google.common.collect.Multimap&lt;?,?&gt;&nbsp;map,
-        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;keyType,
-        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType)</code>
-<div class="block">Gets an iterator wrapper for <code>Multimap</code>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
-<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#multiset(com.google.common.collect.Multiset, java.lang.Class)">multiset</a></strong>(com.google.common.collect.Multiset&lt;?&gt;&nbsp;multiset,
-        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType)</code>
+<td class="colLast"><span class="strong">GuavaSerIteratorFactory.</span><code><strong><a href="../../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html#multiset(com.google.common.collect.Multiset, java.lang.Class, java.util.List)">multiset</a></strong>(com.google.common.collect.Multiset&lt;?&gt;&nbsp;multiset,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;valueTypeTypes)</code>
 <div class="block">Gets an iterator wrapper for <code>Multiset</code>.</div>
 </td>
 </tr>

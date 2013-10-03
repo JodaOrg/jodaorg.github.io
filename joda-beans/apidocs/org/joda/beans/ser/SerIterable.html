@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>SerIterable (Joda-Beans 0.8 API)</title>
+<title>SerIterable (Joda-Beans 0.8.1 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="SerIterable (Joda-Beans 0.8 API)";
+        parent.document.title="SerIterable (Joda-Beans 0.8.1 API)";
     }
 //-->
 </script>
@@ -124,21 +124,33 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/SerIterable.html#isMapLike()">isMapLike</a></strong>()</code>
+<div class="block">Is the iterable map-like, as opposed to collection-like.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser">SerIterator</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/SerIterable.html#iterator()">iterator</a></strong>()</code>
 <div class="block">Obtains an iterator over the data.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/SerIterable.html#keyType()">keyType</a></strong>()</code>
 <div class="block">Gets the type of the key.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/SerIterable.html#valueType()">valueType</a></strong>()</code>
 <div class="block">Gets the type of the value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/SerIterable.html#valueTypeTypes()">valueTypeTypes</a></strong>()</code>
+<div class="block">Gets the generic parameters of the value type.</div>
 </td>
 </tr>
 </table>
@@ -191,6 +203,17 @@
 <dl><dt><span class="strong">Returns:</span></dt><dd>the build collection, not null</dd></dl>
 </li>
 </ul>
+<a name="isMapLike()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isMapLike</h4>
+<pre>boolean&nbsp;isMapLike()</pre>
+<div class="block">Is the iterable map-like, as opposed to collection-like.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if map-like, false if collection-like</dd></dl>
+</li>
+</ul>
 <a name="keyType()">
 <!--   -->
 </a>
@@ -205,12 +228,23 @@
 <a name="valueType()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>valueType</h4>
 <pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;valueType()</pre>
 <div class="block">Gets the type of the value.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the value type, not null</dd></dl>
+</li>
+</ul>
+<a name="valueTypeTypes()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>valueTypeTypes</h4>
+<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;valueTypeTypes()</pre>
+<div class="block">Gets the generic parameters of the value type.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the generic parameters of the value type, not null</dd></dl>
 </li>
 </ul>
 </li>
