@@ -1205,9 +1205,8 @@ Implementation package supporting the time zones.</div>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></code></td>
 <td class="colLast"><span class="strong">ZoneInfoProvider.</span><code><strong><a href="../../../../org/joda/time/tz/ZoneInfoProvider.html#getZone(java.lang.String)">getZone</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id)</code>
-<div class="block">If an error is thrown while loading zone data, uncaughtException is
- called to log the error and null is returned for this and all future
- requests.</div>
+<div class="block">If an error is thrown while loading zone data, the exception is logged
+ to system error and null is returned for this and all future requests.</div>
 </td>
 </tr>
 <tr class="altColor">
