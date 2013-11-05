@@ -21,3 +21,13 @@ These are the projects:
 The projects have various authors and contributors.  
 They are curated and managed by [Stephen Colebourne](http://www.linkedin.com/in/stephencolebourne),
 aka [jodastephen](https://github.com/jodastephen).
+- [GitHub](https://github.com/jodastephen)
+- [Blog](http://blog.joda.org)
+- [Twitter](https://twitter.com/jodastephen)
+- [Ohloh](https://www.ohloh.net/accounts/scolebourne)
+- [LinkedIn](http://www.linkedin.com/in/stephencolebourne)
+
+#### Pronunciation
+ The 'J' in 'Joda' is pronounced the same as the 'J' in '[Java](http://dictionary.reference.com/browse/Java)'.
+ The project is not capable of wielding a [light saber](http://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
+
