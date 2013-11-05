@@ -29,6 +29,7 @@ They are curated and managed by Stephen Colebourne, aka jodastephen.
 - [GitHub](https://github.com/jodastephen)
 - [Blog](http://blog.joda.org)
 - [Twitter](https://twitter.com/jodastephen)
+- [Stack Overflow](http://stackoverflow.com/users/38896/jodastephen)
 - [Ohloh](https://www.ohloh.net/accounts/scolebourne)
 - [LinkedIn](http://www.linkedin.com/in/stephencolebourne)
 - Email - scolebourne at the domain name of this page
