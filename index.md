@@ -16,7 +16,13 @@ These are the projects:
 - [Joda-Convert](http://www.joda.org/joda-convert/) - String to Object conversion
 - [Joda-Primitives](http://www.joda.org/joda-primitives/) - Primitive collections
 
-#### Authors
+Each project aims to be focussed on a specific area and to have minimal dependencies.
+
+#### Pronunciation
+ The 'J' in 'Joda' is pronounced the same as the 'J' in [Java](http://dictionary.reference.com/browse/Java).
+ The project is not capable of wielding a [light saber](http://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
+
+#### Stephen Colebourne
 
 The projects have various authors and contributors.  
 They are curated and managed by [Stephen Colebourne](http://www.linkedin.com/in/stephencolebourne),
@@ -26,8 +32,4 @@ aka [jodastephen](https://github.com/jodastephen).
 - [Twitter](https://twitter.com/jodastephen)
 - [Ohloh](https://www.ohloh.net/accounts/scolebourne)
 - [LinkedIn](http://www.linkedin.com/in/stephencolebourne)
-
-#### Pronunciation
- The 'J' in 'Joda' is pronounced the same as the 'J' in [Java](http://dictionary.reference.com/browse/Java).
- The project is not capable of wielding a [light saber](http://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
-
+- Email - scolebourne at the domain name of this page
