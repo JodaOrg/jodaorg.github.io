@@ -28,6 +28,6 @@ aka [jodastephen](https://github.com/jodastephen).
 - [LinkedIn](http://www.linkedin.com/in/stephencolebourne)
 
 #### Pronunciation
- The 'J' in 'Joda' is pronounced the same as the 'J' in '[Java](http://dictionary.reference.com/browse/Java)'.
+ The 'J' in 'Joda' is pronounced the same as the 'J' in [Java](http://dictionary.reference.com/browse/Java).
  The project is not capable of wielding a [light saber](http://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
 
