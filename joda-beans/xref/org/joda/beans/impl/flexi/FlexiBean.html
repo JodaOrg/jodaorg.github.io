@@ -28,7 +28,7 @@
 <a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
 <a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
-<a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> java.util.LinkedHashMap;
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> java.util.NoSuchElementException;
 <a class="jxr_linenumber" name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> java.util.Set;
@@ -109,7 +109,7 @@
 <a class="jxr_linenumber" name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="100" href="#100">100</a>     <strong class="jxr_keyword">private</strong> Map&lt;String, Object&gt; dataWritable() {
 <a class="jxr_linenumber" name="101" href="#101">101</a>         <strong class="jxr_keyword">if</strong> (data == Collections.EMPTY_MAP) {
-<a class="jxr_linenumber" name="102" href="#102">102</a>             data = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Object&gt;();
+<a class="jxr_linenumber" name="102" href="#102">102</a>             data = <strong class="jxr_keyword">new</strong> LinkedHashMap&lt;String, Object&gt;();
 <a class="jxr_linenumber" name="103" href="#103">103</a>         }
 <a class="jxr_linenumber" name="104" href="#104">104</a>         <strong class="jxr_keyword">return</strong> data;
 <a class="jxr_linenumber" name="105" href="#105">105</a>     }
@@ -320,7 +320,7 @@
 <a class="jxr_linenumber" name="310" href="#310">310</a>                 }
 <a class="jxr_linenumber" name="311" href="#311">311</a>             }
 <a class="jxr_linenumber" name="312" href="#312">312</a>             <strong class="jxr_keyword">if</strong> (data == Collections.EMPTY_MAP) {
-<a class="jxr_linenumber" name="313" href="#313">313</a>                 data = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Object&gt;(map);
+<a class="jxr_linenumber" name="313" href="#313">313</a>                 data = <strong class="jxr_keyword">new</strong> LinkedHashMap&lt;String, Object&gt;(map);
 <a class="jxr_linenumber" name="314" href="#314">314</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="315" href="#315">315</a>                 data.putAll(map);
 <a class="jxr_linenumber" name="316" href="#316">316</a>             }
@@ -337,7 +337,7 @@
 <a class="jxr_linenumber" name="327" href="#327">327</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> putAll(<a href="../../../../../org/joda/beans/impl/flexi/FlexiBean.html">FlexiBean</a> other) {
 <a class="jxr_linenumber" name="328" href="#328">328</a>         <strong class="jxr_keyword">if</strong> (other.size() &gt; 0) {
 <a class="jxr_linenumber" name="329" href="#329">329</a>             <strong class="jxr_keyword">if</strong> (data == Collections.EMPTY_MAP) {
-<a class="jxr_linenumber" name="330" href="#330">330</a>                 data = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Object&gt;(other.data);
+<a class="jxr_linenumber" name="330" href="#330">330</a>                 data = <strong class="jxr_keyword">new</strong> LinkedHashMap&lt;String, Object&gt;(other.data);
 <a class="jxr_linenumber" name="331" href="#331">331</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="332" href="#332">332</a>                 data.putAll(other.data);
 <a class="jxr_linenumber" name="333" href="#333">333</a>             }
@@ -438,7 +438,7 @@
 <a class="jxr_linenumber" name="428" href="#428">428</a>         <strong class="jxr_keyword">if</strong> (size() == 0) {
 <a class="jxr_linenumber" name="429" href="#429">429</a>             <strong class="jxr_keyword">return</strong> Collections.emptyMap();
 <a class="jxr_linenumber" name="430" href="#430">430</a>         }
-<a class="jxr_linenumber" name="431" href="#431">431</a>         <strong class="jxr_keyword">return</strong> Collections.unmodifiableMap(<strong class="jxr_keyword">new</strong> HashMap&lt;String, Object&gt;(data));
+<a class="jxr_linenumber" name="431" href="#431">431</a>         <strong class="jxr_keyword">return</strong> Collections.unmodifiableMap(<strong class="jxr_keyword">new</strong> LinkedHashMap&lt;String, Object&gt;(data));
 <a class="jxr_linenumber" name="432" href="#432">432</a>     }
 <a class="jxr_linenumber" name="433" href="#433">433</a> 
 <a class="jxr_linenumber" name="434" href="#434">434</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
