@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
 
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
 <rss version="0.91">
   <channel>
     <title>Joda-Beans - Checkstyle report</title>
@@ -8,7 +25,7 @@
     <language>en-us</language>
     <copyright>&#169;2007 - 2013 Joda.org</copyright>
     <item>
-      <title>File: 200,
+      <title>File: 202,
              Errors: 0,
              Warnings: 45,
              Infos: 0
@@ -29,35 +46,7 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBasicBean.Command line test 5e220856-f638-426d-b2a8-d45e88308cf8.properties">target/surefire-reports/old/org.joda.beans.TestBasicBean/Command line test 5e220856-f638-426d-b2a8-d45e88308cf8.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.xml.TestAddressXml.Command line test 802cfc4e-a24b-465e-b6c9-036227ed5055.properties">target/surefire-reports/old/org.joda.beans.ser.xml.TestAddressXml/Command line test 802cfc4e-a24b-465e-b6c9-036227ed5055.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPerson.Command line test dafb872a-64e5-4d74-9e7a-798327f82c91.properties">target/surefire-reports/old/org.joda.beans.TestPerson/Command line test dafb872a-64e5-4d74-9e7a-798327f82c91.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMetaInvoke.Command line test 0e62643a-c64d-4ee8-9f40-c93fbe111c7c.properties">target/surefire-reports/old/org.joda.beans.TestMetaInvoke/Command line test 0e62643a-c64d-4ee8-9f40-c93fbe111c7c.properties</a>
                 </td>
                 <td>
                   0
@@ -85,34 +74,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestImmutable.Command line test 872cf402-5695-4ae8-a389-15748738406b.properties">target/surefire-reports/old/org.joda.beans.TestImmutable/Command line test 872cf402-5695-4ae8-a389-15748738406b.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.test.TestBeanAssert.Command line test 56e956e2-2c91-4dbd-ab67-e1221f98d1d0.properties">target/surefire-reports/old/org.joda.beans.test.TestBeanAssert/Command line test 56e956e2-2c91-4dbd-ab67-e1221f98d1d0.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.package-info.java">org/joda/beans/ser/package-info.java</a>
                 </td>
                 <td>
@@ -127,20 +88,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMetaInvoke.Command line test 855bcda5-78b7-4efa-8083-6eec96cce53c.properties">target/surefire-reports/old/org.joda.beans.TestMetaInvoke/Command line test 855bcda5-78b7-4efa-8083-6eec96cce53c.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.BeanDefinition.java">org/joda/beans/BeanDefinition.java</a>
                 </td>
                 <td>
@@ -148,20 +95,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestValidateBean.Command line test 6672b86f-5cdf-4ac6-b3c5-46bca7eaea0d.properties">target/surefire-reports/old/org.joda.beans.TestValidateBean/Command line test 6672b86f-5cdf-4ac6-b3c5-46bca7eaea0d.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -267,20 +200,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestCompanyAddress.Command line test 84292074-ec0f-4c20-a11d-97dc295aaa63.properties">target/surefire-reports/old/org.joda.beans.TestCompanyAddress/Command line test 84292074-ec0f-4c20-a11d-97dc295aaa63.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.gen.BeanGen.java">src/main/java/org/joda/beans/gen/BeanGen.java</a>
                 </td>
                 <td>
@@ -288,6 +207,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPerson.Command line test 9bfe8108-ee7e-46df-b33f-b3dad5354e80.properties">target/surefire-reports/old/org.joda.beans.TestPerson/Command line test 9bfe8108-ee7e-46df-b33f-b3dad5354e80.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -330,6 +263,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFinalFieldBean.Command line test e8c0388a-42a9-4943-b439-6c06383404f4.properties">target/surefire-reports/old/org.joda.beans.TestFinalFieldBean/Command line test e8c0388a-42a9-4943-b439-6c06383404f4.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -393,7 +340,21 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPropertyStyle.Command line test f9f45119-c38c-4293-ac99-0af3e18e707a.properties">target/surefire-reports/old/org.joda.beans.TestPropertyStyle/Command line test f9f45119-c38c-4293-ac99-0af3e18e707a.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestCompanyAddress.Command line test db085120-e6f0-41cc-9777-db20dc71a3e1.properties">target/surefire-reports/old/org.joda.beans.TestCompanyAddress/Command line test db085120-e6f0-41cc-9777-db20dc71a3e1.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBeanQuery.Command line test 143cc03a-17ad-4ebf-898e-8dd74bd5097d.properties">target/surefire-reports/old/org.joda.beans.TestBeanQuery/Command line test 143cc03a-17ad-4ebf-898e-8dd74bd5097d.properties</a>
                 </td>
                 <td>
                   0
@@ -442,6 +403,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestRWOnlyBean.Command line test 62dbc3aa-b864-42e1-97b5-37cb77681c8e.properties">target/surefire-reports/old/org.joda.beans.TestRWOnlyBean/Command line test 62dbc3aa-b864-42e1-97b5-37cb77681c8e.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -533,6 +508,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestCompanyAddress.Command line test e706c18e-36a6-442a-a03d-22474b72d6fb.properties">target/surefire-reports/old/org.joda.beans.TestCompanyAddress/Command line test e706c18e-36a6-442a-a03d-22474b72d6fb.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.reflection.package-info.java">org/joda/beans/impl/reflection/package-info.java</a>
                 </td>
                 <td>
@@ -540,6 +529,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestRWOnlyBean.Command line test 39fda7a6-08ec-458f-a5e4-81bbb4da1384.properties">target/surefire-reports/old/org.joda.beans.TestRWOnlyBean/Command line test 39fda7a6-08ec-458f-a5e4-81bbb4da1384.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -603,20 +606,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMapBean.Command line test b86ee8c1-8905-4b0d-8247-e517687386ed.properties">target/surefire-reports/old/org.joda.beans.TestMapBean/Command line test b86ee8c1-8905-4b0d-8247-e517687386ed.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutableBean.java">org/joda/beans/ImmutableBean.java</a>
                 </td>
                 <td>
@@ -624,20 +613,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestCompanyAddress.Command line test c4802006-674b-4a20-aced-a1f1fff98433.properties">target/surefire-reports/old/org.joda.beans.TestCompanyAddress/Command line test c4802006-674b-4a20-aced-a1f1fff98433.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -673,13 +648,13 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.map.MapBeanMetaProperty.java">org/joda/beans/impl/map/MapBeanMetaProperty.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.xml.TestAddressXml.Command line test b6b501aa-d440-44d7-840b-abdd885da4ad.properties">target/surefire-reports/old/org.joda.beans.ser.xml.TestAddressXml/Command line test b6b501aa-d440-44d7-840b-abdd885da4ad.properties</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  0
+                  1
                 </td>
                 <td>
                   0
@@ -687,13 +662,13 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.xml.TestAddressXml.Command line test 4f2978c5-b27d-43de-989b-e106fb39d898.properties">target/surefire-reports/old/org.joda.beans.ser.xml.TestAddressXml/Command line test 4f2978c5-b27d-43de-989b-e106fb39d898.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.map.MapBeanMetaProperty.java">org/joda/beans/impl/map/MapBeanMetaProperty.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -729,20 +704,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBeanQuery.Command line test daf57747-40c2-4b98-a642-884ae34e431f.properties">target/surefire-reports/old/org.joda.beans.TestBeanQuery/Command line test daf57747-40c2-4b98-a642-884ae34e431f.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.BasicBean.java">org/joda/beans/impl/BasicBean.java</a>
                 </td>
                 <td>
@@ -750,6 +711,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestJodaBeanUtils.Command line test 3cbdb7a3-049b-4efe-aa2b-34e29fd026b7.properties">target/surefire-reports/old/org.joda.beans.TestJodaBeanUtils/Command line test 3cbdb7a3-049b-4efe-aa2b-34e29fd026b7.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -806,34 +781,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestResult.Command line test 04bd93e4-e371-463b-8917-08b91dbb1ef4.properties">target/surefire-reports/old/org.joda.beans.TestResult/Command line test 04bd93e4-e371-463b-8917-08b91dbb1ef4.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestRWOnlyBean.Command line test b9297af0-ea1d-48c9-9db6-a2584bfc27de.properties">target/surefire-reports/old/org.joda.beans.TestRWOnlyBean/Command line test b9297af0-ea1d-48c9-9db6-a2584bfc27de.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -925,20 +872,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestAddress.Command line test b9c81ca9-d4ac-4f2b-ba55-5d031baa4b87.properties">target/surefire-reports/old/org.joda.beans.TestAddress/Command line test b9c81ca9-d4ac-4f2b-ba55-5d031baa4b87.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.impl.flexi.FlexiBeanBuilder.java">src/main/java/org/joda/beans/impl/flexi/FlexiBeanBuilder.java</a>
                 </td>
                 <td>
@@ -953,7 +886,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFlexiBean.Command line test fbe42c2d-d608-42ce-9a8b-6590e38df35d.properties">target/surefire-reports/old/org.joda.beans.TestFlexiBean/Command line test fbe42c2d-d608-42ce-9a8b-6590e38df35d.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFlexiBean.Command line test c708c064-0c07-429e-a8fb-4183258ff0d3.properties">target/surefire-reports/old/org.joda.beans.TestFlexiBean/Command line test c708c064-0c07-429e-a8fb-4183258ff0d3.properties</a>
                 </td>
                 <td>
                   0
@@ -968,6 +901,20 @@
                           <tr>
                 <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.SerIterator.java">org/joda/beans/ser/SerIterator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.impl.direct.DirectFieldsBeanBuilder.java">src/main/java/org/joda/beans/impl/direct/DirectFieldsBeanBuilder.java</a>
                 </td>
                 <td>
                   0
@@ -1009,20 +956,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestResult.Command line test 7024bd25-f108-44d5-a908-db8ea627bc20.properties">target/surefire-reports/old/org.joda.beans.TestResult/Command line test 7024bd25-f108-44d5-a908-db8ea627bc20.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.MetaProperty.java">src/main/java/org/joda/beans/MetaProperty.java</a>
                 </td>
                 <td>
@@ -1037,7 +970,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPair.Command line test 06ca0a24-9c30-41fb-9dfc-ead9d9e40118.properties">target/surefire-reports/old/org.joda.beans.TestPair/Command line test 06ca0a24-9c30-41fb-9dfc-ead9d9e40118.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.test.TestBeanAssert.Command line test b16acb5f-14c3-4cc8-a308-8532105e2335.properties">target/surefire-reports/old/org.joda.beans.test.TestBeanAssert/Command line test b16acb5f-14c3-4cc8-a308-8532105e2335.properties</a>
                 </td>
                 <td>
                   0
@@ -1121,7 +1054,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestValidateBean.Command line test 6e0dae74-b212-4a23-bd28-bb76d5e36dc3.properties">target/surefire-reports/old/org.joda.beans.TestValidateBean/Command line test 6e0dae74-b212-4a23-bd28-bb76d5e36dc3.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPair.Command line test 8d153fe8-afc7-40d2-b4b6-5e3e473e055a.properties">target/surefire-reports/old/org.joda.beans.TestPair/Command line test 8d153fe8-afc7-40d2-b4b6-5e3e473e055a.properties</a>
                 </td>
                 <td>
                   0
@@ -1142,20 +1075,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.test.TestBeanAssert.Command line test 71de66b0-56b9-4f4e-a6cf-9d13292e28f9.properties">target/surefire-reports/old/org.joda.beans.test.TestBeanAssert/Command line test 71de66b0-56b9-4f4e-a6cf-9d13292e28f9.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -1184,20 +1103,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMetaInvoke.Command line test 773a68a9-19ae-4bb6-86e1-bb5f0fe95389.properties">target/surefire-reports/old/org.joda.beans.TestMetaInvoke/Command line test 773a68a9-19ae-4bb6-86e1-bb5f0fe95389.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -1261,21 +1166,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFinalFieldBean.Command line test b16b1730-ab8d-4c04-9a67-10633b151a60.properties">target/surefire-reports/old/org.joda.beans.TestFinalFieldBean/Command line test b16b1730-ab8d-4c04-9a67-10633b151a60.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPair.Command line test 8464415b-21dc-43c2-a899-679707e53350.properties">target/surefire-reports/old/org.joda.beans.TestPair/Command line test 8464415b-21dc-43c2-a899-679707e53350.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMapBean.Command line test eea7b561-7089-4b36-b16b-f86898eb0114.properties">target/surefire-reports/old/org.joda.beans.TestMapBean/Command line test eea7b561-7089-4b36-b16b-f86898eb0114.properties</a>
                 </td>
                 <td>
                   0
@@ -1331,6 +1222,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBasicBean.Command line test b3f137df-f1d9-4404-9ccd-404f3293b060.properties">target/surefire-reports/old/org.joda.beans.TestBasicBean/Command line test b3f137df-f1d9-4404-9ccd-404f3293b060.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPropertyStyle.Command line test f917c8dc-fb65-4d26-ba05-0c385ced8e1d.properties">target/surefire-reports/old/org.joda.beans.TestPropertyStyle/Command line test f917c8dc-fb65-4d26-ba05-0c385ced8e1d.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#tests.output.old.joda-beans by packages.joda-beans by packages.properties">tests/output/old/joda-beans by packages/joda-beans by packages.properties</a>
                 </td>
                 <td>
@@ -1352,6 +1271,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.TestSer.Command line test 6c4aa6fa-cc3a-4054-9798-7a2de585b4ce.properties">target/surefire-reports/old/org.joda.beans.ser.TestSer/Command line test 6c4aa6fa-cc3a-4054-9798-7a2de585b4ce.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -1401,6 +1334,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestResult.Command line test a950fd6f-960f-4e3f-9051-06700af7b3ed.properties">target/surefire-reports/old/org.joda.beans.TestResult/Command line test a950fd6f-960f-4e3f-9051-06700af7b3ed.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.direct.DirectFieldsBeanBuilder.java">org/joda/beans/impl/direct/DirectFieldsBeanBuilder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.impl.flexi.FlexiMetaProperty.java">src/main/java/org/joda/beans/impl/flexi/FlexiMetaProperty.java</a>
                 </td>
                 <td>
@@ -1429,7 +1390,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestJodaBeanUtils.Command line test ee7d7972-9d05-4b6e-be5f-3552fa75d8e8.properties">target/surefire-reports/old/org.joda.beans.TestJodaBeanUtils/Command line test ee7d7972-9d05-4b6e-be5f-3552fa75d8e8.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestArray.Command line test 9ab916c9-44c0-4d07-8f35-4004a06bd370.properties">target/surefire-reports/old/org.joda.beans.TestArray/Command line test 9ab916c9-44c0-4d07-8f35-4004a06bd370.properties</a>
                 </td>
                 <td>
                   0
@@ -1443,7 +1404,21 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBasicBean.Command line test d5b5b0a8-c46d-4eb0-aace-611494a1cf72.properties">target/surefire-reports/old/org.joda.beans.TestBasicBean/Command line test d5b5b0a8-c46d-4eb0-aace-611494a1cf72.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestImmutable.Command line test 93ca57e1-7711-4415-a425-f96c03476689.properties">target/surefire-reports/old/org.joda.beans.TestImmutable/Command line test 93ca57e1-7711-4415-a425-f96c03476689.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBeanQuery.Command line test 43f4a3cf-84d7-44bc-b96a-1ee5a7fedbf7.properties">target/surefire-reports/old/org.joda.beans.TestBeanQuery/Command line test 43f4a3cf-84d7-44bc-b96a-1ee5a7fedbf7.properties</a>
                 </td>
                 <td>
                   0
@@ -1485,6 +1460,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPropertyStyle.Command line test baab7a2b-4e19-4c4a-9554-38ef411fda42.properties">target/surefire-reports/old/org.joda.beans.TestPropertyStyle/Command line test baab7a2b-4e19-4c4a-9554-38ef411fda42.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.ser.xml.JodaBeanXml.java">src/main/java/org/joda/beans/ser/xml/JodaBeanXml.java</a>
                 </td>
                 <td>
@@ -1513,21 +1502,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestJodaBeanUtils.Command line test 3963ee1a-c82c-4382-9ad9-2e7ae9115b95.properties">target/surefire-reports/old/org.joda.beans.TestJodaBeanUtils/Command line test 3963ee1a-c82c-4382-9ad9-2e7ae9115b95.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.TestSer.Command line test 2b11c4ee-cdb6-4cdf-bd9e-d609e1bfbbb2.properties">target/surefire-reports/old/org.joda.beans.ser.TestSer/Command line test 2b11c4ee-cdb6-4cdf-bd9e-d609e1bfbbb2.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.xml.TestAddressXml.Command line test cd53c42c-00b5-43e0-aa22-b36ff905f9ff.properties">target/surefire-reports/old/org.joda.beans.ser.xml.TestAddressXml/Command line test cd53c42c-00b5-43e0-aa22-b36ff905f9ff.properties</a>
                 </td>
                 <td>
                   0
@@ -1681,6 +1656,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFlexiBean.Command line test b5c9fb30-51e4-4d02-a663-11b256dc37fa.properties">target/surefire-reports/old/org.joda.beans.TestFlexiBean/Command line test b5c9fb30-51e4-4d02-a663-11b256dc37fa.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.DynamicBean.java">src/main/java/org/joda/beans/DynamicBean.java</a>
                 </td>
                 <td>
@@ -1695,7 +1684,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMapBean.Command line test df964b79-b49c-4b4b-ad3a-e60178ae3d58.properties">target/surefire-reports/old/org.joda.beans.TestMapBean/Command line test df964b79-b49c-4b4b-ad3a-e60178ae3d58.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPair.Command line test 1ecb9bdf-f843-4371-a245-312729ef44c3.properties">target/surefire-reports/old/org.joda.beans.TestPair/Command line test 1ecb9bdf-f843-4371-a245-312729ef44c3.properties</a>
                 </td>
                 <td>
                   0
@@ -1709,7 +1698,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPropertyStyle.Command line test 8f9a65a2-ac0f-44f3-87d7-211114d69aa2.properties">target/surefire-reports/old/org.joda.beans.TestPropertyStyle/Command line test 8f9a65a2-ac0f-44f3-87d7-211114d69aa2.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPerson.Command line test df7de0bd-c582-4739-905c-c0d9890e1389.properties">target/surefire-reports/old/org.joda.beans.TestPerson/Command line test df7de0bd-c582-4739-905c-c0d9890e1389.properties</a>
                 </td>
                 <td>
                   0
@@ -1751,7 +1740,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBeanQuery.Command line test 979c06fd-17cf-4120-97c1-af9ed36c0d3c.properties">target/surefire-reports/old/org.joda.beans.TestBeanQuery/Command line test 979c06fd-17cf-4120-97c1-af9ed36c0d3c.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestArray.Command line test 2f3f1e12-e256-4f55-8832-878eff4eee51.properties">target/surefire-reports/old/org.joda.beans.TestArray/Command line test 2f3f1e12-e256-4f55-8832-878eff4eee51.properties</a>
                 </td>
                 <td>
                   0
@@ -1807,6 +1796,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestValidateBean.Command line test 8adfed05-1c95-4eed-98fe-53f802e04420.properties">target/surefire-reports/old/org.joda.beans.TestValidateBean/Command line test 8adfed05-1c95-4eed-98fe-53f802e04420.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.ser.SerIteratorFactory.java">src/main/java/org/joda/beans/ser/SerIteratorFactory.java</a>
                 </td>
                 <td>
@@ -1828,6 +1831,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestAddress.Command line test b4f4e9f8-4417-4aab-8c20-05d1bd2d775b.properties">target/surefire-reports/old/org.joda.beans.TestAddress/Command line test b4f4e9f8-4417-4aab-8c20-05d1bd2d775b.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -1905,20 +1922,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestArray.Command line test 8e1076ad-df3f-4637-8163-23b3c862ec08.properties">target/surefire-reports/old/org.joda.beans.TestArray/Command line test 8e1076ad-df3f-4637-8163-23b3c862ec08.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.test.package-info.java">src/main/java/org/joda/beans/test/package-info.java</a>
                 </td>
                 <td>
@@ -1961,6 +1964,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestBasicBean.Command line test daa0c14c-8317-4ff2-8380-04130bc3a2b5.properties">target/surefire-reports/old/org.joda.beans.TestBasicBean/Command line test daa0c14c-8317-4ff2-8380-04130bc3a2b5.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestResult.Command line test 981f117f-d238-48a9-b187-eb31acb1337a.properties">target/surefire-reports/old/org.joda.beans.TestResult/Command line test 981f117f-d238-48a9-b187-eb31acb1337a.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.impl.map.MapBean.java">src/main/java/org/joda/beans/impl/map/MapBean.java</a>
                 </td>
                 <td>
@@ -1968,6 +1999,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.test.TestBeanAssert.Command line test 55e23a2f-000b-4396-8fb4-c86177ddd0a5.properties">target/surefire-reports/old/org.joda.beans.test.TestBeanAssert/Command line test 55e23a2f-000b-4396-8fb4-c86177ddd0a5.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -2017,7 +2062,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestAddress.Command line test 6c8be6f0-32e7-4bfb-9e3c-3f69b9261626.properties">target/surefire-reports/old/org.joda.beans.TestAddress/Command line test 6c8be6f0-32e7-4bfb-9e3c-3f69b9261626.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMapBean.Command line test 1db4a9cb-4e81-435c-b75a-b849df46140b.properties">target/surefire-reports/old/org.joda.beans.TestMapBean/Command line test 1db4a9cb-4e81-435c-b75a-b849df46140b.properties</a>
                 </td>
                 <td>
                   0
@@ -2059,7 +2104,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.TestSer.Command line test 4c0270b6-0ca9-4882-aac0-2f8601297400.properties">target/surefire-reports/old/org.joda.beans.ser.TestSer/Command line test 4c0270b6-0ca9-4882-aac0-2f8601297400.properties</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestValidateBean.Command line test 52bde878-0cd5-4eaa-8c4b-d786d736c745.properties">target/surefire-reports/old/org.joda.beans.TestValidateBean/Command line test 52bde878-0cd5-4eaa-8c4b-d786d736c745.properties</a>
                 </td>
                 <td>
                   0
@@ -2115,20 +2160,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFinalFieldBean.Command line test d3c450f9-0634-430c-bb98-33151bf7f8c8.properties">target/surefire-reports/old/org.joda.beans.TestFinalFieldBean/Command line test d3c450f9-0634-430c-bb98-33151bf7f8c8.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.PropertyStyle.java">org/joda/beans/PropertyStyle.java</a>
                 </td>
                 <td>
@@ -2164,6 +2195,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestJodaBeanUtils.Command line test 3b4f3842-7018-4fae-973c-176cb0ab8373.properties">target/surefire-reports/old/org.joda.beans.TestJodaBeanUtils/Command line test 3b4f3842-7018-4fae-973c-176cb0ab8373.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -2269,20 +2314,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestArray.Command line test b9074028-b5a3-492b-aef4-36daa4b6ed17.properties">target/surefire-reports/old/org.joda.beans.TestArray/Command line test b9074028-b5a3-492b-aef4-36daa4b6ed17.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.DynamicBean.java">org/joda/beans/DynamicBean.java</a>
                 </td>
                 <td>
@@ -2367,6 +2398,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestMetaInvoke.Command line test 35eb3db5-f9b0-4f83-8c82-b7d7c2ecb5a6.properties">target/surefire-reports/old/org.joda.beans.TestMetaInvoke/Command line test 35eb3db5-f9b0-4f83-8c82-b7d7c2ecb5a6.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.BeanGenConfig.java">org/joda/beans/gen/BeanGenConfig.java</a>
                 </td>
                 <td>
@@ -2416,20 +2461,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestImmutable.Command line test 894fef02-f6e9-4aad-9e8a-6ccb5de7b0fb.properties">target/surefire-reports/old/org.joda.beans.TestImmutable/Command line test 894fef02-f6e9-4aad-9e8a-6ccb5de7b0fb.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -2563,6 +2594,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestImmutable.Command line test adffde1e-76c7-4f20-8f05-fc4f66607a20.properties">target/surefire-reports/old/org.joda.beans.TestImmutable/Command line test adffde1e-76c7-4f20-8f05-fc4f66607a20.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#tests.output.old.Failed suite [Default suite].Default test(failed).properties">tests/output/old/Failed suite [Default suite]/Default test(failed).properties</a>
                 </td>
                 <td>
@@ -2633,6 +2678,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFinalFieldBean.Command line test 7bfcca65-cfd1-45cf-8bbc-36881d5c2200.properties">target/surefire-reports/old/org.joda.beans.TestFinalFieldBean/Command line test 7bfcca65-cfd1-45cf-8bbc-36881d5c2200.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.ser.TestSer.Command line test 0e267bb3-886e-4399-88aa-c7f84a0f4577.properties">target/surefire-reports/old/org.joda.beans.ser.TestSer/Command line test 0e267bb3-886e-4399-88aa-c7f84a0f4577.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.flexi.FlexiBean.java">org/joda/beans/impl/flexi/FlexiBean.java</a>
                 </td>
                 <td>
@@ -2675,34 +2748,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestFlexiBean.Command line test 98bf41ac-02a5-4fca-a462-65385e77deaa.properties">target/surefire-reports/old/org.joda.beans.TestFlexiBean/Command line test 98bf41ac-02a5-4fca-a462-65385e77deaa.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestPerson.Command line test b87b4a1e-75a4-47da-b0a8-12f51a38a6a3.properties">target/surefire-reports/old/org.joda.beans.TestPerson/Command line test b87b4a1e-75a4-47da-b0a8-12f51a38a6a3.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#src.main.java.org.joda.beans.PropertyMap.java">src/main/java/org/joda/beans/PropertyMap.java</a>
                 </td>
                 <td>
@@ -2710,20 +2755,6 @@
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestRWOnlyBean.Command line test 37f752e3-8ea6-41e2-b9d8-a10aaf66c40d.properties">target/surefire-reports/old/org.joda.beans.TestRWOnlyBean/Command line test 37f752e3-8ea6-41e2-b9d8-a10aaf66c40d.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -2766,6 +2797,20 @@
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#target.surefire-reports.old.org.joda.beans.TestAddress.Command line test b0c7f0fa-c1f6-45b9-b574-8c8303cde144.properties">target/surefire-reports/old/org.joda.beans.TestAddress/Command line test b0c7f0fa-c1f6-45b9-b574-8c8303cde144.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
