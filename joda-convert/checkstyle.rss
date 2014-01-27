@@ -6,11 +6,11 @@
     <link>http://www.joda.org/joda-convert/</link>
     <description>Joda-Convert - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2010 - 2013 Joda.org</copyright>
+    <copyright>&#169;2010 - 2014 Joda.org</copyright>
     <item>
-      <title>File: 38,
+      <title>File: 42,
              Errors: 0,
-             Warnings: 0,
+             Warnings: 1,
              Infos: 0
       </title>
             <link>http://www.joda.org/joda-convert//checkstyle.html</link>
@@ -365,6 +365,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-convert//checkstyle.html#src.main.java.org.joda.convert.RenameHandler.java">src/main/java/org/joda/convert/RenameHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-convert//checkstyle.html#target.maven-archiver.pom.properties">target/maven-archiver/pom.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-convert//checkstyle.html#src.main.java.org.joda.convert.StringConvert.java">src/main/java/org/joda/convert/StringConvert.java</a>
                 </td>
                 <td>
@@ -491,7 +519,35 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-convert//checkstyle.html#tests.output.old.Default suite.Default test.properties">tests/output/old/Default suite/Default test.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-convert//checkstyle.html#src.main.java.org.joda.convert.MethodsStringConverter.java">src/main/java/org/joda/convert/MethodsStringConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-convert//checkstyle.html#org.joda.convert.RenameHandler.java">org/joda/convert/RenameHandler.java</a>
                 </td>
                 <td>
                   0
