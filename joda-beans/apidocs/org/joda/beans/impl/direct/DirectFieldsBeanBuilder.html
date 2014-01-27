@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>DirectFieldsBeanBuilder (Joda-Beans 0.9.1 API)</title>
+<title>DirectFieldsBeanBuilder (Joda-Beans 0.9.2 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="DirectFieldsBeanBuilder (Joda-Beans 0.9.1 API)";
+        parent.document.title="DirectFieldsBeanBuilder (Joda-Beans 0.9.2 API)";
     }
 //-->
 </script>
@@ -147,7 +147,7 @@ implements <a href="../../../../../org/joda/beans/BeanBuilder.html" title="inter
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><code><strong><a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
@@ -160,7 +160,7 @@ implements <a href="../../../../../org/joda/beans/BeanBuilder.html" title="inter
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><code><strong><a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
@@ -224,7 +224,7 @@ implements <a href="../../../../../org/joda/beans/BeanBuilder.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
-<pre>public&nbsp;<a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;&nbsp;set(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<pre>public&nbsp;<a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;&nbsp;set(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
                  <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">BeanBuilder</a></code></strong></div>
 <div class="block">Sets the value of a single property into the builder.
@@ -234,7 +234,7 @@ implements <a href="../../../../../org/joda/beans/BeanBuilder.html" title="inter
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a> extends <a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>property</code> - the property, not null</dd><dd><code>value</code> - the property value, may be null</dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>metaProperty</code> - the meta-property, not null</dd><dd><code>value</code> - the property value, may be null</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for chaining, not null</dd></dl>
 </li>
 </ul>
@@ -244,7 +244,7 @@ implements <a href="../../../../../org/joda/beans/BeanBuilder.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <h4>setString</h4>
-<pre>public&nbsp;<a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;&nbsp;setString(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<pre>public&nbsp;<a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;&nbsp;setString(<a href="../../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
                        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">BeanBuilder</a></code></strong></div>
 <div class="block">Sets the value of a single property into the builder.
@@ -257,7 +257,7 @@ implements <a href="../../../../../org/joda/beans/BeanBuilder.html" title="inter
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a> extends <a href="../../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>property</code> - the property name, not null</dd><dd><code>value</code> - the property value, may be null</dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>metaProperty</code> - the meta-property name, not null</dd><dd><code>value</code> - the property value, may be null</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for chaining, not null</dd></dl>
 </li>
 </ul>

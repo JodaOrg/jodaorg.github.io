@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Interface org.joda.beans.BeanBuilder (Joda-Beans 0.9.1 API)</title>
+<title>Uses of Interface org.joda.beans.BeanBuilder (Joda-Beans 0.9.2 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Interface org.joda.beans.BeanBuilder (Joda-Beans 0.9.1 API)";
+        parent.document.title="Uses of Interface org.joda.beans.BeanBuilder (Joda-Beans 0.9.2 API)";
     }
 //-->
 </script>
@@ -98,6 +98,12 @@
 <div class="block">Implementation of Joda-Beans using reflection.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.joda.beans.ser">org.joda.beans.ser</a></td>
+<td class="colLast">
+<div class="block">Serialization of Joda-Beans.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -128,7 +134,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">BeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
@@ -148,7 +154,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">BeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
@@ -186,6 +192,12 @@
 <div class="block">Basic implementation of <code>BeanBuilder</code> that wraps a <code>MetaBean</code>.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a>&lt;T extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</strong></code>
+<div class="block">Implementation of <code>BeanBuilder</code> that buffers data in a local map.</div>
+</td>
+</tr>
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -196,25 +208,33 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html" title="type parameter in BasicBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#get(java.lang.String)">get</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</code>
-<div class="block">Gets the current value of the property.</div>
-</td>
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="type parameter in BufferingBeanBuilder">T</a>&gt;</code></td>
+<td class="colLast"><span class="strong">BufferingBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
+   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BasicImmutableBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">BasicImmutableBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html" title="type parameter in BasicBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="type parameter in BufferingBeanBuilder">T</a>&gt;</code></td>
+<td class="colLast"><span class="strong">BufferingBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html#set(java.lang.String, java.lang.Object)">set</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
+   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html" title="type parameter in BasicBeanBuilder">T</a>&gt;</code></td>
 <td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#set(java.lang.String, java.lang.Object)">set</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="type parameter in BufferingBeanBuilder">T</a>&gt;</code></td>
+<td class="colLast"><span class="strong">BufferingBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html#setAll(java.util.Map)">setAll</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,? extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;propertyValueMap)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
@@ -225,13 +245,23 @@
 <td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#setAll(java.util.Map)">setAll</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,? extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;propertyValueMap)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BasicImmutableBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="type parameter in BufferingBeanBuilder">T</a>&gt;</code></td>
+<td class="colLast"><span class="strong">BufferingBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
+<td class="colLast"><span class="strong">BasicImmutableBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
+         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html" title="type parameter in BasicBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">BasicBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BasicBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
+         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="type parameter in BufferingBeanBuilder">T</a>&gt;</code></td>
+<td class="colLast"><span class="strong">BufferingBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/BufferingBeanBuilder.html#setString(java.lang.String, java.lang.String)">setString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -281,7 +311,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">DirectFieldsBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">DirectFieldsBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -290,7 +320,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="type parameter in DirectFieldsBeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><span class="strong">DirectFieldsBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><span class="strong">DirectFieldsBeanBuilder.</span><code><strong><a href="../../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -310,6 +340,67 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ReflectiveMetaBean.</span><code><strong><a href="../../../../org/joda/beans/impl/reflection/ReflectiveMetaBean.html#builder()">builder</a></strong>()</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.joda.beans.ser">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a> in <a href="../../../../org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a> that return <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">SerDeserializer.</span><code><strong><a href="../../../../org/joda/beans/ser/SerDeserializer.html#createBuilder(java.lang.Class, org.joda.beans.MetaBean)">createBuilder</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;beanType,
+             <a href="../../../../org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>&nbsp;metaBean)</code>
+<div class="block">Creates the stateful builder that captures state as the parse progresses.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">DefaultDeserializer.</span><code><strong><a href="../../../../org/joda/beans/ser/DefaultDeserializer.html#createBuilder(java.lang.Class, org.joda.beans.MetaBean)">createBuilder</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;beanType,
+             <a href="../../../../org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>&nbsp;metaBean)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a> with parameters of type <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><span class="strong">SerDeserializer.</span><code><strong><a href="../../../../org/joda/beans/ser/SerDeserializer.html#build(java.lang.Class, org.joda.beans.BeanBuilder)">build</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;beanType,
+     <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;?&gt;&nbsp;builder)</code>
+<div class="block">Builds the resulting object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><span class="strong">DefaultDeserializer.</span><code><strong><a href="../../../../org/joda/beans/ser/DefaultDeserializer.html#build(java.lang.Class, org.joda.beans.BeanBuilder)">build</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;beanType,
+     <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;?&gt;&nbsp;builder)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">SerDeserializer.</span><code><strong><a href="../../../../org/joda/beans/ser/SerDeserializer.html#setValue(org.joda.beans.BeanBuilder, org.joda.beans.MetaProperty, java.lang.Object)">setValue</a></strong>(<a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;?&gt;&nbsp;builder,
+        <a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProp,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
+<div class="block">Sets the parsed value into the builder.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">DefaultDeserializer.</span><code><strong><a href="../../../../org/joda/beans/ser/DefaultDeserializer.html#setValue(org.joda.beans.BeanBuilder, org.joda.beans.MetaProperty, java.lang.Object)">setValue</a></strong>(<a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;?&gt;&nbsp;builder,
+        <a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProp,
+        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

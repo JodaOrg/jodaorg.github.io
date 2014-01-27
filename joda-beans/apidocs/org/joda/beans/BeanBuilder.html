@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>BeanBuilder (Joda-Beans 0.9.1 API)</title>
+<title>BeanBuilder (Joda-Beans 0.9.2 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="BeanBuilder (Joda-Beans 0.9.1 API)";
+        parent.document.title="BeanBuilder (Joda-Beans 0.9.2 API)";
     }
 //-->
 </script>
@@ -88,7 +88,7 @@
 <dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>T</code> - the type of the bean</dd></dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../org/joda/beans/impl/BasicBeanBuilder.html" title="class in org.joda.beans.impl">BasicBeanBuilder</a>, <a href="../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl">BasicImmutableBeanBuilder</a>, <a href="../../../org/joda/beans/impl/direct/DirectBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectBeanBuilder</a>, <a href="../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectFieldsBeanBuilder</a></dd>
+<dd><a href="../../../org/joda/beans/impl/BasicBeanBuilder.html" title="class in org.joda.beans.impl">BasicBeanBuilder</a>, <a href="../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl">BasicImmutableBeanBuilder</a>, <a href="../../../org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a>, <a href="../../../org/joda/beans/impl/direct/DirectBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectBeanBuilder</a>, <a href="../../../org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectFieldsBeanBuilder</a></dd>
 </dl>
 <hr>
 <br>
@@ -122,7 +122,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><code><strong><a href="../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
@@ -142,7 +142,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<td class="colLast"><code><strong><a href="../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
@@ -193,13 +193,13 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
-<pre><a href="../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;&nbsp;set(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<pre><a href="../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;&nbsp;set(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
                  <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
 <div class="block">Sets the value of a single property into the builder.
  <p>
  This will normally behave as per a <code>Map</code>, however it may not
  and as a general rule callers should only set each property once.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>property</code> - the property, not null</dd><dd><code>value</code> - the property value, may be null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>metaProperty</code> - the meta-property, not null</dd><dd><code>value</code> - the property value, may be null</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for chaining, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - optionally thrown if the property name is invalid</dd></dl>
@@ -232,7 +232,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>setString</h4>
-<pre><a href="../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;&nbsp;setString(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;property,
+<pre><a href="../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../org/joda/beans/BeanBuilder.html" title="type parameter in BeanBuilder">T</a>&gt;&nbsp;setString(<a href="../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
                        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
 <div class="block">Sets the value of a single property into the builder.
  <p>
@@ -241,7 +241,7 @@
  <p>
  This will normally behave as per a <code>Map</code>, however it may not
  and as a general rule callers should only set each property once.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>property</code> - the property name, not null</dd><dd><code>value</code> - the property value, may be null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>metaProperty</code> - the meta-property name, not null</dd><dd><code>value</code> - the property value, may be null</dd>
 <dt><span class="strong">Returns:</span></dt><dd><code>this</code>, for chaining, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - optionally thrown if the property name is invalid</dd></dl>

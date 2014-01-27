@@ -56,12 +56,12 @@
 <a class="jxr_linenumber" name="46" href="#46">46</a>  <em class="jxr_javadoccomment">     * This will normally behave as per a {@code Map}, however it may not</em>
 <a class="jxr_linenumber" name="47" href="#47">47</a>  <em class="jxr_javadoccomment">     * and as a general rule callers should only set each property once.</em>
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <em class="jxr_javadoccomment">     * @param property  the property, not null</em>
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <em class="jxr_javadoccomment">     * @param metaProperty  the meta-property, not null</em>
 <a class="jxr_linenumber" name="50" href="#50">50</a>  <em class="jxr_javadoccomment">     * @param value  the property value, may be null</em>
 <a class="jxr_linenumber" name="51" href="#51">51</a>  <em class="jxr_javadoccomment">     * @return {@code this}, for chaining, not null</em>
 <a class="jxr_linenumber" name="52" href="#52">52</a>  <em class="jxr_javadoccomment">     * @throws RuntimeException optionally thrown if the property name is invalid</em>
 <a class="jxr_linenumber" name="53" href="#53">53</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="54" href="#54">54</a>      BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; property, Object value);
+<a class="jxr_linenumber" name="54" href="#54">54</a>      BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value);
 <a class="jxr_linenumber" name="55" href="#55">55</a>  
 <a class="jxr_linenumber" name="56" href="#56">56</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="57" href="#57">57</a>  <em class="jxr_javadoccomment">     * Sets the value of a single property into the builder.</em>
@@ -88,12 +88,12 @@
 <a class="jxr_linenumber" name="78" href="#78">78</a>  <em class="jxr_javadoccomment">     * This will normally behave as per a {@code Map}, however it may not</em>
 <a class="jxr_linenumber" name="79" href="#79">79</a>  <em class="jxr_javadoccomment">     * and as a general rule callers should only set each property once.</em>
 <a class="jxr_linenumber" name="80" href="#80">80</a>  <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="81" href="#81">81</a>  <em class="jxr_javadoccomment">     * @param property  the property name, not null</em>
+<a class="jxr_linenumber" name="81" href="#81">81</a>  <em class="jxr_javadoccomment">     * @param metaProperty  the meta-property name, not null</em>
 <a class="jxr_linenumber" name="82" href="#82">82</a>  <em class="jxr_javadoccomment">     * @param value  the property value, may be null</em>
 <a class="jxr_linenumber" name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * @return {@code this}, for chaining, not null</em>
 <a class="jxr_linenumber" name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     * @throws RuntimeException optionally thrown if the property name is invalid</em>
 <a class="jxr_linenumber" name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="86" href="#86">86</a>      BeanBuilder&lt;T&gt; setString(MetaProperty&lt;?&gt; property, String value);
+<a class="jxr_linenumber" name="86" href="#86">86</a>      BeanBuilder&lt;T&gt; setString(MetaProperty&lt;?&gt; metaProperty, String value);
 <a class="jxr_linenumber" name="87" href="#87">87</a>  
 <a class="jxr_linenumber" name="88" href="#88">88</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="89" href="#89">89</a>  <em class="jxr_javadoccomment">     * Sets the value of a map of properties into the builder.</em>

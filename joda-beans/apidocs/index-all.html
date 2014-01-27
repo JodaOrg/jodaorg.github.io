@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Index (Joda-Beans 0.9.1 API)</title>
+<title>Index (Joda-Beans 0.9.2 API)</title>
 <link rel="stylesheet" type="text/css" href="./stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Index (Joda-Beans 0.9.1 API)";
+        parent.document.title="Index (Joda-Beans 0.9.2 API)";
     }
 //-->
 </script>
@@ -81,6 +81,8 @@
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectMetaProperty.html#annotations()">annotations()</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectMetaProperty.html" title="class in org.joda.beans.impl.direct">DirectMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#annotations()">annotations()</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#annotations()">annotations()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#annotations()">annotations()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
@@ -243,12 +245,28 @@
 <dd>
 <div class="block">Get the type of the bean represented as a <code>Class</code>.</div>
 </dd>
+<dt><a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">BufferingBeanBuilder</span></a>&lt;<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="type parameter in BufferingBeanBuilder">T</a> extends <a href="./org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt; - Class in <a href="./org/joda/beans/impl/package-summary.html">org.joda.beans.impl</a></dt>
+<dd>
+<div class="block">Implementation of <code>BeanBuilder</code> that buffers data in a local map.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#BufferingBeanBuilder(org.joda.beans.MetaBean)">BufferingBeanBuilder(MetaBean)</a></span> - Constructor for class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Constructs the builder wrapping the target bean.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/BeanBuilder.html#build()">build()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a></dt>
 <dd>
 <div class="block">Builds the bean from the state of the builder.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicBeanBuilder.html#build()">build()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicBeanBuilder.html" title="class in org.joda.beans.impl">BasicBeanBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#build()">build()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#build(java.lang.Class, org.joda.beans.BeanBuilder)">build(Class&lt;?&gt;, BeanBuilder&lt;?&gt;)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializer.html#build(java.lang.Class, org.joda.beans.BeanBuilder)">build(Class&lt;?&gt;, BeanBuilder&lt;?&gt;)</a></span> - Method in interface org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser">SerDeserializer</a></dt>
+<dd>
+<div class="block">Builds the resulting object.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/ser/SerIterable.html#build()">build()</a></span> - Method in interface org.joda.beans.ser.<a href="./org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser">SerIterable</a></dt>
 <dd>
 <div class="block">Builds the final collection.</div>
@@ -381,6 +399,12 @@
 <dd>
 <div class="block">Creates an iterator wrapper for a meta-property value.</div>
 </dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#createBuilder(java.lang.Class, org.joda.beans.MetaBean)">createBuilder(Class&lt;?&gt;, MetaBean)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializer.html#createBuilder(java.lang.Class, org.joda.beans.MetaBean)">createBuilder(Class&lt;?&gt;, MetaBean)</a></span> - Method in interface org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser">SerDeserializer</a></dt>
+<dd>
+<div class="block">Creates the stateful builder that captures state as the parse progresses.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/gen/BeanCodeGen.html#createFromArgs(java.lang.String[])">createFromArgs(String[])</a></span> - Static method in class org.joda.beans.gen.<a href="./org/joda/beans/gen/BeanCodeGen.html" title="class in org.joda.beans.gen">BeanCodeGen</a></dt>
 <dd>
 <div class="block">Creates an instance of <code>BeanCodeGen</code> from arguments.</div>
@@ -431,13 +455,23 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#declaringType()">declaringType()</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#declaringType()">declaringType()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#declaringType()">declaringType()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
 <div class="block">Get the type that declares the property, represented as a <code>Class</code>.</div>
 </dd>
-<dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#decodeClass(java.lang.String, java.lang.String, java.util.Map)">decodeClass(String, String, Map&lt;String, Class&lt;?&gt;&gt;)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerTypeMapper.html#decodeType(java.lang.String, org.joda.beans.ser.JodaBeanSer, java.lang.String, java.util.Map)">decodeType(String, JodaBeanSer, String, Map&lt;String, Class&lt;?&gt;&gt;)</a></span> - Static method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerTypeMapper.html" title="class in org.joda.beans.ser">SerTypeMapper</a></dt>
 <dd>
 <div class="block">Decodes a class.</div>
+</dd>
+<dt><a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser"><span class="strong">DefaultDeserializer</span></a> - Class in <a href="./org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></dt>
+<dd>
+<div class="block">Default deserializer that expects the input to match the current classpath beans.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#DefaultDeserializer()">DefaultDeserializer()</a></span> - Constructor for class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>
+<div class="block">Creates an instance.</div>
 </dd>
 <dt><a href="./org/joda/beans/DerivedProperty.html" title="annotation in org.joda.beans"><span class="strong">DerivedProperty</span></a> - Annotation Type in <a href="./org/joda/beans/package-summary.html">org.joda.beans</a></dt>
 <dd>
@@ -501,7 +535,7 @@
 <dd>
 <div class="block">An empty list of classes.</div>
 </dd>
-<dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#encodeClass(java.lang.Class, java.lang.String, java.util.Map)">encodeClass(Class&lt;?&gt;, String, Map&lt;Class&lt;?&gt;, String&gt;)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerTypeMapper.html#encodeType(java.lang.Class, org.joda.beans.ser.JodaBeanSer, java.lang.String, java.util.Map)">encodeType(Class&lt;?&gt;, JodaBeanSer, String, Map&lt;Class&lt;?&gt;, String&gt;)</a></span> - Static method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerTypeMapper.html" title="class in org.joda.beans.ser">SerTypeMapper</a></dt>
 <dd>
 <div class="block">Encodes a basic class.</div>
 </dd>
@@ -561,6 +595,22 @@
 </a>
 <h2 class="title">F</h2>
 <dl>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializers.html#findDeserializer(java.lang.Class)">findDeserializer(Class&lt;?&gt;)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></dt>
+<dd>
+<div class="block">Finds the deserializer for the specified type.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#findMetaBean(java.lang.Class)">findMetaBean(Class&lt;?&gt;)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializer.html#findMetaBean(java.lang.Class)">findMetaBean(Class&lt;?&gt;)</a></span> - Method in interface org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser">SerDeserializer</a></dt>
+<dd>
+<div class="block">Lookup the meta-bean for the speecified type.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#findMetaProperty(java.lang.Class, org.joda.beans.MetaBean, java.lang.String)">findMetaProperty(Class&lt;?&gt;, MetaBean, String)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializer.html#findMetaProperty(java.lang.Class, org.joda.beans.MetaBean, java.lang.String)">findMetaProperty(Class&lt;?&gt;, MetaBean, String)</a></span> - Method in interface org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser">SerDeserializer</a></dt>
+<dd>
+<div class="block">Lookup the meta-property for the specified property name.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicPropertyMap.html#flatten()">flatten()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicPropertyMap.html" title="class in org.joda.beans.impl">BasicPropertyMap</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/PropertyMap.html#flatten()">flatten()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/PropertyMap.html" title="interface in org.joda.beans">PropertyMap</a></dt>
@@ -613,6 +663,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicPropertyMap.html#get(java.lang.Object)">get(Object)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicPropertyMap.html" title="class in org.joda.beans.impl">BasicPropertyMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#get(java.lang.String)">get(String)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Gets the buffered value associated with the specified property name.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#get(org.joda.beans.MetaProperty)">get(MetaProperty&lt;?&gt;)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Gets the buffered value associated with the specified property name.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectMetaProperty.html#get(org.joda.beans.Bean)">get(Bean)</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectMetaProperty.html" title="class in org.joda.beans.impl.direct">DirectMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectMetaPropertyMap.html#get(java.lang.Object)">get(Object)</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectMetaPropertyMap.html" title="class in org.joda.beans.impl.direct">DirectMetaPropertyMap</a></dt>
@@ -626,6 +684,8 @@
 <div class="block">Gets the value of the property cast to a specific type.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#get(org.joda.beans.Bean)">get(Bean)</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#get(org.joda.beans.Bean)">get(Bean)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/integrate/freemarker/FreemarkerTemplateModel.html#get(java.lang.String)">get(String)</a></span> - Method in class org.joda.beans.integrate.freemarker.<a href="./org/joda/beans/integrate/freemarker/FreemarkerTemplateModel.html" title="class in org.joda.beans.integrate.freemarker">FreemarkerTemplateModel</a></dt>
 <dd>
@@ -651,6 +711,10 @@
 <dd>
 <div class="block">Gets the value of the property as a <code>boolean</code>.</div>
 </dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#getBuffer()">getBuffer()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Gets the buffer holding the state of the builder.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/gen/BeanGenConfig.html#getBuilderGenerators()">getBuilderGenerators()</a></span> - Method in class org.joda.beans.gen.<a href="./org/joda/beans/gen/BeanGenConfig.html" title="class in org.joda.beans.gen">BeanGenConfig</a></dt>
 <dd>
 <div class="block">The builder generators.</div>
@@ -670,6 +734,14 @@
 <dt><span class="strong"><a href="./org/joda/beans/gen/BeanGenConfig.html#getCopyGenerators()">getCopyGenerators()</a></span> - Method in class org.joda.beans.gen.<a href="./org/joda/beans/gen/BeanGenConfig.html" title="class in org.joda.beans.gen">BeanGenConfig</a></dt>
 <dd>
 <div class="block">The copy generators.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#getDeserializers()">getDeserializers()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
+<dd>
+<div class="block">Gets the deserializers.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializers.html#getDeserializers()">getDeserializers()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></dt>
+<dd>
+<div class="block">Gets the map of deserializers which can be modified.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/flexi/FlexiBean.html#getDouble(java.lang.String)">getDouble(String)</a></span> - Method in class org.joda.beans.impl.flexi.<a href="./org/joda/beans/impl/flexi/FlexiBean.html" title="class in org.joda.beans.impl.flexi">FlexiBean</a></dt>
 <dd>
@@ -714,6 +786,10 @@
 <dt><span class="strong"><a href="./org/joda/beans/impl/flexi/FlexiBean.html#getLong(java.lang.String, long)">getLong(String, long)</a></span> - Method in class org.joda.beans.impl.flexi.<a href="./org/joda/beans/impl/flexi/FlexiBean.html" title="class in org.joda.beans.impl.flexi">FlexiBean</a></dt>
 <dd>
 <div class="block">Gets the value of the property as a <code>long</code> using a default value.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#getMetaBean()">getMetaBean()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Gets the meta-beans.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#getNewLine()">getNewLine()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
 <dd>
@@ -819,6 +895,14 @@
 <dd>
 <div class="block">Annotation defining which constructor is to be used to create the object
  in for code generation of immutable beans.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#INSTANCE">INSTANCE</a></span> - Static variable in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>
+<div class="block">Singleton.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializers.html#INSTANCE">INSTANCE</a></span> - Static variable in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></dt>
+<dd>
+<div class="block">Shared global instance which can be mutated.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/ser/SerIteratorFactory.html#INSTANCE">INSTANCE</a></span> - Static variable in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser">SerIteratorFactory</a></dt>
 <dd>
@@ -1042,6 +1126,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#metaBean()">metaBean()</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#metaBean()">metaBean()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/JodaBeanUtils.html#metaBean(java.lang.Class)">metaBean(Class&lt;?&gt;)</a></span> - Static method in class org.joda.beans.<a href="./org/joda/beans/JodaBeanUtils.html" title="class in org.joda.beans">JodaBeanUtils</a></dt>
 <dd>
 <div class="block">Gets the meta-bean for a class.</div>
@@ -1207,6 +1293,10 @@
 <dd>
 <div class="block">Factory to create a property map avoiding duplicate generics.</div>
 </dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#of(org.joda.beans.MetaBean)">of(MetaBean)</a></span> - Static method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Constructs the builder wrapping the target bean.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaBean.html#of(java.lang.Class)">of(Class&lt;B&gt;)</a></span> - Static method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaBean.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaBean</a></dt>
 <dd>
 <div class="block">Factory to create a meta-bean avoiding duplicate generics.</div>
@@ -1214,6 +1304,14 @@
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#of(java.lang.Class, java.lang.String)">of(Class&lt;? extends Bean&gt;, String)</a></span> - Static method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
 <dd>
 <div class="block">Factory to create a meta-property avoiding duplicate generics.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#of(java.lang.String, org.joda.beans.MetaBean, java.lang.Class)">of(String, MetaBean, Class&lt;R&gt;)</a></span> - Static method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
+<dd>
+<div class="block">Creates a non-generified property.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#of(java.lang.String, org.joda.beans.MetaBean, java.lang.Class, java.lang.reflect.Type)">of(String, MetaBean, Class&lt;R&gt;, Type)</a></span> - Static method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
+<dd>
+<div class="block">Creates a property.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/query/ChainedBeanQuery.html#of(org.joda.beans.BeanQuery, org.joda.beans.BeanQuery)">of(BeanQuery&lt;? extends Bean&gt;, BeanQuery&lt;P&gt;)</a></span> - Static method in class org.joda.beans.query.<a href="./org/joda/beans/query/ChainedBeanQuery.html" title="class in org.joda.beans.query">ChainedBeanQuery</a></dt>
 <dd>
@@ -1373,6 +1471,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#propertyGenericType()">propertyGenericType()</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#propertyGenericType()">propertyGenericType()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#propertyGenericType()">propertyGenericType()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
 <div class="block">Gets the generic types of the property.</div>
@@ -1424,6 +1524,8 @@
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectMetaProperty.html#propertyType()">propertyType()</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectMetaProperty.html" title="class in org.joda.beans.impl.direct">DirectMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#propertyType()">propertyType()</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#propertyType()">propertyType()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#propertyType()">propertyType()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
@@ -1501,6 +1603,10 @@
 <dd>
 <div class="block">A meta-property implemented using a <code>PropertyDescriptor</code>.</div>
 </dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializers.html#register(java.lang.Class, org.joda.beans.ser.SerDeserializer)">register(Class&lt;?&gt;, SerDeserializer)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></dt>
+<dd>
+<div class="block">Adds the deserializer to be used for the specified type.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/JodaBeanUtils.html#registerMetaBean(org.joda.beans.MetaBean)">registerMetaBean(MetaBean)</a></span> - Static method in class org.joda.beans.<a href="./org/joda/beans/JodaBeanUtils.html" title="class in org.joda.beans">JodaBeanUtils</a></dt>
 <dd>
 <div class="block">Registers a meta-bean.</div>
@@ -1519,6 +1625,18 @@
 </a>
 <h2 class="title">S</h2>
 <dl>
+<dt><a href="./org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser"><span class="strong">SerDeserializer</span></a> - Interface in <a href="./org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></dt>
+<dd>
+<div class="block">Assists with deserialization allowing migration of data from an old data format to a new one.</div>
+</dd>
+<dt><a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser"><span class="strong">SerDeserializers</span></a> - Class in <a href="./org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></dt>
+<dd>
+<div class="block">Manages a map of deserializers that assist with data migration.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializers.html#SerDeserializers()">SerDeserializers()</a></span> - Constructor for class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></dt>
+<dd>
+<div class="block">Creates an instance.</div>
+</dd>
 <dt><a href="./org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser"><span class="strong">SerIterable</span></a> - Interface in <a href="./org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></dt>
 <dd>
 <div class="block">An abstraction over collections, lists, sets and maps.</div>
@@ -1533,6 +1651,10 @@
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/ser/SerIteratorFactory.html#SerIteratorFactory()">SerIteratorFactory()</a></span> - Constructor for class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser">SerIteratorFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="./org/joda/beans/ser/SerTypeMapper.html" title="class in org.joda.beans.ser"><span class="strong">SerTypeMapper</span></a> - Class in <a href="./org/joda/beans/ser/package-summary.html">org.joda.beans.ser</a></dt>
+<dd>
+<div class="block">Type mapper for Joda-Bean serialization, used by serialization implementations.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/BeanBuilder.html#set(java.lang.String, java.lang.Object)">set(String, Object)</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a></dt>
 <dd>
 <div class="block">Sets the value of a single property into the builder.</div>
@@ -1549,6 +1671,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicProperty.html#set(java.lang.Object)">set(Object)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicProperty.html" title="class in org.joda.beans.impl">BasicProperty</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#set(java.lang.String, java.lang.Object)">set(String, Object)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set(MetaProperty&lt;?&gt;, Object)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set(MetaProperty&lt;?&gt;, Object)</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectFieldsBeanBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectMetaProperty.html#set(org.joda.beans.Bean, java.lang.Object)">set(Bean, Object)</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectMetaProperty.html" title="class in org.joda.beans.impl.direct">DirectMetaProperty</a></dt>
@@ -1558,6 +1684,8 @@
 <div class="block">Sets a property in this bean to the specified value.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#set(org.joda.beans.Bean, java.lang.Object)">set(Bean, Object)</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#set(org.joda.beans.Bean, java.lang.Object)">set(Bean, Object)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#set(org.joda.beans.Bean, java.lang.Object)">set(Bean, Object)</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
@@ -1578,6 +1706,8 @@
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicBeanBuilder.html#setAll(java.util.Map)">setAll(Map&lt;String, ? extends Object&gt;)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicBeanBuilder.html" title="class in org.joda.beans.impl">BasicBeanBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicImmutableBeanBuilder.html#setAll(java.util.Map)">setAll(Map&lt;String, ? extends Object&gt;)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="class in org.joda.beans.impl">BasicImmutableBeanBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#setAll(java.util.Map)">setAll(Map&lt;String, ? extends Object&gt;)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#setAll(java.util.Map)">setAll(Map&lt;String, ? extends Object&gt;)</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectFieldsBeanBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -1613,6 +1743,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicMetaProperty.html#setString(org.joda.beans.Bean, java.lang.String, org.joda.convert.StringConvert)">setString(Bean, String, StringConvert)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicMetaProperty.html" title="class in org.joda.beans.impl">BasicMetaProperty</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#setString(java.lang.String, java.lang.String)">setString(String, String)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString(MetaProperty&lt;?&gt;, String)</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString(MetaProperty&lt;?&gt;, String)</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectFieldsBeanBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#setString(org.joda.beans.Bean, java.lang.String)">setString(Bean, String)</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
@@ -1622,6 +1756,12 @@
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#setString(org.joda.beans.Bean, java.lang.String, org.joda.convert.StringConvert)">setString(Bean, String, StringConvert)</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
 <div class="block">Sets the value of the property on the specified bean from a string by conversion.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#setValue(org.joda.beans.BeanBuilder, org.joda.beans.MetaProperty, java.lang.Object)">setValue(BeanBuilder&lt;?&gt;, MetaProperty&lt;?&gt;, Object)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializer.html#setValue(org.joda.beans.BeanBuilder, org.joda.beans.MetaProperty, java.lang.Object)">setValue(BeanBuilder&lt;?&gt;, MetaProperty&lt;?&gt;, Object)</a></span> - Method in interface org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser">SerDeserializer</a></dt>
+<dd>
+<div class="block">Sets the parsed value into the builder.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/BasicPropertyMap.html#size()">size()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BasicPropertyMap.html" title="class in org.joda.beans.impl">BasicPropertyMap</a></dt>
 <dd>&nbsp;</dd>
@@ -1651,6 +1791,10 @@
 <dd>
 <div class="block">Gets an iterable wrapper for <code>SortedSet</code>.</div>
 </dd>
+<dt><a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl"><span class="strong">StandaloneMetaProperty</span></a>&lt;<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="type parameter in StandaloneMetaProperty">P</a>&gt; - Class in <a href="./org/joda/beans/impl/package-summary.html">org.joda.beans.impl</a></dt>
+<dd>
+<div class="block">A meta-property that exists separate from a bean.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/JodaBeanUtils.html#stringConverter()">stringConverter()</a></span> - Static method in class org.joda.beans.<a href="./org/joda/beans/JodaBeanUtils.html" title="class in org.joda.beans">JodaBeanUtils</a></dt>
 <dd>
 <div class="block">Gets the standard string format converter.</div>
@@ -1658,6 +1802,8 @@
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectMetaProperty.html#style()">style()</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectMetaProperty.html" title="class in org.joda.beans.impl.direct">DirectMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html#style()">style()</a></span> - Method in class org.joda.beans.impl.reflection.<a href="./org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection">ReflectiveMetaProperty</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/StandaloneMetaProperty.html#style()">style()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl">StandaloneMetaProperty</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/MetaProperty.html#style()">style()</a></span> - Method in interface org.joda.beans.<a href="./org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a></dt>
 <dd>
@@ -1699,6 +1845,10 @@
 <dd>
 <div class="block">Returns a string that summarises the property.</div>
 </dd>
+<dt><span class="strong"><a href="./org/joda/beans/impl/BufferingBeanBuilder.html#toString()">toString()</a></span> - Method in class org.joda.beans.impl.<a href="./org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl">BufferingBeanBuilder</a></dt>
+<dd>
+<div class="block">Returns a string that summarises the builder.</div>
+</dd>
 <dt><span class="strong"><a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html#toString()">toString()</a></span> - Method in class org.joda.beans.impl.direct.<a href="./org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct">DirectFieldsBeanBuilder</a></dt>
 <dd>
 <div class="block">Returns a string that summarises the builder.</div>
@@ -1722,6 +1872,14 @@
 <div class="block">Returns the <code>toString</code> value handling arrays.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/query/ChainedBeanQuery.html#toString()">toString()</a></span> - Method in class org.joda.beans.query.<a href="./org/joda/beans/query/ChainedBeanQuery.html" title="class in org.joda.beans.query">ChainedBeanQuery</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/DefaultDeserializer.html#toString()">toString()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser">DefaultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#toString()">toString()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerDeserializers.html#toString()">toString()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/SerTypeMapper.html#toString()">toString()</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/SerTypeMapper.html" title="class in org.joda.beans.ser">SerTypeMapper</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="strong"><a href="./org/joda/beans/ser/xml/JodaBeanXml.html#TYPE">TYPE</a></span> - Static variable in class org.joda.beans.ser.xml.<a href="./org/joda/beans/ser/xml/JodaBeanXml.html" title="class in org.joda.beans.ser.xml">JodaBeanXml</a></dt>
 <dd>
@@ -1791,6 +1949,10 @@ the order they are declared.</div>
 <dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#withConverter(org.joda.convert.StringConvert)">withConverter(StringConvert)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
 <dd>
 <div class="block">Returns a copy of this serializer with the specified string converter.</div>
+</dd>
+<dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#withDeserializers(org.joda.beans.ser.SerDeserializers)">withDeserializers(SerDeserializers)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
+<dd>
+<div class="block">Returns a copy of this serializer with the specified deserializers.</div>
 </dd>
 <dt><span class="strong"><a href="./org/joda/beans/ser/JodaBeanSer.html#withIndent(java.lang.String)">withIndent(String)</a></span> - Method in class org.joda.beans.ser.<a href="./org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></dt>
 <dd>

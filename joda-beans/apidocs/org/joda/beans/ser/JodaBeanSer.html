@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>JodaBeanSer (Joda-Beans 0.9.1 API)</title>
+<title>JodaBeanSer (Joda-Beans 0.9.2 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="JodaBeanSer (Joda-Beans 0.9.1 API)";
+        parent.document.title="JodaBeanSer (Joda-Beans 0.9.2 API)";
     }
 //-->
 </script>
@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html" title="class in org.joda.beans.ser"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/joda/beans/ser/JodaBeanSer.html" target="_top">Frames</a></li>
@@ -147,50 +147,44 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#decodeClass(java.lang.String, java.lang.String, java.util.Map)">decodeClass</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
-           <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;basePackage,
-           <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;knownTypes)</code>
-<div class="block">Decodes a class.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#encodeClass(java.lang.Class, java.lang.String, java.util.Map)">encodeClass</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls,
-           <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;basePackage,
-           <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;knownTypes)</code>
-<div class="block">Encodes a basic class.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>org.joda.convert.StringConvert</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#getConverter()">getConverter</a></strong>()</code>
 <div class="block">Gets the string converter.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#getDeserializers()">getDeserializers</a></strong>()</code>
+<div class="block">Gets the deserializers.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#getIndent()">getIndent</a></strong>()</code>
 <div class="block">Gets the pretty print indent.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser">SerIteratorFactory</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#getIteratorFactory()">getIteratorFactory</a></strong>()</code>
 <div class="block">Gets the iterator factory.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#getNewLine()">getNewLine</a></strong>()</code>
 <div class="block">Gets the new line string.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser">SerIteratorFactory</a></code></td>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#isShortTypes()">isShortTypes</a></strong>()</code>
 <div class="block">Gets whether to use short types.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#toString()">toString</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
@@ -200,35 +194,41 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#withDeserializers(org.joda.beans.ser.SerDeserializers)">withDeserializers</a></strong>(<a href="../../../../org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a>&nbsp;deserializers)</code>
+<div class="block">Returns a copy of this serializer with the specified deserializers.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#withIndent(java.lang.String)">withIndent</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;indent)</code>
 <div class="block">Returns a copy of this serializer with the specified pretty print indent.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#withIteratorFactory(org.joda.beans.ser.SerIteratorFactory)">withIteratorFactory</a></strong>(<a href="../../../../org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser">SerIteratorFactory</a>&nbsp;iteratorFactory)</code>
 <div class="block">Returns a copy of this serializer with the specified iterator factory.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#withNewLine(java.lang.String)">withNewLine</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;newLine)</code>
 <div class="block">Returns a copy of this serializer with the specified pretty print new line.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#withShortTypes(boolean)">withShortTypes</a></strong>(boolean&nbsp;shortTypes)</code>
 <div class="block">Returns a copy of this serializer with the short types flag set.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlReader.html" title="class in org.joda.beans.ser.xml">JodaBeanXmlReader</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#xmlReader()">xmlReader</a></strong>()</code>
 <div class="block">Creates an XML reader.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlWriter.html" title="class in org.joda.beans.ser.xml">JodaBeanXmlWriter</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/ser/JodaBeanSer.html#xmlWriter()">xmlWriter</a></strong>()</code>
 <div class="block">Creates an XML writer.</div>
@@ -240,7 +240,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -386,7 +386,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>isShortTypes</h4>
-<pre>public&nbsp;<a href="../../../../org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser">SerIteratorFactory</a>&nbsp;isShortTypes()</pre>
+<pre>public&nbsp;boolean&nbsp;isShortTypes()</pre>
 <div class="block">Gets whether to use short types.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the short types flag, not null</dd></dl>
 </li>
@@ -403,42 +403,31 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>a copy of this object with the short types flag changed, not null</dd></dl>
 </li>
 </ul>
-<a name="encodeClass(java.lang.Class, java.lang.String, java.util.Map)">
+<a name="getDeserializers()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>encodeClass</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;encodeClass(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;cls,
-                 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;basePackage,
-                 <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;knownTypes)</pre>
-<div class="block">Encodes a basic class.
+<h4>getDeserializers</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a>&nbsp;getDeserializers()</pre>
+<div class="block">Gets the deserializers.
  <p>
- This handles known simple types, like String, Integer or File, and prefixing.
- It also allows a map of message specific shorter forms.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>cls</code> - the class to encode, not null</dd><dd><code>basePackage</code> - the base package to use with trailing dot, null if none</dd><dd><code>knownTypes</code> - the known types map, null if not using known type shortening</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the class object, null if not a basic type</dd></dl>
+ The default deserializers can be modified.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the converter, not null</dd></dl>
 </li>
 </ul>
-<a name="decodeClass(java.lang.String, java.lang.String, java.util.Map)">
+<a name="withDeserializers(org.joda.beans.ser.SerDeserializers)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>decodeClass</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;decodeClass(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
-                   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;basePackage,
-                   <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&gt;&nbsp;knownTypes)
-                     throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
-<div class="block">Decodes a class.
+<h4>withDeserializers</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/beans/ser/JodaBeanSer.html" title="class in org.joda.beans.ser">JodaBeanSer</a>&nbsp;withDeserializers(<a href="../../../../org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser">SerDeserializers</a>&nbsp;deserializers)</pre>
+<div class="block">Returns a copy of this serializer with the specified deserializers.
  <p>
- This uses the context class loader.
- This handles known simple types, like String, Integer or File, and prefixing.
- It also allows a map of message specific shorter forms.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>className</code> - the class name, not null</dd><dd><code>basePackage</code> - the base package to use with trailing dot, null if none</dd><dd><code>knownTypes</code> - the known types map, null if not using known type shortening</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the class object, not null</dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></code> - if not found</dd></dl>
+ The default deserializers can be modified.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>deserializers</code> - the deserializers, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a copy of this object with the converter changed, not null</dd></dl>
 </li>
 </ul>
 <a name="xmlWriter()">
@@ -455,12 +444,25 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <a name="xmlReader()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>xmlReader</h4>
 <pre>public&nbsp;<a href="../../../../org/joda/beans/ser/xml/JodaBeanXmlReader.html" title="class in org.joda.beans.ser.xml">JodaBeanXmlReader</a>&nbsp;xmlReader()</pre>
 <div class="block">Creates an XML reader.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the XML reader, not null</dd></dl>
+</li>
+</ul>
+<a name="toString()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -490,7 +492,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/joda/beans/ser/GuavaSerIteratorFactory.html" title="class in org.joda.beans.ser"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/joda/beans/ser/JodaBeanSer.html" target="_top">Frames</a></li>

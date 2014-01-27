@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Class Hierarchy (Joda-Beans 0.9.1 API)</title>
+<title>Class Hierarchy (Joda-Beans 0.9.2 API)</title>
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Class Hierarchy (Joda-Beans 0.9.1 API)";
+        parent.document.title="Class Hierarchy (Joda-Beans 0.9.2 API)";
     }
 //-->
 </script>
@@ -115,6 +115,7 @@
 <ul>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectMetaProperty.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectMetaProperty</span></a>&lt;P&gt;</li>
 <li type="circle">org.joda.beans.impl.reflection.<a href="org/joda/beans/impl/reflection/ReflectiveMetaProperty.html" title="class in org.joda.beans.impl.reflection"><span class="strong">ReflectiveMetaProperty</span></a>&lt;P&gt;</li>
+<li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/StandaloneMetaProperty.html" title="class in org.joda.beans.impl"><span class="strong">StandaloneMetaProperty</span></a>&lt;P&gt;</li>
 </ul>
 </li>
 <li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/BasicProperty.html" title="class in org.joda.beans.impl"><span class="strong">BasicProperty</span></a>&lt;P&gt; (implements org.joda.beans.<a href="org/joda/beans/Property.html" title="interface in org.joda.beans">Property</a>&lt;P&gt;)</li>
@@ -131,7 +132,9 @@
 </li>
 </ul>
 </li>
+<li type="circle">org.joda.beans.impl.<a href="org/joda/beans/impl/BufferingBeanBuilder.html" title="class in org.joda.beans.impl"><span class="strong">BufferingBeanBuilder</span></a>&lt;T&gt; (implements org.joda.beans.<a href="org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;T&gt;)</li>
 <li type="circle">org.joda.beans.query.<a href="org/joda/beans/query/ChainedBeanQuery.html" title="class in org.joda.beans.query"><span class="strong">ChainedBeanQuery</span></a>&lt;P&gt; (implements org.joda.beans.<a href="org/joda/beans/BeanQuery.html" title="interface in org.joda.beans">BeanQuery</a>&lt;P&gt;)</li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/DefaultDeserializer.html" title="class in org.joda.beans.ser"><span class="strong">DefaultDeserializer</span></a> (implements org.joda.beans.ser.<a href="org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser">SerDeserializer</a>)</li>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectBean.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>)</li>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectFieldsBeanBuilder.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectFieldsBeanBuilder</span></a>&lt;T&gt; (implements org.joda.beans.<a href="org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;T&gt;)</li>
 <li type="circle">org.joda.beans.impl.direct.<a href="org/joda/beans/impl/direct/DirectMetaPropertyMap.html" title="class in org.joda.beans.impl.direct"><span class="strong">DirectMetaPropertyMap</span></a> (implements java.util.<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;)</li>
@@ -141,11 +144,13 @@
 <li type="circle">org.joda.beans.ser.xml.<a href="org/joda/beans/ser/xml/JodaBeanXmlReader.html" title="class in org.joda.beans.ser.xml"><span class="strong">JodaBeanXmlReader</span></a></li>
 <li type="circle">org.joda.beans.ser.xml.<a href="org/joda/beans/ser/xml/JodaBeanXmlWriter.html" title="class in org.joda.beans.ser.xml"><span class="strong">JodaBeanXmlWriter</span></a></li>
 <li type="circle">org.joda.beans.impl.reflection.<a href="org/joda/beans/impl/reflection/ReflectiveMetaBean.html" title="class in org.joda.beans.impl.reflection"><span class="strong">ReflectiveMetaBean</span></a> (implements org.joda.beans.<a href="org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>)</li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerDeserializers.html" title="class in org.joda.beans.ser"><span class="strong">SerDeserializers</span></a></li>
 <li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerIteratorFactory.html" title="class in org.joda.beans.ser"><span class="strong">SerIteratorFactory</span></a>
 <ul>
 <li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/GuavaSerIteratorFactory.html" title="class in org.joda.beans.ser"><span class="strong">GuavaSerIteratorFactory</span></a></li>
 </ul>
 </li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerTypeMapper.html" title="class in org.joda.beans.ser"><span class="strong">SerTypeMapper</span></a></li>
 <li type="circle">freemarker.template.WrappingTemplateModel
 <ul>
 <li type="circle">org.joda.beans.integrate.freemarker.<a href="org/joda/beans/integrate/freemarker/FreemarkerTemplateModel.html" title="class in org.joda.beans.integrate.freemarker"><span class="strong">FreemarkerTemplateModel</span></a> (implements freemarker.template.AdapterTemplateModel, freemarker.template.TemplateHashModelEx)</li>
@@ -179,6 +184,7 @@
 </ul>
 </li>
 <li type="circle">org.joda.beans.<a href="org/joda/beans/Property.html" title="interface in org.joda.beans"><span class="strong">Property</span></a>&lt;P&gt;</li>
+<li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerDeserializer.html" title="interface in org.joda.beans.ser"><span class="strong">SerDeserializer</span></a></li>
 <li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerIterable.html" title="interface in org.joda.beans.ser"><span class="strong">SerIterable</span></a></li>
 <li type="circle">org.joda.beans.ser.<a href="org/joda/beans/ser/SerIterator.html" title="interface in org.joda.beans.ser"><span class="strong">SerIterator</span></a></li>
 </ul>
