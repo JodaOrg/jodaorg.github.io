@@ -285,7 +285,7 @@
 <a class="jxr_linenumber" name="275" href="#275">275</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Money array must not be empty"</span>);
 <a class="jxr_linenumber" name="276" href="#276">276</a>         }
 <a class="jxr_linenumber" name="277" href="#277">277</a>         <a href="../../../org/joda/money/BigMoney.html">BigMoney</a> total = of(monies[0]);
-<a class="jxr_linenumber" name="278" href="#278">278</a>         MoneyUtils.checkNotNull(total, <span class="jxr_string">"Money arary must not contain null entries"</span>);
+<a class="jxr_linenumber" name="278" href="#278">278</a>         MoneyUtils.checkNotNull(total, <span class="jxr_string">"Money array must not contain null entries"</span>);
 <a class="jxr_linenumber" name="279" href="#279">279</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 1; i &lt; monies.length; i++) {
 <a class="jxr_linenumber" name="280" href="#280">280</a>             total = total.plus(of(monies[i]));
 <a class="jxr_linenumber" name="281" href="#281">281</a>         }
@@ -523,7 +523,7 @@
 <a class="jxr_linenumber" name="513" href="#513">513</a> <em class="jxr_javadoccomment">     * truncating the amount if necessary.</em>
 <a class="jxr_linenumber" name="514" href="#514">514</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
 <a class="jxr_linenumber" name="515" href="#515">515</a> <em class="jxr_javadoccomment">     * The returned instance will have this currency and the new scaled amount.</em>
-<a class="jxr_linenumber" name="516" href="#516">516</a> <em class="jxr_javadoccomment">     * For example, scaling 'USD 43.271' to a scale of 1 will yield 'USD 43.2'.</em>
+<a class="jxr_linenumber" name="516" href="#516">516</a> <em class="jxr_javadoccomment">     * For example, scaling 'USD 43.2' to a scale of 2 will yield 'USD 43.20'.</em>
 <a class="jxr_linenumber" name="517" href="#517">517</a> <em class="jxr_javadoccomment">     * No rounding is performed on the amount, so it must have a</em>
 <a class="jxr_linenumber" name="518" href="#518">518</a> <em class="jxr_javadoccomment">     * scale less than or equal to the new scale.</em>
 <a class="jxr_linenumber" name="519" href="#519">519</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>

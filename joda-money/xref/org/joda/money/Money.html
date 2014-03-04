@@ -329,13 +329,13 @@
 <a class="jxr_linenumber" name="319" href="#319">319</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="320" href="#320">320</a> <em class="jxr_javadoccomment">     * Parses an instance of {@code Money} from a string.</em>
 <a class="jxr_linenumber" name="321" href="#321">321</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="322" href="#322">322</a> <em class="jxr_javadoccomment">     * The string format is '&lt;currencyCode&gt; &lt;amount&gt;'.</em>
+<a class="jxr_linenumber" name="322" href="#322">322</a> <em class="jxr_javadoccomment">     * The string format is '$currencyCode $amount'.</em>
 <a class="jxr_linenumber" name="323" href="#323">323</a> <em class="jxr_javadoccomment">     * The currency code must be a valid three letter currency.</em>
 <a class="jxr_linenumber" name="324" href="#324">324</a> <em class="jxr_javadoccomment">     * The amount must match the regular expression {@code [+-]?[0-9]*[.]?[0-9]*}.</em>
 <a class="jxr_linenumber" name="325" href="#325">325</a> <em class="jxr_javadoccomment">     * This matches the output from {@link #toString()}.</em>
 <a class="jxr_linenumber" name="326" href="#326">326</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="327" href="#327">327</a> <em class="jxr_javadoccomment">     * For example, {@code of("USD 25")} creates the instance {@code USD 25.00}</em>
-<a class="jxr_linenumber" name="328" href="#328">328</a> <em class="jxr_javadoccomment">     * while {@code of("USD 25.95")} creates the instance {@code USD 25.95}.</em>
+<a class="jxr_linenumber" name="327" href="#327">327</a> <em class="jxr_javadoccomment">     * For example, {@code parse("USD 25")} creates the instance {@code USD 25.00}</em>
+<a class="jxr_linenumber" name="328" href="#328">328</a> <em class="jxr_javadoccomment">     * while {@code parse("USD 25.95")} creates the instance {@code USD 25.95}.</em>
 <a class="jxr_linenumber" name="329" href="#329">329</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="330" href="#330">330</a> <em class="jxr_javadoccomment">     * @param moneyStr  the money string to parse, not null</em>
 <a class="jxr_linenumber" name="331" href="#331">331</a> <em class="jxr_javadoccomment">     * @return the parsed instance, never null</em>
