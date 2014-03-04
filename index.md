@@ -14,6 +14,7 @@ These are the projects:
 - [Joda-Money](http://www.joda.org/joda-money/) - Basic types for Money
 - [Joda-Beans](http://www.joda.org/joda-beans/) - Next generation JavaBeans
 - [Joda-Convert](http://www.joda.org/joda-convert/) - String to Object conversion
+- [Joda-Collect](http://www.joda.org/joda-collect/) - Additional collection data structures
 - [Joda-Primitives](http://www.joda.org/joda-primitives/) - Primitive collections
 
 Each project aims to be focussed on a specific area and to have minimal dependencies.
