@@ -161,53 +161,61 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static long</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeDivide(long, long)">safeDivide</a></strong>(long&nbsp;dividend,
+          long&nbsp;divisor)</code>
+<div class="block">Divides the dividend by the divisor throwing an exception if 
+ overflow occurs or the divisor is zero.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeMultiply(int, int)">safeMultiply</a></strong>(int&nbsp;val1,
             int&nbsp;val2)</code>
 <div class="block">Multiply two values throwing an exception if overflow occurs.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeMultiply(long, int)">safeMultiply</a></strong>(long&nbsp;val1,
             int&nbsp;val2)</code>
 <div class="block">Multiply two values throwing an exception if overflow occurs.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeMultiply(long, long)">safeMultiply</a></strong>(long&nbsp;val1,
             long&nbsp;val2)</code>
 <div class="block">Multiply two values throwing an exception if overflow occurs.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeMultiplyToInt(long, long)">safeMultiplyToInt</a></strong>(long&nbsp;val1,
                  long&nbsp;val2)</code>
 <div class="block">Multiply two values to return an int throwing an exception if overflow occurs.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeNegate(int)">safeNegate</a></strong>(int&nbsp;value)</code>
 <div class="block">Negates the input throwing an exception if it can't negate it.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeSubtract(long, long)">safeSubtract</a></strong>(long&nbsp;val1,
             long&nbsp;val2)</code>
 <div class="block">Subtracts two values throwing an exception if overflow occurs.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#safeToInt(long)">safeToInt</a></strong>(long&nbsp;value)</code>
 <div class="block">Casts to an int throwing an exception if overflow occurs.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#verifyValueBounds(org.joda.time.DateTimeField, int, int, int)">verifyValueBounds</a></strong>(<a href="../../../../org/joda/time/DateTimeField.html" title="class in org.joda.time">DateTimeField</a>&nbsp;field,
                  int&nbsp;value,
@@ -216,7 +224,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Verify that input values are within specified bounds.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#verifyValueBounds(org.joda.time.DateTimeFieldType, int, int, int)">verifyValueBounds</a></strong>(<a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;fieldType,
                  int&nbsp;value,
@@ -225,7 +233,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Verify that input values are within specified bounds.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/FieldUtils.html#verifyValueBounds(java.lang.String, int, int, int)">verifyValueBounds</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
                  int&nbsp;value,
@@ -361,6 +369,22 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>the new total</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the value is too big or too small</dd></dl>
+</li>
+</ul>
+<a name="safeDivide(long, long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>safeDivide</h4>
+<pre>public static&nbsp;long&nbsp;safeDivide(long&nbsp;dividend,
+              long&nbsp;divisor)</pre>
+<div class="block">Divides the dividend by the divisor throwing an exception if 
+ overflow occurs or the divisor is zero.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>dividend</code> - the dividend</dd><dd><code>divisor</code> - the divisor</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the new total</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the operation overflows or the divisor is zero</dd></dl>
 </li>
 </ul>
 <a name="safeToInt(long)">
@@ -563,6 +587,6 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>

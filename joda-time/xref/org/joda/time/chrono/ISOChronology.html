@@ -180,12 +180,12 @@
 <a class="jxr_linenumber" name="170" href="#170">170</a>             <em class="jxr_comment">// Use zero based century and year of century.</em>
 <a class="jxr_linenumber" name="171" href="#171">171</a>             fields.centuryOfEra = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/field/DividedDateTimeField.html">DividedDateTimeField</a>(
 <a class="jxr_linenumber" name="172" href="#172">172</a>                 ISOYearOfEraDateTimeField.INSTANCE, DateTimeFieldType.centuryOfEra(), 100);
-<a class="jxr_linenumber" name="173" href="#173">173</a>             fields.yearOfCentury = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/field/RemainderDateTimeField.html">RemainderDateTimeField</a>(
-<a class="jxr_linenumber" name="174" href="#174">174</a>                 (<a href="../../../../org/joda/time/field/DividedDateTimeField.html">DividedDateTimeField</a>) fields.centuryOfEra, DateTimeFieldType.yearOfCentury());
-<a class="jxr_linenumber" name="175" href="#175">175</a>             fields.weekyearOfCentury = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/field/RemainderDateTimeField.html">RemainderDateTimeField</a>(
-<a class="jxr_linenumber" name="176" href="#176">176</a>                 (<a href="../../../../org/joda/time/field/DividedDateTimeField.html">DividedDateTimeField</a>) fields.centuryOfEra, DateTimeFieldType.weekyearOfCentury());
-<a class="jxr_linenumber" name="177" href="#177">177</a> 
-<a class="jxr_linenumber" name="178" href="#178">178</a>             fields.centuries = fields.centuryOfEra.getDurationField();
+<a class="jxr_linenumber" name="173" href="#173">173</a>             fields.centuries = fields.centuryOfEra.getDurationField();
+<a class="jxr_linenumber" name="174" href="#174">174</a>             
+<a class="jxr_linenumber" name="175" href="#175">175</a>             fields.yearOfCentury = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/field/RemainderDateTimeField.html">RemainderDateTimeField</a>(
+<a class="jxr_linenumber" name="176" href="#176">176</a>                 (<a href="../../../../org/joda/time/field/DividedDateTimeField.html">DividedDateTimeField</a>) fields.centuryOfEra, DateTimeFieldType.yearOfCentury());
+<a class="jxr_linenumber" name="177" href="#177">177</a>             fields.weekyearOfCentury = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/field/RemainderDateTimeField.html">RemainderDateTimeField</a>(
+<a class="jxr_linenumber" name="178" href="#178">178</a>                 (<a href="../../../../org/joda/time/field/DividedDateTimeField.html">DividedDateTimeField</a>) fields.centuryOfEra, fields.weekyears, DateTimeFieldType.weekyearOfCentury());
 <a class="jxr_linenumber" name="179" href="#179">179</a>         }
 <a class="jxr_linenumber" name="180" href="#180">180</a>     }
 <a class="jxr_linenumber" name="181" href="#181">181</a> 

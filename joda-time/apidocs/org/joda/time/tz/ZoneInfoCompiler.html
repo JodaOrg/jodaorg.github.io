@@ -97,14 +97,14 @@
 <br>
 <pre>public class <span class="strong">ZoneInfoCompiler</span>
 extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">Compiles Olson ZoneInfo database files into binary files for each time zone
+<div class="block">Compiles IANA ZoneInfo database files into binary files for each time zone
  in the database. <a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html" title="class in org.joda.time.tz"><code>DateTimeZoneBuilder</code></a> is used to construct and encode
  compiled data files. <a href="../../../../org/joda/time/tz/ZoneInfoProvider.html" title="class in org.joda.time.tz"><code>ZoneInfoProvider</code></a> loads the encoded files and
  converts them back into <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time"><code>DateTimeZone</code></a> objects.
  <p>
  Although this tool is similar to zic, the binary formats are not
- compatible. The latest Olson database files may be obtained
- <a href="http://www.twinsun.com/tz/tz-link.htm">here</a>.
+ compatible. The latest IANA time zone database files may be obtained
+ <a href="http://www.iana.org/time-zones">here</a>.
  <p>
  ZoneInfoCompiler is mutable and not thread-safe, although the main method
  may be safely invoked by multiple threads.</div>
@@ -333,6 +333,6 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>

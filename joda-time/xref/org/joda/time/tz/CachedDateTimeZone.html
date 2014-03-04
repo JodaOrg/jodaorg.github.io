@@ -91,7 +91,7 @@
 <a class="jxr_linenumber" name="81" href="#81">81</a>  
 <a class="jxr_linenumber" name="82" href="#82">82</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/joda/time/DateTimeZone.html">DateTimeZone</a> iZone;
 <a class="jxr_linenumber" name="83" href="#83">83</a>  
-<a class="jxr_linenumber" name="84" href="#84">84</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/joda/time/tz/CachedDateTimeZone.html">Info</a>[] iInfoCache = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/tz/CachedDateTimeZone.html">Info</a>[cInfoCacheMask + 1];
+<a class="jxr_linenumber" name="84" href="#84">84</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> <a href="../../../../org/joda/time/tz/CachedDateTimeZone.html">Info</a>[] iInfoCache = <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/time/tz/CachedDateTimeZone.html">Info</a>[cInfoCacheMask + 1];
 <a class="jxr_linenumber" name="85" href="#85">85</a>  
 <a class="jxr_linenumber" name="86" href="#86">86</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../org/joda/time/tz/CachedDateTimeZone.html">CachedDateTimeZone</a>(<a href="../../../../org/joda/time/DateTimeZone.html">DateTimeZone</a> zone) {
 <a class="jxr_linenumber" name="87" href="#87">87</a>          <strong class="jxr_keyword">super</strong>(zone.getID());

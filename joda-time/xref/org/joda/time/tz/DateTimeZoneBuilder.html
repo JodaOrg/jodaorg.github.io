@@ -181,7 +181,7 @@
 <a class="jxr_linenumber" name="171" href="#171">171</a>         <em class="jxr_comment">// Write milliseconds either because the additional precision is</em>
 <a class="jxr_linenumber" name="172" href="#172">172</a>         <em class="jxr_comment">// required or the minutes didn't fit in the field.</em>
 <a class="jxr_linenumber" name="173" href="#173">173</a>         
-<a class="jxr_linenumber" name="174" href="#174">174</a>         <em class="jxr_comment">// Form 11 (64 bits effective precision, but write as if 70 bits)</em>
+<a class="jxr_linenumber" name="174" href="#174">174</a>         <em class="jxr_comment">// Form 11 (64-bits effective precision, but write as if 70 bits)</em>
 <a class="jxr_linenumber" name="175" href="#175">175</a>         out.writeByte(millis &lt; 0 ? 0xff : 0xc0);
 <a class="jxr_linenumber" name="176" href="#176">176</a>         out.writeLong(millis);
 <a class="jxr_linenumber" name="177" href="#177">177</a>     }
@@ -215,7 +215,7 @@
 <a class="jxr_linenumber" name="205" href="#205">205</a>             <strong class="jxr_keyword">return</strong> w * 1000L;
 <a class="jxr_linenumber" name="206" href="#206">206</a> 
 <a class="jxr_linenumber" name="207" href="#207">207</a>         <strong class="jxr_keyword">case</strong> 3:
-<a class="jxr_linenumber" name="208" href="#208">208</a>             <em class="jxr_comment">// Form 11 (64 bits effective precision)</em>
+<a class="jxr_linenumber" name="208" href="#208">208</a>             <em class="jxr_comment">// Form 11 (64-bits effective precision)</em>
 <a class="jxr_linenumber" name="209" href="#209">209</a>             <strong class="jxr_keyword">return</strong> in.readLong();
 <a class="jxr_linenumber" name="210" href="#210">210</a>         }
 <a class="jxr_linenumber" name="211" href="#211">211</a>     }

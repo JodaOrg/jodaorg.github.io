@@ -145,13 +145,29 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#RemainderDateTimeField(org.joda.time.DateTimeField, org.joda.time.DurationField, org.joda.time.DateTimeFieldType, int)">RemainderDateTimeField</a></strong>(<a href="../../../../org/joda/time/DateTimeField.html" title="class in org.joda.time">DateTimeField</a>&nbsp;field,
+                      <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;rangeField,
+                      <a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;type,
+                      int&nbsp;divisor)</code>
+<div class="block">Constructor.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#RemainderDateTimeField(org.joda.time.field.DividedDateTimeField)">RemainderDateTimeField</a></strong>(<a href="../../../../org/joda/time/field/DividedDateTimeField.html" title="class in org.joda.time.field">DividedDateTimeField</a>&nbsp;dividedField)</code>
 <div class="block">Construct a RemainderDateTimeField that compliments the given
  DividedDateTimeField.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#RemainderDateTimeField(org.joda.time.field.DividedDateTimeField, org.joda.time.DateTimeFieldType)">RemainderDateTimeField</a></strong>(<a href="../../../../org/joda/time/field/DividedDateTimeField.html" title="class in org.joda.time.field">DividedDateTimeField</a>&nbsp;dividedField,
+                      <a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;type)</code>
+<div class="block">Construct a RemainderDateTimeField that compliments the given
+ DividedDateTimeField.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#RemainderDateTimeField(org.joda.time.field.DividedDateTimeField, org.joda.time.DurationField, org.joda.time.DateTimeFieldType)">RemainderDateTimeField</a></strong>(<a href="../../../../org/joda/time/field/DividedDateTimeField.html" title="class in org.joda.time.field">DividedDateTimeField</a>&nbsp;dividedField,
+                      <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;durationField,
                       <a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;type)</code>
 <div class="block">Construct a RemainderDateTimeField that compliments the given
  DividedDateTimeField.</div>
@@ -193,61 +209,67 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getDurationField()">getDurationField</a></strong>()</code>
+<div class="block">Returns the duration per unit value of this field.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getMaximumValue()">getMaximumValue</a></strong>()</code>
 <div class="block">Get the maximum value for the field, which is always one less than the
  divisor.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getMinimumValue()">getMinimumValue</a></strong>()</code>
 <div class="block">Get the minimum value for the field, which is always zero.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getRangeDurationField()">getRangeDurationField</a></strong>()</code>
 <div class="block">Returns a scaled version of the wrapped field's unit duration field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#remainder(long)">remainder</a></strong>(long&nbsp;instant)</code>
 <div class="block">Returns the fractional duration milliseconds of this field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#roundCeiling(long)">roundCeiling</a></strong>(long&nbsp;instant)</code>
 <div class="block">Round to the highest whole unit of this field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#roundFloor(long)">roundFloor</a></strong>(long&nbsp;instant)</code>
 <div class="block">Round to the lowest whole unit of this field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#roundHalfCeiling(long)">roundHalfCeiling</a></strong>(long&nbsp;instant)</code>
 <div class="block">Round to the nearest whole unit of this field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#roundHalfEven(long)">roundHalfEven</a></strong>(long&nbsp;instant)</code>
 <div class="block">Round to the nearest whole unit of this field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#roundHalfFloor(long)">roundHalfFloor</a></strong>(long&nbsp;instant)</code>
 <div class="block">Round to the nearest whole unit of this field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#set(long, int)">set</a></strong>(long&nbsp;instant,
    int&nbsp;value)</code>
@@ -260,7 +282,7 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.joda.time.field.<a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" title="class in org.joda.time.field">DecoratedDateTimeField</a></h3>
-<code><a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#getDurationField()">getDurationField</a>, <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#getWrappedField()">getWrappedField</a>, <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#isLenient()">isLenient</a></code></li>
+<code><a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#getWrappedField()">getWrappedField</a>, <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#isLenient()">isLenient</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.joda.time.field.BaseDateTimeField">
@@ -305,6 +327,22 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if divisor is less than two</dd></dl>
 </li>
 </ul>
+<a name="RemainderDateTimeField(org.joda.time.DateTimeField, org.joda.time.DurationField, org.joda.time.DateTimeFieldType, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>RemainderDateTimeField</h4>
+<pre>public&nbsp;RemainderDateTimeField(<a href="../../../../org/joda/time/DateTimeField.html" title="class in org.joda.time">DateTimeField</a>&nbsp;field,
+                      <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;rangeField,
+                      <a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;type,
+                      int&nbsp;divisor)</pre>
+<div class="block">Constructor.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to wrap, like "year()".</dd><dd><code>rangeField</code> - the range field</dd><dd><code>type</code> - the field type this field actually uses</dd><dd><code>divisor</code> - divisor, such as 100 years in a century</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if divisor is less than two</dd></dl>
+</li>
+</ul>
 <a name="RemainderDateTimeField(org.joda.time.field.DividedDateTimeField)">
 <!--   -->
 </a>
@@ -320,7 +358,7 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 <a name="RemainderDateTimeField(org.joda.time.field.DividedDateTimeField, org.joda.time.DateTimeFieldType)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>RemainderDateTimeField</h4>
 <pre>public&nbsp;RemainderDateTimeField(<a href="../../../../org/joda/time/field/DividedDateTimeField.html" title="class in org.joda.time.field">DividedDateTimeField</a>&nbsp;dividedField,
@@ -328,6 +366,21 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 <div class="block">Construct a RemainderDateTimeField that compliments the given
  DividedDateTimeField.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>dividedField</code> - complimentary divided field, like "century()".</dd><dd><code>type</code> - the field type this field actually uses</dd></dl>
+</li>
+</ul>
+<a name="RemainderDateTimeField(org.joda.time.field.DividedDateTimeField, org.joda.time.DurationField, org.joda.time.DateTimeFieldType)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>RemainderDateTimeField</h4>
+<pre>public&nbsp;RemainderDateTimeField(<a href="../../../../org/joda/time/field/DividedDateTimeField.html" title="class in org.joda.time.field">DividedDateTimeField</a>&nbsp;dividedField,
+                      <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;durationField,
+                      <a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;type)</pre>
+<div class="block">Construct a RemainderDateTimeField that compliments the given
+ DividedDateTimeField.
+ This constructor allows the duration field to be set.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>dividedField</code> - complimentary divided field, like "century()".</dd><dd><code>durationField</code> - the duration field</dd><dd><code>type</code> - the field type this field actually uses</dd></dl>
 </li>
 </ul>
 </li>
@@ -387,6 +440,23 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 <dt><span class="strong">Returns:</span></dt><dd>the updated time instant.</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if value is too large or too small.</dd></dl>
+</li>
+</ul>
+<a name="getDurationField()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDurationField</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;getDurationField()</pre>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getDurationField()">BaseDateTimeField</a></code></strong></div>
+<div class="block">Returns the duration per unit value of this field. For example, if this
+ field represents "hour of day", then the unit duration is an hour.</div>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#getDurationField()">getDurationField</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" title="class in org.joda.time.field">DecoratedDateTimeField</a></code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>the duration of this field, or UnsupportedDurationField if field
+ has no duration</dd></dl>
 </li>
 </ul>
 <a name="getRangeDurationField()">
@@ -645,6 +715,6 @@ extends <a href="../../../../org/joda/time/field/DecoratedDateTimeField.html" ti
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>

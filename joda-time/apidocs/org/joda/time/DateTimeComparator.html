@@ -292,7 +292,11 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparato
 <h4>getInstance</h4>
 <pre>public static&nbsp;<a href="../../../org/joda/time/DateTimeComparator.html" title="class in org.joda.time">DateTimeComparator</a>&nbsp;getInstance(<a href="../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;lowerLimit)</pre>
 <div class="block">Returns a DateTimeComparator with a lower limit only. Fields of a
- magnitude less than the lower limit are excluded from comparisons.</div>
+ magnitude less than the lower limit are excluded from comparisons.
+ <p>
+ The time-zone is considered when using this comparator.
+ The input millis are truncated using the time-zone of that input value.
+ Thus, two inputs with different time-zones will typically not be equal</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>lowerLimit</code> - inclusive lower limit for fields to be compared, null means no limit</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a comparator over all fields above the lower limit</dd></dl>
 </li>
@@ -309,7 +313,11 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparato
  magnitude less than the lower limit are excluded from comparisons.
  Fields of a magnitude greater than or equal to the upper limit are also
  excluded from comparisons. Either limit may be specified as null, which
- indicates an unbounded limit.</div>
+ indicates an unbounded limit.
+ <p>
+ The time-zone is considered when using this comparator unless both limits are null.
+ The input millis are rounded/truncated using the time-zone of that input value.
+ Thus, two inputs with different time-zones will typically not be equal</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>lowerLimit</code> - inclusive lower limit for fields to be compared, null means no limit</dd><dd><code>upperLimit</code> - exclusive upper limit for fields to be compared, null means no limit</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a comparator over all fields between the limits</dd></dl>
 </li>
@@ -322,7 +330,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparato
 <h4>getDateOnlyInstance</h4>
 <pre>public static&nbsp;<a href="../../../org/joda/time/DateTimeComparator.html" title="class in org.joda.time">DateTimeComparator</a>&nbsp;getDateOnlyInstance()</pre>
 <div class="block">Returns a comparator that only considers date fields.
- Time of day is ignored.</div>
+ Time of day is ignored.
+ <p>
+ The time-zone is considered when using this comparator.
+ The input millis are rounded down to the start of the day
+ in the time-zone of that input value. Thus, two inputs with
+ different time-zones will typically not be equal</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a comparator over all date fields</dd></dl>
 </li>
 </ul>
@@ -334,7 +347,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparato
 <h4>getTimeOnlyInstance</h4>
 <pre>public static&nbsp;<a href="../../../org/joda/time/DateTimeComparator.html" title="class in org.joda.time">DateTimeComparator</a>&nbsp;getTimeOnlyInstance()</pre>
 <div class="block">Returns a comparator that only considers time fields.
- Date is ignored.</div>
+ Date is ignored.
+ <p>
+ The time-zone is considered when using this comparator.
+ The input millis are truncated to be within the day
+ in the time-zone of that input value. Thus, two inputs with
+ different time-zones will typically not be equal</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a comparator over all time fields</dd></dl>
 </li>
 </ul>
@@ -494,6 +512,6 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparato
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>

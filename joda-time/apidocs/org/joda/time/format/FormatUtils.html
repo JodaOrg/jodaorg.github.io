@@ -122,6 +122,24 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/FormatUtils.html#appendPaddedInteger(java.lang.Appendable, int, int)">appendPaddedInteger</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appenadble,
+                   int&nbsp;value,
+                   int&nbsp;size)</code>
+<div class="block">Converts an integer to a string, prepended with a variable amount of '0'
+ pad characters, and appends it to the given appendable.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/FormatUtils.html#appendPaddedInteger(java.lang.Appendable, long, int)">appendPaddedInteger</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+                   long&nbsp;value,
+                   int&nbsp;size)</code>
+<div class="block">Converts an integer to a string, prepended with a variable amount of '0'
+ pad characters, and appends it to the given buffer.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/FormatUtils.html#appendPaddedInteger(java.lang.StringBuffer, int, int)">appendPaddedInteger</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
                    int&nbsp;value,
                    int&nbsp;size)</code>
@@ -136,6 +154,20 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
                    int&nbsp;size)</code>
 <div class="block">Converts an integer to a string, prepended with a variable amount of '0'
  pad characters, and appends it to the given buffer.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/FormatUtils.html#appendUnpaddedInteger(java.lang.Appendable, int)">appendUnpaddedInteger</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+                     int&nbsp;value)</code>
+<div class="block">Converts an integer to a string, and appends it to the given appendable.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/FormatUtils.html#appendUnpaddedInteger(java.lang.Appendable, long)">appendUnpaddedInteger</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+                     long&nbsp;value)</code>
+<div class="block">Converts an integer to a string, and appends it to the given appendable.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -226,7 +258,27 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  pad characters, and appends it to the given buffer.
 
  <p>This method is optimized for converting small values to strings.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>buf</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minumum amount of digits to append</dd></dl>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>buf</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minimum amount of digits to append</dd></dl>
+</li>
+</ul>
+<a name="appendPaddedInteger(java.lang.Appendable, int, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendPaddedInteger</h4>
+<pre>public static&nbsp;void&nbsp;appendPaddedInteger(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appenadble,
+                       int&nbsp;value,
+                       int&nbsp;size)
+                                throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Converts an integer to a string, prepended with a variable amount of '0'
+ pad characters, and appends it to the given appendable.
+
+ <p>This method is optimized for converting small values to strings.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>appenadble</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minimum amount of digits to append</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.4</dd></dl>
 </li>
 </ul>
 <a name="appendPaddedInteger(java.lang.StringBuffer, long, int)">
@@ -242,7 +294,27 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  pad characters, and appends it to the given buffer.
 
  <p>This method is optimized for converting small values to strings.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>buf</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minumum amount of digits to append</dd></dl>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>buf</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minimum amount of digits to append</dd></dl>
+</li>
+</ul>
+<a name="appendPaddedInteger(java.lang.Appendable, long, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendPaddedInteger</h4>
+<pre>public static&nbsp;void&nbsp;appendPaddedInteger(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+                       long&nbsp;value,
+                       int&nbsp;size)
+                                throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Converts an integer to a string, prepended with a variable amount of '0'
+ pad characters, and appends it to the given buffer.
+
+ <p>This method is optimized for converting small values to strings.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>appendable</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minimum amount of digits to append</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.4</dd></dl>
 </li>
 </ul>
 <a name="writePaddedInteger(java.io.Writer, int, int)">
@@ -259,7 +331,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  pad characters, and writes it to the given writer.
 
  <p>This method is optimized for converting small values to strings.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>out</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minumum amount of digits to append</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>out</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minimum amount of digits to append</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
 </li>
@@ -278,7 +350,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  pad characters, and writes it to the given writer.
 
  <p>This method is optimized for converting small values to strings.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>out</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minumum amount of digits to append</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>out</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd><dd><code>size</code> - minimum amount of digits to append</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
 </li>
@@ -297,6 +369,24 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>buf</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd></dl>
 </li>
 </ul>
+<a name="appendUnpaddedInteger(java.lang.Appendable, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendUnpaddedInteger</h4>
+<pre>public static&nbsp;void&nbsp;appendUnpaddedInteger(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+                         int&nbsp;value)
+                                  throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Converts an integer to a string, and appends it to the given appendable.
+
+ <p>This method is optimized for converting small values to strings.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>appendable</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.4</dd></dl>
+</li>
+</ul>
 <a name="appendUnpaddedInteger(java.lang.StringBuffer, long)">
 <!--   -->
 </a>
@@ -309,6 +399,23 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 
  <p>This method is optimized for converting small values to strings.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>buf</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd></dl>
+</li>
+</ul>
+<a name="appendUnpaddedInteger(java.lang.Appendable, long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendUnpaddedInteger</h4>
+<pre>public static&nbsp;void&nbsp;appendUnpaddedInteger(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+                         long&nbsp;value)
+                                  throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Converts an integer to a string, and appends it to the given appendable.
+
+ <p>This method is optimized for converting small values to strings.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>appendable</code> - receives integer converted to a string</dd><dd><code>value</code> - value to convert to a string</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
 </li>
 </ul>
 <a name="writeUnpaddedInteger(java.io.Writer, int)">
@@ -423,6 +530,6 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>

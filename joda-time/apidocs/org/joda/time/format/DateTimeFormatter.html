@@ -136,7 +136,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  
  // parse using the Paris zone
  DateTime date = formatter.withZone(DateTimeZone.forID("Europe/Paris")).parseDateTime(str);
- </pre></div>
+ </pre>
+ <p>
+ Parsing builds up the resultant instant by 'setting' the value of each parsed field
+ from largest to smallest onto an initial instant, typically 1970-01-01T00:00Z.
+ This design means that day-of-month is set before day-of-week.
+ As such, if both the day-of-month and day-of-week are parsed, and the day-of-week
+ is incorrect, then the day-of-week overrides the day-of-month.
+ 
+ This has a side effect if the input is not consistent.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>1.0</dd></dl>
 </li>
@@ -590,7 +598,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a new formatter that will use the specified chronology in
  preference to that of the printed object, or ISO on a parse.
  <p>
- When printing, this chronolgy will be used in preference to the chronology
+ When printing, this chronology will be used in preference to the chronology
  from the datetime that would otherwise be used.
  <p>
  When parsing, this chronology will be set on the parsed datetime.
@@ -948,7 +956,7 @@ public&nbsp;<a href="../../../../org/joda/time/Chronology.html" title="class in 
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;print(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</pre>
 <div class="block">Prints a ReadableInstant to a String.
  <p>
- This method will use the override zone and the override chronololgy if
+ This method will use the override zone and the override chronology if
  they are set. Otherwise it will use the chronology and zone of the instant.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>instant</code> - instant to format, null means now</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the printed result</dd></dl>
@@ -963,7 +971,7 @@ public&nbsp;<a href="../../../../org/joda/time/Chronology.html" title="class in 
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;print(long&nbsp;instant)</pre>
 <div class="block">Prints a millisecond instant to a String.
  <p>
- This method will use the override zone and the override chronololgy if
+ This method will use the override zone and the override chronology if
  they are set. Otherwise it will use the ISO chronology and default zone.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>instant</code> - millis since 1970-01-01T00:00:00Z</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the printed result</dd></dl>
@@ -1221,6 +1229,6 @@ public&nbsp;<a href="../../../../org/joda/time/Chronology.html" title="class in 
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>

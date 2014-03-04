@@ -116,8 +116,9 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
  <p>
  A duration is defined by a fixed number of milliseconds.
  There is no concept of fields, such as days or seconds, as these fields can vary in length.
+ <p>
  A duration may be converted to a <a href="../../../org/joda/time/Period.html" title="class in org.joda.time"><code>Period</code></a> to obtain field values.
- This conversion will typically cause a loss of precision however.
+ This conversion will typically cause a loss of precision.
  <p>
  Duration is thread-safe and immutable.</div>
 <dl><dt><span class="strong">Since:</span></dt>
@@ -200,150 +201,170 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#dividedBy(long)">dividedBy</a></strong>(long&nbsp;divisor)</code>
+<div class="block">Returns a new duration with this length divided by the 
+ specified divisor.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#getStandardDays()">getStandardDays</a></strong>()</code>
 <div class="block">Gets the length of this duration in days assuming that there are the
  standard number of milliseconds in a day.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#getStandardHours()">getStandardHours</a></strong>()</code>
 <div class="block">Gets the length of this duration in hours assuming that there are the
  standard number of milliseconds in an hour.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#getStandardMinutes()">getStandardMinutes</a></strong>()</code>
 <div class="block">Gets the length of this duration in minutes assuming that there are the
  standard number of milliseconds in a minute.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#getStandardSeconds()">getStandardSeconds</a></strong>()</code>
 <div class="block">Gets the length of this duration in seconds assuming that there are the
  standard number of milliseconds in a second.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#millis(long)">millis</a></strong>(long&nbsp;millis)</code>
 <div class="block">Create a duration with the specified number of milliseconds.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#minus(long)">minus</a></strong>(long&nbsp;amount)</code>
 <div class="block">Returns a new duration with this length minus that specified.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#minus(org.joda.time.ReadableDuration)">minus</a></strong>(<a href="../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;amount)</code>
 <div class="block">Returns a new duration with this length minus that specified.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#multipliedBy(long)">multipliedBy</a></strong>(long&nbsp;multiplicand)</code>
+<div class="block">Returns a new duration with this length multiplied by the 
+ specified multiplicand.</div>
+</td>
+</tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#negated()">negated</a></strong>()</code>
+<div class="block">Returns a new duration with this length negated.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#parse(java.lang.String)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</code>
 <div class="block">Parses a <code>Duration</code> from the specified string.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#plus(long)">plus</a></strong>(long&nbsp;amount)</code>
 <div class="block">Returns a new duration with this length plus that specified.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#plus(org.joda.time.ReadableDuration)">plus</a></strong>(<a href="../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;amount)</code>
 <div class="block">Returns a new duration with this length plus that specified.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#standardDays(long)">standardDays</a></strong>(long&nbsp;days)</code>
 <div class="block">Create a duration with the specified number of days assuming that
  there are the standard number of milliseconds in a day.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#standardHours(long)">standardHours</a></strong>(long&nbsp;hours)</code>
 <div class="block">Create a duration with the specified number of hours assuming that
  there are the standard number of milliseconds in an hour.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#standardMinutes(long)">standardMinutes</a></strong>(long&nbsp;minutes)</code>
 <div class="block">Create a duration with the specified number of minutes assuming that
  there are the standard number of milliseconds in a minute.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#standardSeconds(long)">standardSeconds</a></strong>(long&nbsp;seconds)</code>
 <div class="block">Create a duration with the specified number of seconds assuming that
  there are the standard number of milliseconds in a second.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#toDuration()">toDuration</a></strong>()</code>
 <div class="block">Get this duration as an immutable <code>Duration</code> object
  by returning <code>this</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Days.html" title="class in org.joda.time">Days</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#toStandardDays()">toStandardDays</a></strong>()</code>
 <div class="block">Converts this duration to a period in days assuming that there are the
  standard number of milliseconds in a day.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Hours.html" title="class in org.joda.time">Hours</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#toStandardHours()">toStandardHours</a></strong>()</code>
 <div class="block">Converts this duration to a period in hours assuming that there are the
  standard number of milliseconds in an hour.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Minutes.html" title="class in org.joda.time">Minutes</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#toStandardMinutes()">toStandardMinutes</a></strong>()</code>
 <div class="block">Converts this duration to a period in minutes assuming that there are the
  standard number of milliseconds in a minute.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Seconds.html" title="class in org.joda.time">Seconds</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#toStandardSeconds()">toStandardSeconds</a></strong>()</code>
 <div class="block">Converts this duration to a period in seconds assuming that there are the
  standard number of milliseconds in a second.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#withDurationAdded(long, int)">withDurationAdded</a></strong>(long&nbsp;durationToAdd,
                  int&nbsp;scalar)</code>
 <div class="block">Returns a new duration with this length plus that specified multiplied by the scalar.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#withDurationAdded(org.joda.time.ReadableDuration, int)">withDurationAdded</a></strong>(<a href="../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;durationToAdd,
                  int&nbsp;scalar)</code>
 <div class="block">Returns a new duration with this length plus that specified multiplied by the scalar.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/time/Duration.html#withMillis(long)">withMillis</a></strong>(long&nbsp;duration)</code>
-<div class="block">Creates a new Duration instance with a different milisecond length.</div>
+<div class="block">Creates a new Duration instance with a different millisecond length.</div>
 </td>
 </tr>
 </table>
@@ -436,7 +457,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
 <div class="block">Creates a duration from the given interval endpoints.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>startInstant</code> - interval start, in milliseconds</dd><dd><code>endInstant</code> - interval end, in milliseconds</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the duration exceeds a 64 bit long</dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the duration exceeds a 64-bit long</dd></dl>
 </li>
 </ul>
 <a name="Duration(org.joda.time.ReadableInstant, org.joda.time.ReadableInstant)">
@@ -450,7 +471,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
 <div class="block">Creates a duration from the given interval endpoints.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>start</code> - interval start, null means now</dd><dd><code>end</code> - interval end, null means now</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the duration exceeds a 64 bit long</dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if the duration exceeds a 64-bit long</dd></dl>
 </li>
 </ul>
 <a name="Duration(java.lang.Object)">
@@ -505,7 +526,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
  Savings changes will not have 24 hours, so use this method with care.
  <p>
  A Duration is a representation of an amount of time. If you want to express
- the concepts of 'days' you should consider using the <a href="../../../org/joda/time/Days.html" title="class in org.joda.time"><code>Days</code></a> class.</div>
+ the concept of 'days' you should consider using the <a href="../../../org/joda/time/Days.html" title="class in org.joda.time"><code>Days</code></a> class.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>days</code> - the number of standard days in this duration</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the duration, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -528,7 +549,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
  All currently supplied chronologies use this definition.
  <p>
  A Duration is a representation of an amount of time. If you want to express
- the concepts of 'hours' you should consider using the <a href="../../../org/joda/time/Hours.html" title="class in org.joda.time"><code>Hours</code></a> class.</div>
+ the concept of 'hours' you should consider using the <a href="../../../org/joda/time/Hours.html" title="class in org.joda.time"><code>Hours</code></a> class.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>hours</code> - the number of standard hours in this duration</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the duration, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -551,7 +572,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
  All currently supplied chronologies use this definition.
  <p>
  A Duration is a representation of an amount of time. If you want to express
- the concepts of 'minutes' you should consider using the <a href="../../../org/joda/time/Minutes.html" title="class in org.joda.time"><code>Minutes</code></a> class.</div>
+ the concept of 'minutes' you should consider using the <a href="../../../org/joda/time/Minutes.html" title="class in org.joda.time"><code>Minutes</code></a> class.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>minutes</code> - the number of standard minutes in this duration</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the duration, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -573,7 +594,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
  All currently supplied chronologies use this definition.
  <p>
  A Duration is a representation of an amount of time. If you want to express
- the concepts of 'seconds' you should consider using the <a href="../../../org/joda/time/Seconds.html" title="class in org.joda.time"><code>Seconds</code></a> class.</div>
+ the concept of 'seconds' you should consider using the <a href="../../../org/joda/time/Seconds.html" title="class in org.joda.time"><code>Seconds</code></a> class.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>seconds</code> - the number of standard seconds in this duration</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the duration, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -774,7 +795,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
 <li class="blockList">
 <h4>withMillis</h4>
 <pre>public&nbsp;<a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a>&nbsp;withMillis(long&nbsp;duration)</pre>
-<div class="block">Creates a new Duration instance with a different milisecond length.</div>
+<div class="block">Creates a new Duration instance with a different millisecond length.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>duration</code> - the new length of the duration</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the new duration instance</dd></dl>
 </li>
@@ -859,7 +880,7 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
 <a name="minus(org.joda.time.ReadableDuration)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>minus</h4>
 <pre>public&nbsp;<a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a>&nbsp;minus(<a href="../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;amount)</pre>
@@ -869,6 +890,50 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
  If the amount is zero, this instance is returned.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>amount</code> - the duration to take away from this one, null means zero</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the new duration instance</dd></dl>
+</li>
+</ul>
+<a name="multipliedBy(long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>multipliedBy</h4>
+<pre>public&nbsp;<a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a>&nbsp;multipliedBy(long&nbsp;multiplicand)</pre>
+<div class="block">Returns a new duration with this length multiplied by the 
+ specified multiplicand.
+ This instance is immutable and is not altered.
+ <p>
+ If the multiplicand is one, this instance is returned.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>multiplicand</code> - the multiplicand to multiply this one by</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the new duration instance</dd></dl>
+</li>
+</ul>
+<a name="dividedBy(long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dividedBy</h4>
+<pre>public&nbsp;<a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a>&nbsp;dividedBy(long&nbsp;divisor)</pre>
+<div class="block">Returns a new duration with this length divided by the 
+ specified divisor.
+ This instance is immutable and is not altered.
+ <p>
+ If the divisor is one, this instance is returned.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>divisor</code> - the divisor to divide this one by</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the new duration instance</dd></dl>
+</li>
+</ul>
+<a name="negated()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>negated</h4>
+<pre>public&nbsp;<a href="../../../org/joda/time/Duration.html" title="class in org.joda.time">Duration</a>&nbsp;negated()</pre>
+<div class="block">Returns a new duration with this length negated.
+ This instance is immutable and is not altered.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the new duration instance</dd></dl>
 </li>
 </ul>
 </li>
@@ -938,6 +1003,6 @@ implements <a href="../../../org/joda/time/ReadableDuration.html" title="interfa
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2013 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2002&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>
