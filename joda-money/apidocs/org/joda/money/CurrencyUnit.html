@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>CurrencyUnit (Joda-Money 0.9.1-SNAPSHOT API)</title>
+<title>CurrencyUnit (Joda-Money 0.9.1 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CurrencyUnit (Joda-Money 0.9.1-SNAPSHOT API)";
+        parent.document.title="CurrencyUnit (Joda-Money 0.9.1 API)";
     }
 //-->
 </script>
@@ -204,7 +204,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/money/CurrencyUnit.html#getCode()">getCode</a></strong>()</code>
-<div class="block">Gets the ISO-4217 three letter currency code.</div>
+<div class="block">Gets the ISO-4217 three-letter currency code.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -240,7 +240,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/money/CurrencyUnit.html" title="class in org.joda.money">CurrencyUnit</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/money/CurrencyUnit.html#getInstance(java.lang.String)">getInstance</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;currencyCode)</code>
-<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified currency code.</div>
+<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified three-letter currency code.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -294,7 +294,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/money/CurrencyUnit.html" title="class in org.joda.money">CurrencyUnit</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/money/CurrencyUnit.html#of(java.lang.String)">of</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;currencyCode)</code>
-<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified ISO-4217 three letter currency code.</div>
+<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified three letter currency code.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -469,8 +469,11 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
  <p>
  Since this method is public, it is possible to add currencies in
  application code. It is recommended to do this only at startup, however
- it is safe to do so later as the internal implementation is thread-safe.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the currency code, not null</dd><dd><code>numericCurrencyCode</code> - the numeric currency code, -1 if none</dd><dd><code>decimalPlaces</code> - the number of decimal places that the currency
+ it is safe to do so later as the internal implementation is thread-safe.
+ <p>
+ The currency code must be three upper-case ASCII letters, based on ISO-4217.
+ The numeric code must be from 0 to 999, or -1 if not applicable.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the three-letter upper-case currency code, not null</dd><dd><code>numericCurrencyCode</code> - the numeric currency code, from 0 to 999, -1 if none</dd><dd><code>decimalPlaces</code> - the number of decimal places that the currency
   normally has, from 0 to 9 (normally 0, 2 or 3), or -1 for a pseudo-currency</dd><dd><code>countryCodes</code> - the country codes to register the currency under, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the new instance, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -499,8 +502,11 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
  it is safe to do so later as the internal implementation is thread-safe.
  <p>
  This method uses a flag to determine whether the registered currency
- must be new, or can replace an existing currency.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the currency code, upper/lower case letters only, not empty, not null</dd><dd><code>numericCurrencyCode</code> - the numeric currency code, -1 if none</dd><dd><code>decimalPlaces</code> - the number of decimal places that the currency
+ must be new, or can replace an existing currency.
+ <p>
+ The currency code must be three upper-case ASCII letters, based on ISO-4217.
+ The numeric code must be from 0 to 999, or -1 if not applicable.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the three-letter upper-case currency code, not null</dd><dd><code>numericCurrencyCode</code> - the numeric currency code, from 0 to 999, -1 if none</dd><dd><code>decimalPlaces</code> - the number of decimal places that the currency
   normally has, from 0 to 9 (normally 0, 2 or 3), or -1 for a pseudo-currency</dd><dd><code>countryCodes</code> - the country codes to register the currency under,
   use of ISO-3166 is recommended, not null</dd><dd><code>force</code> - true to register forcefully, replacing any existing matching currency,
   false to validate that there is no existing matching currency</dd>
@@ -548,10 +554,11 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>of</h4>
 <pre>public static&nbsp;<a href="../../../org/joda/money/CurrencyUnit.html" title="class in org.joda.money">CurrencyUnit</a>&nbsp;of(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;currencyCode)</pre>
-<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified ISO-4217 three letter currency code.
+<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified three letter currency code.
  <p>
- A currency is uniquely identified by ISO-4217 three letter code.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the currency code, not null</dd>
+ A currency is uniquely identified by a three letter code, based on ISO-4217.
+ Valid currency codes are three upper-case ASCII letters.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the three-letter currency code, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the singleton instance, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/joda/money/IllegalCurrencyException.html" title="class in org.joda.money">IllegalCurrencyException</a></code> - if the currency is unknown</dd></dl>
@@ -630,10 +637,10 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>getInstance</h4>
 <pre>public static&nbsp;<a href="../../../org/joda/money/CurrencyUnit.html" title="class in org.joda.money">CurrencyUnit</a>&nbsp;getInstance(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;currencyCode)</pre>
-<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified currency code.
+<div class="block">Obtains an instance of <code>CurrencyUnit</code> for the specified three-letter currency code.
  <p>
  This method exists to match the API of <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Currency.html?is-external=true" title="class or interface in java.util"><code>Currency</code></a>.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the currency code, not null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>currencyCode</code> - the three-letter currency code, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the singleton instance, never null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/joda/money/IllegalCurrencyException.html" title="class in org.joda.money">IllegalCurrencyException</a></code> - if the currency is unknown</dd></dl>
@@ -662,10 +669,10 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <li class="blockList">
 <h4>getCode</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getCode()</pre>
-<div class="block">Gets the ISO-4217 three letter currency code.
+<div class="block">Gets the ISO-4217 three-letter currency code.
  <p>
- Each currency is uniquely identified by a three-letter code.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the three letter ISO-4217 currency code, never null</dd></dl>
+ Each currency is uniquely identified by a three-letter upper-case code, based on ISO-4217.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the three-letter upper-case currency code, never null</dd></dl>
 </li>
 </ul>
 <a name="getNumericCode()">
@@ -677,8 +684,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <pre>public&nbsp;int&nbsp;getNumericCode()</pre>
 <div class="block">Gets the ISO-4217 numeric currency code.
  <p>
- The numeric code is an alternative to the standard three letter code.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the numeric currency code</dd></dl>
+ The numeric code is an alternative to the standard string-based code.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the numeric currency code, -1 if no numeric code</dd></dl>
 </li>
 </ul>
 <a name="getNumeric3Code()">
