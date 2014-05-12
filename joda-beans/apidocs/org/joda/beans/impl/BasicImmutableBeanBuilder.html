@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>BasicImmutableBeanBuilder (Joda-Beans 0.9.7 API)</title>
+<title>BasicImmutableBeanBuilder (Joda-Beans 0.9.8 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="BasicImmutableBeanBuilder (Joda-Beans 0.9.7 API)";
+        parent.document.title="BasicImmutableBeanBuilder (Joda-Beans 0.9.8 API)";
     }
 //-->
 </script>
@@ -99,18 +99,15 @@
 <dd><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;T&gt;</dd>
 </dl>
 <hr>
-<div class="block"><strong>Deprecated.</strong>&nbsp;
-<div class="block"><i>Use DirectFieldsBeanBuilder</i></div>
-</div>
 <br>
-<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-public abstract class <span class="strong">BasicImmutableBeanBuilder&lt;T extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</span>
+<pre>public abstract class <span class="strong">BasicImmutableBeanBuilder&lt;T extends <a href="../../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&gt;</span>
 extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;T&gt;</pre>
 <div class="block">Basic implementation of <code>BeanBuilder</code> that wraps a <code>MetaBean</code>.
  <p>
  The subclass implementation generally has concrete fields for each property.
- This class has effectively been replaced by <code>DirectFieldsBeanBuilder</code>.</div>
+ This class has effectively been replaced by <code>DirectFieldsBeanBuilder</code>.
+ It is retained for situations where the builder is being implemented manually.</div>
 </li>
 </ul>
 </div>
@@ -130,7 +127,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#BasicImmutableBeanBuilder(org.joda.beans.MetaBean)">BasicImmutableBeanBuilder</a></strong>(<a href="../../../../org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>&nbsp;meta)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Constructs the builder.</div>
 </td>
 </tr>
@@ -152,14 +148,12 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#get(org.joda.beans.MetaProperty)">get</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Gets the value of a single property previously added to the builder.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#get(java.lang.String)">get</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Gets the value of a single property previously added to the builder.</div>
 </td>
 </tr>
@@ -167,14 +161,12 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">set</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#setAll(java.util.Map)">setAll</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,? extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;propertyValueMap)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Sets the value of a map of properties into the builder.</div>
 </td>
 </tr>
@@ -182,7 +174,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">setString</a></strong>(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
 </tr>
@@ -190,14 +181,12 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <td class="colFirst"><code><a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#setString(java.lang.String, java.lang.String)">setString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Sets the value of a single property into the builder.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html#toString()">toString</a></strong>()</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Returns a string that summarises the builder.</div>
 </td>
 </tr>
@@ -237,7 +226,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <li class="blockList">
 <h4>BasicImmutableBeanBuilder</h4>
 <pre>public&nbsp;BasicImmutableBeanBuilder(<a href="../../../../org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a>&nbsp;meta)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block">Constructs the builder.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>meta</code> - the meta-bean, not null</dd></dl>
 </li>
@@ -257,7 +245,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <li class="blockList">
 <h4>get</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;get(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/BeanBuilder.html#get(java.lang.String)">BeanBuilder</a></code></strong></div>
 <div class="block">Gets the value of a single property previously added to the builder.</div>
 <dl>
@@ -274,7 +261,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <li class="blockList">
 <h4>get</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;get(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/BeanBuilder.html#get(org.joda.beans.MetaProperty)">BeanBuilder</a></code></strong></div>
 <div class="block">Gets the value of a single property previously added to the builder.</div>
 <dl>
@@ -292,7 +278,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <h4>set</h4>
 <pre>public&nbsp;<a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;&nbsp;set(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
                  <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/BeanBuilder.html#set(org.joda.beans.MetaProperty, java.lang.Object)">BeanBuilder</a></code></strong></div>
 <div class="block">Sets the value of a single property into the builder.
  <p>
@@ -313,7 +298,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <h4>setString</h4>
 <pre>public&nbsp;<a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;&nbsp;setString(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName,
                        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/BeanBuilder.html#setString(java.lang.String, java.lang.String)">BeanBuilder</a></code></strong></div>
 <div class="block">Sets the value of a single property into the builder.
  <p>
@@ -337,7 +321,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <h4>setString</h4>
 <pre>public&nbsp;<a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;&nbsp;setString(<a href="../../../../org/joda/beans/MetaProperty.html" title="interface in org.joda.beans">MetaProperty</a>&lt;?&gt;&nbsp;metaProperty,
                        <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/BeanBuilder.html#setString(org.joda.beans.MetaProperty, java.lang.String)">BeanBuilder</a></code></strong></div>
 <div class="block">Sets the value of a single property into the builder.
  <p>
@@ -360,7 +343,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <li class="blockList">
 <h4>setAll</h4>
 <pre>public&nbsp;<a href="../../../../org/joda/beans/BeanBuilder.html" title="interface in org.joda.beans">BeanBuilder</a>&lt;<a href="../../../../org/joda/beans/impl/BasicImmutableBeanBuilder.html" title="type parameter in BasicImmutableBeanBuilder">T</a>&gt;&nbsp;setAll(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,? extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;propertyValueMap)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/joda/beans/BeanBuilder.html#setAll(java.util.Map)">BeanBuilder</a></code></strong></div>
 <div class="block">Sets the value of a map of properties into the builder.
  <p>
@@ -382,7 +364,6 @@ implements <a href="../../../../org/joda/beans/BeanBuilder.html" title="interfac
 <li class="blockList">
 <h4>toString</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block">Returns a string that summarises the builder.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
