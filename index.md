@@ -27,6 +27,7 @@ Each project aims to be focussed on a specific area and to have minimal dependen
 
 The projects have various authors and contributors.  
 They are curated and managed by Stephen Colebourne, aka jodastephen.
+
 - [GitHub](https://github.com/jodastephen)
 - [Blog](http://blog.joda.org)
 - [Twitter](https://twitter.com/jodastephen)
