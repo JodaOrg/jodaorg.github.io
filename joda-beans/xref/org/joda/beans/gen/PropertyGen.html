@@ -494,9 +494,9 @@
 <a class="jxr_linenumber" name="484" href="#484">484</a>     List&lt;String&gt; generatePropertySetCase() {
 <a class="jxr_linenumber" name="485" href="#485">485</a>         List&lt;String&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
 <a class="jxr_linenumber" name="486" href="#486">486</a>         list.add(<span class="jxr_string">"\t\t\t\tcase "</span> + data.getPropertyName().hashCode() + <span class="jxr_string">":  // "</span> + data.getPropertyName());
-<a class="jxr_linenumber" name="487" href="#487">487</a>         String setter = data.getSetterGen().generateSetInvoke(data);
+<a class="jxr_linenumber" name="487" href="#487">487</a>         String setter = data.getSetterGen().generateSetInvoke(data, castObject() + <span class="jxr_string">"newValue"</span>);
 <a class="jxr_linenumber" name="488" href="#488">488</a>         <strong class="jxr_keyword">if</strong> (data.getStyle().isWritable() &amp;&amp; setter != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="489" href="#489">489</a>             list.add(<span class="jxr_string">"\t\t\t\t\t(("</span> + data.getBean().getTypeNoExtends() + <span class="jxr_string">") bean)."</span> + setter + <span class="jxr_string">"("</span> + castObject() + <span class="jxr_string">"newValue);"</span>);
+<a class="jxr_linenumber" name="489" href="#489">489</a>             list.add(<span class="jxr_string">"\t\t\t\t\t(("</span> + data.getBean().getTypeNoExtends() + <span class="jxr_string">") bean)."</span> + setter + <span class="jxr_string">";"</span>);
 <a class="jxr_linenumber" name="490" href="#490">490</a>             list.add(<span class="jxr_string">"\t\t\t\t\treturn;"</span>);
 <a class="jxr_linenumber" name="491" href="#491">491</a>         } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="492" href="#492">492</a>             list.add(<span class="jxr_string">"\t\t\t\t\tif (quiet) {"</span>);

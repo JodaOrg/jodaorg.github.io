@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Bean (Joda-Beans 0.9.8 API)</title>
+<title>Bean (Joda-Beans 1.0 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Bean (Joda-Beans 0.9.8 API)";
+        parent.document.title="Bean (Joda-Beans 1.0 API)";
     }
 //-->
 </script>
@@ -120,25 +120,19 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/beans/Bean.html#clone()">clone</a></strong>()</code>
-<div class="block">Clones this bean, returning an independent copy.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/beans/MetaBean.html" title="interface in org.joda.beans">MetaBean</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/beans/Bean.html#metaBean()">metaBean</a></strong>()</code>
 <div class="block">Gets the meta-bean representing the parts of the bean that are
  common across all instances, such as the set of meta-properties.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;<a href="../../../org/joda/beans/Property.html" title="interface in org.joda.beans">Property</a>&lt;R&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/beans/Bean.html#property(java.lang.String)">property</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;propertyName)</code>
 <div class="block">Gets a property by name.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../org/joda/beans/Bean.html#propertyNames()">propertyNames</a></strong>()</code>
 <div class="block">Gets the set of property names.</div>
@@ -191,25 +185,12 @@
 <a name="propertyNames()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>propertyNames</h4>
 <pre><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;propertyNames()</pre>
 <div class="block">Gets the set of property names.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the unmodifiable map of property objects, not null</dd></dl>
-</li>
-</ul>
-<a name="clone()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>clone</h4>
-<pre><a href="../../../org/joda/beans/Bean.html" title="interface in org.joda.beans">Bean</a>&nbsp;clone()</pre>
-<div class="block">Clones this bean, returning an independent copy.
- <p>
- Implementations should covariantly return their own type.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the clone, not null</dd></dl>
 </li>
 </ul>
 </li>

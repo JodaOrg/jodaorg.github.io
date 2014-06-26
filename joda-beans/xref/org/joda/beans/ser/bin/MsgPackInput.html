@@ -93,7 +93,7 @@
 <a class="jxr_linenumber" name="83" href="#83">83</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> readObject(<strong class="jxr_keyword">int</strong> unsigned) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="84" href="#84">84</a>          handleObjectStart();
 <a class="jxr_linenumber" name="85" href="#85">85</a>          byte b = (byte) unsigned;
-<a class="jxr_linenumber" name="86" href="#86">86</a>          <strong class="jxr_keyword">if</strong> (b &gt;= MIN_FIX_INT &amp;&amp; b &lt;= MAX_FIX_INT) {
+<a class="jxr_linenumber" name="86" href="#86">86</a>          <strong class="jxr_keyword">if</strong> (b &gt;= MIN_FIX_INT) {  <em class="jxr_comment">// no need to check for b &lt;= MAX_FIX_INT</em>
 <a class="jxr_linenumber" name="87" href="#87">87</a>              handleInt(b);
 <a class="jxr_linenumber" name="88" href="#88">88</a>              
 <a class="jxr_linenumber" name="89" href="#89">89</a>          } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (b &gt;= MIN_FIX_STR &amp;&amp; b &lt;= MAX_FIX_STR) {
