@@ -9,7 +9,7 @@
 <div id="overview"><a href="../../../../../apidocs/org/joda/time/base/AbstractInstant.html">View Javadoc</a></div><pre>
 
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> *  Copyright 2001-2010 Stephen Colebourne</em>
+<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> *  Copyright 2001-2014 Stephen Colebourne</em>
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <em class="jxr_comment"> *  Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <em class="jxr_comment"> *  you may not use this file except in compliance with the License.</em>
@@ -427,7 +427,7 @@
 <a class="jxr_linenumber" name="417" href="#417">417</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="418" href="#418">418</a> <em class="jxr_javadoccomment">     * Output the date time in ISO8601 format (yyyy-MM-ddTHH:mm:ss.SSSZZ).</em>
 <a class="jxr_linenumber" name="419" href="#419">419</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="420" href="#420">420</a> <em class="jxr_javadoccomment">     * @return ISO8601 time formatted string.</em>
+<a class="jxr_linenumber" name="420" href="#420">420</a> <em class="jxr_javadoccomment">     * @return ISO8601 time formatted string, not null</em>
 <a class="jxr_linenumber" name="421" href="#421">421</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="422" href="#422">422</a>     @ToString
 <a class="jxr_linenumber" name="423" href="#423">423</a>     <strong class="jxr_keyword">public</strong> String toString() {
@@ -439,7 +439,7 @@
 <a class="jxr_linenumber" name="429" href="#429">429</a> <em class="jxr_javadoccomment">     * Uses the specified formatter to convert this partial to a String.</em>
 <a class="jxr_linenumber" name="430" href="#430">430</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="431" href="#431">431</a> <em class="jxr_javadoccomment">     * @param formatter  the formatter to use, null means use &lt;code&gt;toString()&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="432" href="#432">432</a> <em class="jxr_javadoccomment">     * @return the formatted string</em>
+<a class="jxr_linenumber" name="432" href="#432">432</a> <em class="jxr_javadoccomment">     * @return the formatted string, not null</em>
 <a class="jxr_linenumber" name="433" href="#433">433</a> <em class="jxr_javadoccomment">     * @since 1.1</em>
 <a class="jxr_linenumber" name="434" href="#434">434</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="435" href="#435">435</a>     <strong class="jxr_keyword">public</strong> String toString(<a href="../../../../org/joda/time/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {

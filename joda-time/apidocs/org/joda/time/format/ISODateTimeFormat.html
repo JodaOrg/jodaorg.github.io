@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>ISODateTimeFormat (Joda-Time 2.4-SNAPSHOT API)</title>
+<title>ISODateTimeFormat (Joda-Time 2.4 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="ISODateTimeFormat (Joda-Time 2.4-SNAPSHOT API)";
+        parent.document.title="ISODateTimeFormat (Joda-Time 2.4 API)";
     }
 //-->
 </script>
@@ -320,8 +320,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateOptionalTimeParser()">dateOptionalTimeParser</a></strong>()</code>
-<div class="block">Returns a generic ISO datetime parser where the date is mandatory and
- the time is optional.</div>
+<div class="block">Returns a generic ISO datetime parser where the date is mandatory and the time is optional.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -347,8 +346,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()">dateTimeParser</a></strong>()</code>
-<div class="block">Returns a generic ISO datetime parser which parses either a date or
- a time or both.</div>
+<div class="block">Returns a generic ISO datetime parser which parses either a date or a time or both.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -398,8 +396,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/ISODateTimeFormat.html#localDateOptionalTimeParser()">localDateOptionalTimeParser</a></strong>()</code>
-<div class="block">Returns a generic ISO datetime parser where the date is mandatory and
- the time is optional.</div>
+<div class="block">Returns a generic ISO datetime parser where the date is mandatory and the time is optional.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -673,6 +670,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;dateParser()</pre>
 <div class="block">Returns a generic ISO date parser for parsing dates with a possible zone.
  <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
  It accepts formats described by the following syntax:
  <pre>
  date              = date-element ['T' offset]
@@ -692,6 +691,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>localDateParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;localDateParser()</pre>
 <div class="block">Returns a generic ISO date parser for parsing local dates.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
  This parser is initialised with the local (UTC) time zone.
  <p>
  It accepts formats described by the following syntax:
@@ -714,6 +716,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;dateElementParser()</pre>
 <div class="block">Returns a generic ISO date parser for parsing dates.
  <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
  It accepts formats described by the following syntax:
  <pre>
  date-element      = std-date-element | ord-date-element | week-date-element
@@ -731,6 +735,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>timeParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;timeParser()</pre>
 <div class="block">Returns a generic ISO time parser for parsing times with a possible zone.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
  The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
  <p>
  It accepts formats described by the following syntax:
@@ -752,6 +759,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>localTimeParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;localTimeParser()</pre>
 <div class="block">Returns a generic ISO time parser for parsing local times.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
  This parser is initialised with the local (UTC) time zone.
  The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
  <p>
@@ -775,6 +785,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>timeElementParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;timeElementParser()</pre>
 <div class="block">Returns a generic ISO time parser.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
  The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
  <p>
  It accepts formats described by the following syntax:
@@ -793,8 +806,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>dateTimeParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;dateTimeParser()</pre>
-<div class="block">Returns a generic ISO datetime parser which parses either a date or
- a time or both. The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+<div class="block">Returns a generic ISO datetime parser which parses either a date or a time or both.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
  <p>
  It accepts formats described by the following syntax:
  <pre>
@@ -820,8 +836,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>dateOptionalTimeParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;dateOptionalTimeParser()</pre>
-<div class="block">Returns a generic ISO datetime parser where the date is mandatory and
- the time is optional. This parser can parse zoned datetimes.
+<div class="block">Returns a generic ISO datetime parser where the date is mandatory and the time is optional.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
+ This parser can parse zoned datetimes.
  The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
  <p>
  It accepts formats described by the following syntax:
@@ -847,8 +866,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>localDateOptionalTimeParser</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;localDateOptionalTimeParser()</pre>
-<div class="block">Returns a generic ISO datetime parser where the date is mandatory and
- the time is optional. This parser only parses local datetimes.
+<div class="block">Returns a generic ISO datetime parser where the date is mandatory and the time is optional.
+ <p>
+ The returned formatter can only be used for parsing, printing is unsupported.
+ <p>
+ This parser only parses local datetimes.
  This parser is initialised with the local (UTC) time zone.
  The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
  <p>
@@ -876,7 +898,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>date</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;date()</pre>
 <div class="block">Returns a formatter for a full date as four digit year, two digit month
- of year, and two digit day of month (yyyy-MM-dd).</div>
+ of year, and two digit day of month (yyyy-MM-dd).
+ <p>
+ The returned formatter prints and parses only this format.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateParser()"><code>dateParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyy-MM-dd</dd></dl>
 </li>
 </ul>
@@ -890,8 +915,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a formatter for a two digit hour of day, two digit minute of
  hour, two digit second of minute, three digit fraction of second, and
  time zone offset (HH:mm:ss.SSSZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#timeParser()"><code>timeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for HH:mm:ss.SSSZZ</dd></dl>
 </li>
 </ul>
@@ -904,8 +933,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;timeNoMillis()</pre>
 <div class="block">Returns a formatter for a two digit hour of day, two digit minute of
  hour, two digit second of minute, and time zone offset (HH:mm:ssZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#timeParser()"><code>timeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for HH:mm:ssZZ</dd></dl>
 </li>
 </ul>
@@ -919,8 +952,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a formatter for a two digit hour of day, two digit minute of
  hour, two digit second of minute, three digit fraction of second, and
  time zone offset prefixed by 'T' ('T'HH:mm:ss.SSSZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#timeParser()"><code>timeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for 'T'HH:mm:ss.SSSZZ</dd></dl>
 </li>
 </ul>
@@ -934,8 +971,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a formatter for a two digit hour of day, two digit minute of
  hour, two digit second of minute, and time zone offset prefixed
  by 'T' ('T'HH:mm:ssZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#timeParser()"><code>timeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for 'T'HH:mm:ssZZ</dd></dl>
 </li>
 </ul>
@@ -948,8 +989,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;dateTime()</pre>
 <div class="block">Returns a formatter that combines a full date and time, separated by a 'T'
  (yyyy-MM-dd'T'HH:mm:ss.SSSZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()"><code>dateTimeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyy-MM-dd'T'HH:mm:ss.SSSZZ</dd></dl>
 </li>
 </ul>
@@ -962,8 +1007,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;dateTimeNoMillis()</pre>
 <div class="block">Returns a formatter that combines a full date and time without millis,
  separated by a 'T' (yyyy-MM-dd'T'HH:mm:ssZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()"><code>dateTimeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyy-MM-dd'T'HH:mm:ssZZ</dd></dl>
 </li>
 </ul>
@@ -975,7 +1024,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>ordinalDate</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;ordinalDate()</pre>
 <div class="block">Returns a formatter for a full ordinal date, using a four
- digit year and three digit dayOfYear (yyyy-DDD).</div>
+ digit year and three digit dayOfYear (yyyy-DDD).
+ <p>
+ The returned formatter prints and parses only this format.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateParser()"><code>dateParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyy-DDD</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.1</dd></dl>
 </li>
@@ -989,8 +1041,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;ordinalDateTime()</pre>
 <div class="block">Returns a formatter for a full ordinal date and time, using a four
  digit year and three digit dayOfYear (yyyy-DDD'T'HH:mm:ss.SSSZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()"><code>dateTimeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyy-DDD'T'HH:mm:ss.SSSZZ</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.1</dd></dl>
 </li>
@@ -1004,8 +1060,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;ordinalDateTimeNoMillis()</pre>
 <div class="block">Returns a formatter for a full ordinal date and time without millis,
  using a four digit year and three digit dayOfYear (yyyy-DDD'T'HH:mm:ssZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()"><code>dateTimeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyy-DDD'T'HH:mm:ssZZ</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.1</dd></dl>
 </li>
@@ -1018,7 +1078,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>weekDate</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;weekDate()</pre>
 <div class="block">Returns a formatter for a full date as four digit weekyear, two digit
- week of weekyear, and one digit day of week (xxxx-'W'ww-e).</div>
+ week of weekyear, and one digit day of week (xxxx-'W'ww-e).
+ <p>
+ The returned formatter prints and parses only this format.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateParser()"><code>dateParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for xxxx-'W'ww-e</dd></dl>
 </li>
 </ul>
@@ -1031,8 +1094,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;weekDateTime()</pre>
 <div class="block">Returns a formatter that combines a full weekyear date and time,
  separated by a 'T' (xxxx-'W'ww-e'T'HH:mm:ss.SSSZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()"><code>dateTimeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for xxxx-'W'ww-e'T'HH:mm:ss.SSSZZ</dd></dl>
 </li>
 </ul>
@@ -1045,8 +1112,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;weekDateTimeNoMillis()</pre>
 <div class="block">Returns a formatter that combines a full weekyear date and time without millis,
  separated by a 'T' (xxxx-'W'ww-e'T'HH:mm:ssZZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HH:mm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.
+ See <a href="../../../../org/joda/time/format/ISODateTimeFormat.html#dateTimeParser()"><code>dateTimeParser()</code></a> for a more flexible parser that accepts different formats.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for xxxx-'W'ww-e'T'HH:mm:ssZZ</dd></dl>
 </li>
 </ul>
@@ -1058,7 +1129,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>basicDate</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicDate()</pre>
 <div class="block">Returns a basic formatter for a full date as four digit year, two digit
- month of year, and two digit day of month (yyyyMMdd).</div>
+ month of year, and two digit day of month (yyyyMMdd).
+ <p>
+ The returned formatter prints and parses only this format.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyyMMdd</dd></dl>
 </li>
 </ul>
@@ -1072,8 +1145,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a basic formatter for a two digit hour of day, two digit minute
  of hour, two digit second of minute, three digit millis, and time zone
  offset (HHmmss.SSSZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for HHmmss.SSSZ</dd></dl>
 </li>
 </ul>
@@ -1086,8 +1162,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicTimeNoMillis()</pre>
 <div class="block">Returns a basic formatter for a two digit hour of day, two digit minute
  of hour, two digit second of minute, and time zone offset (HHmmssZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for HHmmssZ</dd></dl>
 </li>
 </ul>
@@ -1101,8 +1180,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a basic formatter for a two digit hour of day, two digit minute
  of hour, two digit second of minute, three digit millis, and time zone
  offset prefixed by 'T' ('T'HHmmss.SSSZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for 'T'HHmmss.SSSZ</dd></dl>
 </li>
 </ul>
@@ -1116,8 +1198,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns a basic formatter for a two digit hour of day, two digit minute
  of hour, two digit second of minute, and time zone offset prefixed by 'T'
  ('T'HHmmssZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for 'T'HHmmssZ</dd></dl>
 </li>
 </ul>
@@ -1130,8 +1215,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicDateTime()</pre>
 <div class="block">Returns a basic formatter that combines a basic date and time, separated
  by a 'T' (yyyyMMdd'T'HHmmss.SSSZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyyMMdd'T'HHmmss.SSSZ</dd></dl>
 </li>
 </ul>
@@ -1144,8 +1232,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicDateTimeNoMillis()</pre>
 <div class="block">Returns a basic formatter that combines a basic date and time without millis,
  separated by a 'T' (yyyyMMdd'T'HHmmssZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyyMMdd'T'HHmmssZ</dd></dl>
 </li>
 </ul>
@@ -1157,7 +1248,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>basicOrdinalDate</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicOrdinalDate()</pre>
 <div class="block">Returns a formatter for a full ordinal date, using a four
- digit year and three digit dayOfYear (yyyyDDD).</div>
+ digit year and three digit dayOfYear (yyyyDDD).
+ <p>
+ The returned formatter prints and parses only this format.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyyDDD</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.1</dd></dl>
 </li>
@@ -1171,8 +1264,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicOrdinalDateTime()</pre>
 <div class="block">Returns a formatter for a full ordinal date and time, using a four
  digit year and three digit dayOfYear (yyyyDDD'T'HHmmss.SSSZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyyDDD'T'HHmmss.SSSZ</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.1</dd></dl>
 </li>
@@ -1186,8 +1282,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicOrdinalDateTimeNoMillis()</pre>
 <div class="block">Returns a formatter for a full ordinal date and time without millis,
  using a four digit year and three digit dayOfYear (yyyyDDD'T'HHmmssZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for yyyyDDD'T'HHmmssZ</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.1</dd></dl>
 </li>
@@ -1200,7 +1299,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>basicWeekDate</h4>
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicWeekDate()</pre>
 <div class="block">Returns a basic formatter for a full date as four digit weekyear, two
- digit week of weekyear, and one digit day of week (xxxx'W'wwe).</div>
+ digit week of weekyear, and one digit day of week (xxxx'W'wwe).
+ <p>
+ The returned formatter prints and parses only this format.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for xxxx'W'wwe</dd></dl>
 </li>
 </ul>
@@ -1213,8 +1314,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicWeekDateTime()</pre>
 <div class="block">Returns a basic formatter that combines a basic weekyear date and time,
  separated by a 'T' (xxxx'W'wwe'T'HHmmss.SSSZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which includes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for xxxx'W'wwe'T'HHmmss.SSSZ</dd></dl>
 </li>
 </ul>
@@ -1227,8 +1331,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;basicWeekDateTimeNoMillis()</pre>
 <div class="block">Returns a basic formatter that combines a basic weekyear date and time
  without millis, separated by a 'T' (xxxx'W'wwe'T'HHmmssZ).
+ <p>
  The time zone offset is 'Z' for zero, and of the form '±HHmm' for non-zero.
- The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.</div>
+ The parser is strict by default, thus time string <code>24:00</code> cannot be parsed.
+ <p>
+ The returned formatter prints and parses only this format, which excludes milliseconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>a formatter for xxxx'W'wwe'T'HHmmssZ</dd></dl>
 </li>
 </ul>

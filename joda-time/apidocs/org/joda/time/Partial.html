@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Partial (Joda-Time 2.4-SNAPSHOT API)</title>
+<title>Partial (Joda-Time 2.4 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Partial (Joda-Time 2.4-SNAPSHOT API)";
+        parent.document.title="Partial (Joda-Time 2.4 API)";
     }
 //-->
 </script>
@@ -524,6 +524,8 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
        int[]&nbsp;values)</pre>
 <div class="block">Constructs a Partial with the specified fields and values.
  The fields must be specified in the order largest to smallest.
+ For year and weekyear fields with equal duration, year is defined
+ as being larger than weekyear.
  <p>
  The constructor uses the specified chronology.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>types</code> - the types to create the partial from, not null</dd><dd><code>values</code> - the values to store, not null</dd>
@@ -542,6 +544,8 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
        <a href="../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chronology)</pre>
 <div class="block">Constructs a Partial with the specified fields and values.
  The fields must be specified in the order largest to smallest.
+ For year and weekyear fields with equal duration, year is defined
+ as being larger than weekyear.
  <p>
  The constructor uses the specified chronology.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>types</code> - the types to create the partial from, not null</dd><dd><code>values</code> - the values to store, not null</dd><dd><code>chronology</code> - the chronology, null means ISO</dd>

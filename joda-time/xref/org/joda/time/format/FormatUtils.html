@@ -429,7 +429,7 @@
 <a class="jxr_linenumber" name="419" href="#419">419</a>                 ((<strong class="jxr_keyword">int</strong>)(Math.log(value) / LOG_10) + 1)))));
 <a class="jxr_linenumber" name="420" href="#420">420</a>     }
 <a class="jxr_linenumber" name="421" href="#421">421</a> 
-<a class="jxr_linenumber" name="422" href="#422">422</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> parseTwoDigits(String text, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="422" href="#422">422</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> parseTwoDigits(CharSequence text, <strong class="jxr_keyword">int</strong> position) {
 <a class="jxr_linenumber" name="423" href="#423">423</a>         <strong class="jxr_keyword">int</strong> value = text.charAt(position) - '0';
 <a class="jxr_linenumber" name="424" href="#424">424</a>         <strong class="jxr_keyword">return</strong> ((value &lt;&lt; 3) + (value &lt;&lt; 1)) + text.charAt(position + 1) - '0';
 <a class="jxr_linenumber" name="425" href="#425">425</a>     }

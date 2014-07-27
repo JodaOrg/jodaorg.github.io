@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Interval (Joda-Time 2.4-SNAPSHOT API)</title>
+<title>Interval (Joda-Time 2.4 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Interval (Joda-Time 2.4-SNAPSHOT API)";
+        parent.document.title="Interval (Joda-Time 2.4 API)";
     }
 //-->
 </script>
@@ -761,8 +761,8 @@ implements <a href="../../../org/joda/time/ReadableInterval.html" title="interfa
 <h4>withDurationBeforeEnd</h4>
 <pre>public&nbsp;<a href="../../../org/joda/time/Interval.html" title="class in org.joda.time">Interval</a>&nbsp;withDurationBeforeEnd(<a href="../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</pre>
 <div class="block">Creates a new interval with the specified duration before the end instant.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>duration</code> - the duration to add to the start to get the new end instant, null means zero</dd>
-<dt><span class="strong">Returns:</span></dt><dd>an interval with the start from this interval and a calculated end</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>duration</code> - the duration to subtract from the end to get the new start instant, null means zero</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an interval with the end from this interval and a calculated start</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the duration is negative</dd></dl>
 </li>
@@ -789,8 +789,8 @@ implements <a href="../../../org/joda/time/ReadableInterval.html" title="interfa
 <h4>withPeriodBeforeEnd</h4>
 <pre>public&nbsp;<a href="../../../org/joda/time/Interval.html" title="class in org.joda.time">Interval</a>&nbsp;withPeriodBeforeEnd(<a href="../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</pre>
 <div class="block">Creates a new interval with the specified period before the end instant.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>period</code> - the period to add to the start to get the new end instant, null means zero</dd>
-<dt><span class="strong">Returns:</span></dt><dd>an interval with the start from this interval and a calculated end</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>period</code> - the period to subtract from the end to get the new start instant, null means zero</dd>
+<dt><span class="strong">Returns:</span></dt><dd>an interval with the end from this interval and a calculated start</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the period is negative</dd></dl>
 </li>

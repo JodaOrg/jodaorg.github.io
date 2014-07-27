@@ -442,8 +442,8 @@
 <a class="jxr_linenumber" name="432" href="#432">432</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="433" href="#433">433</a> <em class="jxr_javadoccomment">     * Creates a new interval with the specified duration before the end instant.</em>
 <a class="jxr_linenumber" name="434" href="#434">434</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="435" href="#435">435</a> <em class="jxr_javadoccomment">     * @param duration  the duration to add to the start to get the new end instant, null means zero</em>
-<a class="jxr_linenumber" name="436" href="#436">436</a> <em class="jxr_javadoccomment">     * @return an interval with the start from this interval and a calculated end</em>
+<a class="jxr_linenumber" name="435" href="#435">435</a> <em class="jxr_javadoccomment">     * @param duration  the duration to subtract from the end to get the new start instant, null means zero</em>
+<a class="jxr_linenumber" name="436" href="#436">436</a> <em class="jxr_javadoccomment">     * @return an interval with the end from this interval and a calculated start</em>
 <a class="jxr_linenumber" name="437" href="#437">437</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException if the duration is negative</em>
 <a class="jxr_linenumber" name="438" href="#438">438</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="439" href="#439">439</a>     <strong class="jxr_keyword">public</strong> <a href="../../../org/joda/time/Interval.html">Interval</a> withDurationBeforeEnd(<a href="../../../org/joda/time/ReadableDuration.html">ReadableDuration</a> duration) {
@@ -478,8 +478,8 @@
 <a class="jxr_linenumber" name="468" href="#468">468</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="469" href="#469">469</a> <em class="jxr_javadoccomment">     * Creates a new interval with the specified period before the end instant.</em>
 <a class="jxr_linenumber" name="470" href="#470">470</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="471" href="#471">471</a> <em class="jxr_javadoccomment">     * @param period  the period to add to the start to get the new end instant, null means zero</em>
-<a class="jxr_linenumber" name="472" href="#472">472</a> <em class="jxr_javadoccomment">     * @return an interval with the start from this interval and a calculated end</em>
+<a class="jxr_linenumber" name="471" href="#471">471</a> <em class="jxr_javadoccomment">     * @param period the period to subtract from the end to get the new start instant, null means zero</em>
+<a class="jxr_linenumber" name="472" href="#472">472</a> <em class="jxr_javadoccomment">     * @return an interval with the end from this interval and a calculated start</em>
 <a class="jxr_linenumber" name="473" href="#473">473</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException if the period is negative</em>
 <a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="475" href="#475">475</a>     <strong class="jxr_keyword">public</strong> <a href="../../../org/joda/time/Interval.html">Interval</a> withPeriodBeforeEnd(<a href="../../../org/joda/time/ReadablePeriod.html">ReadablePeriod</a> period) {

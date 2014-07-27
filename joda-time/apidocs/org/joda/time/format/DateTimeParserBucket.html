@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>DateTimeParserBucket (Joda-Time 2.4-SNAPSHOT API)</title>
+<title>DateTimeParserBucket (Joda-Time 2.4 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="DateTimeParserBucket (Joda-Time 2.4-SNAPSHOT API)";
+        parent.document.title="DateTimeParserBucket (Joda-Time 2.4 API)";
     }
 //-->
 </script>
@@ -193,24 +193,31 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#computeMillis(boolean, java.lang.CharSequence)">computeMillis</a></strong>(boolean&nbsp;resetFields,
+             <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</code>
+<div class="block">Computes the parsed datetime by setting the saved fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#computeMillis(boolean, java.lang.String)">computeMillis</a></strong>(boolean&nbsp;resetFields,
              <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
 <div class="block">Computes the parsed datetime by setting the saved fields.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#getChronology()">getChronology</a></strong>()</code>
 <div class="block">Gets the chronology of the bucket, which will be a local (UTC) chronology.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#getLocale()">getLocale</a></strong>()</code>
 <div class="block">Returns the locale to be used during parsing.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#getOffset()">getOffset</a></strong>()</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
@@ -218,45 +225,59 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#getOffsetInteger()">getOffsetInteger</a></strong>()</code>
 <div class="block">Returns the time zone offset in milliseconds used by computeMillis.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#getPivotYear()">getPivotYear</a></strong>()</code>
 <div class="block">Returns the default year used when information is incomplete.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#getZone()">getZone</a></strong>()</code>
 <div class="block">Returns the time zone used by computeMillis.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#parseMillis(org.joda.time.format.DateTimeParser, java.lang.CharSequence)">parseMillis</a></strong>(<a href="../../../../org/joda/time/format/DateTimeParser.html" title="interface in org.joda.time.format">DateTimeParser</a>&nbsp;parser,
+           <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</code>
+<div class="block">Parses a datetime from the given text, returning the number of
+ milliseconds since the epoch, 1970-01-01T00:00:00Z.</div>
+</td>
+</tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#reset()">reset</a></strong>()</code>
+<div class="block">Resets the state back to that when the object was constructed.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#restoreState(java.lang.Object)">restoreState</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;savedState)</code>
 <div class="block">Restores the state of this bucket from a previously saved state.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#saveField(org.joda.time.DateTimeField, int)">saveField</a></strong>(<a href="../../../../org/joda/time/DateTimeField.html" title="class in org.joda.time">DateTimeField</a>&nbsp;field,
          int&nbsp;value)</code>
 <div class="block">Saves a datetime field value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#saveField(org.joda.time.DateTimeFieldType, int)">saveField</a></strong>(<a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;fieldType,
          int&nbsp;value)</code>
 <div class="block">Saves a datetime field value.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#saveField(org.joda.time.DateTimeFieldType, java.lang.String, java.util.Locale)">saveField</a></strong>(<a href="../../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;fieldType,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
@@ -264,13 +285,13 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Saves a datetime field text value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#saveState()">saveState</a></strong>()</code>
 <div class="block">Saves the state of this bucket, returning it in an opaque object.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#setOffset(int)">setOffset</a></strong>(int&nbsp;offset)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
@@ -278,19 +299,21 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#setOffset(java.lang.Integer)">setOffset</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;offset)</code>
 <div class="block">Set a time zone offset to be used when computeMillis is called.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#setPivotYear(java.lang.Integer)">setPivotYear</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;pivotYear)</code>
-<div class="block">Sets the pivot year to use when parsing two digit years.</div>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>this method should never have been public</i></div>
+</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/DateTimeParserBucket.html#setZone(org.joda.time.DateTimeZone)">setZone</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Set a time zone to be used when computeMillis is called.</div>
@@ -364,7 +387,7 @@ public&nbsp;DateTimeParserBucket(long&nbsp;instantLocal,
                     int&nbsp;defaultYear)</pre>
 <div class="block">Constructs a bucket, with the option of specifying the pivot year for
  two-digit year parsing.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>instantLocal</code> - the initial millis from 1970-01-01T00:00:00, local time</dd><dd><code>chrono</code> - the chronology to use</dd><dd><code>locale</code> - the locale to use</dd><dd><code>pivotYear</code> - the pivot year to use when parsing two-digit years</dd><dt><span class="strong">Since:</span></dt>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>instantLocal</code> - the initial millis from 1970-01-01T00:00:00, local time</dd><dd><code>chrono</code> - the chronology to use</dd><dd><code>locale</code> - the locale to use</dd><dd><code>pivotYear</code> - the pivot year to use when parsing two-digit years</dd><dd><code>defaultYear</code> - the default year to use when parsing month-day</dd><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
 </li>
 </ul>
@@ -376,6 +399,43 @@ public&nbsp;DateTimeParserBucket(long&nbsp;instantLocal,
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="reset()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>reset</h4>
+<pre>public&nbsp;void&nbsp;reset()</pre>
+<div class="block">Resets the state back to that when the object was constructed.
+ <p>
+ This resets the state of the bucket, allowing a single bucket to be re-used
+ for many parses. The bucket must not be shared between threads.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.4</dd></dl>
+</li>
+</ul>
+<a name="parseMillis(org.joda.time.format.DateTimeParser, java.lang.CharSequence)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parseMillis</h4>
+<pre>public&nbsp;long&nbsp;parseMillis(<a href="../../../../org/joda/time/format/DateTimeParser.html" title="interface in org.joda.time.format">DateTimeParser</a>&nbsp;parser,
+               <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</pre>
+<div class="block">Parses a datetime from the given text, returning the number of
+ milliseconds since the epoch, 1970-01-01T00:00:00Z.
+ <p>
+ This parses the text using the parser into this bucket.
+ The bucket is reset before parsing begins, allowing the bucket to be re-used.
+ The bucket must not be shared between threads.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>parser</code> - the parser to use, see <a href="../../../../org/joda/time/format/DateTimeFormatter.html#getParser()"><code>DateTimeFormatter.getParser()</code></a>, not null</dd><dd><code>text</code> - text to parse, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>parsed value expressed in milliseconds since the epoch</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if parsing is not supported</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the text to parse is invalid</dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.4</dd></dl>
+</li>
+</ul>
 <a name="getChronology()">
 <!--   -->
 </a>
@@ -485,7 +545,9 @@ public&nbsp;void&nbsp;setOffset(int&nbsp;offset)</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPivotYear</h4>
-<pre>public&nbsp;void&nbsp;setPivotYear(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;pivotYear)</pre>
+<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setPivotYear(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&nbsp;pivotYear)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>this method should never have been public</i></div>
 <div class="block">Sets the pivot year to use when parsing two digit years.
  <p>
  If the value is set to null, this will indicate that default
@@ -590,7 +652,7 @@ public&nbsp;void&nbsp;setOffset(int&nbsp;offset)</pre>
 <a name="computeMillis(boolean, java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>computeMillis</h4>
 <pre>public&nbsp;long&nbsp;computeMillis(boolean&nbsp;resetFields,
@@ -602,6 +664,23 @@ public&nbsp;void&nbsp;setOffset(int&nbsp;offset)</pre>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any field is out of range</dd><dt><span class="strong">Since:</span></dt>
   <dd>1.3</dd></dl>
+</li>
+</ul>
+<a name="computeMillis(boolean, java.lang.CharSequence)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>computeMillis</h4>
+<pre>public&nbsp;long&nbsp;computeMillis(boolean&nbsp;resetFields,
+                 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</pre>
+<div class="block">Computes the parsed datetime by setting the saved fields.
+ This method is idempotent, but it is not thread-safe.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>resetFields</code> - false by default, but when true, unsaved field values are cleared</dd><dd><code>text</code> - optional text being parsed, to be included in any error message</dd>
+<dt><span class="strong">Returns:</span></dt><dd>milliseconds since 1970-01-01T00:00:00Z</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if any field is out of range</dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.4</dd></dl>
 </li>
 </ul>
 </li>
