@@ -32,7 +32,7 @@
             
                     
                 <div class="xleft">
-        <span id="projectVersion">Version: 1.7-SNAPSHOT</span>
+        <span id="projectVersion">Version: 1.7</span>
               </div>
             <div class="xright">        
                     
@@ -156,16 +156,15 @@ The main access is via the class <tt>StringConvert</tt>.
 The easiest way to use the conversion is via the global constant:
 </p>
 
-<div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
-<pre>
+<pre class="source">
 // conversion to a String
 TimeZone zone = ...
 String str = StringConvert.INSTANCE.convertToString(zone);
 
 // conversion from a String
 TimeZone zone = StringConvert.INSTANCE.convertFromString(TimeZone.class, str);
-</pre></div></div>
+</pre></div>
 
 <p>
 In both cases, if the input is <tt>null</tt> then the output will also be <tt>null</tt>.
@@ -345,9 +344,8 @@ This will search for the <tt>ToString</tt> and <tt>FromString</tt> annotation on
 These annotations will indicate which method should be called to perform the conversion.
 </p>
 
-<div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
-<pre>
+<pre class="source">
 public class Distance {
 
   @FromString
@@ -357,7 +355,7 @@ public class Distance {
   public String getStandardOutput() { ... }
 
 }
-</pre></div></div>
+</pre></div>
 
 <p>
 To be valid, the class must contain one <tt>ToString</tt> annotation and one <tt>FromString</tt> annotation.
@@ -374,9 +372,8 @@ However in earlier versions, a separate &quot;factory&quot; class is necessary.
 This can also be annotated:
 </p>
 
-<div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
-<pre>
+<pre class="source">
 @FromStringFactory(factory = DistanceFactory.class)
 public interface Distance {
 
@@ -398,7 +395,7 @@ public class DistanceFactory {
   public static Distance parseDistance(String str) { ... }
 
 }
-</pre></div></div>
+</pre></div>
 
 <p>
 The <tt>FromStringFactory</tt> annotation points at the factory class that will provide the factory method.

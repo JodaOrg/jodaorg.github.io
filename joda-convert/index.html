@@ -32,7 +32,7 @@
             
                     
                 <div class="xleft">
-        <span id="projectVersion">Version: 1.7-SNAPSHOT</span>
+        <span id="projectVersion">Version: 1.7</span>
               </div>
             <div class="xright">        
                     
@@ -138,18 +138,17 @@
 
 <p>
 Joda-Convert provides a small set of classes to provide round-trip conversion between Objects and Strings.
-It is not intended to tackle the wider problem of Object to Object transformation.
+It does not tackle the wider problem of Object to Object transformation.
 </p>
 
-<div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
-<pre>
+<pre class="source">
   // conversion to String
   String str = StringConvert.INSTANCE.convertToString(foo);
 
   // conversion from String
   Foo bar = StringConvert.INSTANCE.convertFromString(Foo.class, str);
-</pre></div></div>
+</pre></div>
 
 <p>
 Joda-Convert supports two mechanisms of extending the list of supported conversions.
@@ -164,9 +163,8 @@ to convert to and from a standard format String.
 Consider a <tt>Distance</tt> class:
 </p>
 
-<div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
-<pre>
+<pre class="source">
   public class Distance {
 
     @FromString
@@ -176,7 +174,7 @@ Consider a <tt>Distance</tt> class:
     public String getStandardOutput() { ... }
 
   }
-</pre></div></div>
+</pre></div>
 
 <p>
 As shown, the two methods may have any name. They must simply fulfil the required method signatures for conversion.
@@ -220,13 +218,13 @@ Various documentation is available:
 <h2>Releases<a name="Releases"></a></h2>
 
 <p>
-Release 1.6 is the current latest release.
+Release 1.7 is the current latest release.
 This release is considered stable and worthy of the 1.x tag.
-It depends on JDK 1.6 or later.
+It depends on Java SE 6 or later.
 </p>
 
 <p>
-Available in the <a class="externalLink" href="http://search.maven.org/#artifactdetails|org.joda|joda-convert|1.6|jar">Maven Central repository</a>.
+Available in the <a class="externalLink" href="http://search.maven.org/#artifactdetails|org.joda|joda-convert|1.7|jar">Maven Central repository</a>.
 </p>
 </div>
 
