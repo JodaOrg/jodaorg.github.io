@@ -941,89 +941,91 @@
 <a class="jxr_linenumber" name="931" href="#931">931</a>         <a href="../../../org/joda/beans/JodaBeanUtils.html">GuavaCloner</a>() {
 <a class="jxr_linenumber" name="932" href="#932">932</a>         }
 <a class="jxr_linenumber" name="933" href="#933">933</a> 
-<a class="jxr_linenumber" name="934" href="#934">934</a>         Object clone(Object value) {
-<a class="jxr_linenumber" name="935" href="#935">935</a>             <strong class="jxr_keyword">if</strong> (value == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="936" href="#936">936</a>                 <strong class="jxr_keyword">return</strong> value;
-<a class="jxr_linenumber" name="937" href="#937">937</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof ImmutableMap ||
-<a class="jxr_linenumber" name="938" href="#938">938</a>                     value instanceof ImmutableCollection ||
-<a class="jxr_linenumber" name="939" href="#939">939</a>                     value instanceof ImmutableMap ||
-<a class="jxr_linenumber" name="940" href="#940">940</a>                     value instanceof ImmutableMultimap ||
-<a class="jxr_linenumber" name="941" href="#941">941</a>                     value instanceof ImmutableTable) {
-<a class="jxr_linenumber" name="942" href="#942">942</a>                 <strong class="jxr_keyword">return</strong> value;
-<a class="jxr_linenumber" name="943" href="#943">943</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Multiset) {
-<a class="jxr_linenumber" name="944" href="#944">944</a>                 <strong class="jxr_keyword">return</strong> cloneAlways((Bean) value);
-<a class="jxr_linenumber" name="945" href="#945">945</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof SortedMultiset) {
-<a class="jxr_linenumber" name="946" href="#946">946</a>                 SortedMultiset set = (SortedMultiset) value;
-<a class="jxr_linenumber" name="947" href="#947">947</a>                 <strong class="jxr_keyword">return</strong> cloneIterable(set, TreeMultiset.create(set.comparator()));
-<a class="jxr_linenumber" name="948" href="#948">948</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Multiset) {
-<a class="jxr_linenumber" name="949" href="#949">949</a>                 <strong class="jxr_keyword">return</strong> cloneIterable((Multiset) value, LinkedHashMultiset.create());
-<a class="jxr_linenumber" name="950" href="#950">950</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof SetMultimap) {
-<a class="jxr_linenumber" name="951" href="#951">951</a>                 <strong class="jxr_keyword">return</strong> cloneMultimap((Multimap) value, LinkedHashMultimap.create());
-<a class="jxr_linenumber" name="952" href="#952">952</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof ListMultimap) {
-<a class="jxr_linenumber" name="953" href="#953">953</a>                 <strong class="jxr_keyword">return</strong> cloneMultimap((Multimap) value, ArrayListMultimap.create());
-<a class="jxr_linenumber" name="954" href="#954">954</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Multimap) {
-<a class="jxr_linenumber" name="955" href="#955">955</a>                 <strong class="jxr_keyword">return</strong> cloneMultimap((Multimap) value, ArrayListMultimap.create());
-<a class="jxr_linenumber" name="956" href="#956">956</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof BiMap) {
-<a class="jxr_linenumber" name="957" href="#957">957</a>                 <strong class="jxr_keyword">return</strong> cloneMap((BiMap) value, HashBiMap.create());
-<a class="jxr_linenumber" name="958" href="#958">958</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Table) {
-<a class="jxr_linenumber" name="959" href="#959">959</a>                 <strong class="jxr_keyword">return</strong> cloneTable((Table) value, HashBasedTable.create());
-<a class="jxr_linenumber" name="960" href="#960">960</a>             }
-<a class="jxr_linenumber" name="961" href="#961">961</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.clone(value);
-<a class="jxr_linenumber" name="962" href="#962">962</a>         }
-<a class="jxr_linenumber" name="963" href="#963">963</a> 
-<a class="jxr_linenumber" name="964" href="#964">964</a>         Object cloneMultimap(Multimap original, Multimap cloned) {
-<a class="jxr_linenumber" name="965" href="#965">965</a>             <strong class="jxr_keyword">for</strong> (Object key : original.keySet()) {
-<a class="jxr_linenumber" name="966" href="#966">966</a>                 Collection values = original.get(key);
-<a class="jxr_linenumber" name="967" href="#967">967</a>                 <strong class="jxr_keyword">for</strong> (Object value : values) {
-<a class="jxr_linenumber" name="968" href="#968">968</a>                     cloned.put(clone(key), clone(value));
-<a class="jxr_linenumber" name="969" href="#969">969</a>                 }
-<a class="jxr_linenumber" name="970" href="#970">970</a>             }
-<a class="jxr_linenumber" name="971" href="#971">971</a>             <strong class="jxr_keyword">return</strong> cloned;
-<a class="jxr_linenumber" name="972" href="#972">972</a>         }
-<a class="jxr_linenumber" name="973" href="#973">973</a> 
-<a class="jxr_linenumber" name="974" href="#974">974</a>         Object cloneTable(Table original, Table cloned) {
-<a class="jxr_linenumber" name="975" href="#975">975</a>             <strong class="jxr_keyword">for</strong> (Object item : original.cellSet()) {
-<a class="jxr_linenumber" name="976" href="#976">976</a>                 Table.Cell cell = (Table.Cell) item;
-<a class="jxr_linenumber" name="977" href="#977">977</a>                 cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));
-<a class="jxr_linenumber" name="978" href="#978">978</a>             }
-<a class="jxr_linenumber" name="979" href="#979">979</a>             <strong class="jxr_keyword">return</strong> cloned;
-<a class="jxr_linenumber" name="980" href="#980">980</a>         }
-<a class="jxr_linenumber" name="981" href="#981">981</a>     }
-<a class="jxr_linenumber" name="982" href="#982">982</a> 
-<a class="jxr_linenumber" name="983" href="#983">983</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="984" href="#984">984</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="985" href="#985">985</a> <em class="jxr_javadoccomment">     * Clones an object.</em>
-<a class="jxr_linenumber" name="986" href="#986">986</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="987" href="#987">987</a>     @SuppressWarnings({ <span class="jxr_string">"rawtypes"</span>, <span class="jxr_string">"unchecked"</span> })
-<a class="jxr_linenumber" name="988" href="#988">988</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/joda/beans/JodaBeanUtils.html">CollectCloner</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/joda/beans/JodaBeanUtils.html">GuavaCloner</a> {
-<a class="jxr_linenumber" name="989" href="#989">989</a>         <a href="../../../org/joda/beans/JodaBeanUtils.html">CollectCloner</a>() {
-<a class="jxr_linenumber" name="990" href="#990">990</a>         }
-<a class="jxr_linenumber" name="991" href="#991">991</a> 
-<a class="jxr_linenumber" name="992" href="#992">992</a>         Object clone(Object value) {
-<a class="jxr_linenumber" name="993" href="#993">993</a>             <strong class="jxr_keyword">if</strong> (value == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="994" href="#994">994</a>                 <strong class="jxr_keyword">return</strong> value;
-<a class="jxr_linenumber" name="995" href="#995">995</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof ImmutableGrid) {
+<a class="jxr_linenumber" name="934" href="#934">934</a>         @Override
+<a class="jxr_linenumber" name="935" href="#935">935</a>         Object clone(Object value) {
+<a class="jxr_linenumber" name="936" href="#936">936</a>             <strong class="jxr_keyword">if</strong> (value == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="937" href="#937">937</a>                 <strong class="jxr_keyword">return</strong> value;
+<a class="jxr_linenumber" name="938" href="#938">938</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof ImmutableMap ||
+<a class="jxr_linenumber" name="939" href="#939">939</a>                     value instanceof ImmutableCollection ||
+<a class="jxr_linenumber" name="940" href="#940">940</a>                     value instanceof ImmutableMap ||
+<a class="jxr_linenumber" name="941" href="#941">941</a>                     value instanceof ImmutableMultimap ||
+<a class="jxr_linenumber" name="942" href="#942">942</a>                     value instanceof ImmutableTable) {
+<a class="jxr_linenumber" name="943" href="#943">943</a>                 <strong class="jxr_keyword">return</strong> value;
+<a class="jxr_linenumber" name="944" href="#944">944</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Multiset) {
+<a class="jxr_linenumber" name="945" href="#945">945</a>                 <strong class="jxr_keyword">return</strong> cloneAlways((Bean) value);
+<a class="jxr_linenumber" name="946" href="#946">946</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof SortedMultiset) {
+<a class="jxr_linenumber" name="947" href="#947">947</a>                 SortedMultiset set = (SortedMultiset) value;
+<a class="jxr_linenumber" name="948" href="#948">948</a>                 <strong class="jxr_keyword">return</strong> cloneIterable(set, TreeMultiset.create(set.comparator()));
+<a class="jxr_linenumber" name="949" href="#949">949</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Multiset) {
+<a class="jxr_linenumber" name="950" href="#950">950</a>                 <strong class="jxr_keyword">return</strong> cloneIterable((Multiset) value, LinkedHashMultiset.create());
+<a class="jxr_linenumber" name="951" href="#951">951</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof SetMultimap) {
+<a class="jxr_linenumber" name="952" href="#952">952</a>                 <strong class="jxr_keyword">return</strong> cloneMultimap((Multimap) value, LinkedHashMultimap.create());
+<a class="jxr_linenumber" name="953" href="#953">953</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof ListMultimap) {
+<a class="jxr_linenumber" name="954" href="#954">954</a>                 <strong class="jxr_keyword">return</strong> cloneMultimap((Multimap) value, ArrayListMultimap.create());
+<a class="jxr_linenumber" name="955" href="#955">955</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Multimap) {
+<a class="jxr_linenumber" name="956" href="#956">956</a>                 <strong class="jxr_keyword">return</strong> cloneMultimap((Multimap) value, ArrayListMultimap.create());
+<a class="jxr_linenumber" name="957" href="#957">957</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof BiMap) {
+<a class="jxr_linenumber" name="958" href="#958">958</a>                 <strong class="jxr_keyword">return</strong> cloneMap((BiMap) value, HashBiMap.create());
+<a class="jxr_linenumber" name="959" href="#959">959</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Table) {
+<a class="jxr_linenumber" name="960" href="#960">960</a>                 <strong class="jxr_keyword">return</strong> cloneTable((Table) value, HashBasedTable.create());
+<a class="jxr_linenumber" name="961" href="#961">961</a>             }
+<a class="jxr_linenumber" name="962" href="#962">962</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.clone(value);
+<a class="jxr_linenumber" name="963" href="#963">963</a>         }
+<a class="jxr_linenumber" name="964" href="#964">964</a> 
+<a class="jxr_linenumber" name="965" href="#965">965</a>         Object cloneMultimap(Multimap original, Multimap cloned) {
+<a class="jxr_linenumber" name="966" href="#966">966</a>             <strong class="jxr_keyword">for</strong> (Object key : original.keySet()) {
+<a class="jxr_linenumber" name="967" href="#967">967</a>                 Collection values = original.get(key);
+<a class="jxr_linenumber" name="968" href="#968">968</a>                 <strong class="jxr_keyword">for</strong> (Object value : values) {
+<a class="jxr_linenumber" name="969" href="#969">969</a>                     cloned.put(clone(key), clone(value));
+<a class="jxr_linenumber" name="970" href="#970">970</a>                 }
+<a class="jxr_linenumber" name="971" href="#971">971</a>             }
+<a class="jxr_linenumber" name="972" href="#972">972</a>             <strong class="jxr_keyword">return</strong> cloned;
+<a class="jxr_linenumber" name="973" href="#973">973</a>         }
+<a class="jxr_linenumber" name="974" href="#974">974</a> 
+<a class="jxr_linenumber" name="975" href="#975">975</a>         Object cloneTable(Table original, Table cloned) {
+<a class="jxr_linenumber" name="976" href="#976">976</a>             <strong class="jxr_keyword">for</strong> (Object item : original.cellSet()) {
+<a class="jxr_linenumber" name="977" href="#977">977</a>                 Table.Cell cell = (Table.Cell) item;
+<a class="jxr_linenumber" name="978" href="#978">978</a>                 cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));
+<a class="jxr_linenumber" name="979" href="#979">979</a>             }
+<a class="jxr_linenumber" name="980" href="#980">980</a>             <strong class="jxr_keyword">return</strong> cloned;
+<a class="jxr_linenumber" name="981" href="#981">981</a>         }
+<a class="jxr_linenumber" name="982" href="#982">982</a>     }
+<a class="jxr_linenumber" name="983" href="#983">983</a> 
+<a class="jxr_linenumber" name="984" href="#984">984</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="985" href="#985">985</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="986" href="#986">986</a> <em class="jxr_javadoccomment">     * Clones an object.</em>
+<a class="jxr_linenumber" name="987" href="#987">987</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="988" href="#988">988</a>     @SuppressWarnings({ <span class="jxr_string">"rawtypes"</span>, <span class="jxr_string">"unchecked"</span> })
+<a class="jxr_linenumber" name="989" href="#989">989</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/joda/beans/JodaBeanUtils.html">CollectCloner</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/joda/beans/JodaBeanUtils.html">GuavaCloner</a> {
+<a class="jxr_linenumber" name="990" href="#990">990</a>         <a href="../../../org/joda/beans/JodaBeanUtils.html">CollectCloner</a>() {
+<a class="jxr_linenumber" name="991" href="#991">991</a>         }
+<a class="jxr_linenumber" name="992" href="#992">992</a> 
+<a class="jxr_linenumber" name="993" href="#993">993</a>         @Override
+<a class="jxr_linenumber" name="994" href="#994">994</a>         Object clone(Object value) {
+<a class="jxr_linenumber" name="995" href="#995">995</a>             <strong class="jxr_keyword">if</strong> (value == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="996" href="#996">996</a>                 <strong class="jxr_keyword">return</strong> value;
-<a class="jxr_linenumber" name="997" href="#997">997</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof DenseGrid) {
-<a class="jxr_linenumber" name="998" href="#998">998</a>                 Grid grid = (Grid) value;
-<a class="jxr_linenumber" name="999" href="#999">999</a>                 <strong class="jxr_keyword">return</strong> cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));
-<a class="jxr_linenumber" name="1000" href="#1000">1000</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Grid) {
-<a class="jxr_linenumber" name="1001" href="#1001">1001</a>                 Grid grid = (Grid) value;
-<a class="jxr_linenumber" name="1002" href="#1002">1002</a>                 <strong class="jxr_keyword">return</strong> cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));
-<a class="jxr_linenumber" name="1003" href="#1003">1003</a>             }
-<a class="jxr_linenumber" name="1004" href="#1004">1004</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.clone(value);
-<a class="jxr_linenumber" name="1005" href="#1005">1005</a>         }
-<a class="jxr_linenumber" name="1006" href="#1006">1006</a> 
-<a class="jxr_linenumber" name="1007" href="#1007">1007</a>         Object cloneGrid(Grid original, Grid cloned) {
-<a class="jxr_linenumber" name="1008" href="#1008">1008</a>             <strong class="jxr_keyword">for</strong> (Object item : original.cells()) {
-<a class="jxr_linenumber" name="1009" href="#1009">1009</a>                 Grid.Cell cell = (Grid.Cell) item;
-<a class="jxr_linenumber" name="1010" href="#1010">1010</a>                 cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));
-<a class="jxr_linenumber" name="1011" href="#1011">1011</a>             }
-<a class="jxr_linenumber" name="1012" href="#1012">1012</a>             <strong class="jxr_keyword">return</strong> cloned;
-<a class="jxr_linenumber" name="1013" href="#1013">1013</a>         }
-<a class="jxr_linenumber" name="1014" href="#1014">1014</a>     }
-<a class="jxr_linenumber" name="1015" href="#1015">1015</a> 
-<a class="jxr_linenumber" name="1016" href="#1016">1016</a> }
+<a class="jxr_linenumber" name="997" href="#997">997</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof ImmutableGrid) {
+<a class="jxr_linenumber" name="998" href="#998">998</a>                 <strong class="jxr_keyword">return</strong> value;
+<a class="jxr_linenumber" name="999" href="#999">999</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof DenseGrid) {
+<a class="jxr_linenumber" name="1000" href="#1000">1000</a>                 Grid grid = (Grid) value;
+<a class="jxr_linenumber" name="1001" href="#1001">1001</a>                 <strong class="jxr_keyword">return</strong> cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));
+<a class="jxr_linenumber" name="1002" href="#1002">1002</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof Grid) {
+<a class="jxr_linenumber" name="1003" href="#1003">1003</a>                 Grid grid = (Grid) value;
+<a class="jxr_linenumber" name="1004" href="#1004">1004</a>                 <strong class="jxr_keyword">return</strong> cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));
+<a class="jxr_linenumber" name="1005" href="#1005">1005</a>             }
+<a class="jxr_linenumber" name="1006" href="#1006">1006</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.clone(value);
+<a class="jxr_linenumber" name="1007" href="#1007">1007</a>         }
+<a class="jxr_linenumber" name="1008" href="#1008">1008</a> 
+<a class="jxr_linenumber" name="1009" href="#1009">1009</a>         Object cloneGrid(Grid original, Grid cloned) {
+<a class="jxr_linenumber" name="1010" href="#1010">1010</a>             <strong class="jxr_keyword">for</strong> (Object item : original.cells()) {
+<a class="jxr_linenumber" name="1011" href="#1011">1011</a>                 Grid.Cell cell = (Grid.Cell) item;
+<a class="jxr_linenumber" name="1012" href="#1012">1012</a>                 cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));
+<a class="jxr_linenumber" name="1013" href="#1013">1013</a>             }
+<a class="jxr_linenumber" name="1014" href="#1014">1014</a>             <strong class="jxr_keyword">return</strong> cloned;
+<a class="jxr_linenumber" name="1015" href="#1015">1015</a>         }
+<a class="jxr_linenumber" name="1016" href="#1016">1016</a>     }
+<a class="jxr_linenumber" name="1017" href="#1017">1017</a> 
+<a class="jxr_linenumber" name="1018" href="#1018">1018</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

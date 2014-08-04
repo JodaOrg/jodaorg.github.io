@@ -638,95 +638,96 @@
 <a class="jxr_linenumber" name="628" href="#628">628</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; columnType() {
 <a class="jxr_linenumber" name="629" href="#629">629</a>                 <strong class="jxr_keyword">return</strong> colType;
 <a class="jxr_linenumber" name="630" href="#630">630</a>             }
-<a class="jxr_linenumber" name="631" href="#631">631</a>             <strong class="jxr_keyword">public</strong> Object column() {
-<a class="jxr_linenumber" name="632" href="#632">632</a>                 <strong class="jxr_keyword">return</strong> current.getColumnKey();
-<a class="jxr_linenumber" name="633" href="#633">633</a>             }
-<a class="jxr_linenumber" name="634" href="#634">634</a>             @Override
-<a class="jxr_linenumber" name="635" href="#635">635</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; valueType() {
-<a class="jxr_linenumber" name="636" href="#636">636</a>                 <strong class="jxr_keyword">return</strong> valueType;
-<a class="jxr_linenumber" name="637" href="#637">637</a>             }
-<a class="jxr_linenumber" name="638" href="#638">638</a>             @Override
-<a class="jxr_linenumber" name="639" href="#639">639</a>             <strong class="jxr_keyword">public</strong> List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<a class="jxr_linenumber" name="640" href="#640">640</a>                 <strong class="jxr_keyword">return</strong> valueTypeTypes;
-<a class="jxr_linenumber" name="641" href="#641">641</a>             }
-<a class="jxr_linenumber" name="642" href="#642">642</a>             @Override
-<a class="jxr_linenumber" name="643" href="#643">643</a>             <strong class="jxr_keyword">public</strong> Object value() {
-<a class="jxr_linenumber" name="644" href="#644">644</a>                 <strong class="jxr_keyword">return</strong> current.getValue();
-<a class="jxr_linenumber" name="645" href="#645">645</a>             }
-<a class="jxr_linenumber" name="646" href="#646">646</a>         };
-<a class="jxr_linenumber" name="647" href="#647">647</a>     }
-<a class="jxr_linenumber" name="648" href="#648">648</a> 
-<a class="jxr_linenumber" name="649" href="#649">649</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="650" href="#650">650</a> <em class="jxr_javadoccomment">     * Gets an iterator wrapper for {@code BiMap}.</em>
-<a class="jxr_linenumber" name="651" href="#651">651</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="652" href="#652">652</a> <em class="jxr_javadoccomment">     * @param map  the collection, not null</em>
-<a class="jxr_linenumber" name="653" href="#653">653</a> <em class="jxr_javadoccomment">     * @param declaredType  the declared type, not null</em>
-<a class="jxr_linenumber" name="654" href="#654">654</a> <em class="jxr_javadoccomment">     * @param keyType  the value type, not null</em>
-<a class="jxr_linenumber" name="655" href="#655">655</a> <em class="jxr_javadoccomment">     * @param valueType  the value type, not null</em>
-<a class="jxr_linenumber" name="656" href="#656">656</a> <em class="jxr_javadoccomment">     * @param valueTypeTypes  the generic parameters of the value type</em>
-<a class="jxr_linenumber" name="657" href="#657">657</a> <em class="jxr_javadoccomment">     * @return the iterator, not null</em>
-<a class="jxr_linenumber" name="658" href="#658">658</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="659" href="#659">659</a>     @SuppressWarnings(<span class="jxr_string">"rawtypes"</span>)
-<a class="jxr_linenumber" name="660" href="#660">660</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/joda/beans/ser/SerIterator.html">SerIterator</a> biMap(
-<a class="jxr_linenumber" name="661" href="#661">661</a>             <strong class="jxr_keyword">final</strong> BiMap&lt;?, ?&gt; map, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; declaredType,
-<a class="jxr_linenumber" name="662" href="#662">662</a>             <strong class="jxr_keyword">final</strong> Class&lt;?&gt; keyType, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; valueType, <strong class="jxr_keyword">final</strong> List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<a class="jxr_linenumber" name="663" href="#663">663</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/beans/ser/SerIterator.html">SerIterator</a>() {
-<a class="jxr_linenumber" name="664" href="#664">664</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Iterator it = map.entrySet().iterator();
-<a class="jxr_linenumber" name="665" href="#665">665</a>             <strong class="jxr_keyword">private</strong> Entry current;
-<a class="jxr_linenumber" name="666" href="#666">666</a> 
-<a class="jxr_linenumber" name="667" href="#667">667</a>             @Override
-<a class="jxr_linenumber" name="668" href="#668">668</a>             <strong class="jxr_keyword">public</strong> String metaTypeName() {
-<a class="jxr_linenumber" name="669" href="#669">669</a>                 <strong class="jxr_keyword">return</strong> <span class="jxr_string">"BiMap"</span>;
-<a class="jxr_linenumber" name="670" href="#670">670</a>             }
-<a class="jxr_linenumber" name="671" href="#671">671</a>             @Override
-<a class="jxr_linenumber" name="672" href="#672">672</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> metaTypeRequired() {
-<a class="jxr_linenumber" name="673" href="#673">673</a>                 <em class="jxr_comment">// hack around Guava annoyance by assuming that size 0 and 1 ImmutableBiMap</em>
-<a class="jxr_linenumber" name="674" href="#674">674</a>                 <em class="jxr_comment">// was actually meant to be an ImmutableMap</em>
-<a class="jxr_linenumber" name="675" href="#675">675</a>                 <strong class="jxr_keyword">if</strong> ((declaredType == Map.<strong class="jxr_keyword">class</strong> || declaredType == ImmutableMap.<strong class="jxr_keyword">class</strong>) &amp;&amp; map.size() &lt; 2) {
-<a class="jxr_linenumber" name="676" href="#676">676</a>                     <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="677" href="#677">677</a>                 }
-<a class="jxr_linenumber" name="678" href="#678">678</a>                 <strong class="jxr_keyword">return</strong> BiMap.<strong class="jxr_keyword">class</strong>.isAssignableFrom(declaredType) == false;
-<a class="jxr_linenumber" name="679" href="#679">679</a>             }
-<a class="jxr_linenumber" name="680" href="#680">680</a>             @Override
-<a class="jxr_linenumber" name="681" href="#681">681</a>             <strong class="jxr_keyword">public</strong> <a href="../../../../org/joda/beans/ser/SerCategory.html">SerCategory</a> category() {
-<a class="jxr_linenumber" name="682" href="#682">682</a>                 <strong class="jxr_keyword">return</strong> SerCategory.MAP;
-<a class="jxr_linenumber" name="683" href="#683">683</a>             }
-<a class="jxr_linenumber" name="684" href="#684">684</a>             @Override
-<a class="jxr_linenumber" name="685" href="#685">685</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> size() {
-<a class="jxr_linenumber" name="686" href="#686">686</a>                 <strong class="jxr_keyword">return</strong> map.size();
-<a class="jxr_linenumber" name="687" href="#687">687</a>             }
-<a class="jxr_linenumber" name="688" href="#688">688</a>             @Override
-<a class="jxr_linenumber" name="689" href="#689">689</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> hasNext() {
-<a class="jxr_linenumber" name="690" href="#690">690</a>                 <strong class="jxr_keyword">return</strong> it.hasNext();
-<a class="jxr_linenumber" name="691" href="#691">691</a>             }
-<a class="jxr_linenumber" name="692" href="#692">692</a>             @Override
-<a class="jxr_linenumber" name="693" href="#693">693</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> next() {
-<a class="jxr_linenumber" name="694" href="#694">694</a>                 current = (Entry) it.next();
-<a class="jxr_linenumber" name="695" href="#695">695</a>             }
-<a class="jxr_linenumber" name="696" href="#696">696</a>             @Override
-<a class="jxr_linenumber" name="697" href="#697">697</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; keyType() {
-<a class="jxr_linenumber" name="698" href="#698">698</a>                 <strong class="jxr_keyword">return</strong> keyType;
-<a class="jxr_linenumber" name="699" href="#699">699</a>             }
-<a class="jxr_linenumber" name="700" href="#700">700</a>             @Override
-<a class="jxr_linenumber" name="701" href="#701">701</a>             <strong class="jxr_keyword">public</strong> Object key() {
-<a class="jxr_linenumber" name="702" href="#702">702</a>                 <strong class="jxr_keyword">return</strong> current.getKey();
-<a class="jxr_linenumber" name="703" href="#703">703</a>             }
-<a class="jxr_linenumber" name="704" href="#704">704</a>             @Override
-<a class="jxr_linenumber" name="705" href="#705">705</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; valueType() {
-<a class="jxr_linenumber" name="706" href="#706">706</a>                 <strong class="jxr_keyword">return</strong> valueType;
-<a class="jxr_linenumber" name="707" href="#707">707</a>             }
-<a class="jxr_linenumber" name="708" href="#708">708</a>             @Override
-<a class="jxr_linenumber" name="709" href="#709">709</a>             <strong class="jxr_keyword">public</strong> List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<a class="jxr_linenumber" name="710" href="#710">710</a>                 <strong class="jxr_keyword">return</strong> valueTypeTypes;
-<a class="jxr_linenumber" name="711" href="#711">711</a>             }
-<a class="jxr_linenumber" name="712" href="#712">712</a>             @Override
-<a class="jxr_linenumber" name="713" href="#713">713</a>             <strong class="jxr_keyword">public</strong> Object value() {
-<a class="jxr_linenumber" name="714" href="#714">714</a>                 <strong class="jxr_keyword">return</strong> current.getValue();
-<a class="jxr_linenumber" name="715" href="#715">715</a>             }
-<a class="jxr_linenumber" name="716" href="#716">716</a>         };
-<a class="jxr_linenumber" name="717" href="#717">717</a>     }
-<a class="jxr_linenumber" name="718" href="#718">718</a> 
-<a class="jxr_linenumber" name="719" href="#719">719</a> }
+<a class="jxr_linenumber" name="631" href="#631">631</a>             @Override
+<a class="jxr_linenumber" name="632" href="#632">632</a>             <strong class="jxr_keyword">public</strong> Object column() {
+<a class="jxr_linenumber" name="633" href="#633">633</a>                 <strong class="jxr_keyword">return</strong> current.getColumnKey();
+<a class="jxr_linenumber" name="634" href="#634">634</a>             }
+<a class="jxr_linenumber" name="635" href="#635">635</a>             @Override
+<a class="jxr_linenumber" name="636" href="#636">636</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; valueType() {
+<a class="jxr_linenumber" name="637" href="#637">637</a>                 <strong class="jxr_keyword">return</strong> valueType;
+<a class="jxr_linenumber" name="638" href="#638">638</a>             }
+<a class="jxr_linenumber" name="639" href="#639">639</a>             @Override
+<a class="jxr_linenumber" name="640" href="#640">640</a>             <strong class="jxr_keyword">public</strong> List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<a class="jxr_linenumber" name="641" href="#641">641</a>                 <strong class="jxr_keyword">return</strong> valueTypeTypes;
+<a class="jxr_linenumber" name="642" href="#642">642</a>             }
+<a class="jxr_linenumber" name="643" href="#643">643</a>             @Override
+<a class="jxr_linenumber" name="644" href="#644">644</a>             <strong class="jxr_keyword">public</strong> Object value() {
+<a class="jxr_linenumber" name="645" href="#645">645</a>                 <strong class="jxr_keyword">return</strong> current.getValue();
+<a class="jxr_linenumber" name="646" href="#646">646</a>             }
+<a class="jxr_linenumber" name="647" href="#647">647</a>         };
+<a class="jxr_linenumber" name="648" href="#648">648</a>     }
+<a class="jxr_linenumber" name="649" href="#649">649</a> 
+<a class="jxr_linenumber" name="650" href="#650">650</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="651" href="#651">651</a> <em class="jxr_javadoccomment">     * Gets an iterator wrapper for {@code BiMap}.</em>
+<a class="jxr_linenumber" name="652" href="#652">652</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="653" href="#653">653</a> <em class="jxr_javadoccomment">     * @param map  the collection, not null</em>
+<a class="jxr_linenumber" name="654" href="#654">654</a> <em class="jxr_javadoccomment">     * @param declaredType  the declared type, not null</em>
+<a class="jxr_linenumber" name="655" href="#655">655</a> <em class="jxr_javadoccomment">     * @param keyType  the value type, not null</em>
+<a class="jxr_linenumber" name="656" href="#656">656</a> <em class="jxr_javadoccomment">     * @param valueType  the value type, not null</em>
+<a class="jxr_linenumber" name="657" href="#657">657</a> <em class="jxr_javadoccomment">     * @param valueTypeTypes  the generic parameters of the value type</em>
+<a class="jxr_linenumber" name="658" href="#658">658</a> <em class="jxr_javadoccomment">     * @return the iterator, not null</em>
+<a class="jxr_linenumber" name="659" href="#659">659</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="660" href="#660">660</a>     @SuppressWarnings(<span class="jxr_string">"rawtypes"</span>)
+<a class="jxr_linenumber" name="661" href="#661">661</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/joda/beans/ser/SerIterator.html">SerIterator</a> biMap(
+<a class="jxr_linenumber" name="662" href="#662">662</a>             <strong class="jxr_keyword">final</strong> BiMap&lt;?, ?&gt; map, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; declaredType,
+<a class="jxr_linenumber" name="663" href="#663">663</a>             <strong class="jxr_keyword">final</strong> Class&lt;?&gt; keyType, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; valueType, <strong class="jxr_keyword">final</strong> List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<a class="jxr_linenumber" name="664" href="#664">664</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/joda/beans/ser/SerIterator.html">SerIterator</a>() {
+<a class="jxr_linenumber" name="665" href="#665">665</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Iterator it = map.entrySet().iterator();
+<a class="jxr_linenumber" name="666" href="#666">666</a>             <strong class="jxr_keyword">private</strong> Entry current;
+<a class="jxr_linenumber" name="667" href="#667">667</a> 
+<a class="jxr_linenumber" name="668" href="#668">668</a>             @Override
+<a class="jxr_linenumber" name="669" href="#669">669</a>             <strong class="jxr_keyword">public</strong> String metaTypeName() {
+<a class="jxr_linenumber" name="670" href="#670">670</a>                 <strong class="jxr_keyword">return</strong> <span class="jxr_string">"BiMap"</span>;
+<a class="jxr_linenumber" name="671" href="#671">671</a>             }
+<a class="jxr_linenumber" name="672" href="#672">672</a>             @Override
+<a class="jxr_linenumber" name="673" href="#673">673</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> metaTypeRequired() {
+<a class="jxr_linenumber" name="674" href="#674">674</a>                 <em class="jxr_comment">// hack around Guava annoyance by assuming that size 0 and 1 ImmutableBiMap</em>
+<a class="jxr_linenumber" name="675" href="#675">675</a>                 <em class="jxr_comment">// was actually meant to be an ImmutableMap</em>
+<a class="jxr_linenumber" name="676" href="#676">676</a>                 <strong class="jxr_keyword">if</strong> ((declaredType == Map.<strong class="jxr_keyword">class</strong> || declaredType == ImmutableMap.<strong class="jxr_keyword">class</strong>) &amp;&amp; map.size() &lt; 2) {
+<a class="jxr_linenumber" name="677" href="#677">677</a>                     <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="678" href="#678">678</a>                 }
+<a class="jxr_linenumber" name="679" href="#679">679</a>                 <strong class="jxr_keyword">return</strong> BiMap.<strong class="jxr_keyword">class</strong>.isAssignableFrom(declaredType) == false;
+<a class="jxr_linenumber" name="680" href="#680">680</a>             }
+<a class="jxr_linenumber" name="681" href="#681">681</a>             @Override
+<a class="jxr_linenumber" name="682" href="#682">682</a>             <strong class="jxr_keyword">public</strong> <a href="../../../../org/joda/beans/ser/SerCategory.html">SerCategory</a> category() {
+<a class="jxr_linenumber" name="683" href="#683">683</a>                 <strong class="jxr_keyword">return</strong> SerCategory.MAP;
+<a class="jxr_linenumber" name="684" href="#684">684</a>             }
+<a class="jxr_linenumber" name="685" href="#685">685</a>             @Override
+<a class="jxr_linenumber" name="686" href="#686">686</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> size() {
+<a class="jxr_linenumber" name="687" href="#687">687</a>                 <strong class="jxr_keyword">return</strong> map.size();
+<a class="jxr_linenumber" name="688" href="#688">688</a>             }
+<a class="jxr_linenumber" name="689" href="#689">689</a>             @Override
+<a class="jxr_linenumber" name="690" href="#690">690</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> hasNext() {
+<a class="jxr_linenumber" name="691" href="#691">691</a>                 <strong class="jxr_keyword">return</strong> it.hasNext();
+<a class="jxr_linenumber" name="692" href="#692">692</a>             }
+<a class="jxr_linenumber" name="693" href="#693">693</a>             @Override
+<a class="jxr_linenumber" name="694" href="#694">694</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> next() {
+<a class="jxr_linenumber" name="695" href="#695">695</a>                 current = (Entry) it.next();
+<a class="jxr_linenumber" name="696" href="#696">696</a>             }
+<a class="jxr_linenumber" name="697" href="#697">697</a>             @Override
+<a class="jxr_linenumber" name="698" href="#698">698</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; keyType() {
+<a class="jxr_linenumber" name="699" href="#699">699</a>                 <strong class="jxr_keyword">return</strong> keyType;
+<a class="jxr_linenumber" name="700" href="#700">700</a>             }
+<a class="jxr_linenumber" name="701" href="#701">701</a>             @Override
+<a class="jxr_linenumber" name="702" href="#702">702</a>             <strong class="jxr_keyword">public</strong> Object key() {
+<a class="jxr_linenumber" name="703" href="#703">703</a>                 <strong class="jxr_keyword">return</strong> current.getKey();
+<a class="jxr_linenumber" name="704" href="#704">704</a>             }
+<a class="jxr_linenumber" name="705" href="#705">705</a>             @Override
+<a class="jxr_linenumber" name="706" href="#706">706</a>             <strong class="jxr_keyword">public</strong> Class&lt;?&gt; valueType() {
+<a class="jxr_linenumber" name="707" href="#707">707</a>                 <strong class="jxr_keyword">return</strong> valueType;
+<a class="jxr_linenumber" name="708" href="#708">708</a>             }
+<a class="jxr_linenumber" name="709" href="#709">709</a>             @Override
+<a class="jxr_linenumber" name="710" href="#710">710</a>             <strong class="jxr_keyword">public</strong> List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<a class="jxr_linenumber" name="711" href="#711">711</a>                 <strong class="jxr_keyword">return</strong> valueTypeTypes;
+<a class="jxr_linenumber" name="712" href="#712">712</a>             }
+<a class="jxr_linenumber" name="713" href="#713">713</a>             @Override
+<a class="jxr_linenumber" name="714" href="#714">714</a>             <strong class="jxr_keyword">public</strong> Object value() {
+<a class="jxr_linenumber" name="715" href="#715">715</a>                 <strong class="jxr_keyword">return</strong> current.getValue();
+<a class="jxr_linenumber" name="716" href="#716">716</a>             }
+<a class="jxr_linenumber" name="717" href="#717">717</a>         };
+<a class="jxr_linenumber" name="718" href="#718">718</a>     }
+<a class="jxr_linenumber" name="719" href="#719">719</a> 
+<a class="jxr_linenumber" name="720" href="#720">720</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
