@@ -137,18 +137,18 @@
 <h2>Joda Convert<a name="Joda_Convert"></a></h2>
 
 <p>
-Joda-Convert provides a small set of classes to aid conversion between Objects and Strings.
+Joda-Convert provides a small set of classes to provide round-trip conversion between Objects and Strings.
 It is not intended to tackle the wider problem of Object to Object transformation.
 </p>
 
 <div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
 <pre>
-// conversion to String
-String str = StringConvert.INSTANCE.convertToString(foo);
+  // conversion to String
+  String str = StringConvert.INSTANCE.convertToString(foo);
 
-// conversion from String
-Foo bar = StringConvert.INSTANCE.convertFromString(Foo.class, str);
+  // conversion from String
+  Foo bar = StringConvert.INSTANCE.convertFromString(Foo.class, str);
 </pre></div></div>
 
 <p>
@@ -167,15 +167,15 @@ Consider a <tt>Distance</tt> class:
 <div style="border:1px solid black; padding: 0px 6px; margin: 4px;">
 <div>
 <pre>
-public class Distance {
+  public class Distance {
 
-  @FromString
-  public static Distance parse(String str) { ... }
+    @FromString
+    public static Distance parse(String str) { ... }
 
-  @ToString
-  public String getStandardOutput() { ... }
+    @ToString
+    public String getStandardOutput() { ... }
 
-}
+  }
 </pre></div></div>
 
 <p>
