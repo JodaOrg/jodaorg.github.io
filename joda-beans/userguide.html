@@ -188,7 +188,7 @@ The property also provides methods to get the property name, the underlying bean
 </p>
 
 <div>
-<pre>
+<pre class="source">
   Bean person = new Person();
   Property&lt;String&gt; surnameProperty = bean.property(&quot;surname&quot;);
   String surname = surnameProperty.get();
@@ -213,7 +213,7 @@ as well as methods to get and set the value which require the bean to be passed 
 </p>
 
 <div>
-<pre>
+<pre class="source">
   Bean person = new Person();
   MetaProperty&lt;String&gt; surnameMetaProperty = bean.metaBean().metaProperty(&quot;surname&quot;);
   String surname = surnameMetaProperty.get(person);
@@ -298,7 +298,7 @@ where the query setup was separate from the actual query.
 </p>
 
 <div>
-<pre>
+<pre class="source">
  String city = document.getPerson().getAddress().getCity()
  
  ChainedBeanQuery&lt;String&gt; query = ChainedBeanQuery.of(Document.meta().person(), Person.meta().address(), Address.meta().city());
@@ -371,7 +371,7 @@ The command line takes the following arguments:
 </p>
 
 <div>
-<pre>
+<pre class="source">
   Usage java org.joda.beans.gen.BeanCodeGen [file]
   Options
     -R                process all files recursively, default false
@@ -453,7 +453,7 @@ do not extend any bean class and directly implement <tt>ImmutableBean</tt>.
 </p>
 
 <div>
-<pre>
+<pre class="source">
  @BeanDefinition
  public final class Foo implements ImmutableBean {
    // code generated immutable bean with public builder
@@ -467,7 +467,7 @@ Any subclass should logically also be immutable, but must set the
 </p>
 
 <div>
-<pre>
+<pre class="source">
  // superclass
  @BeanDefinition
  public abstract class SuperFoo implements ImmutableBean {
@@ -490,7 +490,7 @@ The scope of the builder may be controlled in the bean definition:
 </p>
 
 <div>
-<pre>
+<pre class="source">
  // superclass
  @BeanDefinition(builderScope = &quot;private&quot;)
  public final class Bar implements ImmutableBean {
@@ -524,7 +524,7 @@ It contains the relevant settings and methods to access the serialization and de
 </p>
 
 <div>
-<pre>
+<pre class="source">
  // write to XML
  JodaBeanSer.COMPACT.xmlWriter().write(bean);
  // read from XML
