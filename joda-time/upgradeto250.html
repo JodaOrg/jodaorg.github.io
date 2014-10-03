@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Joda-Time - 
-  Java date and time API - Period</title>
+  Java date and time API - Upgrade from 2.4 to 2.5</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -94,8 +94,8 @@
                           <a href="key_duration.html" title="Duration">Duration</a>
             </li>
                   <li class="none">
-            <strong>Period</strong>
-          </li>
+                          <a href="key_period.html" title="Period">Period</a>
+            </li>
                   <li class="none">
                           <a href="key_chronology.html" title="Chronology">Chronology</a>
             </li>
@@ -197,216 +197,105 @@
     <div id="bodyColumn">
       <div id="contentBox">
         
-
  
 
 <div class="section">
-<h2>Period<a name="Period"></a></h2>
-
-
-<p>
-A <i>period</i> in Joda-Time represents a period of time defined in terms of fields,
-for example, 3 years 5 months 2 days and 7 hours.
-This differs from a <a href="key_duration.html">duration</a> in that it is inexact in terms of milliseconds.
-A period can only be resolved to an exact number of milliseconds by specifying the
-<a href="key_instant.html">instant</a> (including chronology and time zone) it is relative to.
-</p>
+<h2>Upgrade<a name="Upgrade"></a></h2>
 
 <p>
-Periods do not have a <a href="key_chronology.html">chronology</a> or time zone.
-They can be added to an <a href="key_instant.html">instant</a>, or to either
-end of an interval to change those objects.
-In datetime maths you could say:
+These are the release notes and advice for upgrading Joda-Time from version 2.4 to version 2.5.
 </p>
 <div class="source">
 <pre>
-      instant  +  period  =  instant
+Joda-Time version 2.5
+---------------------
+
+Joda-Time is a date and time handling library that seeks to replace the JDK
+Date and Calendar classes.
+
+This release contains enhancements, bug fixes and a time zone update.
+The release runs on JDK 5 or later.
+
+Joda-Time is licensed under the business-friendly Apache License Version 2.
+This is the same license as all of Apache, plus other open source projects such as Spring.
+The intent is to make the code available to the Java community with the minimum
+of restrictions. If the license causes you problems please contact the mailing list.
+
+**  Please also check out our related projects   **
+** http://www.joda.org/joda-time/related.html **
+
+
+Enhancements since 2.4
+----------------------
+- Add regex based Period formatting [#166]
+  Regex based formatting allows for languages with more complex rules, such as Polish
+
+- Add time-zone database version to manifest [#176, #183]
+  The version is available as key 'Time-Zone-Database-Version'
+
+
+Compatibility with 2.4
+----------------------
+Build system - Yes
+
+Binary compatible - Yes
+
+Source compatible - Yes, except
+ - The constant DateTimeZone.UTC has changed implementation type
+   It used to be a FixedDateTimeZone, now it is a UTCDateTimeZone
+   This avoids a potential deadlock scenario
+   Serialization is unaffected
+   This change will only be observable if you cast the UTC constant to FixedDateTimeZone
+
+Serialization compatible - Yes
+
+Data compatible - Yes, except
+ - DateTimeZone data updated to version 2014h
+ - Bug in time zone compilation fixed
+
+Semantic compatible - Yes, except
+ - LocalDate.toDateTime(LocalTime) and LocalDate.toDateTime(LocalTime, DateTimeZone)
+   If you pass a null LocalTime to the method, no changes have been made
+   If you pass a non-null LocalTime then behaviour during daylight saving gap and overlap has changed
+   During a daylight saving gap the exception has changed from IllegalFieldValueException to IllegalInstantException
+   During a daylight saving overlap the earlier offset is selected
+   Previously, the earlier offset was chosen east of Greenwich and the later offset west of Greenwich
+
+
+Deprecations since 2.4
+----------------------
+
+
+Bug fixes since 2.4
+-------------------
+- Time zone compiler failed to correctly process 24:00 [#173, #182]
+  This caused reported time to be wrong in Africa/Cairo (and possibly others)
+
+- Additional overflow check for Duration constructor [#159]
+  Handle MIN/MAX value better.
+
+- Handle complex prefix/suffix combinations [#154, #169]
+  For example, 'm' for minutes and 'ms' for milliseconds
+  which both start with 'm'
+
+- Fix deadlock [#171]
+  Referencing DateTimeZone and FixedDateTimeZone from two threads at startup could deadlock
+  Add package scoped UTCDateTimeZone class to avoid this
+
+- Use of current time when converting from LocalDate [#177]
+  LocalDate.toDateTime(LocalTime) and LocalDate.toDateTime(LocalTime, DateTimeZone)
+  These methods used DateTimeUtils.currentTimeMillis() in all cases, rather than just when LocalTime was null
+  Behaviour when LocalTiem is null has been left unchanged
+  When LocalTime is non-null, it no longer uses DateTimeUtils.currentTimeMillis()
+  This change resulted in the semantic change detailed above
+
+
+Scala
+--------
+Joda-Time uses annotations from Joda-Convert.
+In the Java programming language, this dependency is optional, however in Scala it is not.
+Scala users must manually add the Joda-Convert v1.2 dependency.
 </pre></div>
-
-
-<p>
-For example, consider a period of 1 month.
-If you add this period to the 1st February (ISO) then you will get the 1st March.
-If you add the same period to the 1st March you will get the 1st April.
-But the duration added (in milliseconds) in these two cases is very different.
-</p>
-
-<p>
-As a second example, consider adding 1 day at the daylight savings boundary.
-If you use a period to do the addition then either 23 or 25 hours will be added as appropriate.
-If you had created a duration equal to 24 hours, then you would end up with the wrong result.
-</p>
-
-<p>
-The Joda-Time library defines two types of implementation of the period concept.
-The first type can only store a single-field, such as days or hours, but not both.
-The second type can store any-field, expressing a value such as 5 months 8 days and 7 hours.
-</p>
-
-
-<div class="section">
-<h3>Single field Periods<a name="Single_field_Periods"></a></h3>
-
-<p>
-The first type, single-field periods, is new to version 1.4 of Joda-Time.
-These classes - <tt>Years</tt>, <tt>Months</tt>, <tt>Weeks</tt>,
-<tt>Days</tt>, <tt>Hours</tt>, <tt>Minutes</tt>, <tt>Seconds</tt> -
-all follow a very similar design, and only store the single field as implied by
-their name. Thus a <tt>Days</tt> object can only store a number of days.
-</p>
-
-<p>
-These classes can be useful when you want to write an API that must specifically take
-in a period measured in a particular unit. For example, a travel website where you are
-given the option of travelling &#xb1;1 days or &#xb1;3 days could store this
-information in a <tt>Days</tt> object.
-</p>
-
-<p>
-These classes provide static factory methods rather than constructors.
-For <tt>Days</tt> these include <tt>daysBetween(startDate, endDate)</tt> to
-obtain the number of whole days between two dates or datetimes, and 
-<tt>daysIn(interval)</tt> to obtain the number of whole days in an interval.
-In addition, there are a range of constants, such as <tt>Days.ZERO</tt> and
-<tt>Days.ONE</tt>. The factory method <tt>days(int)</tt> either returns
-a constant, or creates a new instance as appropriate.
-</p>
-
-<p>
-The single-field classes include basic mathemaical operator support.
-For <tt>Days</tt> this includes <tt>plus(int)</tt>, <tt>plus(Days)</tt>,
-<tt>multipliedBy(int)</tt>, <tt>dividedBy(int)</tt> and <tt>negated()</tt>.
-All operations return a new instance, as <tt>Days</tt> is immutable.
-The single-field classes are also comparable.
-</p>
-
-<p>
-Converting between different types of period is a difficult problem.
-One day is not always equal to 24 hours. (It might be 23 or 25 at daylight savings time change.)
-However, many applications have business rules that assume a 24 hour day and so on.
-To support this, <tt>Days</tt> has methods named <tt>toStandardHours()</tt> and
-so on which convert the number of days to a number of hours assuming a 24 hour day.
-The word 'standard' is being specifically used in the method name to remind users of the assumption.
-</p>
-</div>
-
-
-<div class="section">
-<h3>Any field Periods<a name="Any_field_Periods"></a></h3>
-
-<p>
-The second type of period is the any-field period.
-These are implemented by the <tt>Period</tt> and <tt>MutablePeriod</tt> classes.
-Internally, they store a set of <tt>int</tt> fields, one for each field.
-The standard set of fields in a period are years, months, weeks, days, hours, minutes, seconds and millis.
-The <a href="apidocs/org/joda/time/PeriodType.html">PeriodType</a> class allows this set
-of fields to be restricted, for example to elimate weeks.
-This is significant when converting a duration or interval to a period, as the calculation
-needs to know which period fields it should populate.
-</p>
-
-<p>
-The <tt>Period</tt> class is useful when you want to write an API that can take
-a period that probably contains more than one field. However, to be even more general,
-your API could define itself to accept a <tt>ReadablePeriod</tt>, and then the
-calling code could pass in either a <tt>Period</tt> or a single field period like
-<tt>Days</tt>.
-</p>
-
-<p>
-Methods exist on <tt>Period</tt> to obtain each field value.
-There are also methods to change a field value, such as <tt>withDays(int)</tt>.
-They are named 'with' as they return a new <tt>Period</tt> object, due to immutability.
-</p>
-
-<p>
-You cannot compare any-field periods for order, as there is no sensible comparison strategy.
-Instead, you need to convert the period to a <tt>Duration</tt> based on a specific date
-and then compare the duration.
-</p>
-</div>
-
-</div>
-
-
-<div class="section">
-<h2>Using Periods in Joda-Time<a name="Using_Periods_in_Joda-Time"></a></h2>
-
-<p>
-Within Joda-Time a period is represented by the
-<a href="apidocs/org/joda/time/ReadablePeriod.html">ReadablePeriod</a> interface.
-There are nine implementations of the interface provided:
-</p>
-<ul>
-
-<li><a href="apidocs/org/joda/time/Period.html">Period</a> -
-An immutable implementation</li>
-
-<li><a href="apidocs/org/joda/time/MutablePeriod.html">MutablePeriod</a> -
-A mutable implementation</li>
-
-<li><a href="apidocs/org/joda/time/Years.html">Years</a> -
-An immutable years-only implementation</li>
-
-<li><a href="apidocs/org/joda/time/Months.html">Months</a> -
-An immutable months-only implementation</li>
-
-<li><a href="apidocs/org/joda/time/Weeks.html">Weeks</a> -
-An immutable weeks-only implementation</li>
-
-<li><a href="apidocs/org/joda/time/Days.html">Days</a> -
-An immutable days-only implementation</li>
-
-<li><a href="apidocs/org/joda/time/Hours.html">Hours</a> -
-An immutable hours-only implementation</li>
-
-<li><a href="apidocs/org/joda/time/Minutes.html">Minutes</a> -
-An immutable minutes-only implementation</li>
-
-<li><a href="apidocs/org/joda/time/Seconds.html">Seconds</a> -
-An immutable seconds-only implementation</li>
-</ul>
-We recommend the immutable implementation for general usage.
-
-
-<p>
-The code can be used in various ways:
-</p>
-<div class="source">
-<pre>
-DateTime start = new DateTime(2004, 12, 25, 0, 0, 0, 0);
-DateTime end = new DateTime(2006, 1, 1, 0, 0, 0, 0);
-
-// period of 1 year and 7 days
-Period period = new Period(start, end);
-
-// calc will equal end
-DateTime calc = start.plus(period);
-
-// able to calculate whole days between two dates easily
-Days days = Days.daysBetween(start, end);
-
-// able to calculate whole months between two dates easily
-Months months = Months.monthsBetween(start, end);
-</pre></div>
-
-
-<p>
-Note that the interface <tt>ReadablePeriod</tt> should not be used like the collections API.
-The interface only contains the core subset of the operations.
-Instead, you should usually refer directly to the implementation classes in your APIs.
-</p>
-
-
-<div class="section">
-<h3>Nulls<a name="Nulls"></a></h3>
-
-<p>
-Joda-Time defines a null period as a zero length period.
-Thus, when a method is defined as taking a <tt>ReadablePeriod</tt>, passing null in
-will be the same as passing in a zero length period.
-</p>
-</div>
 
 </div>
 

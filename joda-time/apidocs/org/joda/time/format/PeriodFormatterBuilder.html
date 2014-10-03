@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>PeriodFormatterBuilder (Joda-Time 2.4 API)</title>
+<title>PeriodFormatterBuilder (Joda-Time 2.5 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="PeriodFormatterBuilder (Joda-Time 2.4 API)";
+        parent.document.title="PeriodFormatterBuilder (Joda-Time 2.5 API)";
     }
 //-->
 </script>
@@ -225,37 +225,44 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String, java.lang.String)">appendPrefix</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;singularText,
-            <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pluralText)</code>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String[], java.lang.String[])">appendPrefix</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;regularExpressions,
+            <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;prefixes)</code>
 <div class="block">Append a field prefix which applies only to the next appended field.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String, java.lang.String)">appendPrefix</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;singularText,
+            <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pluralText)</code>
+<div class="block">Append a field prefix which applies only to the next appended field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSeconds()">appendSeconds</a></strong>()</code>
 <div class="block">Instruct the printer to emit an integer seconds field, if supported.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSecondsWithMillis()">appendSecondsWithMillis</a></strong>()</code>
 <div class="block">Instruct the printer to emit a combined seconds and millis field, if supported.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSecondsWithOptionalMillis()">appendSecondsWithOptionalMillis</a></strong>()</code>
 <div class="block">Instruct the printer to emit a combined seconds and millis field, if supported.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSeparator(java.lang.String)">appendSeparator</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
 <div class="block">Append a separator, which is output if fields are printed both before
  and after the separator.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSeparator(java.lang.String, java.lang.String)">appendSeparator</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
                <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;finalText)</code>
@@ -263,7 +270,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  and after the separator.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSeparator(java.lang.String, java.lang.String, java.lang.String[])">appendSeparator</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
                <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;finalText,
@@ -272,21 +279,28 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  and after the separator.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSeparatorIfFieldsAfter(java.lang.String)">appendSeparatorIfFieldsAfter</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
 <div class="block">Append a separator, which is output only if fields are printed after the separator.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSeparatorIfFieldsBefore(java.lang.String)">appendSeparatorIfFieldsBefore</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
 <div class="block">Append a separator, which is output only if fields are printed before the separator.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSuffix(java.lang.String)">appendSuffix</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
+<div class="block">Append a field suffix which applies only to the last appended field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSuffix(java.lang.String[], java.lang.String[])">appendSuffix</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;regularExpressions,
+            <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;suffixes)</code>
 <div class="block">Append a field suffix which applies only to the last appended field.</div>
 </td>
 </tr>
@@ -675,6 +689,46 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>this PeriodFormatterBuilder</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSuffix(java.lang.String)"><code>appendSuffix(java.lang.String)</code></a></dd></dl>
 </li>
 </ul>
+<a name="appendPrefix(java.lang.String[], java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendPrefix</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a>&nbsp;appendPrefix(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;regularExpressions,
+                                  <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;prefixes)</pre>
+<div class="block">Append a field prefix which applies only to the next appended field.
+ If the field is not printed, neither is the prefix.
+ <p>
+ The value is converted to String. During parsing, the prefix is selected based
+ on the match with the regular expression. The index of the first regular
+ expression that matches value converted to String nominates the prefix. If
+ none of the regular expressions match the value converted to String then the
+ last prefix is selected.
+ <p>
+ An example usage for English might look like this:
+ 
+ <pre>
+ appendPrefix(new String[] { &quot;&circ;1$&quot;, &quot;.*&quot; }, new String[] { &quot; year&quot;, &quot; years&quot; })
+ </pre>
+ 
+ <p>
+ Please note that for languages with simple mapping (singular and plural prefix
+ only - like the one above) the <a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String, java.lang.String)"><code>appendPrefix(String, String)</code></a> method
+ will produce in a slightly faster formatter and that
+ <a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String[], java.lang.String[])"><code>appendPrefix(String[], String[])</code></a> method should be only used when the
+ mapping between values and prefixes is more complicated than the difference between
+ singular and plural.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>regularExpressions</code> - an array of regular expressions, at least one
+  element, length has to match the length of prefixes parameter</dd><dd><code>prefixes</code> - an array of prefixes, at least one element, length has to
+  match the length of regularExpressions parameter</dd>
+<dt><span class="strong">Returns:</span></dt><dd>this PeriodFormatterBuilder</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no field exists to append to</dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.5</dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String)"><code>appendPrefix(java.lang.String)</code></a></dd></dl>
+</li>
+</ul>
 <a name="appendYears()">
 <!--   -->
 </a>
@@ -858,6 +912,46 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>this PeriodFormatterBuilder</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no field exists to append to</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String)"><code>appendPrefix(java.lang.String)</code></a></dd></dl>
+</li>
+</ul>
+<a name="appendSuffix(java.lang.String[], java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appendSuffix</h4>
+<pre>public&nbsp;<a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html" title="class in org.joda.time.format">PeriodFormatterBuilder</a>&nbsp;appendSuffix(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;regularExpressions,
+                                  <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;suffixes)</pre>
+<div class="block">Append a field suffix which applies only to the last appended field.
+ If the field is not printed, neither is the suffix.
+ <p>
+ The value is converted to String. During parsing, the suffix is selected based
+ on the match with the regular expression. The index of the first regular
+ expression that matches value converted to String nominates the suffix. If
+ none of the regular expressions match the value converted to String then the
+ last suffix is selected.
+ <p>
+ An example usage for English might look like this:
+ 
+ <pre>
+ appendSuffix(new String[] { &quot;&circ;1$&quot;, &quot;.*&quot; }, new String[] { &quot; year&quot;, &quot; years&quot; })
+ </pre>
+ 
+ <p>
+ Please note that for languages with simple mapping (singular and plural suffix
+ only - like the one above) the <a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSuffix(java.lang.String, java.lang.String)"><code>appendSuffix(String, String)</code></a> method
+ will result in a slightly faster formatter and that
+ <a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendSuffix(java.lang.String[], java.lang.String[])"><code>appendSuffix(String[], String[])</code></a> method should be only used when the
+ mapping between values and prefixes is more complicated than the difference between
+ singular and plural.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>regularExpressions</code> - an array of regular expressions, at least one
+  element, length has to match the length of suffixes parameter</dd><dd><code>suffixes</code> - an array of suffixes, at least one element, length has to
+  match the length of regularExpressions parameter</dd>
+<dt><span class="strong">Returns:</span></dt><dd>this PeriodFormatterBuilder</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no field exists to append to</dd><dt><span class="strong">Since:</span></dt>
+  <dd>2.5</dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/joda/time/format/PeriodFormatterBuilder.html#appendPrefix(java.lang.String)"><code>appendPrefix(java.lang.String)</code></a></dd></dl>
 </li>
 </ul>
 <a name="appendSeparator(java.lang.String)">
