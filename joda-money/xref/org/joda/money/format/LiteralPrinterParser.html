@@ -52,26 +52,28 @@
 <a class="jxr_linenumber" name="42" href="#42">42</a>      }
 <a class="jxr_linenumber" name="43" href="#43">43</a>  
 <a class="jxr_linenumber" name="44" href="#44">44</a>      <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="45" href="#45">45</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> print(<a href="../../../../org/joda/money/format/MoneyPrintContext.html">MoneyPrintContext</a> context, Appendable appendable, <a href="../../../../org/joda/money/BigMoney.html">BigMoney</a> money) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="46" href="#46">46</a>          appendable.append(literal);
-<a class="jxr_linenumber" name="47" href="#47">47</a>      }
-<a class="jxr_linenumber" name="48" href="#48">48</a>  
-<a class="jxr_linenumber" name="49" href="#49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> parse(<a href="../../../../org/joda/money/format/MoneyParseContext.html">MoneyParseContext</a> context) {
-<a class="jxr_linenumber" name="50" href="#50">50</a>          <strong class="jxr_keyword">int</strong> endPos = context.getIndex() + literal.length();
-<a class="jxr_linenumber" name="51" href="#51">51</a>          <strong class="jxr_keyword">if</strong> (endPos &lt;= context.getTextLength() &amp;&amp;
-<a class="jxr_linenumber" name="52" href="#52">52</a>                  context.getTextSubstring(context.getIndex(), endPos).equals(literal)) {
-<a class="jxr_linenumber" name="53" href="#53">53</a>              context.setIndex(endPos);
-<a class="jxr_linenumber" name="54" href="#54">54</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="55" href="#55">55</a>              context.setError();
-<a class="jxr_linenumber" name="56" href="#56">56</a>          }
-<a class="jxr_linenumber" name="57" href="#57">57</a>      }
-<a class="jxr_linenumber" name="58" href="#58">58</a>  
-<a class="jxr_linenumber" name="59" href="#59">59</a>      @Override
-<a class="jxr_linenumber" name="60" href="#60">60</a>      <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="61" href="#61">61</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"'"</span> + literal + <span class="jxr_string">"'"</span>;
-<a class="jxr_linenumber" name="62" href="#62">62</a>      }
-<a class="jxr_linenumber" name="63" href="#63">63</a>  
-<a class="jxr_linenumber" name="64" href="#64">64</a>  }
+<a class="jxr_linenumber" name="45" href="#45">45</a>      @Override
+<a class="jxr_linenumber" name="46" href="#46">46</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> print(<a href="../../../../org/joda/money/format/MoneyPrintContext.html">MoneyPrintContext</a> context, Appendable appendable, <a href="../../../../org/joda/money/BigMoney.html">BigMoney</a> money) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="47" href="#47">47</a>          appendable.append(literal);
+<a class="jxr_linenumber" name="48" href="#48">48</a>      }
+<a class="jxr_linenumber" name="49" href="#49">49</a>  
+<a class="jxr_linenumber" name="50" href="#50">50</a>      @Override
+<a class="jxr_linenumber" name="51" href="#51">51</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> parse(<a href="../../../../org/joda/money/format/MoneyParseContext.html">MoneyParseContext</a> context) {
+<a class="jxr_linenumber" name="52" href="#52">52</a>          <strong class="jxr_keyword">int</strong> endPos = context.getIndex() + literal.length();
+<a class="jxr_linenumber" name="53" href="#53">53</a>          <strong class="jxr_keyword">if</strong> (endPos &lt;= context.getTextLength() &amp;&amp;
+<a class="jxr_linenumber" name="54" href="#54">54</a>                  context.getTextSubstring(context.getIndex(), endPos).equals(literal)) {
+<a class="jxr_linenumber" name="55" href="#55">55</a>              context.setIndex(endPos);
+<a class="jxr_linenumber" name="56" href="#56">56</a>          } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="57" href="#57">57</a>              context.setError();
+<a class="jxr_linenumber" name="58" href="#58">58</a>          }
+<a class="jxr_linenumber" name="59" href="#59">59</a>      }
+<a class="jxr_linenumber" name="60" href="#60">60</a>  
+<a class="jxr_linenumber" name="61" href="#61">61</a>      @Override
+<a class="jxr_linenumber" name="62" href="#62">62</a>      <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="63" href="#63">63</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"'"</span> + literal + <span class="jxr_string">"'"</span>;
+<a class="jxr_linenumber" name="64" href="#64">64</a>      }
+<a class="jxr_linenumber" name="65" href="#65">65</a>  
+<a class="jxr_linenumber" name="66" href="#66">66</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

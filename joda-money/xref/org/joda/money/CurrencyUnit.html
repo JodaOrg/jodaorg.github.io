@@ -608,52 +608,53 @@
 <a class="jxr_linenumber" name="598" href="#598">598</a> <em class="jxr_javadoccomment">     * @param other  the other currency, not null</em>
 <a class="jxr_linenumber" name="599" href="#599">599</a> <em class="jxr_javadoccomment">     * @return negative if earlier alphabetically, 0 if equal, positive if greater alphabetically</em>
 <a class="jxr_linenumber" name="600" href="#600">600</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="601" href="#601">601</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../org/joda/money/CurrencyUnit.html">CurrencyUnit</a> other) {
-<a class="jxr_linenumber" name="602" href="#602">602</a>         <strong class="jxr_keyword">return</strong> code.compareTo(other.code);
-<a class="jxr_linenumber" name="603" href="#603">603</a>     }
-<a class="jxr_linenumber" name="604" href="#604">604</a> 
-<a class="jxr_linenumber" name="605" href="#605">605</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="606" href="#606">606</a> <em class="jxr_javadoccomment">     * Checks if this currency equals another currency.</em>
-<a class="jxr_linenumber" name="607" href="#607">607</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="608" href="#608">608</a> <em class="jxr_javadoccomment">     * The comparison checks the 3 letter currency code.</em>
-<a class="jxr_linenumber" name="609" href="#609">609</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="610" href="#610">610</a> <em class="jxr_javadoccomment">     * @param obj  the other currency, null returns false</em>
-<a class="jxr_linenumber" name="611" href="#611">611</a> <em class="jxr_javadoccomment">     * @return true if equal</em>
-<a class="jxr_linenumber" name="612" href="#612">612</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="613" href="#613">613</a>     @Override
-<a class="jxr_linenumber" name="614" href="#614">614</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object obj) {
-<a class="jxr_linenumber" name="615" href="#615">615</a>         <strong class="jxr_keyword">if</strong> (obj == <strong class="jxr_keyword">this</strong>) {
-<a class="jxr_linenumber" name="616" href="#616">616</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="617" href="#617">617</a>         }
-<a class="jxr_linenumber" name="618" href="#618">618</a>         <strong class="jxr_keyword">if</strong> (obj instanceof CurrencyUnit) {
-<a class="jxr_linenumber" name="619" href="#619">619</a>             <strong class="jxr_keyword">return</strong> code.equals(((CurrencyUnit) obj).code);
-<a class="jxr_linenumber" name="620" href="#620">620</a>         }
-<a class="jxr_linenumber" name="621" href="#621">621</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="622" href="#622">622</a>     }
-<a class="jxr_linenumber" name="623" href="#623">623</a> 
-<a class="jxr_linenumber" name="624" href="#624">624</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="625" href="#625">625</a> <em class="jxr_javadoccomment">     * Returns a suitable hash code for the currency.</em>
-<a class="jxr_linenumber" name="626" href="#626">626</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="627" href="#627">627</a> <em class="jxr_javadoccomment">     * @return the hash code</em>
-<a class="jxr_linenumber" name="628" href="#628">628</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="629" href="#629">629</a>     @Override
-<a class="jxr_linenumber" name="630" href="#630">630</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
-<a class="jxr_linenumber" name="631" href="#631">631</a>         <strong class="jxr_keyword">return</strong> code.hashCode();
-<a class="jxr_linenumber" name="632" href="#632">632</a>     }
-<a class="jxr_linenumber" name="633" href="#633">633</a> 
-<a class="jxr_linenumber" name="634" href="#634">634</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="635" href="#635">635</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="636" href="#636">636</a> <em class="jxr_javadoccomment">     * Gets the currency code as a string.</em>
-<a class="jxr_linenumber" name="637" href="#637">637</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="638" href="#638">638</a> <em class="jxr_javadoccomment">     * @return the currency code, never null</em>
-<a class="jxr_linenumber" name="639" href="#639">639</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="640" href="#640">640</a>     @Override
-<a class="jxr_linenumber" name="641" href="#641">641</a>     @ToString
-<a class="jxr_linenumber" name="642" href="#642">642</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="643" href="#643">643</a>         <strong class="jxr_keyword">return</strong> code;
-<a class="jxr_linenumber" name="644" href="#644">644</a>     }
-<a class="jxr_linenumber" name="645" href="#645">645</a> 
-<a class="jxr_linenumber" name="646" href="#646">646</a> }
+<a class="jxr_linenumber" name="601" href="#601">601</a>     @Override
+<a class="jxr_linenumber" name="602" href="#602">602</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../org/joda/money/CurrencyUnit.html">CurrencyUnit</a> other) {
+<a class="jxr_linenumber" name="603" href="#603">603</a>         <strong class="jxr_keyword">return</strong> code.compareTo(other.code);
+<a class="jxr_linenumber" name="604" href="#604">604</a>     }
+<a class="jxr_linenumber" name="605" href="#605">605</a> 
+<a class="jxr_linenumber" name="606" href="#606">606</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="607" href="#607">607</a> <em class="jxr_javadoccomment">     * Checks if this currency equals another currency.</em>
+<a class="jxr_linenumber" name="608" href="#608">608</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="609" href="#609">609</a> <em class="jxr_javadoccomment">     * The comparison checks the 3 letter currency code.</em>
+<a class="jxr_linenumber" name="610" href="#610">610</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="611" href="#611">611</a> <em class="jxr_javadoccomment">     * @param obj  the other currency, null returns false</em>
+<a class="jxr_linenumber" name="612" href="#612">612</a> <em class="jxr_javadoccomment">     * @return true if equal</em>
+<a class="jxr_linenumber" name="613" href="#613">613</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="614" href="#614">614</a>     @Override
+<a class="jxr_linenumber" name="615" href="#615">615</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object obj) {
+<a class="jxr_linenumber" name="616" href="#616">616</a>         <strong class="jxr_keyword">if</strong> (obj == <strong class="jxr_keyword">this</strong>) {
+<a class="jxr_linenumber" name="617" href="#617">617</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="618" href="#618">618</a>         }
+<a class="jxr_linenumber" name="619" href="#619">619</a>         <strong class="jxr_keyword">if</strong> (obj instanceof CurrencyUnit) {
+<a class="jxr_linenumber" name="620" href="#620">620</a>             <strong class="jxr_keyword">return</strong> code.equals(((CurrencyUnit) obj).code);
+<a class="jxr_linenumber" name="621" href="#621">621</a>         }
+<a class="jxr_linenumber" name="622" href="#622">622</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="623" href="#623">623</a>     }
+<a class="jxr_linenumber" name="624" href="#624">624</a> 
+<a class="jxr_linenumber" name="625" href="#625">625</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="626" href="#626">626</a> <em class="jxr_javadoccomment">     * Returns a suitable hash code for the currency.</em>
+<a class="jxr_linenumber" name="627" href="#627">627</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="628" href="#628">628</a> <em class="jxr_javadoccomment">     * @return the hash code</em>
+<a class="jxr_linenumber" name="629" href="#629">629</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="630" href="#630">630</a>     @Override
+<a class="jxr_linenumber" name="631" href="#631">631</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
+<a class="jxr_linenumber" name="632" href="#632">632</a>         <strong class="jxr_keyword">return</strong> code.hashCode();
+<a class="jxr_linenumber" name="633" href="#633">633</a>     }
+<a class="jxr_linenumber" name="634" href="#634">634</a> 
+<a class="jxr_linenumber" name="635" href="#635">635</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="636" href="#636">636</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="637" href="#637">637</a> <em class="jxr_javadoccomment">     * Gets the currency code as a string.</em>
+<a class="jxr_linenumber" name="638" href="#638">638</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="639" href="#639">639</a> <em class="jxr_javadoccomment">     * @return the currency code, never null</em>
+<a class="jxr_linenumber" name="640" href="#640">640</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="641" href="#641">641</a>     @Override
+<a class="jxr_linenumber" name="642" href="#642">642</a>     @ToString
+<a class="jxr_linenumber" name="643" href="#643">643</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="644" href="#644">644</a>         <strong class="jxr_keyword">return</strong> code;
+<a class="jxr_linenumber" name="645" href="#645">645</a>     }
+<a class="jxr_linenumber" name="646" href="#646">646</a> 
+<a class="jxr_linenumber" name="647" href="#647">647</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
