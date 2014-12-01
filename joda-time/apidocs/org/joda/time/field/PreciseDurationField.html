@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>PreciseDurationField (Joda-Time 2.5 API)</title>
+<title>PreciseDurationField (Joda-Time 2.6 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="PreciseDurationField (Joda-Time 2.5 API)";
+        parent.document.title="PreciseDurationField (Joda-Time 2.6 API)";
     }
 //-->
 </script>
@@ -135,7 +135,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#PreciseDurationField(org.joda.time.DurationFieldType, long)">PreciseDurationField</a></strong>(<a href="../../../../org/joda/time/DurationFieldType.html" title="class in org.joda.time">DurationFieldType</a>&nbsp;type,
+<td class="colOne"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#PreciseDurationField(org.joda.time.DurationFieldType,%20long)">PreciseDurationField</a></strong>(<a href="../../../../org/joda/time/DurationFieldType.html" title="class in org.joda.time">DurationFieldType</a>&nbsp;type,
                     long&nbsp;unitMillis)</code>
 <div class="block">Constructor.</div>
 </td>
@@ -157,14 +157,14 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#add(long, int)">add</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#add(long,%20int)">add</a></strong>(long&nbsp;instant,
    int&nbsp;value)</code>
 <div class="block">Adds a duration value (which may be negative) to the instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#add(long, long)">add</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#add(long,%20long)">add</a></strong>(long&nbsp;instant,
    long&nbsp;value)</code>
 <div class="block">Adds a duration value (which may be negative) to the instant.</div>
 </td>
@@ -177,7 +177,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getDifferenceAsLong(long, long)">getDifferenceAsLong</a></strong>(long&nbsp;minuendInstant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getDifferenceAsLong(long,%20long)">getDifferenceAsLong</a></strong>(long&nbsp;minuendInstant,
                    long&nbsp;subtrahendInstant)</code>
 <div class="block">Computes the difference between two instants, as measured in the units
  of this field.</div>
@@ -185,14 +185,14 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getMillis(int, long)">getMillis</a></strong>(int&nbsp;value,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getMillis(int,%20long)">getMillis</a></strong>(int&nbsp;value,
          long&nbsp;instant)</code>
 <div class="block">Get the millisecond duration of this field from its value.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getMillis(long, long)">getMillis</a></strong>(long&nbsp;value,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getMillis(long,%20long)">getMillis</a></strong>(long&nbsp;value,
          long&nbsp;instant)</code>
 <div class="block">Get the millisecond duration of this field from its value.</div>
 </td>
@@ -205,7 +205,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getValueAsLong(long, long)">getValueAsLong</a></strong>(long&nbsp;duration,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/field/PreciseDurationField.html#getValueAsLong(long,%20long)">getValueAsLong</a></strong>(long&nbsp;duration,
               long&nbsp;instant)</code>
 <div class="block">Get the value of this field from the milliseconds.</div>
 </td>
@@ -228,21 +228,21 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.joda.time.field.<a href="../../../../org/joda/time/field/BaseDurationField.html" title="class in org.joda.time.field">BaseDurationField</a></h3>
-<code><a href="../../../../org/joda/time/field/BaseDurationField.html#compareTo(org.joda.time.DurationField)">compareTo</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getDifference(long, long)">getDifference</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getMillis(int)">getMillis</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getMillis(long)">getMillis</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getName()">getName</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getType()">getType</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getValue(long)">getValue</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getValue(long, long)">getValue</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getValueAsLong(long)">getValueAsLong</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#isSupported()">isSupported</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#toString()">toString</a></code></li>
+<code><a href="../../../../org/joda/time/field/BaseDurationField.html#compareTo(org.joda.time.DurationField)">compareTo</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getDifference(long,%20long)">getDifference</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getMillis(int)">getMillis</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getMillis(long)">getMillis</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getName()">getName</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getType()">getType</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getValue(long)">getValue</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getValue(long,%20long)">getValue</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#getValueAsLong(long)">getValueAsLong</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#isSupported()">isSupported</a>, <a href="../../../../org/joda/time/field/BaseDurationField.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.joda.time.DurationField">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.joda.time.<a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></h3>
-<code><a href="../../../../org/joda/time/DurationField.html#subtract(long, int)">subtract</a>, <a href="../../../../org/joda/time/DurationField.html#subtract(long, long)">subtract</a></code></li>
+<code><a href="../../../../org/joda/time/DurationField.html#subtract(long,%20int)">subtract</a>, <a href="../../../../org/joda/time/DurationField.html#subtract(long,%20long)">subtract</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -317,7 +317,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <div class="block">Get the value of this field from the milliseconds.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/joda/time/DurationField.html#getValueAsLong(long, long)">getValueAsLong</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
+<dd><code><a href="../../../../org/joda/time/DurationField.html#getValueAsLong(long,%20long)">getValueAsLong</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>duration</code> - the milliseconds to query, which may be negative</dd><dd><code>instant</code> - ignored</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the value of the field, in the units of the field, which may be
  negative</dd></dl>
@@ -334,7 +334,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <div class="block">Get the millisecond duration of this field from its value.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/joda/time/DurationField.html#getMillis(int, long)">getMillis</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
+<dd><code><a href="../../../../org/joda/time/DurationField.html#getMillis(int,%20long)">getMillis</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>value</code> - the value of the field, which may be negative</dd><dd><code>instant</code> - ignored</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the milliseconds that the field represents, which may be
  negative</dd></dl>
@@ -351,7 +351,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <div class="block">Get the millisecond duration of this field from its value.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/joda/time/DurationField.html#getMillis(long, long)">getMillis</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
+<dd><code><a href="../../../../org/joda/time/DurationField.html#getMillis(long,%20long)">getMillis</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>value</code> - the value of the field, which may be negative</dd><dd><code>instant</code> - ignored</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the milliseconds that the field represents, which may be
  negative</dd></dl>
@@ -365,11 +365,11 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <h4>add</h4>
 <pre>public&nbsp;long&nbsp;add(long&nbsp;instant,
        int&nbsp;value)</pre>
-<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/DurationField.html#add(long, int)">DurationField</a></code></strong></div>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/DurationField.html#add(long,%20int)">DurationField</a></code></strong></div>
 <div class="block">Adds a duration value (which may be negative) to the instant.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/joda/time/DurationField.html#add(long, int)">add</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
+<dd><code><a href="../../../../org/joda/time/DurationField.html#add(long,%20int)">add</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>instant</code> - the milliseconds from 1970-01-01T00:00:00Z to add to</dd><dd><code>value</code> - the value to add, in the units of the field</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the updated milliseconds</dd></dl>
 </li>
@@ -382,11 +382,11 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <h4>add</h4>
 <pre>public&nbsp;long&nbsp;add(long&nbsp;instant,
        long&nbsp;value)</pre>
-<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/DurationField.html#add(long, long)">DurationField</a></code></strong></div>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/DurationField.html#add(long,%20long)">DurationField</a></code></strong></div>
 <div class="block">Adds a duration value (which may be negative) to the instant.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/joda/time/DurationField.html#add(long, long)">add</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
+<dd><code><a href="../../../../org/joda/time/DurationField.html#add(long,%20long)">add</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>instant</code> - the milliseconds from 1970-01-01T00:00:00Z to add to</dd><dd><code>value</code> - the value to add, in the units of the field</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the updated milliseconds</dd></dl>
 </li>
@@ -399,7 +399,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
 <h4>getDifferenceAsLong</h4>
 <pre>public&nbsp;long&nbsp;getDifferenceAsLong(long&nbsp;minuendInstant,
                        long&nbsp;subtrahendInstant)</pre>
-<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/DurationField.html#getDifferenceAsLong(long, long)">DurationField</a></code></strong></div>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/joda/time/DurationField.html#getDifferenceAsLong(long,%20long)">DurationField</a></code></strong></div>
 <div class="block">Computes the difference between two instants, as measured in the units
  of this field. Any fractional units are dropped from the result. Calling
  getDifference reverses the effect of calling add. In the following code:
@@ -413,7 +413,7 @@ extends <a href="../../../../org/joda/time/field/BaseDurationField.html" title="
  The value 'age' is the same as the value 'v'.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/joda/time/DurationField.html#getDifferenceAsLong(long, long)">getDifferenceAsLong</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
+<dd><code><a href="../../../../org/joda/time/DurationField.html#getDifferenceAsLong(long,%20long)">getDifferenceAsLong</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>minuendInstant</code> - the milliseconds from 1970-01-01T00:00:00Z to
  subtract from</dd><dd><code>subtrahendInstant</code> - the milliseconds from 1970-01-01T00:00:00Z to
  subtract off the minuend</dd>

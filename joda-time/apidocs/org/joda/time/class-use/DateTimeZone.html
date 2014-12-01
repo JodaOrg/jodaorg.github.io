@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>Uses of Class org.joda.time.DateTimeZone (Joda-Time 2.5 API)</title>
+<title>Uses of Class org.joda.time.DateTimeZone (Joda-Time 2.6 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Class org.joda.time.DateTimeZone (Joda-Time 2.5 API)";
+        parent.document.title="Uses of Class org.joda.time.DateTimeZone (Joda-Time 2.6 API)";
     }
 //-->
 </script>
@@ -162,7 +162,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></code></td>
-<td class="colLast"><span class="strong">DateTimeZone.</span><code><strong><a href="../../../../org/joda/time/DateTimeZone.html#forOffsetHoursMinutes(int, int)">forOffsetHoursMinutes</a></strong>(int&nbsp;hoursOffset,
+<td class="colLast"><span class="strong">DateTimeZone.</span><code><strong><a href="../../../../org/joda/time/DateTimeZone.html#forOffsetHoursMinutes(int,%20int)">forOffsetHoursMinutes</a></strong>(int&nbsp;hoursOffset,
                      int&nbsp;minutesOffset)</code>
 <div class="block">Gets a time zone instance for the specified offset to UTC in hours and minutes.</div>
 </td>
@@ -230,7 +230,7 @@ Implementation package supporting the time zones.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">DateTimeZone.</span><code><strong><a href="../../../../org/joda/time/DateTimeZone.html#getMillisKeepLocal(org.joda.time.DateTimeZone, long)">getMillisKeepLocal</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;newZone,
+<td class="colLast"><span class="strong">DateTimeZone.</span><code><strong><a href="../../../../org/joda/time/DateTimeZone.html#getMillisKeepLocal(org.joda.time.DateTimeZone,%20long)">getMillisKeepLocal</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;newZone,
                   long&nbsp;oldInstant)</code>
 <div class="block">Gets the millisecond instant in another zone keeping the same local time.</div>
 </td>
@@ -357,7 +357,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
-<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../org/joda/time/LocalDate.html#toDateTime(org.joda.time.LocalTime, org.joda.time.DateTimeZone)">toDateTime</a></strong>(<a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a>&nbsp;time,
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../org/joda/time/LocalDate.html#toDateTime(org.joda.time.LocalTime,%20org.joda.time.DateTimeZone)">toDateTime</a></strong>(<a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a>&nbsp;time,
           <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Converts this object to a DateTime using a LocalTime to fill in the
  missing fields.</div>
@@ -365,7 +365,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
-<td class="colLast"><span class="strong">YearMonthDay.</span><code><strong><a href="../../../../org/joda/time/YearMonthDay.html#toDateTime(org.joda.time.TimeOfDay, org.joda.time.DateTimeZone)">toDateTime</a></strong>(<a href="../../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a>&nbsp;time,
+<td class="colLast"><span class="strong">YearMonthDay.</span><code><strong><a href="../../../../org/joda/time/YearMonthDay.html#toDateTime(org.joda.time.TimeOfDay,%20org.joda.time.DateTimeZone)">toDateTime</a></strong>(<a href="../../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a>&nbsp;time,
           <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Converts this object to a DateTime using a TimeOfDay to fill in the
@@ -508,7 +508,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateMidnight.html#DateMidnight(int, int, int, org.joda.time.DateTimeZone)">DateMidnight</a></strong>(int&nbsp;year,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateMidnight.html#DateMidnight(int,%20int,%20int,%20org.joda.time.DateTimeZone)">DateMidnight</a></strong>(int&nbsp;year,
             int&nbsp;monthOfYear,
             int&nbsp;dayOfMonth,
             <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
@@ -518,7 +518,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateMidnight.html#DateMidnight(long, org.joda.time.DateTimeZone)">DateMidnight</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateMidnight.html#DateMidnight(long,%20org.joda.time.DateTimeZone)">DateMidnight</a></strong>(long&nbsp;instant,
             <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Constructs an instance set to the milliseconds from 1970-01-01T00:00:00Z
@@ -526,7 +526,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateMidnight.html#DateMidnight(java.lang.Object, org.joda.time.DateTimeZone)">DateMidnight</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateMidnight.html#DateMidnight(java.lang.Object,%20org.joda.time.DateTimeZone)">DateMidnight</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
             <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 <div class="block">Constructs an instance from an Object that represents a datetime,
@@ -540,7 +540,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(int, int, int, int, int, org.joda.time.DateTimeZone)">DateTime</a></strong>(int&nbsp;year,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(int,%20int,%20int,%20int,%20int,%20org.joda.time.DateTimeZone)">DateTime</a></strong>(int&nbsp;year,
         int&nbsp;monthOfYear,
         int&nbsp;dayOfMonth,
         int&nbsp;hourOfDay,
@@ -551,7 +551,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(int, int, int, int, int, int, org.joda.time.DateTimeZone)">DateTime</a></strong>(int&nbsp;year,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(int,%20int,%20int,%20int,%20int,%20int,%20org.joda.time.DateTimeZone)">DateTime</a></strong>(int&nbsp;year,
         int&nbsp;monthOfYear,
         int&nbsp;dayOfMonth,
         int&nbsp;hourOfDay,
@@ -563,7 +563,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(int, int, int, int, int, int, int, org.joda.time.DateTimeZone)">DateTime</a></strong>(int&nbsp;year,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(int,%20int,%20int,%20int,%20int,%20int,%20int,%20org.joda.time.DateTimeZone)">DateTime</a></strong>(int&nbsp;year,
         int&nbsp;monthOfYear,
         int&nbsp;dayOfMonth,
         int&nbsp;hourOfDay,
@@ -576,21 +576,21 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(long, org.joda.time.DateTimeZone)">DateTime</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(long,%20org.joda.time.DateTimeZone)">DateTime</a></strong>(long&nbsp;instant,
         <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the milliseconds from 1970-01-01T00:00:00Z
  using <code>ISOChronology</code> in the specified time zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(java.lang.Object, org.joda.time.DateTimeZone)">DateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/DateTime.html#DateTime(java.lang.Object,%20org.joda.time.DateTimeZone)">DateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
         <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/Interval.html#Interval(long, long, org.joda.time.DateTimeZone)">Interval</a></strong>(long&nbsp;startInstant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/Interval.html#Interval(long,%20long,%20org.joda.time.DateTimeZone)">Interval</a></strong>(long&nbsp;startInstant,
         long&nbsp;endInstant,
         <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an interval from a start and end instant with the ISO
@@ -604,14 +604,14 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDate.html#LocalDate(long, org.joda.time.DateTimeZone)">LocalDate</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDate.html#LocalDate(long,%20org.joda.time.DateTimeZone)">LocalDate</a></strong>(long&nbsp;instant,
          <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the local time defined by the specified
  instant evaluated using ISO chronology in the specified zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDate.html#LocalDate(java.lang.Object, org.joda.time.DateTimeZone)">LocalDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDate.html#LocalDate(java.lang.Object,%20org.joda.time.DateTimeZone)">LocalDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
          <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
@@ -624,14 +624,14 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDateTime.html#LocalDateTime(long, org.joda.time.DateTimeZone)">LocalDateTime</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDateTime.html#LocalDateTime(long,%20org.joda.time.DateTimeZone)">LocalDateTime</a></strong>(long&nbsp;instant,
              <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the local time defined by the specified
  instant evaluated using ISO chronology in the specified zone.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDateTime.html#LocalDateTime(java.lang.Object, org.joda.time.DateTimeZone)">LocalDateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalDateTime.html#LocalDateTime(java.lang.Object,%20org.joda.time.DateTimeZone)">LocalDateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
              <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
@@ -644,14 +644,14 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalTime.html#LocalTime(long, org.joda.time.DateTimeZone)">LocalTime</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalTime.html#LocalTime(long,%20org.joda.time.DateTimeZone)">LocalTime</a></strong>(long&nbsp;instant,
          <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the local time defined by the specified
  instant evaluated using ISO chronology in the specified zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalTime.html#LocalTime(java.lang.Object, org.joda.time.DateTimeZone)">LocalTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/LocalTime.html#LocalTime(java.lang.Object,%20org.joda.time.DateTimeZone)">LocalTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
          <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
@@ -670,7 +670,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/MutableDateTime.html#MutableDateTime(int, int, int, int, int, int, int, org.joda.time.DateTimeZone)">MutableDateTime</a></strong>(int&nbsp;year,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/MutableDateTime.html#MutableDateTime(int,%20int,%20int,%20int,%20int,%20int,%20int,%20org.joda.time.DateTimeZone)">MutableDateTime</a></strong>(int&nbsp;year,
                int&nbsp;monthOfYear,
                int&nbsp;dayOfMonth,
                int&nbsp;hourOfDay,
@@ -683,14 +683,14 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/MutableDateTime.html#MutableDateTime(long, org.joda.time.DateTimeZone)">MutableDateTime</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/MutableDateTime.html#MutableDateTime(long,%20org.joda.time.DateTimeZone)">MutableDateTime</a></strong>(long&nbsp;instant,
                <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the milliseconds from 1970-01-01T00:00:00Z
  using <code>ISOChronology</code> in the specified time zone.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/MutableDateTime.html#MutableDateTime(java.lang.Object, org.joda.time.DateTimeZone)">MutableDateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/MutableDateTime.html#MutableDateTime(java.lang.Object,%20org.joda.time.DateTimeZone)">MutableDateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
                <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
@@ -772,7 +772,7 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDateTime.html#BaseDateTime(int, int, int, int, int, int, int, org.joda.time.DateTimeZone)">BaseDateTime</a></strong>(int&nbsp;year,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDateTime.html#BaseDateTime(int,%20int,%20int,%20int,%20int,%20int,%20int,%20org.joda.time.DateTimeZone)">BaseDateTime</a></strong>(int&nbsp;year,
             int&nbsp;monthOfYear,
             int&nbsp;dayOfMonth,
             int&nbsp;hourOfDay,
@@ -785,14 +785,14 @@ Implementation package supporting the time zones.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDateTime.html#BaseDateTime(long, org.joda.time.DateTimeZone)">BaseDateTime</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDateTime.html#BaseDateTime(long,%20org.joda.time.DateTimeZone)">BaseDateTime</a></strong>(long&nbsp;instant,
             <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the milliseconds from 1970-01-01T00:00:00Z
  using <code>ISOChronology</code> in the specified time zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDateTime.html#BaseDateTime(java.lang.Object, org.joda.time.DateTimeZone)">BaseDateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDateTime.html#BaseDateTime(java.lang.Object,%20org.joda.time.DateTimeZone)">BaseDateTime</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
             <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
@@ -842,7 +842,7 @@ Implementation package supporting the time zones.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/ZonedChronology.html" title="class in org.joda.time.chrono">ZonedChronology</a></code></td>
-<td class="colLast"><span class="strong">ZonedChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/ZonedChronology.html#getInstance(org.joda.time.Chronology, org.joda.time.DateTimeZone)">getInstance</a></strong>(<a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;base,
+<td class="colLast"><span class="strong">ZonedChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/ZonedChronology.html#getInstance(org.joda.time.Chronology,%20org.joda.time.DateTimeZone)">getInstance</a></strong>(<a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;base,
            <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Create a ZonedChronology for any chronology, overriding any time zone it
  may already have.</div>
@@ -899,42 +899,42 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/JulianChronology.html" title="class in org.joda.time.chrono">JulianChronology</a></code></td>
-<td class="colLast"><span class="strong">JulianChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/JulianChronology.html#getInstance(org.joda.time.DateTimeZone, int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">JulianChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/JulianChronology.html#getInstance(org.joda.time.DateTimeZone,%20int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            int&nbsp;minDaysInFirstWeek)</code>
 <div class="block">Gets an instance of the JulianChronology in the given time zone.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/GregorianChronology.html" title="class in org.joda.time.chrono">GregorianChronology</a></code></td>
-<td class="colLast"><span class="strong">GregorianChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GregorianChronology.html#getInstance(org.joda.time.DateTimeZone, int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">GregorianChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GregorianChronology.html#getInstance(org.joda.time.DateTimeZone,%20int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            int&nbsp;minDaysInFirstWeek)</code>
 <div class="block">Gets an instance of the GregorianChronology in the given time zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/EthiopicChronology.html" title="class in org.joda.time.chrono">EthiopicChronology</a></code></td>
-<td class="colLast"><span class="strong">EthiopicChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/EthiopicChronology.html#getInstance(org.joda.time.DateTimeZone, int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">EthiopicChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/EthiopicChronology.html#getInstance(org.joda.time.DateTimeZone,%20int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            int&nbsp;minDaysInFirstWeek)</code>
 <div class="block">Gets an instance of the EthiopicChronology in the given time zone.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/CopticChronology.html" title="class in org.joda.time.chrono">CopticChronology</a></code></td>
-<td class="colLast"><span class="strong">CopticChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/CopticChronology.html#getInstance(org.joda.time.DateTimeZone, int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">CopticChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/CopticChronology.html#getInstance(org.joda.time.DateTimeZone,%20int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            int&nbsp;minDaysInFirstWeek)</code>
 <div class="block">Gets an instance of the CopticChronology in the given time zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/IslamicChronology.html" title="class in org.joda.time.chrono">IslamicChronology</a></code></td>
-<td class="colLast"><span class="strong">IslamicChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/IslamicChronology.html#getInstance(org.joda.time.DateTimeZone, org.joda.time.chrono.IslamicChronology.LeapYearPatternType)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">IslamicChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/IslamicChronology.html#getInstance(org.joda.time.DateTimeZone,%20org.joda.time.chrono.IslamicChronology.LeapYearPatternType)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            <a href="../../../../org/joda/time/chrono/IslamicChronology.LeapYearPatternType.html" title="class in org.joda.time.chrono">IslamicChronology.LeapYearPatternType</a>&nbsp;leapYears)</code>
 <div class="block">Gets an instance of the IslamicChronology in the given time zone.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/GJChronology.html" title="class in org.joda.time.chrono">GJChronology</a></code></td>
-<td class="colLast"><span class="strong">GJChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GJChronology.html#getInstance(org.joda.time.DateTimeZone, long, int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">GJChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GJChronology.html#getInstance(org.joda.time.DateTimeZone,%20long,%20int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            long&nbsp;gregorianCutover,
            int&nbsp;minDaysInFirstWeek)</code>
 <div class="block">Factory method returns instances of the GJ cutover chronology.</div>
@@ -942,14 +942,14 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/GJChronology.html" title="class in org.joda.time.chrono">GJChronology</a></code></td>
-<td class="colLast"><span class="strong">GJChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GJChronology.html#getInstance(org.joda.time.DateTimeZone, org.joda.time.ReadableInstant)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">GJChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GJChronology.html#getInstance(org.joda.time.DateTimeZone,%20org.joda.time.ReadableInstant)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;gregorianCutover)</code>
 <div class="block">Factory method returns instances of the GJ cutover chronology.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/chrono/GJChronology.html" title="class in org.joda.time.chrono">GJChronology</a></code></td>
-<td class="colLast"><span class="strong">GJChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GJChronology.html#getInstance(org.joda.time.DateTimeZone, org.joda.time.ReadableInstant, int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
+<td class="colLast"><span class="strong">GJChronology.</span><code><strong><a href="../../../../org/joda/time/chrono/GJChronology.html#getInstance(org.joda.time.DateTimeZone,%20org.joda.time.ReadableInstant,%20int)">getInstance</a></strong>(<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone,
            <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;gregorianCutover,
            int&nbsp;minDaysInFirstWeek)</code>
 <div class="block">Factory method returns instances of the GJ cutover chronology.</div>
@@ -1044,7 +1044,7 @@ Implementation package supporting the time zones.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a></code></td>
-<td class="colLast"><span class="strong">PartialConverter.</span><code><strong><a href="../../../../org/joda/time/convert/PartialConverter.html#getChronology(java.lang.Object, org.joda.time.DateTimeZone)">getChronology</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="strong">PartialConverter.</span><code><strong><a href="../../../../org/joda/time/convert/PartialConverter.html#getChronology(java.lang.Object,%20org.joda.time.DateTimeZone)">getChronology</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
              <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Extracts the chronology from an object of this converter's type
  where the time zone is specified.</div>
@@ -1052,7 +1052,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a></code></td>
-<td class="colLast"><span class="strong">InstantConverter.</span><code><strong><a href="../../../../org/joda/time/convert/InstantConverter.html#getChronology(java.lang.Object, org.joda.time.DateTimeZone)">getChronology</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="strong">InstantConverter.</span><code><strong><a href="../../../../org/joda/time/convert/InstantConverter.html#getChronology(java.lang.Object,%20org.joda.time.DateTimeZone)">getChronology</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
              <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Extracts the chronology from an object of this converter's type
  where the time zone is specified.</div>
@@ -1060,9 +1060,9 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a></code></td>
-<td class="colLast"><span class="strong">AbstractConverter.</span><code><strong><a href="../../../../org/joda/time/convert/AbstractConverter.html#getChronology(java.lang.Object, org.joda.time.DateTimeZone)">getChronology</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="strong">AbstractConverter.</span><code><strong><a href="../../../../org/joda/time/convert/AbstractConverter.html#getChronology(java.lang.Object,%20org.joda.time.DateTimeZone)">getChronology</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
              <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
-<div class="block">Extracts the chronology from an object of this convertor's type
+<div class="block">Extracts the chronology from an object of this converter's type
  where the time zone is specified.</div>
 </td>
 </tr>
@@ -1103,7 +1103,7 @@ Implementation package supporting the time zones.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">DateTimePrinter.</span><code><strong><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo(java.lang.StringBuffer, long, org.joda.time.Chronology, int, org.joda.time.DateTimeZone, java.util.Locale)">printTo</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
+<td class="colLast"><span class="strong">DateTimePrinter.</span><code><strong><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo(java.lang.StringBuffer,%20long,%20org.joda.time.Chronology,%20int,%20org.joda.time.DateTimeZone,%20java.util.Locale)">printTo</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
        long&nbsp;instant,
        <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono,
        int&nbsp;displayOffset,
@@ -1115,7 +1115,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">DateTimePrinter.</span><code><strong><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo(java.io.Writer, long, org.joda.time.Chronology, int, org.joda.time.DateTimeZone, java.util.Locale)">printTo</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
+<td class="colLast"><span class="strong">DateTimePrinter.</span><code><strong><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo(java.io.Writer,%20long,%20org.joda.time.Chronology,%20int,%20org.joda.time.DateTimeZone,%20java.util.Locale)">printTo</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
        long&nbsp;instant,
        <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono,
        int&nbsp;displayOffset,
@@ -1224,7 +1224,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></code></td>
-<td class="colLast"><span class="strong">DateTimeZoneBuilder.</span><code><strong><a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html#readFrom(java.io.DataInput, java.lang.String)">readFrom</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a>&nbsp;in,
+<td class="colLast"><span class="strong">DateTimeZoneBuilder.</span><code><strong><a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html#readFrom(java.io.DataInput,%20java.lang.String)">readFrom</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a>&nbsp;in,
         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id)</code>
 <div class="block">Decodes a built DateTimeZone from the given stream, as encoded by
  writeTo.</div>
@@ -1232,7 +1232,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></code></td>
-<td class="colLast"><span class="strong">DateTimeZoneBuilder.</span><code><strong><a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html#readFrom(java.io.InputStream, java.lang.String)">readFrom</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in,
+<td class="colLast"><span class="strong">DateTimeZoneBuilder.</span><code><strong><a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html#readFrom(java.io.InputStream,%20java.lang.String)">readFrom</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in,
         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id)</code>
 <div class="block">Decodes a built DateTimeZone from the given stream, as encoded by
  writeTo.</div>
@@ -1240,7 +1240,7 @@ Implementation package supporting the time zones.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a></code></td>
-<td class="colLast"><span class="strong">DateTimeZoneBuilder.</span><code><strong><a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html#toDateTimeZone(java.lang.String, boolean)">toDateTimeZone</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id,
+<td class="colLast"><span class="strong">DateTimeZoneBuilder.</span><code><strong><a href="../../../../org/joda/time/tz/DateTimeZoneBuilder.html#toDateTimeZone(java.lang.String,%20boolean)">toDateTimeZone</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id,
               boolean&nbsp;outputID)</code>
 <div class="block">Processes all the rules and builds a DateTimeZone.</div>
 </td>
@@ -1256,7 +1256,7 @@ Implementation package supporting the time zones.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&gt;</code></td>
-<td class="colLast"><span class="strong">ZoneInfoCompiler.</span><code><strong><a href="../../../../org/joda/time/tz/ZoneInfoCompiler.html#compile(java.io.File, java.io.File[])">compile</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;outputDir,
+<td class="colLast"><span class="strong">ZoneInfoCompiler.</span><code><strong><a href="../../../../org/joda/time/tz/ZoneInfoCompiler.html#compile(java.io.File,%20java.io.File[])">compile</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;outputDir,
        <a href="http://docs.oracle.com/javase/7/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>[]&nbsp;sources)</code>
 <div class="block">Returns a map of ids to DateTimeZones.</div>
 </td>

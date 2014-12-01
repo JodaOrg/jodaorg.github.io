@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>LocalDate (Joda-Time 2.5 API)</title>
+<title>LocalDate (Joda-Time 2.6 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="LocalDate (Joda-Time 2.5 API)";
+        parent.document.title="LocalDate (Joda-Time 2.6 API)";
     }
 //-->
 </script>
@@ -208,7 +208,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(int, int, int)">LocalDate</a></strong>(int&nbsp;year,
+<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(int,%20int,%20int)">LocalDate</a></strong>(int&nbsp;year,
          int&nbsp;monthOfYear,
          int&nbsp;dayOfMonth)</code>
 <div class="block">Constructs an instance set to the specified date and time
@@ -216,7 +216,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(int, int, int, org.joda.time.Chronology)">LocalDate</a></strong>(int&nbsp;year,
+<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(int,%20int,%20int,%20org.joda.time.Chronology)">LocalDate</a></strong>(int&nbsp;year,
          int&nbsp;monthOfYear,
          int&nbsp;dayOfMonth,
          <a href="../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chronology)</code>
@@ -231,14 +231,14 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(long, org.joda.time.Chronology)">LocalDate</a></strong>(long&nbsp;instant,
+<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(long,%20org.joda.time.Chronology)">LocalDate</a></strong>(long&nbsp;instant,
          <a href="../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chronology)</code>
 <div class="block">Constructs an instance set to the local time defined by the specified
  instant evaluated using the specified chronology.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(long, org.joda.time.DateTimeZone)">LocalDate</a></strong>(long&nbsp;instant,
+<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(long,%20org.joda.time.DateTimeZone)">LocalDate</a></strong>(long&nbsp;instant,
          <a href="../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance set to the local time defined by the specified
  instant evaluated using ISO chronology in the specified zone.</div>
@@ -250,14 +250,14 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(java.lang.Object, org.joda.time.Chronology)">LocalDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(java.lang.Object,%20org.joda.time.Chronology)">LocalDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
          <a href="../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chronology)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  using the specified chronology.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(java.lang.Object, org.joda.time.DateTimeZone)">LocalDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
+<td class="colOne"><code><strong><a href="../../../org/joda/time/LocalDate.html#LocalDate(java.lang.Object,%20org.joda.time.DateTimeZone)">LocalDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;instant,
          <a href="../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Constructs an instance from an Object that represents a datetime,
  forcing the time zone to that specified.</div>
@@ -380,7 +380,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../org/joda/time/DateTimeField.html" title="class in org.joda.time">DateTimeField</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#getField(int, org.joda.time.Chronology)">getField</a></strong>(int&nbsp;index,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#getField(int,%20org.joda.time.Chronology)">getField</a></strong>(int&nbsp;index,
         <a href="../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono)</code>
 <div class="block">Gets the field for a specific index in the chronology specified.</div>
 </td>
@@ -519,7 +519,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#parse(java.lang.String, org.joda.time.format.DateTimeFormatter)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#parse(java.lang.String,%20org.joda.time.format.DateTimeFormatter)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
      <a href="../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;formatter)</code>
 <div class="block">Parses a <code>LocalDate</code> from the specified string using a formatter.</div>
 </td>
@@ -598,7 +598,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#toDateTime(org.joda.time.LocalTime, org.joda.time.DateTimeZone)">toDateTime</a></strong>(<a href="../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a>&nbsp;time,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#toDateTime(org.joda.time.LocalTime,%20org.joda.time.DateTimeZone)">toDateTime</a></strong>(<a href="../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a>&nbsp;time,
           <a href="../../../org/joda/time/DateTimeZone.html" title="class in org.joda.time">DateTimeZone</a>&nbsp;zone)</code>
 <div class="block">Converts this object to a DateTime using a LocalTime to fill in the
  missing fields.</div>
@@ -684,7 +684,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#toString(java.lang.String, java.util.Locale)">toString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pattern,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#toString(java.lang.String,%20java.util.Locale)">toString</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pattern,
         <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Output the date using the specified format pattern.</div>
 </td>
@@ -733,14 +733,14 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#withField(org.joda.time.DateTimeFieldType, int)">withField</a></strong>(<a href="../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;fieldType,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#withField(org.joda.time.DateTimeFieldType,%20int)">withField</a></strong>(<a href="../../../org/joda/time/DateTimeFieldType.html" title="class in org.joda.time">DateTimeFieldType</a>&nbsp;fieldType,
          int&nbsp;value)</code>
 <div class="block">Returns a copy of this date with the specified field set to a new value.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#withFieldAdded(org.joda.time.DurationFieldType, int)">withFieldAdded</a></strong>(<a href="../../../org/joda/time/DurationFieldType.html" title="class in org.joda.time">DurationFieldType</a>&nbsp;fieldType,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#withFieldAdded(org.joda.time.DurationFieldType,%20int)">withFieldAdded</a></strong>(<a href="../../../org/joda/time/DurationFieldType.html" title="class in org.joda.time">DurationFieldType</a>&nbsp;fieldType,
               int&nbsp;amount)</code>
 <div class="block">Returns a copy of this date with the value of the specified field increased.</div>
 </td>
@@ -760,7 +760,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#withPeriodAdded(org.joda.time.ReadablePeriod, int)">withPeriodAdded</a></strong>(<a href="../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/LocalDate.html#withPeriodAdded(org.joda.time.ReadablePeriod,%20int)">withPeriodAdded</a></strong>(<a href="../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
                int&nbsp;scalar)</code>
 <div class="block">Returns a copy of this date with the specified period added.</div>
 </td>
@@ -826,7 +826,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.joda.time.ReadablePartial">
@@ -1210,7 +1210,7 @@ implements <a href="../../../org/joda/time/ReadablePartial.html" title="interfac
  This method must not use any instance variables.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/joda/time/base/AbstractPartial.html#getField(int, org.joda.time.Chronology)">getField</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/joda/time/base/AbstractPartial.html" title="class in org.joda.time.base">AbstractPartial</a></code></dd>
+<dd><code><a href="../../../org/joda/time/base/AbstractPartial.html#getField(int,%20org.joda.time.Chronology)">getField</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/joda/time/base/AbstractPartial.html" title="class in org.joda.time.base">AbstractPartial</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>index</code> - the index to retrieve</dd><dd><code>chrono</code> - the chronology to use</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the field</dd></dl>
 </li>
@@ -1789,7 +1789,7 @@ public&nbsp;<a href="../../../org/joda/time/DateMidnight.html" title="class in o
  <p>
  This method is typically used to add multiple copies of complex
  period instances. Adding one field is best achieved using methods
- like <a href="../../../org/joda/time/LocalDate.html#withFieldAdded(org.joda.time.DurationFieldType, int)"><code>withFieldAdded(DurationFieldType, int)</code></a>
+ like <a href="../../../org/joda/time/LocalDate.html#withFieldAdded(org.joda.time.DurationFieldType,%20int)"><code>withFieldAdded(DurationFieldType, int)</code></a>
  or <a href="../../../org/joda/time/LocalDate.html#plusYears(int)"><code>plusYears(int)</code></a>.
  <p>
  Unsupported time fields are ignored, thus adding a period of 24 hours

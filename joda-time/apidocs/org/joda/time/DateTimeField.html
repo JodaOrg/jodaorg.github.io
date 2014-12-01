@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>DateTimeField (Joda-Time 2.5 API)</title>
+<title>DateTimeField (Joda-Time 2.6 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="DateTimeField (Joda-Time 2.5 API)";
+        parent.document.title="DateTimeField (Joda-Time 2.6 API)";
     }
 //-->
 </script>
@@ -146,7 +146,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#add(long, int)">add</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#add(long,%20int)">add</a></strong>(long&nbsp;instant,
    int&nbsp;value)</code>
 <div class="block">Adds a value (which may be negative) to the millis value,
  overflowing into larger fields if necessary.</div>
@@ -154,7 +154,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#add(long, long)">add</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#add(long,%20long)">add</a></strong>(long&nbsp;instant,
    long&nbsp;value)</code>
 <div class="block">Adds a value (which may be negative) to the millis value,
  overflowing into larger fields if necessary.</div>
@@ -162,7 +162,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract int[]</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#add(org.joda.time.ReadablePartial, int, int[], int)">add</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#add(org.joda.time.ReadablePartial,%20int,%20int[],%20int)">add</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
    int&nbsp;valueToAdd)</code>
@@ -172,7 +172,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#addWrapField(long, int)">addWrapField</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#addWrapField(long,%20int)">addWrapField</a></strong>(long&nbsp;instant,
             int&nbsp;value)</code>
 <div class="block">Adds a value (which may be negative) to the millis value,
  wrapping within this field.</div>
@@ -180,7 +180,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract int[]</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#addWrapField(org.joda.time.ReadablePartial, int, int[], int)">addWrapField</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#addWrapField(org.joda.time.ReadablePartial,%20int,%20int[],%20int)">addWrapField</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
             int&nbsp;fieldIndex,
             int[]&nbsp;values,
             int&nbsp;valueToAdd)</code>
@@ -190,7 +190,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract int[]</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#addWrapPartial(org.joda.time.ReadablePartial, int, int[], int)">addWrapPartial</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#addWrapPartial(org.joda.time.ReadablePartial,%20int,%20int[],%20int)">addWrapPartial</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
               int&nbsp;fieldIndex,
               int[]&nbsp;values,
               int&nbsp;valueToAdd)</code>
@@ -206,7 +206,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(int, java.util.Locale)">getAsShortText</a></strong>(int&nbsp;fieldValue,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(int,%20java.util.Locale)">getAsShortText</a></strong>(int&nbsp;fieldValue,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from the field value.</div>
 </td>
@@ -220,7 +220,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(long, java.util.Locale)">getAsShortText</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(long,%20java.util.Locale)">getAsShortText</a></strong>(long&nbsp;instant,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from the
  milliseconds.</div>
@@ -228,7 +228,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(org.joda.time.ReadablePartial, int, java.util.Locale)">getAsShortText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(org.joda.time.ReadablePartial,%20int,%20java.util.Locale)">getAsShortText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
               int&nbsp;fieldValue,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
@@ -236,14 +236,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(org.joda.time.ReadablePartial, java.util.Locale)">getAsShortText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsShortText(org.joda.time.ReadablePartial,%20java.util.Locale)">getAsShortText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(int, java.util.Locale)">getAsText</a></strong>(int&nbsp;fieldValue,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(int,%20java.util.Locale)">getAsText</a></strong>(int&nbsp;fieldValue,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from the field value.</div>
 </td>
@@ -256,14 +256,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(long, java.util.Locale)">getAsText</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(long,%20java.util.Locale)">getAsText</a></strong>(long&nbsp;instant,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from the milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(org.joda.time.ReadablePartial, int, java.util.Locale)">getAsText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(org.joda.time.ReadablePartial,%20int,%20java.util.Locale)">getAsText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
          int&nbsp;fieldValue,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from a partial instant.</div>
@@ -271,14 +271,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(org.joda.time.ReadablePartial, java.util.Locale)">getAsText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getAsText(org.joda.time.ReadablePartial,%20java.util.Locale)">getAsText</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract int</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getDifference(long, long)">getDifference</a></strong>(long&nbsp;minuendInstant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getDifference(long,%20long)">getDifference</a></strong>(long&nbsp;minuendInstant,
              long&nbsp;subtrahendInstant)</code>
 <div class="block">Computes the difference between two instants, as measured in the units
  of this field.</div>
@@ -286,7 +286,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getDifferenceAsLong(long, long)">getDifferenceAsLong</a></strong>(long&nbsp;minuendInstant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getDifferenceAsLong(long,%20long)">getDifferenceAsLong</a></strong>(long&nbsp;minuendInstant,
                    long&nbsp;subtrahendInstant)</code>
 <div class="block">Computes the difference between two instants, as measured in the units
  of this field.</div>
@@ -343,7 +343,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract int</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getMaximumValue(org.joda.time.ReadablePartial, int[])">getMaximumValue</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getMaximumValue(org.joda.time.ReadablePartial,%20int[])">getMaximumValue</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
                int[]&nbsp;values)</code>
 <div class="block">Get the maximum value for this field using the partial instant and
  the specified values.</div>
@@ -369,7 +369,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract int</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getMinimumValue(org.joda.time.ReadablePartial, int[])">getMinimumValue</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#getMinimumValue(org.joda.time.ReadablePartial,%20int[])">getMinimumValue</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
                int[]&nbsp;values)</code>
 <div class="block">Get the minimum value for this field using the partial instant and
  the specified values.</div>
@@ -449,21 +449,21 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(long, int)">set</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(long,%20int)">set</a></strong>(long&nbsp;instant,
    int&nbsp;value)</code>
 <div class="block">Sets a value in the milliseconds supplied.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(long, java.lang.String)">set</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(long,%20java.lang.String)">set</a></strong>(long&nbsp;instant,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
 <div class="block">Sets a value in the milliseconds supplied from a human-readable, text value.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(long, java.lang.String, java.util.Locale)">set</a></strong>(long&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(long,%20java.lang.String,%20java.util.Locale)">set</a></strong>(long&nbsp;instant,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Sets a value in the milliseconds supplied from a human-readable, text value.</div>
@@ -471,7 +471,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract int[]</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(org.joda.time.ReadablePartial, int, int[], int)">set</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(org.joda.time.ReadablePartial,%20int,%20int[],%20int)">set</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
    int&nbsp;newValue)</code>
@@ -480,7 +480,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract int[]</code></td>
-<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(org.joda.time.ReadablePartial, int, int[], java.lang.String, java.util.Locale)">set</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><code><strong><a href="../../../org/joda/time/DateTimeField.html#set(org.joda.time.ReadablePartial,%20int,%20int[],%20java.lang.String,%20java.util.Locale)">set</a></strong>(<a href="../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
    <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
@@ -500,7 +500,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -775,7 +775,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>instant</code> - the milliseconds from 1970-01-01T00:00:00Z to add to</dd><dd><code>value</code> - the long value to add, in the units of the field</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the updated milliseconds</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if value is too large</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../org/joda/time/DateTimeField.html#add(long, int)"><code>add(long,int)</code></a></dd></dl>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if value is too large</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../org/joda/time/DateTimeField.html#add(long,%20int)"><code>add(long,int)</code></a></dd></dl>
 </li>
 </ul>
 <a name="add(org.joda.time.ReadablePartial, int, int[], int)">

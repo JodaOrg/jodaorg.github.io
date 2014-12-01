@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>BaseDuration (Joda-Time 2.5 API)</title>
+<title>BaseDuration (Joda-Time 2.6 API)</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 </head>
 <body>
 <script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="BaseDuration (Joda-Time 2.5 API)";
+        parent.document.title="BaseDuration (Joda-Time 2.6 API)";
     }
 //-->
 </script>
@@ -148,7 +148,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#BaseDuration(long, long)">BaseDuration</a></strong>(long&nbsp;startInstant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#BaseDuration(long,%20long)">BaseDuration</a></strong>(long&nbsp;startInstant,
             long&nbsp;endInstant)</code>
 <div class="block">Creates a duration from the given interval endpoints.</div>
 </td>
@@ -162,7 +162,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#BaseDuration(org.joda.time.ReadableInstant, org.joda.time.ReadableInstant)">BaseDuration</a></strong>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;start,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#BaseDuration(org.joda.time.ReadableInstant,%20org.joda.time.ReadableInstant)">BaseDuration</a></strong>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;start,
             <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;end)</code>
 <div class="block">Creates a duration from the given interval endpoints.</div>
 </td>
@@ -222,7 +222,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#toPeriod(org.joda.time.PeriodType, org.joda.time.Chronology)">toPeriod</a></strong>(<a href="../../../../org/joda/time/PeriodType.html" title="class in org.joda.time">PeriodType</a>&nbsp;type,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#toPeriod(org.joda.time.PeriodType,%20org.joda.time.Chronology)">toPeriod</a></strong>(<a href="../../../../org/joda/time/PeriodType.html" title="class in org.joda.time">PeriodType</a>&nbsp;type,
         <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono)</code>
 <div class="block">Converts this duration to a Period instance using the specified period type
  and chronology.</div>
@@ -237,7 +237,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodFrom(org.joda.time.ReadableInstant, org.joda.time.PeriodType)">toPeriodFrom</a></strong>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;startInstant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodFrom(org.joda.time.ReadableInstant,%20org.joda.time.PeriodType)">toPeriodFrom</a></strong>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;startInstant,
             <a href="../../../../org/joda/time/PeriodType.html" title="class in org.joda.time">PeriodType</a>&nbsp;type)</code>
 <div class="block">Converts this duration to a Period instance by adding the duration to a start
  instant to obtain an interval.</div>
@@ -253,7 +253,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodTo(org.joda.time.ReadableInstant, org.joda.time.PeriodType)">toPeriodTo</a></strong>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;endInstant,
+<td class="colLast"><code><strong><a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodTo(org.joda.time.ReadableInstant,%20org.joda.time.PeriodType)">toPeriodTo</a></strong>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;endInstant,
           <a href="../../../../org/joda/time/PeriodType.html" title="class in org.joda.time">PeriodType</a>&nbsp;type)</code>
 <div class="block">Converts this duration to a Period instance by subtracting the duration
  from an end instant to obtain an interval using the standard period
@@ -273,7 +273,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.joda.time.ReadableDuration">
@@ -404,7 +404,7 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
  type may restrict the selection further.
  <p>
  For more control over the conversion process, you must pair the duration with
- an instant, see <a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodFrom(org.joda.time.ReadableInstant, org.joda.time.PeriodType)"><code>toPeriodFrom(ReadableInstant, PeriodType)</code></a>.</div>
+ an instant, see <a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodFrom(org.joda.time.ReadableInstant,%20org.joda.time.PeriodType)"><code>toPeriodFrom(ReadableInstant, PeriodType)</code></a>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>type</code> - the period type to use, null means standard</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a Period created using the millisecond duration from this instance</dd></dl>
 </li>
@@ -448,8 +448,8 @@ implements <a href="../../../../org/joda/time/ReadableDuration.html" title="inte
  However, ISO UTC also has precise days and weeks.
  <p>
  For more control over the conversion process, you must pair the duration with
- an instant, see <a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodFrom(org.joda.time.ReadableInstant, org.joda.time.PeriodType)"><code>toPeriodFrom(ReadableInstant, PeriodType)</code></a> and
- <a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodTo(org.joda.time.ReadableInstant, org.joda.time.PeriodType)"><code>toPeriodTo(ReadableInstant, PeriodType)</code></a></div>
+ an instant, see <a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodFrom(org.joda.time.ReadableInstant,%20org.joda.time.PeriodType)"><code>toPeriodFrom(ReadableInstant, PeriodType)</code></a> and
+ <a href="../../../../org/joda/time/base/BaseDuration.html#toPeriodTo(org.joda.time.ReadableInstant,%20org.joda.time.PeriodType)"><code>toPeriodTo(ReadableInstant, PeriodType)</code></a></div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>type</code> - the period type to use, null means standard</dd><dd><code>chrono</code> - the chronology to use, null means ISO default</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a Period created using the millisecond duration from this instance</dd></dl>
 </li>
