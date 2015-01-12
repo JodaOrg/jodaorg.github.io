@@ -9,7 +9,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Joda-Time - 
-  Java date and time API - Formatting</title>
+  Java date and time API - Upgrade from 2.6 to 2.7</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta name="author" content="Stephen Colebourne" />
@@ -20,7 +20,6 @@
 		<link href="./css/bootswatch.css" rel="stylesheet" />
 		<link href="./css/reflow-skin.css" rel="stylesheet" />
 
-		<link href="http://yandex.st/highlightjs/7.5/styles/github.min.css" rel="stylesheet" />
 
 
 		<link href="./css/site.css" rel="stylesheet" />
@@ -51,7 +50,7 @@
 		</script>
 		</head>
 
-	<body class="page-key_format project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-upgradeto270 project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -64,7 +63,7 @@
 					<a class="brand" href="index.html">Joda-Time</a>
 					<div class="nav-collapse collapse" id="top-nav-collapse">
 						<ul class="nav pull-right">
-							<li class="dropdown active">
+							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li ><a href="index.html" title="Home">Home</a></li>
@@ -79,7 +78,7 @@
 											<li ><a href="key_duration.html" title="Duration">Duration</a></li>
 											<li ><a href="key_period.html" title="Period">Period</a></li>
 											<li ><a href="key_chronology.html" title="Chronology">Chronology</a></li>
-											<li class="active"><a href="" title="Formatting">Formatting</a></li>
+											<li ><a href="key_format.html" title="Formatting">Formatting</a></li>
 											<li ><a href="tz_update.html" title="Time zone update">Time zone update</a></li>
 										</ul>
 									</li>
@@ -154,90 +153,88 @@
 		<div class="span12">
 			<div class="body-content">
 <div class="section"> 
- <h2 id="Formatting">Formatting</h2> 
- <p> Joda-Time provides a comprehensive formatting system. There are two layers: </p> 
- <ul> 
-  <li>High level - pre-packaged constant formatters</li> 
-  <li>Mid level - pattern-based, like <tt>SimpleDateFormat</tt></li> 
-  <li>Low level - builder</li> 
- </ul> 
-</div> 
-<div class="section"> 
- <h2 id="Constant_and_Localized_formatting">Constant and Localized formatting</h2> 
- <p> The class <tt><a href="apidocs/org/joda/time/format/ISODateTimeFormat.html">ISODateTimeFormat</a></tt> contains a large number of pre-defined formatters based on the ISO-8601 specification (although not all are fully compatible). These handle many common cases. </p> 
- <p> The class <tt><a href="apidocs/org/joda/time/format/DateTimeFormat.html">DateTimeFormat</a></tt> contains an additional set of pre-defined formatters based on <tt>Locale</tt>. These &quot;style-based&quot; formatters handle the case where the application needs to format a date-time in a manner appropriate to a particular global location. </p> 
-</div> 
-<div class="section"> 
- <h2 id="Pattern-based_formatting">Pattern-based formatting</h2> 
- <p> The class <tt><a href="apidocs/org/joda/time/format/DateTimeFormat.html">DateTimeFormat</a></tt> provides a single method <tt>forPattern(String)</tt> that supports formatting by pattern. These &quot;pattern-based&quot; formatters provide a similar approach to that of <tt>SimpleDateFormat</tt>. </p> 
- <p> For example: </p> 
+ <h2 id="Upgrade">Upgrade</h2> 
+ <p> These are the release notes and advice for upgrading Joda-Time from version 2.6 to version 2.7. </p> 
  <div class="source"> 
   <pre>
-LocalDate date = LocalDate.now();
-DateTimeFormatter fmt = DateTimeFormat.forPattern(&quot;d MMMM, yyyy&quot;);
-String str = date.toString(fmt);
-// might output &quot;6 October, 2013&quot;
+Joda-Time version 2.7
+---------------------
+
+Joda-Time is a date and time handling library that seeks to replace the JDK
+Date and Calendar classes.
+
+This release contains enhancements, bug fixes and a time zone update.
+The release runs on JDK 5 or later.
+
+Joda-Time is licensed under the business-friendly Apache License Version 2.
+This is the same license as all of Apache, plus other open source projects such as Spring.
+The intent is to make the code available to the Java community with the minimum
+of restrictions. If the license causes you problems please contact the mailing list.
+
+**  Please also check out our related projects   **
+** http://www.joda.org/joda-time/related.html **
+
+
+Enhancements since 2.6
+----------------------
+- Add DateTime.withDate(LocalDate) and DateTime.withTime(LocalTime) [#213]
+  This was possible using DateTime.withFields(ReadablePartial) but the new methods are clearer
+
+- Added new system property for time-zone loading [#37]
+  Added system property &quot;org.joda.time.DateTimeZone.Folder&quot;.
+  If set, then it is treated as a file system folder to load time-zone data from.
+  The folder is loaded using ZoneInfoProvider and must be the unzipped output of ZoneInfoCompiler.
+  The default behaviour is unchanged, with default time-zone data included in the jar file.
+
+- Produce jar file without time-zone data [#220]
+  A second jar file is now located in Maven Central with the classifier &quot;no-tzdb&quot;.
+  This is the same as the main joda-time jar file, except that the tzdb data and ZoneInfoCompiler are omitted.
+  This is intended for use by Android, but could be used in other environments.
+  If using this alternative jar, a time-zone system property must be set, either
+  &quot;org.joda.time.DateTimeZone.Provider&quot; or &quot;org.joda.time.DateTimeZone.Folder&quot;.
+  The default behaviour in the standard jar file is unchanged, with time-zone data included in the jar file.
+
+
+Compatibility with 2.6
+----------------------
+Build system - Yes
+
+Binary compatible - Yes
+
+Source compatible - Yes
+
+Serialization compatible - Yes
+
+Data compatible - Yes
+ - DateTimeZone data still at version 2014j
+
+Semantic compatible - Yes
+
+
+Deprecations since 2.6
+----------------------
+
+
+Bug fixes since 2.6
+-------------------
+- Fix Asia/Dhaka time-zone [#208]
+  Problem caused by time-zone ending at 24:00 on December 31st
+  Model change as being as 23:59:59.999
+
+- Fix PeriodFormatter.withLocale to operate on word-based formatting [#187, #191]
+  Previously, PeriodFormatter.withLocale() had no effect on word-based formatting
+  Now, the locale used when calling PeriodFormat.wordBased(locale) is passed to the PeriodFormatter.
+  In addition, if PeriodFormatter.withLocale(locale) is called, then the word-based pattern will
+  change to a pattern appropriate for that locale.
+
+
+Scala
+--------
+Joda-Time uses annotations from Joda-Convert.
+In the Java programming language, this dependency is optional, however in Scala it is not.
+Scala users must manually add the Joda-Convert v1.2 dependency.
 </pre>
  </div> 
- <p> The <a href="apidocs/org/joda/time/format/DateTimeFormat.html">pattern letters</a> are: </p> 
- <div class="source"> 
-  <pre>
-Symbol  Meaning                      Presentation  Examples
-------  -------                      ------------  -------
- G       era                          text          AD
- C       century of era (&gt;=0)         number        20
- Y       year of era (&gt;=0)            year          1996
-
- x       weekyear                     year          1996
- w       week of weekyear             number        27
- e       day of week                  number        2
- E       day of week                  text          Tuesday; Tue
-
- y       year                         year          1996
- D       day of year                  number        189
- M       month of year                month         July; Jul; 07
- d       day of month                 number        10
-
- a       halfday of day               text          PM
- K       hour of halfday (0~11)       number        0
- h       clockhour of halfday (1~12)  number        12
-
- H       hour of day (0~23)           number        0
- k       clockhour of day (1~24)      number        24
- m       minute of hour               number        30
- s       second of minute             number        55
- S       fraction of second           number        978
-
- z       time zone                    text          Pacific Standard Time; PST
- Z       time zone offset/id          zone          -0800; -08:00; America/Los_Angeles
-
- '       escape for text              delimiter
- ''      single quote                 literal       '
-</pre>
- </div> 
- <p> The count of pattern letters determine the format. </p> 
- <p> Text: If the number of pattern letters is 4 or more, the full form is used; otherwise a short or abbreviated form is used if available. Thus, &quot;EEEE&quot; might output &quot;Monday&quot; whereas &quot;E&quot; might output &quot;Mon&quot; (the short form of Monday). </p> 
- <p> Number: The minimum number of digits. Shorter numbers are zero-padded to this amount. Thus, &quot;HH&quot; might output &quot;09&quot; whereas &quot;H&quot; might output &quot;9&quot; (for the hour-of-day of 9 in the morning). </p> 
- <p> Year: Numeric presentation for year and weekyear fields are handled specially. For example, if the count of 'y' is 2, the year will be displayed as the zero-based year of the century, which is two digits. </p> 
- <p> Month: 3 or over, use text, otherwise use number. Thus, &quot;MM&quot; might output &quot;03&quot; whereas &quot;MMM&quot; might output &quot;Mar&quot; (the short form of March) and &quot;MMMM&quot; might output &quot;March&quot;. </p> 
- <p> Zone: 'Z' outputs offset without a colon, 'ZZ' outputs the offset with a colon, 'ZZZ' or more outputs the zone id. </p> 
- <p> Zone names: Time zone names ('z') cannot be parsed. </p> 
- <p> Any characters in the pattern that are not in the ranges of ['a'..'z'] and ['A'..'Z'] will be treated as quoted text. For instance, characters like ':', '.', ' ', '#' and '?' will appear in the resulting time text even they are not embraced within single quotes. </p> 
-</div> 
-<div class="section"> 
- <h2 id="Builder">Builder</h2> 
- <p> All formatting is ultimately built using <tt><a href="apidocs/org/joda/time/format/DateTimeFormatterBuilder.html">DateTimeFormatterBuilder</a></tt>. The builder allows a format pattern to be built up step by step, consisting of literal, text, numeric, pattern and localized elements in any order. Some facilities are only available via the builder. </p> 
- <p> For example, this will build a formatter consisting of the month and year: </p> 
- <div class="source"> 
-  <pre>
-DateTimeFormatter monthAndYear = new DateTimeFormatterBuilder()
-     .appendMonthOfYearText()
-     .appendLiteral(' ')
-     .appendYear(4, 4)
-     .toFormatter();
-</pre>
- </div> 
- <p> <br /> </p> 
 </div>
 			</div>
 		</div>
@@ -359,7 +356,6 @@ DateTimeFormatter monthAndYear = new DateTimeFormatterBuilder()
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-	<script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
 
 	<script src="./js/reflow-skin.js"></script>
 
