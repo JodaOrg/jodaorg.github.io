@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Joda-Time &#x2013; Java date and time API - Time zone update</title>
+		<title>Joda-Time &#x2013; Java date and time API - Upgrade from 2.9 to 2.9.2</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta name="author" content="Stephen Colebourne" />
@@ -49,7 +49,7 @@
 		</script>
 		</head>
 
-	<body class="page-tz_update project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-upgradeto292 project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -62,7 +62,7 @@
 					<a class="brand" href="index.html">Joda-Time</a>
 					<div class="nav-collapse collapse" id="top-nav-collapse">
 						<ul class="nav pull-right">
-							<li class="dropdown active">
+							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li ><a href="index.html" title="Home">Home</a></li>
@@ -78,7 +78,7 @@
 											<li ><a href="key_period.html" title="Period">Period</a></li>
 											<li ><a href="key_chronology.html" title="Chronology">Chronology</a></li>
 											<li ><a href="key_format.html" title="Formatting">Formatting</a></li>
-											<li class="active"><a href="" title="Time zone update">Time zone update</a></li>
+											<li ><a href="tz_update.html" title="Time zone update">Time zone update</a></li>
 										</ul>
 									</li>
 									<li class="dropdown-submenu ">
@@ -152,18 +152,103 @@
 		<div class="span12">
 			<div class="body-content">
 <div class="section"> 
- <h2 id="Time_zone_updates">Time zone updates</h2> 
- <p> Time zones are a concept driven by the political situation in each country around the world. As such, they change frequently, and often at short notice. In order to manage this, Joda-Time uses the internationally recognised <a class="externalLink" href="http://www.iana.org/time-zones">tz database</a>, which is also used in most operating systems and the JDK itself. </p> 
- <p> Using JDK time zone data is a problem however, as the zones are only updated when the JDK is updated. This can cause issues if you are locked into an older version of the JDK. </p> 
- <p> Joda-Time also compiles the time zone data into our jar file. However, the key difference is that you can update the raw data and recompile the jar at any time. </p> 
-</div> 
-<div class="section"> 
- <h2 id="Updating_the_time_zone_data">Updating the time zone data</h2> 
- <p> Firstly, download the latest version of the data files from <a class="externalLink" href="http://www.iana.org/time-zones">tz database</a>. Ensure you select the &quot;Data&quot; download which comes as a tar.gz. </p> 
- <p> Secondly, you need a <a href="download.html">source code download</a> of Joda-Time. </p> 
- <p> Thirdly, you must take the time zone data files from step one, and replace those in the Joda-Time download. They are located at <tt>{root}/src/main/java/org/joda/time/tz/src</tt>. Note that only <i>some</i> of the files need to be copied across. </p> 
- <p> Fourthly, change the version number in the pom.xml file to indicate that it is a non-standard release. </p> 
- <p> Finally, recompile the Joda-Time jar file using maven. Simply type <tt>mvn package</tt> in the root directory. </p> 
+ <h2 id="Upgrade">Upgrade</h2> 
+ <p> These are the release notes and advice for upgrading Joda-Time from version 2.8 to version 2.9. </p> 
+ <div class="source"> 
+  <pre>
+Joda-Time version 2.9.2
+-----------------------
+
+Joda-Time is a date and time handling library that seeks to replace the JDK
+Date and Calendar classes. For Java SE 8 and later, please use java.time instead.
+
+This release contains one bug fix, a time-zone update and some minor internal changes.
+The release runs on JDK 5 or later.
+
+Joda-Time is licensed under the business-friendly Apache License Version 2.
+This is the same license as all of Apache, plus other open source projects such as Spring.
+
+**  Please also check out our related projects   **
+** http://www.joda.org/joda-time/related.html **
+
+
+Bug fixes in 2.9.2
+------------------
+ - Fix bug in time-zone binary search [#332]
+
+ - DateTimeZone data updated to version 2016a (version 2.9 had time-zone data 2015g)
+
+ - Minor fixes to code internals [#339, #326, #344, #350, #343]
+ 
+ - Better document behaviour [#325]
+
+
+Bug fixes in 2.9.1
+------------------
+- Fix bug introduced by Long.MIN_VALUE and Long.MAX_VALUE changes [#328]
+
+
+Enhancements in 2.9
+-------------------
+- Faster parsing of time-zone identifiers [#282]
+
+- Added Interval.parseWithOffset(String) [#299, #296]
+  Provides a way to parse the fixed offset in an interval string
+
+- Add DateTimeFormatter methods for StringBuilder [#298]
+
+- Add Russian period translations [#320]
+
+- Add Italian period translations [#312]
+
+- Add Czech period translations [#313]
+
+- Clarify that PeriodFormatterBuilder is in an invalid state once built [#309]
+
+- Allow DateTime and Interval to refer to values at Long.MIN_VALUE and Long.MAX_VALUE [#297, #190]
+  A DateTime may be created with any millisecond value, however at the very edges there may be
+  some undesirable effects, for example always using UTC instead of the time-zone
+
+- Better error message for malformed tzdb files [#319]
+
+- Better error message for interval constructor [#321]
+
+
+Compatibility between 2.8 and 2.9
+---------------------------------
+Build system - Yes
+
+Binary compatible - Yes
+
+Source compatible - Yes
+
+Serialization compatible - Yes
+
+Data compatible - Yes
+ - DateTimeZone data updated to version 2015g
+
+Semantic compatible - Yes
+
+
+Bug fixes in 2.9
+----------------
+- Fixed to handle JDK 8u60 [#288, #291]
+  Without this fix, formatting a time-zone will print &quot;+00:00&quot; instead of &quot;GMT&quot; for the GMT time-zone
+
+- Fix parsing of basic form ISO style where year has unnecessary plus sign [#86]
+  For example, +20151030 will now be correctly parsed as year 2015.
+
+- Fix overflow bug in intervals [#315]
+
+
+
+Scala
+-----
+Joda-Time uses annotations from Joda-Convert.
+In the Java programming language, this dependency is optional, however in Scala it is not.
+Scala users must manually add the Joda-Convert v1.2 dependency.
+</pre>
+ </div> 
 </div>
 			</div>
 		</div>
