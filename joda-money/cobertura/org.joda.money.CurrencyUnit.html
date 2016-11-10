@@ -113,7 +113,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment"> * This class is immutable and thread-safe.</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;48</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;49</td>  <td class="nbHitsCovered">&nbsp;6404</td>  <td class="src"><pre class="src">&nbsp;<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> CurrencyUnit <span class="keyword">implements</span> Comparable&lt;CurrencyUnit&gt;, Serializable {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;49</td>  <td class="nbHitsCovered">&nbsp;6514</td>  <td class="src"><pre class="src">&nbsp;<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> CurrencyUnit <span class="keyword">implements</span> Comparable&lt;CurrencyUnit&gt;, Serializable {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;50</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;51</td>  <td class="nbHits">&nbsp;</td>
@@ -373,32 +373,32 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> CurrencyUnit registerCurrency(</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;190</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    String currencyCode, <span class="keyword">int</span> numericCurrencyCode, <span class="keyword">int</span> decimalPlaces, List&lt;String&gt; countryCodes, <span class="keyword">boolean</span> force) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;191</td>  <td class="nbHitsCovered">&nbsp;188</td>  <td class="src"><pre class="src">&nbsp;        MoneyUtils.checkNotNull(currencyCode, <span class="string">"Currency code must not be null"</span>);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;192</td>  <td class="nbHitsCovered"><a title="Line 192: Conditional coverage 100% (2/2).">&nbsp;187</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 192: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (currencyCode.length() != 3) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;191</td>  <td class="nbHitsCovered">&nbsp;190</td>  <td class="src"><pre class="src">&nbsp;        MoneyUtils.checkNotNull(currencyCode, <span class="string">"Currency code must not be null"</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;192</td>  <td class="nbHitsCovered"><a title="Line 192: Conditional coverage 100% (2/2).">&nbsp;189</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 192: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (currencyCode.length() != 3) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;193</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid string code, must be length 3"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;194</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;195</td>  <td class="nbHitsCovered"><a title="Line 195: Conditional coverage 100% (2/2).">&nbsp;182</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 195: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (CODE.matcher(currencyCode).matches() == <span class="keyword">false</span>) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;195</td>  <td class="nbHitsCovered"><a title="Line 195: Conditional coverage 100% (2/2).">&nbsp;184</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 195: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (CODE.matcher(currencyCode).matches() == <span class="keyword">false</span>) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;196</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid string code, must be ASCII upper-case letters"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;197</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;198</td>  <td class="nbHitsCovered"><a title="Line 198: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;180</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 198: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> (numericCurrencyCode &lt; -1 || numericCurrencyCode &gt; 999) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;198</td>  <td class="nbHitsCovered"><a title="Line 198: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;182</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 198: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> (numericCurrencyCode &lt; -1 || numericCurrencyCode &gt; 999) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;199</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid numeric code"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;200</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;201</td>  <td class="nbHitsCovered"><a title="Line 201: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;178</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 201: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> (decimalPlaces &lt; -1 || decimalPlaces &gt; 9) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;201</td>  <td class="nbHitsCovered"><a title="Line 201: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;180</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 201: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> (decimalPlaces &lt; -1 || decimalPlaces &gt; 9) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;202</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid number of decimal places"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;203</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;204</td>  <td class="nbHitsCovered">&nbsp;176</td>  <td class="src"><pre class="src">&nbsp;        MoneyUtils.checkNotNull(countryCodes, <span class="string">"Country codes must not be null"</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;204</td>  <td class="nbHitsCovered">&nbsp;178</td>  <td class="src"><pre class="src">&nbsp;        MoneyUtils.checkNotNull(countryCodes, <span class="string">"Country codes must not be null"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;205</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;206</td>  <td class="nbHitsCovered">&nbsp;176</td>  <td class="src"><pre class="src">&nbsp;        CurrencyUnit currency = <span class="keyword">new</span> CurrencyUnit(currencyCode, (<span class="keyword">short</span>) numericCurrencyCode, (<span class="keyword">short</span>) decimalPlaces);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;207</td>  <td class="nbHitsCovered"><a title="Line 207: Conditional coverage 100% (2/2).">&nbsp;176</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 207: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (force) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;208</td>  <td class="nbHitsCovered">&nbsp;172</td>  <td class="src"><pre class="src">&nbsp;            currenciesByCode.remove(currencyCode);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;209</td>  <td class="nbHitsCovered">&nbsp;172</td>  <td class="src"><pre class="src">&nbsp;            currenciesByNumericCode.remove(numericCurrencyCode);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;210</td>  <td class="nbHitsCovered"><a title="Line 210: Conditional coverage 100% (2/2).">&nbsp;172</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 210: Conditional coverage 100% (2/2).">            <span class="keyword">for</span> (String countryCode : countryCodes) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;211</td>  <td class="nbHitsCovered">&nbsp;256</td>  <td class="src"><pre class="src">&nbsp;                currenciesByCountry.remove(countryCode);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;206</td>  <td class="nbHitsCovered">&nbsp;178</td>  <td class="src"><pre class="src">&nbsp;        CurrencyUnit currency = <span class="keyword">new</span> CurrencyUnit(currencyCode, (<span class="keyword">short</span>) numericCurrencyCode, (<span class="keyword">short</span>) decimalPlaces);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;207</td>  <td class="nbHitsCovered"><a title="Line 207: Conditional coverage 100% (2/2).">&nbsp;178</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 207: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (force) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;208</td>  <td class="nbHitsCovered">&nbsp;174</td>  <td class="src"><pre class="src">&nbsp;            currenciesByCode.remove(currencyCode);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;209</td>  <td class="nbHitsCovered">&nbsp;174</td>  <td class="src"><pre class="src">&nbsp;            currenciesByNumericCode.remove(numericCurrencyCode);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;210</td>  <td class="nbHitsCovered"><a title="Line 210: Conditional coverage 100% (2/2).">&nbsp;174</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 210: Conditional coverage 100% (2/2).">            <span class="keyword">for</span> (String countryCode : countryCodes) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;211</td>  <td class="nbHitsCovered">&nbsp;275</td>  <td class="src"><pre class="src">&nbsp;                currenciesByCountry.remove(countryCode);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;212</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;213</td>  <td class="nbHits">&nbsp;</td>
@@ -416,16 +416,16 @@
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;222</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;223</td>  <td class="nbHitsCovered">&nbsp;172</td>  <td class="src"><pre class="src">&nbsp;        currenciesByCode.putIfAbsent(currencyCode, currency);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;224</td>  <td class="nbHitsCovered"><a title="Line 224: Conditional coverage 100% (2/2).">&nbsp;172</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 224: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (numericCurrencyCode &gt;= 0) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;225</td>  <td class="nbHitsCovered">&nbsp;170</td>  <td class="src"><pre class="src">&nbsp;            currenciesByNumericCode.putIfAbsent(numericCurrencyCode, currency);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;223</td>  <td class="nbHitsCovered">&nbsp;174</td>  <td class="src"><pre class="src">&nbsp;        currenciesByCode.putIfAbsent(currencyCode, currency);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;224</td>  <td class="nbHitsCovered"><a title="Line 224: Conditional coverage 100% (2/2).">&nbsp;174</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 224: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (numericCurrencyCode &gt;= 0) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;225</td>  <td class="nbHitsCovered">&nbsp;172</td>  <td class="src"><pre class="src">&nbsp;            currenciesByNumericCode.putIfAbsent(numericCurrencyCode, currency);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;226</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;227</td>  <td class="nbHitsCovered"><a title="Line 227: Conditional coverage 100% (2/2).">&nbsp;172</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 227: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (String countryCode : countryCodes) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;228</td>  <td class="nbHitsCovered">&nbsp;256</td>  <td class="src"><pre class="src">&nbsp;            currenciesByCountry.put(countryCode, currency);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;227</td>  <td class="nbHitsCovered"><a title="Line 227: Conditional coverage 100% (2/2).">&nbsp;174</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 227: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (String countryCode : countryCodes) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;228</td>  <td class="nbHitsCovered">&nbsp;275</td>  <td class="src"><pre class="src">&nbsp;            currenciesByCountry.put(countryCode, currency);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;229</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;230</td>  <td class="nbHitsCovered">&nbsp;172</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> currenciesByCode.get(currencyCode);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;230</td>  <td class="nbHitsCovered">&nbsp;174</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> currenciesByCode.get(currencyCode);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;231</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;232</td>  <td class="nbHits">&nbsp;</td>
@@ -618,13 +618,13 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;336</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> CurrencyUnit of(Locale locale) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;337</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;        MoneyUtils.checkNotNull(locale, <span class="string">"Locale must not be null"</span>);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;338</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;        CurrencyUnit currency = currenciesByCountry.get(locale.getCountry());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;339</td>  <td class="nbHitsCovered"><a title="Line 339: Conditional coverage 100% (2/2).">&nbsp;4</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 339: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (currency == <span class="keyword">null</span>) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;337</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        MoneyUtils.checkNotNull(locale, <span class="string">"Locale must not be null"</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;338</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        CurrencyUnit currency = currenciesByCountry.get(locale.getCountry());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;339</td>  <td class="nbHitsCovered"><a title="Line 339: Conditional coverage 100% (2/2).">&nbsp;5</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 339: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (currency == <span class="keyword">null</span>) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;340</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalCurrencyException(<span class="string">"Unknown currency for locale '"</span> + locale + <span class="string">'\''</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;341</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;342</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> currency;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;342</td>  <td class="nbHitsCovered">&nbsp;3</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> currency;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;343</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;344</td>  <td class="nbHits">&nbsp;</td>
@@ -730,12 +730,12 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * @param decimalPlaces  the decimal places, not null</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;398</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;399</td>  <td class="nbHitsCovered">&nbsp;183</td>  <td class="src"><pre class="src">&nbsp;    CurrencyUnit(String code, <span class="keyword">short</span> numericCode, <span class="keyword">short</span> decimalPlaces) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;400</td>  <td class="nbHitsUncovered"><a title="Line 400: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">&nbsp;183</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 400: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">        <span class="keyword">assert</span> code != <span class="keyword">null</span> : <span class="string">"Joda-Money bug: Currency code must not be null"</span>;</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;401</td>  <td class="nbHitsCovered">&nbsp;182</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.code = code;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;402</td>  <td class="nbHitsCovered">&nbsp;182</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.numericCode = numericCode;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;403</td>  <td class="nbHitsCovered">&nbsp;182</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.decimalPlaces = decimalPlaces;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;404</td>  <td class="nbHitsCovered">&nbsp;182</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;399</td>  <td class="nbHitsCovered">&nbsp;185</td>  <td class="src"><pre class="src">&nbsp;    CurrencyUnit(String code, <span class="keyword">short</span> numericCode, <span class="keyword">short</span> decimalPlaces) {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;400</td>  <td class="nbHitsUncovered"><a title="Line 400: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">&nbsp;185</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 400: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">        <span class="keyword">assert</span> code != <span class="keyword">null</span> : <span class="string">"Joda-Money bug: Currency code must not be null"</span>;</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;401</td>  <td class="nbHitsCovered">&nbsp;184</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.code = code;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;402</td>  <td class="nbHitsCovered">&nbsp;184</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.numericCode = numericCode;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;403</td>  <td class="nbHitsCovered">&nbsp;184</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.decimalPlaces = decimalPlaces;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;404</td>  <td class="nbHitsCovered">&nbsp;184</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;405</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;406</td>  <td class="nbHits">&nbsp;</td>
@@ -792,7 +792,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;433</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> String getCode() {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;434</td>  <td class="nbHitsCovered">&nbsp;600</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> code;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;434</td>  <td class="nbHitsCovered">&nbsp;603</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> code;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;435</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;436</td>  <td class="nbHits">&nbsp;</td>
@@ -876,8 +876,8 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> Set&lt;String&gt; getCountryCodes() {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;480</td>  <td class="nbHitsCovered">&nbsp;3</td>  <td class="src"><pre class="src">&nbsp;        Set&lt;String&gt; countryCodes = <span class="keyword">new</span> HashSet&lt;String&gt;();</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;481</td>  <td class="nbHitsCovered"><a title="Line 481: Conditional coverage 100% (2/2).">&nbsp;3</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 481: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (Entry&lt;String, CurrencyUnit&gt; entry : currenciesByCountry.entrySet()) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;482</td>  <td class="nbHitsCovered"><a title="Line 482: Conditional coverage 100% (2/2).">&nbsp;699</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 482: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> (<span class="keyword">this</span>.equals(entry.getValue())) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;483</td>  <td class="nbHitsCovered">&nbsp;29</td>  <td class="src"><pre class="src">&nbsp;                countryCodes.add(entry.getKey());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;482</td>  <td class="nbHitsCovered"><a title="Line 482: Conditional coverage 100% (2/2).">&nbsp;747</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 482: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> (<span class="keyword">this</span>.equals(entry.getValue())) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;483</td>  <td class="nbHitsCovered">&nbsp;41</td>  <td class="src"><pre class="src">&nbsp;                countryCodes.add(entry.getKey());</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;484</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;485</td>  <td class="nbHits">&nbsp;</td>
@@ -1103,7 +1103,7 @@
   <td class="src"><pre class="src">&nbsp;    @Override</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;602</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">int</span> compareTo(CurrencyUnit other) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;603</td>  <td class="nbHitsCovered">&nbsp;6413</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> code.compareTo(other.code);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;603</td>  <td class="nbHitsCovered">&nbsp;6523</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> code.compareTo(other.code);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;604</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;605</td>  <td class="nbHits">&nbsp;</td>
@@ -1128,12 +1128,12 @@
   <td class="src"><pre class="src">&nbsp;    @Override</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;615</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">boolean</span> equals(Object obj) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;616</td>  <td class="nbHitsCovered"><a title="Line 616: Conditional coverage 100% (2/2).">&nbsp;1452</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 616: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (obj == <span class="keyword">this</span>) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;617</td>  <td class="nbHitsCovered">&nbsp;722</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;616</td>  <td class="nbHitsCovered"><a title="Line 616: Conditional coverage 100% (2/2).">&nbsp;1502</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 616: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (obj == <span class="keyword">this</span>) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;617</td>  <td class="nbHitsCovered">&nbsp;723</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;618</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;619</td>  <td class="nbHitsCovered"><a title="Line 619: Conditional coverage 100% (2/2).">&nbsp;730</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 619: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> CurrencyUnit) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;620</td>  <td class="nbHitsCovered">&nbsp;725</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> code.equals(((CurrencyUnit) obj).code);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;619</td>  <td class="nbHitsCovered"><a title="Line 619: Conditional coverage 100% (2/2).">&nbsp;779</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 619: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> CurrencyUnit) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;620</td>  <td class="nbHitsCovered">&nbsp;774</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> code.equals(((CurrencyUnit) obj).code);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;621</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;622</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
@@ -1178,7 +1178,7 @@
   <td class="src"><pre class="src">&nbsp;    @ToString</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;643</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> String toString() {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;644</td>  <td class="nbHitsCovered">&nbsp;346</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> code;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;644</td>  <td class="nbHitsCovered">&nbsp;350</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> code;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;645</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;646</td>  <td class="nbHits">&nbsp;</td>
@@ -1187,6 +1187,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 21/02/16 20:49.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 10/11/16 20:59.</div>
 </body>
 </html>
