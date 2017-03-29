@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2007 - 2017 Joda.org</copyright>
     <item>
-      <title>File: 124,
+      <title>File: 126,
              Errors: 0,
-             Warnings: 0,
+             Warnings: 18,
              Infos: 0
       </title>
             <link>http://www.joda.org/joda-beans//checkstyle.html</link>
@@ -256,7 +256,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.flexi.FlexiMetaBean.java">org/joda/beans/impl/flexi/FlexiMetaBean.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.MetaBean.java">org/joda/beans/MetaBean.java</a>
                 </td>
                 <td>
                   0
@@ -270,7 +270,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.MetaBean.java">org/joda/beans/MetaBean.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.flexi.FlexiMetaBean.java">org/joda/beans/impl/flexi/FlexiMetaBean.java</a>
                 </td>
                 <td>
                   0
@@ -410,7 +410,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.bin.MsgPack.java">org/joda/beans/ser/bin/MsgPack.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.JodaBeanSer.java">org/joda/beans/ser/JodaBeanSer.java</a>
                 </td>
                 <td>
                   0
@@ -424,7 +424,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.JodaBeanSer.java">org/joda/beans/ser/JodaBeanSer.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.bin.MsgPack.java">org/joda/beans/ser/bin/MsgPack.java</a>
                 </td>
                 <td>
                   0
@@ -570,7 +570,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  8
                 </td>
                 <td>
                   0
@@ -942,6 +942,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.map.JodaBeanSimpleMapReader.java">org/joda/beans/ser/map/JodaBeanSimpleMapReader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.BasicPropertyMap.java">org/joda/beans/impl/BasicPropertyMap.java</a>
                 </td>
                 <td>
@@ -1046,7 +1060,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  10
                 </td>
                 <td>
                   0
@@ -1111,6 +1125,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.PropertyGen.java">org/joda/beans/gen/PropertyGen.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.map.JodaBeanSimpleMapWriter.java">org/joda/beans/ser/map/JodaBeanSimpleMapWriter.java</a>
                 </td>
                 <td>
                   0
@@ -1194,7 +1222,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.json.JodaBeanSimpleJsonWriter.java">org/joda/beans/ser/json/JodaBeanSimpleJsonWriter.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.SerIterable.java">org/joda/beans/ser/SerIterable.java</a>
                 </td>
                 <td>
                   0
@@ -1208,7 +1236,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.SerIterable.java">org/joda/beans/ser/SerIterable.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.json.JodaBeanSimpleJsonWriter.java">org/joda/beans/ser/json/JodaBeanSimpleJsonWriter.java</a>
                 </td>
                 <td>
                   0
@@ -1726,7 +1754,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.BeanCodeGenException.java">org/joda/beans/gen/BeanCodeGenException.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutableValidator.java">org/joda/beans/ImmutableValidator.java</a>
                 </td>
                 <td>
                   0
@@ -1740,7 +1768,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutableValidator.java">org/joda/beans/ImmutableValidator.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.BeanCodeGenException.java">org/joda/beans/gen/BeanCodeGenException.java</a>
                 </td>
                 <td>
                   0
