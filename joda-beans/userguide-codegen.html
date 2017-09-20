@@ -510,6 +510,10 @@ public final class UserAccount implements Bean {
  <p>Both immutable and mutable minimal beans can be generated.</p>
 </div> 
 <div class="section"> 
+ <h2 id="Test_coverage">Test coverage</h2> 
+ <p>Code generated beans are great, but they have a side effect of creating lots of untested generated code. This can make the test coverage percentage produced by tools seem very low. One solution to this is provided by the <tt>JodaBeanTests</tt> class which provides methods to artificially provide test coverage. Of course, this can be used for good or evil! The intention is that it is used to highlight those parts of the codebase that really do need tests, not to stop you needing tests at all.</p>
+</div> 
+<div class="section"> 
  <h2 id="Links">Links</h2> 
  <p>Return to the <a href="userguide.html">main user guide</a>.</p>
 </div>
@@ -596,7 +600,7 @@ public final class UserAccount implements Bean {
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2007-2017 <a href="http://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 1.14. </span><span class="publishDate">Last Published: 2017-09-20. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 2.0. </span><span class="publishDate">Last Published: 2017-09-20. </span></p>
 				<p><a href="http://github.com/andriusvelykis/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a> by <a href="http://andrius.velykis.lt" target="_blank" title="Andrius Velykis">Andrius Velykis</a>.</p>
 			</div>
 		</div>

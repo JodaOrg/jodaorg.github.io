@@ -187,21 +187,6 @@
 </pre>
    </div>
   </div>
- </div> 
- <div class="section"> 
-  <h3 id="Chained_access">Chained access</h3> 
-  <p>Joda-Beans provides the ability to chain properties together using <a href="apidocs/org/joda/beans/query/ChainedBeanQuery.html">ChainedBeanQuery</a>. This is an immutable class that allows a list of “queries” to be passed in.</p> 
-  <p>Each query is an instance of <a href="apidocs/org/joda/beans/BeanQuery.html">BeanQuery</a>. All meta-properties implement this interface, thus they can be passed directly to <tt>ChainedBeanQuery</tt>.</p> 
-  <p>This feature allows the value of a nested property to be queried from the parent bean. For example, these two code sequences are equivalent - obviously the second would only be used within a framework where the query setup was separate from the actual query.</p> 
-  <div class="source"> 
-   <div class="source"> 
-    <pre> String city = document.getPerson().getAddress().getCity()
- 
- ChainedBeanQuery&lt;String&gt; query = ChainedBeanQuery.of(Document.meta().person(), Person.meta().address(), Address.meta().city());
- String city = query.get(document);
-</pre>
-   </div>
-  </div>
  </div>
 </div> 
 <div class="section"> 
@@ -300,7 +285,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2007-2017 <a href="http://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 1.14. </span><span class="publishDate">Last Published: 2017-09-20. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 2.0. </span><span class="publishDate">Last Published: 2017-09-20. </span></p>
 				<p><a href="http://github.com/andriusvelykis/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a> by <a href="http://andrius.velykis.lt" target="_blank" title="Andrius Velykis">Andrius Velykis</a>.</p>
 			</div>
 		</div>

@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2007 - 2017 Joda.org</copyright>
     <item>
-      <title>File: 127,
+      <title>File: 126,
              Errors: 0,
-             Warnings: 55,
+             Warnings: 0,
              Infos: 0
       </title>
             <link>http://www.joda.org/joda-beans//checkstyle.html</link>
@@ -52,7 +52,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  0
                 </td>
                 <td>
                   0
@@ -200,7 +200,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.map.MapBeanPropertyMap.java">org/joda/beans/impl/map/MapBeanPropertyMap.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.ImmutableDefaults.java">org/joda/beans/gen/ImmutableDefaults.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.direct.MinimalMetaBean.java">org/joda/beans/impl/direct/MinimalMetaBean.java</a>
                 </td>
                 <td>
                   0
@@ -396,20 +410,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.query.package-info.java">org/joda/beans/query/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.JodaBeanSer.java">org/joda/beans/ser/JodaBeanSer.java</a>
                 </td>
                 <td>
@@ -438,6 +438,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.ImmutableConstructor.java">org/joda/beans/gen/ImmutableConstructor.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.SetterGen.java">org/joda/beans/gen/SetterGen.java</a>
                 </td>
                 <td>
@@ -452,7 +466,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutableDefaults.java">org/joda/beans/ImmutableDefaults.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.DerivedProperty.java">org/joda/beans/gen/DerivedProperty.java</a>
                 </td>
                 <td>
                   0
@@ -508,7 +522,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.query.ChainedBeanQuery.java">org/joda/beans/query/ChainedBeanQuery.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.direct.MinimalMetaProperty.java">org/joda/beans/impl/direct/MinimalMetaProperty.java</a>
                 </td>
                 <td>
                   0
@@ -528,7 +542,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  0
                 </td>
                 <td>
                   0
@@ -536,7 +550,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.flexi.FlexiPropertyMap.java">org/joda/beans/impl/flexi/FlexiPropertyMap.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.BeanDefinition.java">org/joda/beans/gen/BeanDefinition.java</a>
                 </td>
                 <td>
                   0
@@ -557,20 +571,6 @@ under the License.
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.BeanDefinition.java">org/joda/beans/BeanDefinition.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  8
                 </td>
                 <td>
                   0
@@ -640,7 +640,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  0
                 </td>
                 <td>
                   0
@@ -649,6 +649,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.xml.JodaBeanXmlReader.java">org/joda/beans/ser/xml/JodaBeanXmlReader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.ImmutableValidator.java">org/joda/beans/gen/ImmutableValidator.java</a>
                 </td>
                 <td>
                   0
@@ -830,7 +844,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.SerIterator.java">org/joda/beans/ser/SerIterator.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.TypedMetaBean.java">org/joda/beans/TypedMetaBean.java</a>
                 </td>
                 <td>
                   0
@@ -844,7 +858,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.PropertyMap.java">org/joda/beans/PropertyMap.java</a>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.SerIterator.java">org/joda/beans/ser/SerIterator.java</a>
                 </td>
                 <td>
                   0
@@ -873,6 +887,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.json.JodaBeanSimpleJsonReader.java">org/joda/beans/ser/json/JodaBeanSimpleJsonReader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.impl.light.AbstractLightMetaProperty.java">org/joda/beans/impl/light/AbstractLightMetaProperty.java</a>
                 </td>
                 <td>
                   0
@@ -998,20 +1026,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.BeanQuery.java">org/joda/beans/BeanQuery.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.integrate.kryo.package-info.java">org/joda/beans/integrate/kryo/package-info.java</a>
                 </td>
                 <td>
@@ -1061,20 +1075,6 @@ under the License.
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.PropertyDefinition.java">org/joda/beans/PropertyDefinition.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
                 </td>
                 <td>
                   0
@@ -1376,7 +1376,49 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.ImmutablePreBuild.java">org/joda/beans/gen/ImmutablePreBuild.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.MetaBeans.java">org/joda/beans/MetaBeans.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ser.SerCategory.java">org/joda/beans/ser/SerCategory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.PropertyDefinition.java">org/joda/beans/gen/PropertyDefinition.java</a>
                 </td>
                 <td>
                   0
@@ -1494,7 +1536,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  0
                 </td>
                 <td>
                   0
@@ -1503,34 +1545,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.integrate.freemarker.FreemarkerObjectWrapper.java">org/joda/beans/integrate/freemarker/FreemarkerObjectWrapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutablePreBuild.java">org/joda/beans/ImmutablePreBuild.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutableConstructor.java">org/joda/beans/ImmutableConstructor.java</a>
                 </td>
                 <td>
                   0
@@ -1768,35 +1782,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.ImmutableValidator.java">org/joda/beans/ImmutableValidator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.gen.BeanCodeGenException.java">org/joda/beans/gen/BeanCodeGenException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.joda.org/joda-beans//checkstyle.html#org.joda.beans.DerivedProperty.java">org/joda/beans/DerivedProperty.java</a>
                 </td>
                 <td>
                   0
@@ -1816,7 +1802,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  0
                 </td>
                 <td>
                   0
