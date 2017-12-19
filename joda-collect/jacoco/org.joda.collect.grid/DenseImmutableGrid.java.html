@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DenseImmutableGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">DenseImmutableGrid.java</span></div><h1>DenseImmutableGrid.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.AbstractSet;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+
+/**
+ * Immutable implementation of the {@code Grid} data structure based on an array.
+ * &lt;p&gt;
+ * This uses one item of memory for each possible combination of row and column.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+final class DenseImmutableGrid&lt;V&gt; extends ImmutableGrid&lt;V&gt; implements Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The number of rows.
+     */
+    private final int rowCount;
+    /**
+     * The number of columns.
+     */
+    private final int columnCount;
+    /**
+     * The size.
+     */
+    private final int size;
+    /**
+     * The values.
+     */
+    private final V[] values;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates a {@code DenseImmutableGrid} copying from another grid.
+     *
+     * @param &lt;V&gt; the type of the value
+     * @param grid  the grid to copy, not null
+     * @return the mutable grid, not null
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    static &lt;V&gt; DenseImmutableGrid&lt;V&gt; create(Grid&lt;? extends V&gt; grid) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (grid instanceof DenseGrid) {</span>
+<span class="fc" id="L73">            return new DenseImmutableGrid&lt;V&gt;((DenseGrid&lt;V&gt;) grid);</span>
+        }
+<span class="fc" id="L75">        int rowCount = grid.rowCount();</span>
+<span class="fc" id="L76">        int columnCount = grid.columnCount();</span>
+<span class="fc" id="L77">        validateCounts(rowCount, columnCount);</span>
+<span class="fc" id="L78">        V[] values = (V[]) new Object[rowCount * columnCount];</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (Cell&lt;? extends V&gt; cell : grid.cells()) {</span>
+<span class="fc" id="L80">            values[cell.getRow() * columnCount + cell.getColumn()] = cell.getValue();</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        return new DenseImmutableGrid&lt;V&gt;(rowCount, columnCount, grid.size(), values);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L89">    private DenseImmutableGrid(int rowCount, int columnCount, int size, V[] values) {</span>
+<span class="fc" id="L90">        validateCounts(rowCount, columnCount);</span>
+<span class="fc" id="L91">        this.rowCount = rowCount;</span>
+<span class="fc" id="L92">        this.columnCount = columnCount;</span>
+<span class="fc" id="L93">        this.size = size;</span>
+<span class="fc" id="L94">        this.values = values;</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L100">    DenseImmutableGrid(DenseGrid&lt;V&gt; grid) {</span>
+<span class="fc" id="L101">        this.rowCount = grid.rowCount();</span>
+<span class="fc" id="L102">        this.columnCount = grid.columnCount();</span>
+<span class="fc" id="L103">        this.size = grid.size();</span>
+<span class="fc" id="L104">        this.values = grid.valuesArray();</span>
+<span class="fc" id="L105">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public int rowCount() {
+<span class="fc" id="L110">        return rowCount;</span>
+    }
+
+    @Override
+    public int columnCount() {
+<span class="fc" id="L115">        return columnCount;</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L120">        return size;</span>
+    }
+
+    @Override
+    public boolean contains(int row, int column) {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (exists(row, column)) {</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            return values[row * columnCount + column] != null;</span>
+        }
+<span class="fc" id="L128">        return false;</span>
+    }
+
+    @Override
+    public boolean containsValue(Object valueToFind) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (valueToFind != null) {</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            for (Object value : values) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">                if (valueToFind.equals(value)) {</span>
+<span class="fc" id="L136">                    return true;</span>
+                }
+            }
+        }
+<span class="fc" id="L140">        return false;</span>
+    }
+
+    @Override
+    public V get(int row, int column) {
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (exists(row, column)) {</span>
+<span class="fc" id="L146">            return values[row * columnCount + column];</span>
+        }
+<span class="fc" id="L148">        return null;</span>
+    }
+
+    @Override
+    public Cell&lt;V&gt; cell(int row, int column) {
+<span class="fc" id="L153">        V value = get(row, column);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        return (value != null ? ImmutableCell.of(row, column, value) : null);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Set&lt;Cell&lt;V&gt;&gt; cells() {
+<span class="fc" id="L160">        return new Cells&lt;V&gt;(this);</span>
+    }
+
+    /**
+     * View onto the grid.
+     */
+    static class Cells&lt;V&gt; extends AbstractSet&lt;Cell&lt;V&gt;&gt; {
+        private final DenseImmutableGrid&lt;V&gt; grid;
+
+<span class="fc" id="L169">        Cells(DenseImmutableGrid&lt;V&gt; grid) {</span>
+<span class="fc" id="L170">            this.grid = grid;</span>
+<span class="fc" id="L171">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L175">            return grid.size;</span>
+        }
+
+        @Override
+        public boolean contains(Object obj) {
+<span class="fc" id="L180">            Cell&lt;?&gt; cell = (Cell&lt;?&gt;) obj;</span>
+<span class="fc" id="L181">            return Objects.equal(cell.getValue(), grid.get(cell.getRow(), cell.getColumn()));</span>
+        }
+
+        @Override
+        public Iterator&lt;Cell&lt;V&gt;&gt; iterator() {
+<span class="fc" id="L186">            return new Iterator&lt;Cell&lt;V&gt;&gt;() {</span>
+<span class="fc" id="L187">                private MutableCell&lt;V&gt; cell = new MutableCell&lt;V&gt;();</span>
+                private int count;
+<span class="fc" id="L189">                private int current = -1;</span>
+
+                @Override
+                public boolean hasNext() {
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                    return (count &lt; grid.size);</span>
+                }
+                @Override
+                public Cell&lt;V&gt; next() {
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                    if (!hasNext()) {</span>
+<span class="fc" id="L198">                        throw new NoSuchElementException(&quot;No more elements&quot;);</span>
+                    }
+<span class="fc" id="L200">                    current++;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">                    for ( ; current &lt; grid.values.length; current++) {</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">                        if (grid.values[current] != null) {</span>
+<span class="fc" id="L203">                            break;</span>
+                        }
+                    }
+<span class="fc" id="L206">                    V value = grid.values[current];</span>
+<span class="fc" id="L207">                    count++;</span>
+<span class="fc" id="L208">                    cell.set(current / grid.columnCount, current % grid.columnCount, value);</span>
+<span class="fc" id="L209">                    return cell;</span>
+                }
+                @Override
+                public void remove() {
+<span class="fc" id="L213">                    throw new UnsupportedOperationException(&quot;Immutable&quot;);</span>
+                }
+            };
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ImmutableCollection&lt;V&gt; values() {
+<span class="fc" id="L223">        Object[] array = new Object[size];</span>
+<span class="fc" id="L224">        int index = 0;</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        for (Object object : values) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">            if (object != null) {</span>
+<span class="fc" id="L227">                array[index++] = object;</span>
+            }
+        }
+<span class="fc" id="L230">        return ImmutableList.copyOf((V[]) array);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public List&lt;V&gt; row(int row) {
+<span class="fc" id="L236">        Preconditions.checkElementIndex(row, rowCount(), &quot;Row index&quot;);</span>
+<span class="fc" id="L237">        int base = row * rowCount;</span>
+<span class="fc" id="L238">        return new Inner&lt;V&gt;(this, base, columnCount, 1);</span>
+    }
+
+    @Override
+    public List&lt;List&lt;V&gt;&gt; rows() {
+<span class="fc" id="L243">        return new Outer&lt;V&gt;(this, rowCount, columnCount, columnCount, 1);</span>
+    }
+
+    @Override
+    public List&lt;V&gt; column(int column) {
+<span class="fc" id="L248">        Preconditions.checkElementIndex(column, columnCount(), &quot;Column index&quot;);</span>
+<span class="fc" id="L249">        return new Inner&lt;V&gt;(this, column, rowCount, columnCount);</span>
+    }
+
+    @Override
+    public List&lt;List&lt;V&gt;&gt; columns() {
+<span class="fc" id="L254">        return new Outer&lt;V&gt;(this, columnCount, 1, rowCount, columnCount);</span>
+    }
+
+    static class Outer&lt;V&gt; extends AbstractList&lt;List&lt;V&gt;&gt; {
+        private final DenseImmutableGrid&lt;V&gt; grid;
+        private final int size;
+        private final int gap;
+        private final int innerSize;
+        private final int innerGap;
+
+<span class="fc" id="L264">        Outer(DenseImmutableGrid&lt;V&gt; grid, int size, int gap, int innerSize, int innerGap) {</span>
+<span class="fc" id="L265">            this.grid = grid;</span>
+<span class="fc" id="L266">            this.size = size;</span>
+<span class="fc" id="L267">            this.gap = gap;</span>
+<span class="fc" id="L268">            this.innerSize = innerSize;</span>
+<span class="fc" id="L269">            this.innerGap = innerGap;</span>
+<span class="fc" id="L270">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L274">            return size;</span>
+        }
+
+        @Override
+        public List&lt;V&gt; get(int index) {
+<span class="fc" id="L279">            Preconditions.checkElementIndex(index, size);</span>
+<span class="fc" id="L280">            int base = index * gap;</span>
+<span class="fc" id="L281">            return new Inner&lt;V&gt;(grid, base, innerSize, innerGap);</span>
+        }
+    }
+
+    static class Inner&lt;V&gt; extends AbstractList&lt;V&gt; {
+        private final DenseImmutableGrid&lt;V&gt; grid;
+        private final int size;
+        private final int offset;
+        private final int gap;
+
+<span class="fc" id="L291">        Inner(DenseImmutableGrid&lt;V&gt; grid, int offset, int size, int gap) {</span>
+<span class="fc" id="L292">            this.grid = grid;</span>
+<span class="fc" id="L293">            this.size = size;</span>
+<span class="fc" id="L294">            this.offset = offset;</span>
+<span class="fc" id="L295">            this.gap = gap;</span>
+<span class="fc" id="L296">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L300">            return size;</span>
+        }
+
+        @Override
+        public V get(int index) {
+<span class="fc" id="L305">            Preconditions.checkElementIndex(index, size);</span>
+<span class="fc" id="L306">            int arrayIndex = index * gap + offset;</span>
+<span class="fc" id="L307">            return grid.values[arrayIndex];</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a clone of the internal array.
+     * 
+     * @return the array, not null
+     */
+    V[] valuesArray() {
+<span class="fc" id="L318">        return values.clone();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L324" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L325">            return true;</span>
+        }
+<span class="fc bfc" id="L327" title="All 2 branches covered.">        if (obj instanceof DenseImmutableGrid) {</span>
+<span class="fc" id="L328">            DenseImmutableGrid&lt;?&gt; other = (DenseImmutableGrid&lt;?&gt;) obj;</span>
+<span class="fc" id="L329">            return Arrays.equals(values, other.values);</span>
+        }
+<span class="fc" id="L331">        return super.equals(obj);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L336">        int hash = 0;</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">        for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc" id="L338">            Object value = values[i];</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">            if (value != null) {</span>
+<span class="fc" id="L340">                int row = i / columnCount;</span>
+<span class="fc" id="L341">                int column = i % columnCount;</span>
+<span class="fc" id="L342">                hash += (row ^ Integer.rotateLeft(column, 16) ^ value.hashCode());</span>
+            }
+        }
+<span class="fc" id="L345">        return rowCount ^ Integer.rotateLeft(columnCount, 16) ^ hash;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

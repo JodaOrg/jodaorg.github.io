@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmptyGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">EmptyGrid.java</span></div><h1>EmptyGrid.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+import java.io.Serializable;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSortedSet;
+
+/**
+ * Immutable implementation of the {@code Grid} data structure storing no cells.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+final class EmptyGrid&lt;V&gt; extends ImmutableGrid&lt;V&gt; implements Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The row count.
+     */
+    private final int rowCount;
+    /**
+     * The column count.
+     */
+    private final int columnCount;
+
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L46">    EmptyGrid() {</span>
+<span class="fc" id="L47">        this.rowCount = 0;</span>
+<span class="fc" id="L48">        this.columnCount = 0;</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L54">    EmptyGrid(int rowCount, int columnCount) {</span>
+<span class="fc" id="L55">        validateCounts(rowCount, columnCount);</span>
+<span class="fc" id="L56">        this.rowCount = rowCount;</span>
+<span class="fc" id="L57">        this.columnCount = columnCount;</span>
+<span class="fc" id="L58">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public int rowCount() {
+<span class="fc" id="L63">        return rowCount;</span>
+    }
+
+    @Override
+    public int columnCount() {
+<span class="fc" id="L68">        return columnCount;</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L73">        return 0;</span>
+    }
+
+    @Override
+    public boolean contains(int row, int column) {
+<span class="fc" id="L78">        return false;</span>
+    }
+
+    @Override
+    public boolean containsValue(Object valueToFind) {
+<span class="fc" id="L83">        return false;</span>
+    }
+
+    @Override
+    public V get(int row, int column) {
+<span class="fc" id="L88">        return null;</span>
+    }
+
+    @Override
+    public Cell&lt;V&gt; cell(int row, int column) {
+<span class="fc" id="L93">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ImmutableSortedSet&lt;Cell&lt;V&gt;&gt; cells() {
+<span class="fc" id="L99">        return ImmutableSortedSet.of();</span>
+    }
+
+    @Override
+    public ImmutableList&lt;V&gt; values() {
+<span class="fc" id="L104">        return ImmutableList.of();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

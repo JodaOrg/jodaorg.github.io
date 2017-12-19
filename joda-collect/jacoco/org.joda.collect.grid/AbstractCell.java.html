@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractCell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">AbstractCell.java</span></div><h1>AbstractCell.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+import java.util.Comparator;
+
+import org.joda.collect.grid.Grid.Cell;
+
+import com.google.common.base.Objects;
+
+/**
+ * Abstract implementation of the {@code Grid.Cell} data structure.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+abstract class AbstractCell&lt;V&gt; implements Cell&lt;V&gt; {
+
+    /**
+     * Compare by row then column.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @return the comparator, not null
+     */
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+    static final &lt;R&gt; Comparator&lt;Cell&lt;R&gt;&gt; comparator() {
+<span class="fc" id="L40">        return (Comparator&lt;Cell&lt;R&gt;&gt;) (Comparator) COMPARATOR;</span>
+    }
+    /**
+     * Compare by row then column.
+     */
+<span class="fc" id="L45">    private static final Comparator&lt;Cell&lt;?&gt;&gt; COMPARATOR = new Comparator&lt;Cell&lt;?&gt;&gt;() {</span>
+        @Override
+        public int compare(Cell&lt;?&gt; cell1, Cell&lt;?&gt; cell2) {
+<span class="fc" id="L48">            int thisRow = cell1.getRow();</span>
+<span class="fc" id="L49">            int otherRow = cell2.getRow();</span>
+<span class="fc bfc" id="L50" title="All 4 branches covered.">            int cmp = (thisRow &lt; otherRow ? -1 : (thisRow &gt; otherRow ? 1 : 0));</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if (cmp == 0) {</span>
+<span class="fc" id="L52">                int thisCol = cell1.getColumn();</span>
+<span class="fc" id="L53">                int otherCol = cell2.getColumn();</span>
+<span class="fc bfc" id="L54" title="All 4 branches covered.">                cmp = (thisCol &lt; otherCol ? -1 : (thisCol &gt; otherCol ? 1 : 0));</span>
+            }
+<span class="fc" id="L56">            return cmp;</span>
+        }
+    };
+
+    //-----------------------------------------------------------------------
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L64">    AbstractCell() {</span>
+<span class="fc" id="L65">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equalRowColumn(int row, int column) {
+<span class="fc bfc" id="L70" title="All 4 branches covered.">        return row == getRow() &amp;&amp; column == getColumn();</span>
+    }
+
+    @Override
+    public boolean equalValue(Object value) {
+<span class="fc" id="L75">        return Objects.equal(value, getValue());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L82">            return true;</span>
+        }
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (obj instanceof Cell) {</span>
+<span class="fc" id="L85">            Cell&lt;?&gt; other = (Cell&lt;?&gt;) obj;</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">            return getRow() == other.getRow() &amp;&amp; getColumn() == other.getColumn()</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">                    &amp;&amp; Objects.equal(getValue(), other.getValue());</span>
+        }
+<span class="fc" id="L89">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L94">        return getRow() ^ Integer.rotateLeft(getColumn(), 16) ^ getValue().hashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L99">        return &quot;(&quot; + getRow() + &quot;,&quot; + getColumn() + &quot;)=&quot; + getValue();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImmutableGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">ImmutableGrid.java</span></div><h1>ImmutableGrid.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+/**
+ * Immutable implementation of the {@code Grid} data structure.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+public abstract class ImmutableGrid&lt;V&gt; extends AbstractGrid&lt;V&gt; {
+
+    /**
+     * Obtains an empty immutable grid with zero row-column count.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @return the empty immutable grid, not null
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; of() {
+<span class="fc" id="L33">        return new EmptyGrid&lt;R&gt;();</span>
+    }
+
+    /**
+     * Obtains an empty immutable grid of the specified row-column count.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param rowCount  the number of rows, zero or greater
+     * @param columnCount  the number of columns, zero or greater
+     * @return the empty immutable grid, not null
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; of(int rowCount, int columnCount) {
+<span class="fc" id="L45">        return new EmptyGrid&lt;R&gt;(rowCount, columnCount);</span>
+    }
+
+    /**
+     * Obtains an immutable grid with row-column count 1x1 and a single cell.
+     * &lt;p&gt;
+     * The single cell is at row zero column zero.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param value  the value of the single cell, not null
+     * @return the empty immutable grid, not null
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; of(R value) {
+<span class="fc" id="L58">        return new SingletonGrid&lt;R&gt;(1, 1, 0, 0, value);</span>
+    }
+
+    /**
+     * Obtains an immutable grid of the specified row-column count with a single cell.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param rowCount  the number of rows, zero or greater
+     * @param columnCount  the number of columns, zero or greater
+     * @param row  the row of the single cell, zero or greater
+     * @param column  the column of the single cell, zero or greater
+     * @param value  the value of the single cell, not null
+     * @return the empty immutable grid, not null
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; of(int rowCount, int columnCount, int row, int column, R value) {
+<span class="fc" id="L73">        return new SingletonGrid&lt;R&gt;(rowCount, columnCount, row, column, value);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an immutable grid with one cell.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param rowCount  the number of rows, zero or greater
+     * @param columnCount  the number of columns, zero or greater
+     * @param cell  the cell that the grid should contain, not null
+     * @return the immutable grid, not null
+     * @throws IndexOutOfBoundsException if either index is less than zero
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; copyOf(int rowCount, int columnCount, Cell&lt;R&gt; cell) {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (cell == null) {</span>
+<span class="fc" id="L89">            throw new IllegalArgumentException(&quot;Cell must not be null&quot;);</span>
+        }
+<span class="fc" id="L91">        return new SingletonGrid&lt;R&gt;(rowCount, columnCount, cell);</span>
+    }
+
+    /**
+     * Obtains an immutable grid by copying a set of cells.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param rowCount  the number of rows, zero or greater
+     * @param columnCount  the number of columns, zero or greater
+     * @param cells  the cells to copy, not null
+     * @return the immutable grid, not null
+     * @throws IndexOutOfBoundsException if either index is less than zero
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; copyOf(int rowCount, int columnCount, Iterable&lt;? extends Cell&lt;R&gt;&gt; cells) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (cells == null) {</span>
+<span class="fc" id="L106">            throw new IllegalArgumentException(&quot;Cells must not be null&quot;);</span>
+        }
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (!cells.iterator().hasNext()) {</span>
+<span class="fc" id="L109">            return new EmptyGrid&lt;R&gt;(rowCount, columnCount);</span>
+        }
+<span class="fc" id="L111">        return new SparseImmutableGrid&lt;R&gt;(rowCount, columnCount, cells);</span>
+    }
+
+    /**
+     * Obtains an immutable grid by copying a set of cells, deriving the row and column count.
+     * &lt;p&gt;
+     * The row and column counts are calculated as the maximum row and column specified.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param cells  the cells to copy, not null
+     * @return the immutable grid, not null
+     * @throws IndexOutOfBoundsException if either index is less than zero
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; copyOfDeriveCounts(Iterable&lt;? extends Cell&lt;R&gt;&gt; cells) {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (cells == null) {</span>
+<span class="fc" id="L126">            throw new IllegalArgumentException(&quot;Cells must not be null&quot;);</span>
+        }
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (!cells.iterator().hasNext()) {</span>
+<span class="fc" id="L129">            return new EmptyGrid&lt;R&gt;();</span>
+        }
+<span class="fc" id="L131">        int rowCount = 0;</span>
+<span class="fc" id="L132">        int columnCount = 0;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (Cell&lt;R&gt; cell : cells) {</span>
+<span class="fc" id="L134">            rowCount = Math.max(rowCount, cell.getRow());</span>
+<span class="fc" id="L135">            columnCount = Math.max(columnCount, cell.getColumn());</span>
+<span class="fc" id="L136">        }</span>
+<span class="fc" id="L137">        return new SparseImmutableGrid&lt;R&gt;(rowCount + 1, columnCount + 1, cells);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an immutable grid by copying another grid.
+     * &lt;p&gt;
+     * If you need to change the row-column count, use {@link #copyOf(int, int, Iterable)}
+     * passing in the set of cells from the grid.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param grid  the grid to copy, not null
+     * @return the immutable grid, not null
+     * @throws IndexOutOfBoundsException if either index is less than zero
+     */
+    public static &lt;R&gt; ImmutableGrid&lt;R&gt; copyOf(Grid&lt;R&gt; grid) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (grid == null) {</span>
+<span class="fc" id="L154">            throw new IllegalArgumentException(&quot;Grid must not be null&quot;);</span>
+        }
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (grid instanceof ImmutableGrid) {</span>
+<span class="fc" id="L157">            return (ImmutableGrid&lt;R&gt;) grid;</span>
+        }
+<span class="fc" id="L159">        validateCounts(grid.rowCount(), grid.columnCount());</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (grid.size() == 0) {</span>
+<span class="fc" id="L161">            return new EmptyGrid&lt;R&gt;(grid.rowCount(), grid.columnCount());</span>
+        }
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (grid.size() == 1) {</span>
+<span class="fc" id="L164">            Cell&lt;R&gt; cell = grid.cells().iterator().next();</span>
+<span class="fc" id="L165">            return new SingletonGrid&lt;R&gt;(grid.rowCount(), grid.columnCount(), cell);</span>
+        }
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (grid.size() &gt;= (grid.rowCount() * grid.columnCount() / 2)) {</span>
+<span class="fc" id="L168">            return DenseImmutableGrid.create(grid);</span>
+        }
+<span class="fc" id="L170">        return new SparseImmutableGrid&lt;R&gt;(grid);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L177">    ImmutableGrid() {</span>
+<span class="fc" id="L178">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     * @deprecated Grid is read-only
+     */
+    @Deprecated
+    @Override
+    public void clear() {
+<span class="fc" id="L188">        throw new UnsupportedOperationException(&quot;Grid is read-only&quot;);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     * @deprecated Grid is read-only
+     */
+    @Deprecated
+    @Override
+    public void put(int row, int column, V value) {
+<span class="fc" id="L198">        throw new UnsupportedOperationException(&quot;Grid is read-only&quot;);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     * @deprecated Grid is read-only
+     */
+    @Deprecated
+    @Override
+    public void putAll(Grid&lt;? extends V&gt; grid) {
+<span class="fc" id="L208">        throw new UnsupportedOperationException(&quot;Grid is read-only&quot;);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     * @deprecated Grid is read-only
+     */
+    @Deprecated
+    @Override
+    public boolean remove(int row, int column) {
+<span class="fc" id="L218">        throw new UnsupportedOperationException(&quot;Grid is read-only&quot;);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

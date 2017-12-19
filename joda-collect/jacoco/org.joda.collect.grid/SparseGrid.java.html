@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SparseGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">SparseGrid.java</span></div><h1>SparseGrid.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import com.google.common.collect.ForwardingSortedSet;
+
+/**
+ * Mutable implementation of the {@code Grid} data structure based on hashing.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+public final class SparseGrid&lt;V&gt; extends AbstractGrid&lt;V&gt; implements Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The row count.
+     */
+    private final int rowCount;
+    /**
+     * The column count.
+     */
+    private final int columnCount;
+    /**
+     * The cells.
+     */
+    private final SortedSet&lt;Cell&lt;V&gt;&gt; cells;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an empty {@code SparseGrid} of the specified row-column count.
+     * 
+     * @param &lt;R&gt; the type of the value
+     * @param rowCount  the number of rows, zero or greater
+     * @param columnCount  the number of columns, zero or greater
+     * @return the mutable grid, not null
+     */
+    public static &lt;R&gt; SparseGrid&lt;R&gt; create(int rowCount, int columnCount) {
+<span class="fc" id="L61">        return new SparseGrid&lt;R&gt;(rowCount, columnCount, new TreeSet&lt;Cell&lt;R&gt;&gt;(AbstractCell.&lt;R&gt;comparator()));</span>
+    }
+
+    /**
+     * Creates a {@code SparseGrid} copying from another grid.
+     *
+     * @param &lt;R&gt; the type of the value
+     * @param grid  the grid to copy, not null
+     * @return the mutable grid, not null
+     */
+    public static &lt;R&gt; SparseGrid&lt;R&gt; create(Grid&lt;? extends R&gt; grid) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (grid == null) {</span>
+<span class="fc" id="L73">            throw new IllegalArgumentException(&quot;Grid must not be null&quot;);</span>
+        }
+<span class="fc" id="L75">        SparseGrid&lt;R&gt; created = SparseGrid.create(grid.rowCount(), grid.columnCount());</span>
+<span class="fc" id="L76">        created.putAll(grid);</span>
+<span class="fc" id="L77">        return created;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L84">    SparseGrid(int rowCount, int columnCount, SortedSet&lt;Cell&lt;V&gt;&gt; data) {</span>
+<span class="fc" id="L85">        validateCounts(rowCount, columnCount);</span>
+<span class="fc" id="L86">        this.rowCount = rowCount;</span>
+<span class="fc" id="L87">        this.columnCount = columnCount;</span>
+<span class="fc" id="L88">        this.cells = data;</span>
+<span class="fc" id="L89">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public int rowCount() {
+<span class="fc" id="L94">        return rowCount;</span>
+    }
+
+    @Override
+    public int columnCount() {
+<span class="fc" id="L99">        return columnCount;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public int size() {
+<span class="fc" id="L105">        return cells.size();</span>
+    }
+
+    @Override
+    public Cell&lt;V&gt; cell(int row, int column) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (exists(row, column)) {</span>
+<span class="fc" id="L111">            SortedSet&lt;Cell&lt;V&gt;&gt; tail = cells.tailSet(finder(row, column));</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            if (tail.size() &gt; 0) {</span>
+<span class="fc" id="L113">                Cell&lt;V&gt; cell = tail.first();</span>
+<span class="fc bfc" id="L114" title="All 4 branches covered.">                if (cell.getRow() == row &amp;&amp; cell.getColumn() == column) {</span>
+<span class="fc" id="L115">                    return cell;</span>
+                }
+            }
+        }
+<span class="fc" id="L119">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public SortedSet&lt;Cell&lt;V&gt;&gt; cells() {
+<span class="fc" id="L125">        return new ForwardingSortedSet&lt;Cell&lt;V&gt;&gt;() {</span>
+            @Override
+            protected SortedSet&lt;Cell&lt;V&gt;&gt; delegate() {
+<span class="fc" id="L128">                return cells;</span>
+            }
+            @Override
+            public boolean add(Cell&lt;V&gt; element) {
+<span class="fc" id="L132">                return super.add(ImmutableCell.copyOf(element));</span>
+            }
+            @Override
+            public boolean addAll(Collection&lt;? extends Cell&lt;V&gt;&gt; collection) {
+<span class="fc" id="L136">                return super.standardAddAll(collection);</span>
+            }
+        };
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public void clear() {
+<span class="fc" id="L144">        cells.clear();</span>
+<span class="fc" id="L145">    }</span>
+
+    @Override
+    public void put(int row, int column, V value) {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (!exists(row, column)) {</span>
+<span class="fc" id="L150">            throw new IndexOutOfBoundsException(&quot;Invalid row-column: &quot; + row + &quot;,&quot; + column);</span>
+        }
+<span class="fc" id="L152">        Cell&lt;V&gt; cell = ImmutableCell.of(row, column, value);</span>
+<span class="fc" id="L153">        cells.remove(cell);</span>
+<span class="fc" id="L154">        cells.add(cell);</span>
+<span class="fc" id="L155">    }</span>
+
+    @Override
+    public void putAll(Grid&lt;? extends V&gt; grid) {
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (grid == null) {</span>
+<span class="fc" id="L160">            throw new IllegalArgumentException(&quot;Grid must nor be null&quot;);</span>
+        }
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (Cell&lt;? extends V&gt; cell : grid.cells()) {</span>
+<span class="fc" id="L163">            cells.add(ImmutableCell.copyOf(cell));</span>
+<span class="fc" id="L164">        }</span>
+<span class="fc" id="L165">    }</span>
+
+    @Override
+    public boolean remove(int row, int column) {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (exists(row, column)) {</span>
+<span class="fc" id="L170">            Set&lt;Cell&lt;V&gt;&gt; tail = cells.tailSet(finder(row, column));</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            if (tail.size() &gt; 0) {</span>
+<span class="fc" id="L172">                Iterator&lt;Cell&lt;V&gt;&gt; it = tail.iterator();</span>
+<span class="fc" id="L173">                Cell&lt;V&gt; cell = it.next();</span>
+<span class="fc bfc" id="L174" title="All 4 branches covered.">                if (cell.getRow() == row &amp;&amp; cell.getColumn() == column) {</span>
+<span class="fc" id="L175">                    it.remove();</span>
+<span class="fc" id="L176">                    return true;</span>
+                }
+            }
+        }
+<span class="fc" id="L180">        return false;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">AbstractGrid.java</span></div><h1>AbstractGrid.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+import java.util.AbstractList;
+import java.util.List;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+
+/**
+ * Abstract implementation of the {@code Grid} data structure.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+abstract class AbstractGrid&lt;V&gt; implements Grid&lt;V&gt; {
+
+    /**
+     * Validates the row and column counts.
+     * 
+     * @param rowCount  the row count
+     * @param columnCount  the column count
+     */
+    static void validateCounts(int rowCount, int columnCount) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (rowCount &lt; 0) {</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;Row count must not be negative: &quot; + rowCount + &quot; &lt; 0&quot;);</span>
+        }
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (columnCount &lt; 0) {</span>
+<span class="fc" id="L45">            throw new IllegalArgumentException(&quot;Column count must not be negative: &quot; + columnCount + &quot; &lt; 0&quot;);</span>
+        }
+<span class="fc" id="L47">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L53">    AbstractGrid() {</span>
+<span class="fc" id="L54">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean exists(int row, int column) {
+<span class="fc bfc" id="L59" title="All 8 branches covered.">        return row &gt;= 0 &amp;&amp; row &lt; rowCount() &amp;&amp; column &gt;= 0 &amp;&amp; column &lt; columnCount();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean isFull() {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        return size() == rowCount() * columnCount();</span>
+    }
+
+    @Override
+    public boolean isEmpty() {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        return size() == 0;</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L75">        return cells().size();</span>
+    }
+
+    @Override
+    public boolean contains(int row, int column) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        return cell(row, column) != null;</span>
+    }
+
+    @Override
+    public boolean containsValue(Object valueToFind) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        return (valueToFind != null ? values().contains(valueToFind) : false);</span>
+    }
+
+    @Override
+    public V get(int row, int column) {
+<span class="fc" id="L90">        Cell&lt;V&gt; cell = cell(row, column);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        return (cell != null ? cell.getValue() : null);</span>
+    }
+
+    @Override
+    public Cell&lt;V&gt; cell(int row, int column) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (exists(row, column)) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            for (Cell&lt;V&gt; cell : cells()) {</span>
+<span class="nc bnc" id="L98" title="All 4 branches missed.">                if (cell.getRow() == row &amp;&amp; cell.getColumn() == column) {</span>
+<span class="nc" id="L99">                    return cell;</span>
+                }
+<span class="nc" id="L101">            }</span>
+        }
+<span class="nc" id="L103">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ImmutableCollection&lt;V&gt; values() {
+<span class="fc" id="L109">        Builder&lt;V&gt; builder = ImmutableList.builder();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (Cell&lt;V&gt; cell : cells()) {</span>
+<span class="fc" id="L111">            builder.add(cell.getValue());</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">        return builder.build();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public List&lt;V&gt; row(int row) {
+<span class="fc" id="L119">        Preconditions.checkElementIndex(row, rowCount(), &quot;Row index&quot;);</span>
+<span class="fc" id="L120">        return new Inner&lt;V&gt;(this, columnCount(), row, true);</span>
+    }
+
+    @Override
+    public List&lt;List&lt;V&gt;&gt; rows() {
+<span class="fc" id="L125">        return new Outer&lt;V&gt;(this, rowCount(), columnCount(), true);</span>
+    }
+
+    @Override
+    public List&lt;V&gt; column(int column) {
+<span class="fc" id="L130">        Preconditions.checkElementIndex(column, columnCount(), &quot;Column index&quot;);</span>
+<span class="fc" id="L131">        return new Inner&lt;V&gt;(this, rowCount(), column, false);</span>
+    }
+
+    @Override
+    public List&lt;List&lt;V&gt;&gt; columns() {
+<span class="fc" id="L136">        return new Outer&lt;V&gt;(this, columnCount(), rowCount(), false);</span>
+    }
+
+    static class Outer&lt;V&gt; extends AbstractList&lt;List&lt;V&gt;&gt; {
+        private final Grid&lt;V&gt; grid;
+        private final int size;
+        private final int innerSize;
+        private final boolean rows;
+
+<span class="fc" id="L145">        Outer(Grid&lt;V&gt; grid, int size, int innerSize, boolean rows) {</span>
+<span class="fc" id="L146">            this.grid = grid;</span>
+<span class="fc" id="L147">            this.size = size;</span>
+<span class="fc" id="L148">            this.innerSize = innerSize;</span>
+<span class="fc" id="L149">            this.rows = rows;</span>
+<span class="fc" id="L150">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L154">            return size;</span>
+        }
+
+        @Override
+        public List&lt;V&gt; get(int index) {
+<span class="fc" id="L159">            Preconditions.checkElementIndex(index, size);</span>
+<span class="fc" id="L160">            return new Inner&lt;V&gt;(grid, innerSize, index, rows);</span>
+        }
+    }
+
+    static class Inner&lt;V&gt; extends AbstractList&lt;V&gt; {
+        private final Grid&lt;V&gt; grid;
+        private final int size;
+        private final int outerIndex;
+        private final boolean rows;
+
+<span class="fc" id="L170">        Inner(Grid&lt;V&gt; grid, int size, int outerIndex, boolean rows) {</span>
+<span class="fc" id="L171">            this.grid = grid;</span>
+<span class="fc" id="L172">            this.size = size;</span>
+<span class="fc" id="L173">            this.outerIndex = outerIndex;</span>
+<span class="fc" id="L174">            this.rows = rows;</span>
+<span class="fc" id="L175">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L179">            return size;</span>
+        }
+
+        @Override
+        public V get(int index) {
+<span class="fc" id="L184">            Preconditions.checkElementIndex(index, size);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            if (rows) {</span>
+<span class="fc" id="L186">                return grid.get(outerIndex, index);</span>
+            } else {
+<span class="fc" id="L188">                return grid.get(index, outerIndex);</span>
+            }
+        }
+
+        @Override
+        public V set(int index, V newValue) {
+<span class="nc" id="L194">            V old = get(index);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">            if (rows) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">                if (newValue == null) {</span>
+<span class="nc" id="L197">                    grid.remove(outerIndex, index);</span>
+                } else {
+<span class="nc" id="L199">                    grid.put(outerIndex, index, newValue);</span>
+                }
+            } else {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">                if (newValue == null) {</span>
+<span class="nc" id="L203">                    grid.remove(index, outerIndex);</span>
+                } else {
+<span class="nc" id="L205">                    grid.put(index, outerIndex, newValue);</span>
+                }
+            }
+<span class="nc" id="L208">            return old;</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    Cell&lt;V&gt; finder(int row, int column) {
+        @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+<span class="fc" id="L215">        Cell&lt;V&gt; finder = new ImmutableCell(row, column, &quot;&quot;);</span>
+<span class="fc" id="L216">        return finder;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L223">            return true;</span>
+        }
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        if (obj instanceof Grid) {</span>
+<span class="fc" id="L226">            Grid&lt;?&gt; other = (Grid&lt;?&gt;) obj;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            return rowCount() == other.rowCount() &amp;&amp;</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">                    columnCount() == other.columnCount() &amp;&amp;</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">                    cells().equals(other.cells());</span>
+        }
+<span class="fc" id="L231">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L236">        return rowCount() ^ Integer.rotateLeft(columnCount(), 16) ^ cells().hashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L241">        StringBuilder buf = new StringBuilder(size() * 16);</span>
+<span class="fc" id="L242">        buf.append('[').append(rowCount()).append('x').append(columnCount()).append(':');</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (size() &gt; 0) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">            for (Cell&lt;V&gt; cell : cells()) {</span>
+<span class="fc" id="L245">                buf.append(cell).append(',').append(' ');</span>
+<span class="fc" id="L246">            }</span>
+<span class="fc" id="L247">            buf.setLength(buf.length() - 2);</span>
+        }
+<span class="fc" id="L249">        buf.append(']');</span>
+<span class="fc" id="L250">        return buf.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

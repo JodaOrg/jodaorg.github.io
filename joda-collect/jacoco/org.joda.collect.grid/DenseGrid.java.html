@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DenseGrid.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Collect</a> &gt; <a href="index.source.html" class="el_package">org.joda.collect.grid</a> &gt; <span class="el_source">DenseGrid.java</span></div><h1>DenseGrid.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2014-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.collect.grid;
+
+import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.AbstractSet;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+
+/**
+ * Mutable implementation of the {@code Grid} data structure based on an array.
+ * &lt;p&gt;
+ * This uses one item of memory for each possible combination of row and column.
+ * 
+ * @param &lt;V&gt; the type of the value
+ * @author Stephen Colebourne
+ */
+public final class DenseGrid&lt;V&gt; extends AbstractGrid&lt;V&gt; implements Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The number of rows.
+     */
+    private final int rowCount;
+    /**
+     * The number of columns.
+     */
+    private final int columnCount;
+    /**
+     * The size.
+     */
+    private int size;
+    /**
+     * The values.
+     */
+    private final V[] values;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an empty {@code DenseGrid} of the specified size.
+     * 
+     * @param &lt;V&gt; the type of the value
+     * @param rowCount  the number of rows, zero or greater
+     * @param columnCount  the number of rows, zero or greater
+     * @return the mutable grid, not null
+     */
+    public static &lt;V&gt; DenseGrid&lt;V&gt; create(int rowCount, int columnCount) {
+<span class="fc" id="L72">        return new DenseGrid&lt;V&gt;(rowCount, columnCount);</span>
+    }
+
+    /**
+     * Creates a {@code DenseGrid} copying from another grid.
+     *
+     * @param &lt;V&gt; the type of the value
+     * @param grid  the grid to copy, not null
+     * @return the mutable grid, not null
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;V&gt; DenseGrid&lt;V&gt; create(Grid&lt;? extends V&gt; grid) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (grid == null) {</span>
+<span class="fc" id="L85">            throw new IllegalArgumentException(&quot;Grid must not be null&quot;);</span>
+        }
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (grid instanceof DenseImmutableGrid) {</span>
+<span class="fc" id="L88">            return new DenseGrid&lt;V&gt;((DenseImmutableGrid&lt;V&gt;) grid);</span>
+        }
+<span class="fc" id="L90">        DenseGrid&lt;V&gt; created = DenseGrid.create(grid.rowCount(), grid.columnCount());</span>
+<span class="fc" id="L91">        created.putAll(grid);</span>
+<span class="fc" id="L92">        return created;</span>
+    }
+
+    /**
+     * Creates a {@code DenseGrid} copying from an array.
+     * &lt;p&gt;
+     * The row count and column count are derived from the maximum size of the array.
+     * The grid is initialized from the non-null values.
+     *
+     * @param &lt;V&gt; the type of the value
+     * @param array  the array, first by row, then by column
+     * @return the mutable grid, not null
+     */
+    public static &lt;V&gt; DenseGrid&lt;V&gt; create(V[][] array) {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (array == null) {</span>
+<span class="fc" id="L107">            throw new IllegalArgumentException(&quot;Array must not be null&quot;);</span>
+        }
+<span class="fc" id="L109">        int rowCount = array.length;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (rowCount == 0) {</span>
+<span class="fc" id="L111">            return new DenseGrid&lt;V&gt;(0, 0);</span>
+        }
+<span class="fc" id="L113">        int columnCount = array[0].length;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (int i = 1; i &lt; rowCount; i++) {</span>
+<span class="fc" id="L115">            columnCount = Math.max(columnCount, array[i].length);</span>
+        }
+<span class="fc" id="L117">        DenseGrid&lt;V&gt; created = DenseGrid.create(rowCount, columnCount);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (int row = 0; row &lt; array.length; row++) {</span>
+<span class="fc" id="L119">            V[] rowValues = array[row];</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">            for (int column = 0; column &lt; rowValues.length; column++) {</span>
+<span class="fc" id="L121">                V cellValue = rowValues[column];</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                if (cellValue != null) {</span>
+<span class="fc" id="L123">                    created.values[row * columnCount + column] = cellValue;</span>
+<span class="fc" id="L124">                    created.size++;</span>
+                }
+            }
+        }
+<span class="fc" id="L128">        return created;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Restricted constructor.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L136">    private DenseGrid(int rowCount, int columnCount) {</span>
+<span class="fc" id="L137">        validateCounts(rowCount, columnCount);</span>
+<span class="fc" id="L138">        this.rowCount = rowCount;</span>
+<span class="fc" id="L139">        this.columnCount = columnCount;</span>
+<span class="fc" id="L140">        this.values = (V[]) new Object[rowCount * columnCount];</span>
+<span class="fc" id="L141">    }</span>
+
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L146">    private DenseGrid(DenseImmutableGrid&lt;V&gt; grid) {</span>
+<span class="fc" id="L147">        this.rowCount = grid.rowCount();</span>
+<span class="fc" id="L148">        this.columnCount = grid.columnCount();</span>
+<span class="fc" id="L149">        this.size = grid.size();</span>
+<span class="fc" id="L150">        this.values = grid.valuesArray();</span>
+<span class="fc" id="L151">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public int rowCount() {
+<span class="fc" id="L156">        return rowCount;</span>
+    }
+
+    @Override
+    public int columnCount() {
+<span class="fc" id="L161">        return columnCount;</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L166">        return size;</span>
+    }
+
+    @Override
+    public boolean contains(int row, int column) {
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (exists(row, column)) {</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            return values[row * columnCount + column] != null;</span>
+        }
+<span class="fc" id="L174">        return false;</span>
+    }
+
+    @Override
+    public boolean containsValue(Object valueToFind) {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (valueToFind != null) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            for (Object value : values) {</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                if (valueToFind.equals(value)) {</span>
+<span class="fc" id="L182">                    return true;</span>
+                }
+            }
+        }
+<span class="fc" id="L186">        return false;</span>
+    }
+
+    @Override
+    public V get(int row, int column) {
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (exists(row, column)) {</span>
+<span class="fc" id="L192">            return values[row * columnCount + column];</span>
+        }
+<span class="fc" id="L194">        return null;</span>
+    }
+
+    @Override
+    public Cell&lt;V&gt; cell(int row, int column) {
+<span class="fc" id="L199">        V value = get(row, column);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        return (value != null ? ImmutableCell.of(row, column, value) : null);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Set&lt;Cell&lt;V&gt;&gt; cells() {
+<span class="fc" id="L206">        return new Cells&lt;V&gt;(this);</span>
+    }
+
+    /**
+     * View onto the grid.
+     */
+    static class Cells&lt;V&gt; extends AbstractSet&lt;Cell&lt;V&gt;&gt; {
+        private final DenseGrid&lt;V&gt; grid;
+
+<span class="fc" id="L215">        Cells(DenseGrid&lt;V&gt; grid) {</span>
+<span class="fc" id="L216">            this.grid = grid;</span>
+<span class="fc" id="L217">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L221">            return grid.size;</span>
+        }
+
+        @Override
+        public boolean contains(Object obj) {
+<span class="fc" id="L226">            Cell&lt;?&gt; cell = (Cell&lt;?&gt;) obj;</span>
+<span class="fc" id="L227">            return Objects.equal(cell.getValue(), grid.get(cell.getRow(), cell.getColumn()));</span>
+        }
+
+        @Override
+        public Iterator&lt;Cell&lt;V&gt;&gt; iterator() {
+<span class="fc" id="L232">            return new Iterator&lt;Cell&lt;V&gt;&gt;() {</span>
+<span class="fc" id="L233">                private MutableCell&lt;V&gt; cell = new MutableCell&lt;V&gt;();</span>
+                private int count;
+<span class="fc" id="L235">                private int current = -1;</span>
+
+                @Override
+                public boolean hasNext() {
+<span class="fc bfc" id="L239" title="All 2 branches covered.">                    return (count &lt; grid.size);</span>
+                }
+                @Override
+                public Cell&lt;V&gt; next() {
+<span class="fc bfc" id="L243" title="All 2 branches covered.">                    if (!hasNext()) {</span>
+<span class="fc" id="L244">                        throw new NoSuchElementException(&quot;No more elements&quot;);</span>
+                    }
+<span class="fc" id="L246">                    current++;</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">                    for ( ; current &lt; grid.values.length; current++) {</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">                        if (grid.values[current] != null) {</span>
+<span class="fc" id="L249">                            break;</span>
+                        }
+                    }
+<span class="fc" id="L252">                    V value = grid.values[current];</span>
+<span class="fc" id="L253">                    count++;</span>
+<span class="fc" id="L254">                    cell.set(current / grid.columnCount, current % grid.columnCount, value);</span>
+<span class="fc" id="L255">                    return cell;</span>
+                }
+                @Override
+                public void remove() {
+<span class="fc bfc" id="L259" title="All 2 branches covered.">                    if (current &lt; 0) {</span>
+<span class="fc" id="L260">                        throw new IllegalStateException(&quot;Unable to remove, next() not called yet&quot;);</span>
+                    }
+<span class="fc bfc" id="L262" title="All 2 branches covered.">                    if (grid.values[current] == null) {</span>
+<span class="fc" id="L263">                        throw new IllegalStateException(&quot;Unable to remove, element has been removed&quot;);</span>
+                    }
+<span class="fc" id="L265">                    grid.values[current] = null;</span>
+<span class="fc" id="L266">                    grid.size--;</span>
+<span class="fc" id="L267">                    count--;</span>
+<span class="fc" id="L268">                }</span>
+            };
+        }
+
+        @Override
+        public boolean add(Cell&lt;V&gt; cell) {
+<span class="fc bfc" id="L274" title="All 2 branches covered.">            Preconditions.checkArgument(cell != null, &quot;Cell must not be null&quot;);</span>
+<span class="fc" id="L275">            int oldSize = grid.size;</span>
+<span class="fc" id="L276">            grid.put(cell.getRow(), cell.getColumn(), cell.getValue());</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">            return grid.size &gt; oldSize;</span>
+        }
+
+        @Override
+        public boolean remove(Object obj) {
+<span class="fc" id="L282">            Cell&lt;?&gt; cell = (Cell&lt;?&gt;) obj;</span>
+<span class="fc" id="L283">            return grid.remove(cell.getRow(), cell.getColumn());</span>
+        }
+
+        @Override
+        public void clear() {
+<span class="fc" id="L288">            grid.clear();</span>
+<span class="fc" id="L289">        }</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ImmutableCollection&lt;V&gt; values() {
+<span class="fc" id="L296">        Object[] array = new Object[size];</span>
+<span class="fc" id="L297">        int index = 0;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        for (Object object : values) {</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">            if (object != null) {</span>
+<span class="fc" id="L300">                array[index++] = object;</span>
+            }
+        }
+<span class="fc" id="L303">        return ImmutableList.copyOf((V[]) array);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public List&lt;V&gt; row(int row) {
+<span class="fc" id="L309">        Preconditions.checkElementIndex(row, rowCount(), &quot;Row index&quot;);</span>
+<span class="fc" id="L310">        int base = row * rowCount;</span>
+<span class="fc" id="L311">        return new Inner&lt;V&gt;(this, base, columnCount, 1);</span>
+    }
+
+    @Override
+    public List&lt;List&lt;V&gt;&gt; rows() {
+<span class="fc" id="L316">        return new Outer&lt;V&gt;(this, rowCount, columnCount, columnCount, 1);</span>
+    }
+
+    @Override
+    public List&lt;V&gt; column(int column) {
+<span class="fc" id="L321">        Preconditions.checkElementIndex(column, columnCount(), &quot;Column index&quot;);</span>
+<span class="fc" id="L322">        return new Inner&lt;V&gt;(this, column, rowCount, columnCount);</span>
+    }
+
+    @Override
+    public List&lt;List&lt;V&gt;&gt; columns() {
+<span class="fc" id="L327">        return new Outer&lt;V&gt;(this, columnCount, 1, rowCount, columnCount);</span>
+    }
+
+    static class Outer&lt;V&gt; extends AbstractList&lt;List&lt;V&gt;&gt; {
+        private final DenseGrid&lt;V&gt; grid;
+        private final int size;
+        private final int gap;
+        private final int innerSize;
+        private final int innerGap;
+
+<span class="fc" id="L337">        Outer(DenseGrid&lt;V&gt; grid, int size, int gap, int innerSize, int innerGap) {</span>
+<span class="fc" id="L338">            this.grid = grid;</span>
+<span class="fc" id="L339">            this.size = size;</span>
+<span class="fc" id="L340">            this.gap = gap;</span>
+<span class="fc" id="L341">            this.innerSize = innerSize;</span>
+<span class="fc" id="L342">            this.innerGap = innerGap;</span>
+<span class="fc" id="L343">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L347">            return size;</span>
+        }
+
+        @Override
+        public List&lt;V&gt; get(int index) {
+<span class="fc" id="L352">            Preconditions.checkElementIndex(index, size);</span>
+<span class="fc" id="L353">            int base = index * gap;</span>
+<span class="fc" id="L354">            return new Inner&lt;V&gt;(grid, base, innerSize, innerGap);</span>
+        }
+    }
+
+    static class Inner&lt;V&gt; extends AbstractList&lt;V&gt; {
+        private final DenseGrid&lt;V&gt; grid;
+        private final int size;
+        private final int offset;
+        private final int gap;
+
+<span class="fc" id="L364">        Inner(DenseGrid&lt;V&gt; grid, int offset, int size, int gap) {</span>
+<span class="fc" id="L365">            this.grid = grid;</span>
+<span class="fc" id="L366">            this.size = size;</span>
+<span class="fc" id="L367">            this.offset = offset;</span>
+<span class="fc" id="L368">            this.gap = gap;</span>
+<span class="fc" id="L369">        }</span>
+
+        @Override
+        public int size() {
+<span class="fc" id="L373">            return size;</span>
+        }
+
+        @Override
+        public V get(int index) {
+<span class="fc" id="L378">            Preconditions.checkElementIndex(index, size);</span>
+<span class="fc" id="L379">            int arrayIndex = index * gap + offset;</span>
+<span class="fc" id="L380">            return grid.values[arrayIndex];</span>
+        }
+
+        @Override
+        public V set(int index, V newValue) {
+<span class="nc" id="L385">            Preconditions.checkElementIndex(index, size);</span>
+<span class="nc" id="L386">            int arrayIndex = index * gap + offset;</span>
+<span class="nc" id="L387">            V old = grid.values[arrayIndex];</span>
+<span class="nc" id="L388">            grid.values[arrayIndex] = newValue;</span>
+<span class="nc bnc" id="L389" title="All 4 branches missed.">            if (old == null &amp;&amp; newValue != null) {</span>
+<span class="nc" id="L390">                grid.size++;</span>
+<span class="nc bnc" id="L391" title="All 4 branches missed.">            } else if (old != null &amp;&amp; newValue == null) {</span>
+<span class="nc" id="L392">                grid.size--;</span>
+            }
+<span class="nc" id="L394">            return old;</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public void clear() {
+<span class="fc" id="L401">        Arrays.fill(values, null);</span>
+<span class="fc" id="L402">        size = 0;</span>
+<span class="fc" id="L403">    }</span>
+
+    @Override
+    public void put(int row, int column, V value) {
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        if (!exists(row, column)) {</span>
+<span class="fc" id="L408">            throw new IndexOutOfBoundsException(&quot;Invalid row-column: &quot; + row + &quot;,&quot; + column);</span>
+        }
+<span class="fc bfc" id="L410" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L411">            throw new IllegalArgumentException(&quot;Value must not be null&quot;);</span>
+        }
+<span class="fc" id="L413">        Object current = values[row * columnCount + column];</span>
+<span class="fc" id="L414">        values[row * columnCount + column] = value;</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">        if (current == null) {</span>
+<span class="fc" id="L416">            size++;</span>
+        }
+<span class="fc" id="L418">    }</span>
+
+    @Override
+    public void putAll(Grid&lt;? extends V&gt; grid) {
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        if (grid == null) {</span>
+<span class="fc" id="L423">            throw new IllegalArgumentException(&quot;Grid must nor be null&quot;);</span>
+        }
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        for (Cell&lt;? extends V&gt; cell : grid.cells()) {</span>
+<span class="fc" id="L426">            put(cell.getRow(), cell.getColumn(), cell.getValue());</span>
+<span class="fc" id="L427">        }</span>
+<span class="fc" id="L428">    }</span>
+
+    @Override
+    public boolean remove(int row, int column) {
+<span class="fc" id="L432">        V current = get(row, column);</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        if (current != null) {</span>
+<span class="fc" id="L434">            values[row * columnCount + column] = null;</span>
+<span class="fc" id="L435">            size--;</span>
+<span class="fc" id="L436">            return true;</span>
+        }
+<span class="fc" id="L438">        return false;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a clone of the internal array.
+     * 
+     * @return the array, not null
+     */
+    V[] valuesArray() {
+<span class="fc" id="L448">        return values.clone();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L455">            return true;</span>
+        }
+<span class="fc bfc" id="L457" title="All 2 branches covered.">        if (obj instanceof DenseGrid) {</span>
+<span class="fc" id="L458">            DenseGrid&lt;?&gt; other = (DenseGrid&lt;?&gt;) obj;</span>
+<span class="fc" id="L459">            return Arrays.equals(values, other.values);</span>
+        }
+<span class="fc" id="L461">        return super.equals(obj);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L466">        int hash = 0;</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">        for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc" id="L468">            Object value = values[i];</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">            if (value != null) {</span>
+<span class="fc" id="L470">                int row = i / columnCount;</span>
+<span class="fc" id="L471">                int column = i % columnCount;</span>
+<span class="fc" id="L472">                hash += (row ^ Integer.rotateLeft(column, 16) ^ value.hashCode());</span>
+            }
+        }
+<span class="fc" id="L475">        return rowCount ^ Integer.rotateLeft(columnCount, 16) ^ hash;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
