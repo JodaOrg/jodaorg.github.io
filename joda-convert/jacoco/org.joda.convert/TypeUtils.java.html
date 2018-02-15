@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert</a> &gt; <span class="el_source">TypeUtils.java</span></div><h1>TypeUtils.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Parse the string format of Guava TypeToken.
+ * &lt;p&gt;
+ * This is loaded by reflection only when Guava is on the classpath.
+ * It relies on internal methods in Guava that could change in any release.
+ * &lt;p&gt;
+ * This parser is incomplete, but handles common cases.
+ * It does not handle union types or multi-dimensional arrays.
+ */
+final class TypeUtils {
+
+    // extends
+    private static final String EXTENDS = &quot;? extends &quot;;
+
+    // super
+    private static final String SUPER = &quot;? super &quot;;
+
+    // primitive types
+    private static final Map&lt;String, Class&lt;?&gt;&gt; PRIMITIVES;
+    static {
+<span class="fc" id="L47">        Map&lt;String, Class&lt;?&gt;&gt; map = new HashMap&lt;String, Class&lt;?&gt;&gt;();</span>
+<span class="fc" id="L48">        map.put(&quot;byte&quot;, byte.class);</span>
+<span class="fc" id="L49">        map.put(&quot;short&quot;, short.class);</span>
+<span class="fc" id="L50">        map.put(&quot;int&quot;, int.class);</span>
+<span class="fc" id="L51">        map.put(&quot;long&quot;, long.class);</span>
+<span class="fc" id="L52">        map.put(&quot;boolean&quot;, boolean.class);</span>
+<span class="fc" id="L53">        map.put(&quot;char&quot;, char.class);</span>
+<span class="fc" id="L54">        map.put(&quot;float&quot;, float.class);</span>
+<span class="fc" id="L55">        map.put(&quot;double&quot;, double.class);</span>
+<span class="fc" id="L56">        PRIMITIVES = Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L57">    }</span>
+
+    //-----------------------------------------------------------------------
+    // constructor
+    private TypeUtils() {
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Parses the TypeToken string format.
+     * 
+     * @param str  the string
+     * @return the token
+     */
+    static Type parse(String str) {
+        try {
+<span class="fc" id="L73">            return doParse(str);</span>
+<span class="nc" id="L74">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L75">            throw ex;</span>
+<span class="nc" id="L76">        } catch (Exception ex) {</span>
+<span class="nc" id="L77">            throw new RuntimeException(ex);</span>
+        }
+    }
+
+    // parse an element
+    private static Type doParse(String str) throws Exception {
+<span class="fc" id="L83">        Class&lt;?&gt; token = PRIMITIVES.get(str);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (token != null) {</span>
+<span class="fc" id="L85">            return token;</span>
+        }
+<span class="fc" id="L87">        int first = str.indexOf('&lt;');</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (first &lt; 0) {</span>
+<span class="fc" id="L89">            return RenameHandler.INSTANCE.loadType(str);</span>
+        }
+<span class="fc" id="L91">        int last = str.lastIndexOf('&gt;');</span>
+<span class="fc" id="L92">        String baseStr = str.substring(0, first);</span>
+<span class="fc" id="L93">        Class&lt;?&gt; base = RenameHandler.INSTANCE.loadType(baseStr);</span>
+<span class="fc" id="L94">        String argsStr = str.substring(first + 1, last);</span>
+<span class="fc" id="L95">        List&lt;String&gt; splitArgs = split(argsStr);</span>
+<span class="fc" id="L96">        List&lt;Type&gt; types = new ArrayList&lt;Type&gt;();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (String splitArg : splitArgs) {</span>
+            Type argType;
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            if (splitArg.startsWith(EXTENDS)) {</span>
+<span class="fc" id="L100">                String remainder = splitArg.substring(EXTENDS.length());</span>
+<span class="fc" id="L101">                argType = wildExtendsType(doParse(remainder));</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            } else if (splitArg.startsWith(SUPER)) {</span>
+<span class="fc" id="L103">                String remainder = splitArg.substring(SUPER.length());</span>
+<span class="fc" id="L104">                argType = wildSuperType(doParse(remainder));</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            } else if (splitArg.equals(&quot;?&quot;)) {</span>
+<span class="fc" id="L106">                argType = wildExtendsType(Object.class);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            } else if (splitArg.endsWith(&quot;[]&quot;)) {</span>
+<span class="fc" id="L108">                String componentStr = splitArg.substring(0, splitArg.length() - 2);</span>
+<span class="fc" id="L109">                Class&lt;?&gt; componentCls = RenameHandler.INSTANCE.loadType(componentStr);</span>
+<span class="fc" id="L110">                argType = Array.newInstance(componentCls, 0).getClass();</span>
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">            } else if (splitArg.startsWith(&quot;[L&quot;) &amp;&amp; splitArg.endsWith(&quot;;&quot;)) {</span>
+<span class="fc" id="L112">                String componentStr = splitArg.substring(2, splitArg.length() - 1);</span>
+<span class="fc" id="L113">                Class&lt;?&gt; componentCls = RenameHandler.INSTANCE.loadType(componentStr);</span>
+<span class="fc" id="L114">                argType = Array.newInstance(componentCls, 0).getClass();</span>
+<span class="fc" id="L115">            } else {</span>
+<span class="fc" id="L116">                argType = doParse(splitArg);</span>
+            }
+<span class="fc" id="L118">            types.add(argType);</span>
+<span class="fc" id="L119">        }</span>
+<span class="fc" id="L120">        return newParameterizedType(base, types.toArray(new Type[types.size()]));</span>
+    }
+
+    // split by comma, handling nested generified types
+    private static List&lt;String&gt; split(String str) {
+<span class="fc" id="L125">        List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L126">        int genericCount = 0;</span>
+<span class="fc" id="L127">        int startPos = 0;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for (int i = 0; i &lt; str.length(); i++) {</span>
+<span class="fc bfc" id="L129" title="All 4 branches covered.">            if (str.charAt(i) == ',' &amp;&amp; genericCount == 0) {</span>
+<span class="fc" id="L130">                result.add(str.substring(startPos, i).trim());</span>
+<span class="fc" id="L131">                startPos = i + 1;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            } else if (str.charAt(i) == '&lt;') {</span>
+<span class="fc" id="L133">                genericCount++;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            } else if (str.charAt(i) == '&gt;') {</span>
+<span class="fc" id="L135">                genericCount--;</span>
+            }
+        }
+<span class="fc" id="L138">        result.add(str.substring(startPos).trim());</span>
+<span class="fc" id="L139">        return result;</span>
+    }
+
+    // create a type representing &quot;? extends X&quot;
+    private static Type wildExtendsType(Type bound) throws Exception {
+<span class="fc" id="L144">        return Types.subtypeOf(bound);</span>
+    }
+
+    // create a type representing &quot;? super X&quot;
+    private static Type wildSuperType(Type bound) throws Exception {
+<span class="fc" id="L149">        return Types.supertypeOf(bound);</span>
+    }
+
+    // create a type representing &quot;base&lt;args...&gt;&quot;
+    private static ParameterizedType newParameterizedType(final Class&lt;?&gt; base, Type... args) throws Exception {
+<span class="fc" id="L154">        return Types.newParameterizedType(base, args);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

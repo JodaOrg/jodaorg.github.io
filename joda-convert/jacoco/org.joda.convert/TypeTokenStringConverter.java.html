@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeTokenStringConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert</a> &gt; <span class="el_source">TypeTokenStringConverter.java</span></div><h1>TypeTokenStringConverter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+
+/**
+ * Parse the string format of Guava TypeToken.
+ * &lt;p&gt;
+ * This is loaded by reflection only when Guava is on the classpath.
+ * It relies on internal methods in Guava that could change in any release.
+ * &lt;p&gt;
+ * This parser is incomplete, but handles common cases.
+ * It does not handle union types or multi-dimensional arrays.
+ */
+final class TypeTokenStringConverter
+        implements TypedStringConverter&lt;Object&gt; {
+
+    static final Class&lt;?&gt; TYPE_TOKEN_CLASS;
+    static final Method TYPE_TOKEN_METHOD_OF;
+    static {
+        try {
+            // see StringConvert, which adds the necessary read edge for Java 9
+<span class="fc" id="L38">            TYPE_TOKEN_CLASS = Class.forName(&quot;com.google.common.reflect.TypeToken&quot;);</span>
+<span class="fc" id="L39">            TYPE_TOKEN_METHOD_OF = TYPE_TOKEN_CLASS.getDeclaredMethod(&quot;of&quot;, Type.class);</span>
+
+<span class="nc" id="L41">        } catch (Exception ex) {</span>
+<span class="nc" id="L42">            throw new IllegalStateException(ex);</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">    }</span>
+
+<span class="fc" id="L46">    TypeTokenStringConverter() {</span>
+<span class="fc" id="L47">    }</span>
+
+    @Override
+    public String convertToString(Object object) {
+<span class="fc" id="L51">        return object.toString();</span>
+    }
+
+    @Override
+    public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L56">        Type parsed = TypeUtils.parse(str);</span>
+        try {
+<span class="fc" id="L58">            return TYPE_TOKEN_METHOD_OF.invoke(null, parsed);</span>
+<span class="nc" id="L59">        } catch (Exception ex) {</span>
+<span class="nc" id="L60">            throw new IllegalArgumentException(ex);</span>
+        }
+    }
+
+    @Override
+    public Class&lt;?&gt; getEffectiveType() {
+<span class="fc" id="L66">        return TYPE_TOKEN_CLASS;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

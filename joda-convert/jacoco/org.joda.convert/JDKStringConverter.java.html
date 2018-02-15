@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JDKStringConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert</a> &gt; <span class="el_source">JDKStringConverter.java</span></div><h1>JDKStringConverter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert;
+
+import java.io.File;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Currency;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+/**
+ * Conversion between JDK classes and a {@code String}.
+ */
+<span class="fc" id="L42">enum JDKStringConverter implements TypedStringConverter&lt;Object&gt; {</span>
+
+    /**
+     * String converter.
+     */
+<span class="fc" id="L47">    STRING(String.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L50">            return str;</span>
+        }
+    },
+    /**
+     * CharSequence converter.
+     */
+<span class="fc" id="L56">    CHAR_SEQUENCE(CharSequence.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L59">            return str;</span>
+        }
+    },
+    /**
+     * StringBuffer converter.
+     */
+<span class="fc" id="L65">    STRING_BUFFER(StringBuffer.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L68">            return new StringBuffer(str);</span>
+        }
+    },
+    /**
+     * StringBuilder converter.
+     */
+<span class="fc" id="L74">    STRING_BUILDER(StringBuilder.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L77">            return new StringBuilder(str);</span>
+        }
+    },
+    /**
+     * Long converter.
+     */
+<span class="fc" id="L83">    LONG(Long.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L86">            return Long.valueOf(str);</span>
+        }
+    },
+
+    /**
+     * Integer converter.
+     */
+<span class="fc" id="L93">    INTEGER(Integer.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L96">            return Integer.valueOf(str);</span>
+        }
+    },
+
+    /**
+     * Short converter.
+     */
+<span class="fc" id="L103">    SHORT(Short.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L106">            return Short.valueOf(str);</span>
+        }
+    },
+
+    /**
+     * Byte converter.
+     */
+<span class="fc" id="L113">    BYTE(Byte.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L116">            return Byte.valueOf(str);</span>
+        }
+    },
+    /**
+     * String converter.
+     */
+<span class="fc" id="L122">    BYTE_ARRAY(byte[].class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L125">            return printBase64Binary((byte[]) object);</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L129">            return parseBase64Binary(str);</span>
+        }
+    },
+    /**
+     * Character converter.
+     */
+<span class="fc" id="L135">    CHARACTER(Character.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            if (str.length() != 1) {</span>
+<span class="fc" id="L139">                throw new IllegalArgumentException(&quot;Character value must be a string length 1&quot;);</span>
+            }
+<span class="fc" id="L141">            return Character.valueOf(str.charAt(0));</span>
+        }
+    },
+    /**
+     * String converter.
+     */
+<span class="fc" id="L147">    CHAR_ARRAY(char[].class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L150">            return new String((char[]) object);</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L154">            return str.toCharArray();</span>
+        }
+    },
+    /**
+     * Boolean converter.
+     */
+<span class="fc" id="L160">    BOOLEAN(Boolean.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">            if (&quot;true&quot;.equalsIgnoreCase(str)) {</span>
+<span class="fc" id="L164">                return Boolean.TRUE;</span>
+            }
+<span class="fc bfc" id="L166" title="All 2 branches covered.">            if (&quot;false&quot;.equalsIgnoreCase(str)) {</span>
+<span class="fc" id="L167">                return Boolean.FALSE;</span>
+            }
+<span class="fc" id="L169">            throw new IllegalArgumentException(&quot;Boolean value must be 'true' or 'false', case insensitive&quot;);</span>
+        }
+    },
+    /**
+     * Double converter.
+     */
+<span class="fc" id="L175">    DOUBLE(Double.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L178">            return Double.valueOf(str);</span>
+        }
+    },
+    /**
+     * Float converter.
+     */
+<span class="fc" id="L184">    FLOAT(Float.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L187">            return Float.valueOf(str);</span>
+        }
+    },
+    /**
+     * BigInteger converter.
+     */
+<span class="fc" id="L193">    BIG_INTEGER(BigInteger.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L196">            return new BigInteger(str);</span>
+        }
+    },
+    /**
+     * BigDecimal converter.
+     */
+<span class="fc" id="L202">    BIG_DECIMAL(BigDecimal.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L205">            return new BigDecimal(str);</span>
+        }
+    },
+    /**
+     * AtomicLong converter.
+     */
+<span class="fc" id="L211">    ATOMIC_LONG(AtomicLong.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L214">            long val = Long.parseLong(str);</span>
+<span class="fc" id="L215">            return new AtomicLong(val);</span>
+        }
+    },
+    /**
+     * AtomicLong converter.
+     */
+<span class="fc" id="L221">    ATOMIC_INTEGER(AtomicInteger.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L224">            int val = Integer.parseInt(str);</span>
+<span class="fc" id="L225">            return new AtomicInteger(val);</span>
+        }
+    },
+    /**
+     * AtomicBoolean converter.
+     */
+<span class="fc" id="L231">    ATOMIC_BOOLEAN(AtomicBoolean.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc bfc" id="L234" title="All 2 branches covered.">            if (&quot;true&quot;.equalsIgnoreCase(str)) {</span>
+<span class="fc" id="L235">                return new AtomicBoolean(true);</span>
+            }
+<span class="fc bfc" id="L237" title="All 2 branches covered.">            if (&quot;false&quot;.equalsIgnoreCase(str)) {</span>
+<span class="fc" id="L238">                return new AtomicBoolean(false);</span>
+            }
+<span class="fc" id="L240">            throw new IllegalArgumentException(&quot;Boolean value must be 'true' or 'false', case insensitive&quot;);</span>
+        }
+    },
+    /**
+     * Locale converter.
+     */
+<span class="fc" id="L246">    LOCALE(Locale.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L249">            String[] split = str.split(&quot;_&quot;, 3);</span>
+<span class="pc bpc" id="L250" title="1 of 4 branches missed.">            switch (split.length) {</span>
+                case 1:
+<span class="fc" id="L252">                    return new Locale(split[0]);</span>
+                case 2:
+<span class="fc" id="L254">                    return new Locale(split[0], split[1]);</span>
+                case 3:
+<span class="fc" id="L256">                    return new Locale(split[0], split[1], split[2]);</span>
+            }
+<span class="nc" id="L258">            throw new IllegalArgumentException(&quot;Unable to parse Locale: &quot; + str);</span>
+        }
+    },
+    /**
+     * Class converter.
+     */
+<span class="fc" id="L264">    CLASS(Class.class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L267">            return ((Class&lt;?&gt;) object).getName();</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+            try {
+<span class="fc" id="L272">                return RenameHandler.INSTANCE.lookupType(str);</span>
+<span class="fc" id="L273">            } catch (ClassNotFoundException ex) {</span>
+<span class="fc" id="L274">                throw new RuntimeException(&quot;Unable to create type: &quot; + str, ex);</span>
+            }
+        }
+    },
+    /**
+     * Package converter.
+     */
+<span class="fc" id="L281">    PACKAGE(Package.class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L284">            return ((Package) object).getName();</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L288">            return Package.getPackage(str);</span>
+        }
+    },
+    /**
+     * Currency converter.
+     */
+<span class="fc" id="L294">    CURRENCY(Currency.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L297">            return Currency.getInstance(str);</span>
+        }
+    },
+    /**
+     * TimeZone converter.
+     */
+<span class="fc" id="L303">    TIME_ZONE(TimeZone.class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L306">            return ((TimeZone) object).getID();</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L310">            return TimeZone.getTimeZone(str);</span>
+        }
+    },
+    /**
+     * UUID converter.
+     */
+<span class="fc" id="L316">    UUID(UUID.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L319">            return java.util.UUID.fromString(str);</span>
+        }
+    },
+    /**
+     * URL converter.
+     */
+<span class="fc" id="L325">    URL(URL.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+            try {
+<span class="fc" id="L329">                return new URL(str);</span>
+<span class="fc" id="L330">            } catch (MalformedURLException ex) {</span>
+<span class="fc" id="L331">                throw new RuntimeException(ex.getMessage(), ex);</span>
+            }
+        }
+    },
+    /**
+     * URI converter.
+     */
+<span class="fc" id="L338">    URI(URI.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L341">            return java.net.URI.create(str);</span>
+        }
+    },
+    /**
+     * InetAddress converter.
+     */
+<span class="fc" id="L347">    INET_ADDRESS(InetAddress.class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L350">            return ((InetAddress) object).getHostAddress();</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+            try {
+<span class="fc" id="L355">                return InetAddress.getByName(str);</span>
+<span class="nc" id="L356">            } catch (UnknownHostException ex) {</span>
+<span class="nc" id="L357">                throw new RuntimeException(ex);</span>
+            }
+        }
+    },
+    /**
+     * File converter.
+     */
+<span class="fc" id="L364">    FILE(File.class) {</span>
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc" id="L367">            return new File(str);</span>
+        }
+    },
+    /**
+     * Date converter.
+     */
+<span class="fc" id="L373">    DATE(Date.class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc" id="L376">            SimpleDateFormat f = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm:ss.SSSZ&quot;);</span>
+<span class="fc" id="L377">            String str = f.format(object);</span>
+<span class="fc" id="L378">            return str.substring(0, 26) + &quot;:&quot; + str.substring(26);</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="fc bfc" id="L382" title="All 2 branches covered.">            if (str.length() != 29) {</span>
+<span class="fc" id="L383">                throw new IllegalArgumentException(&quot;Unable to parse date: &quot; + str);</span>
+            }
+<span class="fc" id="L385">            String str2 = str.substring(0, 26) + str.substring(27);</span>
+<span class="fc" id="L386">            SimpleDateFormat f = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm:ss.SSSZ&quot;);</span>
+            try {
+<span class="fc" id="L388">                return f.parseObject(str2);</span>
+<span class="fc" id="L389">            } catch (ParseException ex) {</span>
+<span class="fc" id="L390">                throw new RuntimeException(ex);</span>
+            }
+        }
+    },
+    /**
+     * Calendar converter.
+     */
+<span class="fc" id="L397">    CALENDAR(Calendar.class) {</span>
+        @Override
+        public String convertToString(Object object) {
+<span class="fc bfc" id="L400" title="All 2 branches covered.">            if (object instanceof GregorianCalendar == false) {</span>
+<span class="fc" id="L401">                throw new RuntimeException(&quot;Unable to convert calendar as it is not a GregorianCalendar&quot;);</span>
+            }
+<span class="fc" id="L403">            GregorianCalendar cal = (GregorianCalendar) object;</span>
+<span class="fc" id="L404">            SimpleDateFormat f = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm:ss.SSSZ&quot;);</span>
+<span class="fc" id="L405">            f.setCalendar(cal);</span>
+<span class="fc" id="L406">            String str = f.format(cal.getTime());</span>
+<span class="fc" id="L407">            return str.substring(0, 26) + &quot;:&quot; + str.substring(26) + &quot;[&quot; + cal.getTimeZone().getID() + &quot;]&quot;;</span>
+        }
+        @Override
+        public Object convertFromString(Class&lt;?&gt; cls, String str) {
+<span class="pc bpc" id="L411" title="1 of 4 branches missed.">            if (str.length() &lt; 31 || str.charAt(26) != ':'</span>
+<span class="pc bpc" id="L412" title="2 of 4 branches missed.">                    || str.charAt(29) != '[' || str.charAt(str.length() - 1) != ']') {</span>
+<span class="fc" id="L413">                throw new IllegalArgumentException(&quot;Unable to parse date: &quot; + str);</span>
+            }
+<span class="fc" id="L415">            TimeZone zone = TimeZone.getTimeZone(str.substring(30, str.length() - 1));</span>
+<span class="fc" id="L416">            String str2 = str.substring(0, 26) + str.substring(27, 29);</span>
+<span class="fc" id="L417">            SimpleDateFormat f = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm:ss.SSSZ&quot;);</span>
+<span class="fc" id="L418">            GregorianCalendar cal = new GregorianCalendar(zone);</span>
+<span class="fc" id="L419">            cal.setTimeInMillis(0);</span>
+<span class="fc" id="L420">            f.setCalendar(cal);</span>
+            try {
+<span class="fc" id="L422">                f.parseObject(str2);</span>
+<span class="fc" id="L423">                return f.getCalendar();</span>
+<span class="fc" id="L424">            } catch (ParseException ex) {</span>
+<span class="fc" id="L425">                throw new RuntimeException(ex);</span>
+            }
+        }
+    },
+    ;
+
+    /** The type. */
+    private Class&lt;?&gt; type;
+
+    /**
+     * Creates an enum.
+     * @param type  the type, not null
+     */
+<span class="fc" id="L438">    JDKStringConverter(Class&lt;?&gt; type) {</span>
+<span class="fc" id="L439">        this.type = type;</span>
+<span class="fc" id="L440">    }</span>
+
+    /**
+     * Gets the type of the converter.
+     * @return the type, not null
+     */
+    Class&lt;?&gt; getType() {
+<span class="fc" id="L447">        return type;</span>
+    }
+
+    /**
+     * Gets the type of the converter.
+     * @return the type, not null
+     */
+    @Override
+    public Class&lt;?&gt; getEffectiveType() {
+<span class="fc" id="L456">        return type;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public String convertToString(Object object) {
+<span class="fc" id="L462">        return object.toString();</span>
+    }
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L466">    private static String base64Str = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&quot;;</span>
+<span class="fc" id="L467">    private static char[] base64Array = base64Str.toCharArray();</span>
+    private static final int MASK_8BIT = 0xff;
+    private static final int MASK_6BIT = 0x3f;
+
+    private static String printBase64Binary(byte[] array) {
+<span class="fc" id="L472">        int len = array.length;</span>
+<span class="fc" id="L473">        char[] buf = new char[((len + 2) / 3) * 4];</span>
+<span class="fc" id="L474">        int pos = 0;</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        for (int i = 0; i &lt; len; i += 3) {</span>
+<span class="fc" id="L476">            int remaining = len - i;</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">            if (remaining &gt;= 3) {</span>
+<span class="fc" id="L478">                int bits = (array[i] &amp; MASK_8BIT) &lt;&lt; 16 | (array[i + 1] &amp; MASK_8BIT) &lt;&lt;  8 | (array[i + 2] &amp; MASK_8BIT);</span>
+<span class="fc" id="L479">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 18) &amp; MASK_6BIT];</span>
+<span class="fc" id="L480">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 12) &amp; MASK_6BIT];</span>
+<span class="fc" id="L481">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 6) &amp; MASK_6BIT];</span>
+<span class="fc" id="L482">                buf[pos++] = base64Array[bits &amp; MASK_6BIT];</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">            } else if (remaining == 2) {</span>
+<span class="fc" id="L484">                int bits = (array[i] &amp; MASK_8BIT) &lt;&lt; 16 | (array[i + 1] &amp; MASK_8BIT) &lt;&lt;  8;</span>
+<span class="fc" id="L485">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 18) &amp; MASK_6BIT];</span>
+<span class="fc" id="L486">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 12) &amp; MASK_6BIT];</span>
+<span class="fc" id="L487">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 6) &amp; MASK_6BIT];</span>
+<span class="fc" id="L488">                buf[pos++] = '=';</span>
+<span class="fc" id="L489">            } else {</span>
+<span class="fc" id="L490">                int bits = (array[i] &amp; MASK_8BIT) &lt;&lt; 16;</span>
+<span class="fc" id="L491">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 18) &amp; MASK_6BIT];</span>
+<span class="fc" id="L492">                buf[pos++] = base64Array[(bits &gt;&gt;&gt; 12) &amp; MASK_6BIT];</span>
+<span class="fc" id="L493">                buf[pos++] = '=';</span>
+<span class="fc" id="L494">                buf[pos++] = '=';</span>
+            }
+        }
+<span class="fc" id="L497">        return new String(buf);</span>
+    }
+
+    private static byte[] parseBase64Binary(String str) {
+        // strict parser, must have length divisble by 4
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">        if (str.length() % 4 != 0) {</span>
+<span class="nc" id="L503">            throw new IllegalArgumentException(&quot;Invalid Base64 string&quot;);</span>
+        }
+        // base64Str has 65 characters, with '=' at the end which is masked away
+<span class="fc" id="L506">        int parsedLen = (str.length() * 3) / 4;</span>
+<span class="fc" id="L507">        byte[] decoded = new byte[parsedLen];</span>
+<span class="fc" id="L508">        char[] inChars = str.toCharArray();</span>
+<span class="fc" id="L509">        int pos = 0;</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">        for (int i = 0; i &lt; inChars.length; ) {</span>
+<span class="fc" id="L511">            int bits = (base64Str.indexOf(inChars[i++]) &amp; MASK_6BIT) &lt;&lt; 18 |</span>
+<span class="fc" id="L512">                            (base64Str.indexOf(inChars[i++]) &amp; MASK_6BIT) &lt;&lt; 12 |</span>
+<span class="fc" id="L513">                            (base64Str.indexOf(inChars[i++]) &amp; MASK_6BIT) &lt;&lt; 6 |</span>
+<span class="fc" id="L514">                            (base64Str.indexOf(inChars[i++]) &amp; MASK_6BIT);</span>
+<span class="fc" id="L515">            decoded[pos++] = (byte) ((bits &gt;&gt;&gt; 16) &amp; MASK_8BIT);</span>
+<span class="fc" id="L516">            decoded[pos++] = (byte) ((bits &gt;&gt;&gt; 8) &amp; MASK_8BIT);</span>
+<span class="fc" id="L517">            decoded[pos++] = (byte)  (bits &amp; MASK_8BIT);</span>
+<span class="fc" id="L518">        }</span>
+        // fixup avoiding Arrays.copyRange
+<span class="fc bfc" id="L520" title="All 2 branches covered.">        if (str.endsWith(&quot;==&quot;)) {</span>
+<span class="fc" id="L521">            byte[] result = new byte[parsedLen - 2];</span>
+<span class="fc" id="L522">            System.arraycopy(decoded, 0, result, 0, parsedLen - 2);</span>
+<span class="fc" id="L523">            return result;</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">        } else if (str.endsWith(&quot;=&quot;)) {</span>
+<span class="fc" id="L525">            byte[] result = new byte[parsedLen - 1];</span>
+<span class="fc" id="L526">            System.arraycopy(decoded, 0, result, 0, parsedLen - 1);</span>
+<span class="fc" id="L527">            return result;</span>
+        }
+<span class="fc" id="L529">        return decoded;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumericArrayStringConverterFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert.factory</a> &gt; <span class="el_source">NumericArrayStringConverterFactory.java</span></div><h1>NumericArrayStringConverterFactory.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert.factory;
+
+import java.util.regex.Pattern;
+
+import org.joda.convert.StringConverter;
+import org.joda.convert.StringConverterFactory;
+import org.joda.convert.TypedStringConverter;
+
+/**
+ * Factory for {@code StringConverter} providing support for primitive arrays
+ * as a comma separated list.
+ * &lt;p&gt;
+ * To use, simply register the instance with a {@code StringConvert} instance.
+ * &lt;p&gt;
+ * This class is immutable and thread-safe.
+ * 
+ * @since 1.5
+ */
+public final class NumericArrayStringConverterFactory implements StringConverterFactory {
+
+    /**
+     * Singleton instance.
+     */
+<span class="fc" id="L39">    public static final StringConverterFactory INSTANCE = new NumericArrayStringConverterFactory();</span>
+    /**
+     * Delimiter to find.
+     */
+<span class="fc" id="L43">    static final Pattern DELIMITER = Pattern.compile(&quot;[,]&quot;);</span>
+
+    /**
+     * Restricted constructor.
+     */
+    private NumericArrayStringConverterFactory() {
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Finds a converter by type.
+     * 
+     * @param cls  the type to lookup, not null
+     * @return the converter, null if not found
+     * @throws RuntimeException (or subclass) if source code is invalid
+     */
+    @Override
+    public StringConverter&lt;?&gt; findConverter(Class&lt;?&gt; cls) {
+<span class="pc bpc" id="L61" title="1 of 4 branches missed.">        if (cls.isArray() &amp;&amp; cls.getComponentType().isPrimitive()) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if (cls == long[].class) {</span>
+<span class="fc" id="L63">                return LongArrayStringConverter.INSTANCE;</span>
+            }
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (cls == int[].class) {</span>
+<span class="fc" id="L66">                return IntArrayStringConverter.INSTANCE;</span>
+            }
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (cls == short[].class) {</span>
+<span class="fc" id="L69">                return ShortArrayStringConverter.INSTANCE;</span>
+            }
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            if (cls == double[].class) {</span>
+<span class="fc" id="L72">                return DoubleArrayStringConverter.INSTANCE;</span>
+            }
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if (cls == float[].class) {</span>
+<span class="fc" id="L75">                return FloatArrayStringConverter.INSTANCE;</span>
+            }
+        }
+<span class="fc" id="L78">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public String toString() {
+<span class="nc" id="L84">        return getClass().getSimpleName();</span>
+    }
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L88">    enum LongArrayStringConverter implements TypedStringConverter&lt;long[]&gt; {</span>
+<span class="fc" id="L89">        INSTANCE {</span>
+            @Override
+            public String convertToString(long[] array) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                if (array.length == 0) {</span>
+<span class="fc" id="L93">                    return &quot;&quot;;</span>
+                }
+<span class="fc" id="L95">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L96">                buf.append(array[0]);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc" id="L98">                    buf.append(',').append(array[i]);</span>
+                }
+<span class="fc" id="L100">                return buf.toString();</span>
+            }
+            @Override
+            public long[] convertFromString(Class&lt;? extends long[]&gt; cls, String str) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                if (str.length() == 0) {</span>
+<span class="fc" id="L105">                    return EMPTY;</span>
+                }
+<span class="fc" id="L107">                String[] split = DELIMITER.split(str);</span>
+<span class="fc" id="L108">                long[] array = new long[split.length];</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                for (int i = 0; i &lt; split.length; i++) {</span>
+<span class="fc" id="L110">                    array[i] = Long.parseLong(split[i]);</span>
+                }
+<span class="fc" id="L112">                return array;</span>
+            }
+            @Override
+            public Class&lt;?&gt; getEffectiveType() {
+<span class="nc" id="L116">                return long[].class;</span>
+            }
+        };
+<span class="fc" id="L119">        private static final long[] EMPTY = new long[0];</span>
+    }
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L123">    enum IntArrayStringConverter implements TypedStringConverter&lt;int[]&gt; {</span>
+<span class="fc" id="L124">        INSTANCE {</span>
+            @Override
+            public String convertToString(int[] array) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                if (array.length == 0) {</span>
+<span class="fc" id="L128">                    return &quot;&quot;;</span>
+                }
+<span class="fc" id="L130">                StringBuilder buf = new StringBuilder(array.length * 6);</span>
+<span class="fc" id="L131">                buf.append(array[0]);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc" id="L133">                    buf.append(',').append(array[i]);</span>
+                }
+<span class="fc" id="L135">                return buf.toString();</span>
+            }
+            @Override
+            public int[] convertFromString(Class&lt;? extends int[]&gt; cls, String str) {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">                if (str.length() == 0) {</span>
+<span class="fc" id="L140">                    return EMPTY;</span>
+                }
+<span class="fc" id="L142">                String[] split = DELIMITER.split(str);</span>
+<span class="fc" id="L143">                int[] array = new int[split.length];</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                for (int i = 0; i &lt; split.length; i++) {</span>
+<span class="fc" id="L145">                    array[i] = Integer.parseInt(split[i]);</span>
+                }
+<span class="fc" id="L147">                return array;</span>
+            }
+            @Override
+            public Class&lt;?&gt; getEffectiveType() {
+<span class="nc" id="L151">                return int[].class;</span>
+            }
+        };
+<span class="fc" id="L154">        private static final int[] EMPTY = new int[0];</span>
+    }
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L158">    enum ShortArrayStringConverter implements TypedStringConverter&lt;short[]&gt; {</span>
+<span class="fc" id="L159">        INSTANCE {</span>
+            @Override
+            public String convertToString(short[] array) {
+<span class="fc bfc" id="L162" title="All 2 branches covered.">                if (array.length == 0) {</span>
+<span class="fc" id="L163">                    return &quot;&quot;;</span>
+                }
+<span class="fc" id="L165">                StringBuilder buf = new StringBuilder(array.length * 3);</span>
+<span class="fc" id="L166">                buf.append(array[0]);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc" id="L168">                    buf.append(',').append(array[i]);</span>
+                }
+<span class="fc" id="L170">                return buf.toString();</span>
+            }
+            @Override
+            public short[] convertFromString(Class&lt;? extends short[]&gt; cls, String str) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                if (str.length() == 0) {</span>
+<span class="fc" id="L175">                    return EMPTY;</span>
+                }
+<span class="fc" id="L177">                String[] split = DELIMITER.split(str);</span>
+<span class="fc" id="L178">                short[] array = new short[split.length];</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                for (int i = 0; i &lt; split.length; i++) {</span>
+<span class="fc" id="L180">                    array[i] = Short.parseShort(split[i]);</span>
+                }
+<span class="fc" id="L182">                return array;</span>
+            }
+            @Override
+            public Class&lt;?&gt; getEffectiveType() {
+<span class="nc" id="L186">                return short[].class;</span>
+            }
+        };
+<span class="fc" id="L189">        private static final short[] EMPTY = new short[0];</span>
+    }
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L193">    enum DoubleArrayStringConverter implements TypedStringConverter&lt;double[]&gt; {</span>
+<span class="fc" id="L194">        INSTANCE {</span>
+            @Override
+            public String convertToString(double[] array) {
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                if (array.length == 0) {</span>
+<span class="fc" id="L198">                    return &quot;&quot;;</span>
+                }
+<span class="fc" id="L200">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L201">                buf.append(array[0]);</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc" id="L203">                    buf.append(',').append(array[i]);</span>
+                }
+<span class="fc" id="L205">                return buf.toString();</span>
+            }
+            @Override
+            public double[] convertFromString(Class&lt;? extends double[]&gt; cls, String str) {
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                if (str.length() == 0) {</span>
+<span class="fc" id="L210">                    return EMPTY;</span>
+                }
+<span class="fc" id="L212">                String[] split = DELIMITER.split(str);</span>
+<span class="fc" id="L213">                double[] array = new double[split.length];</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">                for (int i = 0; i &lt; split.length; i++) {</span>
+<span class="fc" id="L215">                    array[i] = Double.parseDouble(split[i]);</span>
+                }
+<span class="fc" id="L217">                return array;</span>
+            }
+            @Override
+            public Class&lt;?&gt; getEffectiveType() {
+<span class="nc" id="L221">                return double[].class;</span>
+            }
+        };
+<span class="fc" id="L224">        private static final double[] EMPTY = new double[0];</span>
+    }
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L228">    enum FloatArrayStringConverter implements TypedStringConverter&lt;float[]&gt; {</span>
+<span class="fc" id="L229">        INSTANCE {</span>
+            @Override
+            public String convertToString(float[] array) {
+<span class="fc bfc" id="L232" title="All 2 branches covered.">                if (array.length == 0) {</span>
+<span class="fc" id="L233">                    return &quot;&quot;;</span>
+                }
+<span class="fc" id="L235">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L236">                buf.append(array[0]);</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc" id="L238">                    buf.append(',').append(array[i]);</span>
+                }
+<span class="fc" id="L240">                return buf.toString();</span>
+            }
+            @Override
+            public float[] convertFromString(Class&lt;? extends float[]&gt; cls, String str) {
+<span class="fc bfc" id="L244" title="All 2 branches covered.">                if (str.length() == 0) {</span>
+<span class="fc" id="L245">                    return EMPTY;</span>
+                }
+<span class="fc" id="L247">                String[] split = DELIMITER.split(str);</span>
+<span class="fc" id="L248">                float[] array = new float[split.length];</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">                for (int i = 0; i &lt; split.length; i++) {</span>
+<span class="fc" id="L250">                    array[i] = Float.parseFloat(split[i]);</span>
+                }
+<span class="fc" id="L252">                return array;</span>
+            }
+            @Override
+            public Class&lt;?&gt; getEffectiveType() {
+<span class="nc" id="L256">                return float[].class;</span>
+            }
+        };
+<span class="fc" id="L259">        private static final float[] EMPTY = new float[0];</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

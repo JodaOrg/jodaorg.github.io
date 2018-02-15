@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MethodsStringConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert</a> &gt; <span class="el_source">MethodsStringConverter.java</span></div><h1>MethodsStringConverter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+/**
+ * Conversion to and from a string using two methods.
+ * &lt;p&gt;
+ * The toString method must meet the following signature:&lt;br /&gt;
+ * {@code String anyName()} on Class T.
+ * &lt;p&gt;
+ * The fromString method must meet the following signature:&lt;br /&gt;
+ * {@code static T anyName(String)} on any class.
+ * &lt;p&gt;
+ * MethodsStringConverter is thread-safe and immutable.
+ * 
+ * @param &lt;T&gt;  the type of the converter
+ */
+final class MethodsStringConverter&lt;T&gt; extends ReflectionStringConverter&lt;T&gt; {
+
+    /** Conversion from a string. */
+    private final Method fromString;
+    /** Effective type. */
+    private final Class&lt;?&gt; effectiveType;
+
+    /**
+     * Creates an instance using two methods.
+     * @param cls  the class this converts for, not null
+     * @param toString  the toString method, not null
+     * @param fromString  the fromString method, not null
+     * @throws RuntimeException (or subclass) if the method signatures are invalid
+     */
+    MethodsStringConverter(Class&lt;T&gt; cls, Method toString, Method fromString, Class&lt;?&gt; effectiveType) {
+<span class="fc" id="L50">        super(cls, toString);</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (Modifier.isStatic(fromString.getModifiers()) == false) {</span>
+<span class="nc" id="L52">            throw new IllegalStateException(&quot;FromString method must be static: &quot; + fromString);</span>
+        }
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (fromString.getParameterTypes().length != 1) {</span>
+<span class="fc" id="L55">            throw new IllegalStateException(&quot;FromString method must have one parameter: &quot; + fromString);</span>
+        }
+<span class="fc" id="L57">        Class&lt;?&gt; param = fromString.getParameterTypes()[0];</span>
+<span class="fc bfc" id="L58" title="All 4 branches covered.">        if (param != String.class &amp;&amp; param != CharSequence.class) {</span>
+<span class="fc" id="L59">            throw new IllegalStateException(&quot;FromString method must take a String or CharSequence: &quot; + fromString);</span>
+        }
+<span class="fc bfc" id="L61" title="All 4 branches covered.">        if (fromString.getReturnType().isAssignableFrom(cls) == false &amp;&amp; cls.isAssignableFrom(fromString.getReturnType()) == false) {</span>
+<span class="fc" id="L62">            throw new IllegalStateException(&quot;FromString method must return specified class or a supertype: &quot; + fromString);</span>
+        }
+<span class="fc" id="L64">        this.fromString = fromString;</span>
+<span class="fc" id="L65">        this.effectiveType = effectiveType;</span>
+<span class="fc" id="L66">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Converts the {@code String} to an object.
+     * @param cls  the class to convert to, not null
+     * @param str  the string to convert, not null
+     * @return the converted object, may be null but generally not
+     */
+    @Override
+    public T convertFromString(Class&lt;? extends T&gt; cls, String str) {
+        try {
+<span class="fc" id="L78">            return cls.cast(fromString.invoke(null, str));</span>
+<span class="nc" id="L79">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L80">            throw new IllegalStateException(&quot;Method is not accessible: &quot; + fromString);</span>
+<span class="fc" id="L81">        } catch (InvocationTargetException ex) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">            if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L83">                throw (RuntimeException) ex.getCause();</span>
+            }
+<span class="fc" id="L85">            throw new RuntimeException(ex.getMessage(), ex.getCause());</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    @Override
+    public Class&lt;?&gt; getEffectiveType() {
+<span class="fc" id="L92">        return effectiveType;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
