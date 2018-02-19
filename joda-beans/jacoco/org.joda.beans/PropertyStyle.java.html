@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropertyStyle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans</a> &gt; <span class="el_source">PropertyStyle.java</span></div><h1>PropertyStyle.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans;
+
+/**
+ * An enumeration of property styles.
+ * &lt;p&gt;
+ * A property may be read-only, read-write or write-only.
+ * This enumeration models those options.
+ * &lt;p&gt;
+ * It is strongly recommended to use the methods, not compare against the enum values.
+ * 
+ * @author Stephen Colebourne
+ */
+<span class="fc" id="L28">public enum PropertyStyle {</span>
+
+    /**
+     * The property can be read and written.
+     */
+<span class="fc" id="L33">    READ_WRITE,</span>
+    /**
+     * The property is read-only.
+     */
+<span class="fc" id="L37">    READ_ONLY,</span>
+    /**
+     * The property is write-only.
+     */
+<span class="fc" id="L41">    WRITE_ONLY,</span>
+    /**
+     * The property is read-only but can be written via the builder.
+     */
+<span class="fc" id="L45">    READ_ONLY_BUILDABLE,</span>
+    /**
+     * The property is derived.
+     * It is read-only.
+     */
+<span class="fc" id="L50">    DERIVED,</span>
+    /**
+     * The property is immutable.
+     * It can be read and written via the builder.
+     */
+<span class="fc" id="L55">    IMMUTABLE;</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks whether the property is readable.
+     * &lt;p&gt;
+     * This checks if the property get method will succeed.
+     * 
+     * @return true if the property can be read
+     */
+    public boolean isReadable() {
+<span class="pc bpc" id="L66" title="1 of 10 branches missed.">        return this == READ_WRITE || this == READ_ONLY || this == READ_ONLY_BUILDABLE || this == DERIVED || this == IMMUTABLE;</span>
+    }
+
+    /**
+     * Checks whether the property is writable.
+     * &lt;p&gt;
+     * This checks if the property set method will succeed.
+     * 
+     * @return true if the property can be written
+     */
+    public boolean isWritable() {
+<span class="fc bfc" id="L77" title="All 4 branches covered.">        return this == READ_WRITE || this == WRITE_ONLY;</span>
+    }
+
+    /**
+     * Checks whether the property is read-only.
+     * &lt;p&gt;
+     * This checks if the property get method will succeed and the set method fail.
+     * Read-only, derived and immutable properties will return true.
+     * Note that an immutable property can be written via the builder.
+     * 
+     * @return true if the property is derived
+     */
+    public boolean isReadOnly() {
+<span class="pc bpc" id="L90" title="1 of 8 branches missed.">        return this == READ_ONLY || this == READ_ONLY_BUILDABLE || this == DERIVED || this == IMMUTABLE;</span>
+    }
+
+    /**
+     * Checks whether the property can be used in the builder.
+     * &lt;p&gt;
+     * To check for round-trip behavior, use {@link #isSerializable()}.
+     * 
+     * @return true if the property can be used in the builder
+     */
+    public boolean isBuildable() {
+<span class="pc bpc" id="L101" title="1 of 8 branches missed.">        return this == READ_WRITE || this == WRITE_ONLY || this == READ_ONLY_BUILDABLE || this == IMMUTABLE;</span>
+    }
+
+    /**
+     * Checks whether the property is derived.
+     * &lt;p&gt;
+     * A derived property has no instance variable.
+     * 
+     * @return true if the property is derived
+     */
+    public boolean isDerived() {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        return this == DERIVED;</span>
+    }
+
+    /**
+     * Checks whether the property can be serialized in a round-trip.
+     * &lt;p&gt;
+     * A property that is read-write or immutable can be round-trip serialized.
+     * 
+     * @return true if the property is serializable
+     */
+    public boolean isSerializable() {
+<span class="pc bpc" id="L123" title="1 of 6 branches missed.">        return this == READ_WRITE || this == READ_ONLY_BUILDABLE || this == IMMUTABLE;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

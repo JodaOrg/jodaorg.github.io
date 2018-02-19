@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SerOptional.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser</a> &gt; <span class="el_source">SerOptional.java</span></div><h1>SerOptional.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser;
+
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.joda.beans.Bean;
+import org.joda.beans.JodaBeanUtils;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Assists with serialization and deserialization of optional properties.
+ */
+<span class="nc" id="L30">public class SerOptional {</span>
+
+    /**
+     * Map of known optional types.
+     */
+    private static final Map&lt;Class&lt;?&gt;, Object[]&gt; OPTIONALS;
+    static {
+<span class="fc" id="L37">        Map&lt;Class&lt;?&gt;, Object[]&gt; map = new HashMap&lt;&gt;();</span>
+        try {
+<span class="fc" id="L39">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.base.Optional&quot;);</span>
+<span class="fc" id="L40">            Method create = cls.getMethod(&quot;of&quot;, Object.class);</span>
+<span class="fc" id="L41">            Object nullConstant = cls.getMethod(&quot;absent&quot;).invoke(null);</span>
+<span class="fc" id="L42">            Method isPresent = cls.getMethod(&quot;isPresent&quot;);</span>
+<span class="fc" id="L43">            Method get = cls.getMethod(&quot;get&quot;);</span>
+<span class="fc" id="L44">            map.put(cls, new Object[] {create, nullConstant, isPresent, get});</span>
+<span class="nc" id="L45">        } catch (Exception ex) {</span>
+            // ignore
+<span class="fc" id="L47">        }</span>
+        try {
+<span class="fc" id="L49">            Class&lt;?&gt; cls = Class.forName(&quot;java.util.Optional&quot;);</span>
+<span class="fc" id="L50">            Method create = cls.getMethod(&quot;of&quot;, Object.class);</span>
+<span class="fc" id="L51">            Object nullConstant = cls.getMethod(&quot;empty&quot;).invoke(null);</span>
+<span class="fc" id="L52">            Method isPresent = cls.getMethod(&quot;isPresent&quot;);</span>
+<span class="fc" id="L53">            Method get = cls.getMethod(&quot;get&quot;);</span>
+<span class="fc" id="L54">            map.put(cls, new Object[] {create, nullConstant, isPresent, get});</span>
+<span class="nc" id="L55">        } catch (Exception ex) {</span>
+            // ignore
+<span class="fc" id="L57">        }</span>
+        try {
+<span class="fc" id="L59">            Class&lt;?&gt; cls = Class.forName(&quot;java.util.OptionalDouble&quot;);</span>
+<span class="fc" id="L60">            Method create = cls.getMethod(&quot;of&quot;, Double.TYPE);</span>
+<span class="fc" id="L61">            Object nullConstant = cls.getMethod(&quot;empty&quot;).invoke(null);</span>
+<span class="fc" id="L62">            Method isPresent = cls.getMethod(&quot;isPresent&quot;);</span>
+<span class="fc" id="L63">            Method get = cls.getMethod(&quot;getAsDouble&quot;);</span>
+<span class="fc" id="L64">            map.put(cls, new Object[] {create, nullConstant, isPresent, get});</span>
+<span class="nc" id="L65">        } catch (Exception ex) {</span>
+            // ignore
+<span class="fc" id="L67">        }</span>
+        try {
+<span class="fc" id="L69">            Class&lt;?&gt; cls = Class.forName(&quot;java.util.OptionalInt&quot;);</span>
+<span class="fc" id="L70">            Method create = cls.getMethod(&quot;of&quot;, Integer.TYPE);</span>
+<span class="fc" id="L71">            Object nullConstant = cls.getMethod(&quot;empty&quot;).invoke(null);</span>
+<span class="fc" id="L72">            Method isPresent = cls.getMethod(&quot;isPresent&quot;);</span>
+<span class="fc" id="L73">            Method get = cls.getMethod(&quot;getAsInt&quot;);</span>
+<span class="fc" id="L74">            map.put(cls, new Object[] {create, nullConstant, isPresent, get});</span>
+<span class="nc" id="L75">        } catch (Exception ex) {</span>
+            // ignore
+<span class="fc" id="L77">        }</span>
+        try {
+<span class="fc" id="L79">            Class&lt;?&gt; cls = Class.forName(&quot;java.util.OptionalLong&quot;);</span>
+<span class="fc" id="L80">            Method create = cls.getMethod(&quot;of&quot;, Long.TYPE);</span>
+<span class="fc" id="L81">            Object nullConstant = cls.getMethod(&quot;empty&quot;).invoke(null);</span>
+<span class="fc" id="L82">            Method isPresent = cls.getMethod(&quot;isPresent&quot;);</span>
+<span class="fc" id="L83">            Method get = cls.getMethod(&quot;getAsLong&quot;);</span>
+<span class="fc" id="L84">            map.put(cls, new Object[] {create, nullConstant, isPresent, get});</span>
+<span class="nc" id="L85">        } catch (Exception ex) {</span>
+            // ignore
+<span class="fc" id="L87">        }</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (map.isEmpty()) {</span>
+<span class="nc" id="L89">            OPTIONALS = Collections.emptyMap();</span>
+        } else {
+<span class="fc" id="L91">            OPTIONALS = map;</span>
+        }
+<span class="fc" id="L93">    }</span>
+
+    /**
+     * Extracts the value of the property from a bean, unwrapping any optional.
+     * 
+     * @param metaProp  the property to query, not null
+     * @param bean  the bean to query, not null
+     * @return the value of the property, with any optional wrapper removed
+     */
+    public static Object extractValue(MetaProperty&lt;?&gt; metaProp, Bean bean) {
+<span class="fc" id="L103">        Object value = metaProp.get(bean);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (value != null) {</span>
+<span class="fc" id="L105">            Object[] helpers = OPTIONALS.get(metaProp.propertyType());</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            if (helpers != null) {</span>
+                try {
+<span class="fc" id="L108">                    boolean present = (Boolean) ((Method) helpers[2]).invoke(value);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                    if (present) {</span>
+<span class="fc" id="L110">                        value = ((Method) helpers[3]).invoke(value);</span>
+                    } else {
+<span class="fc" id="L112">                        value = null;</span>
+                    }
+<span class="nc" id="L114">                } catch (Exception ex) {</span>
+<span class="nc" id="L115">                    throw new RuntimeException(ex);</span>
+<span class="fc" id="L116">                }</span>
+            }
+        }
+<span class="fc" id="L119">        return value;</span>
+    }
+
+    /**
+     * Extracts the value of the property from a bean, unwrapping any optional.
+     * 
+     * @param metaProp  the property to query, not null
+     * @param beanType  the type of the bean, not null
+     * @return the type of the property with any optional wrapper removed
+     */
+    public static Class&lt;?&gt; extractType(MetaProperty&lt;?&gt; metaProp, Class&lt;?&gt; beanType) {
+<span class="fc" id="L130">        Class&lt;?&gt; type = metaProp.propertyType();</span>
+<span class="fc" id="L131">        Object[] helpers = OPTIONALS.get(type);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (helpers != null) {</span>
+            try {
+<span class="fc" id="L134">                Class&lt;?&gt; genericType = JodaBeanUtils.extractTypeClass(metaProp, beanType, 1, 0);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">                type = (genericType != null ? genericType : type);</span>
+<span class="nc" id="L136">            } catch (Exception ex) {</span>
+<span class="nc" id="L137">                throw new RuntimeException(ex);</span>
+<span class="fc" id="L138">            }</span>
+        }
+<span class="fc" id="L140">        return type;</span>
+    }
+
+    /**
+     * Wraps the value of a property if it is an optional.
+     * 
+     * @param metaProp  the property to query, not null
+     * @param beanType  the type of the bean, not null
+     * @param value  the value to wrap, may be null
+     * @return the value of the property, with any optional wrapper added
+     */
+    public static Object wrapValue(MetaProperty&lt;?&gt; metaProp, Class&lt;?&gt; beanType, Object value) {
+<span class="fc" id="L152">        Object[] helpers = OPTIONALS.get(metaProp.propertyType());</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (helpers != null) {</span>
+            try {
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                if (value != null) {</span>
+<span class="fc" id="L156">                    value = ((Method) helpers[0]).invoke(null, value);</span>
+                } else {
+<span class="nc" id="L158">                    value = helpers[1];</span>
+                }
+<span class="nc" id="L160">            } catch (Exception ex) {</span>
+<span class="nc" id="L161">                throw new RuntimeException(ex);</span>
+<span class="fc" id="L162">            }</span>
+        }
+<span class="fc" id="L164">        return value;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

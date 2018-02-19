@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicBeanBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl</a> &gt; <span class="el_source">BasicBeanBuilder.java</span></div><h1>BasicBeanBuilder.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl;
+
+import org.joda.beans.Bean;
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Basic implementation of {@code BeanBuilder} that wraps a real bean.
+ * &lt;p&gt;
+ * This approach saves creating a temporary map, but is only suitable if the
+ * bean has a no-arg constructor and allows properties to be set.
+ * 
+ * @author Stephen Colebourne
+ * @param &lt;T&gt;  the bean type
+ */
+public class BasicBeanBuilder&lt;T extends Bean&gt;
+        implements BeanBuilder&lt;T&gt; {
+
+    /**
+     * The actual target bean.
+     */
+    private final T bean;
+
+    /**
+     * Constructs the builder wrapping the target bean.
+     * 
+     * @param bean  the target bean, not null
+     */
+<span class="fc" id="L44">    public BasicBeanBuilder(T bean) {</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (bean == null) {</span>
+<span class="nc" id="L46">            throw new NullPointerException(&quot;Bean must not be null&quot;);</span>
+        }
+<span class="fc" id="L48">        this.bean = bean;</span>
+<span class="fc" id="L49">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the target bean.
+     * 
+     * @return the target bean, not null
+     */
+    protected T getTargetBean() {
+<span class="nc" id="L58">        return bean;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Object get(String propertyName) {
+<span class="fc" id="L64">        return bean.property(propertyName).get();</span>
+    }
+
+    @Override
+    public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
+<span class="fc" id="L69">        return metaProperty.get(bean);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public BeanBuilder&lt;T&gt; set(String propertyName, Object value) {
+<span class="fc" id="L75">        return set(bean.metaBean().metaProperty(propertyName), value);</span>
+    }
+
+    @Override
+    public BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
+<span class="fc" id="L80">        metaProperty.set(bean, value);</span>
+<span class="fc" id="L81">        return this;</span>
+    }
+
+    @Override
+    public T build() {
+<span class="fc" id="L86">        validate(bean);</span>
+<span class="fc" id="L87">        return bean;</span>
+    }
+
+    /**
+     * Hook to allow a subclass to validate the bean.
+     * 
+     * @param bean  the bean to validate, not null
+     */
+    protected void validate(T bean) {
+        // override to validate the bean
+<span class="fc" id="L97">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string that summarises the builder.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L107">        return &quot;BeanBuilder for &quot; + bean.metaBean().beanName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

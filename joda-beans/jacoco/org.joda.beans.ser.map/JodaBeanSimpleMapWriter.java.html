@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JodaBeanSimpleMapWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.map</a> &gt; <span class="el_source">JodaBeanSimpleMapWriter.java</span></div><h1>JodaBeanSimpleMapWriter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.map;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.beans.Bean;
+import org.joda.beans.JodaBeanUtils;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.ser.JodaBeanSer;
+import org.joda.beans.ser.SerCategory;
+import org.joda.beans.ser.SerIterator;
+import org.joda.beans.ser.SerOptional;
+import org.joda.convert.StringConverter;
+
+/**
+ * Provides the ability for a Joda-Bean to be written to a JSON-like in memory {@code Map}.
+ * &lt;p&gt;
+ * This class contains mutable state and cannot be used from multiple threads.
+ * A new instance must be created for each message.
+ * &lt;p&gt;
+ * The format used here is natural, with no meta-data.
+ * As such, it may not be possible to write some objects or read the JSON data back in.
+ * &lt;p&gt;
+ * Beans are output as maps where the key is the property name.
+ * Most simple types, defined by Joda-Convert, are output as JSON strings.
+ * Null values are generally omitted, booleans and numbers are left as is.
+ * Maps must have a key that can be converted to a string by Joda-Convert.
+ * The property type needs to be known when writing/reading - properties, or
+ * list/map entries, that are defined as {@code Object} are unlikely to work well.
+ * &lt;p&gt;
+ * Collections are output using lists, Maps as maps, with other collection types
+ * having a complex list-based format.
+ */
+public class JodaBeanSimpleMapWriter {
+
+    /**
+     * The settings to use.
+     */
+    private final JodaBeanSer settings;
+
+    /**
+     * Creates an instance.
+     * 
+     * @param settings  the settings to use, not null
+     */
+<span class="fc" id="L64">    public JodaBeanSimpleMapWriter(JodaBeanSer settings) {</span>
+<span class="fc" id="L65">        JodaBeanUtils.notNull(settings, &quot;settings&quot;);</span>
+<span class="fc" id="L66">        this.settings = settings;</span>
+<span class="fc" id="L67">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes the bean to a string.
+     * 
+     * @param bean  the bean to output, not null
+     * @return the JSON, not null
+     */
+    public Map&lt;String, Object&gt; write(Bean bean) {
+<span class="fc" id="L77">        JodaBeanUtils.notNull(bean, &quot;bean&quot;);</span>
+<span class="fc" id="L78">        return writeBean(bean, bean.getClass());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // write a bean as a JSON object
+    private Map&lt;String, Object&gt; writeBean(Bean bean, Class&lt;?&gt; declaredType) {
+<span class="fc" id="L84">        Map&lt;String, Object&gt; result = new LinkedHashMap&lt;&gt;();</span>
+        // property information
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
+<span class="pc bpc" id="L87" title="2 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
+<span class="fc" id="L88">                Object value = SerOptional.extractValue(prop, bean);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                if (value != null) {</span>
+<span class="fc" id="L90">                    Object outputValue = null;</span>
+<span class="fc" id="L91">                    Class&lt;?&gt; propType = SerOptional.extractType(prop, bean.getClass());</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                    if (value instanceof Bean) {</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                        if (settings.getConverter().isConvertible(value.getClass())) {</span>
+<span class="nc" id="L94">                            outputValue = writeSimple(propType, value);</span>
+                        } else {
+<span class="fc" id="L96">                            outputValue = writeBean((Bean) value, propType);</span>
+                        }
+                    } else {
+<span class="fc" id="L99">                        SerIterator itemIterator = settings.getIteratorFactory().create(value, prop, bean.getClass(), true);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">                        if (itemIterator != null) {</span>
+<span class="fc" id="L101">                            outputValue = writeElements(itemIterator);</span>
+                        } else {
+<span class="fc" id="L103">                            outputValue = writeSimple(propType, value);</span>
+                        }
+                    }
+<span class="fc" id="L106">                    result.put(prop.name(), outputValue);</span>
+                }
+            }
+<span class="fc" id="L109">        }</span>
+<span class="fc" id="L110">        return result;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // write a collection
+    private Object writeElements(SerIterator itemIterator) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (itemIterator.category() == SerCategory.MAP) {</span>
+<span class="fc" id="L117">            return writeMap(itemIterator);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.COUNTED) {</span>
+<span class="fc" id="L119">            return writeCounted(itemIterator);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        } else if (itemIterator.category() == SerCategory.TABLE) {</span>
+<span class="nc" id="L121">            return writeTable(itemIterator);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        } else if (itemIterator.category() == SerCategory.GRID) {</span>
+<span class="nc" id="L123">            return writeGrid(itemIterator);</span>
+        } else {
+<span class="fc" id="L125">            return writeArray(itemIterator);</span>
+        }
+    }
+
+    // write list/set/array
+    private Object writeArray(SerIterator itemIterator) {
+<span class="fc" id="L131">        List&lt;Object&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L133">            itemIterator.next();</span>
+<span class="fc" id="L134">            result.add(writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator));</span>
+        }
+<span class="fc" id="L136">        return result;</span>
+    }
+
+    // write map
+    private Object writeMap(SerIterator itemIterator) {
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (itemIterator.size() == 0) {</span>
+<span class="fc" id="L142">            return new LinkedHashMap&lt;&gt;();</span>
+        }
+        // if key type is known and convertible use short key format, else use full bean format
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (settings.getConverter().isConvertible(itemIterator.keyType())) {</span>
+<span class="fc" id="L146">            return writeMapSimple(itemIterator);</span>
+        } else {
+<span class="fc" id="L148">            return writeMapComplex(itemIterator);</span>
+        }
+    }
+
+    // write map with simple keys
+    private Object writeMapSimple(SerIterator itemIterator) {
+<span class="fc" id="L154">        Map&lt;String, Object&gt; result = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L155">        StringConverter&lt;Object&gt; keyConverter = settings.getConverter().findConverterNoGenerics(itemIterator.keyType());</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L157">            itemIterator.next();</span>
+<span class="fc" id="L158">            Object key = itemIterator.key();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (key == null) {</span>
+<span class="fc" id="L160">                throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be null&quot;);</span>
+            }
+<span class="fc" id="L162">            String str = keyConverter.convertToString(itemIterator.key());</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">            if (str == null) {</span>
+<span class="nc" id="L164">                throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be a null string&quot;);</span>
+            }
+<span class="fc" id="L166">            result.put(str, writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator));</span>
+<span class="fc" id="L167">        }</span>
+<span class="fc" id="L168">        return result;</span>
+    }
+
+    // write map with complex keys
+    private Object writeMapComplex(SerIterator itemIterator) {
+<span class="fc" id="L173">        Map&lt;String, Object&gt; result = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L175">            itemIterator.next();</span>
+<span class="fc" id="L176">            Object key = itemIterator.key();</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">            if (key == null) {</span>
+<span class="nc" id="L178">                throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be null&quot;);</span>
+            }
+<span class="fc" id="L180">            String str = settings.getConverter().convertToString(itemIterator.key());</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">            if (str == null) {</span>
+<span class="nc" id="L182">                throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be a null string&quot;);</span>
+            }
+<span class="fc" id="L184">            result.put(str, writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator));</span>
+<span class="fc" id="L185">        }</span>
+<span class="fc" id="L186">        return result;</span>
+    }
+
+    // write table
+    private Object writeTable(SerIterator itemIterator) {
+<span class="nc" id="L191">        List&lt;Object&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        while (itemIterator.hasNext()) {</span>
+<span class="nc" id="L193">            itemIterator.next();</span>
+<span class="nc" id="L194">            Object outputKey = writeObject(itemIterator.keyType(), itemIterator.key(), null);</span>
+<span class="nc" id="L195">            Object outputCol = writeObject(itemIterator.columnType(), itemIterator.column(), null);</span>
+<span class="nc" id="L196">            Object outputValue = writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+<span class="nc" id="L197">            result.add(Arrays.asList(outputKey, outputCol, outputValue));</span>
+<span class="nc" id="L198">        }</span>
+<span class="nc" id="L199">        return result;</span>
+    }
+
+    // write grid using sparse approach
+    private Object writeGrid(SerIterator itemIterator) {
+<span class="nc" id="L204">        List&lt;Object&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L205">        result.add(itemIterator.dimensionSize(0));</span>
+<span class="nc" id="L206">        result.add(itemIterator.dimensionSize(1));</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        while (itemIterator.hasNext()) {</span>
+<span class="nc" id="L208">            itemIterator.next();</span>
+<span class="nc" id="L209">            Integer outputKey = (Integer) itemIterator.key();</span>
+<span class="nc" id="L210">            Integer outputCol = (Integer) itemIterator.column();</span>
+<span class="nc" id="L211">            Object outputValue = writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+<span class="nc" id="L212">            result.add(Arrays.asList(outputKey, outputCol, outputValue));</span>
+<span class="nc" id="L213">        }</span>
+<span class="nc" id="L214">        return result;</span>
+    }
+
+    // write counted set
+    private Object writeCounted(final SerIterator itemIterator) {
+<span class="fc" id="L219">        List&lt;Object&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">        while (itemIterator.hasNext()) {</span>
+<span class="nc" id="L221">            itemIterator.next();</span>
+<span class="nc" id="L222">            Object outputValue = writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+<span class="nc" id="L223">            Integer outputCount = itemIterator.count();</span>
+<span class="nc" id="L224">            result.add(Arrays.asList(outputValue, outputCount));</span>
+<span class="nc" id="L225">        }</span>
+<span class="fc" id="L226">        return result;</span>
+    }
+
+    // write collection object
+    private Object writeObject(Class&lt;?&gt; declaredType, Object obj, SerIterator parentIterator) {
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L232">            return null;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        } else if (settings.getConverter().isConvertible(obj.getClass())) {</span>
+<span class="fc" id="L234">            return writeSimple(declaredType, obj);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        } else if (obj instanceof Bean) {</span>
+<span class="fc" id="L236">            return writeBean((Bean) obj, declaredType);</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">        } else if (parentIterator != null) {</span>
+<span class="fc" id="L238">            SerIterator childIterator = settings.getIteratorFactory().createChild(obj, parentIterator);</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">            if (childIterator != null) {</span>
+<span class="fc" id="L240">                return writeElements(childIterator);</span>
+            } else {
+<span class="nc" id="L242">                return writeSimple(declaredType, obj);</span>
+            }
+        } else {
+<span class="nc" id="L245">            return writeSimple(declaredType, obj);</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    // write simple type
+    private Object writeSimple(Class&lt;?&gt; declaredType, Object value) {
+<span class="fc" id="L252">        Class&lt;?&gt; realType = value.getClass();</span>
+<span class="fc bfc" id="L253" title="All 14 branches covered.">        if (realType == Integer.class || realType == Long.class || realType == Short.class ||</span>
+                realType == Byte.class || realType == Float.class || realType == Double.class ||
+                realType == Boolean.class) {
+<span class="fc" id="L256">            return value;</span>
+        } else {
+            // write as a string
+            try {
+<span class="fc" id="L260">                String converted = settings.getConverter().convertToString(realType, value);</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">                if (converted == null) {</span>
+<span class="nc" id="L262">                    throw new IllegalArgumentException(&quot;Unable to write because converter returned a null string: &quot; + value);</span>
+                }
+<span class="fc" id="L264">                return converted;</span>
+<span class="nc" id="L265">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L266">                throw new IllegalArgumentException(</span>
+<span class="nc" id="L267">                        &quot;Unable to convert type &quot; + declaredType.getName() + &quot; for real type: &quot; + realType.getName(), ex);</span>
+            }
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

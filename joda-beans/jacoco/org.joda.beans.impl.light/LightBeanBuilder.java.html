@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LightBeanBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.light</a> &gt; <span class="el_source">LightBeanBuilder.java</span></div><h1>LightBeanBuilder.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.light;
+
+import java.util.NoSuchElementException;
+
+import org.joda.beans.Bean;
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Implementation of {@code BeanBuilder} that builds light beans.
+ * 
+ * @author Stephen Colebourne
+ * @param &lt;B&gt;  the bean type
+ */
+class LightBeanBuilder&lt;B extends Bean&gt;
+        implements BeanBuilder&lt;B&gt; {
+
+    /** The meta-bean. */
+    private final LightMetaBean&lt;B&gt; metaBean;
+    /** The data. */
+    private final Object[] data;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs the builder wrapping the target bean.
+     * 
+     * @param metaBean  the target meta-bean, not null
+     */
+<span class="fc" id="L44">    LightBeanBuilder(LightMetaBean&lt;B&gt; metaBean, Object[] data) {</span>
+<span class="fc" id="L45">        this.metaBean = metaBean;</span>
+<span class="fc" id="L46">        this.data = data;</span>
+<span class="fc" id="L47">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Object get(String propertyName) {
+<span class="nc" id="L52">        return get(metaBean.metaProperty(propertyName));</span>
+    }
+
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
+<span class="nc" id="L58">        return (P) data[index(metaProperty)];</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public BeanBuilder&lt;B&gt; set(String propertyName, Object value) {
+<span class="fc" id="L64">        return set(metaBean.metaProperty(propertyName), value);</span>
+    }
+
+    @Override
+    public BeanBuilder&lt;B&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
+<span class="fc" id="L69">        data[index(metaProperty)] = value;</span>
+<span class="fc" id="L70">        return this;</span>
+    }
+
+    @SuppressWarnings(&quot;deprecation&quot;)
+    private int index(MetaProperty&lt;?&gt; metaProperty) {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (metaProperty instanceof LightMetaProperty) {</span>
+<span class="fc" id="L76">            int index = ((LightMetaProperty&lt;?&gt;) metaProperty).getConstructorIndex();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (index &lt; 0) {</span>
+<span class="fc" id="L78">                throw new NoSuchElementException(&quot;Derived property cannot be set: &quot; + metaProperty.name());</span>
+            }
+<span class="fc" id="L80">            return index;</span>
+        }
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (metaProperty instanceof AbstractLightMetaProperty) {</span>
+            try {
+<span class="fc" id="L84">                int index = ((AbstractLightMetaProperty&lt;?&gt;) metaProperty).getConstructorIndex();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">                if (index &lt; 0) {</span>
+<span class="nc" id="L86">                    throw new NoSuchElementException(&quot;Derived property cannot be set: &quot; + metaProperty.name());</span>
+                }
+<span class="fc" id="L88">                return index;</span>
+<span class="nc" id="L89">            } catch (ClassCastException ex) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                for (MetaProperty&lt;?&gt; mp : metaBean.metaPropertyIterable()) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                    if (mp.equals(metaProperty)) {</span>
+<span class="nc" id="L92">                        return ((LightMetaProperty&lt;?&gt;) mp).getConstructorIndex();</span>
+                    }
+<span class="nc" id="L94">                }</span>
+<span class="nc" id="L95">                throw new NoSuchElementException(&quot;Unknown property: &quot; + metaProperty.name());</span>
+            }
+        }
+<span class="fc" id="L98">        return index(metaBean.metaProperty(metaProperty.name()));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public B build() {
+<span class="fc" id="L104">        return metaBean.build(data);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string that summarises the builder.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L115">        return &quot;BeanBuilder for &quot; + metaBean.beanName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

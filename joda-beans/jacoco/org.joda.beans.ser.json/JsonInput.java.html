@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonInput.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.json</a> &gt; <span class="el_source">JsonInput.java</span></div><h1>JsonInput.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.json;
+
+import java.io.IOException;
+import java.io.Reader;
+
+/**
+ * Reader of JSON data.
+ */
+final class JsonInput {
+
+    /** encoding JSON */
+<span class="fc" id="L27">    private static final String[] REPLACE = new String[128];</span>
+    static {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int i = 0; i &lt; 32; i++) {</span>
+<span class="fc" id="L30">            REPLACE[i] = String.format(&quot;\\u%04x&quot;, i);</span>
+        }
+<span class="fc" id="L32">        REPLACE['\b'] = &quot;\\b&quot;;</span>
+<span class="fc" id="L33">        REPLACE['\t'] = &quot;\\t&quot;;</span>
+<span class="fc" id="L34">        REPLACE['\n'] = &quot;\\n&quot;;</span>
+<span class="fc" id="L35">        REPLACE['\f'] = &quot;\\f&quot;;</span>
+<span class="fc" id="L36">        REPLACE['\r'] = &quot;\\r&quot;;</span>
+<span class="fc" id="L37">        REPLACE['&quot;'] = &quot;\\\&quot;&quot;;</span>
+<span class="fc" id="L38">        REPLACE['\\'] = &quot;\\\\&quot;;</span>
+<span class="fc" id="L39">        REPLACE[127] = &quot;\\u007f&quot;;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * The reader.
+     */
+    private final Reader input;
+    /**
+     * The reused string buffer.
+     */
+<span class="fc" id="L49">    private final StringBuilder buf = new StringBuilder(32);</span>
+    /**
+     * The last parsed integral number.
+     */
+    private long integral;
+    /**
+     * The last parsed floating number.
+     */
+    private double floating;
+    /**
+     * The previously read character.
+     */
+    private Character cachedNext;
+    /**
+     * The previously read object key.
+     */
+    private String cachedObjectKey;
+
+    /**
+     * Creates an instance that parses JSON.
+     * 
+     * @param input  the input to read from, not null
+     */
+<span class="fc" id="L72">    JsonInput(Reader input) {</span>
+<span class="fc" id="L73">        this.input = input;</span>
+<span class="fc" id="L74">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a JSON null.
+     * 
+     * @throws IOException if an error occurs
+     */
+    JsonEvent readEvent() throws IOException {
+<span class="fc" id="L83">        char next = readNext();</span>
+        // whitespace
+<span class="fc bfc" id="L85" title="All 8 branches covered.">        while (next == ' ' || next == '\t' || next == '\n' || next == '\r') {</span>
+<span class="fc" id="L86">            next = readNext();</span>
+        }
+        // identify token
+<span class="fc bfc" id="L89" title="All 12 branches covered.">        switch (next) {</span>
+            case '{':
+<span class="fc" id="L91">                return JsonEvent.OBJECT;</span>
+            case '}':
+<span class="fc" id="L93">                return JsonEvent.OBJECT_END;</span>
+            case '[':
+<span class="fc" id="L95">                return JsonEvent.ARRAY;</span>
+            case ']':
+<span class="fc" id="L97">                return JsonEvent.ARRAY_END;</span>
+            case '&quot;':
+<span class="fc" id="L99">                return JsonEvent.STRING;</span>
+            case '-':
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+<span class="fc" id="L111">                return acceptNumber(next);</span>
+            case 'n':
+<span class="fc" id="L113">                return acceptNull();</span>
+            case 't':
+<span class="fc" id="L115">                return acceptTrue();</span>
+            case 'f':
+<span class="fc" id="L117">                return acceptFalse();</span>
+            case ',':
+<span class="fc" id="L119">                return JsonEvent.COMMA;</span>
+            case ':':
+<span class="fc" id="L121">                return JsonEvent.COLON;</span>
+            default:
+<span class="fc" id="L123">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected JSON character but found '&quot; + next + &quot;'&quot;);</span>
+        }
+    }
+
+    // store peeked value for later use
+    void pushBack(char ch) throws IOException {
+<span class="fc" id="L129">        cachedNext = ch;</span>
+<span class="fc" id="L130">    }</span>
+
+    // store peeked value for later use
+    void pushBackObjectKey(String objectKey) throws IOException {
+<span class="fc" id="L134">        cachedObjectKey = objectKey;</span>
+<span class="fc" id="L135">    }</span>
+
+    JsonEvent ensureEvent(JsonEvent event, JsonEvent expected) throws IOException {
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (event != expected) {</span>
+<span class="fc" id="L139">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected &quot; + expected + &quot; but found &quot; + event);</span>
+        }
+<span class="fc" id="L141">        return event;</span>
+    }
+
+    JsonEvent acceptEvent(JsonEvent expected) throws IOException {
+<span class="fc" id="L145">        return ensureEvent(readEvent(), expected);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // expect object key and parse it
+    String acceptObjectKey(JsonEvent event) throws IOException {
+<span class="fc" id="L151">        ensureEvent(event, JsonEvent.STRING);</span>
+<span class="fc" id="L152">        return parseObjectKey();</span>
+    }
+
+    // opening quite already consumed
+    String parseObjectKey() throws IOException {
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (cachedObjectKey != null) {</span>
+<span class="fc" id="L158">            String key = cachedObjectKey;</span>
+<span class="fc" id="L159">            cachedObjectKey = null;</span>
+<span class="fc" id="L160">            return key;</span>
+        }
+<span class="fc" id="L162">        String str = parseString();</span>
+<span class="fc" id="L163">        acceptEvent(JsonEvent.COLON);</span>
+<span class="fc" id="L164">        return str;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // expect string and parse it
+    String acceptString() throws IOException {
+<span class="fc" id="L170">        acceptEvent(JsonEvent.STRING);</span>
+<span class="fc" id="L171">        return parseString();</span>
+    }
+
+    // opening quite already consumed
+    String parseString() throws IOException {
+<span class="fc" id="L176">        buf.setLength(0);</span>
+<span class="fc" id="L177">        char next = readNext();</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        while (next != '&quot;') {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">            if (next == '\\') {</span>
+<span class="fc" id="L180">                parseEscape();</span>
+            } else {
+<span class="fc" id="L182">                buf.append(next);</span>
+            }
+<span class="fc" id="L184">            next = readNext();</span>
+        }
+<span class="fc" id="L186">        return buf.toString();</span>
+    }
+
+    private void parseEscape() throws IOException {
+<span class="fc" id="L190">        char next = readNext();</span>
+<span class="fc bfc" id="L191" title="All 10 branches covered.">        switch (next) {</span>
+            case '&quot;':
+<span class="fc" id="L193">                buf.append('&quot;');</span>
+<span class="fc" id="L194">                return;</span>
+            case '/':
+<span class="fc" id="L196">                buf.append('/');</span>
+<span class="fc" id="L197">                return;</span>
+            case '\\':
+<span class="fc" id="L199">                buf.append('\\');</span>
+<span class="fc" id="L200">                return;</span>
+            case 'b':
+<span class="fc" id="L202">                buf.append('\b');</span>
+<span class="fc" id="L203">                return;</span>
+            case 'f':
+<span class="fc" id="L205">                buf.append('\f');</span>
+<span class="fc" id="L206">                return;</span>
+            case 'n':
+<span class="fc" id="L208">                buf.append('\n');</span>
+<span class="fc" id="L209">                return;</span>
+            case 'r':
+<span class="fc" id="L211">                buf.append('\r');</span>
+<span class="fc" id="L212">                return;</span>
+            case 't':
+<span class="fc" id="L214">                buf.append('\t');</span>
+<span class="fc" id="L215">                return;</span>
+            case 'u':
+<span class="fc" id="L217">                int total = 0;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">                for (int i = 0; i &lt; 4; i++) {</span>
+<span class="fc" id="L219">                    total = total * 16 + acceptHex();</span>
+                }
+<span class="fc" id="L221">                buf.append((char) total);</span>
+<span class="fc" id="L222">                return;</span>
+            default:
+<span class="fc" id="L224">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected valid escape sequence but found '\\&quot; + next + &quot;'&quot;);</span>
+        }
+    }
+
+    private int acceptHex() throws IOException {
+<span class="fc" id="L229">        char next = readNext();</span>
+<span class="fc bfc" id="L230" title="All 4 branches covered.">        if (next &gt;= '0' &amp;&amp; next &lt;= '9') {</span>
+<span class="fc" id="L231">            return next - 48;</span>
+        }
+<span class="fc bfc" id="L233" title="All 4 branches covered.">        if (next &gt;= 'a' &amp;&amp; next &lt;= 'f') {</span>
+<span class="fc" id="L234">            return next - 97 + 10;</span>
+        }
+<span class="fc bfc" id="L236" title="All 4 branches covered.">        if (next &gt;= 'A' &amp;&amp; next &lt;= 'F') {</span>
+<span class="fc" id="L237">            return next - 65 + 10;</span>
+        }
+<span class="fc" id="L239">        throw new IllegalArgumentException(&quot;Invalid JSON data: Expected hex but found '&quot; + next + &quot;'&quot;);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // number already parsed
+    long parseNumberIntegral() {
+<span class="fc" id="L245">        return integral;</span>
+    }
+
+    // number already parsed
+    double parseNumberFloating() {
+<span class="fc" id="L250">        return floating;</span>
+    }
+
+    private JsonEvent acceptNumber(char first) throws IOException {
+<span class="fc" id="L254">        buf.setLength(0);</span>
+<span class="fc" id="L255">        buf.append(first);</span>
+<span class="fc" id="L256">        char last = first;</span>
+<span class="fc" id="L257">        char next = readNext();</span>
+<span class="fc bfc" id="L258" title="All 14 branches covered.">        while ((next &gt;= '0' &amp;&amp; next &lt;= '9') || next == '.' || next == '-' || next == '+' || next == 'e' || next == 'E') {</span>
+<span class="fc" id="L259">            buf.append((char) next);</span>
+<span class="fc" id="L260">            last = next;</span>
+<span class="fc" id="L261">            next = readNext();</span>
+        }
+<span class="fc" id="L263">        pushBack(next);</span>
+<span class="fc bfc" id="L264" title="All 4 branches covered.">        if (last &lt; '0' || last &gt; '9') {</span>
+<span class="fc" id="L265">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected number but found invalid last char '&quot; + last + &quot;'&quot;);</span>
+        }
+<span class="fc" id="L267">        String str = buf.toString();</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (str.equals(&quot;0&quot;)) {</span>
+<span class="fc" id="L269">            integral = 0;</span>
+<span class="fc" id="L270">            return JsonEvent.NUMBER_INTEGRAL;</span>
+<span class="fc bfc" id="L271" title="All 4 branches covered.">        } else if (str.startsWith(&quot;0&quot;) &amp;&amp; str.charAt(1) != '.') {</span>
+<span class="fc" id="L272">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected number but found zero at start&quot;);</span>
+<span class="fc bfc" id="L273" title="All 6 branches covered.">        } else if (str.contains(&quot;.&quot;) || str.contains(&quot;e&quot;) || str.contains(&quot;E&quot;)) {</span>
+<span class="fc" id="L274">            floating = Double.parseDouble(str);</span>
+<span class="fc" id="L275">            return JsonEvent.NUMBER_FLOATING;</span>
+        } else {
+<span class="fc" id="L277">            integral = Long.parseLong(str);</span>
+<span class="fc" id="L278">            return JsonEvent.NUMBER_INTEGRAL;</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    private JsonEvent acceptNull() throws IOException {
+<span class="fc" id="L284">        acceptChar('u');</span>
+<span class="fc" id="L285">        acceptChar('l');</span>
+<span class="fc" id="L286">        acceptChar('l');</span>
+<span class="fc" id="L287">        return JsonEvent.NULL;</span>
+    }
+
+    private JsonEvent acceptTrue() throws IOException {
+<span class="fc" id="L291">        acceptChar('r');</span>
+<span class="fc" id="L292">        acceptChar('u');</span>
+<span class="fc" id="L293">        acceptChar('e');</span>
+<span class="fc" id="L294">        return JsonEvent.TRUE;</span>
+    }
+
+    private JsonEvent acceptFalse() throws IOException {
+<span class="fc" id="L298">        acceptChar('a');</span>
+<span class="fc" id="L299">        acceptChar('l');</span>
+<span class="fc" id="L300">        acceptChar('s');</span>
+<span class="fc" id="L301">        acceptChar('e');</span>
+<span class="fc" id="L302">        return JsonEvent.FALSE;</span>
+    }
+
+    private void acceptChar(char ch) throws IOException {
+<span class="fc" id="L306">        char next = readNext();</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        if (next != ch) {</span>
+<span class="fc" id="L308">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected '&quot; + ch + &quot;' but found '&quot; + next + &quot;'&quot;);</span>
+        }
+<span class="fc" id="L310">    }</span>
+
+    //-----------------------------------------------------------------------
+    private char readNext() throws IOException {
+<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (cachedNext != null) {</span>
+<span class="fc" id="L315">            char next = cachedNext.charValue();</span>
+<span class="fc" id="L316">            cachedNext = null;</span>
+<span class="fc" id="L317">            return next;</span>
+        }
+<span class="fc" id="L319">        int next = input.read();</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">        if (next == -1) {</span>
+<span class="fc" id="L321">            throw new IllegalArgumentException(&quot;Invalid JSON data: End of file&quot;);</span>
+        }
+<span class="fc" id="L323">        return (char) next;</span>
+    }
+
+    void skipData() throws IOException {
+<span class="fc" id="L327">        skipData(readEvent());</span>
+<span class="fc" id="L328">    }</span>
+
+    private void skipData(JsonEvent event) throws IOException {
+<span class="pc bfc" id="L331" title="All 5 branches covered.">        switch (event) {</span>
+            case OBJECT:
+<span class="fc" id="L333">                event = readEvent();</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">                while (event != JsonEvent.OBJECT_END) {</span>
+<span class="fc" id="L335">                    acceptObjectKey(event);</span>
+<span class="fc" id="L336">                    skipData();</span>
+<span class="fc" id="L337">                    event = acceptObjectSeparator();</span>
+                }
+                break;
+            case ARRAY:
+<span class="fc" id="L341">                event = readEvent();</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">                while (event != JsonEvent.ARRAY_END) {</span>
+<span class="fc" id="L343">                    skipData(event);</span>
+<span class="fc" id="L344">                    event = acceptArraySeparator();</span>
+                }
+                break;
+            case STRING:
+<span class="fc" id="L348">                parseString();</span>
+<span class="fc" id="L349">                break;</span>
+            case NULL:
+            case TRUE:
+            case FALSE:
+            case NUMBER_FLOATING:
+            case NUMBER_INTEGRAL:
+<span class="fc" id="L355">                break;</span>
+            default:
+<span class="fc" id="L357">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected data item but found &quot; + event);</span>
+        }
+<span class="fc" id="L359">    }</span>
+
+    //-----------------------------------------------------------------------
+    // accepts a comma or object end
+    JsonEvent acceptObjectSeparator() throws IOException {
+<span class="fc" id="L364">        JsonEvent event = readEvent();</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">        if (event == JsonEvent.COMMA) {</span>
+<span class="fc" id="L366">            return readEvent();  // leniently allow comma before objectEnd</span>
+        } else {
+<span class="fc" id="L368">            return ensureEvent(event, JsonEvent.OBJECT_END);</span>
+        }
+    }
+
+    // accepts a comma or array end
+    JsonEvent acceptArraySeparator() throws IOException {
+<span class="fc" id="L374">        JsonEvent event = readEvent();</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (event == JsonEvent.COMMA) {</span>
+<span class="fc" id="L376">            return readEvent();  // leniently allow comma before arrayEnd</span>
+        } else {
+<span class="fc" id="L378">            return ensureEvent(event, JsonEvent.ARRAY_END);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

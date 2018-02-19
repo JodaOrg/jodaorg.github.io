@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl</a> &gt; <span class="el_source">BasicProperty.java</span></div><h1>BasicProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.Property;
+
+/**
+ * A property that binds a {@code Bean} to a {@code MetaProperty}.
+ * &lt;p&gt;
+ * This is the standard implementation of a property.
+ * It defers the strategy of getting and setting the value to the meta-property.
+ * &lt;p&gt;
+ * This implementation is also a map entry to aid performance in maps.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ */
+public final class BasicProperty&lt;P&gt; implements Property&lt;P&gt; {
+
+    /** The bean that the property is bound to. */
+    private final Bean bean;
+    /** The meta-property that the property is bound to. */
+    private final MetaProperty&lt;P&gt; metaProperty;
+
+    /**
+     * Factory to create a property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param bean  the bean that the property is bound to, not null
+     * @param metaProperty  the meta property, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; BasicProperty&lt;P&gt; of(Bean bean, MetaProperty&lt;P&gt; metaProperty) {
+<span class="fc" id="L49">        return new BasicProperty&lt;&gt;(bean, metaProperty);</span>
+    }
+
+    /**
+     * Creates a property binding the bean to the meta-property.
+     * 
+     * @param bean  the bean that the property is bound to, not null
+     * @param metaProperty  the meta property, not null
+     */
+<span class="fc" id="L58">    private BasicProperty(Bean bean, MetaProperty&lt;P&gt; metaProperty) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (bean == null) {</span>
+<span class="nc" id="L60">            throw new NullPointerException(&quot;Bean must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (metaProperty == null) {</span>
+<span class="nc" id="L63">            throw new NullPointerException(&quot;MetaProperty must not be null&quot;);</span>
+        }
+<span class="fc" id="L65">        this.bean = bean;</span>
+<span class="fc" id="L66">        this.metaProperty = metaProperty;</span>
+<span class="fc" id="L67">    }</span>
+
+    //-----------------------------------------------------------------------
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public &lt;B extends Bean&gt; B bean() {
+<span class="fc" id="L73">        return (B) bean;</span>
+    }
+
+    @Override
+    public MetaProperty&lt;P&gt; metaProperty() {
+<span class="fc" id="L78">        return metaProperty;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L85">            return true;</span>
+        }
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (obj instanceof Property) {</span>
+<span class="fc" id="L88">            Property&lt;?&gt; other = (Property&lt;?&gt;) obj;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (metaProperty.equals(other.metaProperty())) {</span>
+<span class="fc" id="L90">                Object a = get();</span>
+<span class="fc" id="L91">                Object b = other.get();</span>
+<span class="pc bpc" id="L92" title="3 of 4 branches missed.">                return a == null ? b == null : a.equals(b);</span>
+            }
+        }
+<span class="nc" id="L95">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L100">        P value = get();</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        return metaProperty.hashCode() ^ (value == null ? 0 : value.hashCode());</span>
+    }
+
+    /**
+     * Returns a string that summarises the property.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L111">        return metaProperty + &quot;=&quot; + get();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

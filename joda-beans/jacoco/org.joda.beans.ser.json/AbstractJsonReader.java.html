@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractJsonReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.json</a> &gt; <span class="el_source">AbstractJsonReader.java</span></div><h1>AbstractJsonReader.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.json;
+
+import static org.joda.beans.ser.json.JodaBeanJsonWriter.BEAN;
+import static org.joda.beans.ser.json.JodaBeanJsonWriter.META;
+import static org.joda.beans.ser.json.JodaBeanJsonWriter.TYPE;
+import static org.joda.beans.ser.json.JodaBeanJsonWriter.VALUE;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.joda.beans.Bean;
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.JodaBeanUtils;
+import org.joda.beans.MetaBean;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.ser.JodaBeanSer;
+import org.joda.beans.ser.SerCategory;
+import org.joda.beans.ser.SerDeserializer;
+import org.joda.beans.ser.SerIterable;
+import org.joda.beans.ser.SerOptional;
+import org.joda.beans.ser.SerTypeMapper;
+
+/**
+ * Provides the ability for a Joda-Bean to read from JSON.
+ * &lt;p&gt;
+ * The JSON format is defined by {@link JodaBeanJsonWriter}.
+ * &lt;p&gt;
+ * This class contains mutable state and cannot be used from multiple threads.
+ * A new instance must be created for each message.
+ */
+abstract class AbstractJsonReader {
+
+    /**
+     * Settings.
+     */
+    private final JodaBeanSer settings;
+    /**
+     * The reader.
+     */
+    private JsonInput input;
+    /**
+     * The base package including the trailing dot.
+     */
+    private String basePackage;
+    /**
+     * The known types.
+     */
+<span class="fc" id="L63">    private Map&lt;String, Class&lt;?&gt;&gt; knownTypes = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Creates an instance.
+     * 
+     * @param settings  the settings, not null
+     */
+<span class="fc" id="L70">    AbstractJsonReader(final JodaBeanSer settings) {</span>
+<span class="fc" id="L71">        JodaBeanUtils.notNull(settings, &quot;settings&quot;);</span>
+<span class="fc" id="L72">        this.settings = settings;</span>
+<span class="fc" id="L73">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Parses the root bean.
+     * 
+     * @param input  the JSON input
+     * @param declaredType  the declared type, not null
+     * @return the bean, not null
+     * @throws Exception if an error occurs
+     */
+    &lt;T&gt; T parseRoot(JsonInput input, Class&lt;T&gt; declaredType) throws Exception {
+<span class="fc" id="L85">        this.input = input;</span>
+<span class="fc" id="L86">        Object parsed = parseObject(input.acceptEvent(JsonEvent.OBJECT), declaredType, null, null, null, true);</span>
+<span class="fc" id="L87">        return declaredType.cast(parsed);</span>
+    }
+
+    // parse a bean, event after object start passed in
+    private Object parseBean(JsonEvent event, Class&lt;?&gt; beanType) throws Exception {
+<span class="fc" id="L92">        String propName = &quot;&quot;;</span>
+        try {
+<span class="fc" id="L94">            SerDeserializer deser = settings.getDeserializers().findDeserializer(beanType);</span>
+<span class="fc" id="L95">            MetaBean metaBean = deser.findMetaBean(beanType);</span>
+<span class="fc" id="L96">            BeanBuilder&lt;?&gt; builder = deser.createBuilder(beanType, metaBean);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            while (event != JsonEvent.OBJECT_END) {</span>
+                // property name
+<span class="fc" id="L99">                propName = input.acceptObjectKey(event);</span>
+<span class="fc" id="L100">                MetaProperty&lt;?&gt; metaProp = deser.findMetaProperty(beanType, metaBean, propName);</span>
+                // ignore unknown properties
+<span class="fc bfc" id="L102" title="All 4 branches covered.">                if (metaProp == null || metaProp.style().isDerived()) {</span>
+<span class="fc" id="L103">                    input.skipData();</span>
+                } else {
+<span class="fc" id="L105">                    Object value = parseObject(input.readEvent(),</span>
+<span class="fc" id="L106">                            SerOptional.extractType(metaProp, beanType), metaProp, beanType, null, false);</span>
+<span class="fc" id="L107">                    deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, beanType, value));</span>
+                }
+<span class="fc" id="L109">                propName = &quot;&quot;;</span>
+<span class="fc" id="L110">                event = input.acceptObjectSeparator();</span>
+<span class="fc" id="L111">            }</span>
+<span class="fc" id="L112">            return deser.build(beanType, builder);</span>
+<span class="fc" id="L113">        } catch (Exception ex) {</span>
+<span class="fc" id="L114">            throw new IllegalArgumentException(</span>
+<span class="fc" id="L115">                    &quot;Error parsing bean: &quot; + beanType.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
+        }
+    }
+
+    // parse object, event passed in
+    private Object parseObject(
+            JsonEvent event,
+            Class&lt;?&gt; inputDeclaredType,
+            MetaProperty&lt;?&gt; metaProp,
+            Class&lt;?&gt; beanType,
+            SerIterable parentIterable,
+            boolean rootType) throws Exception {
+
+        // avoid nulls
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        Class&lt;?&gt; declaredType = (inputDeclaredType == null ? Object.class : inputDeclaredType);</span>
+        // establish type
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (event == JsonEvent.OBJECT) {</span>
+<span class="fc" id="L132">            event = input.readEvent();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            if (event == JsonEvent.STRING) {</span>
+<span class="fc" id="L134">                String key = input.parseObjectKey();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">                if (key.equals(BEAN)) {</span>
+<span class="fc" id="L136">                    return parseTypedBean(declaredType, rootType);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">                } else if (key.equals(TYPE)) {</span>
+<span class="fc" id="L138">                    return parseTypedSimple(declaredType);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">                } else if (key.equals(META)) {</span>
+<span class="fc" id="L140">                    return parseTypedMeta();</span>
+                } else {
+<span class="fc" id="L142">                    input.pushBack('&quot;');</span>
+<span class="fc" id="L143">                    input.pushBackObjectKey(key);</span>
+<span class="fc" id="L144">                    event = JsonEvent.OBJECT;</span>
+                }
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            } else if (event == JsonEvent.OBJECT_END) {</span>
+<span class="fc" id="L147">                input.pushBack('}');</span>
+<span class="fc" id="L148">                event = JsonEvent.OBJECT;</span>
+            } else {
+<span class="fc" id="L150">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected JSON object end but found &quot; + event);</span>
+            }
+        }
+        // parse based on type
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(declaredType)) {</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">            if (event == JsonEvent.OBJECT) {</span>
+<span class="fc" id="L156">                return parseBean(input.readEvent(), declaredType);</span>
+            } else {
+<span class="fc" id="L158">                return parseSimple(event, declaredType);</span>
+            }
+        } else {
+<span class="fc bfc" id="L161" title="All 4 branches covered.">            if (event == JsonEvent.OBJECT || event == JsonEvent.ARRAY) {</span>
+<span class="fc" id="L162">                SerIterable childIterable = null;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">                if (metaProp != null) {</span>
+<span class="fc" id="L164">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType, true);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">                } else if (parentIterable != null) {</span>
+<span class="fc" id="L166">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
+                }
+<span class="fc bfc" id="L168" title="All 2 branches covered.">                if (childIterable == null) {</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                    if (event == JsonEvent.ARRAY) {</span>
+<span class="fc" id="L170">                        childIterable = parseUnknownArray(declaredType);</span>
+                    } else {
+<span class="fc" id="L172">                        childIterable = parseUnknownObject(declaredType);</span>
+                    }
+                }
+<span class="fc" id="L175">                return parseIterable(event, childIterable);</span>
+            } else {
+<span class="fc" id="L177">                return parseSimple(event, declaredType);</span>
+            }
+        }
+    }
+
+    SerIterable parseUnknownArray(Class&lt;?&gt; declaredType) {
+<span class="fc" id="L183">        throw new IllegalArgumentException(&quot;JSON contained an array without information about the Java type&quot;);</span>
+    }
+
+    SerIterable parseUnknownObject(Class&lt;?&gt; declaredType) {
+<span class="fc" id="L187">        throw new IllegalArgumentException(&quot;JSON contained an object without information about the Java type&quot;);</span>
+    }
+
+    private Object parseTypedBean(Class&lt;?&gt; declaredType, boolean rootType) throws Exception {
+<span class="fc" id="L191">        String typeStr = input.acceptString();</span>
+<span class="fc" id="L192">        Class&lt;?&gt; effectiveType = SerTypeMapper.decodeType(typeStr, settings, basePackage, knownTypes);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (rootType) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            if (Bean.class.isAssignableFrom(effectiveType) == false) {</span>
+<span class="fc" id="L195">                throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + effectiveType.getName());</span>
+            }
+<span class="fc" id="L197">            basePackage = effectiveType.getPackage().getName() + &quot;.&quot;;</span>
+        }
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (declaredType.isAssignableFrom(effectiveType) == false) {</span>
+<span class="fc" id="L200">            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; +</span>
+<span class="fc" id="L201">                declaredType.getName() + &quot; and &quot; + effectiveType.getName());</span>
+        }
+<span class="fc" id="L203">        JsonEvent event = input.readEvent();</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if (event == JsonEvent.COMMA) {</span>
+<span class="fc" id="L205">            event = input.readEvent();</span>
+        }
+<span class="fc" id="L207">        return parseBean(event, effectiveType);</span>
+    }
+
+    private Object parseTypedSimple(Class&lt;?&gt; declaredType) throws Exception {
+<span class="fc" id="L211">        String typeStr = input.acceptString();</span>
+<span class="fc" id="L212">        Class&lt;?&gt; effectiveType = settings.getDeserializers().decodeType(typeStr, settings, basePackage, knownTypes, declaredType);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">        if (declaredType.isAssignableFrom(effectiveType) == false) {</span>
+<span class="nc" id="L214">            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; +</span>
+<span class="nc" id="L215">                declaredType.getName() + &quot; and &quot; + effectiveType.getName());</span>
+        }
+<span class="fc" id="L217">        input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L218">        String valueKey = input.acceptObjectKey(input.readEvent());</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (valueKey.equals(VALUE) == false) {</span>
+<span class="fc" id="L220">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected 'value' key but found &quot; + valueKey);</span>
+        }
+<span class="fc" id="L222">        Object result = parseSimple(input.readEvent(), effectiveType);</span>
+<span class="fc" id="L223">        input.acceptEvent(JsonEvent.OBJECT_END);</span>
+<span class="fc" id="L224">        return result;</span>
+    }
+
+    private Object parseTypedMeta() throws Exception {
+<span class="fc" id="L228">        String metaType = input.acceptString();</span>
+<span class="fc" id="L229">        SerIterable childIterable = settings.getIteratorFactory().createIterable(metaType, settings, knownTypes);</span>
+<span class="fc" id="L230">        input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L231">        String valueKey = input.acceptObjectKey(input.readEvent());</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        if (valueKey.equals(VALUE) == false) {</span>
+<span class="fc" id="L233">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected 'value' key but found &quot; + valueKey);</span>
+        }
+<span class="fc" id="L235">        Object result = parseIterable(input.readEvent(), childIterable);</span>
+<span class="fc" id="L236">        input.acceptEvent(JsonEvent.OBJECT_END);</span>
+<span class="fc" id="L237">        return result;</span>
+    }
+
+    private Object parseIterable(JsonEvent event, SerIterable iterable) throws Exception {
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        if (iterable.category() == SerCategory.MAP) {</span>
+<span class="fc" id="L242">            return parseIterableMap(event, iterable);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.COUNTED) {</span>
+<span class="fc" id="L244">            return parseIterableCounted(event, iterable);</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.TABLE) {</span>
+<span class="fc" id="L246">            return parseIterableTable(event, iterable);</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.GRID) {</span>
+<span class="fc" id="L248">            return parseIterableGrid(event, iterable);</span>
+        } else {
+<span class="fc" id="L250">            return parseIterableArray(event, iterable);</span>
+        }
+    }
+
+    private Object parseIterableMap(JsonEvent event, SerIterable iterable) throws Exception {
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (event == JsonEvent.OBJECT) {</span>
+<span class="fc" id="L256">            event = input.readEvent();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">            while (event != JsonEvent.OBJECT_END) {</span>
+<span class="fc" id="L258">                String keyStr = input.acceptObjectKey(event);</span>
+<span class="fc" id="L259">                Object key = parseText(keyStr, iterable.keyType());</span>
+<span class="fc" id="L260">                Object value = parseObject(input.readEvent(), iterable.valueType(), null, null, iterable, false);</span>
+<span class="fc" id="L261">                iterable.add(key, null, value, 1);</span>
+<span class="fc" id="L262">                event = input.acceptObjectSeparator();</span>
+<span class="fc" id="L263">            }</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">        } else if (event == JsonEvent.ARRAY) {</span>
+<span class="fc" id="L265">            event = input.readEvent();</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">            while (event != JsonEvent.ARRAY_END) {</span>
+<span class="fc" id="L267">                input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L268">                Object key = parseObject(input.readEvent(), iterable.keyType(), null, null, null, false);</span>
+<span class="fc" id="L269">                input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L270">                Object value = parseObject(input.readEvent(), iterable.valueType(), null, null, iterable, false);</span>
+<span class="fc" id="L271">                input.acceptEvent(JsonEvent.ARRAY_END);</span>
+<span class="fc" id="L272">                iterable.add(key, null, value, 1);</span>
+<span class="fc" id="L273">                event = input.acceptArraySeparator();</span>
+<span class="fc" id="L274">            }</span>
+<span class="fc" id="L275">            return iterable.build();</span>
+        } else {
+<span class="fc" id="L277">            throw new IllegalArgumentException(&quot;Invalid JSON data: Expected array or object but found &quot; + event);</span>
+        }
+<span class="fc" id="L279">        return iterable.build();</span>
+    }
+
+    private Object parseIterableTable(JsonEvent event, SerIterable iterable) throws Exception {
+<span class="fc" id="L283">        input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L284">        event = input.readEvent();</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        while (event != JsonEvent.ARRAY_END) {</span>
+<span class="fc" id="L286">            input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L287">            Object key = parseObject(input.readEvent(), iterable.keyType(), null, null, null, false);</span>
+<span class="fc" id="L288">            input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L289">            Object column = parseObject(input.readEvent(), iterable.columnType(), null, null, null, false);</span>
+<span class="fc" id="L290">            input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L291">            Object value = parseObject(input.readEvent(), iterable.valueType(), null, null, iterable, false);</span>
+<span class="fc" id="L292">            iterable.add(key, column, value, 1);</span>
+<span class="fc" id="L293">            input.acceptEvent(JsonEvent.ARRAY_END);</span>
+<span class="fc" id="L294">            event = input.acceptArraySeparator();</span>
+<span class="fc" id="L295">        }</span>
+<span class="fc" id="L296">        return iterable.build();</span>
+    }
+
+    private Object parseIterableGrid(JsonEvent event, SerIterable iterable) throws Exception {
+<span class="fc" id="L300">        input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L301">        input.acceptEvent(JsonEvent.NUMBER_INTEGRAL);</span>
+<span class="fc" id="L302">        int rows = (int) input.parseNumberIntegral();</span>
+<span class="fc" id="L303">        input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L304">        input.acceptEvent(JsonEvent.NUMBER_INTEGRAL);</span>
+<span class="fc" id="L305">        int columns = (int) input.parseNumberIntegral();</span>
+<span class="fc" id="L306">        iterable.dimensions(new int[] {rows, columns});</span>
+<span class="fc" id="L307">        event = input.acceptArraySeparator();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        while (event != JsonEvent.ARRAY_END) {</span>
+<span class="fc" id="L309">            input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L310">            input.acceptEvent(JsonEvent.NUMBER_INTEGRAL);</span>
+<span class="fc" id="L311">            int row = (int) input.parseNumberIntegral();</span>
+<span class="fc" id="L312">            input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L313">            input.acceptEvent(JsonEvent.NUMBER_INTEGRAL);</span>
+<span class="fc" id="L314">            int column = (int) input.parseNumberIntegral();</span>
+<span class="fc" id="L315">            input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L316">            Object value = parseObject(input.readEvent(), iterable.valueType(), null, null, iterable, false);</span>
+<span class="fc" id="L317">            input.acceptEvent(JsonEvent.ARRAY_END);</span>
+<span class="fc" id="L318">            iterable.add(row, column, value, 1);</span>
+<span class="fc" id="L319">            event = input.acceptArraySeparator();</span>
+<span class="fc" id="L320">        }</span>
+<span class="fc" id="L321">        return iterable.build();</span>
+    }
+
+    private Object parseIterableCounted(JsonEvent event, SerIterable iterable) throws Exception {
+<span class="fc" id="L325">        input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L326">        event = input.readEvent();</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">        while (event != JsonEvent.ARRAY_END) {</span>
+<span class="fc" id="L328">            input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L329">            Object value = parseObject(input.readEvent(), iterable.valueType(), null, null, iterable, false);</span>
+<span class="fc" id="L330">            input.acceptEvent(JsonEvent.COMMA);</span>
+<span class="fc" id="L331">            input.acceptEvent(JsonEvent.NUMBER_INTEGRAL);</span>
+<span class="fc" id="L332">            iterable.add(null, null, value, (int) input.parseNumberIntegral());</span>
+<span class="fc" id="L333">            input.acceptEvent(JsonEvent.ARRAY_END);</span>
+<span class="fc" id="L334">            event = input.acceptArraySeparator();</span>
+<span class="fc" id="L335">        }</span>
+<span class="fc" id="L336">        return iterable.build();</span>
+    }
+
+    private Object parseIterableArray(JsonEvent event, SerIterable iterable) throws Exception {
+<span class="fc" id="L340">        input.ensureEvent(event, JsonEvent.ARRAY);</span>
+<span class="fc" id="L341">        event = input.readEvent();</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        while (event != JsonEvent.ARRAY_END) {</span>
+<span class="fc" id="L343">            Object value = parseObject(event, iterable.valueType(), null, null, iterable, false);</span>
+<span class="fc" id="L344">            iterable.add(null, null, value, 1);</span>
+<span class="fc" id="L345">            event = input.acceptArraySeparator();</span>
+<span class="fc" id="L346">        }</span>
+<span class="fc" id="L347">        return iterable.build();</span>
+    }
+
+    private Object parseSimple(JsonEvent event, Class&lt;?&gt; type) throws Exception {
+<span class="pc bfc" id="L351" title="All 7 branches covered.">        switch (event) {</span>
+            case STRING: {
+<span class="fc" id="L353">                String text = input.parseString();</span>
+<span class="fc" id="L354">                return parseText(text, type);</span>
+            }
+            case NUMBER_INTEGRAL: {
+<span class="fc" id="L357">                long value = input.parseNumberIntegral();</span>
+<span class="fc bfc" id="L358" title="All 4 branches covered.">                if (type == Long.class || type == long.class) {</span>
+<span class="fc" id="L359">                    return Long.valueOf(value);</span>
+                    
+<span class="fc bfc" id="L361" title="All 4 branches covered.">                } else if (type == Short.class || type == short.class) {</span>
+<span class="fc bfc" id="L362" title="All 4 branches covered.">                    if (value &lt; Short.MIN_VALUE || value &gt; Short.MAX_VALUE) {</span>
+<span class="fc" id="L363">                        throw new IllegalArgumentException(&quot;Invalid JSON data: Expected short, but was &quot; + value);</span>
+                    }
+<span class="fc" id="L365">                    return Short.valueOf((short) value);</span>
+                    
+<span class="fc bfc" id="L367" title="All 4 branches covered.">                } else if (type == Byte.class || type == byte.class) {</span>
+<span class="fc bfc" id="L368" title="All 4 branches covered.">                    if (value &lt; Byte.MIN_VALUE || value &gt; Byte.MAX_VALUE) {</span>
+<span class="fc" id="L369">                        throw new IllegalArgumentException(&quot;Invalid JSON data: Expected byte, but was &quot; + value);</span>
+                    }
+<span class="fc" id="L371">                    return Byte.valueOf((byte) value);</span>
+                    
+<span class="pc bpc" id="L373" title="1 of 4 branches missed.">                } else if (type == Double.class || type == double.class) {</span>
+<span class="fc" id="L374">                    double dblVal = (double) value;</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">                    if (value != (long) dblVal) {</span>
+<span class="fc" id="L376">                        throw new IllegalArgumentException(&quot;Invalid JSON data: Value exceeds capacity of double: &quot; + value);</span>
+                    }
+<span class="fc" id="L378">                    return Double.valueOf(dblVal);</span>
+                    
+<span class="pc bpc" id="L380" title="1 of 4 branches missed.">                } else if (type == Float.class || type == float.class) {</span>
+<span class="fc" id="L381">                    float fltVal = (float) value;</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">                    if (value != (long) fltVal) {</span>
+<span class="fc" id="L383">                        throw new IllegalArgumentException(&quot;Invalid JSON data: Value exceeds capacity of float: &quot; + value);</span>
+                    }
+<span class="fc" id="L385">                    return Float.valueOf(fltVal);</span>
+                    
+                } else {
+<span class="fc bfc" id="L388" title="All 4 branches covered.">                    if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+<span class="fc" id="L389">                        throw new IllegalArgumentException(&quot;Invalid JSON data: Expected int, but was &quot; + value);</span>
+                    }
+<span class="fc" id="L391">                    return Integer.valueOf((int) value);</span>
+                }
+            }
+            case NUMBER_FLOATING: {
+<span class="fc" id="L395">                double value = input.parseNumberFloating();</span>
+<span class="fc bfc" id="L396" title="All 4 branches covered.">                if (type == Float.class || type == float.class) {</span>
+<span class="fc" id="L397">                    return Float.valueOf((float) value);</span>
+                } else {
+<span class="fc" id="L399">                    return Double.valueOf(value);</span>
+                }
+            }
+            case NULL: {
+<span class="pc bpc" id="L403" title="1 of 4 branches missed.">                if (type == double.class || type == Double.class) {</span>
+<span class="fc" id="L404">                    return Double.NaN;  // leniently accept null for NaN</span>
+<span class="pc bpc" id="L405" title="1 of 4 branches missed.">                } else if (type == float.class || type == Float.class) {</span>
+<span class="fc" id="L406">                    return Float.NaN;  // leniently accept null for NaN</span>
+                } else {
+<span class="fc" id="L408">                    return null;</span>
+                }
+            }
+            case TRUE:
+<span class="fc" id="L412">                return Boolean.TRUE;</span>
+            case FALSE:
+<span class="fc" id="L414">                return Boolean.FALSE;</span>
+            default:
+<span class="fc" id="L416">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected simple type but found &quot; + event);</span>
+        }
+    }
+
+    private Object parseText(String text, Class&lt;?&gt; type) {
+<span class="fc bfc" id="L421" title="All 4 branches covered.">        if (type == Object.class || type.isAssignableFrom(String.class)) {</span>
+<span class="fc" id="L422">            return text;</span>
+        }
+<span class="fc" id="L424">        return settings.getConverter().convertFromString(type, text);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MetaBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans</a> &gt; <span class="el_source">MetaBean.java</span></div><h1>MetaBean.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans;
+
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+/**
+ * A meta-bean, defining those aspects of a bean which are not specific
+ * to a particular instance, such as the type and set of meta-properties.
+ * &lt;p&gt;
+ * This interface can be thought of as the equivalent of {@link Class} but for beans.
+ * In most cases the meta-bean will be code generated and the concrete class will have additional methods.
+ * 
+ * @author Stephen Colebourne
+ */
+public interface MetaBean {
+
+    /**
+     * Obtains a meta-bean from a {@code Class}.
+     * &lt;p&gt;
+     * This will return a meta-bean if it has been registered, or if the class
+     * implements {@link DynamicBean} and has a no-args constructor.
+     * Note that the common case where the meta-bean is registered by a static initializer is handled.
+     * 
+     * @param cls  the class to get the meta-bean for, not null
+     * @return the meta-bean associated with the class, not null
+     * @throws IllegalArgumentException if unable to obtain the meta-bean
+     */
+    public static MetaBean of(Class&lt;?&gt; cls) {
+<span class="fc" id="L48">        return MetaBeans.lookup(cls);</span>
+    }
+
+    /**
+     * Registers a meta-bean.
+     * &lt;p&gt;
+     * This should be done for all beans in a static factory where possible.
+     * If the meta-bean is dynamic, this method should not be called.
+     * 
+     * @param metaBean  the meta-bean, not null
+     * @throws IllegalArgumentException if unable to register
+     */
+    public static void register(MetaBean metaBean) {
+<span class="fc" id="L61">        MetaBeans.register(metaBean);</span>
+<span class="fc" id="L62">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks whether this bean is buildable or not.
+     * &lt;p&gt;
+     * A buildable bean can be constructed using {@link #builder()}.
+     * If this method returns true then {@code builder()} must return a valid builder.
+     * If this method returns false then {@code builder()} must throw {@link UnsupportedOperationException}.
+     * 
+     * @return true if this bean is buildable
+     */
+    public abstract boolean isBuildable();
+
+    /**
+     * Creates a bean builder that can be used to create an instance of this bean.
+     * &lt;p&gt;
+     * The builder is used in two main ways.
+     * The first is to allow immutable beans to be constructed.
+     * The second is to enable automated tools like serialization/deserialization.
+     * &lt;p&gt;
+     * The builder can be thought of as a {@code Map} of {@link MetaProperty} to value.
+     * Note that the implementation is not necessarily an actual map.
+     * 
+     * @return the bean builder, not null
+     * @throws UnsupportedOperationException if the bean cannot be created
+     */
+    public abstract BeanBuilder&lt;? extends Bean&gt; builder();
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the bean name, which is normally the fully qualified class name of the bean.
+     * &lt;p&gt;
+     * This is primarily used for human-readable output.
+     * 
+     * @return the name of the bean, not empty
+     */
+    public default String beanName() {
+<span class="fc" id="L100">        return beanType().getName();</span>
+    }
+
+    /**
+     * Get the type of the bean, represented as a {@code Class}.
+     * &lt;p&gt;
+     * A {@code MetaBean} can be thought of as the equivalent of {@link Class} but for beans.
+     * This method allows the actual {@code Class} instance of the bean to be obtained.
+     * 
+     * @return the type of the bean, not null
+     */
+    public abstract Class&lt;? extends Bean&gt; beanType();
+
+    //-----------------------------------------------------------------------
+    /**
+     * Counts the number of properties.
+     * &lt;p&gt;
+     * Each meta-bean manages a single bean with a known set of properties.
+     * This method returns the count of properties.
+     * 
+     * @return the number of properties
+     */
+    public default int metaPropertyCount() {
+<span class="fc" id="L123">        return metaPropertyMap().size();</span>
+    }
+
+    /**
+     * Checks if a property exists.
+     * &lt;p&gt;
+     * Each meta-bean manages a single bean with a known set of properties.
+     * This method checks whether there is a property with the specified name.
+     * 
+     * @param propertyName  the property name to check, null returns false
+     * @return true if the property exists
+     */
+    public default boolean metaPropertyExists(String propertyName) {
+<span class="fc" id="L136">        return metaPropertyMap().containsKey(propertyName);</span>
+    }
+
+    /**
+     * Gets a meta-property by name.
+     * &lt;p&gt;
+     * Each meta-bean manages a single bean with a known set of properties.
+     * This method returns the property with the specified name.
+     * &lt;p&gt;
+     * The base interface throws an exception if the name is not recognised.
+     * By contrast, the {@code DynamicMetaBean} subinterface creates the property on demand.
+     * 
+     * @param &lt;R&gt;  the property type, optional, enabling auto-casting
+     * @param propertyName  the property name to retrieve, not null
+     * @return the meta property, not null
+     * @throws NoSuchElementException if the property name is invalid
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public default &lt;R&gt; MetaProperty&lt;R&gt; metaProperty(String propertyName) {
+<span class="fc" id="L155">        MetaProperty&lt;?&gt; mp = metaPropertyMap().get(propertyName);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (mp == null) {</span>
+<span class="nc" id="L157">            throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+        }
+<span class="fc" id="L159">        return (MetaProperty&lt;R&gt;) mp;</span>
+    }
+
+    /**
+     * Gets an iterator of meta-properties.
+     * &lt;p&gt;
+     * This method returns an {@code Iterable}, which is simpler than a {@code Map}.
+     * As a result, implementations may be able to optimise, and so this method should be
+     * preferred to {@link #metaPropertyMap()} where a choice is possible.
+     * 
+     * @return the unmodifiable map of meta property objects, not null
+     */
+    public default Iterable&lt;MetaProperty&lt;?&gt;&gt; metaPropertyIterable() {
+<span class="fc" id="L172">        return metaPropertyMap().values();</span>
+    }
+
+    /**
+     * Gets the map of meta-properties, keyed by property name.
+     * &lt;p&gt;
+     * Where possible, use {@link #metaPropertyIterable()} instead as it typically has better performance.
+     * 
+     * @return the unmodifiable map of meta property objects, not null
+     */
+    public abstract Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap();
+
+    /**
+     * Gets the annotations associated with this bean.
+     * &lt;p&gt;
+     * The annotations are queried from the bean.
+     * This is typically accomplished by querying the annotations of an underlying
+     * {@link Class} however any strategy is permitted.
+     * &lt;p&gt;
+     * If the implementation has a mutable set of annotations, then the result of
+     * this method must stream over those annotations in existence when this method
+     * is called to avoid concurrency issues.
+     * &lt;p&gt;
+     * The default implementation uses the annotations from {@link #beanType()}.
+     * 
+     * @return the annotations, unmodifiable, not null
+     */
+    public default List&lt;Annotation&gt; annotations() {
+<span class="fc" id="L200">        return Collections.unmodifiableList(Arrays.asList(beanType().getAnnotations()));</span>
+    }
+
+    /**
+     * Gets an annotation from the bean.
+     * &lt;p&gt;
+     * The annotations are queried from the bean.
+     * This is typically accomplished by querying the annotations of an underlying
+     * {@link Class} however any strategy is permitted.
+     * 
+     * @param &lt;A&gt;  the annotation type
+     * @param annotationClass  the annotation class to find, not null
+     * @return the annotation, not null
+     * @throws NoSuchElementException if the annotation is not specified
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public default &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
+<span class="fc" id="L217">        List&lt;Annotation&gt; annotations = annotations();</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        for (Annotation annotation : annotations) {</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
+<span class="fc" id="L220">                return (A) annotation;</span>
+            }
+<span class="nc" id="L222">        }</span>
+<span class="nc" id="L223">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

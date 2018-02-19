@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinimalMetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.direct</a> &gt; <span class="el_source">MinimalMetaProperty.java</span></div><h1>MinimalMetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.direct;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
+import org.joda.beans.Bean;
+import org.joda.beans.ImmutableBean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.PropertyStyle;
+import org.joda.beans.impl.BasicMetaProperty;
+
+/**
+ * An immutable meta-property based on a functional interface.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ */
+final class MinimalMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
+
+    /** The meta-bean. */
+    private final MetaBean metaBean;
+    /** The type of the property. */
+    private final Class&lt;P&gt; propertyType;
+    /** The type of the property. */
+    private final Type propertyGenericType;
+    /** The annotations. */
+    private final List&lt;Annotation&gt; annotations;
+    /** The read method. */
+    private final Function&lt;Bean, Object&gt; getter;
+    /** The write method. */
+    private final BiConsumer&lt;Bean, Object&gt; setter;
+    /** The property style. */
+    private final PropertyStyle style;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance.
+     * 
+     * @param metaBean  the meta bean, not null
+     * @param propertyName  the property name, not empty
+     * @param field  the field, not null
+     * @param getter  the property getter, not null
+     * @param setter  the property setter, null if read only
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    MinimalMetaProperty(
+            MetaBean metaBean,
+            String propertyName,
+            Field field,
+            Function&lt;? extends Bean, Object&gt; getter,
+            BiConsumer&lt;? extends Bean, Object&gt; setter) {
+        
+<span class="fc" id="L74">        super(propertyName);</span>
+<span class="fc" id="L75">        this.metaBean = metaBean;</span>
+<span class="fc" id="L76">        this.propertyType = (Class&lt;P&gt;) field.getType();</span>
+<span class="fc" id="L77">        this.propertyGenericType = field.getGenericType();</span>
+<span class="fc" id="L78">        this.annotations = Arrays.asList(field.getAnnotations());</span>
+<span class="fc" id="L79">        this.getter = (Function&lt;Bean, Object&gt;) getter;</span>
+<span class="fc" id="L80">        this.setter = (BiConsumer&lt;Bean, Object&gt;) setter;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (ImmutableBean.class.isAssignableFrom(metaBean.beanType())) {</span>
+<span class="fc" id="L82">            this.style = PropertyStyle.IMMUTABLE;</span>
+        } else {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">            this.style = setter != null ? PropertyStyle.READ_WRITE : PropertyStyle.READ_ONLY;</span>
+        }
+<span class="fc" id="L86">    }</span>
+
+    /**
+     * Creates an instance.
+     * 
+     * @param metaBean  the meta bean, not null
+     * @param method  the method, not null
+     * @param propertyName  the property name, not empty
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    MinimalMetaProperty(
+            MetaBean metaBean,
+            Method method,
+            String propertyName) {
+        
+<span class="fc" id="L101">        super(propertyName);</span>
+<span class="fc" id="L102">        this.metaBean = metaBean;</span>
+<span class="fc" id="L103">        this.propertyType = (Class&lt;P&gt;) method.getReturnType();</span>
+<span class="fc" id="L104">        this.propertyGenericType = method.getGenericReturnType();</span>
+<span class="fc" id="L105">        this.annotations = Arrays.asList(method.getAnnotations());</span>
+<span class="fc" id="L106">        this.getter = b -&gt; {</span>
+            try {
+<span class="fc" id="L108">                return method.invoke(b);</span>
+<span class="nc" id="L109">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L110">                throw ex;</span>
+<span class="nc" id="L111">            } catch (Exception ex) {</span>
+<span class="nc" id="L112">                throw new RuntimeException(ex);</span>
+            }
+        };
+<span class="fc" id="L115">        this.setter = null;</span>
+<span class="fc" id="L116">        this.style = PropertyStyle.DERIVED;</span>
+<span class="fc" id="L117">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public MetaBean metaBean() {
+<span class="nc" id="L122">        return metaBean;</span>
+    }
+
+    @Override
+    public Class&lt;?&gt; declaringType() {
+<span class="fc" id="L127">        return metaBean.beanType();</span>
+    }
+
+    @Override
+    public Class&lt;P&gt; propertyType() {
+<span class="fc" id="L132">        return propertyType;</span>
+    }
+
+    @Override
+    public Type propertyGenericType() {
+<span class="fc" id="L137">        return propertyGenericType;</span>
+    }
+
+    @Override
+    public PropertyStyle style() {
+<span class="fc" id="L142">        return style;</span>
+    }
+
+    @Override
+    public List&lt;Annotation&gt; annotations() {
+<span class="nc" id="L147">        return annotations;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public P get(Bean bean) {
+        try {
+<span class="fc" id="L155">            return (P) getter.apply(bean);</span>
+<span class="nc" id="L156">        } catch (RuntimeException | Error ex) {</span>
+<span class="nc" id="L157">            throw ex;</span>
+<span class="nc" id="L158">        } catch (Throwable ex) {</span>
+<span class="nc" id="L159">            throw new RuntimeException(ex);</span>
+        }
+    }
+
+    @Override
+    public void set(Bean bean, Object value) {
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (setter == null) {</span>
+<span class="nc" id="L166">            throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
+        }
+        try {
+<span class="fc" id="L169">            setter.accept(bean, value);</span>
+<span class="nc" id="L170">        } catch (RuntimeException | Error ex) {</span>
+<span class="nc" id="L171">            throw ex;</span>
+<span class="nc" id="L172">        } catch (Throwable ex) {</span>
+<span class="nc" id="L173">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L174">        }</span>
+<span class="fc" id="L175">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

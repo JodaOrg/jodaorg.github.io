@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SerIteratorFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser</a> &gt; <span class="el_source">SerIteratorFactory.java</span></div><h1>SerIteratorFactory.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import org.joda.beans.JodaBeanUtils;
+import org.joda.beans.MetaProperty;
+
+/**
+ * A factory used to create wrappers around collection-like objects.
+ *
+ * @author Stephen Colebourne
+ */
+<span class="fc" id="L44">public class SerIteratorFactory {</span>
+
+    /**
+     * Singleton instance.
+     */
+<span class="fc" id="L49">    public static final SerIteratorFactory INSTANCE = getInstance();</span>
+    private static SerIteratorFactory getInstance() {
+        try {
+<span class="fc" id="L52">            Class.forName(&quot;org.joda.collect.grid.Grid&quot;);</span>
+<span class="fc" id="L53">            return new CollectSerIteratorFactory();</span>
+<span class="nc" id="L54">        } catch (Exception | LinkageError ex) {</span>
+            try {
+<span class="nc" id="L56">                Class.forName(&quot;com.google.common.collect.Multimap&quot;);</span>
+<span class="nc" id="L57">                return new GuavaSerIteratorFactory();</span>
+<span class="nc" id="L58">            } catch (Exception | LinkageError ex2) {</span>
+<span class="nc" id="L59">                return new SerIteratorFactory();</span>
+            }
+        }
+    }
+    /**
+     * An empty list of classes.
+     */
+<span class="fc" id="L66">    public static final List&lt;Class&lt;?&gt;&gt; EMPTY_VALUE_TYPES = Collections.emptyList();</span>
+    /**
+     * Map of array types.
+     */
+<span class="fc" id="L70">    private static final Map&lt;String, Class&lt;?&gt;&gt; META_TYPE_MAP = new HashMap&lt;&gt;();</span>
+    static {
+<span class="fc" id="L72">        META_TYPE_MAP.put(&quot;Object[]&quot;, Object.class);</span>
+<span class="fc" id="L73">        META_TYPE_MAP.put(&quot;String[]&quot;, String.class);</span>
+<span class="fc" id="L74">        META_TYPE_MAP.put(&quot;boolean[]&quot;, boolean.class);</span>
+<span class="fc" id="L75">        META_TYPE_MAP.put(&quot;char[]&quot;, char.class);</span>
+<span class="fc" id="L76">        META_TYPE_MAP.put(&quot;byte[]&quot;, byte.class);</span>
+<span class="fc" id="L77">        META_TYPE_MAP.put(&quot;short[]&quot;, short.class);</span>
+<span class="fc" id="L78">        META_TYPE_MAP.put(&quot;int[]&quot;, int.class);</span>
+<span class="fc" id="L79">        META_TYPE_MAP.put(&quot;long[]&quot;, long.class);</span>
+<span class="fc" id="L80">        META_TYPE_MAP.put(&quot;float[]&quot;, float.class);</span>
+<span class="fc" id="L81">        META_TYPE_MAP.put(&quot;double[]&quot;, double.class);</span>
+<span class="fc" id="L82">        META_TYPE_MAP.put(&quot;Object[][]&quot;, Object[].class);</span>
+<span class="fc" id="L83">        META_TYPE_MAP.put(&quot;String[][]&quot;, String[].class);</span>
+<span class="fc" id="L84">        META_TYPE_MAP.put(&quot;boolean[][]&quot;, boolean[].class);</span>
+<span class="fc" id="L85">        META_TYPE_MAP.put(&quot;char[][]&quot;, char[].class);</span>
+<span class="fc" id="L86">        META_TYPE_MAP.put(&quot;byte[][]&quot;, byte[].class);</span>
+<span class="fc" id="L87">        META_TYPE_MAP.put(&quot;short[][]&quot;, short[].class);</span>
+<span class="fc" id="L88">        META_TYPE_MAP.put(&quot;int[][]&quot;, int[].class);</span>
+<span class="fc" id="L89">        META_TYPE_MAP.put(&quot;long[][]&quot;, long[].class);</span>
+<span class="fc" id="L90">        META_TYPE_MAP.put(&quot;float[][]&quot;, float[].class);</span>
+<span class="fc" id="L91">        META_TYPE_MAP.put(&quot;double[][]&quot;, double[].class);</span>
+<span class="fc" id="L92">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param value  the possible collection-like object, not null
+     * @param prop  the meta-property defining the value, not null
+     * @param beanClass  the class of the bean, not the meta-property, for better generics, not null
+     * @param allowPrimitiveArrays  whether to allow primitive arrays
+     * @return the iterator, null if not a collection-like type
+     */
+    public SerIterator create(Object value, MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass, boolean allowPrimitiveArrays) {
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (allowPrimitiveArrays &amp;&amp;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                value.getClass().isArray() &amp;&amp;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">                value.getClass().getComponentType().isPrimitive() &amp;&amp;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                value.getClass().getComponentType() != byte.class) {</span>
+<span class="fc" id="L109">            return arrayPrimitive(value, prop.propertyType(), value.getClass().getComponentType());</span>
+        }
+<span class="fc" id="L111">        return create(value, prop, beanClass);</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param value  the possible collection-like object, not null
+     * @param prop  the meta-property defining the value, not null
+     * @param beanClass  the class of the bean, not the meta-property, for better generics, not null
+     * @return the iterator, null if not a collection-like type
+     */
+    public SerIterator create(Object value, MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
+<span class="fc" id="L123">        Class&lt;?&gt; declaredType = prop.propertyType();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (value instanceof Collection) {</span>
+<span class="fc" id="L125">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.collectionType(prop, beanClass));</span>
+<span class="fc" id="L126">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L127">            return collection((Collection&lt;?&gt;) value, declaredType, valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (value instanceof Map) {</span>
+<span class="fc" id="L130">            Class&lt;?&gt; keyType = defaultToObjectClass(JodaBeanUtils.mapKeyType(prop, beanClass));</span>
+<span class="fc" id="L131">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.mapValueType(prop, beanClass));</span>
+<span class="fc" id="L132">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L133">            return map((Map&lt;?, ?&gt;) value, declaredType, keyType, valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L135" title="All 4 branches covered.">        if (value.getClass().isArray() &amp;&amp; value.getClass().getComponentType().isPrimitive() == false) {</span>
+<span class="fc" id="L136">            Object[] array = (Object[]) value;</span>
+<span class="fc" id="L137">            return array(array, declaredType, array.getClass().getComponentType());</span>
+        }
+<span class="fc" id="L139">        return null;</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a value retrieved from a parent iterator.
+     * &lt;p&gt;
+     * Allows the parent iterator to define the child iterator using generic type information.
+     * This handles cases such as a {@code List} as the value in a {@code Map}.
+     * 
+     * @param value  the possible collection-like object, not null
+     * @param parent  the parent iterator, not null
+     * @return the iterator, null if not a collection-like type
+     */
+    public SerIterator createChild(Object value, SerIterator parent) {
+<span class="fc" id="L153">        Class&lt;?&gt; declaredType = parent.valueType();</span>
+<span class="fc" id="L154">        List&lt;Class&lt;?&gt;&gt; childGenericTypes = parent.valueTypeTypes();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (value instanceof Collection) {</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">            if (childGenericTypes.size() == 1) {</span>
+<span class="fc" id="L157">                return collection((Collection&lt;?&gt;) value, declaredType, childGenericTypes.get(0), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="fc" id="L159">            return collection((Collection&lt;?&gt;) value, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (value instanceof Map) {</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">            if (childGenericTypes.size() == 2) {</span>
+<span class="nc" id="L163">                return map((Map&lt;?, ?&gt;) value, declaredType, childGenericTypes.get(0), childGenericTypes.get(1), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="fc" id="L165">            return map((Map&lt;?, ?&gt;) value, Object.class, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="fc bfc" id="L167" title="All 4 branches covered.">        if (value.getClass().isArray() &amp;&amp; value.getClass().getComponentType().isPrimitive() == false) {</span>
+<span class="fc" id="L168">            Object[] array = (Object[]) value;</span>
+<span class="fc" id="L169">            return array(array, Object.class, value.getClass().getComponentType());</span>
+        }
+<span class="fc" id="L171">        return null;</span>
+    }
+
+    /**
+     * Defaults input class to Object class.
+     * 
+     * @param type  the type, may be null
+     * @return the type, not null
+     */
+    protected Class&lt;?&gt; defaultToObjectClass(Class&lt;?&gt; type) {
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        return (type != null ? type : Object.class);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an iterator wrapper for a meta-type description.
+     * 
+     * @param metaTypeDescription  the description of the collection type, not null
+     * @param settings  the settings object, not null
+     * @param knownTypes  the known types map, null if not using known type shortening
+     * @return the iterable, null if not a collection-like type
+     */
+    public SerIterable createIterable(String metaTypeDescription, JodaBeanSer settings, Map&lt;String, Class&lt;?&gt;&gt; knownTypes) {
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;Set&quot;)) {</span>
+<span class="fc" id="L195">            return set(Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;List&quot;)) {</span>
+<span class="fc" id="L198">            return list(Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (metaTypeDescription.equals(&quot;Collection&quot;)) {</span>
+<span class="nc" id="L201">            return list(Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;Map&quot;)) {</span>
+<span class="fc" id="L204">            return map(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">        if (metaTypeDescription.endsWith(&quot;[][][]&quot;)) {</span>
+<span class="nc" id="L207">            throw new IllegalArgumentException(&quot;Three-dimensional arrays cannot be parsed&quot;);</span>
+        }
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (metaTypeDescription.endsWith(&quot;[][]&quot;)) {</span>
+<span class="fc" id="L210">            Class&lt;?&gt; type = META_TYPE_MAP.get(metaTypeDescription);</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">            if (type != null) {</span>
+<span class="fc" id="L212">                return array(type);</span>
+            }
+<span class="nc" id="L214">            String clsStr = metaTypeDescription.substring(0, metaTypeDescription.length() - 4);</span>
+            try {
+<span class="nc" id="L216">                Class&lt;?&gt; cls = SerTypeMapper.decodeType(clsStr, settings, null, knownTypes);</span>
+<span class="nc" id="L217">                String compound = &quot;[L&quot; + cls.getName() + &quot;;&quot;;</span>
+<span class="nc" id="L218">                return array(Class.forName(compound));  // needs to be Class.forName</span>
+<span class="nc" id="L219">            } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L220">                throw new RuntimeException(ex);</span>
+            }
+        }
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        if (metaTypeDescription.endsWith(&quot;[]&quot;)) {</span>
+<span class="fc" id="L224">            Class&lt;?&gt; type = META_TYPE_MAP.get(metaTypeDescription);</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">            if (type == null) {</span>
+<span class="nc" id="L226">                String clsStr = metaTypeDescription.substring(0, metaTypeDescription.length() - 2);</span>
+                try {
+<span class="nc" id="L228">                    type = SerTypeMapper.decodeType(clsStr, settings, null, knownTypes);</span>
+<span class="nc" id="L229">                } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L230">                    throw new RuntimeException(ex);</span>
+<span class="nc" id="L231">                }</span>
+            }
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">            return type.isPrimitive() ? arrayPrimitive(type) : array(type);</span>
+        }
+<span class="nc" id="L235">        return null;</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a child where there are second level generic parameters.
+     * 
+     * @param iterable  the parent iterable, not null
+     * @return the iterable, null if not a collection-like type
+     */
+    public SerIterable createIterable(SerIterable iterable) {
+<span class="fc" id="L245">        List&lt;Class&lt;?&gt;&gt; valueTypeTypes = iterable.valueTypeTypes();</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (valueTypeTypes.size() &gt; 0) {</span>
+<span class="fc" id="L247">            Class&lt;?&gt; valueType = iterable.valueType();</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (NavigableSet.class.isAssignableFrom(valueType)) {</span>
+<span class="nc" id="L249">                return navigableSet(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">            if (SortedSet.class.isAssignableFrom(valueType)) {</span>
+<span class="nc" id="L252">                return sortedSet(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">            if (Set.class.isAssignableFrom(valueType)) {</span>
+<span class="nc" id="L255">                return set(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="fc bfc" id="L257" title="All 2 branches covered.">            if (Collection.class.isAssignableFrom(valueType)) {  // includes List</span>
+<span class="fc" id="L258">                return list(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">            if (NavigableMap.class.isAssignableFrom(valueType)) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
+<span class="nc" id="L262">                    return navigableMap(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
+                }
+<span class="nc" id="L264">                return navigableMap(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+            }
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">            if (SortedMap.class.isAssignableFrom(valueType)) {</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
+<span class="nc" id="L268">                    return sortedMap(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
+                }
+<span class="nc" id="L270">                return sortedMap(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+            }
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">            if (Map.class.isAssignableFrom(valueType)) {</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
+<span class="fc" id="L274">                    return map(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
+                }
+<span class="nc" id="L276">                return map(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+            }
+<span class="nc bnc" id="L278" title="All 2 branches missed.">            if (valueType.isArray()) {</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">                if (valueType.getComponentType().isPrimitive()) {</span>
+<span class="nc" id="L280">                    return arrayPrimitive(valueType.getComponentType());</span>
+                } else {
+<span class="nc" id="L282">                    return array(valueType.getComponentType());</span>
+                }
+            }
+        }
+<span class="fc" id="L286">        return null;</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param prop  the meta-property defining the value, not null
+     * @param beanClass  the class of the bean, not the meta-property, for better generics, not null
+     * @param allowPrimitiveArrays  whether to allow primitive arrays
+     * @return the iterable, null if not a collection-like type
+     */
+    public SerIterable createIterable(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass, boolean allowPrimitiveArrays) {
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        if (allowPrimitiveArrays &amp;&amp;</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">                prop.propertyType().isArray() &amp;&amp;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">                prop.propertyType().getComponentType().isPrimitive() &amp;&amp;</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">                prop.propertyType().getComponentType() != byte.class) {</span>
+<span class="fc" id="L302">            return arrayPrimitive(prop.propertyType().getComponentType());</span>
+        }
+<span class="fc" id="L304">        return createIterable(prop, beanClass);</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param prop  the meta-property defining the value, not null
+     * @param beanClass  the class of the bean, not the meta-property, for better generics, not null
+     * @return the iterable, null if not a collection-like type
+     */
+    public SerIterable createIterable(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (NavigableSet.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="nc" id="L316">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="nc" id="L317">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="nc" id="L318">            return navigableSet(valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L320" title="All 2 branches covered.">        if (SortedSet.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L321">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L322">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L323">            return sortedSet(valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        if (Set.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L326">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L327">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L328">            return set(valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        if (Collection.class.isAssignableFrom(prop.propertyType())) {  // includes List</span>
+<span class="fc" id="L331">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L332">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L333">            return list(valueType, valueTypeTypes);</span>
+        }
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">        if (NavigableMap.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="nc" id="L336">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
+<span class="nc" id="L337">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
+<span class="nc" id="L338">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="nc" id="L339">            return navigableMap(keyType, valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (SortedMap.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L342">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
+<span class="fc" id="L343">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
+<span class="fc" id="L344">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L345">            return sortedMap(keyType, valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L347" title="All 2 branches covered.">        if (Map.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L348">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
+<span class="fc" id="L349">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
+<span class="fc" id="L350">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L351">            return map(keyType, valueType, valueTypeTypes);</span>
+        }
+<span class="fc bfc" id="L353" title="All 4 branches covered.">        if (prop.propertyType().isArray() &amp;&amp; prop.propertyType().getComponentType().isPrimitive() == false) {</span>
+<span class="fc" id="L354">            return array(prop.propertyType().getComponentType());</span>
+        }
+<span class="fc" id="L356">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an iterable wrapper for {@code List}.
+     * 
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable list(
+            final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L369">        final List&lt;Object&gt; coll = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L370">        return new SerIterable() {</span>
+            @Override
+            public SerIterator iterator() {
+<span class="nc" id="L373">                return collection(coll, Object.class, valueType, valueTypeTypes);</span>
+            }
+            @Override
+            public void add(Object key, Object column, Object value, int count) {
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L378">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+                }
+<span class="fc bfc" id="L380" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L381">                    coll.add(value);</span>
+                }
+<span class="fc" id="L383">            }</span>
+            @Override
+            public Object build() {
+<span class="fc" id="L386">                return coll;</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L390">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L394">                return valueTypeTypes;</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterable wrapper for {@code Set}.
+     * 
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable set(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L407">        final Set&lt;Object&gt; coll = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L408">        return set(valueType, valueTypeTypes, coll);</span>
+    }
+
+    /**
+     * Gets an iterable wrapper for {@code SortedSet}.
+     * 
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable sortedSet(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L419">        final SortedSet&lt;Object&gt; coll = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L420">        return set(valueType, valueTypeTypes, coll);</span>
+    }
+
+    /**
+     * Gets an iterable wrapper for {@code NavigableSet}.
+     * 
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable navigableSet(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="nc" id="L431">        final NavigableSet&lt;Object&gt; coll = new TreeSet&lt;&gt;();</span>
+<span class="nc" id="L432">        return set(valueType, valueTypeTypes, coll);</span>
+    }
+
+    private static SerIterable set(
+            final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes, final Set&lt;Object&gt; coll) {
+<span class="fc" id="L437">        return new SerIterable() {</span>
+            @Override
+            public SerIterator iterator() {
+<span class="nc" id="L440">                return collection(coll, Object.class, valueType, valueTypeTypes);</span>
+            }
+            @Override
+            public void add(Object key, Object column, Object value, int count) {
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L445">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+                }
+<span class="fc bfc" id="L447" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L448">                    coll.add(value);</span>
+                }
+<span class="fc" id="L450">            }</span>
+            @Override
+            public Object build() {
+<span class="fc" id="L453">                return coll;</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L457">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L461">                return valueTypeTypes;</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterator wrapper for {@code Collection}.
+     * 
+     * @param coll  the collection, not null
+     * @param declaredType  the declared type, not null
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterator, not null
+     */
+    @SuppressWarnings(&quot;rawtypes&quot;)
+    public static final SerIterator collection(
+            final Collection&lt;?&gt; coll, final Class&lt;?&gt; declaredType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L478">        return new SerIterator() {</span>
+<span class="fc" id="L479">            private final Iterator it = coll.iterator();</span>
+            private Object current;
+
+            @Override
+            public String metaTypeName() {
+<span class="fc bfc" id="L484" title="All 2 branches covered.">                if (coll instanceof Set) {</span>
+<span class="fc" id="L485">                    return &quot;Set&quot;;</span>
+                }
+<span class="pc bpc" id="L487" title="1 of 2 branches missed.">                if (coll instanceof List) {</span>
+<span class="fc" id="L488">                    return &quot;List&quot;;</span>
+                }
+<span class="nc" id="L490">                return &quot;Collection&quot;;</span>
+            }
+            @Override
+            public boolean metaTypeRequired() {
+<span class="fc bfc" id="L494" title="All 2 branches covered.">                if (coll instanceof Set) {</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">                    return Set.class.isAssignableFrom(declaredType) == false;</span>
+                }
+<span class="pc bpc" id="L497" title="1 of 2 branches missed.">                if (coll instanceof List) {</span>
+<span class="fc bfc" id="L498" title="All 2 branches covered.">                    return List.class.isAssignableFrom(declaredType) == false;</span>
+                }
+<span class="nc bnc" id="L500" title="All 2 branches missed.">                return Collection.class.isAssignableFrom(declaredType) == false;</span>
+            }
+            @Override
+            public int size() {
+<span class="fc" id="L504">                return coll.size();</span>
+            }
+            @Override
+            public boolean hasNext() {
+<span class="fc" id="L508">                return it.hasNext();</span>
+            }
+            @Override
+            public void next() {
+<span class="fc" id="L512">                current = it.next();</span>
+<span class="fc" id="L513">            }</span>
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L516">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L520">                return valueTypeTypes;</span>
+            }
+            @Override
+            public Object value() {
+<span class="fc" id="L524">                return current;</span>
+            }
+        };
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an iterable wrapper for {@code Map}.
+     * 
+     * @param keyType  the value type, not null
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable map(final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L539">        final Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L540">        return map(keyType, valueType, valueTypeTypes, map);</span>
+    }
+
+    /**
+     * Gets an iterable wrapper for {@code SortedMap}.
+     * 
+     * @param keyType  the value type, not null
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable sortedMap(final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L552">        final SortedMap&lt;Object, Object&gt; map = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L553">        return map(keyType, valueType, valueTypeTypes, map);</span>
+    }
+
+    /**
+     * Gets an iterable wrapper for {@code NavigableMap}.
+     * 
+     * @param keyType  the value type, not null
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable navigableMap(final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="nc" id="L565">        final NavigableMap&lt;Object, Object&gt; map = new TreeMap&lt;&gt;();</span>
+<span class="nc" id="L566">        return map(keyType, valueType, valueTypeTypes, map);</span>
+    }
+
+    static SerIterable map(
+            final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType,
+            final List&lt;Class&lt;?&gt;&gt; valueTypeTypes, final Map&lt;Object, Object&gt; map) {
+<span class="fc" id="L572">        return new SerIterable() {</span>
+            @Override
+            public SerIterator iterator() {
+<span class="nc" id="L575">                return map(map, Object.class, keyType, valueType, valueTypeTypes);</span>
+            }
+            @Override
+            public void add(Object key, Object column, Object value, int count) {
+<span class="pc bpc" id="L579" title="1 of 2 branches missed.">                if (key == null) {</span>
+<span class="nc" id="L580">                    throw new IllegalArgumentException(&quot;Missing key&quot;);</span>
+                }
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">                if (count != 1) {</span>
+<span class="nc" id="L583">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
+                }
+<span class="fc" id="L585">                map.put(key, value);</span>
+<span class="fc" id="L586">            }</span>
+            @Override
+            public Object build() {
+<span class="fc" id="L589">                return map;</span>
+            }
+            @Override
+            public SerCategory category() {
+<span class="fc" id="L593">                return SerCategory.MAP;</span>
+            }
+            @Override
+            public Class&lt;?&gt; keyType() {
+<span class="fc" id="L597">                return keyType;</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L601">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L605">                return valueTypeTypes;</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterator wrapper for {@code Map}.
+     * 
+     * @param map  the collection, not null
+     * @param declaredType  the declared type, not null
+     * @param keyType  the value type, not null
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterator, not null
+     */
+    @SuppressWarnings(&quot;rawtypes&quot;)
+    public static final SerIterator map(
+            final Map&lt;?, ?&gt; map, final Class&lt;?&gt; declaredType,
+            final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L624">        return new SerIterator() {</span>
+<span class="fc" id="L625">            private final Iterator it = map.entrySet().iterator();</span>
+            private Entry current;
+
+            @Override
+            public String metaTypeName() {
+<span class="fc" id="L630">                return &quot;Map&quot;;</span>
+            }
+            @Override
+            public boolean metaTypeRequired() {
+<span class="fc bfc" id="L634" title="All 2 branches covered.">                return Map.class.isAssignableFrom(declaredType) == false;</span>
+            }
+            @Override
+            public SerCategory category() {
+<span class="fc" id="L638">                return SerCategory.MAP;</span>
+            }
+            @Override
+            public int size() {
+<span class="fc" id="L642">                return map.size();</span>
+            }
+            @Override
+            public boolean hasNext() {
+<span class="fc" id="L646">                return it.hasNext();</span>
+            }
+            @Override
+            public void next() {
+<span class="fc" id="L650">                current = (Entry) it.next();</span>
+<span class="fc" id="L651">            }</span>
+            @Override
+            public Class&lt;?&gt; keyType() {
+<span class="fc" id="L654">                return keyType;</span>
+            }
+            @Override
+            public Object key() {
+<span class="fc" id="L658">                return current.getKey();</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L662">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L666">                return valueTypeTypes;</span>
+            }
+            @Override
+            public Object value() {
+<span class="fc" id="L670">                return current.getValue();</span>
+            }
+        };
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an iterable wrapper for an object array.
+     * 
+     * @param valueType  the value type, not null
+     * @return the iterable, not null
+     */
+    public static final SerIterable array(final Class&lt;?&gt; valueType) {
+<span class="fc" id="L683">        final List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L684">        return new SerIterable() {</span>
+            @Override
+            public SerIterator iterator() {
+<span class="nc" id="L687">                return array(build(), Object.class, valueType);</span>
+            }
+            @Override
+            public void add(Object key, Object column, Object value, int count) {
+<span class="pc bpc" id="L691" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L692">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+                }
+<span class="pc bpc" id="L694" title="1 of 2 branches missed.">                if (count != 1) {</span>
+<span class="nc" id="L695">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
+                }
+<span class="fc bfc" id="L697" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L698">                    list.add(value);</span>
+                }
+<span class="fc" id="L700">            }</span>
+            @Override
+            public Object[] build() {
+<span class="fc" id="L703">                Object[] array = (Object[]) Array.newInstance(valueType, list.size());</span>
+<span class="fc" id="L704">                return list.toArray(array);</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L708">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L712">                return EMPTY_VALUE_TYPES;</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterable wrapper for a primitive array.
+     * 
+     * @param valueType  the value type, not null
+     * @return the iterable, not null
+     */
+    static final SerIterable arrayPrimitive(final Class&lt;?&gt; valueType) {
+<span class="fc" id="L724">        final List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L725">        return new SerIterable() {</span>
+            @Override
+            public SerIterator iterator() {
+<span class="nc" id="L728">                return arrayPrimitive(build(), Object.class, valueType);</span>
+            }
+            @Override
+            public void add(Object key, Object column, Object value, int count) {
+<span class="pc bpc" id="L732" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L733">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+                }
+<span class="pc bpc" id="L735" title="1 of 2 branches missed.">                if (count != 1) {</span>
+<span class="nc" id="L736">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
+                }
+<span class="fc bfc" id="L738" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L739">                    list.add(value);</span>
+                }
+<span class="fc" id="L741">            }</span>
+            @Override
+            public Object build() {
+<span class="fc" id="L744">                Object array = Array.newInstance(valueType, list.size());</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">                for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L746">                    Array.set(array, i, list.get(i));</span>
+                }
+<span class="fc" id="L748">                return array;</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L752">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="nc" id="L756">                return EMPTY_VALUE_TYPES;</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterator wrapper for an object array.
+     * 
+     * @param array  the array, not null
+     * @param declaredType  the declared type, not null
+     * @param valueType  the value type, not null
+     * @return the iterator, not null
+     */
+    public static final SerIterator array(
+            final Object[] array, final Class&lt;?&gt; declaredType, final Class&lt;?&gt; valueType) {
+<span class="fc" id="L771">        return new SerIterator() {</span>
+<span class="fc" id="L772">            private int index = -1;</span>
+
+            @Override
+            public String metaTypeName() {
+<span class="fc" id="L776">                return metaTypeNameBase(valueType);</span>
+            }
+            private String metaTypeNameBase(Class&lt;?&gt; arrayType) {
+<span class="fc bfc" id="L779" title="All 2 branches covered.">                if (arrayType.isArray()) {</span>
+<span class="fc" id="L780">                    return metaTypeNameBase(arrayType.getComponentType()) + &quot;[]&quot;;</span>
+                }
+<span class="pc bpc" id="L782" title="1 of 2 branches missed.">                if (arrayType == Object.class) {</span>
+<span class="nc" id="L783">                    return &quot;Object[]&quot;;</span>
+                }
+<span class="fc bfc" id="L785" title="All 2 branches covered.">                if (arrayType == String.class) {</span>
+<span class="fc" id="L786">                    return &quot;String[]&quot;;</span>
+                }
+<span class="fc" id="L788">                return arrayType.getName() + &quot;[]&quot;;</span>
+            }
+            @Override
+            public boolean metaTypeRequired() {
+<span class="pc bpc" id="L792" title="1 of 2 branches missed.">                if (valueType == Object.class) {</span>
+<span class="nc bnc" id="L793" title="All 2 branches missed.">                    return Object[].class.isAssignableFrom(declaredType) == false;</span>
+                }
+<span class="fc bfc" id="L795" title="All 2 branches covered.">                if (valueType == String.class) {</span>
+<span class="fc bfc" id="L796" title="All 2 branches covered.">                    return String[].class.isAssignableFrom(declaredType) == false;</span>
+                }
+<span class="fc" id="L798">                return true;</span>
+            }
+            @Override
+            public int size() {
+<span class="fc" id="L802">                return array.length;</span>
+            }
+            @Override
+            public boolean hasNext() {
+<span class="fc bfc" id="L806" title="All 2 branches covered.">                return (index + 1) &lt; array.length;</span>
+            }
+            @Override
+            public void next() {
+<span class="fc" id="L810">                index++;</span>
+<span class="fc" id="L811">            }</span>
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L814">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="fc" id="L818">                return Collections.emptyList();</span>
+            }
+            @Override
+            public Object value() {
+<span class="fc" id="L822">                return array[index];</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterator wrapper for a primitive array.
+     * 
+     * @param array  the array, not null
+     * @param declaredType  the declared type, not null
+     * @param valueType  the value type, not null
+     * @return the iterator, not null
+     */
+    static final SerIterator arrayPrimitive(
+            final Object array, final Class&lt;?&gt; declaredType, final Class&lt;?&gt; valueType) {
+<span class="fc" id="L837">        final int arrayLength = Array.getLength(array);</span>
+<span class="fc" id="L838">        return new SerIterator() {</span>
+<span class="fc" id="L839">            private int index = -1;</span>
+
+            @Override
+            public String metaTypeName() {
+<span class="nc" id="L843">                return metaTypeNameBase(valueType);</span>
+            }
+            private String metaTypeNameBase(Class&lt;?&gt; arrayType) {
+<span class="nc bnc" id="L846" title="All 2 branches missed.">                if (arrayType.isArray()) {</span>
+<span class="nc" id="L847">                    return metaTypeNameBase(arrayType.getComponentType()) + &quot;[]&quot;;</span>
+                }
+<span class="nc bnc" id="L849" title="All 2 branches missed.">                if (arrayType == Object.class) {</span>
+<span class="nc" id="L850">                    return &quot;Object[]&quot;;</span>
+                }
+<span class="nc bnc" id="L852" title="All 2 branches missed.">                if (arrayType == String.class) {</span>
+<span class="nc" id="L853">                    return &quot;String[]&quot;;</span>
+                }
+<span class="nc" id="L855">                return arrayType.getName() + &quot;[]&quot;;</span>
+            }
+            @Override
+            public boolean metaTypeRequired() {
+<span class="nc bnc" id="L859" title="All 2 branches missed.">                if (valueType == Object.class) {</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">                    return Object[].class.isAssignableFrom(declaredType) == false;</span>
+                }
+<span class="nc bnc" id="L862" title="All 2 branches missed.">                if (valueType == String.class) {</span>
+<span class="nc bnc" id="L863" title="All 2 branches missed.">                    return String[].class.isAssignableFrom(declaredType) == false;</span>
+                }
+<span class="nc" id="L865">                return true;</span>
+            }
+            @Override
+            public int size() {
+<span class="nc" id="L869">                return arrayLength;</span>
+            }
+            @Override
+            public boolean hasNext() {
+<span class="fc bfc" id="L873" title="All 2 branches covered.">                return (index + 1) &lt; arrayLength;</span>
+            }
+            @Override
+            public void next() {
+<span class="fc" id="L877">                index++;</span>
+<span class="fc" id="L878">            }</span>
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L881">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="nc" id="L885">                return Collections.emptyList();</span>
+            }
+            @Override
+            public Object value() {
+<span class="fc" id="L889">                return Array.get(array, index);</span>
+            }
+        };
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

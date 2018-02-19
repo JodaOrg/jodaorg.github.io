@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinimalMetaBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.direct</a> &gt; <span class="el_source">MinimalMetaBean.java</span></div><h1>MinimalMetaBean.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.direct;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import org.joda.beans.Bean;
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.TypedMetaBean;
+import org.joda.beans.gen.DerivedProperty;
+import org.joda.beans.gen.PropertyDefinition;
+
+/**
+ * A meta-bean implementation designed for use by the code generator.
+ * 
+ * @author Stephen Colebourne
+ * @param &lt;T&gt;  the type of the bean
+ */
+public final class MinimalMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&lt;T&gt; {
+
+    /** The bean type. */
+    private final Class&lt;T&gt; beanType;
+    /** The constructor to use. */
+    private final Supplier&lt;BeanBuilder&lt;T&gt;&gt; builderSupplier;
+    /** The meta-property instances of the bean. */
+    private final Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap;
+
+    /**
+     * Obtains an instance of the meta-bean for immutable beans.
+     * &lt;p&gt;
+     * The properties will be determined using reflection to find the
+     * {@link PropertyDefinition} annotation.
+     * 
+     * @param &lt;B&gt;  the type of the bean
+     * @param beanType  the bean type, not null
+     * @param builderSupplier  the supplier of bean builders, not null
+     * @param getters  the getter functions, not null
+     * @return the meta-bean, not null
+     * @deprecated Use version that takes the field names
+     */
+    @Deprecated
+    @SafeVarargs
+    public static &lt;B extends Bean&gt; MinimalMetaBean&lt;B&gt; of(
+            Class&lt;B&gt; beanType,
+            Supplier&lt;BeanBuilder&lt;B&gt;&gt; builderSupplier,
+            Function&lt;B, Object&gt;... getters) {
+
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (getters == null) {</span>
+<span class="nc" id="L75">            throw new NullPointerException(&quot;Getter functions must not be null&quot;);</span>
+        }
+<span class="nc" id="L77">        return new MinimalMetaBean&lt;&gt;(beanType, fieldNames(beanType), builderSupplier, Arrays.asList(getters), null);</span>
+    }
+
+    /**
+     * Obtains an instance of the meta-bean for immutable beans.
+     * &lt;p&gt;
+     * The properties will be determined using reflection to find the
+     * {@link PropertyDefinition} annotation.
+     * The field names must be specified as reflection does not return fields in source code order.
+     * 
+     * @param &lt;B&gt;  the type of the bean
+     * @param beanType  the bean type, not null
+     * @param fieldNames  the field names, not null
+     * @param builderSupplier  the supplier of bean builders, not null
+     * @param getters  the getter functions, not null
+     * @return the meta-bean, not null
+     */
+    @SafeVarargs
+    public static &lt;B extends Bean&gt; MinimalMetaBean&lt;B&gt; of(
+            Class&lt;B&gt; beanType,
+            String[] fieldNames,
+            Supplier&lt;BeanBuilder&lt;B&gt;&gt; builderSupplier,
+            Function&lt;B, Object&gt;... getters) {
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (getters == null) {</span>
+<span class="nc" id="L102">            throw new NullPointerException(&quot;Getter functions must not be null&quot;);</span>
+        }
+<span class="fc" id="L104">        return new MinimalMetaBean&lt;&gt;(beanType, fieldNames, builderSupplier, Arrays.asList(getters), null);</span>
+    }
+
+    /**
+     * Obtains an instance of the meta-bean for mutable beans.
+     * &lt;p&gt;
+     * The properties will be determined using reflection to find the
+     * {@link PropertyDefinition} annotation.
+     * 
+     * @param &lt;B&gt;  the type of the bean
+     * @param beanType  the bean type, not null
+     * @param builderSupplier  the supplier of bean builders, not null
+     * @param getters  the getter functions, not null
+     * @param setters  the setter functions, not null
+     * @return the meta-bean, not null
+     * @deprecated Use version that takes the field names
+     */
+    @Deprecated
+    public static &lt;B extends Bean&gt; MinimalMetaBean&lt;B&gt; of(
+            Class&lt;B&gt; beanType,
+            Supplier&lt;BeanBuilder&lt;B&gt;&gt; builderSupplier,
+            List&lt;Function&lt;B, Object&gt;&gt; getters,
+            List&lt;BiConsumer&lt;B, Object&gt;&gt; setters) {
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (getters == null) {</span>
+<span class="nc" id="L129">            throw new NullPointerException(&quot;Getter functions must not be null&quot;);</span>
+        }
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (setters == null) {</span>
+<span class="nc" id="L132">            throw new NullPointerException(&quot;Setter functions must not be null&quot;);</span>
+        }
+<span class="nc" id="L134">        return new MinimalMetaBean&lt;&gt;(beanType, fieldNames(beanType), builderSupplier, getters, setters);</span>
+    }
+
+    /**
+     * Obtains an instance of the meta-bean for mutable beans.
+     * &lt;p&gt;
+     * The properties will be determined using reflection to find the
+     * {@link PropertyDefinition} annotation.
+     * The field names must be specified as reflection does not return fields in source code order.
+     * 
+     * @param &lt;B&gt;  the type of the bean
+     * @param beanType  the bean type, not null
+     * @param fieldNames  the field names, not null
+     * @param builderSupplier  the supplier of bean builders, not null
+     * @param getters  the getter functions, not null
+     * @param setters  the setter functions, not null
+     * @return the meta-bean, not null
+     */
+    public static &lt;B extends Bean&gt; MinimalMetaBean&lt;B&gt; of(
+            Class&lt;B&gt; beanType,
+            String[] fieldNames,
+            Supplier&lt;BeanBuilder&lt;B&gt;&gt; builderSupplier,
+            List&lt;Function&lt;B, Object&gt;&gt; getters,
+            List&lt;BiConsumer&lt;B, Object&gt;&gt; setters) {
+
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (getters == null) {</span>
+<span class="nc" id="L160">            throw new NullPointerException(&quot;Getter functions must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (setters == null) {</span>
+<span class="nc" id="L163">            throw new NullPointerException(&quot;Setter functions must not be null&quot;);</span>
+        }
+<span class="fc" id="L165">        return new MinimalMetaBean&lt;&gt;(beanType, fieldNames, builderSupplier, getters, setters);</span>
+    }
+
+    /**
+     * Constructor.
+     * 
+     * @param beanType  the bean type, not null
+     * @param builderSupplier  the supplier of bean builders, not null
+     * @param fieldNames  the field names, not null
+     * @param getters  the getter functions, not null
+     * @param setters  the setter functions, may be null
+     */
+    private MinimalMetaBean(
+            Class&lt;T&gt; beanType,
+            String[] fieldNames,
+            Supplier&lt;BeanBuilder&lt;T&gt;&gt; builderSupplier,
+            List&lt;Function&lt;T, Object&gt;&gt; getters,
+<span class="fc" id="L182">            List&lt;BiConsumer&lt;T, Object&gt;&gt; setters) {</span>
+
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        if (beanType == null) {</span>
+<span class="nc" id="L185">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (builderSupplier == null) {</span>
+<span class="nc" id="L188">            throw new NullPointerException(&quot;Supplier of BeanBuilder must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">        if (fieldNames == null) {</span>
+<span class="nc" id="L191">            throw new NullPointerException(&quot;Field names must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        if (fieldNames.length != getters.size()) {</span>
+<span class="nc" id="L194">            throw new IllegalArgumentException(&quot;Number of getter functions must match number of fields&quot;);</span>
+        }
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">        if (setters != null &amp;&amp; fieldNames.length != setters.size()) {</span>
+<span class="nc" id="L197">            throw new IllegalArgumentException(&quot;Number of setter functions must match number of fields&quot;);</span>
+        }
+<span class="fc" id="L199">        this.beanType = beanType;</span>
+<span class="fc" id="L200">        this.builderSupplier = builderSupplier;</span>
+        // extract fields and match to getters/setters
+<span class="fc" id="L202">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        for (int i = 0; i &lt; fieldNames.length; i++) {</span>
+<span class="fc" id="L204">            String fieldName = fieldNames[i];</span>
+            Field field;
+            try {
+<span class="fc" id="L207">                field = beanType.getDeclaredField(fieldName);</span>
+<span class="nc" id="L208">            } catch (NoSuchFieldException ex) {</span>
+<span class="nc" id="L209">                throw new IllegalArgumentException(ex);</span>
+<span class="fc" id="L210">            }</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">            if (Modifier.isStatic(field.getModifiers())) {</span>
+<span class="nc" id="L212">                throw new IllegalArgumentException(&quot;Field must not be static&quot;);</span>
+            }
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">            if (field.getAnnotation(PropertyDefinition.class) == null) {</span>
+<span class="nc" id="L215">                throw new IllegalArgumentException(&quot;Field must have PropertyDefinition annotation&quot;);</span>
+            }
+<span class="fc" id="L217">            map.put(fieldName, new MinimalMetaProperty&lt;&gt;(</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">                    this, fieldName, field, getters.get(i), setters != null ? setters.get(i) : null));</span>
+        }
+        // derived
+<span class="fc" id="L221">        Method[] methods = beanType.getDeclaredMethods();</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        for (Method method : methods) {</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">            if (!Modifier.isStatic(method.getModifiers()) &amp;&amp;</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">                    Modifier.isPublic(method.getModifiers()) &amp;&amp;</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">                    method.getAnnotation(DerivedProperty.class) != null &amp;&amp;</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">                    method.getName().startsWith(&quot;get&quot;) &amp;&amp;</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">                    method.getName().length() &gt; 3 &amp;&amp;</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">                    Character.isUpperCase(method.getName().charAt(3)) &amp;&amp;</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">                    method.getParameterTypes().length == 0) {</span>
+<span class="fc" id="L230">                String methodName = method.getName();</span>
+<span class="fc" id="L231">                String propertyName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);</span>
+<span class="fc" id="L232">                MetaProperty&lt;Object&gt; mp = new MinimalMetaProperty&lt;&gt;(this, method, propertyName);</span>
+<span class="fc" id="L233">                map.put(propertyName, mp);</span>
+            }
+        }
+<span class="fc" id="L236">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L237">    }</span>
+
+    // determine the field names by reflection
+    // this is fundamentally broken as Java does not guarantee that the field names
+    // are returned in the order defined in the source file
+    private static String[] fieldNames(Class&lt;?&gt; beanType) {
+<span class="nc" id="L243">        Field[] fields = Stream.of(beanType.getDeclaredFields())</span>
+<span class="nc bnc" id="L244" title="All 4 branches missed.">                .filter(f -&gt; !Modifier.isStatic(f.getModifiers()) &amp;&amp; f.getAnnotation(PropertyDefinition.class) != null)</span>
+<span class="nc" id="L245">                .toArray(Field[]::new);</span>
+<span class="nc" id="L246">        List&lt;String&gt; fieldNames = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        for (int i = 0; i &lt; fields.length; i++) {</span>
+<span class="nc" id="L248">            fieldNames.add(fields[i].getName());</span>
+        }
+<span class="nc" id="L250">        return fieldNames.toArray(new String[fieldNames.size()]);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean isBuildable() {
+<span class="nc" id="L256">        return true;</span>
+    }
+
+    @Override
+    public BeanBuilder&lt;T&gt; builder() {
+<span class="fc" id="L261">        return builderSupplier.get();</span>
+    }
+
+    @Override
+    public Class&lt;T&gt; beanType() {
+<span class="fc" id="L266">        return beanType;</span>
+    }
+
+    @Override
+    public Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap() {
+<span class="fc" id="L271">        return metaPropertyMap;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        if (obj instanceof MinimalMetaBean) {</span>
+<span class="nc" id="L278">            MinimalMetaBean&lt;?&gt; other = (MinimalMetaBean&lt;?&gt;) obj;</span>
+<span class="nc" id="L279">            return this.beanType.equals(other.beanType);</span>
+        }
+<span class="nc" id="L281">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L286">        return beanType.hashCode() + 3;</span>
+    }
+
+    /**
+     * Returns a string that summarises the meta-bean.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L296">        return &quot;MetaBean:&quot; + beanName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImmutableLightMetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.light</a> &gt; <span class="el_source">ImmutableLightMetaProperty.java</span></div><h1>ImmutableLightMetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.light;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.PropertyStyle;
+
+/**
+ * An immutable meta-property based on a getter interface.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ * @deprecated Replaced by method handles
+ */
+@Deprecated
+final class ImmutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaProperty&lt;P&gt; {
+
+    /** The read method. */
+    private final PropertyGetter getter;
+    /** The style. */
+    private final PropertyStyle style;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance from a {@code Field}.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta bean, not null
+     * @param field  the field, not null
+     * @param constructorIndex  the index of the property in the constructor
+     * @return the property, not null
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    static &lt;P&gt; ImmutableLightMetaProperty&lt;P&gt; of(
+            MetaBean metaBean,
+            final Field field,
+            final String propertyName,
+            int constructorIndex) {
+        
+<span class="fc" id="L62">        PropertyGetter getter = new PropertyGetter() {</span>
+            @Override
+            public Object get(Bean bean) {
+                try {
+<span class="nc" id="L66">                    return field.get(bean);</span>
+<span class="nc" id="L67">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L68">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+                }
+            }
+        };
+<span class="fc" id="L72">        return new ImmutableLightMetaProperty&lt;&gt;(</span>
+                metaBean, 
+                propertyName, 
+<span class="fc" id="L75">                (Class&lt;P&gt;) field.getType(), </span>
+<span class="fc" id="L76">                field.getGenericType(), </span>
+<span class="fc" id="L77">                Arrays.asList(field.getAnnotations()), </span>
+                getter,
+                constructorIndex,
+                PropertyStyle.IMMUTABLE);
+    }
+
+    /**
+     * Creates an instance from a {@code Method}.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta bean, not null
+     * @param method  the method, not null
+     * @param constructorIndex  the index of the property in the constructor
+     * @return the property, not null
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    static &lt;P&gt; ImmutableLightMetaProperty&lt;P&gt; of(
+            MetaBean metaBean,
+            Field field,
+            final Method method,
+            final String propertyName,
+            int constructorIndex) {
+        
+<span class="fc" id="L100">        PropertyGetter getter = new PropertyGetter() {</span>
+            @Override
+            public Object get(Bean bean) {
+                try {
+<span class="nc" id="L104">                    return method.invoke(bean);</span>
+<span class="nc" id="L105">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L106">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L107">                } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L109">                        throw (RuntimeException) ex.getCause();</span>
+                    }
+<span class="nc" id="L111">                    throw new RuntimeException(ex);</span>
+                }
+            }
+        };
+<span class="fc" id="L115">        return new ImmutableLightMetaProperty&lt;&gt;(</span>
+                metaBean,
+                propertyName,
+<span class="fc" id="L118">                (Class&lt;P&gt;) field.getType(),</span>
+<span class="fc" id="L119">                field.getGenericType(),</span>
+<span class="fc" id="L120">                Arrays.asList(field.getAnnotations()),</span>
+                getter,
+                constructorIndex,
+                PropertyStyle.IMMUTABLE);
+    }
+
+    /**
+     * Creates an instance from a derived {@code Method}.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta bean, not null
+     * @param method  the method, not null
+     * @param constructorIndex  the index of the property
+     * @return the property, not null
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    static &lt;P&gt; ImmutableLightMetaProperty&lt;P&gt; of(
+            MetaBean metaBean,
+            final Method method,
+            final String propertyName,
+            int constructorIndex) {
+
+<span class="fc" id="L142">        PropertyGetter getter = new PropertyGetter() {</span>
+            @Override
+            public Object get(Bean bean) {
+                try {
+<span class="nc" id="L146">                    return method.invoke(bean);</span>
+<span class="nc" id="L147">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L148">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L149">                } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L151">                        throw (RuntimeException) ex.getCause();</span>
+                    }
+<span class="nc" id="L153">                    throw new RuntimeException(ex);</span>
+                }
+            }
+        };
+<span class="fc" id="L157">        return new ImmutableLightMetaProperty&lt;P&gt;(</span>
+                metaBean, 
+                propertyName, 
+<span class="fc" id="L160">                (Class&lt;P&gt;) method.getReturnType(),</span>
+<span class="fc" id="L161">                method.getGenericReturnType(),</span>
+<span class="fc" id="L162">                Arrays.asList(method.getAnnotations()),</span>
+                getter,
+                constructorIndex,
+                PropertyStyle.DERIVED);
+    }
+
+    /**
+     * Creates an instance.
+     * 
+     * @param metaBean  the meta bean, not null
+     * @param propertyName  the property name, not empty
+     * @param propertyType  the property type
+     * @param propertyGenericType  the property generic type
+     * @param annotations  the annotations
+     * @param getter  the property getter
+     * @param constructorIndex  the index of the property in the constructor
+     * @param style  the style
+     */
+    ImmutableLightMetaProperty(
+            MetaBean metaBean, 
+            String propertyName,
+            Class&lt;P&gt; propertyType,
+            Type propertyGenericType,
+            List&lt;Annotation&gt; annotations,
+            PropertyGetter getter,
+            int constructorIndex,
+            PropertyStyle style) {
+        
+<span class="fc" id="L190">        super(metaBean, propertyName, propertyType, propertyGenericType, annotations, constructorIndex);</span>
+<span class="fc" id="L191">        this.getter = getter;</span>
+<span class="fc" id="L192">        this.style = style;</span>
+<span class="fc" id="L193">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public PropertyStyle style() {
+<span class="nc" id="L198">        return style;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public P get(Bean bean) {
+<span class="nc" id="L205">        return (P) getter.get(bean);</span>
+    }
+
+    @Override
+    public void set(Bean bean, Object value) {
+<span class="nc" id="L210">        throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

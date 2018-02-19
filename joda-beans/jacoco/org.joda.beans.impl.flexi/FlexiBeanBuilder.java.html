@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlexiBeanBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.flexi</a> &gt; <span class="el_source">FlexiBeanBuilder.java</span></div><h1>FlexiBeanBuilder.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.flexi;
+
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Implementation of a meta-bean for {@code FlexiBean}.
+ * 
+ * @author Stephen Colebourne
+ */
+class FlexiBeanBuilder implements BeanBuilder&lt;FlexiBean&gt; {
+
+    /**
+     * The bean itself.
+     */
+    private final FlexiBean bean;
+
+    /**
+     * Creates the meta-bean.
+     * 
+     * @param bean  the underlying bean, not null
+     */
+<span class="fc" id="L38">    FlexiBeanBuilder(FlexiBean bean) {</span>
+<span class="fc" id="L39">        this.bean = bean;</span>
+<span class="fc" id="L40">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Object get(String propertyName) {
+        // lenient getter
+<span class="nc" id="L46">        return bean.get(propertyName);</span>
+    }
+
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
+        // this approach allows meta-property from one bean to be used with another
+<span class="nc" id="L53">        return (P) bean.get(metaProperty.name());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public FlexiBeanBuilder set(String propertyName, Object value) {
+<span class="nc" id="L59">        bean.put(propertyName, value);</span>
+<span class="nc" id="L60">        return this;</span>
+    }
+
+    @Override
+    public FlexiBeanBuilder set(MetaProperty&lt;?&gt; metaProperty, Object value) {
+        // this approach allows meta-property from one bean to be used with another
+<span class="fc" id="L66">        bean.put(metaProperty.name(), value);</span>
+<span class="fc" id="L67">        return this;</span>
+    }
+
+    @Override
+    public FlexiBean build() {
+<span class="fc" id="L72">        return bean;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public String toString() {
+<span class="nc" id="L78">        return &quot;FlexiBeanBuilder&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

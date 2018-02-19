@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReflectiveMetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.reflection</a> &gt; <span class="el_source">ReflectiveMetaProperty.java</span></div><h1>ReflectiveMetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.reflection;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+import org.joda.beans.Bean;
+import org.joda.beans.ImmutableBean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.PropertyStyle;
+import org.joda.beans.impl.BasicMetaProperty;
+
+/**
+ * A meta-property implemented using a {@code PropertyDescriptor}.
+ * &lt;p&gt;
+ * The property descriptor class is part of the JDK JavaBean standard.
+ * It provides access to get and set a property on a bean.
+ * &lt;p&gt;
+ * Instances of this class should be declared as a static constant on the bean,
+ * one for each property, followed by a {@code ReflectiveMetaBean} declaration.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ */
+final class ReflectiveMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
+
+    /** The meta-bean. */
+    private volatile MetaBean metaBean;
+    /** The declaring type. */
+    private final Class&lt;?&gt; declaringType;
+    /** The type of the property. */
+    private final Class&lt;P&gt; propertyType;
+    /** The getter. */
+    private final Method getMethod;
+    /** The setter. */
+    private final Method setMethod;
+
+    /**
+     * Constructor using {@code PropertyDescriptor} to find the get and set methods.
+     * 
+     * @param metaBean  the meta-bean
+     * @param beanType  the bean type, not null
+     * @param propertyName  the property name, not empty
+     */
+    @SuppressWarnings({&quot;unchecked&quot;, &quot;null&quot;})
+    ReflectiveMetaProperty(MetaBean metaBean, Class&lt;? extends Bean&gt; beanType, String propertyName) {
+<span class="fc" id="L67">        super(propertyName);</span>
+<span class="fc" id="L68">        String getterName = &quot;get&quot; + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring(1);</span>
+<span class="fc" id="L69">        String isserName = &quot;is&quot; + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring(1);</span>
+<span class="fc" id="L70">        Method getMethod = findGetMethod(beanType, getterName);</span>
+<span class="fc" id="L71">        Method isMethod = findGetMethod(beanType, isserName);</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">        if (getMethod == null &amp;&amp; isMethod == null) {</span>
+<span class="nc" id="L73">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L74">                &quot;Unable to find property getter: &quot; + beanType.getSimpleName() + &quot;.&quot; + getterName + &quot;()&quot;);</span>
+        }
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        getMethod = isMethod != null ? isMethod : getMethod;</span>
+<span class="fc" id="L77">        Method setMethod = null;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (!ImmutableBean.class.isAssignableFrom(beanType)) {</span>
+<span class="fc" id="L79">            String setterName = &quot;set&quot; + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring(1);</span>
+<span class="fc" id="L80">            setMethod = findSetMethod(beanType, setterName, getMethod.getReturnType());</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">            if (setMethod == null) {</span>
+<span class="nc" id="L82">                throw new IllegalArgumentException(</span>
+<span class="nc" id="L83">                    &quot;Unable to find property setter: &quot; + beanType.getSimpleName() + &quot;.&quot; + setterName + &quot;()&quot;);</span>
+            }
+        }
+<span class="fc" id="L86">        this.metaBean = metaBean;</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        this.declaringType = (getMethod != null ? getMethod.getDeclaringClass() : setMethod.getDeclaringClass());</span>
+<span class="fc" id="L88">        this.propertyType = (Class&lt;P&gt;) getMethod.getReturnType();</span>
+<span class="fc" id="L89">        this.getMethod = getMethod;</span>
+<span class="fc" id="L90">        this.setMethod = setMethod;</span>
+<span class="fc" id="L91">    }</span>
+
+    // finds a method on class or public method on super-type
+    private static Method findGetMethod(Class&lt;? extends Bean&gt; beanType, String getterName) {
+        try {
+<span class="fc" id="L96">            return beanType.getDeclaredMethod(getterName);</span>
+<span class="fc" id="L97">        } catch (NoSuchMethodException ex) {</span>
+            try {
+<span class="nc" id="L99">                return beanType.getMethod(getterName);</span>
+<span class="fc" id="L100">            } catch (NoSuchMethodException ex2) {</span>
+<span class="fc" id="L101">                return null;</span>
+            }
+        }
+    }
+
+    // finds a method on class or public method on super-type
+    private static Method findSetMethod(Class&lt;? extends Bean&gt; beanType, String setterName, Class&lt;?&gt; fieldType) {
+        try {
+<span class="fc" id="L109">            return beanType.getDeclaredMethod(setterName, fieldType);</span>
+<span class="nc" id="L110">        } catch (NoSuchMethodException ex) {</span>
+<span class="nc" id="L111">            Method[] methods = beanType.getMethods();</span>
+<span class="nc" id="L112">            List&lt;Method&gt; potential = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            for (Method method : methods) {</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">                if (method.getName().equals(setterName) &amp;&amp; method.getParameterTypes().length == 1) {</span>
+<span class="nc" id="L115">                    potential.add(method);</span>
+                }
+            }
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (potential.size() == 1) {</span>
+<span class="nc" id="L119">                return potential.get(0);</span>
+            }
+<span class="nc bnc" id="L121" title="All 2 branches missed.">            for (Method method : potential) {</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">                if (method.getParameterTypes()[0].equals(fieldType)) {</span>
+<span class="nc" id="L123">                    return method;</span>
+                }
+<span class="nc" id="L125">            }</span>
+<span class="nc" id="L126">            return null;</span>
+        }
+    }
+
+    /**
+     * Sets the meta-bean, necessary due to ordering restrictions during loading.
+     * @param metaBean  the meta-bean, not null
+     */
+    void setMetaBean(MetaBean metaBean) {
+<span class="nc" id="L135">        this.metaBean = metaBean;</span>
+<span class="nc" id="L136">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public MetaBean metaBean() {
+<span class="nc" id="L141">        return metaBean;</span>
+    }
+
+    @Override
+    public Class&lt;?&gt; declaringType() {
+<span class="fc" id="L146">        return declaringType;</span>
+    }
+
+    @Override
+    public Class&lt;P&gt; propertyType() {
+<span class="fc" id="L151">        return propertyType;</span>
+    }
+
+    @Override
+    public Type propertyGenericType() {
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (getMethod != null) {</span>
+<span class="fc" id="L157">            return getMethod.getGenericReturnType();</span>
+        }
+<span class="nc" id="L159">        return setMethod.getGenericParameterTypes()[0];</span>
+    }
+
+    @Override
+    public PropertyStyle style() {
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        return (getMethod == null ? PropertyStyle.WRITE_ONLY :</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                (setMethod == null ? PropertyStyle.READ_ONLY : PropertyStyle.READ_WRITE));</span>
+    }
+
+    @Override
+    public List&lt;Annotation&gt; annotations() {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (getMethod != null) {</span>
+<span class="nc" id="L171">            return Arrays.asList(getMethod.getDeclaredAnnotations());</span>
+        }
+<span class="nc" id="L173">        return Arrays.asList(setMethod.getDeclaredAnnotations());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public P get(Bean bean) {
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (style().isReadable() == false) {</span>
+<span class="nc" id="L181">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + name());</span>
+        }
+        try {
+<span class="fc" id="L184">            return (P) getMethod.invoke(bean, (Object[]) null);</span>
+<span class="nc" id="L185">        } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L186">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + name(), ex);</span>
+<span class="nc" id="L187">        } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L189">                throw (RuntimeException) ex.getCause();</span>
+            }
+<span class="nc" id="L191">            throw new RuntimeException(ex);</span>
+        }
+    }
+
+    @SuppressWarnings(&quot;null&quot;)
+    @Override
+    public void set(Bean bean, Object value) {
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (style().isWritable() == false) {</span>
+<span class="nc" id="L199">            throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
+        }
+        try {
+<span class="fc" id="L202">            setMethod.invoke(bean, value);</span>
+<span class="nc" id="L203">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc bnc" id="L204" title="All 4 branches missed.">            if (value == null &amp;&amp; setMethod.getParameterTypes()[0].isPrimitive()) {</span>
+<span class="nc" id="L205">                throw new NullPointerException(&quot;Property cannot be written: &quot; + name() + &quot;: Cannot store null in primitive&quot;);</span>
+            }
+<span class="nc bnc" id="L207" title="All 2 branches missed.">            if (propertyType.isInstance(value) == false) {</span>
+<span class="nc" id="L208">                throw new ClassCastException(&quot;Property cannot be written: &quot; + name() + &quot;: Invalid type: &quot; + value.getClass().getName());</span>
+            }
+<span class="nc" id="L210">            throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name(), ex);</span>
+<span class="nc" id="L211">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L212">            throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name(), ex);</span>
+<span class="nc" id="L213">        } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L215">                throw (RuntimeException) ex.getCause();</span>
+            }
+<span class="nc" id="L217">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L218">        }</span>
+<span class="fc" id="L219">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

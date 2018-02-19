@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JodaBeanUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans</a> &gt; <span class="el_source">JodaBeanUtils.java</span></div><h1>JodaBeanUtils.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.function.Function;
+
+import org.joda.beans.impl.direct.DirectBean;
+import org.joda.beans.impl.flexi.FlexiBean;
+import org.joda.collect.grid.DenseGrid;
+import org.joda.collect.grid.Grid;
+import org.joda.collect.grid.ImmutableGrid;
+import org.joda.collect.grid.SparseGrid;
+import org.joda.convert.StringConvert;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.LinkedHashMultiset;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.SortedMultiset;
+import com.google.common.collect.Table;
+import com.google.common.collect.TreeMultiset;
+
+/**
+ * A set of utilities to assist when working with beans and properties.
+ * 
+ * @author Stephen Colebourne
+ */
+public final class JodaBeanUtils {
+
+    /**
+     * The cache of meta-beans.
+     */
+<span class="fc" id="L80">    private static final StringConvert converter = new StringConvert();</span>
+
+    /**
+     * Restricted constructor.
+     */
+    private JodaBeanUtils() {
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a meta-bean from a {@code Class}.
+     * &lt;p&gt;
+     * This will return a meta-bean if it has been registered, or if the class
+     * implements {@link DynamicBean} and has a no-args constructor.
+     * Note that the common case where the meta-bean is registered by a static initializer is handled.
+     * 
+     * @param cls  the class to get the meta-bean for, not null
+     * @return the meta-bean, not null
+     * @throws IllegalArgumentException if unable to obtain the meta-bean
+     * @deprecated Use {@link MetaBean#of(Class)}
+     */
+    @Deprecated
+    public static MetaBean metaBean(Class&lt;?&gt; cls) {
+<span class="nc" id="L103">        return MetaBean.of(cls);</span>
+    }
+
+    /**
+     * Registers a meta-bean.
+     * &lt;p&gt;
+     * This should be done for all beans in a static factory where possible.
+     * If the meta-bean is dynamic, this method should not be called.
+     * 
+     * @param metaBean  the meta-bean, not null
+     * @throws IllegalArgumentException if unable to register
+     * @deprecated Use {@link MetaBean#register(MetaBean)}
+     */
+    @Deprecated
+    public static void registerMetaBean(MetaBean metaBean) {
+<span class="nc" id="L118">        MetaBean.register(metaBean);</span>
+<span class="nc" id="L119">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the standard string format converter.
+     * &lt;p&gt;
+     * This returns a singleton that may be mutated (holds a concurrent map).
+     * New conversions should be registered at program startup.
+     * 
+     * @return the standard string converter, not null
+     */
+    public static StringConvert stringConverter() {
+<span class="fc" id="L131">        return converter;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if two objects are equal handling null.
+     * 
+     * @param obj1  the first object, may be null
+     * @param obj2  the second object, may be null
+     * @return true if equal
+     */
+    public static boolean equal(Object obj1, Object obj2) {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (obj1 == obj2) {</span>
+<span class="fc" id="L144">            return true;</span>
+        }
+<span class="fc bfc" id="L146" title="All 4 branches covered.">        if (obj1 == null || obj2 == null) {</span>
+<span class="fc" id="L147">            return false;</span>
+        }
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (obj1.getClass().isArray()) {</span>
+<span class="fc" id="L150">            return equalsArray(obj1, obj2);</span>
+        }
+        // this does not handle arrays embedded in objects, such as in lists/maps
+        // but you shouldn't use arrays like that, should you?
+<span class="fc" id="L154">        return obj1.equals(obj2);</span>
+    }
+
+    // extracted from equal(Object,Object) to aid hotspot inlining
+    private static boolean equalsArray(Object obj1, Object obj2) {
+<span class="fc bfc" id="L159" title="All 6 branches covered.">        if (obj1 instanceof Object[] &amp;&amp; obj2 instanceof Object[] &amp;&amp; obj1.getClass() == obj2.getClass()) {</span>
+<span class="fc" id="L160">            return Arrays.deepEquals((Object[]) obj1, (Object[]) obj2);</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">        } else if (obj1 instanceof int[] &amp;&amp; obj2 instanceof int[]) {</span>
+<span class="fc" id="L162">            return Arrays.equals((int[]) obj1, (int[]) obj2);</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">        } else if (obj1 instanceof long[] &amp;&amp; obj2 instanceof long[]) {</span>
+<span class="fc" id="L164">            return Arrays.equals((long[]) obj1, (long[]) obj2);</span>
+<span class="fc bfc" id="L165" title="All 4 branches covered.">        } else if (obj1 instanceof byte[] &amp;&amp; obj2 instanceof byte[]) {</span>
+<span class="fc" id="L166">            return Arrays.equals((byte[]) obj1, (byte[]) obj2);</span>
+<span class="fc bfc" id="L167" title="All 4 branches covered.">        } else if (obj1 instanceof double[] &amp;&amp; obj2 instanceof double[]) {</span>
+<span class="fc" id="L168">            return Arrays.equals((double[]) obj1, (double[]) obj2);</span>
+<span class="fc bfc" id="L169" title="All 4 branches covered.">        } else if (obj1 instanceof float[] &amp;&amp; obj2 instanceof float[]) {</span>
+<span class="fc" id="L170">            return Arrays.equals((float[]) obj1, (float[]) obj2);</span>
+<span class="fc bfc" id="L171" title="All 4 branches covered.">        } else if (obj1 instanceof char[] &amp;&amp; obj2 instanceof char[]) {</span>
+<span class="fc" id="L172">            return Arrays.equals((char[]) obj1, (char[]) obj2);</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">        } else if (obj1 instanceof short[] &amp;&amp; obj2 instanceof short[]) {</span>
+<span class="fc" id="L174">            return Arrays.equals((short[]) obj1, (short[]) obj2);</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">        } else if (obj1 instanceof boolean[] &amp;&amp; obj2 instanceof boolean[]) {</span>
+<span class="fc" id="L176">            return Arrays.equals((boolean[]) obj1, (boolean[]) obj2);</span>
+        }
+        // reachable if obj1 is an array and obj2 is not
+<span class="fc" id="L179">        return false;</span>
+    }
+
+    /**
+     * Checks if two floats are equal based on identity.
+     * &lt;p&gt;
+     * This performs the same check as {@link Float#equals(Object)}.
+     * 
+     * @param val1  the first value, may be null
+     * @param val2  the second value, may be null
+     * @return true if equal
+     */
+    public static boolean equal(float val1, float val2) {
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        return Float.floatToIntBits(val1) == Float.floatToIntBits(val2);</span>
+    }
+
+    /**
+     * Checks if two floats are equal within the specified tolerance.
+     * &lt;p&gt;
+     * Two NaN values are equal. Positive and negative infinity are only equal with themselves.
+     * Otherwise, the difference between the values is compared to the tolerance.
+     * 
+     * @param val1  the first value, may be null
+     * @param val2  the second value, may be null
+     * @param tolerance  the tolerance used to compare equal
+     * @return true if equal
+     */
+    public static boolean equalWithTolerance(float val1, float val2, double tolerance) {
+<span class="fc bfc" id="L207" title="All 4 branches covered.">        return (Float.floatToIntBits(val1) == Float.floatToIntBits(val2)) || Math.abs(val1 - val2) &lt;= tolerance;</span>
+    }
+
+    /**
+     * Checks if two doubles are equal based on identity.
+     * &lt;p&gt;
+     * This performs the same check as {@link Double#equals(Object)}.
+     * 
+     * @param val1  the first value, may be null
+     * @param val2  the second value, may be null
+     * @return true if equal
+     */
+    public static boolean equal(double val1, double val2) {
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        return Double.doubleToLongBits(val1) == Double.doubleToLongBits(val2);</span>
+    }
+
+    /**
+     * Checks if two doubles are equal within the specified tolerance.
+     * &lt;p&gt;
+     * Two NaN values are equal. Positive and negative infinity are only equal with themselves.
+     * Otherwise, the difference between the values is compared to the tolerance.
+     * The tolerance is expected to be a finite value, not NaN or infinity.
+     * 
+     * @param val1  the first value, may be null
+     * @param val2  the second value, may be null
+     * @param tolerance  the tolerance used to compare equal
+     * @return true if equal
+     */
+    public static boolean equalWithTolerance(double val1, double val2, double tolerance) {
+<span class="fc bfc" id="L236" title="All 4 branches covered.">        return (Double.doubleToLongBits(val1) == Double.doubleToLongBits(val2)) || Math.abs(val1 - val2) &lt;= tolerance;</span>
+    }
+
+    /**
+     * Returns a hash code for an object handling null.
+     * 
+     * @param obj  the object, may be null
+     * @return the hash code
+     */
+    public static int hashCode(Object obj) {
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L247">            return 0;</span>
+        }
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (obj.getClass().isArray()) {</span>
+<span class="fc" id="L250">            return hashCodeArray(obj);</span>
+        }
+<span class="fc" id="L252">        return obj.hashCode();</span>
+    }
+
+    // extracted from hashCode(Object) to aid hotspot inlining
+    private static int hashCodeArray(Object obj) {
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (obj instanceof Object[]) {</span>
+<span class="fc" id="L258">            return Arrays.deepHashCode((Object[]) obj);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        } else if (obj instanceof int[]) {</span>
+<span class="fc" id="L260">            return Arrays.hashCode((int[]) obj);</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        } else if (obj instanceof long[]) {</span>
+<span class="fc" id="L262">            return Arrays.hashCode((long[]) obj);</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        } else if (obj instanceof byte[]) {</span>
+<span class="fc" id="L264">            return Arrays.hashCode((byte[]) obj);</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">        } else if (obj instanceof double[]) {</span>
+<span class="fc" id="L266">            return Arrays.hashCode((double[]) obj);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        } else if (obj instanceof float[]) {</span>
+<span class="fc" id="L268">            return Arrays.hashCode((float[]) obj);</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        } else if (obj instanceof char[]) {</span>
+<span class="fc" id="L270">            return Arrays.hashCode((char[]) obj);</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        } else if (obj instanceof short[]) {</span>
+<span class="fc" id="L272">            return Arrays.hashCode((short[]) obj);</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        } else if (obj instanceof boolean[]) {</span>
+<span class="fc" id="L274">            return Arrays.hashCode((boolean[]) obj);</span>
+        }
+        // unreachable?
+<span class="nc" id="L277">        return obj.hashCode();</span>
+    }
+
+    /**
+     * Returns a hash code for a {@code boolean}.
+     * 
+     * @param value  the value to convert to a hash code
+     * @return the hash code
+     */
+    public static int hashCode(boolean value) {
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        return value ? 1231 : 1237;</span>
+    }
+
+    /**
+     * Returns a hash code for an {@code int}.
+     * 
+     * @param value  the value to convert to a hash code
+     * @return the hash code
+     */
+    public static int hashCode(int value) {
+<span class="fc" id="L297">        return value;</span>
+    }
+
+    /**
+     * Returns a hash code for a {@code long}.
+     * 
+     * @param value  the value to convert to a hash code
+     * @return the hash code
+     */
+    public static int hashCode(long value) {
+<span class="fc" id="L307">        return (int) (value ^ value &gt;&gt;&gt; 32);</span>
+    }
+
+    /**
+     * Returns a hash code for a {@code float}.
+     * 
+     * @param value  the value to convert to a hash code
+     * @return the hash code
+     */
+    public static int hashCode(float value) {
+<span class="fc" id="L317">        return Float.floatToIntBits(value);</span>
+    }
+
+    /**
+     * Returns a hash code for a {@code double}.
+     * 
+     * @param value  the value to convert to a hash code
+     * @return the hash code
+     */
+    public static int hashCode(double value) {
+<span class="fc" id="L327">        return hashCode(Double.doubleToLongBits(value));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the {@code toString} value handling arrays.
+     * 
+     * @param obj  the object, may be null
+     * @return the string, not null
+     */
+    public static String toString(Object obj) {
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L339">            return &quot;null&quot;;</span>
+        }
+<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (obj.getClass().isArray()) {</span>
+<span class="fc" id="L342">            return toStringArray(obj);</span>
+        }
+<span class="fc" id="L344">        return obj.toString();</span>
+    }
+
+    // extracted from toString(Object) to aid hotspot inlining
+    private static String toStringArray(Object obj) {
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">        if (obj instanceof Object[]) {</span>
+<span class="fc" id="L350">            return Arrays.deepToString((Object[]) obj);</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">        } else if (obj instanceof int[]) {</span>
+<span class="nc" id="L352">            return Arrays.toString((int[]) obj);</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">        } else if (obj instanceof long[]) {</span>
+<span class="nc" id="L354">            return Arrays.toString((long[]) obj);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        } else if (obj instanceof byte[]) {</span>
+<span class="nc" id="L356">            return Arrays.toString((byte[]) obj);</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        } else if (obj instanceof double[]) {</span>
+<span class="nc" id="L358">            return Arrays.toString((double[]) obj);</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        } else if (obj instanceof float[]) {</span>
+<span class="nc" id="L360">            return Arrays.toString((float[]) obj);</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        } else if (obj instanceof char[]) {</span>
+<span class="nc" id="L362">            return Arrays.toString((char[]) obj);</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">        } else if (obj instanceof short[]) {</span>
+<span class="nc" id="L364">            return Arrays.toString((short[]) obj);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">        } else if (obj instanceof boolean[]) {</span>
+<span class="nc" id="L366">            return Arrays.toString((boolean[]) obj);</span>
+        }
+        // unreachable?
+<span class="nc" id="L369">        return obj.toString();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the two beans have the same set of properties.
+     * &lt;p&gt;
+     * This comparison checks that both beans have the same set of property names
+     * and that the value of each property name is also equal.
+     * It does not check the bean type, thus a {@link FlexiBean} may be equal
+     * to a {@link DirectBean}.
+     * &lt;p&gt;
+     * This comparison is usable with the {@link #propertiesHashCode} method.
+     * The result is the same as that if each bean was converted to a {@code Map}
+     * from name to value.
+     * 
+     * @param bean1  the first bean to compare, not null
+     * @param bean2  the second bean to compare, not null
+     * @return true if equal
+     */
+    public static boolean propertiesEqual(Bean bean1, Bean bean2) {
+<span class="fc" id="L390">        Set&lt;String&gt; names = bean1.propertyNames();</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">        if (names.equals(bean2.propertyNames()) == false) {</span>
+<span class="fc" id="L392">            return false;</span>
+        }
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        for (String name : names) {</span>
+<span class="fc" id="L395">            Object value1 = bean1.property(name).get();</span>
+<span class="fc" id="L396">            Object value2 = bean2.property(name).get();</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">            if (equal(value1, value2) == false) {</span>
+<span class="fc" id="L398">                return false;</span>
+            }
+<span class="fc" id="L400">        }</span>
+<span class="fc" id="L401">        return true;</span>
+    }
+
+    /**
+     * Returns a hash code based on the set of properties on a bean.
+     * &lt;p&gt;
+     * This hash code is usable with the {@link #propertiesEqual} method.
+     * The result is the same as that if each bean was converted to a {@code Map}
+     * from name to value.
+     * 
+     * @param bean  the bean to generate a hash code for, not null
+     * @return the hash code
+     */
+    public static int propertiesHashCode(Bean bean) {
+<span class="fc" id="L415">        int hash = 7;</span>
+<span class="fc" id="L416">        Set&lt;String&gt; names = bean.propertyNames();</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">        for (String name : names) {</span>
+<span class="fc" id="L418">            Object value = bean.property(name).get();</span>
+<span class="fc" id="L419">            hash += hashCode(value);</span>
+<span class="fc" id="L420">        }</span>
+<span class="fc" id="L421">        return hash;</span>
+    }
+
+    /**
+     * Returns a string describing the set of properties on a bean.
+     * &lt;p&gt;
+     * The result is the same as that if the bean was converted to a {@code Map}
+     * from name to value.
+     * 
+     * @param bean  the bean to generate a string for, not null
+     * @param prefix  the prefix to use, null ignored
+     * @return the string form of the bean, not null
+     */
+    public static String propertiesToString(Bean bean, String prefix) {
+<span class="nc" id="L435">        Set&lt;String&gt; names = bean.propertyNames();</span>
+        StringBuilder buf;
+<span class="nc bnc" id="L437" title="All 2 branches missed.">        if (prefix != null) {</span>
+<span class="nc" id="L438">            buf = new StringBuilder((names.size()) * 32 + prefix.length()).append(prefix);</span>
+        } else {
+<span class="nc" id="L440">            buf = new StringBuilder((names.size()) * 32);</span>
+        }
+<span class="nc" id="L442">        buf.append('{');</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">        if (names.size() &gt; 0) {</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">            for (String name : names) {</span>
+<span class="nc" id="L445">                Object value = bean.property(name).get();</span>
+<span class="nc" id="L446">                buf.append(name).append('=').append(value).append(',').append(' ');</span>
+<span class="nc" id="L447">            }</span>
+<span class="nc" id="L448">            buf.setLength(buf.length() - 2);</span>
+        }
+<span class="nc" id="L450">        buf.append('}');</span>
+<span class="nc" id="L451">        return buf.toString();</span>
+    }
+
+    /**
+     * Flattens a bean to a {@code Map}.
+     * &lt;p&gt;
+     * The returned map will contain all the properties from the bean with their actual values.
+     * 
+     * @param bean  the bean to generate a string for, not null
+     * @return the bean as a map, not null
+     */
+    public static Map&lt;String, Object&gt; flatten(Bean bean) {
+<span class="nc" id="L463">        Map&lt;String, MetaProperty&lt;?&gt;&gt; propertyMap = bean.metaBean().metaPropertyMap();</span>
+<span class="nc" id="L464">        Map&lt;String, Object&gt; map = new LinkedHashMap&lt;&gt;(propertyMap.size());</span>
+<span class="nc bnc" id="L465" title="All 2 branches missed.">        for (Entry&lt;String, MetaProperty&lt;?&gt;&gt; entry : propertyMap.entrySet()) {</span>
+<span class="nc" id="L466">            map.put(entry.getKey(), entry.getValue().get(bean));</span>
+<span class="nc" id="L467">        }</span>
+<span class="nc" id="L468">        return Collections.unmodifiableMap(map);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Clones a bean.
+     * &lt;p&gt;
+     * This performs a deep clone. There is no protection against cycles in
+     * the object graph beyond {@code StackOverflowError}.
+     * 
+     * @param &lt;T&gt;  the type of the bean
+     * @param original  the original bean to clone, null returns null
+     * @return the cloned bean, null if null input
+     */
+    public static &lt;T extends Bean&gt; T clone(T original) {
+<span class="pc bpc" id="L483" title="2 of 4 branches missed.">        if (original == null || original instanceof ImmutableBean) {</span>
+<span class="nc" id="L484">            return original;</span>
+        }
+<span class="fc" id="L486">        return cloneAlways(original);</span>
+    }
+
+    /**
+     * Clones a bean always.
+     * &lt;p&gt;
+     * This performs a deep clone. There is no protection against cycles in
+     * the object graph beyond {@code StackOverflowError}.
+     * This differs from {@link #clone()} in that immutable beans are also cloned.
+     * 
+     * @param &lt;T&gt;  the type of the bean
+     * @param original  the original bean to clone, not null
+     * @return the cloned bean, not null
+     */
+    public static &lt;T extends Bean&gt; T cloneAlways(T original) {
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L502">        BeanBuilder&lt;T&gt; builder = (BeanBuilder&lt;T&gt;) original.metaBean().builder();</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; mp : original.metaBean().metaPropertyIterable()) {</span>
+<span class="pc bpc" id="L504" title="1 of 2 branches missed.">            if (mp.style().isBuildable()) {</span>
+<span class="fc" id="L505">                Object value = mp.get(original);</span>
+<span class="fc" id="L506">                builder.set(mp.name(), Cloner.INSTANCE.clone(value));</span>
+            }
+<span class="fc" id="L508">        }</span>
+<span class="fc" id="L509">        return builder.build();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the value is not null, throwing an exception if it is.
+     * 
+     * @param value  the value to check, may be null
+     * @param propertyName  the property name, should not be null
+     * @throws IllegalArgumentException if the value is null
+     */
+    public static void notNull(Object value, String propertyName) {
+<span class="fc bfc" id="L521" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L522">            throw new IllegalArgumentException(notNullMsg(propertyName));</span>
+        }
+<span class="fc" id="L524">    }</span>
+
+    // extracted from notNull(Object,String) to aid hotspot inlining
+    private static String notNullMsg(String propertyName) {
+<span class="fc" id="L528">        return &quot;Argument '&quot; + propertyName + &quot;' must not be null&quot;;</span>
+    }
+
+    /**
+     * Checks if the value is not blank, throwing an exception if it is.
+     * &lt;p&gt;
+     * Validate that the specified argument is not null and has at least one non-whitespace character.
+     * 
+     * @param value  the value to check, may be null
+     * @param propertyName  the property name, should not be null
+     * @throws IllegalArgumentException if the value is null or empty
+     */
+    public static void notBlank(String value, String propertyName) {
+<span class="fc bfc" id="L541" title="All 2 branches covered.">        if (isBlank(value)) {</span>
+<span class="fc" id="L542">            throw new IllegalArgumentException(notBlank(propertyName));</span>
+        }
+<span class="fc" id="L544">    }</span>
+
+    @SuppressWarnings(&quot;null&quot;)
+    private static boolean isBlank(String str) {
+<span class="fc bfc" id="L548" title="All 2 branches covered.">        int strLen = (str != null ? str.length() : 0);</span>
+<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (strLen != 0) {</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">            for (int i = 0; i &lt; strLen; i++) {</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">                if (!Character.isWhitespace(str.charAt(i))) {</span>
+<span class="fc" id="L552">                    return false;</span>
+                }
+            }
+        }
+<span class="fc" id="L556">        return true;</span>
+    }
+
+    private static String notBlank(String propertyName) {
+<span class="fc" id="L560">        return &quot;Argument '&quot; + propertyName + &quot;' must not be empty&quot;;</span>
+    }
+
+    /**
+     * Checks if the value is not empty, throwing an exception if it is.
+     * 
+     * @param value  the value to check, may be null
+     * @param propertyName  the property name, should not be null
+     * @throws IllegalArgumentException if the value is null or empty
+     */
+    public static void notEmpty(String value, String propertyName) {
+<span class="fc bfc" id="L571" title="All 4 branches covered.">        if (value == null || value.length() == 0) {</span>
+<span class="fc" id="L572">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
+        }
+<span class="fc" id="L574">    }</span>
+
+    // extracted from notEmpty(?,String) to aid hotspot inlining
+    private static String notEmpty(String propertyName) {
+<span class="fc" id="L578">        return &quot;Argument '&quot; + propertyName + &quot;' must not be empty&quot;;</span>
+    }
+
+    /**
+     * Checks if the collection value is not empty, throwing an exception if it is.
+     * 
+     * @param value  the value to check, may be null
+     * @param propertyName  the property name, should not be null
+     * @throws IllegalArgumentException if the value is null or empty
+     */
+    public static void notEmpty(Collection&lt;?&gt; value, String propertyName) {
+<span class="fc bfc" id="L589" title="All 4 branches covered.">        if (value == null || value.isEmpty()) {</span>
+<span class="fc" id="L590">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
+        }
+<span class="fc" id="L592">    }</span>
+
+    /**
+     * Checks if the map value is not empty, throwing an exception if it is.
+     * 
+     * @param value  the value to check, may be null
+     * @param propertyName  the property name, should not be null
+     * @throws IllegalArgumentException if the value is null or empty
+     */
+    public static void notEmpty(Map&lt;?, ?&gt; value, String propertyName) {
+<span class="fc bfc" id="L602" title="All 4 branches covered.">        if (value == null || value.isEmpty()) {</span>
+<span class="fc" id="L603">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
+        }
+<span class="fc" id="L605">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Extracts the collection content type as a {@code Class} from a property.
+     * &lt;p&gt;
+     * This method allows the resolution of generics in certain cases.
+     * 
+     * @param prop  the property to examine, not null
+     * @return the collection content type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; collectionType(Property&lt;?&gt; prop) {
+<span class="fc" id="L617">        return collectionType(prop.metaProperty(), prop.bean().getClass());</span>
+    }
+
+    /**
+     * Extracts the collection content type as a {@code Class} from a meta-property.
+     * &lt;p&gt;
+     * The target type is the type of the object, not the declaring type of the meta-property.
+     * 
+     * @param prop  the property to examine, not null
+     * @param targetClass  the target type to evaluate against, not null
+     * @return the collection content type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; collectionType(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
+<span class="fc" id="L630">        return extractTypeClass(prop, targetClass, 1, 0);</span>
+    }
+
+    /**
+     * Extracts the map value type generic type parameters as a {@code Class} from a meta-property.
+     * &lt;p&gt;
+     * The target type is the type of the object, not the declaring type of the meta-property.
+     * &lt;p&gt;
+     * This is used when the collection generic parameter is a map or collection.
+     * 
+     * @param prop  the property to examine, not null
+     * @param targetClass  the target type to evaluate against, not null
+     * @return the collection content type generic parameters, empty if unable to determine, no nulls
+     */
+    public static List&lt;Class&lt;?&gt;&gt; collectionTypeTypes(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
+<span class="fc" id="L645">        Type type = extractType(targetClass, prop, 1, 0);</span>
+<span class="fc" id="L646">        return extractTypeClasses(targetClass, type);</span>
+    }
+
+    /**
+     * Extracts the map key type as a {@code Class} from a meta-property.
+     * 
+     * @param prop  the property to examine, not null
+     * @return the map key type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; mapKeyType(Property&lt;?&gt; prop) {
+<span class="nc" id="L656">        return mapKeyType(prop.metaProperty(), prop.bean().getClass());</span>
+    }
+
+    /**
+     * Extracts the map key type as a {@code Class} from a meta-property.
+     * &lt;p&gt;
+     * The target type is the type of the object, not the declaring type of the meta-property.
+     * 
+     * @param prop  the property to examine, not null
+     * @param targetClass  the target type to evaluate against, not null
+     * @return the map key type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; mapKeyType(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
+<span class="fc" id="L669">        return extractTypeClass(prop, targetClass, 2, 0);</span>
+    }
+
+    /**
+     * Extracts the map value type as a {@code Class} from a meta-property.
+     * 
+     * @param prop  the property to examine, not null
+     * @return the map value type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; mapValueType(Property&lt;?&gt; prop) {
+<span class="nc" id="L679">        return mapValueType(prop.metaProperty(), prop.bean().getClass());</span>
+    }
+
+    /**
+     * Extracts the map value type as a {@code Class} from a meta-property.
+     * &lt;p&gt;
+     * The target type is the type of the object, not the declaring type of the meta-property.
+     * 
+     * @param prop  the property to examine, not null
+     * @param targetClass  the target type to evaluate against, not null
+     * @return the map value type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; mapValueType(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
+<span class="fc" id="L692">        return extractTypeClass(prop, targetClass, 2, 1);</span>
+    }
+
+    /**
+     * Extracts the map value type generic type parameters as a {@code Class} from a meta-property.
+     * &lt;p&gt;
+     * The target type is the type of the object, not the declaring type of the meta-property.
+     * &lt;p&gt;
+     * This is used when the map value generic parameter is a map or collection.
+     * 
+     * @param prop  the property to examine, not null
+     * @param targetClass  the target type to evaluate against, not null
+     * @return the map value type generic parameters, empty if unable to determine, no nulls
+     */
+    public static List&lt;Class&lt;?&gt;&gt; mapValueTypeTypes(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
+<span class="fc" id="L707">        Type type = extractType(targetClass, prop, 2, 1);</span>
+<span class="fc" id="L708">        return extractTypeClasses(targetClass, type);</span>
+    }
+
+    /**
+     * Low-level method to extract generic type information.
+     * 
+     * @param prop  the property to examine, not null
+     * @param targetClass  the target type to evaluate against, not null
+     * @param size  the number of generic parameters expected
+     * @param index  the index of the generic parameter
+     * @return the type, null if unable to determine or type has no generic parameters
+     */
+    public static Class&lt;?&gt; extractTypeClass(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass, int size, int index) {
+<span class="fc" id="L721">        return eraseToClass(extractType(targetClass, prop, size, index));</span>
+    }
+
+    private static Type extractType(Class&lt;?&gt; targetClass, MetaProperty&lt;?&gt; prop, int size, int index) {
+<span class="fc" id="L725">        Type genType = prop.propertyGenericType();</span>
+<span class="fc bfc" id="L726" title="All 2 branches covered.">        if (genType instanceof ParameterizedType) {</span>
+<span class="fc" id="L727">            ParameterizedType pt = (ParameterizedType) genType;</span>
+<span class="fc" id="L728">            Type[] types = pt.getActualTypeArguments();</span>
+<span class="fc bfc" id="L729" title="All 2 branches covered.">            if (types.length == size) {</span>
+<span class="fc" id="L730">                Type type = types[index];</span>
+<span class="fc bfc" id="L731" title="All 2 branches covered.">                if (type instanceof WildcardType) {</span>
+<span class="fc" id="L732">                    WildcardType wtype = (WildcardType) type;</span>
+<span class="pc bpc" id="L733" title="2 of 4 branches missed.">                    if (wtype.getLowerBounds().length == 0 &amp;&amp; wtype.getUpperBounds().length &gt; 0) {</span>
+<span class="fc" id="L734">                        type = wtype.getUpperBounds()[0];</span>
+                    }
+                }
+<span class="fc bfc" id="L737" title="All 2 branches covered.">                if (type instanceof TypeVariable) {</span>
+<span class="fc" id="L738">                    type = resolveGenerics(targetClass, (TypeVariable&lt;?&gt;) type);</span>
+                }
+<span class="fc" id="L740">                return type;</span>
+            }
+        }
+<span class="fc" id="L743">        return null;</span>
+    }
+
+    private static List&lt;Class&lt;?&gt;&gt; extractTypeClasses(Class&lt;?&gt; targetClass, Type type) {
+<span class="fc" id="L747">        List&lt;Class&lt;?&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L748" title="All 2 branches covered.">        if (type != null) {</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">            if (type instanceof ParameterizedType) {</span>
+<span class="fc" id="L750">                ParameterizedType pt = (ParameterizedType) type;</span>
+<span class="fc" id="L751">                Type[] actualTypes = pt.getActualTypeArguments();</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">                for (Type actualType : actualTypes) {</span>
+<span class="pc bpc" id="L753" title="1 of 2 branches missed.">                    if (actualType instanceof TypeVariable) {</span>
+<span class="nc" id="L754">                        actualType = resolveGenerics(targetClass, (TypeVariable&lt;?&gt;) actualType);</span>
+                    }
+<span class="fc" id="L756">                    Class&lt;?&gt; cls = eraseToClass(actualType);</span>
+<span class="fc bfc" id="L757" title="All 2 branches covered.">                    result.add(cls != null ? cls : Object.class);</span>
+                }
+            }
+        }
+<span class="fc" id="L761">        return result;</span>
+    }
+
+    private static Type resolveGenerics(Class&lt;?&gt; targetClass, TypeVariable&lt;?&gt; typevar) {
+        // looks up meaning of type variables like T
+<span class="fc" id="L766">        Map&lt;Type, Type&gt; resolved = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L767">        Type type = targetClass;</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">        while (type != null) {</span>
+<span class="fc bfc" id="L769" title="All 2 branches covered.">            if (type instanceof Class) {</span>
+<span class="fc" id="L770">                type = ((Class&lt;?&gt;) type).getGenericSuperclass();</span>
+<span class="pc bpc" id="L771" title="1 of 2 branches missed.">            } else if (type instanceof ParameterizedType) {</span>
+                // find actual types captured by subclass
+<span class="fc" id="L773">                ParameterizedType pt = (ParameterizedType) type;</span>
+<span class="fc" id="L774">                Type[] actualTypeArguments = pt.getActualTypeArguments();</span>
+                // find type variables declared in source code
+<span class="fc" id="L776">                Class&lt;?&gt; rawType = eraseToClass(pt.getRawType());</span>
+<span class="pc bpc" id="L777" title="1 of 2 branches missed.">                if (rawType == null) {</span>
+<span class="nc" id="L778">                    return null;</span>
+                }
+<span class="fc" id="L780">                TypeVariable&lt;?&gt;[] typeParameters = rawType.getTypeParameters();</span>
+<span class="fc bfc" id="L781" title="All 2 branches covered.">                for (int i = 0; i &lt; actualTypeArguments.length; i++) {</span>
+<span class="fc" id="L782">                    resolved.put(typeParameters[i], actualTypeArguments[i]);</span>
+                }
+<span class="fc" id="L784">                type = rawType.getGenericSuperclass();</span>
+<span class="fc" id="L785">            }</span>
+        }
+        // resolve type variable to a meaningful type
+<span class="fc" id="L788">        Type result = typevar;</span>
+<span class="fc bfc" id="L789" title="All 2 branches covered.">        while (resolved.containsKey(result)) {</span>
+<span class="fc" id="L790">            result = resolved.get(result);</span>
+        }
+<span class="fc" id="L792">        return result;</span>
+    }
+
+    private static Class&lt;?&gt; eraseToClass(Type type) {
+<span class="fc bfc" id="L796" title="All 2 branches covered.">        if (type instanceof Class) {</span>
+<span class="fc" id="L797">            return (Class&lt;?&gt;) type;</span>
+<span class="fc bfc" id="L798" title="All 2 branches covered.">        } else if (type instanceof ParameterizedType) {</span>
+<span class="fc" id="L799">            return eraseToClass(((ParameterizedType) type).getRawType());</span>
+<span class="pc bpc" id="L800" title="1 of 2 branches missed.">        } else if (type instanceof GenericArrayType) {</span>
+<span class="nc" id="L801">            Type componentType = ((GenericArrayType) type).getGenericComponentType();</span>
+<span class="nc" id="L802">            Class&lt;?&gt; componentClass = eraseToClass(componentType);</span>
+<span class="nc bnc" id="L803" title="All 2 branches missed.">            if (componentClass != null) {</span>
+<span class="nc" id="L804">                return Array.newInstance(componentClass, 0).getClass();</span>
+            }
+<span class="pc bfc" id="L806" title="All 2 branches covered.">        } else if (type instanceof TypeVariable) {</span>
+<span class="fc" id="L807">            Type[] bounds = ((TypeVariable&lt;?&gt;) type).getBounds();</span>
+<span class="pc bpc" id="L808" title="1 of 2 branches missed.">            if (bounds.length == 0) {</span>
+<span class="nc" id="L809">                return Object.class;</span>
+            } else {
+<span class="fc" id="L811">                return eraseToClass(bounds[0]);</span>
+            }
+        }
+<span class="fc" id="L814">        return null;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Checks if two beans are equal ignoring one or more properties.
+     * &lt;p&gt;
+     * This version of {@code equalIgnoring} only checks properties at the top level.
+     * For example, if a {@code Person} bean contains an {@code Address} bean then
+     * only properties on the {@code Person} bean will be checked against the ignore list.
+     * 
+     * @param bean1  the first bean, not null
+     * @param bean2  the second bean, not null
+     * @param properties  the properties to ignore, not null
+     * @return true if equal
+     * @throws IllegalArgumentException if inputs are null
+     */
+    public static boolean equalIgnoring(Bean bean1, Bean bean2, MetaProperty&lt;?&gt;... properties) {
+<span class="fc" id="L832">        JodaBeanUtils.notNull(bean1, &quot;bean1&quot;);</span>
+<span class="fc" id="L833">        JodaBeanUtils.notNull(bean2, &quot;bean2&quot;);</span>
+<span class="fc" id="L834">        JodaBeanUtils.notNull(properties, &quot;properties&quot;);</span>
+<span class="fc bfc" id="L835" title="All 2 branches covered.">        if (bean1 == bean2) {</span>
+<span class="fc" id="L836">            return true;</span>
+        }
+<span class="pc bpc" id="L838" title="1 of 2 branches missed.">        if (bean1.getClass() != bean2.getClass()) {</span>
+<span class="nc" id="L839">            return false;</span>
+        }
+<span class="fc bfc" id="L841" title="All 3 branches covered.">        switch (properties.length) {</span>
+            case 0:
+<span class="fc" id="L843">                return bean1.equals(bean2);</span>
+            case 1: {
+<span class="fc" id="L845">                MetaProperty&lt;?&gt; ignored = properties[0];</span>
+<span class="fc bfc" id="L846" title="All 2 branches covered.">                for (MetaProperty&lt;?&gt; mp : bean1.metaBean().metaPropertyIterable()) {</span>
+<span class="fc bfc" id="L847" title="All 4 branches covered.">                    if (ignored.equals(mp) == false &amp;&amp; JodaBeanUtils.equal(mp.get(bean1), mp.get(bean2)) == false) {</span>
+<span class="fc" id="L848">                        return false;</span>
+                    }
+<span class="fc" id="L850">                }</span>
+<span class="fc" id="L851">                return true;</span>
+            }
+            default:
+<span class="fc" id="L854">                Set&lt;MetaProperty&lt;?&gt;&gt; ignored = new HashSet&lt;&gt;(Arrays.asList(properties));</span>
+<span class="fc bfc" id="L855" title="All 2 branches covered.">                for (MetaProperty&lt;?&gt; mp : bean1.metaBean().metaPropertyIterable()) {</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">                    if (ignored.contains(mp) == false</span>
+<span class="fc bfc" id="L857" title="All 2 branches covered.">                            &amp;&amp; JodaBeanUtils.equal(mp.get(bean1), mp.get(bean2)) == false) {</span>
+<span class="fc" id="L858">                        return false;</span>
+                    }
+<span class="fc" id="L860">                }</span>
+<span class="fc" id="L861">                return true;</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an iterator over all the beans contained within the bean.
+     * &lt;p&gt;
+     * The iterator is a depth-first traversal of the beans within the specified bean.
+     * The first returned bean is the specified bean.
+     * Beans within collections will be returned.
+     * &lt;p&gt;
+     * A cycle in the bean structure will cause an infinite loop.
+     * 
+     * @param bean  the bean to iterate over, not null
+     * @return the iterator, not null
+     */
+    public static Iterator&lt;Bean&gt; beanIterator(Bean bean) {
+<span class="fc" id="L879">        return new BeanIterator(bean);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Chains two meta-properties together.
+     * &lt;p&gt;
+     * The resulting function takes an instance of a bean, queries using the first
+     * meta-property, then queries the result using the second meta-property.
+     * If the first returns null, the result will be null.
+     * 
+     * @param &lt;P&gt;  the type of the result of the chain
+     * @param mp1  the first meta-property, not null
+     * @param mp2  the second meta-property, not null
+     * @return the chain function, not null
+     */
+    public static &lt;P&gt; Function&lt;Bean, P&gt; chain(MetaProperty&lt;? extends Bean&gt; mp1, MetaProperty&lt;P&gt; mp2) {
+<span class="fc" id="L896">        notNull(mp1, &quot;MetaProperty 1&quot;);</span>
+<span class="fc" id="L897">        notNull(mp1, &quot;MetaProperty 2&quot;);</span>
+<span class="fc" id="L898">        return b -&gt; {</span>
+<span class="fc" id="L899">            Bean first = mp1.get(b);</span>
+<span class="pc bpc" id="L900" title="1 of 2 branches missed.">            return first != null ? mp2.get(first) : null;</span>
+        };
+    }
+
+    /**
+     * Chains a function to a meta-property.
+     * &lt;p&gt;
+     * The resulting function takes an instance of a bean, queries using the first
+     * function, then queries the result using the second meta-property.
+     * If the first returns null, the result will be null.
+     * 
+     * @param &lt;P&gt;  the type of the result of the chain
+     * @param fn1  the first meta-property, not null
+     * @param mp2  the second meta-property, not null
+     * @return the chain function, not null
+     */
+    public static &lt;P&gt; Function&lt;Bean, P&gt; chain(Function&lt;Bean, ? extends Bean&gt; fn1, MetaProperty&lt;P&gt; mp2) {
+<span class="nc" id="L917">        notNull(fn1, &quot;Function 1&quot;);</span>
+<span class="nc" id="L918">        notNull(fn1, &quot;MetaProperty 2&quot;);</span>
+<span class="nc" id="L919">        return b -&gt; {</span>
+<span class="nc" id="L920">            Bean first = fn1.apply(b);</span>
+<span class="nc bnc" id="L921" title="All 2 branches missed.">            return first != null ? mp2.get(first) : null;</span>
+        };
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a comparator for the specified bean query.
+     * &lt;p&gt;
+     * The result of the query must be {@link Comparable}.
+     * &lt;p&gt;
+     * To use this with a meta-property append {@code ::get} to the meta-property,
+     * for example {@code Address.meta().street()::get}.
+     * 
+     * @param query  the query to use, not null
+     * @param ascending  true for ascending, false for descending
+     * @return the comparator, not null
+     */
+    public static Comparator&lt;Bean&gt; comparator(Function&lt;Bean, ?&gt; query, boolean ascending) {
+<span class="fc bfc" id="L939" title="All 2 branches covered.">        return (ascending ? comparatorAscending(query) : comparatorDescending(query));</span>
+    }
+
+    /**
+     * Obtains an ascending comparator for the specified bean query.
+     * &lt;p&gt;
+     * The result of the query must be {@link Comparable}.
+     * 
+     * @param query  the query to use, not null
+     * @return the comparator, not null
+     */
+    public static Comparator&lt;Bean&gt; comparatorAscending(Function&lt;Bean, ?&gt; query) {
+<span class="fc bfc" id="L951" title="All 2 branches covered.">        if (query == null) {</span>
+<span class="fc" id="L952">            throw new NullPointerException(&quot;Function must not be null&quot;);</span>
+        }
+<span class="fc" id="L954">        return new Comp(query);</span>
+    }
+
+    /**
+     * Obtains an descending comparator for the specified bean query.
+     * &lt;p&gt;
+     * The result of the query must be {@link Comparable}.
+     * 
+     * @param query  the query to use, not null
+     * @return the comparator, not null
+     */
+    public static Comparator&lt;Bean&gt; comparatorDescending(Function&lt;Bean, ?&gt; query) {
+<span class="fc bfc" id="L966" title="All 2 branches covered.">        if (query == null) {</span>
+<span class="fc" id="L967">            throw new NullPointerException(&quot;Function must not be null&quot;);</span>
+        }
+<span class="fc" id="L969">        return Collections.reverseOrder(new Comp(query));</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Comparator.
+     */
+    private static final class Comp implements Comparator&lt;Bean&gt; {
+        private final Function&lt;Bean, ?&gt; query;
+
+<span class="fc" id="L979">        private Comp(Function&lt;Bean, ?&gt; query) {</span>
+<span class="fc" id="L980">            this.query = query;</span>
+<span class="fc" id="L981">        }</span>
+
+        @Override
+        public int compare(Bean bean1, Bean bean2) {
+            @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L986">            Comparable&lt;Object&gt; value1 = (Comparable&lt;Object&gt;) query.apply(bean1);</span>
+<span class="fc" id="L987">            Object value2 = query.apply(bean2);</span>
+<span class="fc" id="L988">            return value1.compareTo(value2);</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Clones an object.
+     */
+    @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+    private static class Cloner {
+<span class="fc" id="L998">        public static final Cloner INSTANCE = getInstance();</span>
+        private static Cloner getInstance() {
+            try {
+<span class="fc" id="L1001">                Class.forName(&quot;org.joda.collect.grid.Grid&quot;);</span>
+<span class="fc" id="L1002">                return new CollectCloner();</span>
+<span class="nc" id="L1003">            } catch (Exception | LinkageError ex) {</span>
+                try {
+<span class="nc" id="L1005">                    Class.forName(&quot;com.google.common.collect.Multimap&quot;);</span>
+<span class="nc" id="L1006">                    return new GuavaCloner();</span>
+<span class="nc" id="L1007">                } catch (Exception | LinkageError ex2) {</span>
+<span class="nc" id="L1008">                    return new Cloner();</span>
+                }
+            }
+        }
+
+<span class="fc" id="L1013">        Cloner() {</span>
+<span class="fc" id="L1014">        }</span>
+
+        Object clone(Object value) {
+<span class="pc bpc" id="L1017" title="1 of 2 branches missed.">            if (value == null) {</span>
+<span class="nc" id="L1018">                return value;</span>
+<span class="fc bfc" id="L1019" title="All 2 branches covered.">            } else if (value instanceof Bean) {</span>
+<span class="fc" id="L1020">                return cloneAlways((Bean) value);</span>
+<span class="pc bpc" id="L1021" title="1 of 2 branches missed.">            } else if (value instanceof SortedSet) {</span>
+<span class="nc" id="L1022">                SortedSet set = (SortedSet) value;</span>
+<span class="nc" id="L1023">                return cloneIterable(set, new TreeSet(set.comparator()));</span>
+<span class="pc bpc" id="L1024" title="1 of 2 branches missed.">            } else if (value instanceof Set) {</span>
+<span class="nc" id="L1025">                return cloneIterable((Set) value, new LinkedHashSet());</span>
+<span class="fc bfc" id="L1026" title="All 2 branches covered.">            } else if (value instanceof Iterable) {</span>
+<span class="fc" id="L1027">                return cloneIterable((Iterable) value, new ArrayList());</span>
+<span class="pc bpc" id="L1028" title="1 of 2 branches missed.">            } else if (value instanceof SortedMap) {</span>
+<span class="nc" id="L1029">                SortedMap map = (SortedMap) value;</span>
+<span class="nc" id="L1030">                return cloneMap(map, new TreeMap(map.comparator()));</span>
+<span class="fc bfc" id="L1031" title="All 2 branches covered.">            } else if (value instanceof Map) {</span>
+<span class="fc" id="L1032">                return cloneMap((Map) value, new LinkedHashMap());</span>
+<span class="fc bfc" id="L1033" title="All 2 branches covered.">            } else if (value.getClass().isArray()) {</span>
+<span class="fc" id="L1034">                return cloneArray(value);</span>
+<span class="fc bfc" id="L1035" title="All 2 branches covered.">            } else if (value instanceof java.util.Date) {</span>
+<span class="fc" id="L1036">                return ((java.util.Date) value).clone();</span>
+            }
+<span class="fc" id="L1038">            return value;</span>
+        }
+
+        Object cloneIterable(Iterable original, Collection cloned) {
+<span class="fc bfc" id="L1042" title="All 2 branches covered.">            for (Object item : original) {</span>
+<span class="fc" id="L1043">                cloned.add(clone(item));</span>
+<span class="fc" id="L1044">            }</span>
+<span class="fc" id="L1045">            return cloned;</span>
+        }
+
+        Object cloneMap(Map original, Map cloned) {
+<span class="fc bfc" id="L1049" title="All 2 branches covered.">            for (Object item : original.entrySet()) {</span>
+<span class="fc" id="L1050">                Entry entry = (Entry) item;</span>
+<span class="fc" id="L1051">                cloned.put(clone(entry.getKey()), clone(entry.getValue()));</span>
+<span class="fc" id="L1052">            }</span>
+<span class="fc" id="L1053">            return cloned;</span>
+        }
+
+        Object cloneArray(Object original) {
+<span class="fc" id="L1057">            int len = Array.getLength(original);</span>
+<span class="fc" id="L1058">            Class&lt;?&gt; arrayType = original.getClass().getComponentType();</span>
+<span class="fc" id="L1059">            Object copy = Array.newInstance(arrayType, len);</span>
+<span class="fc bfc" id="L1060" title="All 2 branches covered.">            for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L1061">                Array.set(copy, i, clone(Array.get(original, i)));</span>
+            }
+<span class="fc" id="L1063">            return copy;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Clones an object.
+     */
+    @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+    private static class GuavaCloner extends Cloner {
+<span class="fc" id="L1073">        GuavaCloner() {</span>
+<span class="fc" id="L1074">        }</span>
+
+        @Override
+        Object clone(Object value) {
+<span class="pc bpc" id="L1078" title="1 of 2 branches missed.">            if (value == null) {</span>
+<span class="nc" id="L1079">                return value;</span>
+<span class="pc bpc" id="L1080" title="5 of 10 branches missed.">            } else if (value instanceof ImmutableMap ||</span>
+                    value instanceof ImmutableCollection ||
+                    value instanceof ImmutableMap ||
+                    value instanceof ImmutableMultimap ||
+                    value instanceof ImmutableTable) {
+<span class="nc" id="L1085">                return value;</span>
+<span class="pc bpc" id="L1086" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
+<span class="nc" id="L1087">                return cloneAlways((Bean) value);</span>
+<span class="pc bpc" id="L1088" title="1 of 2 branches missed.">            } else if (value instanceof SortedMultiset) {</span>
+<span class="nc" id="L1089">                SortedMultiset set = (SortedMultiset) value;</span>
+<span class="nc" id="L1090">                return cloneIterable(set, TreeMultiset.create(set.comparator()));</span>
+<span class="pc bpc" id="L1091" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
+<span class="nc" id="L1092">                return cloneIterable((Multiset) value, LinkedHashMultiset.create());</span>
+<span class="pc bpc" id="L1093" title="1 of 2 branches missed.">            } else if (value instanceof SetMultimap) {</span>
+<span class="nc" id="L1094">                return cloneMultimap((Multimap) value, LinkedHashMultimap.create());</span>
+<span class="pc bpc" id="L1095" title="1 of 2 branches missed.">            } else if (value instanceof ListMultimap) {</span>
+<span class="nc" id="L1096">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
+<span class="pc bpc" id="L1097" title="1 of 2 branches missed.">            } else if (value instanceof Multimap) {</span>
+<span class="nc" id="L1098">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
+<span class="pc bpc" id="L1099" title="1 of 2 branches missed.">            } else if (value instanceof BiMap) {</span>
+<span class="nc" id="L1100">                return cloneMap((BiMap) value, HashBiMap.create());</span>
+<span class="pc bpc" id="L1101" title="1 of 2 branches missed.">            } else if (value instanceof Table) {</span>
+<span class="nc" id="L1102">                return cloneTable((Table) value, HashBasedTable.create());</span>
+            }
+<span class="fc" id="L1104">            return super.clone(value);</span>
+        }
+
+        Object cloneMultimap(Multimap original, Multimap cloned) {
+<span class="nc bnc" id="L1108" title="All 2 branches missed.">            for (Object key : original.keySet()) {</span>
+<span class="nc" id="L1109">                Collection values = original.get(key);</span>
+<span class="nc bnc" id="L1110" title="All 2 branches missed.">                for (Object value : values) {</span>
+<span class="nc" id="L1111">                    cloned.put(clone(key), clone(value));</span>
+<span class="nc" id="L1112">                }</span>
+<span class="nc" id="L1113">            }</span>
+<span class="nc" id="L1114">            return cloned;</span>
+        }
+
+        Object cloneTable(Table original, Table cloned) {
+<span class="nc bnc" id="L1118" title="All 2 branches missed.">            for (Object item : original.cellSet()) {</span>
+<span class="nc" id="L1119">                Table.Cell cell = (Table.Cell) item;</span>
+<span class="nc" id="L1120">                cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));</span>
+<span class="nc" id="L1121">            }</span>
+<span class="nc" id="L1122">            return cloned;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Clones an object.
+     */
+    @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+    private static class CollectCloner extends GuavaCloner {
+<span class="fc" id="L1132">        CollectCloner() {</span>
+<span class="fc" id="L1133">        }</span>
+
+        @Override
+        Object clone(Object value) {
+<span class="fc bfc" id="L1137" title="All 2 branches covered.">            if (value == null) {</span>
+<span class="fc" id="L1138">                return value;</span>
+<span class="pc bpc" id="L1139" title="1 of 2 branches missed.">            } else if (value instanceof ImmutableGrid) {</span>
+<span class="nc" id="L1140">                return value;</span>
+<span class="pc bpc" id="L1141" title="1 of 2 branches missed.">            } else if (value instanceof DenseGrid) {</span>
+<span class="nc" id="L1142">                Grid grid = (Grid) value;</span>
+<span class="nc" id="L1143">                return cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));</span>
+<span class="pc bpc" id="L1144" title="1 of 2 branches missed.">            } else if (value instanceof Grid) {</span>
+<span class="nc" id="L1145">                Grid grid = (Grid) value;</span>
+<span class="nc" id="L1146">                return cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));</span>
+            }
+<span class="fc" id="L1148">            return super.clone(value);</span>
+        }
+
+        Object cloneGrid(Grid original, Grid cloned) {
+<span class="nc bnc" id="L1152" title="All 2 branches missed.">            for (Object item : original.cells()) {</span>
+<span class="nc" id="L1153">                Grid.Cell cell = (Grid.Cell) item;</span>
+<span class="nc" id="L1154">                cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));</span>
+<span class="nc" id="L1155">            }</span>
+<span class="nc" id="L1156">            return cloned;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

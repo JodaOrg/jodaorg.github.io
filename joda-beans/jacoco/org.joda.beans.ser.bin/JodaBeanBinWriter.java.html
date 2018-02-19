@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JodaBeanBinWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.bin</a> &gt; <span class="el_source">JodaBeanBinWriter.java</span></div><h1>JodaBeanBinWriter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.bin;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.ser.JodaBeanSer;
+import org.joda.beans.ser.SerCategory;
+import org.joda.beans.ser.SerIterator;
+import org.joda.beans.ser.SerOptional;
+import org.joda.beans.ser.SerTypeMapper;
+
+/**
+ * Provides the ability for a Joda-Bean to be written to a binary format.
+ * &lt;p&gt;
+ * This class contains mutable state and cannot be used from multiple threads.
+ * A new instance must be created for each message.
+ * &lt;p&gt;
+ * The binary format is based on MessagePack v2.0.
+ * Each bean is output as a map using the property name.
+ * &lt;p&gt;
+ * Most simple types, defined by Joda-Convert, are output as MessagePack strings.
+ * However, MessagePack nil, boolean, float, integral and bin types are also used
+ * for null, byte[] and the Java numeric primitive types (excluding char).
+ * &lt;p&gt;
+ * Beans are output using MessagePack maps where the key is the property name.
+ * Collections are output using MessagePack maps or arrays.
+ * Multisets are output as a map of value to count.
+ * &lt;p&gt;
+ * If a collection contains a collection then addition meta-type information is
+ * written to aid with deserialization.
+ * At this level, the data read back may not be identical to that written.
+ * &lt;p&gt;
+ * Where necessary, the Java type is sent using an 'ext' entity.
+ * Three 'ext' types are used, one each for beans, meta-type and simple.
+ * The class name is passed as the 'ext' data.
+ * The 'ext' value is sent as an additional key-value pair for beans, with the
+ * 'ext' as the key and 'nil' as the value. Where the additional type information
+ * is not about a bean, a tuple is written using a size 1 map where the key is the
+ * 'ext' data and the value is the data being annotated.
+ * &lt;p&gt;
+ * Type names are shortened by the package of the root type if possible.
+ * Certain basic types are also handled, such as String, Integer, File and URI.
+ *
+ * @author Stephen Colebourne
+ */
+public class JodaBeanBinWriter {
+    // this binary design is not the smallest possible
+    // however, placing the 'ext' for the additional type info within
+    // the bean data is much more friendly for dynamic languages using
+    // a standalone MessagePack parser
+
+    /**
+     * The settings to use.
+     */
+    private final JodaBeanSer settings;
+    /**
+     * The output stream.
+     */
+    private MsgPackOutput output;
+    /**
+     * The base package including the trailing dot.
+     */
+    private String basePackage;
+    /**
+     * The known types.
+     */
+<span class="fc" id="L87">    private Map&lt;Class&lt;?&gt;, String&gt; knownTypes = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Creates an instance.
+     * 
+     * @param settings  the settings to use, not null
+     */
+<span class="fc" id="L94">    public JodaBeanBinWriter(final JodaBeanSer settings) {</span>
+<span class="fc" id="L95">        this.settings = settings;</span>
+<span class="fc" id="L96">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes the bean to an array of bytes.
+     * &lt;p&gt;
+     * The type of the bean will be set in the message.
+     * 
+     * @param bean  the bean to output, not null
+     * @return the binary data, not null
+     */
+    public byte[] write(final Bean bean) {
+<span class="fc" id="L108">        return write(bean, true);</span>
+    }
+
+    /**
+     * Writes the bean to an array of bytes.
+     * 
+     * @param bean  the bean to output, not null
+     * @param rootType  true to output the root type
+     * @return the binary data, not null
+     */
+    public byte[] write(final Bean bean, final boolean rootType) {
+<span class="fc" id="L119">        ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);</span>
+        try {
+<span class="fc" id="L121">            write(bean, rootType, baos);</span>
+<span class="nc" id="L122">        } catch (IOException ex) {</span>
+<span class="nc" id="L123">            throw new IllegalStateException(ex);</span>
+<span class="fc" id="L124">        }</span>
+<span class="fc" id="L125">        return baos.toByteArray();</span>
+    }
+
+    /**
+     * Writes the bean to the {@code OutputStream}.
+     * &lt;p&gt;
+     * The type of the bean will be set in the message.
+     * 
+     * @param bean  the bean to output, not null
+     * @param output  the output stream, not null
+     * @throws IOException if an error occurs
+     */
+    public void write(final Bean bean, OutputStream output) throws IOException {
+<span class="nc" id="L138">        write(bean, true, output);</span>
+<span class="nc" id="L139">    }</span>
+
+    /**
+     * Writes the bean to the {@code OutputStream}.
+     * 
+     * @param bean  the bean to output, not null
+     * @param rootType  true to output the root type
+     * @param output  the output stream, not null
+     * @throws IOException if an error occurs
+     */
+    public void write(final Bean bean, final boolean rootType, OutputStream output) throws IOException {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (bean == null) {</span>
+<span class="nc" id="L151">            throw new NullPointerException(&quot;bean&quot;);</span>
+        }
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        if (output == null) {</span>
+<span class="nc" id="L154">            throw new NullPointerException(&quot;output&quot;);</span>
+        }
+<span class="fc" id="L156">        this.output = new MsgPackOutput(output);</span>
+<span class="fc" id="L157">        writeRoot(bean, rootType);</span>
+<span class="fc" id="L158">    }</span>
+
+    //-----------------------------------------------------------------------
+    private void writeRoot(final Bean bean, final boolean rootType) throws IOException {
+<span class="fc" id="L162">        output.writeArrayHeader(2);</span>
+<span class="fc" id="L163">        output.writeInt(1);  // version 1</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        writeBean(bean, bean.getClass(), rootType ? RootType.ROOT_WITH_TYPE : RootType.ROOT_WITHOUT_TYPE);</span>
+<span class="fc" id="L165">    }</span>
+
+    private void writeBean(final Bean bean, final Class&lt;?&gt; declaredType, RootType rootTypeFlag) throws IOException {
+<span class="fc" id="L168">        int count = bean.metaBean().metaPropertyCount();</span>
+<span class="fc" id="L169">        MetaProperty&lt;?&gt;[] props = new MetaProperty&lt;?&gt;[count];</span>
+<span class="fc" id="L170">        Object[] values = new Object[count];</span>
+<span class="fc" id="L171">        int size = 0;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
+<span class="pc bpc" id="L173" title="1 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
+<span class="fc" id="L174">                Object value = SerOptional.extractValue(prop, bean);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                if (value != null) {</span>
+<span class="fc" id="L176">                    props[size] = prop;</span>
+<span class="fc" id="L177">                    values[size++] = value;</span>
+                }
+            }
+<span class="fc" id="L180">        }</span>
+<span class="fc bfc" id="L181" title="All 6 branches covered.">        if (rootTypeFlag == RootType.ROOT_WITH_TYPE || (rootTypeFlag == RootType.NOT_ROOT &amp;&amp; bean.getClass() != declaredType)) {</span>
+<span class="fc" id="L182">            String typeStr = SerTypeMapper.encodeType(bean.getClass(), settings, basePackage, knownTypes);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">            if (rootTypeFlag == RootType.ROOT_WITH_TYPE) {</span>
+<span class="fc" id="L184">                basePackage = bean.getClass().getPackage().getName() + &quot;.&quot;;</span>
+            }
+<span class="fc" id="L186">            output.writeMapHeader(size + 1);</span>
+<span class="fc" id="L187">            output.writeExtensionString(MsgPack.JODA_TYPE_BEAN, typeStr);</span>
+<span class="fc" id="L188">            output.writeNil();</span>
+<span class="fc" id="L189">        } else {</span>
+<span class="fc" id="L190">            output.writeMapHeader(size);</span>
+        }
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L193">            MetaProperty&lt;?&gt; prop = props[i];</span>
+<span class="fc" id="L194">            Object value = values[i];</span>
+<span class="fc" id="L195">            output.writeString(prop.name());</span>
+<span class="fc" id="L196">            Class&lt;?&gt; propType = SerOptional.extractType(prop, bean.getClass());</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">            if (value instanceof Bean) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                if (settings.getConverter().isConvertible(value.getClass())) {</span>
+<span class="fc" id="L199">                    writeSimple(propType, value);</span>
+                } else {
+<span class="fc" id="L201">                    writeBean((Bean) value, propType, RootType.NOT_ROOT);</span>
+                }
+            } else {
+<span class="fc" id="L204">                SerIterator itemIterator = settings.getIteratorFactory().create(value, prop, bean.getClass());</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">                if (itemIterator != null) {</span>
+<span class="fc" id="L206">                    writeElements(itemIterator);</span>
+                } else {
+<span class="fc" id="L208">                    writeSimple(propType, value);</span>
+                }
+            }
+        }
+<span class="fc" id="L212">    }</span>
+
+    //-----------------------------------------------------------------------
+    private void writeElements(final SerIterator itemIterator) throws IOException {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (itemIterator.metaTypeRequired()) {</span>
+<span class="fc" id="L217">            output.writeMapHeader(1);</span>
+<span class="fc" id="L218">            output.writeExtensionString(MsgPack.JODA_TYPE_META, itemIterator.metaTypeName());</span>
+        }
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (itemIterator.category() == SerCategory.MAP) {</span>
+<span class="fc" id="L221">            writeMap(itemIterator);</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.COUNTED) {</span>
+<span class="fc" id="L223">            writeCounted(itemIterator);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.TABLE) {</span>
+<span class="fc" id="L225">            writeTable(itemIterator);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.GRID) {</span>
+<span class="fc" id="L227">            writeGrid(itemIterator);</span>
+        } else {
+<span class="fc" id="L229">            writeArray(itemIterator);</span>
+        }
+<span class="fc" id="L231">    }</span>
+
+    private void writeArray(final SerIterator itemIterator) throws IOException {
+<span class="fc" id="L234">        output.writeArrayHeader(itemIterator.size());</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L236">            itemIterator.next();</span>
+<span class="fc" id="L237">            writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+        }
+<span class="fc" id="L239">    }</span>
+
+    private void writeMap(final SerIterator itemIterator) throws IOException {
+<span class="fc" id="L242">        output.writeMapHeader(itemIterator.size());</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L244">            itemIterator.next();</span>
+<span class="fc" id="L245">            Object key = itemIterator.key();</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">            if (key == null) {</span>
+<span class="fc" id="L247">                throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be null: &quot; + key);</span>
+            }
+<span class="fc" id="L249">            writeObject(itemIterator.keyType(), key, null);</span>
+<span class="fc" id="L250">            writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+<span class="fc" id="L251">        }</span>
+<span class="fc" id="L252">    }</span>
+
+    private void writeTable(final SerIterator itemIterator) throws IOException {
+<span class="fc" id="L255">        output.writeArrayHeader(itemIterator.size());</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L257">            itemIterator.next();</span>
+<span class="fc" id="L258">            output.writeArrayHeader(3);</span>
+<span class="fc" id="L259">            writeObject(itemIterator.keyType(), itemIterator.key(), null);</span>
+<span class="fc" id="L260">            writeObject(itemIterator.columnType(), itemIterator.column(), null);</span>
+<span class="fc" id="L261">            writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+        }
+<span class="fc" id="L263">    }</span>
+
+    private void writeGrid(final SerIterator itemIterator) throws IOException {
+<span class="fc" id="L266">        int rows = itemIterator.dimensionSize(0);</span>
+<span class="fc" id="L267">        int columns = itemIterator.dimensionSize(1);</span>
+<span class="fc" id="L268">        int totalSize = rows * columns;</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        if (itemIterator.size() &lt; (totalSize / 4)) {</span>
+            // sparse
+<span class="fc" id="L271">            output.writeArrayHeader(itemIterator.size() + 2);</span>
+<span class="fc" id="L272">            output.writeInt(rows);</span>
+<span class="fc" id="L273">            output.writeInt(columns);</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">            while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L275">                itemIterator.next();</span>
+<span class="fc" id="L276">                output.writeArrayHeader(3);</span>
+<span class="fc" id="L277">                output.writeInt((Integer) itemIterator.key());</span>
+<span class="fc" id="L278">                output.writeInt((Integer) itemIterator.column());</span>
+<span class="fc" id="L279">                writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+            }
+        } else {
+            // dense
+<span class="fc" id="L283">            output.writeArrayHeader(totalSize + 2);</span>
+<span class="fc" id="L284">            output.writeInt(rows);</span>
+<span class="fc" id="L285">            output.writeInt(columns);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">            for (int row = 0; row &lt; rows; row++) {</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">                for (int column = 0; column &lt; columns; column++) {</span>
+<span class="fc" id="L288">                    writeObject(itemIterator.valueType(), itemIterator.value(row, column), itemIterator);</span>
+                }
+            }
+        }
+<span class="fc" id="L292">    }</span>
+
+    private void writeCounted(final SerIterator itemIterator) throws IOException {
+<span class="fc" id="L295">        output.writeMapHeader(itemIterator.size());</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L297">            itemIterator.next();</span>
+<span class="fc" id="L298">            writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
+<span class="fc" id="L299">            output.writeInt(itemIterator.count());</span>
+        }
+<span class="fc" id="L301">    }</span>
+
+    private void writeObject(final Class&lt;?&gt; declaredType, final Object obj, SerIterator parentIterator) throws IOException {
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L305">            output.writeNil();</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        } else if (settings.getConverter().isConvertible(obj.getClass())) {</span>
+<span class="fc" id="L307">            writeSimple(declaredType, obj);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        } else if (obj instanceof Bean) {</span>
+<span class="fc" id="L309">            writeBean((Bean) obj, declaredType, RootType.NOT_ROOT);</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">        } else if (parentIterator != null) {</span>
+<span class="fc" id="L311">            SerIterator childIterator = settings.getIteratorFactory().createChild(obj, parentIterator);</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">            if (childIterator != null) {</span>
+<span class="fc" id="L313">                writeElements(childIterator);</span>
+            } else {
+<span class="nc" id="L315">                writeSimple(declaredType, obj);</span>
+            }
+<span class="fc" id="L317">        } else {</span>
+<span class="nc" id="L318">            writeSimple(declaredType, obj);</span>
+        }
+<span class="fc" id="L320">    }</span>
+
+    //-----------------------------------------------------------------------
+    private void writeSimple(final Class&lt;?&gt; declaredType, final Object value) throws IOException {
+        // simple types have no need to write a type object
+<span class="fc" id="L325">        Class&lt;?&gt; realType = value.getClass();</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        if (realType == Integer.class) {</span>
+<span class="fc" id="L327">            output.writeInt(((Integer) value).intValue());</span>
+<span class="fc" id="L328">            return;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        } else if (realType == Double.class) {</span>
+<span class="fc" id="L330">            output.writeDouble(((Double) value).doubleValue());</span>
+<span class="fc" id="L331">            return;</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        } else if (realType == Float.class) {</span>
+<span class="fc" id="L333">            output.writeFloat(((Float) value).floatValue());</span>
+<span class="fc" id="L334">            return;</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        } else if (realType == Boolean.class) {</span>
+<span class="fc" id="L336">            output.writeBoolean(((Boolean) value).booleanValue());</span>
+<span class="fc" id="L337">            return;</span>
+        }
+        
+        // handle no declared type and subclasses
+<span class="fc" id="L341">        Class&lt;?&gt; effectiveType = declaredType;</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        if (declaredType == Object.class) {</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">            if (realType != String.class) {</span>
+<span class="fc" id="L344">                effectiveType = settings.getConverter().findTypedConverter(realType).getEffectiveType();</span>
+<span class="fc" id="L345">                String typeStr = SerTypeMapper.encodeType(effectiveType, settings, basePackage, knownTypes);</span>
+<span class="fc" id="L346">                output.writeMapHeader(1);</span>
+<span class="fc" id="L347">                output.writeExtensionString(MsgPack.JODA_TYPE_DATA, typeStr);</span>
+<span class="fc" id="L348">            } else {</span>
+<span class="fc" id="L349">                effectiveType = realType;</span>
+            }
+<span class="fc bfc" id="L351" title="All 2 branches covered.">        } else if (settings.getConverter().isConvertible(declaredType) == false) {</span>
+<span class="fc" id="L352">            effectiveType = settings.getConverter().findTypedConverter(realType).getEffectiveType();</span>
+<span class="fc" id="L353">            String typeStr = SerTypeMapper.encodeType(effectiveType, settings, basePackage, knownTypes);</span>
+<span class="fc" id="L354">            output.writeMapHeader(1);</span>
+<span class="fc" id="L355">            output.writeExtensionString(MsgPack.JODA_TYPE_DATA, typeStr);</span>
+        }
+        
+        // long/short/byte only processed now to ensure that a distinction can be made between Integer and Long
+<span class="fc bfc" id="L359" title="All 2 branches covered.">        if (realType == Long.class) {</span>
+<span class="fc" id="L360">            output.writeLong(((Long) value).longValue());</span>
+<span class="fc" id="L361">            return;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        } else if (realType == Short.class) {</span>
+<span class="fc" id="L363">            output.writeInt(((Short) value).shortValue());</span>
+<span class="fc" id="L364">            return;</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">        } else if (realType == Byte.class) {</span>
+<span class="fc" id="L366">            output.writeInt(((Byte) value).byteValue());</span>
+<span class="fc" id="L367">            return;</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">        } else if (realType == byte[].class) {</span>
+<span class="fc" id="L369">            output.writeBytes((byte[]) value);</span>
+<span class="fc" id="L370">            return;</span>
+        }
+        
+        // write as a string
+        try {
+<span class="fc" id="L375">            String converted = settings.getConverter().convertToString(effectiveType, value);</span>
+<span class="pc bpc" id="L376" title="1 of 2 branches missed.">            if (converted == null) {</span>
+<span class="nc" id="L377">                throw new IllegalArgumentException(&quot;Unable to write because converter returned a null string: &quot; + value);</span>
+            }
+<span class="fc" id="L379">            output.writeString(converted);</span>
+<span class="nc" id="L380">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L381">            throw new IllegalArgumentException(&quot;Unable to convert type &quot; + effectiveType.getName() + &quot; declared as &quot; + declaredType.getName(), ex);</span>
+<span class="fc" id="L382">        }</span>
+<span class="fc" id="L383">    }</span>
+
+    //-----------------------------------------------------------------------
+<span class="fc" id="L386">    enum RootType {</span>
+<span class="fc" id="L387">        ROOT_WITH_TYPE,</span>
+<span class="fc" id="L388">        ROOT_WITHOUT_TYPE,</span>
+<span class="fc" id="L389">        NOT_ROOT,</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

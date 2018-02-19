@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BuilderGen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.gen</a> &gt; <span class="el_source">BuilderGen.java</span></div><h1>BuilderGen.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.gen;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * A generator of builder code.
+ * 
+ * @author Stephen Colebourne
+ */
+<span class="nc" id="L27">abstract class BuilderGen {</span>
+
+    /**
+     * Generates the builder field.
+     * 
+     * @param indent  the indent to use, not null
+     * @param prop  the property data, not null
+     * @return the generated code, not null
+     */
+    abstract List&lt;String&gt; generateField(String indent, PropertyData prop);
+
+    /**
+     * Is special initialization needed.
+     * 
+     * @param prop  the property data, not null
+     * @return true if special
+     */
+    abstract boolean isSpecialInit(PropertyData prop);
+
+    /**
+     * Generates the init string.
+     * 
+     * @param prop  the property data, not null
+     * @return the generated code, not null
+     */
+    abstract String generateInit(PropertyData prop);
+
+    /**
+     * Generates the builder exposed type.
+     * 
+     * @param prop  the property data, not null
+     * @return the generated code, not null
+     */
+    String generateType(PropertyData prop) {
+<span class="nc" id="L61">        return prop.getBuilderType();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    static class PatternBuilderGen extends BuilderGen {
+        private final String type;
+        private final String init;
+<span class="nc" id="L68">        PatternBuilderGen(String type, String init) {</span>
+<span class="nc" id="L69">            this.type = type;</span>
+<span class="nc" id="L70">            this.init = init;</span>
+<span class="nc" id="L71">        }</span>
+        @Override
+        List&lt;String&gt; generateField(String indent, PropertyData prop) {
+<span class="nc" id="L74">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (prop.isNotNull()) {</span>
+<span class="nc" id="L76">                String init = this.init;</span>
+<span class="nc" id="L77">                init = init.replace(&quot;&lt;&gt;&quot;, PropertyGen.resolveWildcard(prop.getTypeGenerics()));</span>
+<span class="nc" id="L78">                list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot; = &quot; + init + &quot;;&quot;);</span>
+<span class="nc" id="L79">            } else {</span>
+<span class="nc" id="L80">                list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot;;&quot;);</span>
+            }
+<span class="nc" id="L82">            return list;</span>
+        }
+        @Override
+        boolean isSpecialInit(PropertyData prop) {
+<span class="nc" id="L86">            return true;</span>
+        }
+        @Override
+        String generateInit(PropertyData prop) {
+<span class="nc" id="L90">            return init;</span>
+        }
+        @Override
+        String generateType(PropertyData prop) {
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (!&quot;smart&quot;.equals(prop.getBuilderTypeStyle())) {</span>
+<span class="nc" id="L95">                return prop.getBuilderType().replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
+            }
+<span class="nc" id="L97">            return type.replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
+        }
+    }
+
+    static class SimpleBuilderGen extends BuilderGen {
+<span class="nc" id="L102">        SimpleBuilderGen() {</span>
+<span class="nc" id="L103">        }</span>
+        @Override
+        List&lt;String&gt; generateField(String indent, PropertyData prop) {
+<span class="nc" id="L106">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L107">            list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot;;&quot;);</span>
+<span class="nc" id="L108">            return list;</span>
+        }
+        @Override
+        boolean isSpecialInit(PropertyData prop) {
+<span class="nc" id="L112">            return false;</span>
+        }
+        @Override
+        String generateInit(PropertyData prop) {
+<span class="nc" id="L116">            return defaultType(prop);</span>
+        }
+        @Override
+        String generateType(PropertyData prop) {
+<span class="nc" id="L120">            return prop.getBuilderType().replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
+        }
+    }
+
+<span class="nc" id="L124">    static class NoBuilderGen extends BuilderGen {</span>
+<span class="nc" id="L125">        static final BuilderGen INSTANCE = new NoBuilderGen();</span>
+        @Override
+        List&lt;String&gt; generateField(String indent, PropertyData prop) {
+<span class="nc" id="L128">            return Collections.emptyList();</span>
+        }
+        @Override
+        boolean isSpecialInit(PropertyData prop) {
+<span class="nc" id="L132">            return false;</span>
+        }
+        @Override
+        String generateInit(PropertyData prop) {
+<span class="nc" id="L136">            return defaultType(prop);</span>
+        }
+    }
+
+    private static String defaultType(PropertyData prop) {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (prop.getType().equals(&quot;long&quot;)) {</span>
+<span class="nc" id="L142">            return &quot;0L&quot;;</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;int&quot;)) {</span>
+<span class="nc" id="L144">            return &quot;0&quot;;</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;short&quot;)) {</span>
+<span class="nc" id="L146">            return &quot;Short.valueOf(0)&quot;;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;byte&quot;)) {</span>
+<span class="nc" id="L148">            return &quot;Byte.valueOf(0)&quot;;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;double&quot;)) {</span>
+<span class="nc" id="L150">            return &quot;0d&quot;;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;float&quot;)) {</span>
+<span class="nc" id="L152">            return &quot;0f&quot;;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;char&quot;)) {</span>
+<span class="nc" id="L154">            return &quot;Character.valueOf((char) 0)&quot;;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;boolean&quot;)) {</span>
+<span class="nc" id="L156">            return &quot;Boolean.FALSE&quot;;</span>
+        }
+<span class="nc" id="L158">        return &quot;null&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanCodeGen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.gen</a> &gt; <span class="el_source">BeanCodeGen.java</span></div><h1>BeanCodeGen.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.gen;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.joda.beans.JodaBeanUtils;
+
+/**
+ * Code generator for the beans.
+ * &lt;p&gt;
+ * This reads in a {@code .java} file, parses it, and writes out an updated version.
+ * 
+ * @author Stephen Colebourne
+ */
+public class BeanCodeGen {
+
+    /**
+     * Main method.
+     * &lt;p&gt;
+     * This calls {@code System.exit}.
+     * 
+     * @param args  the arguments, not null
+     */
+    public static void main(String[] args) {
+        BeanCodeGen gen;
+        try {
+<span class="nc" id="L51">            gen = createFromArgs(args);</span>
+<span class="nc" id="L52">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L53">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L54">            System.out.println(&quot;&quot;);</span>
+<span class="nc" id="L55">            System.out.println(&quot;Code generator&quot;);</span>
+<span class="nc" id="L56">            System.out.println(&quot;  Usage java org.joda.beans.gen.BeanCodeGen [file]&quot;);</span>
+<span class="nc" id="L57">            System.out.println(&quot;  Options&quot;);</span>
+<span class="nc" id="L58">            System.out.println(&quot;    -R                process all files recursively, default false&quot;);</span>
+<span class="nc" id="L59">            System.out.println(&quot;    -indent=tab       use a tab for indenting, default 4 spaces&quot;);</span>
+<span class="nc" id="L60">            System.out.println(&quot;    -indent=[n]       use n spaces for indenting, default 4&quot;);</span>
+<span class="nc" id="L61">            System.out.println(&quot;    -prefix=[p]       field prefix of p should be removed, no default&quot;);</span>
+<span class="nc" id="L62">            System.out.println(&quot;    -config=[f]       config file: 'jdk'/'guava', default guava&quot;);</span>
+<span class="nc" id="L63">            System.out.println(&quot;    -style=[s]        default bean style: 'light'/'minimal'/'full', default smart&quot;);</span>
+<span class="nc" id="L64">            System.out.println(&quot;    -verbose=[v]      output logging with verbosity from 0 to 3, default 1&quot;);</span>
+<span class="nc" id="L65">            System.out.println(&quot;    -nowrite          output messages rather than writing, default is to write&quot;);</span>
+<span class="nc" id="L66">            System.exit(0);</span>
+<span class="nc" id="L67">            throw new InternalError(&quot;Unreachable&quot;);</span>
+<span class="nc" id="L68">        }</span>
+        try {
+<span class="nc" id="L70">            int changed = gen.process();</span>
+<span class="nc" id="L71">            System.out.println(&quot;Finished, found &quot; + changed + &quot; changed files&quot;);</span>
+<span class="nc" id="L72">            System.exit(0);</span>
+<span class="nc" id="L73">        } catch (Exception ex) {</span>
+<span class="nc" id="L74">            System.out.println();</span>
+<span class="nc" id="L75">            ex.printStackTrace(System.out);</span>
+<span class="nc" id="L76">            System.exit(1);</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * Creates an instance of {@code BeanCodeGen} from arguments.
+     * &lt;p&gt;
+     * This is intended for tools and does not call {@code System.exit}.
+     * 
+     * @param args  the arguments, not null
+     * @return the code generator, not null
+     * @throws RuntimeException if unable to create
+     */
+    public static BeanCodeGen createFromArgs(String[] args) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (args == null) {</span>
+<span class="nc" id="L91">            throw new IllegalArgumentException(&quot;Arguments must not be null&quot;);</span>
+        }
+<span class="nc" id="L93">        String indent = &quot;    &quot;;</span>
+<span class="nc" id="L94">        String prefix = &quot;&quot;;</span>
+<span class="nc" id="L95">        String defaultStyle = null;</span>
+<span class="nc" id="L96">        boolean recurse = false;</span>
+<span class="nc" id="L97">        int verbosity = 1;</span>
+<span class="nc" id="L98">        boolean write = true;</span>
+<span class="nc" id="L99">        File file = null;</span>
+<span class="nc" id="L100">        BeanGenConfig config = null;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (args.length == 0) {</span>
+<span class="nc" id="L102">            throw new IllegalArgumentException(&quot;No arguments specified&quot;);</span>
+        }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        for (int i = 0; i &lt; args.length - 1; i++) {</span>
+<span class="nc" id="L105">            String arg = args[i];</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">            if (arg == null) {</span>
+<span class="nc" id="L107">                throw new IllegalArgumentException(&quot;Argument must not be null: &quot; + Arrays.toString(args));</span>
+            }
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            if (arg.startsWith(&quot;-indent=tab&quot;)) {</span>
+<span class="nc" id="L110">                indent = &quot;\t&quot;;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            } else if (arg.startsWith(&quot;-indent=&quot;)) {</span>
+<span class="nc" id="L112">                indent = &quot;          &quot;.substring(0, Integer.parseInt(arg.substring(8)));</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            } else if (arg.startsWith(&quot;-prefix=&quot;)) {</span>
+<span class="nc" id="L114">                prefix = arg.substring(8);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            } else if (arg.equals(&quot;-R&quot;)) {</span>
+<span class="nc" id="L116">                recurse = true;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            } else if (arg.startsWith(&quot;-config=&quot;)) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                if (config != null) {</span>
+<span class="nc" id="L119">                    throw new IllegalArgumentException(&quot;Argument 'config' must not be specified twice: &quot; + Arrays.toString(args));</span>
+                }
+<span class="nc" id="L121">                config = BeanGenConfig.parse(arg.substring(8));</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">            } else if (arg.startsWith(&quot;-style=&quot;)) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">                if (defaultStyle != null) {</span>
+<span class="nc" id="L124">                    throw new IllegalArgumentException(&quot;Argument 'style' must not be specified twice: &quot; + Arrays.toString(args));</span>
+                }
+<span class="nc" id="L126">                defaultStyle = arg.substring(7);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">            } else if (arg.startsWith(&quot;-verbose=&quot;)) {</span>
+<span class="nc" id="L128">                verbosity = Integer.parseInt(arg.substring(9));</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            } else if (arg.startsWith(&quot;-v=&quot;)) {</span>
+<span class="nc" id="L130">                System.out.println(&quot;Deprecated command line argument -v (use -verbose instead)&quot;);</span>
+<span class="nc" id="L131">                verbosity = Integer.parseInt(arg.substring(3));</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            } else if (arg.equals(&quot;-nowrite&quot;)) {</span>
+<span class="nc" id="L133">                write = false;</span>
+            } else {
+<span class="nc" id="L135">                throw new IllegalArgumentException(&quot;Unknown argument: &quot; + arg);</span>
+            }
+        }
+<span class="nc" id="L138">        file = new File(args[args.length - 1]);</span>
+<span class="nc" id="L139">        List&lt;File&gt; files = findFiles(file, recurse);</span>
+        
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (config == null) {</span>
+<span class="nc" id="L142">            config = BeanGenConfig.parse(&quot;guava&quot;);</span>
+        }
+<span class="nc" id="L144">        config.setIndent(indent);</span>
+<span class="nc" id="L145">        config.setPrefix(prefix);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (defaultStyle != null) {</span>
+<span class="nc" id="L147">            config.setDefaultStyle(defaultStyle);</span>
+        }
+<span class="nc" id="L149">        return new BeanCodeGen(files, config, verbosity, write);</span>
+    }
+
+    /**
+     * Finds the set of files to process.
+     * 
+     * @param parent  the root, not null
+     * @param recurse  whether to recurse
+     * @return the files, not null
+     */
+    private static List&lt;File&gt; findFiles(final File parent, boolean recurse) {
+<span class="nc" id="L160">        final List&lt;File&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (parent.isDirectory()) {</span>
+<span class="nc" id="L162">            File[] files = parent.listFiles();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            files = (files != null ? files : new File[0]);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            for (File child : files) {</span>
+<span class="nc bnc" id="L165" title="All 4 branches missed.">                if (child.isFile() &amp;&amp; child.getName().endsWith(&quot;.java&quot;)) {</span>
+<span class="nc" id="L166">                    result.add(child);</span>
+                }
+            }
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            if (recurse) {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                for (File child : files) {</span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">                    if (child.isDirectory() &amp;&amp; child.getName().startsWith(&quot;.&quot;) == false) {</span>
+<span class="nc" id="L172">                        result.addAll(findFiles(child, recurse));</span>
+                    }
+                }
+            }
+<span class="nc" id="L176">        } else {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">            if (parent.getName().endsWith(&quot;.java&quot;)) {</span>
+<span class="nc" id="L178">                result.add(parent);</span>
+            }
+        }
+<span class="nc" id="L181">        return result;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /** The files to process. */
+    private final List&lt;File&gt; files;
+    /** The configuration to use. */
+    private final BeanGenConfig config;
+    /** The verbosity level. */
+    private final int verbosity;
+    /** Whether to write or not. */
+    private final boolean write;
+
+    /**
+     * Creates the generator for a single bean.
+     * &lt;p&gt;
+     * To generate, use {@link #process()}.
+     * 
+     * @param files  the files to process, not null
+     * @param config  the configuration to use, not null
+     * @param verbosity  the verbosity, from 0 to 3
+     * @param write  whether to write or not
+     */
+<span class="nc" id="L204">    public BeanCodeGen(List&lt;File&gt; files, BeanGenConfig config, int verbosity, boolean write) {</span>
+<span class="nc" id="L205">        JodaBeanUtils.notNull(files, &quot;files&quot;);</span>
+<span class="nc" id="L206">        JodaBeanUtils.notNull(config, &quot;config&quot;);</span>
+<span class="nc bnc" id="L207" title="All 4 branches missed.">        if (verbosity &lt; 0 || verbosity &gt; 3) {</span>
+<span class="nc" id="L208">            throw new IllegalArgumentException(&quot;Invalid verbosity: &quot; + verbosity);</span>
+        }
+<span class="nc" id="L210">        this.files = files;</span>
+<span class="nc" id="L211">        this.config = config;</span>
+<span class="nc" id="L212">        this.verbosity = verbosity;</span>
+<span class="nc" id="L213">        this.write = write;</span>
+<span class="nc" id="L214">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Processes the file, recursing as necessary, generating the source code.
+     * &lt;p&gt;
+     * The number of altered files is returned.
+     * 
+     * @return the number of changed files
+     * @throws Exception if an error occurs
+     */
+    public int process() throws Exception {
+<span class="nc" id="L226">        int changed = 0;</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        for (File child : files) {</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">            changed += (processFile(child) != null ? 1 : 0);</span>
+<span class="nc" id="L229">        }</span>
+<span class="nc" id="L230">        return changed;</span>
+    }
+
+    /**
+     * Processes the file, recursing as necessary, generating the source code.
+     * &lt;p&gt;
+     * The list of altered files is returned.
+     * 
+     * @return the list of changed files, not null
+     * @throws Exception if an error occurs
+     */
+    public List&lt;File&gt; processFiles() throws Exception {
+<span class="nc" id="L242">        List&lt;File&gt; changed = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        for (File child : files) {</span>
+<span class="nc" id="L244">            File file = processFile(child);</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">            if (file != null) {</span>
+<span class="nc" id="L246">                changed.add(file);</span>
+            }
+<span class="nc" id="L248">        }</span>
+<span class="nc" id="L249">        return changed;</span>
+    }
+
+    /**
+     * Processes the bean, generating the code.
+     * 
+     * @param file  the file to process, not null
+     * @return not-null if changed
+     * @throws Exception if an error occurs
+     */
+    private File processFile(File file) throws Exception {
+<span class="nc" id="L260">        List&lt;String&gt; original = readFile(file);</span>
+<span class="nc" id="L261">        List&lt;String&gt; content = new ArrayList&lt;&gt;(original);</span>
+        BeanGen gen;
+        try {
+<span class="nc" id="L264">            BeanParser parser = new BeanParser(file, content, config);</span>
+<span class="nc" id="L265">            gen = parser.parse();</span>
+<span class="nc" id="L266">        } catch (BeanCodeGenException ex) {</span>
+<span class="nc" id="L267">            throw ex;</span>
+<span class="nc" id="L268">        } catch (Exception ex) {</span>
+<span class="nc" id="L269">            throw new BeanCodeGenException(ex.getMessage(), ex, file);</span>
+<span class="nc" id="L270">        }</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">        if (gen.isBean()) {</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">            if (verbosity &gt;= 2) {</span>
+<span class="nc" id="L273">                System.out.print(file + &quot;  [processing]&quot;);</span>
+            }
+<span class="nc" id="L275">            gen.process();</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            if (content.equals(original) == false) {</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                if (write) {</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">                    if (verbosity &gt;= 2) {</span>
+<span class="nc" id="L279">                        System.out.println(&quot; [writing]&quot;);</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">                    } else if (verbosity == 1) {</span>
+<span class="nc" id="L281">                        System.out.println(file + &quot;  [writing]&quot;);</span>
+                    }
+<span class="nc" id="L283">                    writeFile(file, content);</span>
+                } else {
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                    if (verbosity &gt;= 2) {</span>
+<span class="nc" id="L286">                        System.out.println(&quot; [changed not written]&quot;);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">                    } else if (verbosity == 1) {</span>
+<span class="nc" id="L288">                        System.out.println(file + &quot;  [changed not written]&quot;);</span>
+                    }
+                }
+<span class="nc" id="L291">                return file;</span>
+            } else {
+<span class="nc bnc" id="L293" title="All 2 branches missed.">                if (verbosity &gt;= 2) {</span>
+<span class="nc" id="L294">                    System.out.println(&quot; [no change]&quot;);</span>
+                }
+            }
+        } else {
+<span class="nc" id="L298">            gen.processNonBean();</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            if (!content.equals(original)) {</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">                if (write) {</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">                    if (verbosity &gt;= 2) {</span>
+<span class="nc" id="L302">                        System.out.println(&quot; [writing]&quot;);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">                    } else if (verbosity == 1) {</span>
+<span class="nc" id="L304">                        System.out.println(file + &quot;  [writing]&quot;);</span>
+                    }
+<span class="nc" id="L306">                    writeFile(file, content);</span>
+                } else {
+<span class="nc bnc" id="L308" title="All 2 branches missed.">                    if (verbosity &gt;= 2) {</span>
+<span class="nc" id="L309">                        System.out.println(&quot; [changed not written]&quot;);</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">                    } else if (verbosity == 1) {</span>
+<span class="nc" id="L311">                        System.out.println(file + &quot;  [changed not written]&quot;);</span>
+                    }
+                }
+<span class="nc" id="L314">                return file;</span>
+            } else {
+<span class="nc bnc" id="L316" title="All 2 branches missed.">                if (verbosity == 3) {</span>
+<span class="nc" id="L317">                    System.out.println(file + &quot;  [ignored]&quot;);</span>
+                }
+            }
+        }
+<span class="nc" id="L321">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    private List&lt;String&gt; readFile(File file) throws Exception {
+<span class="nc" id="L326">        List&lt;String&gt; content = new ArrayList&lt;&gt;(100);</span>
+<span class="nc" id="L327">        try (BufferedReader is = new BufferedReader(new InputStreamReader(new FileInputStream(file), &quot;UTF-8&quot;))) {</span>
+            String line;
+<span class="nc bnc" id="L329" title="All 2 branches missed.">            while ((line = is.readLine()) != null) {</span>
+<span class="nc" id="L330">                content.add(line);</span>
+            }
+<span class="nc" id="L332">            return content;</span>
+        }
+    }
+
+    private void writeFile(File file, List&lt;String&gt; content) throws Exception {
+<span class="nc" id="L337">        try (PrintWriter os = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), &quot;UTF-8&quot;)))) {</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">            for (String line : content) {</span>
+<span class="nc" id="L339">                os.println(line);</span>
+<span class="nc" id="L340">            }</span>
+        }
+<span class="nc" id="L342">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

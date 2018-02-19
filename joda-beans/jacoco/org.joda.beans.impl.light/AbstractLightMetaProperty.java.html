@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractLightMetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.light</a> &gt; <span class="el_source">AbstractLightMetaProperty.java</span></div><h1>AbstractLightMetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.light;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.Property;
+import org.joda.beans.impl.BasicMetaProperty;
+import org.joda.beans.impl.BasicProperty;
+
+/**
+ * An immutable meta-property based on a getter interface.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ * @deprecated Replaced by method handles
+ */
+@Deprecated
+abstract class AbstractLightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
+
+    /** The meta-bean. */
+    private final MetaBean metaBean;
+    /** The type of the property. */
+    private final Class&lt;P&gt; propertyType;
+    /** The type of the property. */
+    private final Type propertyGenericType;
+    /** The annotations. */
+    private final List&lt;Annotation&gt; annotations;
+    /** The index of the property in the constructor. */
+    private final int constructorIndex;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance.
+     * 
+     * @param metaBean  the meta bean, not null
+     * @param propertyName  the property name, not empty
+     * @param propertyType  the property type
+     * @param propertyGenericType  the property generic type
+     * @param annotations  the annotations
+     * @param constructorIndex  the index of the property in the constructor
+     */
+    AbstractLightMetaProperty(
+            MetaBean metaBean, 
+            String propertyName,
+            Class&lt;P&gt; propertyType,
+            Type propertyGenericType,
+            List&lt;Annotation&gt; annotations,
+            int constructorIndex) {
+        
+<span class="fc" id="L68">        super(propertyName);</span>
+<span class="fc" id="L69">        this.metaBean = metaBean;</span>
+<span class="fc" id="L70">        this.propertyType = propertyType;</span>
+<span class="fc" id="L71">        this.propertyGenericType = propertyGenericType;</span>
+<span class="fc" id="L72">        this.annotations = annotations;</span>
+<span class="fc" id="L73">        this.constructorIndex = constructorIndex;</span>
+<span class="fc" id="L74">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Property&lt;P&gt; createProperty(Bean bean) {
+<span class="nc" id="L79">        return BasicProperty.of(bean, this);</span>
+    }
+
+    @Override
+    public MetaBean metaBean() {
+<span class="nc" id="L84">        return metaBean;</span>
+    }
+
+    @Override
+    public Class&lt;?&gt; declaringType() {
+<span class="nc" id="L89">        return metaBean.beanType();</span>
+    }
+
+    @Override
+    public Class&lt;P&gt; propertyType() {
+<span class="nc" id="L94">        return propertyType;</span>
+    }
+
+    @Override
+    public Type propertyGenericType() {
+<span class="nc" id="L99">        return propertyGenericType;</span>
+    }
+
+    @Override
+    public List&lt;Annotation&gt; annotations() {
+<span class="nc" id="L104">        return annotations;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    int getConstructorIndex() {
+<span class="fc" id="L109">        return constructorIndex;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

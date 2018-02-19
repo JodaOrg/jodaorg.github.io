@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MsgPackOutput.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.bin</a> &gt; <span class="el_source">MsgPackOutput.java</span></div><h1>MsgPackOutput.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.bin;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+/**
+ * Outputter for MsgPack data.
+ *
+ * @author Stephen Colebourne
+ */
+final class MsgPackOutput extends MsgPack {
+
+    /**
+     * The stream to write to.
+     */
+    private final DataOutputStream output;
+
+    /**
+     * Creates an instance.
+     * 
+     * @param stream  the stream to write to, not null
+     */
+<span class="fc" id="L39">    MsgPackOutput(OutputStream stream) {</span>
+<span class="fc" id="L40">        this.output = new DataOutputStream(stream);</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Creates an instance.
+     * 
+     * @param stream  the stream to write to, not null
+     */
+<span class="nc" id="L48">    MsgPackOutput(DataOutputStream stream) {</span>
+<span class="nc" id="L49">        this.output = stream;</span>
+<span class="nc" id="L50">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a MessagePack nil.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeNil() throws IOException {
+<span class="fc" id="L59">        output.writeByte(NIL);</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Writes a MessagePack boolean.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeBoolean(boolean value) throws IOException {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (value) {</span>
+<span class="fc" id="L70">            output.writeByte(TRUE);</span>
+        } else {
+<span class="fc" id="L72">            output.writeByte(FALSE);</span>
+        }
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Writes a MessagePack int.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeInt(int value) throws IOException {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (value &lt; MIN_FIX_INT) {</span>
+            // large negative
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            if (value &gt;= Byte.MIN_VALUE) {</span>
+<span class="nc" id="L86">                output.writeByte(SINT_8);</span>
+<span class="nc" id="L87">                output.writeByte((byte) value);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            } else if (value &gt;= Short.MIN_VALUE) {</span>
+<span class="nc" id="L89">                output.writeByte(SINT_16);</span>
+<span class="nc" id="L90">                output.writeShort((short) value);</span>
+            } else {
+<span class="nc" id="L92">                output.writeByte(SINT_32);</span>
+<span class="nc" id="L93">                output.writeInt(value);</span>
+            }
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        } else if (value &lt; MAX_FIX_INT) {</span>
+            // in range -64 to 127
+<span class="fc" id="L97">            output.writeByte(value);</span>
+        } else {
+            // large positive
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if (value &lt; 0xFF) {</span>
+<span class="fc" id="L101">                output.writeByte(UINT_8);</span>
+<span class="fc" id="L102">                output.writeByte((byte) value);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            } else if (value &lt; 0xFFFF) {</span>
+<span class="fc" id="L104">                output.writeByte(UINT_16);</span>
+<span class="fc" id="L105">                output.writeShort((short) value);</span>
+            } else {
+<span class="nc" id="L107">                output.writeByte(UINT_32);</span>
+<span class="nc" id="L108">                output.writeInt(value);</span>
+            }
+        }
+<span class="fc" id="L111">    }</span>
+
+    /**
+     * Writes a MessagePack long.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeLong(long value) throws IOException {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (value &lt; MIN_FIX_INT) {</span>
+            // large negative
+<span class="nc bnc" id="L122" title="All 2 branches missed.">            if (value &gt;= Byte.MIN_VALUE) {</span>
+<span class="nc" id="L123">                output.writeByte(SINT_8);</span>
+<span class="nc" id="L124">                output.writeByte((byte) value);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            } else if (value &gt;= Short.MIN_VALUE) {</span>
+<span class="nc" id="L126">                output.writeByte(SINT_16);</span>
+<span class="nc" id="L127">                output.writeShort((short) value);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            } else if (value &gt;= Integer.MIN_VALUE) {</span>
+<span class="nc" id="L129">                output.writeByte(SINT_32);</span>
+<span class="nc" id="L130">                output.writeInt((int) value);</span>
+            } else {
+<span class="nc" id="L132">                output.writeByte(SINT_64);</span>
+<span class="nc" id="L133">                output.writeLong(value);</span>
+            }
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        } else if (value &lt; MAX_FIX_INT) {</span>
+            // in range -64 to 127
+<span class="fc" id="L137">            output.writeByte((byte) value);</span>
+        } else {
+            // large positive
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            if (value &lt; 0xFF) {</span>
+<span class="nc" id="L141">                output.writeByte(UINT_8);</span>
+<span class="nc" id="L142">                output.writeByte((byte) value);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            } else if (value &lt; 0xFFFF) {</span>
+<span class="nc" id="L144">                output.writeByte(UINT_16);</span>
+<span class="nc" id="L145">                output.writeShort((short) value);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            } else if (value &lt; 0xFFFFFFFFL) {</span>
+<span class="nc" id="L147">                output.writeByte(UINT_32);</span>
+<span class="nc" id="L148">                output.writeInt((int) value);</span>
+            } else {
+<span class="nc" id="L150">                output.writeByte(UINT_64);</span>
+<span class="nc" id="L151">                output.writeLong(value);</span>
+            }
+        }
+<span class="fc" id="L154">    }</span>
+
+    /**
+     * Writes a MessagePack float.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeFloat(float value) throws IOException {
+<span class="fc" id="L163">        output.writeByte(FLOAT_32);</span>
+<span class="fc" id="L164">        output.writeFloat(value);</span>
+<span class="fc" id="L165">    }</span>
+
+    /**
+     * Writes a MessagePack double.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeDouble(double value) throws IOException {
+<span class="fc" id="L174">        output.writeByte(FLOAT_64);</span>
+<span class="fc" id="L175">        output.writeDouble(value);</span>
+<span class="fc" id="L176">    }</span>
+
+    /**
+     * Writes a MessagePack byte block.
+     * 
+     * @param bytes  the bytes, not null
+     * @throws IOException if an error occurs
+     */
+    void writeBytes(byte[] bytes) throws IOException {
+<span class="fc" id="L185">        int size = bytes.length;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (size &lt; 256) {</span>
+<span class="fc" id="L187">            output.writeByte(BIN_8);</span>
+<span class="fc" id="L188">            output.writeByte(size);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        } else if (size &lt; 65536) {</span>
+<span class="nc" id="L190">            output.writeByte(BIN_16);</span>
+<span class="nc" id="L191">            output.writeShort(size);</span>
+        } else {
+<span class="nc" id="L193">            output.writeByte(BIN_32);</span>
+<span class="nc" id="L194">            output.writeInt(size);</span>
+        }
+<span class="fc" id="L196">        output.write(bytes);</span>
+<span class="fc" id="L197">    }</span>
+
+    /**
+     * Writes a MessagePack string.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeString(String value) throws IOException {
+<span class="fc" id="L206">        byte[] bytes = toUTF8(value);</span>
+<span class="fc" id="L207">        int size = bytes.length;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (size &lt; 32) {</span>
+<span class="fc" id="L209">            output.writeByte(MIN_FIX_STR + size);</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        } else if (size &lt; 256) {</span>
+<span class="fc" id="L211">            output.writeByte(STR_8);</span>
+<span class="fc" id="L212">            output.writeByte(size);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        } else if (size &lt; 65536) {</span>
+<span class="nc" id="L214">            output.writeByte(STR_16);</span>
+<span class="nc" id="L215">            output.writeShort(size);</span>
+        } else {
+<span class="nc" id="L217">            output.writeByte(STR_32);</span>
+<span class="nc" id="L218">            output.writeInt(size);</span>
+        }
+<span class="fc" id="L220">        output.write(bytes);</span>
+<span class="fc" id="L221">    }</span>
+
+    private byte[] toUTF8(String value) {
+        // inline common ASCII case for much better performance
+<span class="fc" id="L225">        final int size = value.length();</span>
+<span class="fc" id="L226">        byte[] bytes = new byte[size];</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L228">            char ch = value.charAt(i);</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            if (ch &lt; 128) {</span>
+<span class="fc" id="L230">                bytes[i] = (byte) ch;</span>
+            } else {
+<span class="nc" id="L232">                return value.getBytes(UTF_8);</span>
+            }
+        }
+<span class="fc" id="L235">        return bytes;</span>
+    }
+
+    /**
+     * Writes a MessagePack array header.
+     * 
+     * @param size  the size
+     * @throws IOException if an error occurs
+     */
+    void writeArrayHeader(int size) throws IOException {
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">        if (size &lt; 16) {</span>
+<span class="fc" id="L246">            output.writeByte(MIN_FIX_ARRAY + size);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        } else if (size &lt; 65536) {</span>
+<span class="nc" id="L248">            output.writeByte(ARRAY_16);</span>
+<span class="nc" id="L249">            output.writeShort(size);</span>
+        } else {
+<span class="nc" id="L251">            output.writeByte(ARRAY_32);</span>
+<span class="nc" id="L252">            output.writeInt(size);</span>
+        }
+<span class="fc" id="L254">    }</span>
+
+    /**
+     * Writes a MessagePack map header.
+     * 
+     * @param size  the size
+     * @throws IOException if an error occurs
+     */
+    void writeMapHeader(int size) throws IOException {
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        if (size &lt; 16) {</span>
+<span class="fc" id="L264">            output.writeByte(MIN_FIX_MAP + size);</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        } else if (size &lt; 65536) {</span>
+<span class="fc" id="L266">            output.writeByte(MAP_16);</span>
+<span class="fc" id="L267">            output.writeShort(size);</span>
+        } else {
+<span class="nc" id="L269">            output.writeByte(MAP_32);</span>
+<span class="nc" id="L270">            output.writeInt(size);</span>
+        }
+<span class="fc" id="L272">    }</span>
+
+    /**
+     * Writes an extension string using FIX_EXT_1.
+     * 
+     * @param extensionType  the type
+     * @param value  the value to write as the data
+     * @throws IOException if an error occurs
+     */
+    void writeExtensionByte(int extensionType, int value) throws IOException {
+<span class="nc" id="L282">        output.write(FIX_EXT_1);</span>
+<span class="nc" id="L283">        output.write(extensionType);</span>
+<span class="nc" id="L284">        output.write(value);</span>
+<span class="nc" id="L285">    }</span>
+
+    /**
+     * Writes an extension string using EXT_8.
+     * 
+     * @param extensionType  the type
+     * @param str  the string to write as the data
+     * @throws IOException if an error occurs
+     */
+    void writeExtensionString(int extensionType, String str) throws IOException {
+<span class="fc" id="L295">        byte[] bytes = str.getBytes(UTF_8);</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">        if (bytes.length &gt; 256) {</span>
+<span class="nc" id="L297">            throw new IllegalArgumentException(&quot;String too long&quot;);</span>
+        }
+<span class="fc" id="L299">        output.write(EXT_8);</span>
+<span class="fc" id="L300">        output.write(bytes.length);</span>
+<span class="fc" id="L301">        output.write(extensionType);</span>
+<span class="fc" id="L302">        output.write(bytes);</span>
+<span class="fc" id="L303">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

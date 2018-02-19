@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans</a> &gt; <span class="el_source">MetaProperty.java</span></div><h1>MetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.joda.beans.impl.BasicProperty;
+import org.joda.convert.StringConvert;
+
+/**
+ * A meta-property, defining those aspects of a property which are not specific
+ * to a particular bean, such as the property type and name.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ */
+public interface MetaProperty&lt;P&gt; {
+
+    /**
+     * Creates a property that binds this meta-property to a specific bean.
+     * &lt;p&gt;
+     * This method returns a {@code Property} instance that connects this meta-property to the specified bean.
+     * The result can be queried and passed around without further reference to the bean.
+     * 
+     * @param bean  the bean to create the property for, not null
+     * @return the property, not null
+     */
+    public default Property&lt;P&gt; createProperty(Bean bean) {
+<span class="fc" id="L45">        return BasicProperty.of(bean, this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the meta-bean which owns this meta-property.
+     * &lt;p&gt;
+     * Each meta-property is fully owned by a single bean.
+     * 
+     * @return the meta-bean, not null
+     */
+    public abstract MetaBean metaBean();
+
+    /**
+     * Gets the property name.
+     * &lt;p&gt;
+     * The JavaBean style methods getFoo() and setFoo() will lead to a property
+     * name of 'foo' and so on.
+     * 
+     * @return the name of the property, not empty
+     */
+    public abstract String name();
+
+    /**
+     * Get the type that declares the property, represented as a {@code Class}.
+     * &lt;p&gt;
+     * This is the type of the bean where the property is declared.
+     * 
+     * @return the type declaring the property, not null
+     */
+    public abstract Class&lt;?&gt; declaringType();
+
+    /**
+     * Get the type of the property represented as a {@code Class}.
+     * &lt;p&gt;
+     * This is the type of the property.
+     * For example, the surname of a person would typically be a {@code String}.
+     * 
+     * @return the type of the property, not null
+     */
+    public abstract Class&lt;P&gt; propertyType();
+
+    /**
+     * Gets the generic types of the property.
+     * &lt;p&gt;
+     * This provides access to the generic type declared in the source code.
+     * 
+     * @return the full generic type of the property, unmodifiable, not null
+     */
+    public abstract Type propertyGenericType();
+
+    /**
+     * Gets the style of the property, such as read-only, read-write or write-only.
+     * &lt;p&gt;
+     * Rather than testing against specific values, it is strongly recommended to
+     * call the helper methods on the returned style.
+     * 
+     * @return the property style, not null
+     */
+    public abstract PropertyStyle style();
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the annotations of the property.
+     * &lt;p&gt;
+     * The annotations are queried from the property.
+     * This is typically accomplished by querying the annotations of the underlying
+     * instance variable however any strategy is permitted.
+     * 
+     * @return the annotations, unmodifiable, not null
+     */
+    public abstract List&lt;Annotation&gt; annotations();
+
+    /**
+     * Gets an annotation from the property.
+     * &lt;p&gt;
+     * The annotations are queried from the property.
+     * This is typically accomplished by querying the annotations of the underlying
+     * instance variable however any strategy is permitted..
+     * 
+     * @param &lt;A&gt;  the annotation type
+     * @param annotationClass  the annotation class to find, not null
+     * @return the annotation, not null
+     * @throws NoSuchElementException if the annotation is not specified
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public default &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
+<span class="nc" id="L132">        List&lt;Annotation&gt; annotations = annotations();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (Annotation annotation : annotations) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
+<span class="nc" id="L135">                return (A) annotation;</span>
+            }
+<span class="nc" id="L137">        }</span>
+<span class="nc" id="L138">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the property for the specified bean.
+     * &lt;p&gt;
+     * For a standard JavaBean, this is equivalent to calling &lt;code&gt;getFoo()&lt;/code&gt; on the bean.
+     * Alternate implementations may perform any logic to obtain the value.
+     * 
+     * @param bean  the bean to query, not null
+     * @return the value of the property on the specified bean, may be null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws UnsupportedOperationException if the property is write-only
+     */
+    public abstract P get(Bean bean);
+
+    /**
+     * Sets the value of the property on the specified bean.
+     * &lt;p&gt;
+     * The value must be of the correct type for the property.
+     * For a standard JavaBean, this is equivalent to calling &lt;code&gt;setFoo()&lt;/code&gt; on the bean.
+     * Alternate implementations may perform any logic to change the value.
+     * 
+     * @param bean  the bean to update, not null
+     * @param value  the value to set into the property on the specified bean, may be null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws ClassCastException if the value is of an invalid type for the property
+     * @throws UnsupportedOperationException if the property is read-only
+     * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
+     */
+    public abstract void set(Bean bean, Object value);
+
+    /**
+     * Sets the value of the property on the associated bean and returns the previous value.
+     * &lt;p&gt;
+     * The value must be of the correct type for the property.
+     * This is a combination of the {@code get} and {@code set} methods that matches the definition
+     * of {@code put} in a {@code Map}.
+     * 
+     * @param bean  the bean to update, not null
+     * @param value  the value to set into the property on the specified bean, may be null
+     * @return the old value of the property, may be null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws ClassCastException if the value is of an invalid type for the property
+     * @throws UnsupportedOperationException if the property is read-only
+     * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
+     */
+    public default P put(Bean bean, Object value) {
+<span class="fc" id="L187">        P old = get(bean);</span>
+<span class="fc" id="L188">        set(bean, value);</span>
+<span class="fc" id="L189">        return old;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the property for the specified bean converted to a string.
+     * &lt;p&gt;
+     * This converts the result of {@link #get(Bean)} to a standard format string.
+     * Conversion uses Joda-Convert.
+     * Not all object types can be converted to a string, see Joda-Convert.
+     * &lt;p&gt;
+     * For a standard JavaBean, this is equivalent to calling &lt;code&gt;getFoo()&lt;/code&gt; on the bean.
+     * Alternate implementations may perform any logic to obtain the value.
+     * 
+     * @param bean  the bean to query, not null
+     * @return the value of the property on the specified bean, may be null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws UnsupportedOperationException if the property is write-only
+     * @throws RuntimeException if the value cannot be converted to a string (use appropriate subclasses)
+     */
+    public default String getString(Bean bean) {
+<span class="fc" id="L210">        return getString(bean, JodaBeanUtils.stringConverter());</span>
+    }
+
+    /**
+     * Gets the value of the property for the specified bean converted to a string.
+     * &lt;p&gt;
+     * This converts the result of {@link #get(Bean)} to a standard format string using the supplied converter.
+     * Not all object types can be converted to a string, see Joda-Convert.
+     * &lt;p&gt;
+     * For a standard JavaBean, this is equivalent to calling &lt;code&gt;getFoo()&lt;/code&gt; on the bean.
+     * Alternate implementations may perform any logic to obtain the value.
+     *
+     * @param bean  the bean to query, not null
+     * @param stringConvert  the converter to use, not null
+     * @return the value of the property on the specified bean, may be null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws UnsupportedOperationException if the property is write-only
+     * @throws RuntimeException if the value cannot be converted to a string (use appropriate subclasses)
+     */
+    public default String getString(Bean bean, StringConvert stringConvert) {
+<span class="fc" id="L230">        P value = get(bean);</span>
+<span class="fc" id="L231">        return stringConvert.convertToString(propertyType(), value);</span>
+    }
+
+    /**
+     * Sets the value of the property on the specified bean from a string by conversion.
+     * &lt;p&gt;
+     * This converts the string to the correct type for the property and then sets it
+     * using {@link #set(Bean, Object)}. Conversion uses Joda-Convert.
+     * 
+     * @param bean  the bean to update, not null
+     * @param value  the value to set into the property on the specified bean, may be null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws ClassCastException if the value is of an invalid type for the property
+     * @throws UnsupportedOperationException if the property is read-only
+     * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
+     */
+    public default void setString(Bean bean, String value) {
+<span class="nc" id="L248">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
+<span class="nc" id="L249">    }</span>
+
+    /**
+     * Sets the value of the property on the specified bean from a string by conversion.
+     * &lt;p&gt;
+     * This converts the string to the correct type for the property using the supplied converter and then sets it
+     * using {@link #set(Bean, Object)}.
+     *
+     * @param bean  the bean to update, not null
+     * @param value  the value to set into the property on the specified bean, may be null
+     * @param stringConvert  the converter, not null
+     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws ClassCastException if the value is of an invalid type for the property
+     * @throws UnsupportedOperationException if the property is read-only
+     * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
+     */
+    public default void setString(Bean bean, String value, StringConvert stringConvert) {
+<span class="nc" id="L266">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
+<span class="nc" id="L267">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this meta-property equals another.
+     * &lt;p&gt;
+     * This compares the property name and declaring type.
+     * It does not compare the property or bean types.
+     * 
+     * @param obj  the other meta-property, null returns false
+     * @return true if equal
+     */
+    @Override
+    public abstract boolean equals(Object obj);
+
+    /**
+     * Returns a suitable hash code.
+     * 
+     * @return the hash code
+     */
+    @Override
+    public abstract int hashCode();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

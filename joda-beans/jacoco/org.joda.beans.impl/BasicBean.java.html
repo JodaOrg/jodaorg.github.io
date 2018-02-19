@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl</a> &gt; <span class="el_source">BasicBean.java</span></div><h1>BasicBean.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl;
+
+import org.joda.beans.Bean;
+import org.joda.beans.JodaBeanUtils;
+
+/**
+ * Basic implementation of {@code Bean} intended for applications to subclass.
+ * &lt;p&gt;
+ * The subclass must to provide an implementation for {@link Bean#metaBean()}.
+ * This returns the complete definition of the bean at the meta level.
+ * 
+ * @author Stephen Colebourne
+ */
+<span class="nc" id="L29">public abstract class BasicBean implements Bean {</span>
+
+    /**
+     * Clones this bean, returning an independent copy.
+     * 
+     * @return the clone, not null
+     */
+    @Override
+    public BasicBean clone() {
+<span class="nc" id="L38">        return JodaBeanUtils.clone(this);</span>
+    }
+
+    /**
+     * Checks if this bean equals another.
+     * &lt;p&gt;
+     * This compares the class and all the properties of the bean.
+     * 
+     * @param obj  the object to compare to, null returns false
+     * @return true if the beans are equal
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L52">            return true;</span>
+        }
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (obj != null &amp;&amp; getClass() == obj.getClass()) {</span>
+<span class="nc" id="L55">            Bean other = (Bean) obj;</span>
+<span class="nc" id="L56">            return JodaBeanUtils.propertiesEqual(this, other);</span>
+        }
+<span class="nc" id="L58">        return false;</span>
+    }
+
+    /**
+     * Returns a suitable hash code.
+     * &lt;p&gt;
+     * The hash code is derived from all the properties of the bean.
+     * 
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L70">        return getClass().hashCode() ^ JodaBeanUtils.propertiesHashCode(this);</span>
+    }
+
+    /**
+     * Returns a string that summarises the bean.
+     * &lt;p&gt;
+     * The string contains the class name and properties.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L82">        return JodaBeanUtils.propertiesToString(this, metaBean().beanType().getSimpleName());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

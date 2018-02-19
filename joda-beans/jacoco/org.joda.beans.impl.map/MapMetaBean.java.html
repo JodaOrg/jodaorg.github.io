@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapMetaBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.map</a> &gt; <span class="el_source">MapMetaBean.java</span></div><h1>MapMetaBean.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.map;
+
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.DynamicMetaBean;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Implementation of a meta-bean for {@code MapBean}.
+ * 
+ * @author Stephen Colebourne
+ */
+class MapMetaBean implements DynamicMetaBean {
+
+    /**
+     * The bean itself.
+     */
+    private final MapBean bean;
+
+    /**
+     * Creates the meta-bean.
+     * 
+     * @param bean  the underlying bean, not null
+     */
+<span class="fc" id="L46">    MapMetaBean(MapBean bean) {</span>
+<span class="fc" id="L47">        this.bean = bean;</span>
+<span class="fc" id="L48">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public boolean isBuildable() {
+<span class="nc" id="L53">        return true;</span>
+    }
+
+    @Override
+    public BeanBuilder&lt;MapBean&gt; builder() {
+<span class="fc" id="L58">        return new MapBeanBuilder(bean);</span>
+    }
+
+    @Override
+    public Class&lt;MapBean&gt; beanType() {
+<span class="nc" id="L63">        return MapBean.class;</span>
+    }
+
+    @Override
+    public int metaPropertyCount() {
+<span class="fc" id="L68">        return bean.size();</span>
+    }
+
+    @Override
+    public boolean metaPropertyExists(String name) {
+<span class="nc" id="L73">        return bean.containsKey(name);</span>
+    }
+
+    @Override
+    public MetaProperty&lt;Object&gt; metaProperty(String name) {
+        // do not check if exists
+<span class="fc" id="L79">        return MapBeanMetaProperty.of(this, name);</span>
+    }
+
+    @Override
+    public Iterable&lt;MetaProperty&lt;?&gt;&gt; metaPropertyIterable() {
+<span class="nc" id="L84">        return new Iterable&lt;MetaProperty&lt;?&gt;&gt;() {</span>
+<span class="nc" id="L85">            private final Iterator&lt;String&gt; it = bean.keySet().iterator();</span>
+            @Override
+            public Iterator&lt;MetaProperty&lt;?&gt;&gt; iterator() {
+<span class="nc" id="L88">                return new Iterator&lt;MetaProperty&lt;?&gt;&gt;() {</span>
+                    @Override
+                    public boolean hasNext() {
+<span class="nc" id="L91">                        return it.hasNext();</span>
+                    }
+                    @Override
+                    public MetaProperty&lt;?&gt; next() {
+<span class="nc" id="L95">                        return MapBeanMetaProperty.of(MapMetaBean.this, it.next());</span>
+                    }
+                    @Override
+                    public void remove() {
+<span class="nc" id="L99">                        throw new UnsupportedOperationException(&quot;Unmodifiable&quot;);</span>
+                    }
+                    
+                };
+            }
+        };
+    }
+
+    @Override
+    public Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap() {
+<span class="nc" id="L109">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        for (String name : bean.keySet()) {</span>
+<span class="nc" id="L111">            map.put(name, MapBeanMetaProperty.of(this, name));</span>
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">        return Collections.unmodifiableMap(map);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public void metaPropertyDefine(String propertyName, Class&lt;?&gt; propertyType) {
+<span class="fc" id="L119">        bean.propertyDefine(propertyName, propertyType);</span>
+<span class="fc" id="L120">    }</span>
+
+    @Override
+    public void metaPropertyRemove(String propertyName) {
+<span class="nc" id="L124">        bean.propertyRemove(propertyName);</span>
+<span class="nc" id="L125">    }</span>
+
+    @Override
+    public List&lt;Annotation&gt; annotations() {
+<span class="nc" id="L129">        return Collections.emptyList();</span>
+    }
+
+    /**
+     * Returns a string that summarises the meta-bean.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L139">        return &quot;MetaBean:&quot; + beanType().getSimpleName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

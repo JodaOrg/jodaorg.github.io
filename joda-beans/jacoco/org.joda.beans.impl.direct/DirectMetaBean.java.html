@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirectMetaBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.direct</a> &gt; <span class="el_source">DirectMetaBean.java</span></div><h1>DirectMetaBean.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.direct;
+
+import java.util.NoSuchElementException;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.impl.StandaloneMetaProperty;
+import org.joda.beans.test.JodaBeanTests;
+
+/**
+ * A meta-bean implementation designed for use by the code generator.
+ * 
+ * @author Stephen Colebourne
+ */
+<span class="fc" id="L31">public abstract class DirectMetaBean implements MetaBean {</span>
+    // overriding other methods has negligible effect considering DirectMetaPropertyMap
+
+    /**
+     * This constant can be used to pass into {@code setString()} to increase test coverage.
+     */
+    public static final String TEST_COVERAGE_STRING = &quot;!ConstantUsedForTestCoveragePurposes!&quot;;
+
+    @Override
+    public boolean isBuildable() {
+<span class="fc" id="L41">        return true;</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public &lt;R&gt; MetaProperty&lt;R&gt; metaProperty(String propertyName) {
+<span class="fc" id="L47">        MetaProperty&lt;?&gt; mp = metaPropertyGet(propertyName);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (mp == null) {</span>
+<span class="fc" id="L49">            return metaPropertyNotFound(propertyName);</span>
+        }
+<span class="fc" id="L51">        return (MetaProperty&lt;R&gt;) mp;</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;R&gt; MetaProperty&lt;R&gt; metaPropertyNotFound(String propertyName) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (propertyName == JodaBeanTests.TEST_COVERAGE_PROPERTY) {</span>
+            // cast is unsafe unless R is String, but code only used in test coverage scenarios
+<span class="fc" id="L58">            return (MetaProperty&lt;R&gt;) StandaloneMetaProperty.of(propertyName, this, String.class);</span>
+        }
+<span class="fc" id="L60">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+    }
+
+    /**
+     * Gets the meta-property by name.
+     * &lt;p&gt;
+     * This implementation returns null, and must be overridden in subclasses.
+     * 
+     * @param propertyName  the property name, not null
+     * @return the meta-property, null if not found
+     */
+    protected MetaProperty&lt;?&gt; metaPropertyGet(String propertyName) {
+<span class="fc" id="L72">        return null;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the value of the property.
+     * 
+     * @param bean  the bean to query, not null
+     * @param propertyName  the property name, not null
+     * @param quiet  true to return null if unable to read
+     * @return the value of the property, may be null
+     * @throws NoSuchElementException if the property name is invalid
+     */
+    protected Object propertyGet(Bean bean, String propertyName, boolean quiet) {
+        // used to enable 100% test coverage in beans
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (quiet) {</span>
+<span class="fc" id="L88">            return null;</span>
+        }
+<span class="fc" id="L90">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+    }
+
+    /**
+     * Sets the value of the property.
+     * 
+     * @param bean  the bean to update, not null
+     * @param propertyName  the property name, not null
+     * @param value  the value of the property, may be null
+     * @param quiet  true to take no action if unable to write
+     * @throws NoSuchElementException if the property name is invalid
+     */
+    protected void propertySet(Bean bean, String propertyName, Object value, boolean quiet) {
+        // used to enable 100% test coverage in beans
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (quiet) {</span>
+<span class="nc" id="L105">            return;</span>
+        }
+<span class="fc" id="L107">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+    }
+
+    /**
+     * Validates the values of the properties.
+     * 
+     * @param bean  the bean to validate, not null
+     * @throws RuntimeException if a property is invalid
+     */
+    protected void validate(Bean bean) {
+<span class="fc" id="L117">    }</span>
+
+    /**
+     * Returns a string that summarises the meta-bean.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L126">        return &quot;MetaBean:&quot; + beanType().getSimpleName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

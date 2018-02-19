@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BufferingBeanBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl</a> &gt; <span class="el_source">BufferingBeanBuilder.java</span></div><h1>BufferingBeanBuilder.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl;
+
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import org.joda.beans.Bean;
+import org.joda.beans.BeanBuilder;
+import org.joda.beans.MetaBean;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Implementation of {@code BeanBuilder} that buffers data in a local map.
+ * &lt;p&gt;
+ * This is useful for cases where the builder data might be manipulated before
+ * the final build. The buffer can be directly mutated.
+ * 
+ * @author Stephen Colebourne
+ * @param &lt;T&gt;  the bean type
+ */
+public class BufferingBeanBuilder&lt;T extends Bean&gt;
+        implements BeanBuilder&lt;T&gt; {
+
+    /**
+     * The target meta-bean.
+     */
+    private final MetaBean metaBean;
+    /**
+     * The buffered data.
+     */
+<span class="fc" id="L46">    private final ConcurrentMap&lt;MetaProperty&lt;?&gt;, Object&gt; buffer = new ConcurrentHashMap&lt;&gt;();</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs the builder wrapping the target bean.
+     * 
+     * @param metaBean  the target meta-bean, not null
+     * @return a new untyped builder, not null
+     */
+    public static BufferingBeanBuilder&lt;?&gt; of(MetaBean metaBean) {
+<span class="fc" id="L56">        return new BufferingBeanBuilder&lt;&gt;(metaBean);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs the builder wrapping the target bean.
+     * 
+     * @param metaBean  the target meta-bean, not null
+     */
+<span class="fc" id="L65">    public BufferingBeanBuilder(MetaBean metaBean) {</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L67">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
+        }
+<span class="fc" id="L69">        this.metaBean = metaBean;</span>
+<span class="fc" id="L70">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the meta-beans.
+     * 
+     * @return the meta-bean, not null
+     */
+    public MetaBean getMetaBean() {
+<span class="fc" id="L79">        return metaBean;</span>
+    }
+
+    /**
+     * Gets the buffer holding the state of the builder.
+     * &lt;p&gt;
+     * The buffer may be mutated.
+     * 
+     * @return the mutable buffer, not null
+     */
+    public ConcurrentMap&lt;MetaProperty&lt;?&gt;, Object&gt; getBuffer() {
+<span class="fc" id="L90">        return buffer;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the buffered value associated with the specified property name.
+     * 
+     * @param propertyName  the property name, not null
+     * @return the current value in the builder, null if not found or value is null
+     */
+    @Override
+    public Object get(String propertyName) {
+<span class="nc" id="L102">        return get(getMetaBean().metaProperty(propertyName));</span>
+    }
+
+    /**
+     * Gets the buffered value associated with the specified property name.
+     * 
+     * @param metaProperty  the meta-property, not null
+     * @return the current value in the builder, null if not found or value is null
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
+<span class="nc" id="L114">        return (P) getBuffer().get(metaProperty);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public BeanBuilder&lt;T&gt; set(String propertyName, Object value) {
+<span class="nc" id="L120">        return set(getMetaBean().metaProperty(propertyName), value);</span>
+    }
+
+    @Override
+    public BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
+<span class="fc" id="L125">        getBuffer().put(metaProperty, value);</span>
+<span class="fc" id="L126">        return this;</span>
+    }
+
+    @Override
+    public T build() {
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L132">        BeanBuilder&lt;T&gt; builder = (BeanBuilder&lt;T&gt;) getMetaBean().builder();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (Entry&lt;MetaProperty&lt;?&gt;, Object&gt; entry : getBuffer().entrySet()) {</span>
+<span class="fc" id="L134">            builder.set(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L135">        }</span>
+<span class="fc" id="L136">        return builder.build();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string that summarises the builder.
+     * 
+     * @return a summary string, not null
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L147">        return &quot;BeanBuilder for &quot; + metaBean.beanName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

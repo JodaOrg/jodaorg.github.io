@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SerDeserializers.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser</a> &gt; <span class="el_source">SerDeserializers.java</span></div><h1>SerDeserializers.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * Manages a map of deserializers that assist with data migration.
+ * &lt;p&gt;
+ * Deserializers handle situations where the data being read does not match the
+ * bean in the classpath. See also {@code RenameHandler}.
+ * &lt;p&gt;
+ * Normally, it makes sense to customize the shared singleton instance, because
+ * the classpath is static and fixed and the transformations are common.
+ * &lt;p&gt;
+ * Implementations must be thread-safe singletons.
+ *
+ * @author Stephen Colebourne
+ */
+public final class SerDeserializers {
+
+    /**
+     * Shared global instance which can be mutated.
+     */
+<span class="fc" id="L42">    public static final SerDeserializers INSTANCE = new SerDeserializers(false);</span>
+    /**
+     * Lenient instance which can be mutated.
+     */
+<span class="fc" id="L46">    public static final SerDeserializers LENIENT = new SerDeserializers(true);</span>
+
+    /**
+     * Whether deserialization is lenient.
+     */
+    private final boolean lenient;
+    /**
+     * The default deserializer.
+     */
+    private final SerDeserializer defaultDeserializer;
+    /**
+     * The deserializers.
+     */
+<span class="fc" id="L59">    private final ConcurrentMap&lt;Class&lt;?&gt;, SerDeserializer&gt; deserializers = new ConcurrentHashMap&lt;&gt;();</span>
+    /**
+     * The deserializer providers.
+     */
+<span class="fc" id="L63">    private final CopyOnWriteArrayList&lt;SerDeserializerProvider&gt; providers = new CopyOnWriteArrayList&lt;&gt;();</span>
+
+    /**
+     * Creates an instance.
+     */
+<span class="fc" id="L68">    public SerDeserializers() {</span>
+<span class="fc" id="L69">        this.lenient = false;</span>
+<span class="fc" id="L70">        this.defaultDeserializer = DefaultDeserializer.INSTANCE;</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Creates an instance using additional providers.
+     * 
+     * @param providers  the providers to use
+     */
+<span class="fc" id="L78">    public SerDeserializers(SerDeserializerProvider... providers) {</span>
+<span class="fc" id="L79">        this.lenient = false;</span>
+<span class="fc" id="L80">        this.defaultDeserializer = DefaultDeserializer.INSTANCE;</span>
+<span class="fc" id="L81">        this.providers.addAll(Arrays.asList(providers));</span>
+<span class="fc" id="L82">    }</span>
+
+    /**
+     * Creates an instance using additional providers.
+     * 
+     * @param lenient  whether to deserialize leniently
+     * @param providers  the providers to use
+     */
+<span class="fc" id="L90">    public SerDeserializers(boolean lenient, SerDeserializerProvider... providers) {</span>
+<span class="fc" id="L91">        this.lenient = lenient;</span>
+<span class="fc" id="L92">        this.providers.addAll(Arrays.asList(providers));</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        this.defaultDeserializer = lenient ? LenientDeserializer.INSTANCE : DefaultDeserializer.INSTANCE;</span>
+<span class="fc" id="L94">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds the deserializer to be used for the specified type.
+     * 
+     * @param type  the type, not null
+     * @param deserializer  the deserializer, not null
+     * @return this, for chaining, not null
+     */
+    public SerDeserializers register(Class&lt;?&gt; type, SerDeserializer deserializer) {
+<span class="fc" id="L105">        deserializers.put(type, deserializer);</span>
+<span class="fc" id="L106">        return this;</span>
+    }
+
+    /**
+     * Gets the map of deserializers which can be modified.
+     * 
+     * @return the map of deserializers, not null
+     */
+    public ConcurrentMap&lt;Class&lt;?&gt;, SerDeserializer&gt; getDeserializers() {
+<span class="nc" id="L115">        return deserializers;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds the deserializer provider to be used.
+     * 
+     * @param provider  the deserializer provider, not null
+     * @return this, for chaining, not null
+     */
+    public SerDeserializers registerProvider(SerDeserializerProvider provider) {
+<span class="nc" id="L126">        providers.add(provider);</span>
+<span class="nc" id="L127">        return this;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Finds the deserializer for the specified type.
+     * &lt;p&gt;
+     * The {@code DefaultDeserializer} is used if one has not been registered.
+     * 
+     * @param type  the type, not null
+     * @return the deserializer, not null
+     */
+    public SerDeserializer findDeserializer(Class&lt;?&gt; type) {
+<span class="fc" id="L140">        SerDeserializer deser = deserializers.get(type);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (deser != null) {</span>
+<span class="fc" id="L142">            return deser;</span>
+        }
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        for (SerDeserializerProvider provider : providers) {</span>
+<span class="fc" id="L145">            deser = provider.findDeserializer(type);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">            if (deser != null) {</span>
+<span class="fc" id="L147">                return deser;</span>
+            }
+<span class="nc" id="L149">        }</span>
+<span class="fc" id="L150">        return defaultDeserializer;</span>
+    }
+
+    public Class&lt;?&gt; decodeType(
+            String typeStr,
+            JodaBeanSer settings,
+            String basePackage,
+            Map&lt;String, Class&lt;?&gt;&gt; knownTypes,
+            Class&lt;?&gt; defaultType) throws ClassNotFoundException {
+        
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (lenient) {</span>
+<span class="fc" id="L161">            return SerTypeMapper.decodeType(</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                    typeStr, settings, basePackage, knownTypes, defaultType == Object.class ? String.class : defaultType);</span>
+        }
+<span class="fc" id="L164">        return SerTypeMapper.decodeType(typeStr, settings, basePackage, knownTypes);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public String toString() {
+<span class="nc" id="L170">        return getClass().getSimpleName();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

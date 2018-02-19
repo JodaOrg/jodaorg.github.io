@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropertyData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.gen</a> &gt; <span class="el_source">PropertyData.java</span></div><h1>PropertyData.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.gen;
+
+import static java.util.stream.Collectors.joining;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import org.joda.beans.PropertyStyle;
+
+/**
+ * A bean that can be generated.
+ * 
+ * @author Stephen Colebourne
+ */
+class PropertyData {
+
+    /** Collection types. */
+<span class="nc" id="L38">    private static final Set&lt;String&gt; COLLECTIONS = new HashSet&lt;&gt;(</span>
+<span class="nc" id="L39">            Arrays.asList(</span>
+                    &quot;Collection&quot;, &quot;Set&quot;, &quot;SortedSet&quot;, &quot;NavigableSet&quot;, &quot;List&quot;,
+                    &quot;ArrayList&quot;, &quot;LinkedList&quot;,
+                    &quot;HashSet&quot;, &quot;LinkedHashSet&quot;, &quot;TreeSet&quot;, &quot;ConcurrentSkipListSet, EnumSet&quot;,
+                    &quot;ImmutableCollection&quot;, &quot;ImmutableList&quot;, &quot;ImmutableSet&quot;, &quot;ImmutableSortedSet&quot;));
+    /** Set types. */
+<span class="nc" id="L45">    private static final Set&lt;String&gt; SETS = new HashSet&lt;&gt;(</span>
+<span class="nc" id="L46">            Arrays.asList(</span>
+                    &quot;Set&quot;, &quot;SortedSet&quot;, &quot;NavigableSet&quot;,
+                    &quot;HashSet&quot;, &quot;LinkedHashSet&quot;, &quot;TreeSet&quot;, &quot;ConcurrentSkipListSet, EnumSet&quot;,
+                    &quot;ImmutableSet&quot;, &quot;ImmutableSortedSet&quot;));
+    /** Set types. */
+<span class="nc" id="L51">    private static final Set&lt;String&gt; SORTED_SETS = new HashSet&lt;&gt;(</span>
+<span class="nc" id="L52">            Arrays.asList(</span>
+                    &quot;SortedSet&quot;, &quot;NavigableSet&quot;,
+                    &quot;TreeSet&quot;, &quot;ConcurrentSkipListSet&quot;,
+                    &quot;ImmutableSortedSet&quot;));
+    /** Map types. */
+<span class="nc" id="L57">    private static final Set&lt;String&gt; MAPS = new HashSet&lt;&gt;(</span>
+<span class="nc" id="L58">            Arrays.asList(</span>
+                    &quot;Map&quot;, &quot;SortedMap&quot;, &quot;NavigableMap&quot;, &quot;ConcurrentMap&quot;, &quot;ConcurrentNavigableMap&quot;,
+                    &quot;HashMap&quot;, &quot;LinkedHashMap&quot;, &quot;TreeMap&quot;, &quot;ConcurrentHashMap&quot;, &quot;ConcurrentSkipListMap&quot;,
+                    &quot;BiMap&quot;, &quot;HashBiMap&quot;,
+                    &quot;ImmutableMap&quot;, &quot;ImmutableSortedMap&quot;, &quot;ImmutableBiMap&quot;));
+
+    /** Owning bean. */
+    private final BeanData bean;
+    /** Annotation line index for {@code PropertyDefinition} in input file. */
+    private final int lineIndex;
+    /** Property name. */
+    private String propertyName;
+    /** Field name. */
+    private String fieldName;
+    /** Meta field name. */
+    private String metaFieldName;
+    /** Upper property name. */
+    private String upperName;
+    /** Property type. */
+    private String type;
+    /** The builder type. */
+    private String builderType;
+    /** Property field type. */
+    private String fieldType;
+    /** Whether the field is declared final. */
+    private boolean isFinal;
+    /** The field initializer. */
+    private String initializer;
+    /** The alias. */
+    private String alias;
+    /** The getter style. */
+    private String getStyle;
+    /** The setter style. */
+    private String setStyle;
+    /** The override style. */
+    private boolean overrideGet;
+    /** The override style. */
+    private boolean overrideSet;
+    /** The type style. */
+    private String typeStyle;
+    /** The builder type style. */
+    private String builderTypeStyle;
+    /** The equals hashCode style. */
+    private String equalsHashCodeStyle;
+    /** The toString style. */
+    private String toStringStyle;
+    /** The validation string. */
+    private String validation;
+    /** Deprecated flag. */
+    private boolean deprecated;
+    /** First comment about the property. */
+    private String firstComment;
+    /** Other comments about the property. */
+<span class="nc" id="L111">    private final List&lt;String&gt; comments = new ArrayList&lt;&gt;();</span>
+    /** The getter generator. */
+    private GetterGen getterGen;
+    /** The setter generator. */
+    private SetterGen setterGen;
+    /** The flag for bound properties. */
+    private boolean bound;
+    /** The copy generator. */
+    private CopyGen copyGen;
+    /** The builder generator. */
+    private BuilderGen builderGen;
+    /** The config. */
+    private BeanGenConfig config;
+
+    /**
+     * Constructor.
+     */
+<span class="nc" id="L128">    PropertyData(BeanData bean, BeanGenConfig config, int lineIndex) {</span>
+<span class="nc" id="L129">        this.bean = bean;</span>
+<span class="nc" id="L130">        this.config = config;</span>
+<span class="nc" id="L131">        this.lineIndex = lineIndex;</span>
+<span class="nc" id="L132">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the bean.
+     * @return the bean, not null
+     */
+    public BeanData getBean() {
+<span class="nc" id="L140">        return bean;</span>
+    }
+
+    /**
+     * Gets the configuration.
+     * 
+     * @return the configuration, not null
+     */
+    public BeanGenConfig getConfig() {
+<span class="nc" id="L149">        return config;</span>
+    }
+
+    /**
+     * Sets the configuration.
+     * 
+     * @param config  the new configuration, not null
+     */
+    public void setConfig(BeanGenConfig config) {
+<span class="nc" id="L158">        this.config = config;</span>
+<span class="nc" id="L159">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the property line index.
+     * @return the property line index
+     */
+    public int getLineIndex() {
+<span class="nc" id="L167">        return lineIndex;</span>
+    }
+
+    /**
+     * Gets the property name.
+     * @return the property name
+     */
+    public String getPropertyName() {
+<span class="nc" id="L175">        return propertyName;</span>
+    }
+
+    /**
+     * Sets the property name.
+     * @param propertyName  the property name to set
+     */
+    public void setPropertyName(String propertyName) {
+<span class="nc" id="L183">        this.propertyName = propertyName;</span>
+<span class="nc" id="L184">    }</span>
+
+    /**
+     * Gets the field name.
+     * @return the field name
+     */
+    public String getFieldName() {
+<span class="nc" id="L191">        return fieldName;</span>
+    }
+
+    /**
+     * Sets the field name.
+     * @param fieldName  the field name to set
+     */
+    public void setFieldName(String fieldName) {
+<span class="nc" id="L199">        this.fieldName = fieldName;</span>
+<span class="nc" id="L200">    }</span>
+
+    /**
+     * Gets the meta field name.
+     * @return the meta field name
+     */
+    public String getMetaFieldName() {
+<span class="nc" id="L207">        return metaFieldName;</span>
+    }
+
+    /**
+     * Sets the meta field name.
+     * @param metaFieldName  the meta field name to set
+     */
+    public void setMetaFieldName(String metaFieldName) {
+<span class="nc" id="L215">        this.metaFieldName = metaFieldName;</span>
+<span class="nc" id="L216">    }</span>
+
+    /**
+     * Gets the upper property name.
+     * @return the upper name
+     */
+    public String getUpperName() {
+<span class="nc" id="L223">        return upperName;</span>
+    }
+
+    /**
+     * Sets the upper property name.
+     * @param upperName  the upper name to set
+     */
+    public void setUpperName(String upperName) {
+<span class="nc" id="L231">        this.upperName = upperName;</span>
+<span class="nc" id="L232">    }</span>
+
+    /**
+     * Gets the type.
+     * @return the type
+     */
+    public String getType() {
+<span class="nc" id="L239">        return type;</span>
+    }
+
+    /**
+     * Sets the type.
+     * @param type  the type to set
+     */
+    public void setType(String type) {
+<span class="nc" id="L247">        this.type = type;</span>
+<span class="nc" id="L248">    }</span>
+
+    /**
+     * Gets the builder type.
+     * @return the type
+     */
+    public String getBuilderType() {
+<span class="nc" id="L255">        return builderType;</span>
+    }
+
+    /**
+     * Sets the builder type.
+     * @param builderType  the type to set
+     */
+    public void setBuilderType(String builderType) {
+<span class="nc" id="L263">        this.builderType = builderType;</span>
+<span class="nc" id="L264">    }</span>
+
+    /**
+     * Gets the field type.
+     * @return the field type
+     */
+    public String getFieldType() {
+<span class="nc" id="L271">        return fieldType;</span>
+    }
+
+    /**
+     * Sets the field type.
+     * @param fieldType  the field type to set
+     */
+    public void setFieldType(String fieldType) {
+<span class="nc" id="L279">        this.fieldType = fieldType;</span>
+<span class="nc" id="L280">    }</span>
+
+    /**
+     * Resolves the field type.
+     */
+    public void resolveType() {
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (getTypeStyle() == null) {</span>
+<span class="nc" id="L287">            setTypeStyle(&quot;&quot;);</span>
+        }
+<span class="nc" id="L289">        final String fieldType = getFieldType();</span>
+<span class="nc" id="L290">        String generics = &quot;&quot;;</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">        if (fieldType.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc" id="L292">            generics = fieldType.substring(fieldType.indexOf('&lt;'));</span>
+        }
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        if (getTypeStyle().equals(&quot;smart&quot;)) {</span>
+<span class="nc" id="L295">            setType(fieldType);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">        } else if (getTypeStyle().length() &gt; 0) {</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">            if (getTypeStyle().contains(&quot;&lt;&gt;&quot;)) {</span>
+<span class="nc" id="L298">                setType(getTypeStyle().replace(&quot;&lt;&gt;&quot;, generics));</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            } else if (getTypeStyle().contains(&quot;&lt;&quot;)) {</span>
+<span class="nc" id="L300">                setType(getTypeStyle());</span>
+            } else {
+<span class="nc" id="L302">                setType(getTypeStyle() + generics);</span>
+            }
+        } else {
+<span class="nc" id="L305">            setType(fieldType);</span>
+        }
+<span class="nc" id="L307">    }</span>
+
+    /**
+     * Resolves the field builder type.
+     */
+    public void resolveBuilderType() {
+<span class="nc bnc" id="L313" title="All 2 branches missed.">        if (getBuilderTypeStyle() == null) {</span>
+<span class="nc" id="L314">            setBuilderTypeStyle(&quot;&quot;);</span>
+        }
+<span class="nc" id="L316">        final String fieldType = getFieldType();</span>
+<span class="nc" id="L317">        String generics = &quot;&quot;;</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">        if (fieldType.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc" id="L319">            generics = fieldType.substring(fieldType.indexOf('&lt;'));</span>
+        }
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        if (getBuilderTypeStyle().equals(&quot;smart&quot;)) {</span>
+<span class="nc" id="L322">            setBuilderType(fieldType);</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">        } else if (getBuilderTypeStyle().length() &gt; 0) {</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">            if (getBuilderTypeStyle().contains(&quot;&lt;&gt;&quot;)) {</span>
+<span class="nc" id="L325">                setBuilderType(getBuilderTypeStyle().replace(&quot;&lt;&gt;&quot;, generics));</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">            } else if (getBuilderTypeStyle().contains(&quot;&lt;&quot;)) {</span>
+<span class="nc" id="L327">                setBuilderType(getBuilderTypeStyle());</span>
+            } else {
+<span class="nc" id="L329">                setBuilderType(getBuilderTypeStyle() + generics);</span>
+            }
+        } else {
+<span class="nc" id="L332">            setBuilderType(fieldType);</span>
+        }
+<span class="nc" id="L334">    }</span>
+
+    /**
+     * Gets whether the field is declared final.
+     * @return the type
+     */
+    public boolean isFinal() {
+<span class="nc" id="L341">        return isFinal;</span>
+    }
+
+    /**
+     * Sets whether the field is declared final.
+     * @param isFinal  the field is final flag
+     */
+    public void setFinal(boolean isFinal) {
+<span class="nc" id="L349">        this.isFinal = isFinal;</span>
+<span class="nc" id="L350">    }</span>
+
+    /**
+     * Gets the field initializer.
+     * @return the initializer
+     */
+    public String getInitializer() {
+<span class="nc" id="L357">        return initializer;</span>
+    }
+
+    /**
+     * Sets the field initializer.
+     * @param initializer  the field initializer
+     */
+    public void setInitializer(String initializer) {
+<span class="nc" id="L365">        this.initializer = initializer;</span>
+<span class="nc" id="L366">    }</span>
+
+    /**
+     * Gets the alias.
+     * @return the alias
+     */
+    public String getAlias() {
+<span class="nc" id="L373">        return alias;</span>
+    }
+
+    /**
+     * Sets the alias.
+     * @param alias  the alias
+     */
+    public void setAlias(String alias) {
+<span class="nc bnc" id="L381" title="All 4 branches missed.">        this.alias = (alias != null &amp;&amp; alias.isEmpty() == false ? alias : null);</span>
+<span class="nc" id="L382">    }</span>
+
+    /**
+     * Gets the getter style.
+     * @return the getter style
+     */
+    public String getGetStyle() {
+<span class="nc" id="L389">        return getStyle;</span>
+    }
+
+    /**
+     * Sets the getter style.
+     * @param getStyle  the getter style to set
+     */
+    public void setGetStyle(String getStyle) {
+<span class="nc" id="L397">        this.getStyle = getStyle;</span>
+<span class="nc" id="L398">    }</span>
+
+    /**
+     * Gets the type style.
+     * @return the type style
+     */
+    public String getTypeStyle() {
+<span class="nc" id="L405">        return typeStyle;</span>
+    }
+
+    /**
+     * Sets the type style.
+     * @param typeStyle  the type style to set
+     */
+    public void setTypeStyle(String typeStyle) {
+<span class="nc" id="L413">        this.typeStyle = typeStyle;</span>
+<span class="nc" id="L414">    }</span>
+
+    /**
+     * Gets the type builder type style.
+     * @return the builder type style
+     */
+    public String getBuilderTypeStyle() {
+<span class="nc" id="L421">        return builderTypeStyle;</span>
+    }
+
+    /**
+     * Sets the builder type style.
+     * @param builderTypeStyle  the builder type style to set
+     */
+    public void setBuilderTypeStyle(String builderTypeStyle) {
+<span class="nc" id="L429">        this.builderTypeStyle = builderTypeStyle;</span>
+<span class="nc" id="L430">    }</span>
+
+    /**
+     * Gets the equals hashCode style.
+     * @return the equals hashCode style
+     */
+    public String getEqualsHashCodeStyle() {
+<span class="nc" id="L437">        return equalsHashCodeStyle;</span>
+    }
+
+    /**
+     * Sets the equals hashCode style.
+     * @param equalsHashCodeStyle  the equals hashCode style
+     */
+    public void setEqualsHashCodeStyle(String equalsHashCodeStyle) {
+<span class="nc" id="L445">        this.equalsHashCodeStyle = equalsHashCodeStyle;</span>
+<span class="nc" id="L446">    }</span>
+
+    /**
+     * Resolves the equals hashCode generator.
+     * @param file  the file
+     * @param lineIndex  the line index
+     */
+    public void resolveEqualsHashCodeStyle(File file, int lineIndex) {
+<span class="nc bnc" id="L454" title="All 2 branches missed.">        if (equalsHashCodeStyle.equals(&quot;smart&quot;)) {</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">            equalsHashCodeStyle = (bean.isImmutable() ? &quot;field&quot; : &quot;getter&quot;);</span>
+        }
+<span class="nc bnc" id="L457" title="All 2 branches missed.">        if (equalsHashCodeStyle.equals(&quot;omit&quot;) ||</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">                equalsHashCodeStyle.equals(&quot;getter&quot;) ||</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">                equalsHashCodeStyle.equals(&quot;field&quot;)) {</span>
+<span class="nc" id="L460">            return;</span>
+        }
+<span class="nc" id="L462">        throw new BeanCodeGenException(&quot;Invalid equals/hashCode style: &quot; + equalsHashCodeStyle +</span>
+<span class="nc" id="L463">                &quot; in &quot; + getBean().getTypeRaw() + &quot;.&quot; + getPropertyName(), file, lineIndex);</span>
+    }
+
+    /**
+     * Gets the toString style.
+     * @return the toString style
+     */
+    public String getToStringStyle() {
+<span class="nc" id="L471">        return toStringStyle;</span>
+    }
+
+    /**
+     * Sets the toString style.
+     * @param toStringStyle  the toString style
+     */
+    public void setToStringStyle(String toStringStyle) {
+<span class="nc" id="L479">        this.toStringStyle = toStringStyle;</span>
+<span class="nc" id="L480">    }</span>
+
+    /**
+     * Resolves the toString generator.
+     * @param file  the file
+     * @param lineIndex  the line index
+     */
+    public void resolveToStringStyle(File file, int lineIndex) {
+<span class="nc bnc" id="L488" title="All 2 branches missed.">        if (toStringStyle.equals(&quot;smart&quot;)) {</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">            toStringStyle = (bean.isImmutable() ? &quot;field&quot; : &quot;getter&quot;);</span>
+        }
+<span class="nc bnc" id="L491" title="All 2 branches missed.">        if (toStringStyle.equals(&quot;omit&quot;) ||</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">                toStringStyle.equals(&quot;getter&quot;) ||</span>
+<span class="nc bnc" id="L493" title="All 2 branches missed.">                toStringStyle.equals(&quot;field&quot;)) {</span>
+<span class="nc" id="L494">            return;</span>
+        }
+<span class="nc" id="L496">        throw new BeanCodeGenException(&quot;Invalid toString style: &quot; + toStringStyle +</span>
+<span class="nc" id="L497">                &quot; in &quot; + getBean().getTypeRaw() + &quot;.&quot; + getPropertyName(), file, lineIndex);</span>
+    }
+
+    /**
+     * Gets the setter style.
+     * @return the setter style
+     */
+    public String getSetStyle() {
+<span class="nc" id="L505">        return setStyle;</span>
+    }
+
+    /**
+     * Sets the setter style.
+     * @param setStyle  the setter style to set
+     */
+    public void setSetStyle(String setStyle) {
+<span class="nc" id="L513">        this.setStyle = setStyle;</span>
+<span class="nc" id="L514">    }</span>
+
+    /**
+     * Gets the override get flag.
+     * @return the setter style
+     */
+    public boolean isOverrideGet() {
+<span class="nc" id="L521">        return overrideGet;</span>
+    }
+
+    /**
+     * Sets the override get flag.
+     * @param overrideGet  the setter style to set
+     */
+    public void setOverrideGet(boolean overrideGet) {
+<span class="nc" id="L529">        this.overrideGet = overrideGet;</span>
+<span class="nc" id="L530">    }</span>
+
+    /**
+     * Gets the override get flag.
+     * @return the setter style
+     */
+    public boolean isOverrideSet() {
+<span class="nc" id="L537">        return overrideSet;</span>
+    }
+
+    /**
+     * Sets the override get flag.
+     * @param overrideSet  the setter style to set
+     */
+    public void setOverrideSet(boolean overrideSet) {
+<span class="nc" id="L545">        this.overrideSet = overrideSet;</span>
+<span class="nc" id="L546">    }</span>
+
+    /**
+     * Gets the validation.
+     * @return the validation
+     */
+    public String getValidation() {
+<span class="nc" id="L553">        return validation;</span>
+    }
+
+    /**
+     * Sets the validation.
+     * @param validation  the validation to set
+     */
+    public void setValidation(String validation) {
+<span class="nc" id="L561">        this.validation = validation;</span>
+<span class="nc" id="L562">    }</span>
+
+    /**
+     * Resolves validation.
+     */
+    public void resolveValidation() {
+<span class="nc bnc" id="L568" title="All 6 branches missed.">        if (isFinal() &amp;&amp; getInitializer().length() &gt; 0 &amp;&amp;  getValidation().length() == 0) {</span>
+<span class="nc" id="L569">            setValidation(&quot;notNull&quot;);</span>
+        }
+<span class="nc" id="L571">    }</span>
+
+    /**
+     * Checks if the property is deprecated.
+     * @return the deprecated flag
+     */
+    public boolean isDeprecated() {
+<span class="nc" id="L578">        return deprecated;</span>
+    }
+
+    /**
+     * Sets if the property is deprecated.
+     * @param deprecated  the deprecated to set
+     */
+    public void setDeprecated(boolean deprecated) {
+<span class="nc" id="L586">        this.deprecated = deprecated;</span>
+<span class="nc" id="L587">    }</span>
+
+    /**
+     * Gets the first comment line.
+     * @return the first comment
+     */
+    public String getFirstComment() {
+<span class="nc" id="L594">        return firstComment;</span>
+    }
+
+    /**
+     * Sets the first comment line.
+     * @param firstComment  the first comment to set
+     */
+    public void setFirstComment(String firstComment) {
+<span class="nc" id="L602">        this.firstComment = firstComment;</span>
+<span class="nc" id="L603">    }</span>
+
+    /**
+     * Gets the remaining comments.
+     * @return the remaining comments, not null
+     */
+    public List&lt;String&gt; getComments() {
+<span class="nc" id="L610">        return comments;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the property is parameterised with generics.
+     * @return true if generified
+     */
+    public boolean isGenericParamType() {
+<span class="nc bnc" id="L619" title="All 2 branches missed.">        return type.indexOf(&quot;&lt;&quot;) &gt;= 0;</span>
+    }
+
+    /**
+     * Checks if the property is parameterised with generics.
+     * {@code Foo&lt;?&gt;} will return true, {@code Foo&lt;? extends Number&gt; will return false}.
+     * @return true if generified
+     */
+    public boolean isGenericWildcardParamType() {
+<span class="nc" id="L628">        return type.endsWith(&quot;&lt;?&gt;&quot;);</span>
+    }
+
+    /**
+     * Gets the parameterisation of the property.
+     * {@code Foo&lt;String&gt;} will return {@code String}.
+     * @return the generic type, or a blank string if not generic, not null
+     */
+    public String getGenericParamType() {
+<span class="nc" id="L637">        int pos = type.indexOf(&quot;&lt;&quot;);</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">        if (pos &lt; 0) {</span>
+<span class="nc" id="L639">            return &quot;&quot;;</span>
+        }
+<span class="nc" id="L641">        return type.substring(pos + 1, type.length() - 1);</span>
+    }
+
+    /**
+     * Checks if the type is the generic type of the bean.
+     * For example, if the property is of type T or T[] in a bean of Foo[T].
+     * @return true if matches
+     */
+    public boolean isBeanGenericType() {
+<span class="nc" id="L650">        String stripped = type;</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">        if (isArrayType()) {</span>
+<span class="nc" id="L652">            stripped = type.substring(0, type.length() - 2);</span>
+        }
+<span class="nc" id="L654">        return bean.isTypeGenerifiedBy(stripped);</span>
+    }
+
+    /**
+     * Checks if the property is generic in some way.
+     * @return true if generic
+     */
+    public boolean isGeneric() {
+<span class="nc bnc" id="L662" title="All 4 branches missed.">        return isGenericParamType() || isBeanGenericType();</span>
+    }
+
+    /**
+     * Gets the raw type of the property without generics.
+     * {@code Foo&lt;String&gt;} will return {@code Foo}.
+     * @return the raw type
+     */
+    public String getTypeRaw() {
+<span class="nc" id="L671">        int pos = type.indexOf(&quot;&lt;&quot;);</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">        return (pos &lt; 0 ? type : type.substring(0, pos));</span>
+    }
+
+    /**
+     * Gets the raw type of the property.
+     * @return the raw type
+     */
+    public String getFieldTypeRaw() {
+<span class="nc" id="L680">        int pos = fieldType.indexOf(&quot;&lt;&quot;);</span>
+<span class="nc bnc" id="L681" title="All 2 branches missed.">        return (pos &lt; 0 ? fieldType : fieldType.substring(0, pos));</span>
+    }
+
+    /**
+     * Gets the generic part of the property type.
+     * &lt;p&gt;
+     * For example, &quot;{@literal Foo&lt;String&gt;}&quot; will return &quot;{@literal &lt;String&gt;}&quot;.
+     * 
+     * @return the generic part of the type, not null
+     */
+    public String getTypeGenerics() {
+<span class="nc" id="L692">        final String type = getType();</span>
+<span class="nc bnc" id="L693" title="All 2 branches missed.">        if (type.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc" id="L694">            return type.substring(type.indexOf('&lt;'));</span>
+        }
+<span class="nc" id="L696">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Gets the generic part of the property type.
+     * &lt;p&gt;
+     * For example, &quot;{@literal Foo&lt;String&gt;}&quot; will return &quot;String&quot;.
+     * 
+     * @return the generic part of the type, empty if not generic, not null
+     */
+    public String getTypeGenericsSimple() {
+<span class="nc" id="L707">        final String type = getType();</span>
+<span class="nc bnc" id="L708" title="All 2 branches missed.">        if (type.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc" id="L709">            return type.substring(type.indexOf('&lt;') + 1, type.length() - 1);</span>
+        }
+<span class="nc" id="L711">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Gets the type of the property, erasing generics attached to the bean.
+     * {@code Foo&lt;T&gt;} will return {@code Foo&lt;Number&gt;} where {@code T extends Number}.
+     * @return the raw type
+     */
+    public String getTypeBeanErased() {
+<span class="nc bnc" id="L720" title="All 2 branches missed.">        if (isBeanGenericType()) {</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">            for (int i = 0; i &lt; bean.getTypeGenericCount(); i++) {</span>
+<span class="nc bnc" id="L722" title="All 2 branches missed.">                if (type.equals(bean.getTypeGenericName(i, false))) {</span>
+<span class="nc" id="L723">                    return bean.getTypeGenericErased(i);</span>
+                }
+            }
+        }
+<span class="nc" id="L727">        String generic = getTypeGenericsSimple();</span>
+<span class="nc bnc" id="L728" title="All 2 branches missed.">        if (generic.isEmpty()) {</span>
+<span class="nc" id="L729">            return type;</span>
+        }
+<span class="nc" id="L731">        StringTokenizer tkn = new StringTokenizer(generic, &quot;,&quot;);</span>
+<span class="nc" id="L732">        List&lt;String&gt; altered = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L733" title="All 2 branches missed.">        while (tkn.hasMoreTokens()) {</span>
+<span class="nc" id="L734">            String genericType = tkn.nextToken().trim();</span>
+<span class="nc" id="L735">            String erased = genericType;</span>
+<span class="nc bnc" id="L736" title="All 2 branches missed.">            if (bean.isTypeGenerifiedBy(genericType)) {</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">                for (int i = 0; i &lt; bean.getTypeGenericCount(); i++) {</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">                    if (genericType.equals(bean.getTypeGenericName(i, false))) {</span>
+<span class="nc" id="L739">                        erased = bean.getTypeGenericErased(i);</span>
+                    }
+                }
+            }
+<span class="nc" id="L743">            altered.add(erased);</span>
+<span class="nc" id="L744">        }</span>
+<span class="nc" id="L745">        return getTypeRaw() + &quot;&lt;&quot; + altered.stream().collect(joining(&quot;, &quot;)) + &quot;&gt;&quot;;</span>
+    }
+
+    /**
+     * Checks if the property is derived.
+     * @return true if derived
+     */
+    public boolean isDerived() {
+<span class="nc bnc" id="L753" title="All 2 branches missed.">        return fieldName == null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Resolves the getter generator.
+     * @param file  the file
+     * @param lineIndex  the line index
+     */
+    public void resolveGetterGen(File file, int lineIndex) {
+<span class="nc bnc" id="L763" title="All 2 branches missed.">        if (getGetStyle() == null) {</span>
+<span class="nc" id="L764">            setGetStyle(&quot;&quot;);</span>
+        }
+<span class="nc" id="L766">        String style = getGetStyle();</span>
+<span class="nc" id="L767">        String access = &quot;public&quot;;</span>
+<span class="nc bnc" id="L768" title="All 2 branches missed.">        if (style.equals(&quot;private&quot;)) {</span>
+<span class="nc" id="L769">            style = &quot;smart&quot;;</span>
+<span class="nc" id="L770">            access = &quot;private&quot;;</span>
+<span class="nc bnc" id="L771" title="All 2 branches missed.">        } else if (style.equals(&quot;package&quot;)) {</span>
+<span class="nc" id="L772">            style = &quot;smart&quot;;</span>
+<span class="nc" id="L773">            access = &quot;package&quot;;</span>
+<span class="nc bnc" id="L774" title="All 2 branches missed.">        } else if (style.equals(&quot;protected&quot;)) {</span>
+<span class="nc" id="L775">            style = &quot;smart&quot;;</span>
+<span class="nc" id="L776">            access = &quot;protected&quot;;</span>
+        }
+<span class="nc bnc" id="L778" title="All 2 branches missed.">        if (style.equals(&quot;get&quot;)) {</span>
+<span class="nc" id="L779">            getterGen = GetterGen.GetGetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L780" title="All 2 branches missed.">        } else if (style.equals(&quot;is&quot;)) {</span>
+<span class="nc" id="L781">            getterGen = GetterGen.IsGetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L782" title="All 2 branches missed.">        } else if (style.equals(&quot;smart&quot;)) {</span>
+<span class="nc bnc" id="L783" title="All 2 branches missed.">            if (bean.isImmutable()) {</span>
+<span class="nc" id="L784">                String clone = config.getImmutableGetClones().get(getFieldTypeRaw());</span>
+<span class="nc bnc" id="L785" title="All 2 branches missed.">                if (&quot;clone&quot;.equals(clone)) {</span>
+<span class="nc bnc" id="L786" title="All 2 branches missed.">                    getterGen = isNotNull() ?</span>
+<span class="nc" id="L787">                                    GetterGen.CloneNNGetterGen.of(access) :</span>
+<span class="nc" id="L788">                                    GetterGen.CloneGetterGen.of(access);</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">                } else if (&quot;cloneCast&quot;.equals(clone)) {</span>
+<span class="nc bnc" id="L790" title="All 2 branches missed.">                    getterGen = isNotNull() ?</span>
+<span class="nc" id="L791">                                    GetterGen.CloneCastNNGetterGen.of(access) :</span>
+<span class="nc" id="L792">                                    GetterGen.CloneCastGetterGen.of(access);</span>
+<span class="nc bnc" id="L793" title="All 2 branches missed.">                } else if (getType().equals(&quot;boolean&quot;)) {</span>
+<span class="nc" id="L794">                    getterGen = GetterGen.IsGetterGen.of(access);</span>
+                } else {
+<span class="nc" id="L796">                    getterGen = GetterGen.GetGetterGen.of(access);</span>
+                }
+<span class="nc bnc" id="L798" title="All 2 branches missed.">            } else if (getType().equals(&quot;boolean&quot;)) {</span>
+<span class="nc" id="L799">                getterGen = GetterGen.IsGetterGen.of(access);</span>
+            } else {
+<span class="nc" id="L801">                getterGen = GetterGen.GetGetterGen.of(access);</span>
+            }
+<span class="nc bnc" id="L803" title="All 2 branches missed.">        } else if (style.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L804">            getterGen = GetterGen.NoGetterGen.INSTANCE;</span>
+<span class="nc bnc" id="L805" title="All 2 branches missed.">        } else if (style.equals(&quot;field&quot;)) {</span>
+<span class="nc" id="L806">            getterGen = GetterGen.NoGetterGen.INSTANCE;</span>
+<span class="nc bnc" id="L807" title="All 2 branches missed.">        } else if (style.equals(&quot;clone&quot;)) {</span>
+<span class="nc bnc" id="L808" title="All 2 branches missed.">            getterGen = isNotNull() ? GetterGen.CloneNNGetterGen.PUBLIC : GetterGen.CloneGetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L809" title="All 2 branches missed.">        } else if (style.equals(&quot;cloneCast&quot;)) {</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">            getterGen = isNotNull() ? GetterGen.CloneCastNNGetterGen.PUBLIC : GetterGen.CloneCastGetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L811" title="All 2 branches missed.">        } else if (style.equals(&quot;optional&quot;)) {</span>
+<span class="nc" id="L812">            getterGen = GetterGen.Optional8GetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L813" title="All 2 branches missed.">        } else if (style.equals(&quot;optionalGuava&quot;)) {</span>
+<span class="nc" id="L814">            getterGen = GetterGen.OptionalGuavaGetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L815" title="All 2 branches missed.">        } else if (style.equals(&quot;manual&quot;)) {</span>
+<span class="nc" id="L816">            getterGen = GetterGen.ManualGetterGen.INSTANCE;</span>
+        } else {
+<span class="nc" id="L818">            throw new BeanCodeGenException(&quot;Unable to locate getter generator '&quot; + style + &quot;'&quot; +</span>
+<span class="nc" id="L819">                    &quot; in &quot; + getBean().getTypeRaw() + &quot;.&quot; + getPropertyName(), file, lineIndex);</span>
+        }
+<span class="nc" id="L821">    }</span>
+
+    /**
+     * Gets the getter generator.
+     * @return the getter generator
+     */
+    public GetterGen getGetterGen() {
+<span class="nc" id="L828">        return getterGen;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Resolves the setter generator.
+     * @param file  the file
+     * @param lineIndex  the line index
+     */
+    public void resolveSetterGen(File file, int lineIndex) {
+<span class="nc bnc" id="L838" title="All 2 branches missed.">        if (getSetStyle() == null) {</span>
+<span class="nc" id="L839">            setSetStyle(&quot;&quot;);</span>
+        }
+<span class="nc" id="L841">        String style = getSetStyle().replace(&quot;\\n&quot;, &quot;\n&quot;);</span>
+<span class="nc" id="L842">        String access = &quot;public&quot;;</span>
+<span class="nc bnc" id="L843" title="All 2 branches missed.">        if (style.equals(&quot;private&quot;)) {</span>
+<span class="nc" id="L844">            style = &quot;smart&quot;;</span>
+<span class="nc" id="L845">            access = &quot;private&quot;;</span>
+<span class="nc bnc" id="L846" title="All 2 branches missed.">        } else if (style.equals(&quot;package&quot;)) {</span>
+<span class="nc" id="L847">            style = &quot;smart&quot;;</span>
+<span class="nc" id="L848">            access = &quot;package&quot;;</span>
+<span class="nc bnc" id="L849" title="All 2 branches missed.">        } else if (style.equals(&quot;protected&quot;)) {</span>
+<span class="nc" id="L850">            style = &quot;smart&quot;;</span>
+<span class="nc" id="L851">            access = &quot;protected&quot;;</span>
+        }
+<span class="nc bnc" id="L853" title="All 2 branches missed.">        if (style.equals(&quot;set&quot;)) {</span>
+<span class="nc" id="L854">            setterGen = SetterGen.SetSetterGen.PUBLIC;</span>
+<span class="nc bnc" id="L855" title="All 2 branches missed.">        } else if (style.equals(&quot;setClearAddAll&quot;)) {</span>
+<span class="nc" id="L856">            setterGen = new SetterGen.PatternSetterGen(&quot;$field.clear();\n$field.addAll($value);&quot;);</span>
+<span class="nc bnc" id="L857" title="All 2 branches missed.">        } else if (style.equals(&quot;setClearPutAll&quot;)) {</span>
+<span class="nc" id="L858">            setterGen = new SetterGen.PatternSetterGen(&quot;$field.clear();\n$field.putAll($value);&quot;);</span>
+<span class="nc bnc" id="L859" title="All 2 branches missed.">        } else if (style.equals(&quot;bound&quot;)) {</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">            if (isFinal()) {</span>
+<span class="nc" id="L861">                throw new IllegalArgumentException(&quot;Final field must not have a bound setter&quot;);</span>
+            } else {
+<span class="nc" id="L863">                setterGen = SetterGen.ObservableSetterGen.PUBLIC;</span>
+<span class="nc" id="L864">                bound = true;</span>
+            }
+<span class="nc bnc" id="L866" title="All 2 branches missed.">        } else if (style.equals(&quot;smart&quot;)) {</span>
+<span class="nc bnc" id="L867" title="All 2 branches missed.">            if (isDerived()) {</span>
+<span class="nc" id="L868">                setterGen = SetterGen.NoSetterGen.INSTANCE;</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">            } else if (isFinal()) {</span>
+<span class="nc bnc" id="L870" title="All 2 branches missed.">                if (isCollectionType()) {</span>
+<span class="nc" id="L871">                    setterGen = new SetterGen.PatternSetterGen(&quot;$field.clear();\n$field.addAll($value);&quot;, access);</span>
+<span class="nc bnc" id="L872" title="All 2 branches missed.">                } else if (isMapType()) {</span>
+<span class="nc" id="L873">                    setterGen = new SetterGen.PatternSetterGen(&quot;$field.clear();\n$field.putAll($value);&quot;, access);</span>
+                } else {
+<span class="nc" id="L875">                    setterGen = SetterGen.NoSetterGen.INSTANCE;</span>
+                }
+            } else {
+<span class="nc" id="L878">                setterGen = SetterGen.SetSetterGen.of(access);</span>
+            }
+<span class="nc bnc" id="L880" title="All 2 branches missed.">        } else if (style.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L881">            setterGen = SetterGen.NoSetterGen.INSTANCE;</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">        } else if (style.equals(&quot;field&quot;)) {</span>
+<span class="nc" id="L883">            setterGen = SetterGen.FieldSetterGen.INSTANCE;</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed.">        } else if (style.equals(&quot;manual&quot;)) {</span>
+<span class="nc" id="L885">            setterGen = SetterGen.NoSetterGen.INSTANCE;</span>
+<span class="nc bnc" id="L886" title="All 4 branches missed.">        } else if (style.contains(&quot;$field&quot;) || style.contains(&quot;$value&quot;)) {</span>
+<span class="nc bnc" id="L887" title="All 4 branches missed.">            if (style.contains(&quot;$field&quot;) || style.contains(&quot;\n&quot;)) {</span>
+<span class="nc" id="L888">                setterGen = new SetterGen.PatternSetterGen(style);</span>
+            } else {
+<span class="nc" id="L890">                setterGen = new SetterGen.PatternSetterGen(&quot;$field = &quot; + style);</span>
+            }
+        } else {
+<span class="nc" id="L893">            throw new BeanCodeGenException(&quot;Unable to locate setter generator '&quot; + style + &quot;'&quot; +</span>
+<span class="nc" id="L894">                    &quot; in &quot; + getBean().getTypeRaw() + &quot;.&quot; + getPropertyName(), file, lineIndex);</span>
+        }
+<span class="nc" id="L896">    }</span>
+
+    /**
+     * Gets the setter generator.
+     * @return the setter generator
+     */
+    public SetterGen getSetterGen() {
+<span class="nc" id="L903">        return setterGen;</span>
+    }
+
+    /**
+     * Gets the setter scope.
+     * @return the setter scope
+     */
+    public String getSetterScope() {
+<span class="nc bnc" id="L911" title="All 2 branches missed.">        if (getSetStyle().equals(&quot;private&quot;)) {</span>
+<span class="nc" id="L912">            return &quot;private&quot;;</span>
+        }
+<span class="nc" id="L914">        return &quot;public&quot;;</span>
+    }
+
+    /**
+     * Gets whether the property is bound.
+     * @return true if bound
+     */
+    public boolean isBound() {
+<span class="nc" id="L922">        return bound;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Resolves the copy generator.
+     * @param file  the file
+     * @param lineIndex  the line index
+     */
+    public void resolveCopyGen(File file, int lineIndex) {
+<span class="nc bnc" id="L932" title="All 4 branches missed.">        if (getBean().isMutable() &amp;&amp; getBean().isBuilderScopeVisible() == false) {</span>
+<span class="nc" id="L933">            return;  // no copying</span>
+        }
+<span class="nc bnc" id="L935" title="All 2 branches missed.">        if (config.getInvalidImmutableTypes().contains(getFieldTypeRaw())) {</span>
+<span class="nc" id="L936">            throw new BeanCodeGenException(&quot;Invalid collection type for immutable bean: &quot; + getFieldTypeRaw() +</span>
+<span class="nc" id="L937">                    &quot; in &quot; + getBean().getTypeRaw() + &quot;.&quot; + getPropertyName(), file, lineIndex);</span>
+        }
+<span class="nc bnc" id="L939" title="All 2 branches missed.">        if (isDerived()) {</span>
+<span class="nc" id="L940">            copyGen = CopyGen.NoCopyGen.INSTANCE;</span>
+        } else {
+<span class="nc" id="L942">            CopyGen copier = config.getCopyGenerators().get(getFieldTypeRaw());</span>
+<span class="nc bnc" id="L943" title="All 2 branches missed.">            if (copier != null) {</span>
+<span class="nc" id="L944">                copyGen = copier;</span>
+            } else {
+<span class="nc" id="L946">                String clone = config.getImmutableGetClones().get(getFieldTypeRaw());</span>
+<span class="nc bnc" id="L947" title="All 2 branches missed.">                if (clone != null) {</span>
+<span class="nc bnc" id="L948" title="All 2 branches missed.">                    if (clone.equals(&quot;clone&quot;)) {</span>
+<span class="nc" id="L949">                        copyGen = CopyGen.CLONE;</span>
+                    } else {
+<span class="nc" id="L951">                        copyGen = CopyGen.CLONE_CAST;</span>
+                    }
+                } else {
+<span class="nc" id="L954">                    copyGen = CopyGen.ASSIGN;</span>
+                }
+            }
+        }
+<span class="nc" id="L958">    }</span>
+
+    /**
+     * Gets the copy generator.
+     * @return the copy generator
+     */
+    public CopyGen getCopyGen() {
+<span class="nc" id="L965">        return copyGen;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Resolves the copy generator.
+     */
+    public void resolveBuilderGen() {
+<span class="nc bnc" id="L973" title="All 2 branches missed.">        if (getBean().isMutable()) {</span>
+<span class="nc bnc" id="L974" title="All 4 branches missed.">            if (!getBean().isBuilderScopeVisible() &amp;&amp; !getBean().isBeanStyleLightOrMinimal()) {</span>
+<span class="nc" id="L975">                return;  // no builder</span>
+            }
+        }
+<span class="nc bnc" id="L978" title="All 2 branches missed.">        if (isDerived()) {</span>
+<span class="nc" id="L979">            builderGen = BuilderGen.NoBuilderGen.INSTANCE;</span>
+        } else {
+<span class="nc" id="L981">            BuilderGen builder = config.getBuilderGenerators().get(getFieldTypeRaw());</span>
+<span class="nc bnc" id="L982" title="All 2 branches missed.">            if (builder != null) {</span>
+<span class="nc" id="L983">                builderGen = builder;</span>
+            } else {
+<span class="nc" id="L985">                builderGen = new BuilderGen.SimpleBuilderGen();</span>
+            }
+        }
+<span class="nc" id="L988">    }</span>
+
+    /**
+     * Gets the builder generator.
+     * @return the builder generator
+     */
+    public BuilderGen getBuilderGen() {
+<span class="nc" id="L995">        return builderGen;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this property is an array type.
+     * 
+     * @return true if it is an array type
+     */
+    public boolean isArrayType() {
+<span class="nc" id="L1005">        return getType().endsWith(&quot;[]&quot;);</span>
+    }
+
+    /**
+     * Checks if this property is an array type.
+     * 
+     * @return true if it is an array type
+     */
+    public boolean isGenericArrayType() {
+<span class="nc bnc" id="L1014" title="All 4 branches missed.">        return getType().endsWith(&quot;[]&quot;) &amp;&amp; getType().length() == 3;</span>
+    }
+
+    /**
+     * Checks if this property is a known collection type.
+     * 
+     * @return true if it is a known collection type
+     */
+    public boolean isCollectionType() {
+<span class="nc bnc" id="L1023" title="All 4 branches missed.">        return isGeneric() &amp;&amp; COLLECTIONS.contains(getTypeRaw());</span>
+    }
+
+    /**
+     * Checks if this property is a known set type.
+     * 
+     * @return true if it is a known set type
+     */
+    public boolean isSetType() {
+<span class="nc bnc" id="L1032" title="All 4 branches missed.">        return isGeneric() &amp;&amp; SETS.contains(getTypeRaw());</span>
+    }
+
+    /**
+     * Checks if this property is a known sorted set type.
+     * 
+     * @return true if it is a known set type
+     */
+    public boolean isSortedSetType() {
+<span class="nc bnc" id="L1041" title="All 4 branches missed.">        return isGeneric() &amp;&amp; SORTED_SETS.contains(getTypeRaw());</span>
+    }
+
+    /**
+     * Checks if this property is a known map type.
+     * 
+     * @return true if it is a known map type
+     */
+    public boolean isMapType() {
+<span class="nc bnc" id="L1050" title="All 6 branches missed.">        return &quot;FlexiBean&quot;.equals(getType()) || (isGeneric() &amp;&amp; MAPS.contains(getTypeRaw()));</span>
+    }
+
+    /**
+     * Gets the read-write flag.
+     * 
+     * @return the read write
+     */
+    public PropertyStyle getStyle() {
+<span class="nc bnc" id="L1059" title="All 2 branches missed.">        if (isDerived()) {</span>
+<span class="nc" id="L1060">            return PropertyStyle.DERIVED;</span>
+        }
+<span class="nc bnc" id="L1062" title="All 2 branches missed.">        if (getBean().isImmutable()) {</span>
+<span class="nc" id="L1063">            return PropertyStyle.IMMUTABLE;</span>
+        }
+<span class="nc bnc" id="L1065" title="All 8 branches missed.">        if (getGetStyle().length() &gt; 0 &amp;&amp; getSetStyle().length() &gt; 0 &amp;&amp; (getSetterGen().isSetterGenerated(this) || getSetStyle().equals(&quot;manual&quot;))) {</span>
+<span class="nc" id="L1066">            return PropertyStyle.READ_WRITE;</span>
+        }
+<span class="nc bnc" id="L1068" title="All 2 branches missed.">        if (getGetStyle().length() &gt; 0) {</span>
+<span class="nc bnc" id="L1069" title="All 2 branches missed.">            if (bean.isBuilderScopeVisible()) {</span>
+<span class="nc" id="L1070">                return PropertyStyle.READ_ONLY_BUILDABLE;</span>
+            } else {
+<span class="nc" id="L1072">                return PropertyStyle.READ_ONLY;</span>
+            }
+        }
+<span class="nc bnc" id="L1075" title="All 2 branches missed.">        if (getSetStyle().length() &gt; 0) {</span>
+<span class="nc" id="L1076">            return PropertyStyle.WRITE_ONLY;</span>
+        }
+<span class="nc" id="L1078">        throw new RuntimeException(&quot;Property must have a getter or setter: &quot; +</span>
+<span class="nc" id="L1079">                getBean().getTypeRaw() + &quot;.&quot; + getPropertyName());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the validation is non-null.
+     * @return true if non-null
+     */
+    public boolean isValidated() {
+<span class="nc bnc" id="L1088" title="All 4 branches missed.">        return getValidation() != null &amp;&amp; getValidation().length() &gt; 0;</span>
+    }
+
+    /**
+     * Checks if the validation is non-null.
+     * @return true if non-null
+     */
+    public boolean isNotNull() {
+<span class="nc bnc" id="L1096" title="All 2 branches missed.">        return getValidation().equals(&quot;notNull&quot;) ||</span>
+<span class="nc bnc" id="L1097" title="All 2 branches missed.">                getValidation().equals(&quot;notEmpty&quot;) ||</span>
+<span class="nc bnc" id="L1098" title="All 2 branches missed.">                getValidation().equals(&quot;notBlank&quot;);</span>
+    }
+
+    /**
+     * Gets the validation non-null Javadoc.
+     * @return the non-null text
+     */
+    public String getNotNullJavadoc() {
+<span class="nc bnc" id="L1106" title="All 2 branches missed.">        if (getValidation().equals(&quot;notNull&quot;)) {</span>
+<span class="nc" id="L1107">            return &quot;, not null&quot;;</span>
+        }
+<span class="nc bnc" id="L1109" title="All 2 branches missed.">        if (getValidation().equals(&quot;notEmpty&quot;)) {</span>
+<span class="nc" id="L1110">            return &quot;, not empty&quot;;</span>
+        }
+<span class="nc bnc" id="L1112" title="All 2 branches missed.">        if (getValidation().equals(&quot;notBlank&quot;)) {</span>
+<span class="nc" id="L1113">            return &quot;, not blank&quot;;</span>
+        }
+<span class="nc" id="L1115">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Gets the validation method name.
+     * @return the method name
+     */
+    public String getValidationMethodName() {
+<span class="nc bnc" id="L1123" title="All 2 branches missed.">        if (isValidated() == false) {</span>
+<span class="nc" id="L1124">            throw new IllegalStateException();</span>
+        }
+<span class="nc bnc" id="L1126" title="All 2 branches missed.">        if (getValidation().equals(&quot;notNull&quot;) ||</span>
+<span class="nc bnc" id="L1127" title="All 2 branches missed.">                getValidation().equals(&quot;notEmpty&quot;) ||</span>
+<span class="nc bnc" id="L1128" title="All 2 branches missed.">                getValidation().equals(&quot;notBlank&quot;)) {</span>
+<span class="nc" id="L1129">            return &quot;JodaBeanUtils.&quot; + getValidation();</span>
+        }
+<span class="nc" id="L1131">        return getValidation();  // method in bean or static</span>
+    }
+
+    /**
+     * Gets the varargs code.
+     * 
+     * @return the varargs code, null if not applicable
+     */
+    public String getVarArgsCode() {
+<span class="nc" id="L1140">        return config.getImmutableVarArgs().get(getTypeRaw());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

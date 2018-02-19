@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans</a> &gt; <span class="el_source">Bean.java</span></div><h1>Bean.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans;
+
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+/**
+ * A bean consisting of a set of properties.
+ * &lt;p&gt;
+ * The implementation may be any class, but is typically a standard JavaBean
+ * with get/set methods. Alternate implementations might store the properties
+ * in another data structure such as a map.
+ * 
+ * @author Stephen Colebourne
+ */
+public interface Bean {
+
+    /**
+     * Gets the meta-bean representing the parts of the bean that are
+     * common across all instances, such as the set of meta-properties.
+     * &lt;p&gt;
+     * The meta-bean can be thought of as the equivalent of {@link Class} but for beans.
+     * 
+     * @return the meta-bean, not null
+     */
+    public abstract MetaBean metaBean();
+
+    /**
+     * Gets a property by name.
+     * &lt;p&gt;
+     * Each bean consists of a known set of properties.
+     * This method checks whether there is a property with the specified name.
+     * &lt;p&gt;
+     * The base interface throws an exception if the name is not recognised.
+     * By contrast, the {@code DynamicBean} subinterface creates the property on demand.
+     * 
+     * @param &lt;R&gt;  the property type, optional, enabling auto-casting
+     * @param propertyName  the property name to retrieve, not null
+     * @return the property, not null
+     * @throws NoSuchElementException if the property name is invalid
+     */
+    public default &lt;R&gt; Property&lt;R&gt; property(String propertyName) {
+<span class="fc" id="L57">        return metaBean().&lt;R&gt;metaProperty(propertyName).createProperty(this);</span>
+    }
+
+    /**
+     * Gets the set of property names.
+     * &lt;p&gt;
+     * Each bean consists of a known set of properties.
+     * This method returns the known property names.
+     * 
+     * @return the unmodifiable set of property names, not null
+     */
+    public default Set&lt;String&gt; propertyNames() {
+<span class="fc" id="L69">        return metaBean().metaPropertyMap().keySet();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

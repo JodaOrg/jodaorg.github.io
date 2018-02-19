@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CopyGen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.gen</a> &gt; <span class="el_source">CopyGen.java</span></div><h1>CopyGen.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.gen;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * A generator of copy code.
+ * 
+ * @author Stephen Colebourne
+ */
+<span class="nc" id="L27">abstract class CopyGen {</span>
+
+<span class="nc" id="L29">    static final CopyGen ASSIGN = new PatternCopyGen(&quot;$field = $value;&quot;);</span>
+<span class="nc" id="L30">    static final CopyGen CLONE = new PatternCopyGen(&quot;$value.clone()&quot;);</span>
+<span class="nc" id="L31">    static final CopyGen CLONE_CAST = new PatternCopyGen(&quot;($type) $value.clone()&quot;);</span>
+
+    /**
+     * Generates the copy to immutable lines.
+     * 
+     * @param indent  the indent to use, not null
+     * @param fromBean  the source code for the bean to copy from, not null
+     * @param prop  the property data, not null
+     * @return the generated code, not null
+     */
+    abstract List&lt;String&gt; generateCopyToImmutable(String indent, String fromBean, PropertyData prop);
+
+    /**
+     * Generates the copy to mutable lines.
+     * 
+     * @param indent  the indent to use, not null
+     * @param prop  the property data, not null
+     * @param beanToCopyFrom  the variable name of the bean, not null
+     * @return the generated code, not null
+     */
+    abstract List&lt;String&gt; generateCopyToMutable(String indent, PropertyData prop, String beanToCopyFrom);
+
+    //-----------------------------------------------------------------------
+    static class PatternCopyGen extends CopyGen {
+        private final String immutablePattern;
+        private final String mutablePattern;
+<span class="nc" id="L57">        PatternCopyGen(String pattern) {</span>
+<span class="nc" id="L58">            this.immutablePattern = pattern;</span>
+<span class="nc" id="L59">            this.mutablePattern = pattern;</span>
+<span class="nc" id="L60">        }</span>
+<span class="nc" id="L61">        PatternCopyGen(String immutablePattern, String mutablePattern) {</span>
+<span class="nc" id="L62">            this.immutablePattern = immutablePattern;</span>
+<span class="nc" id="L63">            this.mutablePattern = mutablePattern;</span>
+<span class="nc" id="L64">        }</span>
+        @Override
+        List&lt;String&gt; generateCopyToImmutable(String indent, String fromBean, PropertyData prop) {
+<span class="nc" id="L67">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L68">            final String[] split = immutablePattern.split(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            for (String line : split) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                if (split.length == 1) {</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">                        if (prop.isNotNull()) {</span>
+<span class="nc" id="L73">                            line = &quot;$field = &quot; + line + &quot;;&quot;;</span>
+                        } else {
+<span class="nc" id="L75">                            line = &quot;$field = ($value != null ? &quot; + line + &quot; : null);&quot;;</span>
+                        }
+                    }
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false) {</span>
+<span class="nc" id="L79">                        line = &quot;$field = &quot; + line;</span>
+                    }
+                }
+<span class="nc" id="L82">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                line = line.replace(&quot;$value&quot;, fromBean + (fromBean.isEmpty() ? prop.getPropertyName() : prop.getFieldName()));</span>
+<span class="nc" id="L84">                line = line.replace(&quot;$type&quot;, prop.getFieldType());</span>
+<span class="nc" id="L85">                line = line.replace(&quot;$typeRaw&quot;, prop.getTypeRaw());</span>
+<span class="nc" id="L86">                line = line.replace(&quot;$generics&quot;, prop.getTypeGenerics());</span>
+<span class="nc" id="L87">                list.add(indent + line);</span>
+            }
+<span class="nc" id="L89">            return list;</span>
+        }
+        @Override
+        List&lt;String&gt; generateCopyToMutable(String indent, PropertyData prop, String beanToCopyFrom) {
+<span class="nc" id="L93">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L94">            final String[] split = mutablePattern.split(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            for (String line : split) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                if (split.length == 1) {</span>
+<span class="nc bnc" id="L97" title="All 4 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                        if (prop.isNotNull()) {</span>
+<span class="nc" id="L99">                            line = &quot;$field = &quot; + line + &quot;;&quot;;</span>
+                        } else {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                            if (line.equals(&quot;$value&quot;)) {</span>
+<span class="nc" id="L102">                                line = &quot;$field = $value;&quot;;</span>
+                            } else {
+<span class="nc" id="L104">                                line = &quot;$field = ($value != null ? &quot; + line + &quot; : null);&quot;;</span>
+                            }
+                        }
+                    }
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false) {</span>
+<span class="nc" id="L109">                        line = &quot;$field = &quot; + line;</span>
+                    }
+                }
+<span class="nc" id="L112">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
+<span class="nc" id="L113">                line = line.replace(&quot;$value&quot;, beanToCopyFrom + &quot;.&quot; + prop.getGetterGen().generateGetInvoke(prop));</span>
+<span class="nc" id="L114">                line = line.replace(&quot;$type&quot;, prop.getFieldType());</span>
+<span class="nc" id="L115">                line = line.replace(&quot;$typeRaw&quot;, prop.getTypeRaw());</span>
+<span class="nc" id="L116">                line = line.replace(&quot;$generics&quot;, prop.getTypeGenerics());</span>
+<span class="nc" id="L117">                list.add(indent + line);</span>
+            }
+<span class="nc" id="L119">            return list;</span>
+        }
+    }
+
+<span class="nc" id="L123">    static class NoCopyGen extends CopyGen {</span>
+<span class="nc" id="L124">        static final CopyGen INSTANCE = new NoCopyGen();</span>
+        @Override
+        List&lt;String&gt; generateCopyToImmutable(String indent, String fromBean, PropertyData prop) {
+<span class="nc" id="L127">            return Collections.emptyList();</span>
+        }
+        @Override
+        List&lt;String&gt; generateCopyToMutable(String indent, PropertyData prop, String beanToCopyFrom) {
+<span class="nc" id="L131">            return Collections.emptyList();</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

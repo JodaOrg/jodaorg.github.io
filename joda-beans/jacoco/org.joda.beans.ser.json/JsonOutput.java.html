@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonOutput.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.json</a> &gt; <span class="el_source">JsonOutput.java</span></div><h1>JsonOutput.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.json;
+
+import java.io.IOException;
+import java.util.BitSet;
+
+/**
+ * Outputter for JSON data.
+ */
+final class JsonOutput {
+
+    /** encoding JSON */
+<span class="fc" id="L27">    private static final String[] REPLACE = new String[128];</span>
+    static {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int i = 0; i &lt; 32; i++) {</span>
+<span class="fc" id="L30">            REPLACE[i] = String.format(&quot;\\u%04x&quot;, i);</span>
+        }
+<span class="fc" id="L32">        REPLACE['\b'] = &quot;\\b&quot;;</span>
+<span class="fc" id="L33">        REPLACE['\t'] = &quot;\\t&quot;;</span>
+<span class="fc" id="L34">        REPLACE['\n'] = &quot;\\n&quot;;</span>
+<span class="fc" id="L35">        REPLACE['\f'] = &quot;\\f&quot;;</span>
+<span class="fc" id="L36">        REPLACE['\r'] = &quot;\\r&quot;;</span>
+<span class="fc" id="L37">        REPLACE['&quot;'] = &quot;\\\&quot;&quot;;</span>
+<span class="fc" id="L38">        REPLACE['\\'] = &quot;\\\\&quot;;</span>
+<span class="fc" id="L39">        REPLACE[127] = &quot;\\u007f&quot;;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * The appender to write to.
+     */
+    private final Appendable output;
+    /**
+     * The indent amount.
+     */
+    private final String indent;
+    /**
+     * The new line.
+     */
+    private final String newLine;
+    /**
+     * The current indent.
+     */
+<span class="fc" id="L57">    private String currentIndent = &quot;&quot;;</span>
+    /**
+     * The comma depth.
+     */
+    private int commaDepth;
+    /**
+     * The comma state.
+     */
+<span class="fc" id="L65">    private BitSet commaState = new BitSet(64);</span>
+
+    /**
+     * Creates an instance that outputs in compact format.
+     * 
+     * @param output  the output to write to, not null
+     */
+    JsonOutput(Appendable output) {
+<span class="fc" id="L73">        this(output, &quot;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Creates an instance where the output format can be controlled.
+     * 
+     * @param output  the output to write to, not null
+     * @param indent  the pretty format indent
+     * @param newLine  the pretty format new line
+     */
+<span class="fc" id="L83">    JsonOutput(Appendable output, String indent, String newLine) {</span>
+<span class="fc" id="L84">        this.output = output;</span>
+<span class="fc" id="L85">        this.indent = indent;</span>
+<span class="fc" id="L86">        this.newLine = newLine;</span>
+<span class="fc" id="L87">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a JSON null.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeNull() throws IOException {
+<span class="fc" id="L96">        output.append(&quot;null&quot;);</span>
+<span class="fc" id="L97">    }</span>
+
+    /**
+     * Writes a JSON boolean.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeBoolean(boolean value) throws IOException {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (value) {</span>
+<span class="fc" id="L107">            output.append(&quot;true&quot;);</span>
+        } else {
+<span class="fc" id="L109">            output.append(&quot;false&quot;);</span>
+        }
+<span class="fc" id="L111">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a JSON int.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeInt(int value) throws IOException {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if ((value &amp; 0xfffffff8) == 0) {</span>
+<span class="fc" id="L122">            output.append((char) (value + 48));</span>
+        } else {
+<span class="fc" id="L124">            output.append(Integer.toString(value));</span>
+        }
+<span class="fc" id="L126">    }</span>
+
+    /**
+     * Writes a JSON long.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeLong(long value) throws IOException {
+<span class="fc" id="L135">        output.append(Long.toString(value));</span>
+<span class="fc" id="L136">    }</span>
+
+    /**
+     * Writes a JSON float.
+     * &lt;p&gt;
+     * This outputs the values of NaN, and Infinity as strings.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeFloat(float value) throws IOException {
+<span class="fc bfc" id="L147" title="All 4 branches covered.">        if (Float.isNaN(value) || Float.isInfinite(value)) {</span>
+<span class="fc" id="L148">            output.append('&quot;').append(Float.toString(value)).append('&quot;');</span>
+        } else {
+<span class="fc" id="L150">            output.append(Float.toString(value));</span>
+        }
+<span class="fc" id="L152">    }</span>
+
+    /**
+     * Writes a JSON double.
+     * &lt;p&gt;
+     * This outputs the values of NaN, and Infinity as strings.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeDouble(double value) throws IOException {
+<span class="fc bfc" id="L163" title="All 4 branches covered.">        if (Double.isNaN(value) || Double.isInfinite(value)) {</span>
+<span class="fc" id="L164">            output.append('&quot;').append(Double.toString(value)).append('&quot;');</span>
+        } else {
+<span class="fc" id="L166">            output.append(Double.toString(value));</span>
+        }
+<span class="fc" id="L168">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a JSON string.
+     * 
+     * @param value  the value
+     * @throws IOException if an error occurs
+     */
+    void writeString(String value) throws IOException {
+<span class="fc" id="L178">        output.append('&quot;');</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        for (int i = 0; i &lt; value.length(); i++) {</span>
+<span class="fc" id="L180">            char ch = value.charAt(i);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            if (ch &lt; 128) {</span>
+<span class="fc" id="L182">                String replace = REPLACE[ch];</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">                if (replace != null) {</span>
+<span class="fc" id="L184">                    output.append(replace);</span>
+                } else {
+<span class="fc" id="L186">                    output.append(ch);</span>
+                }
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            } else if (ch == '\u2028') {</span>
+<span class="fc" id="L189">                output.append(&quot;\\u2028&quot;);  // match other JSON writers</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            } else if (ch == '\u2029') {</span>
+<span class="fc" id="L191">                output.append(&quot;\\u2029&quot;);  // match other JSON writers</span>
+            } else {
+<span class="fc" id="L193">                output.append(ch);</span>
+            }
+        }
+<span class="fc" id="L196">        output.append('&quot;');</span>
+<span class="fc" id="L197">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a JSON array start.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeArrayStart() throws IOException {
+<span class="fc" id="L206">        output.append('[');</span>
+<span class="fc" id="L207">        commaDepth++;</span>
+<span class="fc" id="L208">        commaState.clear(commaDepth);</span>
+<span class="fc" id="L209">    }</span>
+
+    /**
+     * Writes a JSON array item start.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeArrayItemStart() throws IOException {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (commaState.get(commaDepth)) {</span>
+<span class="fc" id="L218">            output.append(',');</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">            if (newLine.length() &gt; 0) {</span>
+<span class="fc" id="L220">                output.append(' ');</span>
+            }
+        } else {
+<span class="fc" id="L223">            commaState.set(commaDepth);</span>
+        }
+<span class="fc" id="L225">    }</span>
+
+    /**
+     * Writes a JSON array end.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeArrayEnd() throws IOException {
+<span class="fc" id="L233">        output.append(']');</span>
+<span class="fc" id="L234">        commaDepth--;</span>
+<span class="fc" id="L235">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Writes a JSON object start.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeObjectStart() throws IOException {
+<span class="fc" id="L244">        output.append('{');</span>
+<span class="fc" id="L245">        currentIndent = currentIndent + indent;</span>
+<span class="fc" id="L246">        commaDepth++;</span>
+<span class="fc" id="L247">        commaState.set(commaDepth, false);</span>
+<span class="fc" id="L248">    }</span>
+
+    /**
+     * Writes a JSON object key.
+     * &lt;p&gt;
+     * This handles the comma, string encoded key and separator colon.
+     * 
+     * @param key  the item key
+     * @throws IOException if an error occurs
+     */
+    void writeObjectKey(String key) throws IOException {
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        if (commaState.get(commaDepth)) {</span>
+<span class="fc" id="L260">            output.append(',');</span>
+        } else {
+<span class="fc" id="L262">            commaState.set(commaDepth, true);</span>
+        }
+<span class="fc" id="L264">        output.append(newLine);</span>
+<span class="fc" id="L265">        output.append(currentIndent);</span>
+<span class="fc" id="L266">        writeString(key);</span>
+<span class="fc" id="L267">        output.append(':');</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (newLine.length() &gt; 0) {</span>
+<span class="fc" id="L269">            output.append(' ');</span>
+        }
+<span class="fc" id="L271">    }</span>
+
+    /**
+     * Writes a JSON object key and value.
+     * 
+     * @param key  the item key
+     * @param value  the item value
+     * @throws IOException if an error occurs
+     */
+    void writeObjectKeyValue(String key, String value) throws IOException {
+<span class="fc" id="L281">        writeObjectKey(key);</span>
+<span class="fc" id="L282">        writeString(value);</span>
+<span class="fc" id="L283">    }</span>
+
+    /**
+     * Writes a JSON object end.
+     * 
+     * @throws IOException if an error occurs
+     */
+    void writeObjectEnd() throws IOException {
+<span class="fc" id="L291">        currentIndent = currentIndent.substring(0, currentIndent.length() - indent.length());</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        if (commaState.get(commaDepth)) {</span>
+<span class="fc" id="L293">            output.append(newLine);</span>
+<span class="fc" id="L294">            output.append(currentIndent);</span>
+        }
+<span class="fc" id="L296">        output.append('}');</span>
+<span class="fc" id="L297">        commaDepth--;</span>
+<span class="fc" id="L298">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

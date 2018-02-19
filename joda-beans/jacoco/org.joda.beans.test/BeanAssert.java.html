@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanAssert.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.test</a> &gt; <span class="el_source">BeanAssert.java</span></div><h1>BeanAssert.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.beans.Bean;
+import org.joda.beans.JodaBeanUtils;
+import org.joda.beans.MetaProperty;
+
+/**
+ * Assertion class to compare beans.
+ * &lt;p&gt;
+ * This class fulfils a similar role to other assertion libraries in testing code.
+ * It should generally be statically imported.
+ */
+public final class BeanAssert {
+
+    /**
+     * Restricted constructor.
+     */
+    private BeanAssert() {
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Asserts that two beans are equal, providing a better error message.
+     * 
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     */
+    public static void assertBeanEquals(Bean expected, Bean actual) {
+<span class="fc" id="L49">        assertBeanEquals(null, expected, actual, 0d);</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Asserts that two beans are equal, providing a better error message.
+     * &lt;p&gt;
+     * Note that specifying a tolerance can mean that two beans compare as not
+     * equal using {@link Object#equals(Object)} but equal using this method,
+     * because the standard equals method has no tolerance.
+     * 
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     * @param tolerance  the tolerance to use for {@code double} and {@code float}
+     */
+    public static void assertBeanEquals(Bean expected, Bean actual, double tolerance) {
+<span class="fc" id="L64">        assertBeanEquals(null, expected, actual, tolerance);</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Asserts that two beans are equal, providing a better error message.
+     * 
+     * @param baseMsg  the message to use in any error, null uses default message
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     */
+    public static void assertBeanEquals(String baseMsg, Bean expected, Bean actual) {
+<span class="nc" id="L75">        assertBeanEquals(baseMsg, expected, actual, 0d);</span>
+<span class="nc" id="L76">    }</span>
+
+    /**
+     * Asserts that two beans are equal, providing a better error message.
+     * &lt;p&gt;
+     * Note that specifying a tolerance can mean that two beans compare as not
+     * equal using {@link Object#equals(Object)} but equal using this method,
+     * because the standard equals method has no tolerance.
+     * 
+     * @param baseMsg  the message to use in any error, null uses default message
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     * @param tolerance  the tolerance to use for {@code double} and {@code float}
+     */
+    public static void assertBeanEquals(String baseMsg, Bean expected, Bean actual, double tolerance) {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (expected == null) {</span>
+<span class="nc" id="L92">            throw new AssertionError(baseMsg + &quot;: Expected bean must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (actual == null) {</span>
+<span class="nc" id="L95">            throw new AssertionError(baseMsg + &quot;: Actual bean must not be null&quot;);</span>
+        }
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (expected.equals(actual) == false) {</span>
+<span class="fc" id="L98">            String comparisonMsg = buildMessage(baseMsg, 10, expected, actual, tolerance);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            if (comparisonMsg.isEmpty()) {</span>
+<span class="fc" id="L100">                return; // no errors, just double/float within tolerance</span>
+            }
+<span class="fc" id="L102">            throw new BeanComparisonError(comparisonMsg, expected, actual);</span>
+        }
+<span class="fc" id="L104">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Asserts that two beans are equal, providing a better error message.
+     * 
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     */
+    public static void assertBeanEqualsFullDetail(Bean expected, Bean actual) {
+<span class="nc" id="L114">        assertBeanEqualsFullDetail(null, expected, actual, 0d);</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * Asserts that two beans are equal, providing a better error message.
+     * &lt;p&gt;
+     * Note that specifying a tolerance can mean that two beans compare as not
+     * equal using {@link Object#equals(Object)} but equal using this method,
+     * because the standard equals method has no tolerance.
+     * 
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     * @param tolerance  the tolerance to use for {@code double} and {@code float}
+     */
+    public static void assertBeanEqualsFullDetail(Bean expected, Bean actual, double tolerance) {
+<span class="nc" id="L129">        assertBeanEqualsFullDetail(null, expected, actual, tolerance);</span>
+<span class="nc" id="L130">    }</span>
+
+    /**
+     * Asserts that two beans are equal, providing a better error message, with
+     * an unlimited number of errors reported.
+     * 
+     * @param baseMsg  the message to use in any error, null uses default message
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     */
+    public static void assertBeanEqualsFullDetail(String baseMsg, Bean expected, Bean actual) {
+<span class="nc" id="L141">        assertBeanEqualsFullDetail(baseMsg, expected, actual, 0d);</span>
+<span class="nc" id="L142">    }</span>
+
+    /**
+     * Asserts that two beans are equal, providing a better error message, with
+     * an unlimited number of errors reported.
+     * &lt;p&gt;
+     * Note that specifying a tolerance can mean that two beans compare as not
+     * equal using {@link Object#equals(Object)} but equal using this method,
+     * because the standard equals method has no tolerance.
+     * 
+     * @param baseMsg  the message to use in any error, null uses default message
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     * @param tolerance  the tolerance to use for {@code double} and {@code float}
+     */
+    public static void assertBeanEqualsFullDetail(String baseMsg, Bean expected, Bean actual, double tolerance) {
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (expected == null) {</span>
+<span class="nc" id="L159">            throw new AssertionError(baseMsg + &quot;: Expected bean must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (actual == null) {</span>
+<span class="nc" id="L162">            throw new AssertionError(baseMsg + &quot;: Actual bean must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if (expected.equals(actual) == false) {</span>
+<span class="fc" id="L165">            String comparisonMsg = buildMessage(baseMsg, Integer.MAX_VALUE, expected, actual, tolerance);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">            if (comparisonMsg.isEmpty()) {</span>
+<span class="nc" id="L167">                return; // no errors, just double/float within tolerance</span>
+            }
+<span class="fc" id="L169">            throw new BeanComparisonError(comparisonMsg, expected, actual);</span>
+        }
+<span class="nc" id="L171">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares the two beans.
+     * 
+     * @param baseMsg  the message, may be null
+     * @param maxErrors  the maximum number of errors to report
+     * @param expected  the expected value, not null
+     * @param actual  the actual value, not null
+     * @param tolerance  the tolerance to use for {@code double} and {@code float}
+     * @return the message, not null
+     */
+    private static String buildMessage(String baseMsg, int maxErrors, Bean expected, Bean actual, double tolerance) {
+<span class="fc" id="L185">        List&lt;String&gt; diffs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L186">        buildMessage(diffs, &quot;&quot;, expected, actual, tolerance);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (diffs.size() == 0) {</span>
+<span class="fc" id="L188">            return &quot;&quot;;</span>
+        }
+<span class="fc" id="L190">        StringBuilder buf = new StringBuilder();</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">        buf.append(baseMsg != null ? baseMsg + &quot;: &quot; : &quot;&quot;);</span>
+<span class="fc" id="L192">        buf.append(&quot;Bean did not equal expected. Differences:&quot;);</span>
+<span class="fc" id="L193">        int size = diffs.size();</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">        if (size &gt; maxErrors) {</span>
+<span class="nc" id="L195">            diffs = diffs.subList(0, maxErrors);</span>
+        }
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        for (String diff : diffs) {</span>
+<span class="fc" id="L198">            buf.append('\n').append(diff);</span>
+<span class="fc" id="L199">        }</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (size &gt; maxErrors) {</span>
+<span class="nc" id="L201">            buf.append(&quot;\n...and &quot; + (size - 10) + &quot; more differences&quot;);</span>
+        }
+<span class="fc" id="L203">        return buf.toString();</span>
+    }
+
+    private static void buildMessage(List&lt;String&gt; diffs, String prefix, Object expected, Object actual, double tolerance) {
+<span class="fc bfc" id="L207" title="All 4 branches covered.">        if (expected == null &amp;&amp; actual == null) {</span>
+<span class="fc" id="L208">            return;</span>
+        }
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">        if (expected == null &amp;&amp; actual != null) {</span>
+<span class="fc" id="L211">            diffs.add(prefix + &quot;: Expected null, but was &quot; + buildSummary(actual, true));</span>
+<span class="fc" id="L212">            return;</span>
+        }
+<span class="pc bpc" id="L214" title="2 of 4 branches missed.">        if (expected != null &amp;&amp; actual == null) {</span>
+<span class="nc" id="L215">            diffs.add(prefix + &quot;: Was null, but expected &quot; + buildSummary(expected, true));</span>
+<span class="nc" id="L216">            return;</span>
+        }
+<span class="pc bpc" id="L218" title="1 of 4 branches missed.">        if (expected instanceof List &amp;&amp; actual instanceof List) {</span>
+<span class="fc" id="L219">            List&lt;?&gt; expectedList = (List&lt;?&gt;) expected;</span>
+<span class="fc" id="L220">            List&lt;?&gt; actualList = (List&lt;?&gt;) actual;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">            if (expectedList.size() != actualList.size()) {</span>
+<span class="fc" id="L222">                diffs.add(prefix + &quot;: List size differs, expected &quot; + expectedList.size() + &quot; but was &quot; + actualList.size());</span>
+<span class="fc" id="L223">                return;</span>
+            }
+<span class="fc bfc" id="L225" title="All 2 branches covered.">            for (int i = 0; i &lt; expectedList.size(); i++) {</span>
+<span class="fc" id="L226">                buildMessage(diffs, prefix + '[' + i + &quot;]&quot;, expectedList.get(i), actualList.get(i), tolerance);</span>
+            }
+<span class="fc" id="L228">            return;</span>
+        }
+<span class="pc bpc" id="L230" title="1 of 4 branches missed.">        if (expected instanceof Map &amp;&amp; actual instanceof Map) {</span>
+<span class="fc" id="L231">            Map&lt;?, ?&gt; expectedMap = (Map&lt;?, ?&gt;) expected;</span>
+<span class="fc" id="L232">            Map&lt;?, ?&gt; actualMap = (Map&lt;?, ?&gt;) actual;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            if (expectedMap.size() != actualMap.size()) {</span>
+<span class="fc" id="L234">                diffs.add(prefix + &quot;: Map size differs, expected &quot; + expectedMap.size() + &quot; but was &quot; + actualMap.size());</span>
+<span class="fc" id="L235">                return;</span>
+            }
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">            if (expectedMap.keySet().equals(actualMap.keySet()) == false) {</span>
+<span class="nc" id="L238">                diffs.add(prefix + &quot;: Map keyset differs, expected &quot; + buildSummary(expectedMap.keySet(), false) + &quot; but was &quot; + buildSummary(actualMap.keySet(), false));</span>
+<span class="nc" id="L239">                return;</span>
+            }
+<span class="fc bfc" id="L241" title="All 2 branches covered.">            for (Object key : expectedMap.keySet()) {</span>
+<span class="fc" id="L242">                buildMessage(diffs, prefix + '[' + key + &quot;]&quot;, expectedMap.get(key), actualMap.get(key), tolerance);</span>
+<span class="fc" id="L243">            }</span>
+<span class="fc" id="L244">            return;</span>
+        }
+<span class="pc bpc" id="L246" title="2 of 4 branches missed.">        if (expected != null &amp;&amp; expected.getClass() != actual.getClass()) {</span>
+<span class="nc" id="L247">            diffs.add(prefix + &quot;: Class differs, expected &quot; + buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, true));</span>
+<span class="nc" id="L248">            return;</span>
+        }
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        if (expected instanceof Bean) {</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">            for (MetaProperty&lt;?&gt; prop : ((Bean) expected).metaBean().metaPropertyIterable()) {</span>
+<span class="fc" id="L252">                buildMessage(diffs, prefix + '.' + prop.name(), prop.get((Bean) expected), prop.get((Bean) actual), tolerance);</span>
+<span class="fc" id="L253">            }</span>
+<span class="fc" id="L254">            return;</span>
+        }
+<span class="pc bpc" id="L256" title="1 of 6 branches missed.">        if (expected instanceof Double &amp;&amp; actual instanceof Double &amp;&amp; tolerance != 0d) {</span>
+<span class="fc" id="L257">            double e = (Double) expected;</span>
+<span class="fc" id="L258">            double a = (Double) actual;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">            if (!JodaBeanUtils.equalWithTolerance(e, a, tolerance)) {</span>
+<span class="fc" id="L260">                diffs.add(prefix + &quot;: Double values differ by more than allowed tolerance, expected &quot; +</span>
+<span class="fc" id="L261">                    buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+            }
+<span class="fc" id="L263">            return;</span>
+        }
+<span class="pc bpc" id="L265" title="1 of 6 branches missed.">        if (expected instanceof double[] &amp;&amp; actual instanceof double[] &amp;&amp; tolerance != 0d) {</span>
+<span class="fc" id="L266">            double[] e = (double[]) expected;</span>
+<span class="fc" id="L267">            double[] a = (double[]) actual;</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">            if (e.length != a.length) {</span>
+<span class="nc" id="L269">                diffs.add(prefix + &quot;: Double arrays differ in length, expected &quot; +</span>
+<span class="nc" id="L270">                                buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+            } else {
+<span class="fc bfc" id="L272" title="All 2 branches covered.">                for (int i = 0; i &lt; a.length; i++) {</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">                    if (!JodaBeanUtils.equalWithTolerance(e[i], a[i], tolerance)) {</span>
+<span class="fc" id="L274">                        diffs.add(prefix + &quot;: Double arrays differ by more than allowed tolerance, expected &quot; +</span>
+<span class="fc" id="L275">                            buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+<span class="fc" id="L276">                        break;</span>
+                    }
+                }
+            }
+<span class="fc" id="L280">            return;</span>
+        }
+<span class="pc bpc" id="L282" title="5 of 6 branches missed.">        if (expected instanceof Float &amp;&amp; actual instanceof Float &amp;&amp; tolerance != 0d) {</span>
+<span class="nc" id="L283">            float e = (Float) expected;</span>
+<span class="nc" id="L284">            float a = (Float) actual;</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">            if (!JodaBeanUtils.equalWithTolerance(e, a, tolerance)) {</span>
+<span class="nc" id="L286">                diffs.add(prefix + &quot;: Float values differ by more than allowed tolerance, expected &quot; +</span>
+<span class="nc" id="L287">                    buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+            }
+<span class="nc" id="L289">            return;</span>
+        }
+<span class="pc bpc" id="L291" title="5 of 6 branches missed.">        if (expected instanceof float[] &amp;&amp; actual instanceof float[] &amp;&amp; tolerance != 0d) {</span>
+<span class="nc" id="L292">            float[] e = (float[]) expected;</span>
+<span class="nc" id="L293">            float[] a = (float[]) actual;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">            if (e.length != a.length) {</span>
+<span class="nc" id="L295">                diffs.add(prefix + &quot;: Double arrays differ in length, expected &quot; +</span>
+<span class="nc" id="L296">                                buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+            } else {
+<span class="nc bnc" id="L298" title="All 2 branches missed.">                for (int i = 0; i &lt; a.length; i++) {</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">                    if (!JodaBeanUtils.equalWithTolerance(e[i], a[i], tolerance)) {</span>
+<span class="nc" id="L300">                        diffs.add(prefix + &quot;: Float arrays differ by more than allowed tolerance, expected &quot; +</span>
+<span class="nc" id="L301">                            buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+<span class="nc" id="L302">                        break;</span>
+                    }
+                }
+            }
+<span class="nc" id="L306">            return;</span>
+        }
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        if (JodaBeanUtils.equal(expected, actual) == false) {</span>
+<span class="fc" id="L309">            diffs.add(prefix + &quot;: Content differs, expected &quot; + buildSummary(expected, true) + &quot; but was &quot; + buildSummary(actual, false));</span>
+<span class="fc" id="L310">            return;</span>
+        }
+<span class="fc" id="L312">        return;  // equal</span>
+    }
+
+    /**
+     * Builds a summary of an object.
+     * 
+     * @param obj  the object to summarise, not null
+     */
+    private static String buildSummary(Object obj, boolean includeType) {
+<span class="fc" id="L321">        String type = obj.getClass().getSimpleName();</span>
+        String toStr;
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        if (obj instanceof double[]) {</span>
+<span class="fc" id="L324">            toStr = Arrays.toString((double[]) obj);</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">        } else if (obj instanceof float[]) {</span>
+<span class="nc" id="L326">            toStr = Arrays.toString((float[]) obj);</span>
+        } else {
+<span class="fc" id="L328">            toStr = obj.toString();</span>
+        }
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        if (toStr.length() &gt; 60) {</span>
+<span class="fc" id="L331">            toStr = toStr.substring(0, 57) + &quot;...&quot;;</span>
+        }
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        return (includeType ? type + &quot; &quot; : &quot;&quot;) + &quot;&lt;&quot; + toStr + &quot;&gt;&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

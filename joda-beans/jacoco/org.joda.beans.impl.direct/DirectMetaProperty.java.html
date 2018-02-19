@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirectMetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl.direct</a> &gt; <span class="el_source">DirectMetaProperty.java</span></div><h1>DirectMetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl.direct;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.PropertyStyle;
+import org.joda.beans.impl.BasicMetaProperty;
+
+/**
+ * A meta-property implementation designed for use by the code generator.
+ * &lt;p&gt;
+ * This meta-property uses reflection to find the {@code Field} to obtain the annotations.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ */
+public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
+
+    /** The meta-bean. */
+    private final MetaBean metaBean;
+    /** The property type. */
+    private final Class&lt;P&gt; propertyType;
+    /** The declaring type. */
+    private final Class&lt;?&gt; declaringType;
+    /** The field implementing the property. */
+    private final Field field;
+    /** The style. */
+    private final PropertyStyle style;
+
+    /**
+     * Factory to create a read-write meta-property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the type declaring the property, not null
+     * @param propertyType  the property type, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofReadWrite(
+            MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
+<span class="fc" id="L64">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L65">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_WRITE, field);</span>
+    }
+
+    /**
+     * Factory to create a read-only meta-property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the type declaring the property, not null
+     * @param propertyType  the property type, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofReadOnly(
+            MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
+<span class="fc" id="L80">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L81">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_ONLY, field);</span>
+    }
+
+    /**
+     * Factory to create a write-only meta-property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the type declaring the property, not null
+     * @param propertyType  the property type, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofWriteOnly(
+            MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
+<span class="fc" id="L96">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L97">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.WRITE_ONLY, field);</span>
+    }
+
+    /**
+     * Factory to create a buildable read-only meta-property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the type declaring the property, not null
+     * @param propertyType  the property type, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofReadOnlyBuildable(
+            MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
+<span class="nc" id="L112">        Field field = findField(metaBean, propertyName);</span>
+<span class="nc" id="L113">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_ONLY_BUILDABLE, field);</span>
+    }
+
+    /**
+     * Factory to create a derived read-only meta-property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the type declaring the property, not null
+     * @param propertyType  the property type, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofDerived(
+            MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
+<span class="fc" id="L128">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L129">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.DERIVED, field);</span>
+    }
+
+    /**
+     * Factory to create an imutable meta-property avoiding duplicate generics.
+     * 
+     * @param &lt;P&gt;  the property type
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the type declaring the property, not null
+     * @param propertyType  the property type, not null
+     * @return the property, not null
+     */
+    public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofImmutable(
+            MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
+<span class="fc" id="L144">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L145">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.IMMUTABLE, field);</span>
+    }
+
+    private static Field findField(MetaBean metaBean, String propertyName) {
+<span class="fc" id="L149">        Field field = null;</span>
+<span class="fc" id="L150">        Class&lt;?&gt; cls = metaBean.beanType();</span>
+<span class="pc bpc" id="L151" title="1 of 6 branches missed.">        while (cls != DirectBean.class &amp;&amp; cls != Object.class &amp;&amp; cls != null) {</span>
+            try {
+<span class="fc" id="L153">                field = cls.getDeclaredField(propertyName);</span>
+<span class="fc" id="L154">                break;</span>
+<span class="fc" id="L155">            } catch (NoSuchFieldException ex) {</span>
+                try {
+<span class="nc" id="L157">                    field = cls.getDeclaredField(&quot;_&quot; + propertyName);</span>
+<span class="nc" id="L158">                    break;</span>
+<span class="fc" id="L159">                } catch (NoSuchFieldException ex2) {</span>
+<span class="fc" id="L160">                    cls = cls.getSuperclass();</span>
+                }
+<span class="fc" id="L162">            }</span>
+        }
+<span class="fc" id="L164">        return field;</span>
+    }
+
+    /**
+     * Constructor.
+     * 
+     * @param metaBean  the meta-bean, not null
+     * @param propertyName  the property name, not empty
+     * @param declaringType  the declaring type, not null
+     * @param propertyType  the property type, not null
+     * @param style  the style, not null
+     * @param field  the reflected field, not null
+     */
+    private DirectMetaProperty(MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType,
+            Class&lt;P&gt; propertyType, PropertyStyle style, Field field) {
+<span class="fc" id="L179">        super(propertyName);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L181">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (declaringType == null) {</span>
+<span class="nc" id="L184">            throw new NullPointerException(&quot;Declaring type must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (propertyType == null) {</span>
+<span class="nc" id="L187">            throw new NullPointerException(&quot;Property type must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (style == null) {</span>
+<span class="nc" id="L190">            throw new NullPointerException(&quot;PropertyStyle must not be null&quot;);</span>
+        }
+<span class="fc" id="L192">        this.metaBean = metaBean;</span>
+<span class="fc" id="L193">        this.propertyType = propertyType;</span>
+<span class="fc" id="L194">        this.declaringType = declaringType;</span>
+<span class="fc" id="L195">        this.style = style;</span>
+<span class="fc" id="L196">        this.field = field;  // may be null</span>
+<span class="fc" id="L197">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public MetaBean metaBean() {
+<span class="fc" id="L202">        return metaBean;</span>
+    }
+
+    @Override
+    public Class&lt;?&gt; declaringType() {
+<span class="fc" id="L207">        return declaringType;</span>
+    }
+
+    @Override
+    public Class&lt;P&gt; propertyType() {
+<span class="fc" id="L212">        return propertyType;</span>
+    }
+
+    @Override
+    public Type propertyGenericType() {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (field == null) {</span>
+<span class="fc" id="L218">            return propertyType;</span>
+        }
+<span class="fc" id="L220">        return field.getGenericType();</span>
+    }
+
+    @Override
+    public PropertyStyle style() {
+<span class="fc" id="L225">        return style;</span>
+    }
+
+    @Override
+    public &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        if (field == null) {</span>
+<span class="nc" id="L231">            throw new UnsupportedOperationException(&quot;Field not found for property: &quot; + name());</span>
+        }
+<span class="fc" id="L233">        A annotation = field.getAnnotation(annotationClass);</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">        if (annotation == null) {</span>
+<span class="nc" id="L235">            throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+        }
+<span class="fc" id="L237">        return annotation;</span>
+    }
+
+    @Override
+    public List&lt;Annotation&gt; annotations() {
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (field == null) {</span>
+<span class="nc" id="L243">            return Collections.emptyList();</span>
+        }
+<span class="fc" id="L245">        return Arrays.asList(field.getDeclaredAnnotations());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public P get(Bean bean) {
+<span class="fc" id="L252">        DirectMetaBean meta = (DirectMetaBean) bean.metaBean();</span>
+<span class="fc" id="L253">        return (P) meta.propertyGet(bean, name(), false);</span>
+    }
+
+    @Override
+    public void set(Bean bean, Object value) {
+<span class="fc" id="L258">        DirectMetaBean meta = (DirectMetaBean) bean.metaBean();</span>
+<span class="fc" id="L259">        meta.propertySet(bean, name(), value, false);</span>
+<span class="fc" id="L260">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

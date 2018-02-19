@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CollectSerIteratorFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser</a> &gt; <span class="el_source">CollectSerIteratorFactory.java</span></div><h1>CollectSerIteratorFactory.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.beans.JodaBeanUtils;
+import org.joda.beans.MetaProperty;
+import org.joda.collect.grid.Grid;
+import org.joda.collect.grid.ImmutableCell;
+import org.joda.collect.grid.ImmutableGrid;
+
+/**
+ * Factory used to create wrappers around collection-like objects.
+ *
+ * @author Stephen Colebourne
+ */
+<span class="fc" id="L34">public class CollectSerIteratorFactory extends GuavaSerIteratorFactory {</span>
+
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param value  the possible collection-like object, not null
+     * @param prop  the meta-property defining the value, not null
+     * @param beanClass  the class of the bean, not the meta-property, for better generics, not null
+     * @return the iterator, null if not a collection-like type
+     */
+    @Override
+    public SerIterator create(final Object value, final MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
+<span class="fc" id="L46">        Class&lt;?&gt; declaredType = prop.propertyType();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (value instanceof Grid) {</span>
+<span class="fc" id="L48">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.collectionType(prop, beanClass));</span>
+<span class="fc" id="L49">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L50">            return grid((Grid&lt;?&gt;) value, declaredType, valueType, valueTypeTypes);</span>
+        }
+<span class="fc" id="L52">        return super.create(value, prop, beanClass);</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a value retrieved from a parent iterator.
+     * &lt;p&gt;
+     * Allows the parent iterator to define the child iterator using generic type information.
+     * This handles cases such as a {@code List} as the value in a {@code Map}.
+     * 
+     * @param value  the possible collection-like object, not null
+     * @param parent  the parent iterator, not null
+     * @return the iterator, null if not a collection-like type
+     */
+    @Override
+    public SerIterator createChild(final Object value, final SerIterator parent) {
+<span class="fc" id="L67">        Class&lt;?&gt; declaredType = parent.valueType();</span>
+<span class="fc" id="L68">        List&lt;Class&lt;?&gt;&gt; childGenericTypes = parent.valueTypeTypes();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (value instanceof Grid) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (childGenericTypes.size() == 1) {</span>
+<span class="nc" id="L71">                return grid((Grid&lt;?&gt;) value, declaredType, childGenericTypes.get(0), EMPTY_VALUE_TYPES);</span>
+            }
+<span class="nc" id="L73">            return grid((Grid&lt;?&gt;) value, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="fc" id="L75">        return super.createChild(value, parent);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param metaTypeDescription  the description of the collection type, not null
+     * @param settings  the settings object, not null
+     * @param knownTypes  the known types map, null if not using known type shortening
+     * @return the iterator, null if not a collection-like type
+     */
+    @Override
+    public SerIterable createIterable(final String metaTypeDescription, final JodaBeanSer settings, final Map&lt;String, Class&lt;?&gt;&gt; knownTypes) {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (metaTypeDescription.equals(&quot;Grid&quot;)) {</span>
+<span class="nc" id="L90">            return grid(Object.class, EMPTY_VALUE_TYPES);</span>
+        }
+<span class="fc" id="L92">        return super.createIterable(metaTypeDescription, settings, knownTypes);</span>
+    }
+
+    /**
+     * Creates an iterator wrapper for a meta-property value.
+     * 
+     * @param prop  the meta-property defining the value, not null
+     * @param beanClass  the class of the bean, not the meta-property, for better generics, not null
+     * @return the iterator, null if not a collection-like type
+     */
+    @Override
+    public SerIterable createIterable(final MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (Grid.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L105">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L106">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L107">            return grid(valueType, valueTypeTypes);</span>
+        }
+<span class="fc" id="L109">        return super.createIterable(prop, beanClass);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an iterable wrapper for {@code Grid}.
+     * 
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterable, not null
+     */
+    public static final SerIterable grid(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L121">        return new SerIterable() {</span>
+<span class="fc" id="L122">            private final List&lt;Grid.Cell&lt;?&gt;&gt; cells = new ArrayList&lt;&gt;();</span>
+            private int[] dimensions;
+            @Override
+            public SerIterator iterator() {
+<span class="nc" id="L126">                return grid(build(), Object.class, valueType, valueTypeTypes);</span>
+            }
+            @Override
+            public void dimensions(int[] dimensions) {
+<span class="fc" id="L130">                this.dimensions = dimensions;</span>
+<span class="fc" id="L131">            }</span>
+            @Override
+            public void add(Object key, Object column, Object value, int count) {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                if (value != null) {</span>
+<span class="fc" id="L135">                    cells.add(ImmutableCell.of((Integer) key, (Integer) column, value));</span>
+                }
+<span class="fc" id="L137">            }</span>
+            @Override
+            @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+            public Grid&lt;?&gt; build() {
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">                if (dimensions == null || dimensions.length != 2) {</span>
+<span class="nc" id="L142">                    throw new IllegalArgumentException(&quot;Expected 2 dimensions, rowCount and columnCount&quot;);</span>
+                }
+<span class="fc" id="L144">                return ImmutableGrid.copyOf(dimensions[0], dimensions[1], (Iterable) cells);</span>
+            }
+            @Override
+            public SerCategory category() {
+<span class="fc" id="L148">                return SerCategory.GRID;</span>
+            }
+            @Override
+            public Class&lt;?&gt; keyType() {
+<span class="fc" id="L152">                return Integer.class;</span>
+            }
+            @Override
+            public Class&lt;?&gt; columnType() {
+<span class="fc" id="L156">                return Integer.class;</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L160">                return valueType;</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="nc" id="L164">                return valueTypeTypes;</span>
+            }
+        };
+    }
+
+    /**
+     * Gets an iterator wrapper for {@code Grid}.
+     * 
+     * @param grid  the collection, not null
+     * @param declaredType  the declared type, not null
+     * @param valueType  the value type, not null
+     * @param valueTypeTypes  the generic parameters of the value type
+     * @return the iterator, not null
+     */
+    @SuppressWarnings(&quot;rawtypes&quot;)
+    public static final SerIterator grid(
+            final Grid&lt;?&gt; grid, final Class&lt;?&gt; declaredType,
+            final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
+<span class="fc" id="L182">        return new SerIterator() {</span>
+<span class="fc" id="L183">            private final Iterator it = grid.cells().iterator();</span>
+            private Grid.Cell current;
+
+            @Override
+            public String metaTypeName() {
+<span class="nc" id="L188">                return &quot;Grid&quot;;</span>
+            }
+            @Override
+            public boolean metaTypeRequired() {
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">                return Grid.class.isAssignableFrom(declaredType) == false;</span>
+            }
+            @Override
+            public SerCategory category() {
+<span class="fc" id="L196">                return SerCategory.GRID;</span>
+            }
+            @Override
+            public int dimensionSize(int dimension) {
+<span class="fc bfc" id="L200" title="All 2 branches covered.">                return (dimension == 0 ? grid.rowCount() : grid.columnCount());</span>
+            }
+            @Override
+            public int size() {
+<span class="fc" id="L204">                return grid.size();</span>
+            }
+            @Override
+            public boolean hasNext() {
+<span class="fc" id="L208">                return it.hasNext();</span>
+            }
+            @Override
+            public void next() {
+<span class="fc" id="L212">                current = (Grid.Cell) it.next();</span>
+<span class="fc" id="L213">            }</span>
+            @Override
+            public Class&lt;?&gt; keyType() {
+<span class="fc" id="L216">                return Integer.class;</span>
+            }
+            @Override
+            public Object key() {
+<span class="fc" id="L220">                return current.getRow();</span>
+            }
+            @Override
+            public Class&lt;?&gt; columnType() {
+<span class="fc" id="L224">                return Integer.class;</span>
+            }
+            @Override
+            public Object column() {
+<span class="fc" id="L228">                return current.getColumn();</span>
+            }
+            @Override
+            public Class&lt;?&gt; valueType() {
+<span class="fc" id="L232">                return valueType;</span>
+            }
+            @Override
+            public Object value() {
+<span class="fc" id="L236">                return current.getValue();</span>
+            }
+            @Override
+            public Object value(int row, int column) {
+<span class="fc" id="L240">                return grid.get(row, column);</span>
+            }
+            @Override
+            public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
+<span class="nc" id="L244">                return valueTypeTypes;</span>
+            }
+        };
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

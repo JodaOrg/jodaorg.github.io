@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StandaloneMetaProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.impl</a> &gt; <span class="el_source">StandaloneMetaProperty.java</span></div><h1>StandaloneMetaProperty.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.impl;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.List;
+
+import org.joda.beans.Bean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.PropertyStyle;
+
+/**
+ * A meta-property that exists separate from a bean.
+ * &lt;p&gt;
+ * One use case for this is to handle renamed properties in {@code SerDeserializer}.
+ * 
+ * @param &lt;P&gt;  the type of the property content
+ * @author Stephen Colebourne
+ */
+public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
+
+    /**
+     * The meta-bean, which does not have to refer to this property.
+     */
+    private final MetaBean metaBean;
+    /**
+     * The type of the property.
+     */
+    private final Class&lt;P&gt; clazz;
+    /**
+     * The type of the property.
+     */
+    private final Type type;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates a non-generified property.
+     * 
+     * @param &lt;R&gt;  the property type
+     * @param propertyName  the property name, not empty
+     * @param metaBean  the meta-bean, which does not have to refer to this property, not null
+     * @param clazz  the type of the property, not null
+     * @return the meta-property, not null
+     */
+    public static &lt;R&gt; StandaloneMetaProperty&lt;R&gt; of(String propertyName, MetaBean metaBean, Class&lt;R&gt; clazz) {
+<span class="fc" id="L61">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, clazz);</span>
+    }
+
+    /**
+     * Creates a property.
+     * 
+     * @param &lt;R&gt;  the property type
+     * @param propertyName  the property name, not empty
+     * @param metaBean  the meta-bean, which does not have to refer to this property, not null
+     * @param clazz  the type of the property, not null
+     * @param type  the type of the property, not null
+     * @return the meta-property, not null
+     */
+    public static &lt;R&gt; StandaloneMetaProperty&lt;R&gt; of(String propertyName, MetaBean metaBean, Class&lt;R&gt; clazz, Type type) {
+<span class="nc" id="L75">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, type);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance.
+     * 
+     * @param propertyName  the property name, not empty
+     * @param metaBean  the meta-bean, which does not have to refer to this property, not null
+     * @param clazz  the type of the property, not null
+     * @param type  the type of the property, not null
+     */
+    private StandaloneMetaProperty(String propertyName, MetaBean metaBean, Class&lt;P&gt; clazz, Type type) {
+<span class="fc" id="L88">        super(propertyName);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L90">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (clazz == null) {</span>
+<span class="nc" id="L93">            throw new NullPointerException(&quot;Class must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (type == null) {</span>
+<span class="nc" id="L96">            throw new NullPointerException(&quot;Type must not be null&quot;);</span>
+        }
+<span class="fc" id="L98">        this.metaBean = metaBean;</span>
+<span class="fc" id="L99">        this.clazz = clazz;</span>
+<span class="fc" id="L100">        this.type = type;</span>
+<span class="fc" id="L101">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public MetaBean metaBean() {
+<span class="fc" id="L106">        return metaBean;</span>
+    }
+
+    @Override
+    public Class&lt;?&gt; declaringType() {
+<span class="nc" id="L111">        return metaBean().beanType();</span>
+    }
+
+    @Override
+    public Class&lt;P&gt; propertyType() {
+<span class="fc" id="L116">        return clazz;</span>
+    }
+
+    @Override
+    public Type propertyGenericType() {
+<span class="nc" id="L121">        return type;</span>
+    }
+
+    @Override
+    public PropertyStyle style() {
+<span class="fc" id="L126">        return PropertyStyle.READ_WRITE;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public List&lt;Annotation&gt; annotations() {
+<span class="nc" id="L132">        return Collections.emptyList();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public P get(Bean bean) {
+<span class="nc" id="L138">        return clazz.cast(metaBean().metaProperty(name()).get(bean));</span>
+    }
+
+    @Override
+    public void set(Bean bean, Object value) {
+<span class="fc" id="L143">        metaBean().metaProperty(name()).set(bean, value);</span>
+<span class="fc" id="L144">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

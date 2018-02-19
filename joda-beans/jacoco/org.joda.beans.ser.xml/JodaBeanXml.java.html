@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JodaBeanXml.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.xml</a> &gt; <span class="el_source">JodaBeanXml.java</span></div><h1>JodaBeanXml.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.xml;
+
+import javax.xml.namespace.QName;
+
+/**
+ * Constants used in XML.
+ *
+ * @author Stephen Colebourne
+ */
+final class JodaBeanXml {
+
+    /**
+     * XML bean tag.
+     */
+    public static final String BEAN = &quot;bean&quot;;
+    /**
+     * XML bean QName.
+     */
+<span class="fc" id="L34">    public static final QName BEAN_QNAME = new QName(null, BEAN);</span>
+    /**
+     * XML item tag.
+     */
+    public static final String ITEM = &quot;item&quot;;
+    /**
+     * XML item QName.
+     */
+<span class="fc" id="L42">    public static final QName ITEM_QNAME = new QName(null, ITEM);</span>
+    /**
+     * XML entry tag.
+     */
+    public static final String ENTRY = &quot;entry&quot;;
+    /**
+     * XML entry QName.
+     */
+<span class="fc" id="L50">    public static final QName ENTRY_QNAME = new QName(null, ENTRY);</span>
+    /**
+     * XML type attribute.
+     */
+    public static final String TYPE = &quot;type&quot;;
+    /**
+     * XML type QName.
+     */
+<span class="fc" id="L58">    public static final QName TYPE_QNAME = new QName(null, TYPE);</span>
+    /**
+     * XML key attribute.
+     */
+    public static final String KEY = &quot;key&quot;;
+    /**
+     * XML key QName.
+     */
+<span class="fc" id="L66">    public static final QName KEY_QNAME = new QName(null, KEY);</span>
+    /**
+     * XML rows attribute.
+     */
+    public static final String ROWS = &quot;rows&quot;;
+    /**
+     * XML rows QName.
+     */
+<span class="fc" id="L74">    public static final QName ROWS_QNAME = new QName(null, ROWS);</span>
+    /**
+     * XML cols attribute.
+     */
+    public static final String COLS = &quot;cols&quot;;
+    /**
+     * XML cols QName.
+     */
+<span class="fc" id="L82">    public static final QName COLS_QNAME = new QName(null, COLS);</span>
+    /**
+     * XML row attribute.
+     */
+    public static final String ROW = &quot;row&quot;;
+    /**
+     * XML row QName.
+     */
+<span class="fc" id="L90">    public static final QName ROW_QNAME = new QName(null, ROW);</span>
+    /**
+     * XML col attribute.
+     */
+    public static final String COL = &quot;col&quot;;
+    /**
+     * XML col QName.
+     */
+<span class="fc" id="L98">    public static final QName COL_QNAME = new QName(null, COL);</span>
+    /**
+     * XML count attribute.
+     */
+    public static final String COUNT = &quot;count&quot;;
+    /**
+     * XML count QName.
+     */
+<span class="fc" id="L106">    public static final QName COUNT_QNAME = new QName(null, COUNT);</span>
+    /**
+     * XML meta-type attribute.
+     */
+    public static final String METATYPE = &quot;metatype&quot;;
+    /**
+     * XML meta-type QName.
+     */
+<span class="fc" id="L114">    public static final QName METATYPE_QNAME = new QName(null, METATYPE);</span>
+    /**
+     * XML null attribute.
+     */
+    public static final String NULL = &quot;null&quot;;
+    /**
+     * XML null QName.
+     */
+<span class="fc" id="L122">    public static final QName NULL_QNAME = new QName(null, NULL);</span>
+
+    /**
+     * Restricted constructor.
+     */
+    private JodaBeanXml() {
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
