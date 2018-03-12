@@ -231,9 +231,9 @@ public final class StringConvert {
 <span class="fc" id="L231">            Object convertModule = Class.class.getMethod(&quot;getModule&quot;).invoke(StringConvert.class);</span>
 <span class="fc" id="L232">            Object layer = convertModule.getClass().getMethod(&quot;getLayer&quot;).invoke(convertModule);</span>
 <span class="pc bpc" id="L233" title="1 of 2 branches missed.">            if (layer != null) {</span>
-<span class="nc" id="L234">                Object optGuava = layer.getClass().getMethod(&quot;findModule&quot;, String.class).invoke(layer, &quot;com.google.common&quot;);</span>
-<span class="nc" id="L235">                boolean found = (Boolean) optGuava.getClass().getMethod(&quot;isPresent&quot;).invoke(optGuava);</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">                if (found) {</span>
+<span class="fc" id="L234">                Object optGuava = layer.getClass().getMethod(&quot;findModule&quot;, String.class).invoke(layer, &quot;com.google.common&quot;);</span>
+<span class="fc" id="L235">                boolean found = (Boolean) optGuava.getClass().getMethod(&quot;isPresent&quot;).invoke(optGuava);</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">                if (found) {</span>
 <span class="nc" id="L237">                    Object guavaModule = optGuava.getClass().getMethod(&quot;get&quot;).invoke(optGuava);</span>
 <span class="nc" id="L238">                    moduleClass.getMethod(&quot;addReads&quot;, moduleClass).invoke(convertModule, guavaModule);</span>
                 }
