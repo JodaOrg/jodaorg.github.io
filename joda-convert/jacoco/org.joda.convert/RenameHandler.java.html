@@ -15,8 +15,15 @@
  */
 package org.joda.convert;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,6 +38,14 @@ import java.util.concurrent.ConcurrentHashMap;
  *  RenameHandler.INSTANCE.renamedEnum(&quot;CORRECT&quot;, Status.VALID);
  *  RenameHandler.INSTANCE.renamedEnum(&quot;INCORRECT&quot;, Status.INVALID);
  * &lt;/pre&gt;
+ * From v2.1, renames can be stored on the classpath in configuration files.
+ * The file location is {@code META-INF/org/joda/convert/Renamed.ini}.
+ * All files found in this location are read and processed.
+ * The format has two sections {@code [types]} and {@code [enums]}.
+ * The {@code [types]} section has lines of the format {@code oldClassName = newClassName}.
+ * The {@code [enums]} section has lines of the format {@code oldEnumConstantName = enumClassName.newEnumConstantName}.
+ * Lines starting with {@code #} are treated as comments.
+ * &lt;p&gt;
  * The recommended usage is to edit the static singleton before using other classes.
  * Editing a static is acceptable because renames are driven by bytecode which is static.
  * For additional security, an application should lock the rename handler instance
@@ -45,8 +60,9 @@ public final class RenameHandler {
     /**
      * A mutable global instance.
      * This is a singleton instance which is mutated.
+     * It will be populated by the contents of the {@code Renamed.ini} configuration files.
      */
-<span class="fc" id="L49">    public static final RenameHandler INSTANCE = new RenameHandler();</span>
+<span class="fc" id="L65">    public static final RenameHandler INSTANCE = create(true);</span>
 
     /**
      * The lock flag.
@@ -55,12 +71,12 @@ public final class RenameHandler {
     /**
      * The type renames.
      */
-<span class="fc" id="L58">    private final ConcurrentHashMap&lt;String, Class&lt;?&gt;&gt; typeRenames =</span>
+<span class="fc" id="L74">    private final ConcurrentHashMap&lt;String, Class&lt;?&gt;&gt; typeRenames =</span>
                     new ConcurrentHashMap&lt;String, Class&lt;?&gt;&gt;(16, 0.75f, 2);
     /**
      * The enum renames.
      */
-<span class="fc" id="L63">    private final ConcurrentHashMap&lt;Class&lt;?&gt;, Map&lt;String, Enum&lt;?&gt;&gt;&gt; enumRenames =</span>
+<span class="fc" id="L79">    private final ConcurrentHashMap&lt;Class&lt;?&gt;, Map&lt;String, Enum&lt;?&gt;&gt;&gt; enumRenames =</span>
                     new ConcurrentHashMap&lt;Class&lt;?&gt;, Map&lt;String, Enum&lt;?&gt;&gt;&gt;(16, 0.75f, 2);
 
     //-----------------------------------------------------------------------
@@ -72,15 +88,33 @@ public final class RenameHandler {
      * @return a new instance, not null
      */
     public static RenameHandler create() {
-<span class="fc" id="L75">        return new RenameHandler();</span>
+<span class="fc" id="L91">        return new RenameHandler();</span>
+    }
+
+    /**
+     * Creates an instance, providing the ability to load types in config files.
+     * &lt;p&gt;
+     * This is not normally used as the preferred option is to edit the singleton.
+     * &lt;p&gt;
+     * If the flag is set to true, the classpath config files will be used to register types and enums.
+     * 
+     * @param loadFromClasspath  whether to load any types in classpath config files
+     * @return a new instance, not null
+     */
+    public static RenameHandler create(boolean loadFromClasspath) {
+<span class="fc" id="L105">        RenameHandler handler = new RenameHandler();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (loadFromClasspath) {</span>
+<span class="fc" id="L107">            handler.loadFromClasspath();</span>
+        }
+<span class="fc" id="L109">        return handler;</span>
     }
 
     //-----------------------------------------------------------------------
     /**
      * Restricted constructor.
      */
-<span class="fc" id="L82">    private RenameHandler() {</span>
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L116">    private RenameHandler() {</span>
+<span class="fc" id="L117">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -92,18 +126,18 @@ public final class RenameHandler {
      * @param currentValue  the current type, not null
      */
     public void renamedType(String oldName, Class&lt;?&gt; currentValue) {
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (oldName == null) {</span>
-<span class="nc" id="L96">            throw new IllegalArgumentException(&quot;oldName must not be null&quot;);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (oldName == null) {</span>
+<span class="nc" id="L130">            throw new IllegalArgumentException(&quot;oldName must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (currentValue == null) {</span>
-<span class="nc" id="L99">            throw new IllegalArgumentException(&quot;currentValue must not be null&quot;);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (currentValue == null) {</span>
+<span class="nc" id="L133">            throw new IllegalArgumentException(&quot;currentValue must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L101" title="All 6 branches covered.">        if (oldName.startsWith(&quot;java.&quot;) || oldName.startsWith(&quot;javax.&quot;) || oldName.startsWith(&quot;org.joda.&quot;)) {</span>
-<span class="fc" id="L102">            throw new IllegalArgumentException(&quot;oldName must not be a java.*, javax.* or org.joda.* type&quot;);</span>
+<span class="fc bfc" id="L135" title="All 6 branches covered.">        if (oldName.startsWith(&quot;java.&quot;) || oldName.startsWith(&quot;javax.&quot;) || oldName.startsWith(&quot;org.joda.&quot;)) {</span>
+<span class="fc" id="L136">            throw new IllegalArgumentException(&quot;oldName must not be a java.*, javax.* or org.joda.* type&quot;);</span>
         }
-<span class="fc" id="L104">        checkNotLocked();</span>
-<span class="fc" id="L105">        typeRenames.put(oldName, currentValue);</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L138">        checkNotLocked();</span>
+<span class="fc" id="L139">        typeRenames.put(oldName, currentValue);</span>
+<span class="fc" id="L140">    }</span>
 
     /**
      * Gets the map of renamed types.
@@ -113,7 +147,7 @@ public final class RenameHandler {
      * @return a copy of the set of enum types with renames, not null
      */
     public Map&lt;String, Class&lt;?&gt;&gt; getTypeRenames() {
-<span class="nc" id="L116">        return new HashMap&lt;String, Class&lt;?&gt;&gt;(typeRenames);</span>
+<span class="nc" id="L150">        return new HashMap&lt;String, Class&lt;?&gt;&gt;(typeRenames);</span>
     }
 
     /**
@@ -124,14 +158,14 @@ public final class RenameHandler {
      * @throws ClassNotFoundException if the name is not a valid type
      */
     public Class&lt;?&gt; lookupType(String name) throws ClassNotFoundException {
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (name == null) {</span>
-<span class="nc" id="L128">            throw new IllegalArgumentException(&quot;name must not be null&quot;);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (name == null) {</span>
+<span class="nc" id="L162">            throw new IllegalArgumentException(&quot;name must not be null&quot;);</span>
         }
-<span class="fc" id="L130">        Class&lt;?&gt; type = typeRenames.get(name);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (type == null) {</span>
-<span class="fc" id="L132">            type = loadType(name);</span>
+<span class="fc" id="L164">        Class&lt;?&gt; type = typeRenames.get(name);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (type == null) {</span>
+<span class="fc" id="L166">            type = loadType(name);</span>
         }
-<span class="fc" id="L134">        return type;</span>
+<span class="fc" id="L168">        return type;</span>
     }
 
     /**
@@ -143,35 +177,35 @@ public final class RenameHandler {
      */
     Class&lt;?&gt; loadType(String fullName) throws ClassNotFoundException {
         try {
-<span class="fc" id="L146">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            return loader != null ? loader.loadClass(fullName) : Class.forName(fullName);</span>
-<span class="fc" id="L148">        } catch (ClassNotFoundException ex) {</span>
-<span class="fc" id="L149">            return loadPrimitiveType(fullName, ex);</span>
+<span class="fc" id="L180">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">            return loader != null ? loader.loadClass(fullName) : Class.forName(fullName);</span>
+<span class="fc" id="L182">        } catch (ClassNotFoundException ex) {</span>
+<span class="fc" id="L183">            return loadPrimitiveType(fullName, ex);</span>
         }
     }
 
     // handle primitive types
     private Class&lt;?&gt; loadPrimitiveType(String fullName, ClassNotFoundException ex) throws ClassNotFoundException {
-<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (fullName.equals(&quot;int&quot;)) {</span>
-<span class="fc" id="L156">            return int.class;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        } else if (fullName.equals(&quot;long&quot;)) {</span>
-<span class="fc" id="L158">            return long.class;</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        } else if (fullName.equals(&quot;double&quot;)) {</span>
-<span class="fc" id="L160">            return double.class;</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        } else if (fullName.equals(&quot;boolean&quot;)) {</span>
-<span class="fc" id="L162">            return boolean.class;</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">        } else if (fullName.equals(&quot;short&quot;)) {</span>
-<span class="fc" id="L164">            return short.class;</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">        } else if (fullName.equals(&quot;byte&quot;)) {</span>
-<span class="fc" id="L166">            return byte.class;</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        } else if (fullName.equals(&quot;char&quot;)) {</span>
-<span class="fc" id="L168">            return char.class;</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">        } else if (fullName.equals(&quot;float&quot;)) {</span>
-<span class="fc" id="L170">            return float.class;</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">        } else if (fullName.equals(&quot;void&quot;)) {</span>
-<span class="fc" id="L172">            return void.class;            </span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (fullName.equals(&quot;int&quot;)) {</span>
+<span class="fc" id="L190">            return int.class;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        } else if (fullName.equals(&quot;long&quot;)) {</span>
+<span class="fc" id="L192">            return long.class;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        } else if (fullName.equals(&quot;double&quot;)) {</span>
+<span class="fc" id="L194">            return double.class;</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        } else if (fullName.equals(&quot;boolean&quot;)) {</span>
+<span class="fc" id="L196">            return boolean.class;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        } else if (fullName.equals(&quot;short&quot;)) {</span>
+<span class="fc" id="L198">            return short.class;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        } else if (fullName.equals(&quot;byte&quot;)) {</span>
+<span class="fc" id="L200">            return byte.class;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        } else if (fullName.equals(&quot;char&quot;)) {</span>
+<span class="fc" id="L202">            return char.class;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        } else if (fullName.equals(&quot;float&quot;)) {</span>
+<span class="fc" id="L204">            return float.class;</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        } else if (fullName.equals(&quot;void&quot;)) {</span>
+<span class="fc" id="L206">            return void.class;            </span>
         }
-<span class="fc" id="L174">        throw ex;</span>
+<span class="fc" id="L208">        throw ex;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -184,21 +218,21 @@ public final class RenameHandler {
      * @param currentValue  the current enum constant, not null
      */
     public void renamedEnum(String oldName, Enum&lt;?&gt; currentValue) {
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (oldName == null) {</span>
-<span class="nc" id="L188">            throw new IllegalArgumentException(&quot;oldName must not be null&quot;);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">        if (oldName == null) {</span>
+<span class="nc" id="L222">            throw new IllegalArgumentException(&quot;oldName must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">        if (currentValue == null) {</span>
-<span class="nc" id="L191">            throw new IllegalArgumentException(&quot;currentValue must not be null&quot;);</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">        if (currentValue == null) {</span>
+<span class="nc" id="L225">            throw new IllegalArgumentException(&quot;currentValue must not be null&quot;);</span>
         }
-<span class="fc" id="L193">        checkNotLocked();</span>
-<span class="fc" id="L194">        Class&lt;?&gt; enumType = currentValue.getDeclaringClass();</span>
-<span class="fc" id="L195">        Map&lt;String, Enum&lt;?&gt;&gt; perClass = enumRenames.get(enumType);</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (perClass == null) {</span>
-<span class="fc" id="L197">            enumRenames.putIfAbsent(enumType, new ConcurrentHashMap&lt;String, Enum&lt;?&gt;&gt;(16, 0.75f, 2));</span>
-<span class="fc" id="L198">            perClass = enumRenames.get(enumType);</span>
+<span class="fc" id="L227">        checkNotLocked();</span>
+<span class="fc" id="L228">        Class&lt;?&gt; enumType = currentValue.getDeclaringClass();</span>
+<span class="fc" id="L229">        Map&lt;String, Enum&lt;?&gt;&gt; perClass = enumRenames.get(enumType);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (perClass == null) {</span>
+<span class="fc" id="L231">            enumRenames.putIfAbsent(enumType, new ConcurrentHashMap&lt;String, Enum&lt;?&gt;&gt;(16, 0.75f, 2));</span>
+<span class="fc" id="L232">            perClass = enumRenames.get(enumType);</span>
         }
-<span class="fc" id="L200">        perClass.put(oldName, currentValue);</span>
-<span class="fc" id="L201">    }</span>
+<span class="fc" id="L234">        perClass.put(oldName, currentValue);</span>
+<span class="fc" id="L235">    }</span>
 
     /**
      * Gets the set of enum types that have renames.
@@ -208,7 +242,7 @@ public final class RenameHandler {
      * @return a copy of the set of enum types with renames, not null
      */
     public Set&lt;Class&lt;?&gt;&gt; getEnumTypesWithRenames() {
-<span class="nc" id="L211">        return new HashSet&lt;Class&lt;?&gt;&gt;(enumRenames.keySet());</span>
+<span class="nc" id="L245">        return new HashSet&lt;Class&lt;?&gt;&gt;(enumRenames.keySet());</span>
     }
 
     /**
@@ -220,14 +254,14 @@ public final class RenameHandler {
      * @return a copy of the set of enum renames, not null
      */
     public Map&lt;String, Enum&lt;?&gt;&gt; getEnumRenames(Class&lt;?&gt; type) {
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        if (type == null) {</span>
-<span class="nc" id="L224">            throw new IllegalArgumentException(&quot;type must not be null&quot;);</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">        if (type == null) {</span>
+<span class="nc" id="L258">            throw new IllegalArgumentException(&quot;type must not be null&quot;);</span>
         }
-<span class="fc" id="L226">        Map&lt;String, Enum&lt;?&gt;&gt; map = enumRenames.get(type);</span>
-<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (map == null) {</span>
-<span class="fc" id="L228">            return new HashMap&lt;String, Enum&lt;?&gt;&gt;();</span>
+<span class="fc" id="L260">        Map&lt;String, Enum&lt;?&gt;&gt; map = enumRenames.get(type);</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (map == null) {</span>
+<span class="fc" id="L262">            return new HashMap&lt;String, Enum&lt;?&gt;&gt;();</span>
         }
-<span class="fc" id="L230">        return new HashMap&lt;String, Enum&lt;?&gt;&gt;(map);</span>
+<span class="fc" id="L264">        return new HashMap&lt;String, Enum&lt;?&gt;&gt;(map);</span>
     }
 
     /**
@@ -240,18 +274,18 @@ public final class RenameHandler {
      * @throws IllegalArgumentException if the name is not a valid enum constant
      */
     public &lt;T extends Enum&lt;T&gt;&gt; T lookupEnum(Class&lt;T&gt; type, String name) {
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        if (type == null) {</span>
-<span class="nc" id="L244">            throw new IllegalArgumentException(&quot;type must not be null&quot;);</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">        if (type == null) {</span>
+<span class="nc" id="L278">            throw new IllegalArgumentException(&quot;type must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">        if (name == null) {</span>
-<span class="nc" id="L247">            throw new IllegalArgumentException(&quot;name must not be null&quot;);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        if (name == null) {</span>
+<span class="nc" id="L281">            throw new IllegalArgumentException(&quot;name must not be null&quot;);</span>
         }
-<span class="fc" id="L249">        Map&lt;String, Enum&lt;?&gt;&gt; map = getEnumRenames(type);</span>
-<span class="fc" id="L250">        Enum&lt;?&gt; value = map.get(name);</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (value != null) {</span>
-<span class="fc" id="L252">            return type.cast(value);</span>
+<span class="fc" id="L283">        Map&lt;String, Enum&lt;?&gt;&gt; map = getEnumRenames(type);</span>
+<span class="fc" id="L284">        Enum&lt;?&gt; value = map.get(name);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        if (value != null) {</span>
+<span class="fc" id="L286">            return type.cast(value);</span>
         }
-<span class="fc" id="L254">        return Enum.valueOf(type, name);</span>
+<span class="fc" id="L288">        return Enum.valueOf(type, name);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -262,22 +296,98 @@ public final class RenameHandler {
      * once any types and enums have been registered.
      */
     public void lock() {
-<span class="fc" id="L265">        checkNotLocked();</span>
-<span class="fc" id="L266">        locked = true;</span>
-<span class="fc" id="L267">    }</span>
+<span class="fc" id="L299">        checkNotLocked();</span>
+<span class="fc" id="L300">        locked = true;</span>
+<span class="fc" id="L301">    }</span>
 
     // ensure not locked
     private void checkNotLocked() {
-<span class="fc bfc" id="L271" title="All 2 branches covered.">        if (locked) {</span>
-<span class="fc" id="L272">            throw new IllegalStateException(&quot;RenameHandler has been locked and it cannot now be changed&quot;);</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        if (locked) {</span>
+<span class="fc" id="L306">            throw new IllegalStateException(&quot;RenameHandler has been locked and it cannot now be changed&quot;);</span>
         }
-<span class="fc" id="L274">    }</span>
+<span class="fc" id="L308">    }</span>
+
+    //-----------------------------------------------------------------------
+    // loads config files
+    private void loadFromClasspath() {
+<span class="fc" id="L313">        URL url = null;</span>
+        try {
+            // this is the new location of the file, working on Java 8, Java 9 class path and Java 9 module path
+<span class="fc" id="L316">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">            if (loader == null) {</span>
+<span class="nc" id="L318">                loader = RenameHandler.class.getClassLoader();</span>
+            }
+<span class="fc" id="L320">            Enumeration&lt;URL&gt; en = loader.getResources(&quot;META-INF/org/joda/convert/Renamed.ini&quot;);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">            while (en.hasMoreElements()) {</span>
+<span class="fc" id="L322">                url = en.nextElement();</span>
+<span class="fc" id="L323">                loadRenames(url);</span>
+            }
+<span class="nc" id="L325">        } catch (Exception ex) {</span>
+<span class="nc" id="L326">            throw new RuntimeException(&quot;Unable to load Renamed.ini: &quot; + url, ex);</span>
+<span class="fc" id="L327">        }</span>
+<span class="fc" id="L328">    }</span>
+
+    // loads a single rename file
+    private void loadRenames(URL url) throws Exception {
+<span class="fc" id="L332">        List&lt;String&gt; lines = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L333">        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), Charset.forName(&quot;UTF-8&quot;)));</span>
+        try {
+            String line;
+<span class="fc bfc" id="L336" title="All 2 branches covered.">            while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L337">                String trimmed = line.trim();</span>
+<span class="fc bfc" id="L338" title="All 4 branches covered.">                if (!trimmed.isEmpty() &amp;&amp; !trimmed.startsWith(&quot;#&quot;)) {</span>
+<span class="fc" id="L339">                    lines.add(trimmed);</span>
+                }
+<span class="fc" id="L341">            }</span>
+        } finally {
+<span class="fc" id="L343">            reader.close();</span>
+        }
+        // format allows multiple [types] and [enums] so file can be merged
+<span class="fc" id="L346">        boolean types = false;</span>
+<span class="fc" id="L347">        boolean enums = false;</span>
+<span class="fc bfc" id="L348" title="All 2 branches covered.">        for (String line : lines) {</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">            if (line.equals(&quot;[types]&quot;)) {</span>
+<span class="fc" id="L350">                types = true;</span>
+<span class="fc" id="L351">                enums = false;</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">            } else if (line.equals(&quot;[enums]&quot;)) {</span>
+<span class="fc" id="L353">                types = false;</span>
+<span class="fc" id="L354">                enums = true;</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">            } else if (types) {</span>
+<span class="fc" id="L356">                int equalsPos = line.indexOf('=');</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">                if (equalsPos &lt; 0) {</span>
+<span class="nc" id="L358">                    throw new IllegalArgumentException(</span>
+                            &quot;Renamed.ini type line must be formatted as 'oldClassName = newClassName'&quot;);
+                }
+<span class="fc" id="L361">                String oldName = line.substring(0, equalsPos).trim();</span>
+<span class="fc" id="L362">                String newName = line.substring(equalsPos + 1).trim();</span>
+<span class="fc" id="L363">                Class&lt;?&gt; newClass = Class.forName(newName);</span>
+<span class="fc" id="L364">                renamedType(oldName, newClass);</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">            } else if (enums) {</span>
+<span class="fc" id="L366">                int equalsPos = line.indexOf('=');</span>
+<span class="fc" id="L367">                int lastDotPos = line.lastIndexOf('.');</span>
+<span class="pc bpc" id="L368" title="3 of 6 branches missed.">                if (equalsPos &lt; 0 || lastDotPos &lt; 0 || lastDotPos &lt; equalsPos) {</span>
+<span class="nc" id="L369">                    throw new IllegalArgumentException(</span>
+                            &quot;Renamed.ini enum line must be formatted as 'oldEnumConstantName = enumClassName.newEnumConstantName'&quot;);
+                }
+<span class="fc" id="L372">                String oldName = line.substring(0, equalsPos).trim();</span>
+<span class="fc" id="L373">                String enumClassName = line.substring(equalsPos + 1, lastDotPos).trim();</span>
+<span class="fc" id="L374">                String enumConstantName = line.substring(lastDotPos + 1).trim();</span>
+                @SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L376">                Class&lt;? extends Enum&gt; enumClass = Class.forName(enumClassName).asSubclass(Enum.class);</span>
+                @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L378">                Enum&lt;?&gt; newEnum = Enum.valueOf(enumClass, enumConstantName);</span>
+<span class="fc" id="L379">                renamedEnum(oldName, newEnum);</span>
+<span class="fc" id="L380">            } else {</span>
+<span class="nc" id="L381">                throw new IllegalArgumentException(&quot;Renamed.ini must start with [types] or [enums]&quot;);</span>
+            }
+<span class="fc" id="L383">        }</span>
+<span class="fc" id="L384">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L279">        return &quot;RenamedTypes&quot; + typeRenames + &quot;,RenamedEnumConstants&quot; + enumRenames;</span>
+<span class="nc" id="L389">        return &quot;RenamedTypes&quot; + typeRenames + &quot;,RenamedEnumConstants&quot; + enumRenames;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

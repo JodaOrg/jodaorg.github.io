@@ -19,18 +19,18 @@ Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},0,12,0,0,0,2,0,2,0,2
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},0,20,0,0,0,4,0,2,0,2
 Joda-Convert,org.joda.convert,Types.TypeVariableImpl,107,0,20,0,23,0,16,0,6,0
-Joda-Convert,org.joda.convert,RenameHandler,70,244,10,42,11,69,13,28,3,12
+Joda-Convert,org.joda.convert,RenameHandler,102,429,16,66,17,119,19,40,3,15
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},0,10,0,0,0,2,0,2,0,2
 Joda-Convert,org.joda.convert,Types.GenericArrayTypeImpl,40,0,2,0,10,0,6,0,5,0
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},12,45,1,3,1,6,1,4,0,2
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},0,29,0,0,0,5,0,3,0,3
 Joda-Convert,org.joda.convert,AnnotationStringConverterFactory,45,427,9,79,6,88,10,43,1,8
 Joda-Convert,org.joda.convert,OptionalLongStringConverter,57,42,4,0,12,10,4,3,2,3
-Joda-Convert,org.joda.convert,Types.JavaVersion,19,92,4,4,6,15,5,4,2,3
+Joda-Convert,org.joda.convert,Types.JavaVersion,19,87,4,4,6,15,5,3,2,2
 Joda-Convert,org.joda.convert,TypeTokenStringConverter,12,36,0,0,4,10,0,5,0,5
 Joda-Convert,org.joda.convert,TypeStringConverterFactory,4,19,1,3,1,4,2,3,1,2
 Joda-Convert,org.joda.convert,Types.TypeVisitor,101,0,18,0,26,0,16,0,7,0
-Joda-Convert,org.joda.convert,Types.ClassOwnership,4,66,1,3,1,10,1,4,0,3
+Joda-Convert,org.joda.convert,Types.ClassOwnership,4,61,1,3,1,10,1,3,0,2
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},0,14,0,0,0,3,0,3,0,3
 Joda-Convert,org.joda.convert,JDKStringConverter.new JDKStringConverter() {...},0,10,0,0,0,2,0,2,0,2
 Joda-Convert,org.joda.convert,Types.ClassOwnership.new Types.ClassOwnership.1LocalClass() {...},0,3,0,0,0,1,0,1,0,1
@@ -77,31 +77,31 @@ Joda-Convert,org.joda.convert.factory,BooleanObjectArrayStringConverterFactory,4
 Joda-Convert,org.joda.convert.factory,BooleanObjectArrayStringConverterFactory.BooleanArrayStringConverter.new BooleanObjectArrayStringConverterFactory.BooleanArrayStringConverter() {...},7,92,1,17,2,19,2,11,1,3
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.IntArrayStringConverter.new NumericArrayStringConverterFactory.IntArrayStringConverter() {...},2,102,0,8,1,20,1,7,1,3
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.DoubleArrayStringConverter.new NumericArrayStringConverterFactory.DoubleArrayStringConverter() {...},2,102,0,8,1,20,1,7,1,3
-Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.IntArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.IntArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory,4,35,1,11,1,13,2,7,1,2
-Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.LongArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.LongArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.DoubleArrayStringConverter.new NumericObjectArrayStringConverterFactory.DoubleArrayStringConverter() {...},2,135,0,16,1,23,1,11,1,3
 Joda-Convert,org.joda.convert.factory,BooleanArrayStringConverterFactory.BooleanArrayStringConverter.new BooleanArrayStringConverterFactory.BooleanArrayStringConverter() {...},7,77,1,13,2,17,2,9,1,3
-Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.LongArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.LongArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.LongArrayStringConverter.new NumericObjectArrayStringConverterFactory.LongArrayStringConverter() {...},2,135,0,16,1,23,1,11,1,3
 Joda-Convert,org.joda.convert.factory,CharObjectArrayStringConverterFactory.CharecterArrayStringConverter.new CharObjectArrayStringConverterFactory.CharecterArrayStringConverter() {...},7,145,1,19,2,28,2,12,1,3
-Joda-Convert,org.joda.convert.factory,CharObjectArrayStringConverterFactory.CharecterArrayStringConverter,0,22,0,0,0,3,0,2,0,2
-Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.FloatArrayStringConverter,0,22,0,0,0,3,0,2,0,2
-Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.ShortArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,CharObjectArrayStringConverterFactory.CharecterArrayStringConverter,0,17,0,0,0,3,0,1,0,1
+Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.FloatArrayStringConverter,0,17,0,0,0,3,0,1,0,1
+Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.ShortArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.ShortArrayStringConverter.new NumericArrayStringConverterFactory.ShortArrayStringConverter() {...},2,102,0,8,1,20,1,7,1,3
-Joda-Convert,org.joda.convert.factory,ByteObjectArrayStringConverterFactory.ByteArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,ByteObjectArrayStringConverterFactory.ByteArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.IntArrayStringConverter.new NumericObjectArrayStringConverterFactory.IntArrayStringConverter() {...},2,135,0,16,1,23,1,11,1,3
-Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.DoubleArrayStringConverter,0,22,0,0,0,3,0,2,0,2
-Joda-Convert,org.joda.convert.factory,BooleanObjectArrayStringConverterFactory.BooleanArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.DoubleArrayStringConverter,0,17,0,0,0,3,0,1,0,1
+Joda-Convert,org.joda.convert.factory,BooleanObjectArrayStringConverterFactory.BooleanArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,ByteObjectArrayStringConverterFactory.ByteArrayStringConverter.new ByteObjectArrayStringConverterFactory.ByteArrayStringConverter() {...},7,115,1,13,2,20,2,9,1,3
 Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.ShortArrayStringConverter.new NumericObjectArrayStringConverterFactory.ShortArrayStringConverter() {...},2,135,0,16,1,23,1,11,1,3
 Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.FloatArrayStringConverter.new NumericObjectArrayStringConverterFactory.FloatArrayStringConverter() {...},2,135,0,16,1,23,1,11,1,3
-Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.IntArrayStringConverter,0,22,0,0,0,3,0,2,0,2
-Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.FloatArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.IntArrayStringConverter,0,17,0,0,0,3,0,1,0,1
+Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.FloatArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,BooleanArrayStringConverterFactory,4,12,0,2,1,4,1,3,1,2
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.LongArrayStringConverter.new NumericArrayStringConverterFactory.LongArrayStringConverter() {...},2,102,0,8,1,20,1,7,1,3
-Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.DoubleArrayStringConverter,0,22,0,0,0,3,0,2,0,2
-Joda-Convert,org.joda.convert.factory,BooleanArrayStringConverterFactory.BooleanArrayStringConverter,0,22,0,0,0,3,0,2,0,2
-Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.ShortArrayStringConverter,0,22,0,0,0,3,0,2,0,2
+Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.DoubleArrayStringConverter,0,17,0,0,0,3,0,1,0,1
+Joda-Convert,org.joda.convert.factory,BooleanArrayStringConverterFactory.BooleanArrayStringConverter,0,17,0,0,0,3,0,1,0,1
+Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.ShortArrayStringConverter,0,17,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory,4,39,2,12,1,13,3,7,1,2
 Joda-Convert,org.joda.convert.factory,CharObjectArrayStringConverterFactory,4,12,0,2,1,4,1,3,1,2
