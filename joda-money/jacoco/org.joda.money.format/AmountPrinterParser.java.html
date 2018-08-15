@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmountPrinterParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money.format</a> &gt; <span class="el_source">AmountPrinterParser.java</span></div><h1>AmountPrinterParser.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money.format;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import org.joda.money.BigMoney;
+
+/**
+ * Prints and parses the amount part of the money.
+ * &lt;p&gt;
+ * This class is immutable and thread-safe.
+ */
+final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1L;
+
+    /** The style to use. */
+    private final MoneyAmountStyle style;
+
+    /**
+     * Constructor.
+     * @param style  the style, not null
+     */
+<span class="fc" id="L41">    AmountPrinterParser(MoneyAmountStyle style) {</span>
+<span class="fc" id="L42">        this.style = style;</span>
+<span class="fc" id="L43">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
+<span class="fc" id="L48">        MoneyAmountStyle activeStyle = style.localize(context.getLocale());</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (money.isNegative()) {</span>
+<span class="fc" id="L50">            money = money.negated();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if (!activeStyle.isAbsValue()) {</span>
+<span class="fc" id="L52">                appendable.append(activeStyle.getNegativeSignCharacter());</span>
+            }
+        }
+<span class="fc" id="L55">        String str = money.getAmount().toPlainString();</span>
+<span class="fc" id="L56">        char zeroChar = activeStyle.getZeroCharacter();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (zeroChar != '0') {</span>
+<span class="fc" id="L58">            int diff = zeroChar - '0';</span>
+<span class="fc" id="L59">            StringBuilder zeroConvert = new StringBuilder(str);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            for (int i = 0; i &lt; str.length(); i++) {</span>
+<span class="fc" id="L61">                char ch = str.charAt(i);</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">                if (ch &gt;= '0' &amp;&amp; ch &lt;= '9') {</span>
+<span class="fc" id="L63">                    zeroConvert.setCharAt(i, (char) (ch + diff));</span>
+                }
+            }
+<span class="fc" id="L66">            str = zeroConvert.toString();</span>
+        }
+<span class="fc" id="L68">        final int decPoint = str.indexOf('.');</span>
+<span class="fc" id="L69">        final int afterDecPoint = decPoint + 1;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (activeStyle.getGroupingStyle() == GroupingStyle.NONE) {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            if (decPoint &lt; 0) {</span>
+<span class="fc" id="L72">                appendable.append(str);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                if (activeStyle.isForcedDecimalPoint()) {</span>
+<span class="nc" id="L74">                    appendable.append(activeStyle.getDecimalPointCharacter());</span>
+                }
+            } else {
+<span class="fc" id="L77">                appendable.append(str.subSequence(0, decPoint))</span>
+<span class="fc" id="L78">                    .append(activeStyle.getDecimalPointCharacter()).append(str.substring(afterDecPoint));</span>
+            }
+        } else {
+<span class="fc" id="L81">            int groupingSize = activeStyle.getGroupingSize();</span>
+<span class="fc" id="L82">            int extendedGroupingSize = activeStyle.getExtendedGroupingSize();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            extendedGroupingSize = extendedGroupingSize == 0 ? groupingSize : extendedGroupingSize;</span>
+<span class="fc" id="L84">            char groupingChar = activeStyle.getGroupingCharacter();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            int pre = (decPoint &lt; 0 ? str.length() : decPoint);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            int post = (decPoint &lt; 0 ? 0 : str.length() - decPoint - 1);</span>
+<span class="fc" id="L87">            appendable.append(str.charAt(0));</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            for (int i = 1; i &lt; pre; i++) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                if (isPreGroupingPoint(pre - i, groupingSize, extendedGroupingSize)) {</span>
+<span class="fc" id="L90">                    appendable.append(groupingChar);</span>
+                }
+<span class="fc" id="L92">                appendable.append(str.charAt(i));</span>
+            }
+<span class="fc bfc" id="L94" title="All 4 branches covered.">            if (decPoint &gt;= 0 || activeStyle.isForcedDecimalPoint()) {</span>
+<span class="fc" id="L95">                appendable.append(activeStyle.getDecimalPointCharacter());</span>
+            }
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (activeStyle.getGroupingStyle() == GroupingStyle.BEFORE_DECIMAL_POINT) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">                if (decPoint &gt;= 0) {</span>
+<span class="fc" id="L99">                    appendable.append(str.substring(afterDecPoint));</span>
+                }
+            } else {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                for (int i = 0; i &lt; post; i++) {</span>
+<span class="fc" id="L103">                    appendable.append(str.charAt(i + afterDecPoint));</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                    if (isPostGroupingPoint(i, post, groupingSize, extendedGroupingSize)) {</span>
+<span class="fc" id="L105">                        appendable.append(groupingChar);</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L110">    }</span>
+
+    private boolean isPreGroupingPoint(int remaining, int groupingSize, int extendedGroupingSize) {
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (remaining &gt;= groupingSize + extendedGroupingSize) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            return (remaining - groupingSize) % extendedGroupingSize == 0;</span>
+        }
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        return remaining % groupingSize == 0;</span>
+    }
+
+    private boolean isPostGroupingPoint(int i, int post, int groupingSize, int extendedGroupingSize) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        boolean atEnd = (i + 1) &gt;= post;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (i &gt; groupingSize) {</span>
+<span class="fc bfc" id="L122" title="All 4 branches covered.">            return (i - groupingSize) % extendedGroupingSize == (extendedGroupingSize - 1) &amp;&amp; !atEnd;</span>
+        }
+<span class="fc bfc" id="L124" title="All 4 branches covered.">        return i % groupingSize == (groupingSize - 1) &amp;&amp; !atEnd;</span>
+    }
+
+    @Override
+    public void parse(MoneyParseContext context) {
+<span class="fc" id="L129">        final int len = context.getTextLength();</span>
+<span class="fc" id="L130">        final MoneyAmountStyle activeStyle = style.localize(context.getLocale());</span>
+<span class="fc" id="L131">        char[] buf = new char[len - context.getIndex()];</span>
+<span class="fc" id="L132">        int bufPos = 0;</span>
+<span class="fc" id="L133">        boolean dpSeen = false;</span>
+<span class="fc" id="L134">        int pos = context.getIndex();</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (pos &lt; len) {</span>
+<span class="fc" id="L136">            char ch = context.getText().charAt(pos++);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            if (ch == activeStyle.getNegativeSignCharacter()) {</span>
+<span class="fc" id="L138">                buf[bufPos++] = '-';</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            } else if (ch == activeStyle.getPositiveSignCharacter()) {</span>
+<span class="fc" id="L140">                buf[bufPos++] = '+';</span>
+<span class="fc bfc" id="L141" title="All 4 branches covered.">            } else if (ch &gt;= activeStyle.getZeroCharacter() &amp;&amp; ch &lt; activeStyle.getZeroCharacter() + 10) {</span>
+<span class="fc" id="L142">                buf[bufPos++] = (char) ('0' + ch - activeStyle.getZeroCharacter());</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            } else if (ch == activeStyle.getDecimalPointCharacter()) {</span>
+<span class="fc" id="L144">                buf[bufPos++] = '.';</span>
+<span class="fc" id="L145">                dpSeen = true;</span>
+            } else {
+<span class="fc" id="L147">                context.setError();</span>
+<span class="fc" id="L148">                return;</span>
+            }
+        }
+<span class="fc" id="L151">        boolean lastWasGroup = false;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for ( ; pos &lt; len; pos++) {</span>
+<span class="fc" id="L153">            char ch = context.getText().charAt(pos);</span>
+<span class="fc bfc" id="L154" title="All 4 branches covered.">            if (ch &gt;= activeStyle.getZeroCharacter() &amp;&amp; ch &lt; activeStyle.getZeroCharacter() + 10) {</span>
+<span class="fc" id="L155">                buf[bufPos++] = (char) ('0' + ch - activeStyle.getZeroCharacter());</span>
+<span class="fc" id="L156">                lastWasGroup = false;</span>
+<span class="fc bfc" id="L157" title="All 4 branches covered.">            } else if (ch == activeStyle.getDecimalPointCharacter() &amp;&amp; dpSeen == false) {</span>
+<span class="fc" id="L158">                buf[bufPos++] = '.';</span>
+<span class="fc" id="L159">                dpSeen = true;</span>
+<span class="fc" id="L160">                lastWasGroup = false;</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">            } else if (ch == activeStyle.getGroupingCharacter() &amp;&amp; lastWasGroup == false) {</span>
+<span class="fc" id="L162">                lastWasGroup = true;</span>
+            } else {
+                break;
+            }
+        }
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (lastWasGroup) {</span>
+<span class="fc" id="L168">            pos--;</span>
+        }
+        try {
+<span class="fc" id="L171">            context.setAmount(new BigDecimal(buf, 0, bufPos));</span>
+<span class="fc" id="L172">            context.setIndex(pos);</span>
+<span class="fc" id="L173">        } catch (NumberFormatException ex) {</span>
+<span class="fc" id="L174">            context.setError();</span>
+<span class="fc" id="L175">        }</span>
+<span class="fc" id="L176">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L180">        return &quot;${amount}&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

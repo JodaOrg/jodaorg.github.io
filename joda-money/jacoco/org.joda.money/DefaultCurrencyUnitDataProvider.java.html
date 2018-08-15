@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultCurrencyUnitDataProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money</a> &gt; <span class="el_source">DefaultCurrencyUnitDataProvider.java</span></div><h1>DefaultCurrencyUnitDataProvider.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Provider for available currencies using a file.
+ * &lt;p&gt;
+ * This reads currencies from various files.
+ * Firstly it reads the mandatory resource named {@code /org/joda/money/CurencyData.csv}.
+ * Then it reads the mandatory resource named {@code /org/joda/money/CountryData.csv}.
+ * These files are located in the joda-money jar file.
+ * &lt;p&gt;
+ * Then it reads optional resources named {@code META-INF/org/joda/money/CurencyDataExtension.csv}.
+ * Then it reads optional resources named {@code META-INF/org/joda/money/CountryDataExtension.csv}.
+ * These will be read using {@link ClassLoader#getResources(String)}.
+ * These files may augment or replace data from the first two files.
+ */
+<span class="fc" id="L43">class DefaultCurrencyUnitDataProvider extends CurrencyUnitDataProvider {</span>
+
+    /** Regex format for the money csv line. */
+<span class="fc" id="L46">    private static final Pattern CURRENCY_REGEX_LINE = Pattern.compile(&quot;([A-Z]{3}),(-1|[0-9]{1,3}),(-1|[0-9]|[1-2][0-9]|30) *(#.*)?&quot;);</span>
+    /** Regex format for the country csv line. */
+<span class="fc" id="L48">    private static final Pattern COUNTRY_REGEX_LINE = Pattern.compile(&quot;([A-Z]{2}),([A-Z]{3}) *(#.*)?&quot;);</span>
+
+    /**
+     * Registers all the currencies known by this provider.
+     * 
+     * @throws Exception if an error occurs
+     */ 
+    @Override
+    protected void registerCurrencies() throws Exception {
+<span class="fc" id="L57">        parseCurrencies(loadFromFile(&quot;/org/joda/money/CurrencyData.csv&quot;));</span>
+<span class="fc" id="L58">        parseCountries(loadFromFile(&quot;/org/joda/money/CountryData.csv&quot;));</span>
+<span class="fc" id="L59">        parseCurrencies(loadFromFiles(&quot;META-INF/org/joda/money/CurrencyDataExtension.csv&quot;));</span>
+<span class="fc" id="L60">        parseCountries(loadFromFiles(&quot;META-INF/org/joda/money/CountryDataExtension.csv&quot;));</span>
+<span class="fc" id="L61">    }</span>
+
+    // loads a file
+    private List&lt;String&gt; loadFromFile(String fileName) throws Exception {
+<span class="fc" id="L65">        InputStream in = null;</span>
+<span class="fc" id="L66">        Exception resultEx = null;</span>
+<span class="fc" id="L67">        List&lt;String&gt; content = new ArrayList&lt;String&gt;();</span>
+        try {
+<span class="fc" id="L69">            in = getClass().getResourceAsStream(fileName);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">            if (in == null) {</span>
+<span class="nc" id="L71">                throw new FileNotFoundException(&quot;Data file &quot; + fileName + &quot; not found&quot;);</span>
+            }
+<span class="fc" id="L73">            BufferedReader reader = new BufferedReader(new InputStreamReader(in, &quot;UTF-8&quot;));</span>
+            String line;
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L76">                content.add(line);</span>
+            }
+<span class="fc" id="L78">            return content;</span>
+<span class="nc" id="L79">        } catch (Exception ex) {</span>
+<span class="nc" id="L80">            resultEx = ex;</span>
+<span class="nc" id="L81">            throw ex;</span>
+        } finally {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if (in != null) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">                if (resultEx != null) {</span>
+                    try {
+<span class="nc" id="L86">                        in.close();</span>
+<span class="nc" id="L87">                    } catch (IOException ignored) {</span>
+<span class="nc" id="L88">                        throw resultEx;</span>
+<span class="nc" id="L89">                    }</span>
+                } else {
+<span class="fc" id="L91">                    in.close();</span>
+                }
+            }
+        }
+    }
+
+    // loads a file
+    private List&lt;String&gt; loadFromFiles(String fileName) throws Exception {
+<span class="fc" id="L99">        List&lt;String&gt; content = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L100">        Enumeration&lt;URL&gt; en = getClass().getClassLoader().getResources(fileName);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        while (en.hasMoreElements()) {</span>
+<span class="fc" id="L102">            URL url = (URL) en.nextElement();</span>
+<span class="fc" id="L103">            InputStream in = null;</span>
+<span class="fc" id="L104">            Exception resultEx = null;</span>
+            try {
+<span class="fc" id="L106">                in = url.openStream();</span>
+<span class="fc" id="L107">                BufferedReader reader = new BufferedReader(new InputStreamReader(in, &quot;UTF-8&quot;));</span>
+                String line;
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L110">                    content.add(line);</span>
+                }
+<span class="nc" id="L112">            } catch (Exception ex) {</span>
+<span class="nc" id="L113">                resultEx = ex;</span>
+<span class="nc" id="L114">                throw ex;</span>
+            } finally {
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                if (in != null) {</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">                    if (resultEx != null) {</span>
+                        try {
+<span class="nc" id="L119">                            in.close();</span>
+<span class="nc" id="L120">                        } catch (IOException ignored) {</span>
+<span class="nc" id="L121">                            throw resultEx;</span>
+<span class="nc" id="L122">                        }</span>
+                    } else {
+<span class="fc" id="L124">                        in.close();</span>
+                    }
+                }
+            }
+<span class="fc" id="L128">        }</span>
+<span class="fc" id="L129">        return content;</span>
+    }
+
+    // parse the currencies
+    private void parseCurrencies(List&lt;String&gt; content) throws Exception {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for (String line : content) {</span>
+<span class="fc" id="L135">            Matcher matcher = CURRENCY_REGEX_LINE.matcher(line);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L137">                String currencyCode = matcher.group(1);</span>
+<span class="fc" id="L138">                int numericCode = Integer.parseInt(matcher.group(2));</span>
+<span class="fc" id="L139">                int digits = Integer.parseInt(matcher.group(3));</span>
+<span class="fc" id="L140">                registerCurrency(currencyCode, numericCode, digits);</span>
+            }
+<span class="fc" id="L142">        }</span>
+<span class="fc" id="L143">    }</span>
+
+    // parse the countries
+    private void parseCountries(List&lt;String&gt; content) throws Exception {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for (String line : content) {</span>
+<span class="fc" id="L148">            Matcher matcher = COUNTRY_REGEX_LINE.matcher(line);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L150">                String countryCode = matcher.group(1);</span>
+<span class="fc" id="L151">                String currencyCode = matcher.group(2);</span>
+<span class="fc" id="L152">                registerCountry(countryCode, currencyCode);</span>
+            }
+<span class="fc" id="L154">        }</span>
+<span class="fc" id="L155">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

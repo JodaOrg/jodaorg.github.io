@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MoneyUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money</a> &gt; <span class="el_source">MoneyUtils.java</span></div><h1>MoneyUtils.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money;
+
+/**
+ * Utilities for working with monetary values that handle null.
+ * &lt;p&gt;
+ * This utility class contains thread-safe static methods.
+ */
+public final class MoneyUtils {
+
+    /**
+     * Validates that the object specified is not null.
+     *
+     * @param object  the object to check, not null
+     * @throws NullPointerException if the input value is null
+     */
+    static void checkNotNull(Object object, String message) {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (object == null) {</span>
+<span class="fc" id="L33">            throw new NullPointerException(message);</span>
+        }
+<span class="fc" id="L35">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Private constructor.
+     */
+    private MoneyUtils() {
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the monetary value is zero, treating null as zero.
+     * &lt;p&gt;
+     * This method accepts any implementation of {@code BigMoneyProvider}.
+     * 
+     * @param moneyProvider  the money to check, null returns zero
+     * @return true if the money is null or zero
+     */
+    public static boolean isZero(BigMoneyProvider moneyProvider) {
+<span class="fc bfc" id="L54" title="All 4 branches covered.">        return (moneyProvider == null || moneyProvider.toBigMoney().isZero());</span>
+    }
+
+    /**
+     * Checks if the monetary value is positive and non-zero, treating null as zero.
+     * &lt;p&gt;
+     * This method accepts any implementation of {@code BigMoneyProvider}.
+     * 
+     * @param moneyProvider  the money to check, null returns false
+     * @return true if the money is non-null and positive
+     */
+    public static boolean isPositive(BigMoneyProvider moneyProvider) {
+<span class="fc bfc" id="L66" title="All 4 branches covered.">        return (moneyProvider != null &amp;&amp; moneyProvider.toBigMoney().isPositive());</span>
+    }
+
+    /**
+     * Checks if the monetary value is positive or zero, treating null as zero.
+     * &lt;p&gt;
+     * This method accepts any implementation of {@code BigMoneyProvider}.
+     * 
+     * @param moneyProvider  the money to check, null returns true
+     * @return true if the money is null, zero or positive
+     */
+    public static boolean isPositiveOrZero(BigMoneyProvider moneyProvider) {
+<span class="fc bfc" id="L78" title="All 4 branches covered.">        return (moneyProvider == null || moneyProvider.toBigMoney().isPositiveOrZero());</span>
+    }
+
+    /**
+     * Checks if the monetary value is negative and non-zero, treating null as zero.
+     * &lt;p&gt;
+     * This method accepts any implementation of {@code BigMoneyProvider}.
+     * 
+     * @param moneyProvider  the money to check, null returns false
+     * @return true if the money is non-null and negative
+     */
+    public static boolean isNegative(BigMoneyProvider moneyProvider) {
+<span class="fc bfc" id="L90" title="All 4 branches covered.">        return (moneyProvider != null &amp;&amp; moneyProvider.toBigMoney().isNegative());</span>
+    }
+
+    /**
+     * Checks if the monetary value is negative or zero, treating null as zero.
+     * &lt;p&gt;
+     * This method accepts any implementation of {@code BigMoneyProvider}.
+     * 
+     * @param moneyProvider  the money to check, null returns true
+     * @return true if the money is null, zero or negative
+     */
+    public static boolean isNegativeOrZero(BigMoneyProvider moneyProvider) {
+<span class="fc bfc" id="L102" title="All 4 branches covered.">        return (moneyProvider == null || moneyProvider.toBigMoney().isNegativeOrZero());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Finds the maximum {@code Money} value, handing null.
+     * &lt;p&gt;
+     * This returns the greater of money1 or money2 where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null returns money2
+     * @param money2  the first money instance, null returns money1
+     * @return the maximum value, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static Money max(Money money1, Money money2) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L119">            return money2;</span>
+        }
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L122">            return money1;</span>
+        }
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        return money1.compareTo(money2) &gt; 0 ? money1 : money2;</span>
+    }
+
+    /**
+     * Finds the minimum {@code Money} value, handing null.
+     * &lt;p&gt;
+     * This returns the greater of money1 or money2 where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null returns money2
+     * @param money2  the first money instance, null returns money1
+     * @return the minimum value, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static Money min(Money money1, Money money2) {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L140">            return money2;</span>
+        }
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L143">            return money1;</span>
+        }
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        return money1.compareTo(money2) &lt; 0 ? money1 : money2;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds two {@code Money} objects, handling null.
+     * &lt;p&gt;
+     * This returns {@code money1 + money2} where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null returns money2
+     * @param money2  the first money instance, null returns money1
+     * @return the total, where null is ignored, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static Money add(Money money1, Money money2) {
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L162">            return money2;</span>
+        }
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L165">            return money1;</span>
+        }
+<span class="fc" id="L167">        return money1.plus(money2);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Subtracts the second {@code Money} from the first, handling null.
+     * &lt;p&gt;
+     * This returns {@code money1 - money2} where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null treated as zero
+     * @param money2  the first money instance, null returns money1
+     * @return the total, where null is ignored, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static Money subtract(Money money1, Money money2) {
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L184">            return money1;</span>
+        }
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L187">            return money2.negated();</span>
+        }
+<span class="fc" id="L189">        return money1.minus(money2);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Finds the maximum {@code BigMoney} value, handing null.
+     * &lt;p&gt;
+     * This returns the greater of money1 or money2 where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null returns money2
+     * @param money2  the first money instance, null returns money1
+     * @return the maximum value, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney max(BigMoney money1, BigMoney money2) {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L206">            return money2;</span>
+        }
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L209">            return money1;</span>
+        }
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        return money1.compareTo(money2) &gt; 0 ? money1 : money2;</span>
+    }
+
+    /**
+     * Finds the minimum {@code BigMoney} value, handing null.
+     * &lt;p&gt;
+     * This returns the greater of money1 or money2 where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null returns money2
+     * @param money2  the first money instance, null returns money1
+     * @return the minimum value, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney min(BigMoney money1, BigMoney money2) {
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L227">            return money2;</span>
+        }
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L230">            return money1;</span>
+        }
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        return money1.compareTo(money2) &lt; 0 ? money1 : money2;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds two {@code BigMoney} objects, handling null.
+     * &lt;p&gt;
+     * This returns {@code money1 + money2} where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null returns money2
+     * @param money2  the first money instance, null returns money1
+     * @return the total, where null is ignored, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney add(BigMoney money1, BigMoney money2) {
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L249">            return money2;</span>
+        }
+<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L252">            return money1;</span>
+        }
+<span class="fc" id="L254">        return money1.plus(money2);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Subtracts the second {@code BigMoney} from the first, handling null.
+     * &lt;p&gt;
+     * This returns {@code money1 - money2} where null is ignored.
+     * If both input values are null, then null is returned.
+     * 
+     * @param money1  the first money instance, null treated as zero
+     * @param money2  the first money instance, null returns money1
+     * @return the total, where null is ignored, null if both inputs are null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney subtract(BigMoney money1, BigMoney money2) {
+<span class="fc bfc" id="L270" title="All 2 branches covered.">        if (money2 == null) {</span>
+<span class="fc" id="L271">            return money1;</span>
+        }
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        if (money1 == null) {</span>
+<span class="fc" id="L274">            return money2.negated();</span>
+        }
+<span class="fc" id="L276">        return money1.minus(money2);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

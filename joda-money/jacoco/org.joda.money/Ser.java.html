@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money</a> &gt; <span class="el_source">Ser.java</span></div><h1>Ser.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.InvalidClassException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.StreamCorruptedException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+/**
+ * A package scoped class used to manage serialization efficiently.
+ * &lt;p&gt;
+ * This class is mutable and intended for use by a single thread.
+ */
+final class Ser implements Externalizable {
+
+    /** Type for BigMoney. */
+    static final byte BIG_MONEY = 'B';
+    /** Type for Money. */
+    static final byte MONEY = 'M';
+    /** Type for CurrencyUnit. */
+    static final byte CURRENCY_UNIT = 'C';  // not in use yet
+
+    /** The type. */
+    private byte type;
+    /** The data object. */
+    private Object object;
+
+    /**
+     * Constructor for serialization.
+     */
+<span class="fc" id="L50">    public Ser() {</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Constructor for package.
+     * 
+     * @param type  the type
+     * @param object  the object
+     */
+<span class="fc" id="L59">    Ser(byte type, Object object) {</span>
+<span class="fc" id="L60">        this.type = type;</span>
+<span class="fc" id="L61">        this.object = object;</span>
+<span class="fc" id="L62">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Outputs the data.
+     *
+     * @serialData One byte type code, then data specific to the type.
+     * @param out  the output stream
+     * @throws IOException if an error occurs
+     */
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+<span class="fc" id="L74">        out.writeByte(type);</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">        switch (type) {</span>
+            case BIG_MONEY: {
+<span class="fc" id="L77">                BigMoney obj = (BigMoney) object;</span>
+<span class="fc" id="L78">                writeBigMoney(out, obj);</span>
+<span class="fc" id="L79">                return;</span>
+            }
+            case MONEY: {
+<span class="fc" id="L82">                Money obj = (Money) object;</span>
+<span class="fc" id="L83">                writeBigMoney(out, obj.toBigMoney());</span>
+<span class="fc" id="L84">                return;</span>
+            }
+            case CURRENCY_UNIT: {
+<span class="fc" id="L87">                CurrencyUnit obj = (CurrencyUnit) object;</span>
+<span class="fc" id="L88">                writeCurrency(out, obj);</span>
+<span class="fc" id="L89">                return;</span>
+            }
+        }
+<span class="nc" id="L92">        throw new InvalidClassException(&quot;Joda-Money bug: Serialization broken&quot;);</span>
+    }
+
+    private void writeBigMoney(ObjectOutput out, BigMoney obj) throws IOException {
+<span class="fc" id="L96">        writeCurrency(out, obj.getCurrencyUnit());</span>
+<span class="fc" id="L97">        byte[] bytes = obj.getAmount().unscaledValue().toByteArray();</span>
+<span class="fc" id="L98">        out.writeInt(bytes.length);</span>
+<span class="fc" id="L99">        out.write(bytes);</span>
+<span class="fc" id="L100">        out.writeInt(obj.getScale());</span>
+<span class="fc" id="L101">    }</span>
+
+    private void writeCurrency(ObjectOutput out, CurrencyUnit obj) throws IOException {
+<span class="fc" id="L104">        out.writeUTF(obj.getCode());</span>
+<span class="fc" id="L105">        out.writeShort(obj.getNumericCode());</span>
+<span class="fc" id="L106">        out.writeShort(obj.getDecimalPlaces());</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
+     * Outputs the data.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs
+     */
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+<span class="fc" id="L117">        type = in.readByte();</span>
+<span class="pc bpc" id="L118" title="1 of 4 branches missed.">        switch (type) {</span>
+            case BIG_MONEY: {
+<span class="fc" id="L120">                object = readBigMoney(in);</span>
+<span class="fc" id="L121">                return;</span>
+            }
+            case MONEY: {
+<span class="fc" id="L124">                object = new Money(readBigMoney(in));</span>
+<span class="fc" id="L125">                return;</span>
+            }
+            case CURRENCY_UNIT: {
+<span class="fc" id="L128">                object = readCurrency(in);</span>
+<span class="fc" id="L129">                return;</span>
+            }
+        }
+<span class="nc" id="L132">        throw new StreamCorruptedException(&quot;Serialization input has invalid type&quot;);</span>
+    }
+
+    private BigMoney readBigMoney(ObjectInput in) throws IOException {
+<span class="fc" id="L136">        CurrencyUnit currency = readCurrency(in);</span>
+<span class="fc" id="L137">        byte[] bytes = new byte[in.readInt()];</span>
+<span class="fc" id="L138">        in.readFully(bytes);</span>
+<span class="fc" id="L139">        BigDecimal bd = new BigDecimal(new BigInteger(bytes), in.readInt());</span>
+<span class="fc" id="L140">        BigMoney bigMoney = new BigMoney(currency, bd);</span>
+<span class="fc" id="L141">        return bigMoney;</span>
+    }
+
+    private CurrencyUnit readCurrency(ObjectInput in) throws IOException {
+<span class="fc" id="L145">        String code = in.readUTF();</span>
+<span class="fc" id="L146">        CurrencyUnit singletonCurrency = CurrencyUnit.of(code);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (singletonCurrency.getNumericCode() != in.readShort()) {</span>
+<span class="fc" id="L148">            throw new InvalidObjectException(&quot;Deserialization found a mismatch in the numeric code for currency &quot; + code);</span>
+        }
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (singletonCurrency.getDecimalPlaces() != in.readShort()) {</span>
+<span class="fc" id="L151">            throw new InvalidObjectException(&quot;Deserialization found a mismatch in the decimal places for currency &quot; + code);</span>
+        }
+<span class="fc" id="L153">        return singletonCurrency;</span>
+    }
+
+    /**
+     * Returns the object that will replace this one.
+     * 
+     * @return the read object, should never be null
+     */
+    private Object readResolve() {
+<span class="fc" id="L162">        return object;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

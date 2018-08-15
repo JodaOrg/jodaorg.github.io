@@ -1,0 +1,26 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Joda-Money,org.joda.money.format,MoneyFormatterBuilder.Singletons,0,48,0,0,0,8,0,3,0,3
+Joda-Money,org.joda.money.format,MoneyFormatException,0,18,0,2,0,7,0,4,0,3
+Joda-Money,org.joda.money.format,LiteralPrinterParser,0,51,0,4,0,12,0,6,0,4
+Joda-Money,org.joda.money.format,MoneyFormatterBuilder.Singletons.new MoneyFormatterBuilder.Singletons() {...},0,44,0,2,0,13,0,4,0,3
+Joda-Money,org.joda.money.format,MoneyFormatterBuilder.Singletons.new MoneyFormatterBuilder.Singletons() {...},0,67,0,8,0,16,0,7,0,3
+Joda-Money,org.joda.money.format,MoneyFormatterBuilder,0,169,0,4,0,37,0,18,0,16
+Joda-Money,org.joda.money.format,SignedPrinterParser,5,143,3,27,0,33,2,17,0,4
+Joda-Money,org.joda.money.format,MoneyFormatter,26,283,13,35,0,59,13,27,0,16
+Joda-Money,org.joda.money.format,MoneyParseContext,0,204,0,12,0,57,0,30,0,24
+Joda-Money,org.joda.money.format,MoneyFormatterBuilder.Singletons.new MoneyFormatterBuilder.Singletons() {...},0,44,0,2,0,13,0,4,0,3
+Joda-Money,org.joda.money.format,AmountPrinterParser,7,473,3,83,1,94,3,46,0,6
+Joda-Money,org.joda.money.format,MultiPrinterParser,0,195,0,30,0,34,0,22,0,7
+Joda-Money,org.joda.money.format,MoneyFormatterBuilder.SingletonPrinters,0,25,0,0,0,5,0,3,0,3
+Joda-Money,org.joda.money.format,MoneyPrintContext,7,9,0,0,3,4,1,2,1,2
+Joda-Money,org.joda.money.format,GroupingStyle,0,34,0,0,0,4,0,1,0,1
+Joda-Money,org.joda.money.format,MoneyAmountStyle,28,922,9,99,4,132,9,73,0,28
+Joda-Money,org.joda.money,Money,13,610,3,29,4,118,5,88,2,75
+Joda-Money,org.joda.money,CurrencyUnit,78,588,5,59,20,121,7,59,2,31
+Joda-Money,org.joda.money,IllegalCurrencyException,0,4,0,0,0,2,0,1,0,1
+Joda-Money,org.joda.money,CurrencyUnitDataProvider,0,15,0,0,0,5,0,3,0,3
+Joda-Money,org.joda.money,CurrencyMismatchException,0,37,0,4,0,8,0,5,0,3
+Joda-Money,org.joda.money,MoneyUtils,0,172,0,62,0,48,0,45,0,14
+Joda-Money,org.joda.money,DefaultCurrencyUnitDataProvider,36,196,5,19,15,52,5,14,0,7
+Joda-Money,org.joda.money,Ser,10,184,2,10,2,49,2,15,0,9
+Joda-Money,org.joda.money,BigMoney,16,1257,4,126,5,275,6,147,2,86

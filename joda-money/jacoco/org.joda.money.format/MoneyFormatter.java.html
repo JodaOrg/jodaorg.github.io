@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MoneyFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money.format</a> &gt; <span class="el_source">MoneyFormatter.java</span></div><h1>MoneyFormatter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money.format;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Locale;
+
+import org.joda.money.BigMoney;
+import org.joda.money.BigMoneyProvider;
+import org.joda.money.Money;
+
+/**
+ * Formats instances of money to and from a String.
+ * &lt;p&gt;
+ * Instances of {@code MoneyFormatter} can be created by
+ * {@code MoneyFormatterBuilder}.
+ * &lt;p&gt;
+ * This class is immutable and thread-safe.
+ */
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">public final class MoneyFormatter implements Serializable {</span>
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = 2385346258L;
+
+    /**
+     * The locale to use.
+     */
+    private final Locale locale;
+    /**
+     * The printer/parser.
+     */
+    private final MultiPrinterParser printerParser;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Validates that the object specified is not null
+     *
+     * @param object  the object to check, null throws exception
+     * @param message  the message to use in the exception, not null
+     * @throws NullPointerException if the input value is null
+     */
+    static void checkNotNull(Object object, String message) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (object == null) {</span>
+<span class="fc" id="L60">            throw new NullPointerException(message);</span>
+        }
+<span class="fc" id="L62">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructor, creating a new formatter.
+     * 
+     * @param locale  the locale to use, not null
+     * @param printers  the printers, not null
+     * @param parsers  the parsers, not null
+     */
+<span class="fc" id="L72">    MoneyFormatter(Locale locale, MoneyPrinter[] printers, MoneyParser[] parsers) {</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">        assert locale != null;</span>
+<span class="pc bpc" id="L74" title="2 of 4 branches missed.">        assert printers != null;</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">        assert parsers != null;</span>
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">        assert printers.length == parsers.length;</span>
+<span class="fc" id="L77">        this.locale = locale;</span>
+<span class="fc" id="L78">        this.printerParser = new MultiPrinterParser(printers, parsers);</span>
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * Constructor, creating a new formatter.
+     * 
+     * @param locale  the locale to use, not null
+     * @param printerParser  the printer/parser, not null
+     */
+<span class="fc" id="L87">    private MoneyFormatter(Locale locale, MultiPrinterParser printerParser) {</span>
+<span class="pc bpc" id="L88" title="2 of 4 branches missed.">        assert locale != null;</span>
+<span class="pc bpc" id="L89" title="2 of 4 branches missed.">        assert printerParser != null;</span>
+<span class="fc" id="L90">        this.locale = locale;</span>
+<span class="fc" id="L91">        this.printerParser = printerParser;</span>
+<span class="fc" id="L92">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the printer/parser.
+     * 
+     * @return the printer/parser, never null
+     */
+    MultiPrinterParser getPrinterParser() {
+<span class="fc" id="L101">        return printerParser;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the locale to use.
+     * 
+     * @return the locale, never null
+     */
+    public Locale getLocale() {
+<span class="fc" id="L111">        return locale;</span>
+    }
+
+    /**
+     * Returns a copy of this instance with the specified locale.
+     * &lt;p&gt;
+     * Changing the locale may change the style of output depending on how the
+     * formatter has been configured.
+     * 
+     * @param locale  the locale, not null
+     * @return the new instance, never null
+     */
+    public MoneyFormatter withLocale(Locale locale) {
+<span class="fc" id="L124">        checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L125">        return new MoneyFormatter(locale, printerParser);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks whether this formatter can print.
+     * &lt;p&gt;
+     * If the formatter cannot print, an UnsupportedOperationException will
+     * be thrown from the print methods.
+     * 
+     * @return true if the formatter can print
+     */
+    public boolean isPrinter() {
+<span class="fc" id="L138">        return printerParser.isPrinter();</span>
+    }
+
+    /**
+     * Checks whether this formatter can parse.
+     * &lt;p&gt;
+     * If the formatter cannot parse, an UnsupportedOperationException will
+     * be thrown from the print methods.
+     * 
+     * @return true if the formatter can parse
+     */
+    public boolean isParser() {
+<span class="fc" id="L150">        return printerParser.isParser();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Prints a monetary value to a {@code String}.
+     * 
+     * @param moneyProvider  the money to print, not null
+     * @return the string printed using the settings of this formatter
+     * @throws UnsupportedOperationException if the formatter is unable to print
+     * @throws MoneyFormatException if there is a problem while printing
+     */
+    public String print(BigMoneyProvider moneyProvider) {
+<span class="fc" id="L163">        StringBuilder buf = new StringBuilder();</span>
+<span class="fc" id="L164">        print(buf, moneyProvider);</span>
+<span class="fc" id="L165">        return buf.toString();</span>
+    }
+
+    /**
+     * Prints a monetary value to an {@code Appendable} converting
+     * any {@code IOException} to a {@code MoneyFormatException}.
+     * &lt;p&gt;
+     * Example implementations of {@code Appendable} are {@code StringBuilder},
+     * {@code StringBuffer} or {@code Writer}. Note that {@code StringBuilder}
+     * and {@code StringBuffer} never throw an {@code IOException}.
+     * 
+     * @param appendable  the appendable to add to, not null
+     * @param moneyProvider  the money to print, not null
+     * @throws UnsupportedOperationException if the formatter is unable to print
+     * @throws MoneyFormatException if there is a problem while printing
+     */
+    public void print(Appendable appendable, BigMoneyProvider moneyProvider) {
+        try {
+<span class="fc" id="L183">            printIO(appendable, moneyProvider);</span>
+<span class="fc" id="L184">        } catch (IOException ex) {</span>
+<span class="fc" id="L185">            throw new MoneyFormatException(ex.getMessage(), ex);</span>
+<span class="fc" id="L186">        }</span>
+<span class="fc" id="L187">    }</span>
+
+    /**
+     * Prints a monetary value to an {@code Appendable} potentially
+     * throwing an {@code IOException}.
+     * &lt;p&gt;
+     * Example implementations of {@code Appendable} are {@code StringBuilder},
+     * {@code StringBuffer} or {@code Writer}. Note that {@code StringBuilder}
+     * and {@code StringBuffer} never throw an {@code IOException}.
+     * 
+     * @param appendable  the appendable to add to, not null
+     * @param moneyProvider  the money to print, not null
+     * @throws UnsupportedOperationException if the formatter is unable to print
+     * @throws MoneyFormatException if there is a problem while printing
+     * @throws IOException if an IO error occurs
+     */
+    public void printIO(Appendable appendable, BigMoneyProvider moneyProvider) throws IOException {
+<span class="fc" id="L204">        checkNotNull(moneyProvider, &quot;BigMoneyProvider must not be null&quot;);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (isPrinter() == false) {</span>
+<span class="fc" id="L206">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to print&quot;);</span>
+        }
+        
+<span class="fc" id="L209">        BigMoney money = BigMoney.of(moneyProvider);</span>
+<span class="fc" id="L210">        MoneyPrintContext context = new MoneyPrintContext(locale);</span>
+<span class="fc" id="L211">        printerParser.print(context, appendable, money);</span>
+<span class="fc" id="L212">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Fully parses the text into a {@code BigMoney}.
+     * &lt;p&gt;
+     * The parse must complete normally and parse the entire text (currency and amount).
+     * If the parse completes without reading the entire length of the text, an exception is thrown.
+     * If any other problem occurs during parsing, an exception is thrown.
+     * 
+     * @param text  the text to parse, not null
+     * @return the parsed monetary value, never null
+     * @throws UnsupportedOperationException if the formatter is unable to parse
+     * @throws MoneyFormatException if there is a problem while parsing
+     */
+    public BigMoney parseBigMoney(CharSequence text) {
+<span class="fc" id="L228">        checkNotNull(text, &quot;Text must not be null&quot;);</span>
+<span class="fc" id="L229">        MoneyParseContext result = parse(text, 0);</span>
+<span class="fc bfc" id="L230" title="All 6 branches covered.">        if (result.isError() || result.isFullyParsed() == false || result.isComplete() == false) {</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">            String str = (text.length() &gt; 64 ? text.subSequence(0, 64).toString() + &quot;...&quot; : text.toString());</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            if (result.isError()) {</span>
+<span class="fc" id="L233">                throw new MoneyFormatException(&quot;Text could not be parsed at index &quot; + result.getErrorIndex() + &quot;: &quot; + str);</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">            } else if (result.isFullyParsed() == false) {</span>
+<span class="fc" id="L235">                throw new MoneyFormatException(&quot;Unparsed text found at index &quot; + result.getIndex() + &quot;: &quot; + str);</span>
+            } else {
+<span class="fc" id="L237">                throw new MoneyFormatException(&quot;Parsing did not find both currency and amount: &quot; + str);</span>
+            }
+        }
+<span class="fc" id="L240">        return result.toBigMoney();</span>
+    }
+
+    /**
+     * Fully parses the text into a {@code Money} requiring that the parsed
+     * amount has the correct number of decimal places.
+     * &lt;p&gt;
+     * The parse must complete normally and parse the entire text (currency and amount).
+     * If the parse completes without reading the entire length of the text, an exception is thrown.
+     * If any other problem occurs during parsing, an exception is thrown.
+     * 
+     * @param text  the text to parse, not null
+     * @return the parsed monetary value, never null
+     * @throws UnsupportedOperationException if the formatter is unable to parse
+     * @throws MoneyFormatException if there is a problem while parsing
+     * @throws ArithmeticException if the scale of the parsed money exceeds the scale of the currency
+     */
+    public Money parseMoney(CharSequence text) {
+<span class="fc" id="L258">        return parseBigMoney(text).toMoney();</span>
+    }
+
+    /**
+     * Parses the text extracting monetary information.
+     * &lt;p&gt;
+     * This method parses the input providing low-level access to the parsing state.
+     * The resulting context contains the parsed text, indicator of error, position
+     * following the parse and the parsed currency and amount.
+     * Together, these provide enough information for higher level APIs to use.
+     *
+     * @param text  the text to parse, not null
+     * @param startIndex  the start index to parse from
+     * @return the parsed monetary value, null only if the parse results in an error
+     * @throws IndexOutOfBoundsException if the start index is invalid
+     * @throws UnsupportedOperationException if this formatter cannot parse
+     */
+    public MoneyParseContext parse(CharSequence text, int startIndex) {
+<span class="fc" id="L276">        checkNotNull(text, &quot;Text must not be null&quot;);</span>
+<span class="fc bfc" id="L277" title="All 4 branches covered.">        if (startIndex &lt; 0 || startIndex &gt; text.length()) {</span>
+<span class="fc" id="L278">            throw new StringIndexOutOfBoundsException(&quot;Invalid start index: &quot; + startIndex);</span>
+        }
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (isParser() == false) {</span>
+<span class="fc" id="L281">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to parse&quot;);</span>
+        }
+<span class="fc" id="L283">        MoneyParseContext context = new MoneyParseContext(locale, text, startIndex);</span>
+<span class="fc" id="L284">        printerParser.parse(context);</span>
+<span class="fc" id="L285">        return context;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets a string summary of the formatter.
+     * 
+     * @return a string summarising the formatter, never null
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L296">        return printerParser.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

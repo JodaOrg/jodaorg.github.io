@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SignedPrinterParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money.format</a> &gt; <span class="el_source">SignedPrinterParser.java</span></div><h1>SignedPrinterParser.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money.format;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import org.joda.money.BigMoney;
+
+/**
+ * Prints and parses using delegated formatters, one for positive and one for megative.
+ * &lt;p&gt;
+ * This class is immutable and thread-safe.
+ */
+final class SignedPrinterParser implements MoneyPrinter, MoneyParser, Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1L;
+
+    /** The formatter to use when positive. */
+    private final MoneyFormatter whenPositive;
+    /** The formatter to use when zero. */
+    private final MoneyFormatter whenZero;
+    /** The formatter to use when negative. */
+    private final MoneyFormatter whenNegative;
+
+    /**
+     * Constructor.
+     * @param whenPositive  the formatter to use when the amount is positive
+     * @param whenZero  the formatter to use when the amount is zero
+     * @param whenNegative  the formatter to use when the amount is positive
+     */
+<span class="fc" id="L47">    SignedPrinterParser(MoneyFormatter whenPositive, MoneyFormatter whenZero, MoneyFormatter whenNegative) {</span>
+<span class="fc" id="L48">        this.whenPositive = whenPositive;</span>
+<span class="fc" id="L49">        this.whenZero = whenZero;</span>
+<span class="fc" id="L50">        this.whenNegative = whenNegative;</span>
+<span class="fc" id="L51">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
+<span class="fc bfc" id="L56" title="All 4 branches covered.">        MoneyFormatter fmt = (money.isZero() ? whenZero : money.isPositive() ? whenPositive : whenNegative);</span>
+<span class="fc" id="L57">        fmt.getPrinterParser().print(context, appendable, money);</span>
+<span class="fc" id="L58">    }</span>
+
+    @Override
+    public void parse(MoneyParseContext context) {
+<span class="fc" id="L62">        MoneyParseContext positiveContext = context.createChild();</span>
+<span class="fc" id="L63">        whenPositive.getPrinterParser().parse(positiveContext);</span>
+<span class="fc" id="L64">        MoneyParseContext zeroContext = context.createChild();</span>
+<span class="fc" id="L65">        whenZero.getPrinterParser().parse(zeroContext);</span>
+<span class="fc" id="L66">        MoneyParseContext negativeContext = context.createChild();</span>
+<span class="fc" id="L67">        whenNegative.getPrinterParser().parse(negativeContext);</span>
+<span class="fc" id="L68">        MoneyParseContext best = null;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (!positiveContext.isError()) {</span>
+<span class="fc" id="L70">            best = positiveContext;</span>
+        }
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (!zeroContext.isError()) {</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">            if (best == null || zeroContext.getIndex() &gt; best.getIndex()) {</span>
+<span class="fc" id="L74">                best = zeroContext;</span>
+            }
+        }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (!negativeContext.isError()) {</span>
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">            if (best == null || negativeContext.getIndex() &gt; best.getIndex()) {</span>
+<span class="fc" id="L79">                best = negativeContext;</span>
+            }
+        }
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (best == null) {</span>
+<span class="fc" id="L83">            context.setError();</span>
+        } else {
+<span class="fc" id="L85">            context.mergeChild(best);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (best == zeroContext) {</span>
+<span class="fc bfc" id="L87" title="All 4 branches covered.">                if (context.getAmount() == null || context.getAmount().compareTo(BigDecimal.ZERO) != 0) {</span>
+<span class="fc" id="L88">                    context.setAmount(BigDecimal.ZERO);</span>
+                }
+<span class="fc bfc" id="L90" title="All 4 branches covered.">            } else if (best == negativeContext &amp;&amp; context.getAmount().compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc" id="L91">                context.setAmount(context.getAmount().negate());</span>
+            }
+        }
+<span class="fc" id="L94">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L98">        return &quot;PositiveZeroNegative(&quot; + whenPositive + &quot;,&quot; + whenZero + &quot;,&quot; + whenNegative + &quot;)&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -1,0 +1,1736 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BigMoney.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money</a> &gt; <span class="el_source">BigMoney.java</span></div><h1>BigMoney.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money;
+
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.regex.Pattern;
+
+import org.joda.convert.FromString;
+import org.joda.convert.ToString;
+
+/**
+ * An amount of money with unrestricted decimal place precision.
+ * &lt;p&gt;
+ * This class represents a quantity of money, stored as a {@code BigDecimal} amount
+ * in a single {@link CurrencyUnit currency}.
+ * &lt;p&gt;
+ * Every currency has a certain standard number of decimal places.
+ * This is typically 2 (Euro, British Pound, US Dollar) but might be
+ * 0 (Japanese Yen), 1 (Vietnamese Dong) or 3 (Bahrain Dinar).
+ * The {@code BigMoney} class is not restricted to the standard decimal places
+ * and can represent an amount to any precision that a {@code BigDecimal} can represent.
+ * &lt;p&gt;
+ * This class is immutable and thread-safe.
+ */
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyProvider&gt;, Serializable {</span>
+
+    /**
+     * The serialisation version.
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * The regex for parsing.
+     */
+<span class="fc" id="L54">    private static final Pattern PARSE_REGEX = Pattern.compile(&quot;[+-]?[0-9]*[.]?[0-9]*&quot;);</span>
+
+    /**
+     * The currency, not null.
+     */
+    private final CurrencyUnit currency;
+    /**
+     * The amount, not null.
+     */
+    private final BigDecimal amount;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code BigMoney} from a {@code BigDecimal}.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency and amount.
+     * The scale of the money will be that of the {@code BigDecimal}, with
+     * a minimum scale of zero.
+     *
+     * @param currency  the currency, not null
+     * @param amount  the amount of money, not null
+     * @return the new instance, never null
+     * @throws IllegalArgumentException if an invalid BigDecimal subclass has been used
+     */
+    public static BigMoney of(CurrencyUnit currency, BigDecimal amount) {
+<span class="fc" id="L79">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
+<span class="fc" id="L80">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (amount.getClass() != BigDecimal.class) {</span>
+<span class="fc" id="L82">            BigInteger value = amount.unscaledValue();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (value == null) {</span>
+<span class="fc" id="L84">                throw new IllegalArgumentException(&quot;Illegal BigDecimal subclass&quot;);</span>
+            }
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">            if (value.getClass() != BigInteger.class) {</span>
+<span class="fc" id="L87">                value = new BigInteger(value.toString());</span>
+            }
+<span class="fc" id="L89">            amount = new BigDecimal(value, amount.scale());</span>
+        }
+<span class="fc" id="L91">        return new BigMoney(currency, amount);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code BigMoney} from a {@code double} using a well-defined conversion.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency and amount.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.425d' will be converted to '1.425'.
+     * The scale of the money will be that of the BigDecimal produced, with trailing zeroes stripped,
+     * and with a minimum scale of zero.
+     *
+     * @param currency  the currency, not null
+     * @param amount  the amount of money, not null
+     * @return the new instance, never null
+     */
+    public static BigMoney of(CurrencyUnit currency, double amount) {
+<span class="fc" id="L112">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
+<span class="fc" id="L113">        return BigMoney.of(currency, BigDecimal.valueOf(amount).stripTrailingZeros());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code BigMoney} from a {@code BigDecimal} at a specific scale.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency and amount.
+     * No rounding is performed on the amount, so it must have a
+     * scale less than or equal to the new scale.
+     * The result will have a minimum scale of zero.
+     *
+     * @param currency  the currency, not null
+     * @param amount  the amount of money, not null
+     * @param scale  the scale to use, zero or positive
+     * @return the new instance, never null
+     * @throws ArithmeticException if the scale exceeds the currency scale
+     */
+    public static BigMoney ofScale(CurrencyUnit currency, BigDecimal amount, int scale) {
+<span class="fc" id="L132">        return BigMoney.ofScale(currency, amount, scale, RoundingMode.UNNECESSARY);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code BigMoney} from a {@code double} using a
+     * well-defined conversion, rounding as necessary.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency and amount.
+     * If the amount has a scale in excess of the scale of the currency then the excess
+     * fractional digits are rounded using the rounding mode.
+     * The result will have a minimum scale of zero.
+     *
+     * @param currency  the currency, not null
+     * @param amount  the amount of money, not null
+     * @param scale  the scale to use, zero or positive
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new instance, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public static BigMoney ofScale(CurrencyUnit currency, BigDecimal amount, int scale, RoundingMode roundingMode) {
+<span class="fc" id="L152">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L153">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
+<span class="fc" id="L154">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc" id="L155">        amount = amount.setScale(scale, roundingMode);</span>
+<span class="fc" id="L156">        return BigMoney.of(currency, amount);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code BigMoney} from a scaled amount.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency, amount and scale.
+     * The amount is defined in terms of the specified scale.
+     * The result will have a minimum scale of zero.
+     * &lt;p&gt;
+     * For example, {@code ofScale(USD, 234, 2)} creates the instance {@code USD 2.34}.
+     *
+     * @param currency  the currency, not null
+     * @param unscaledAmount  the unscaled amount of money
+     * @param scale  the scale to use
+     * @return the new instance, never null
+     */
+    public static BigMoney ofScale(CurrencyUnit currency, long unscaledAmount, int scale) {
+<span class="fc" id="L174">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
+<span class="fc" id="L175">        return BigMoney.of(currency, BigDecimal.valueOf(unscaledAmount, scale));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code BigMoney} from an amount in major units.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency and amount.
+     * The scale of the money will be zero.
+     * &lt;p&gt;
+     * The amount is a whole number only. Thus you can initialise the value
+     * 'USD 20', but not the value 'USD 20.32'.
+     * For example, {@code ofMajor(USD, 25)} creates the instance {@code USD 25}.
+     *
+     * @param currency  the currency, not null
+     * @param amountMajor  the amount of money in the major division of the currency
+     * @return the new instance, never null
+     */
+    public static BigMoney ofMajor(CurrencyUnit currency, long amountMajor) {
+<span class="fc" id="L194">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L195">        return BigMoney.of(currency, BigDecimal.valueOf(amountMajor));</span>
+    }
+
+    /**
+     * Obtains an instance of {@code BigMoney} from an amount in minor units.
+     * &lt;p&gt;
+     * This allows you to create an instance with a specific currency and amount
+     * expressed in terms of the minor unit.
+     * The scale of the money will be that of the currency, such as 2 for USD or 0 for JPY.
+     * &lt;p&gt;
+     * For example, if constructing US Dollars, the input to this method represents cents.
+     * Note that when a currency has zero decimal places, the major and minor units are the same.
+     * For example, {@code ofMinor(USD, 2595)} creates the instance {@code USD 25.95}.
+     *
+     * @param currency  the currency, not null
+     * @param amountMinor  the amount of money in the minor division of the currency
+     * @return the new instance, never null
+     */
+    public static BigMoney ofMinor(CurrencyUnit currency, long amountMinor) {
+<span class="fc" id="L214">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L215">        return BigMoney.of(currency, BigDecimal.valueOf(amountMinor, currency.getDecimalPlaces()));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code BigMoney} representing zero.
+     * &lt;p&gt;
+     * The scale of the money will be zero.
+     * For example, {@code zero(USD)} creates the instance {@code USD 0}.
+     *
+     * @param currency  the currency, not null
+     * @return the instance representing zero, never null
+     */
+    public static BigMoney zero(CurrencyUnit currency) {
+<span class="fc" id="L229">        return BigMoney.of(currency, BigDecimal.ZERO);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code BigMoney} representing zero at a specific scale.
+     * &lt;p&gt;
+     * For example, {@code zero(USD, 2)} creates the instance {@code USD 0.00}.
+     *
+     * @param currency  the currency, not null
+     * @param scale  the scale to use, zero or positive
+     * @return the instance representing zero, never null
+     * @throws IllegalArgumentException if the scale is negative
+     */
+    public static BigMoney zero(CurrencyUnit currency, int scale) {
+<span class="fc" id="L243">        return BigMoney.of(currency, BigDecimal.valueOf(0, scale));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code BigMoney} from a provider.
+     * &lt;p&gt;
+     * This allows you to create an instance from any class that implements the
+     * provider, such as {@code Money}.
+     * This method simply calls {@link BigMoneyProvider#toBigMoney()} checking for nulls.
+     *
+     * @param moneyProvider  the money to convert, not null
+     * @return the new instance, never null
+     */
+    public static BigMoney of(BigMoneyProvider moneyProvider) {
+<span class="fc" id="L258">        MoneyUtils.checkNotNull(moneyProvider, &quot;BigMoneyProvider must not be null&quot;);</span>
+<span class="fc" id="L259">        BigMoney money = moneyProvider.toBigMoney();</span>
+<span class="fc" id="L260">        MoneyUtils.checkNotNull(money, &quot;BigMoneyProvider must not return null&quot;);</span>
+<span class="fc" id="L261">        return money;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code BigMoney} as the total value of an array.
+     * &lt;p&gt;
+     * The array must contain at least one monetary value.
+     * Subsequent amounts are added as though using {@link #plus(BigMoneyProvider)}.
+     * All amounts must be in the same currency.
+     * 
+     * @param monies  the monetary values to total, not empty, no null elements, not null
+     * @return the total, never null
+     * @throws IllegalArgumentException if the array is empty
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney total(BigMoneyProvider... monies) {
+<span class="fc" id="L278">        MoneyUtils.checkNotNull(monies, &quot;Money array must not be null&quot;);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        if (monies.length == 0) {</span>
+<span class="fc" id="L280">            throw new IllegalArgumentException(&quot;Money array must not be empty&quot;);</span>
+        }
+<span class="fc" id="L282">        BigMoney total = of(monies[0]);</span>
+<span class="fc" id="L283">        MoneyUtils.checkNotNull(total, &quot;Money array must not contain null entries&quot;);</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        for (int i = 1; i &lt; monies.length; i++) {</span>
+<span class="fc" id="L285">            total = total.plus(of(monies[i]));</span>
+        }
+<span class="fc" id="L287">        return total;</span>
+    }
+
+    /**
+     * Obtains an instance of {@code BigMoney} as the total value of a collection.
+     * &lt;p&gt;
+     * The iterable must provide at least one monetary value.
+     * Subsequent amounts are added as though using {@link #plus(BigMoneyProvider)}.
+     * All amounts must be in the same currency.
+     * 
+     * @param monies  the monetary values to total, not empty, no null elements, not null
+     * @return the total, never null
+     * @throws IllegalArgumentException if the iterable is empty
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney total(Iterable&lt;? extends BigMoneyProvider&gt; monies) {
+<span class="fc" id="L303">        MoneyUtils.checkNotNull(monies, &quot;Money iterator must not be null&quot;);</span>
+<span class="fc" id="L304">        Iterator&lt;? extends BigMoneyProvider&gt; it = monies.iterator();</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        if (it.hasNext() == false) {</span>
+<span class="fc" id="L306">            throw new IllegalArgumentException(&quot;Money iterator must not be empty&quot;);</span>
+        }
+<span class="fc" id="L308">        BigMoney total = of(it.next());</span>
+<span class="fc" id="L309">        MoneyUtils.checkNotNull(total, &quot;Money iterator must not contain null entries&quot;);</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        while (it.hasNext()) {</span>
+<span class="fc" id="L311">            total = total.plus(it.next());</span>
+        }
+<span class="fc" id="L313">        return total;</span>
+    }
+
+    /**
+     * Obtains an instance of {@code Money} as the total value of
+     * a possibly empty array.
+     * &lt;p&gt;
+     * The amounts are added as though using {@link #plus(BigMoneyProvider)} starting
+     * from zero in the specified currency.
+     * All amounts must be in the same currency.
+     * 
+     * @param currency  the currency to total in, not null
+     * @param monies  the monetary values to total, no null elements, not null
+     * @return the total, never null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney total(CurrencyUnit currency, BigMoneyProvider... monies) {
+<span class="fc" id="L330">        return BigMoney.zero(currency).plus(Arrays.asList(monies));</span>
+    }
+
+    /**
+     * Obtains an instance of {@code Money} as the total value of
+     * a possibly empty collection.
+     * &lt;p&gt;
+     * The amounts are added as though using {@link #plus(BigMoneyProvider)} starting
+     * from zero in the specified currency.
+     * All amounts must be in the same currency.
+     * 
+     * @param currency  the currency to total in, not null
+     * @param monies  the monetary values to total, no null elements, not null
+     * @return the total, never null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public static BigMoney total(CurrencyUnit currency, Iterable&lt;? extends BigMoneyProvider&gt; monies) {
+<span class="fc" id="L347">        return BigMoney.zero(currency).plus(monies);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Parses an instance of {@code BigMoney} from a string.
+     * &lt;p&gt;
+     * The string format is '$currencyCode $amount' where there may be
+     * zero to many spaces between the two parts.
+     * The currency code must be a valid three letter currency.
+     * The amount must match the regular expression {@code [+-]?[0-9]*[.]?[0-9]*}.
+     * The spaces and numbers must be ASCII characters.
+     * This matches the output from {@link #toString()}.
+     * &lt;p&gt;
+     * For example, {@code parse(&quot;USD 25&quot;)} creates the instance {@code USD 25}
+     * while {@code parse(&quot;USD 25.95&quot;)} creates the instance {@code USD 25.95}.
+     *
+     * @param moneyStr  the money string to parse, not null
+     * @return the parsed instance, never null
+     * @throws IllegalArgumentException if the string is malformed
+     * @throws ArithmeticException if the amount is too large
+     */
+    @FromString
+    public static BigMoney parse(String moneyStr) {
+<span class="fc" id="L371">        MoneyUtils.checkNotNull(moneyStr, &quot;Money must not be null&quot;);</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">        if (moneyStr.length() &lt; 4) {</span>
+<span class="fc" id="L373">            throw new IllegalArgumentException(&quot;Money '&quot; + moneyStr + &quot;' cannot be parsed&quot;);</span>
+        }
+<span class="fc" id="L375">        String currStr = moneyStr.substring(0, 3);</span>
+<span class="fc" id="L376">        int amountStart = 3;</span>
+<span class="fc bfc" id="L377" title="All 4 branches covered.">        while (amountStart &lt; moneyStr.length() &amp;&amp; moneyStr.charAt(amountStart) == ' ') {</span>
+<span class="fc" id="L378">            amountStart++;</span>
+        }
+<span class="fc" id="L380">        String amountStr = moneyStr.substring(amountStart);</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">        if (PARSE_REGEX.matcher(amountStr).matches() == false) {</span>
+<span class="fc" id="L382">            throw new IllegalArgumentException(&quot;Money amount '&quot; + moneyStr + &quot;' cannot be parsed&quot;);</span>
+        }
+<span class="fc" id="L384">        return BigMoney.of(CurrencyUnit.of(currStr), new BigDecimal(amountStr));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Ensures that a {@code BigMoney} is not {@code null}.
+     * &lt;p&gt;
+     * If the input money is not {@code null}, then it is returned, providing
+     * that the currency matches the specified currency.
+     * If the input money is {@code null}, then zero money in the currency
+     * is returned with a scale of zero.
+     * 
+     * @param money  the monetary value to check, may be null
+     * @param currency  the currency to use, not null
+     * @return the input money or zero in the specified currency, never null
+     * @throws CurrencyMismatchException if the input money is non-null and the currencies differ
+     * @deprecated This method encourages nulls, so is deprecated
+     */
+    @Deprecated
+    public static BigMoney nonNull(BigMoney money, CurrencyUnit currency) {
+<span class="fc bfc" id="L404" title="All 2 branches covered.">        if (money == null) {</span>
+<span class="fc" id="L405">            return zero(currency);</span>
+        }
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        if (money.getCurrencyUnit().equals(currency) == false) {</span>
+<span class="fc" id="L408">            MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
+<span class="fc" id="L409">            throw new CurrencyMismatchException(money.getCurrencyUnit(), currency);</span>
+        }
+<span class="fc" id="L411">        return money;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Private no-args constructor, for use as JPA Embeddable (for example).
+     */
+    @SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L419">    private BigMoney() {</span>
+<span class="nc" id="L420">        this.currency = null;</span>
+<span class="nc" id="L421">        this.amount = null;</span>
+<span class="nc" id="L422">    }</span>
+
+    /**
+     * Constructor, creating a new monetary instance.
+     * 
+     * @param currency  the currency to use, not null
+     * @param amount  the amount of money, not null
+     */
+<span class="fc" id="L430">    BigMoney(CurrencyUnit currency, BigDecimal amount) {</span>
+<span class="pc bpc" id="L431" title="1 of 4 branches missed.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
+<span class="pc bpc" id="L432" title="1 of 4 branches missed.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
+<span class="fc" id="L433">        this.currency = currency;</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">        this.amount = (amount.scale() &lt; 0 ? amount.setScale(0) : amount);</span>
+<span class="fc" id="L435">    }</span>
+
+    /**
+     * Block malicious data streams.
+     * 
+     * @param ois  the input stream, not null
+     * @throws InvalidObjectException if an error occurs
+     */
+    private void readObject(ObjectInputStream ois) throws InvalidObjectException {
+<span class="nc" id="L444">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
+    }
+
+    /**
+     * Uses a serialization delegate.
+     * 
+     * @return the replacing object, never null
+     */
+    private Object writeReplace() {
+<span class="fc" id="L453">        return new Ser(Ser.BIG_MONEY, this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a new {@code BigMoney}, returning {@code this} if possible.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param newAmount  the new amount to use, not null
+     * @return the new instance, never null
+     */
+    private BigMoney with(BigDecimal newAmount) {
+<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (newAmount == amount) {</span>
+<span class="fc" id="L467">            return this;</span>
+        }
+<span class="fc" id="L469">        return new BigMoney(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the currency.
+     * 
+     * @return the currency, never null
+     */
+    public CurrencyUnit getCurrencyUnit() {
+<span class="fc" id="L479">        return currency;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the specified currency.
+     * &lt;p&gt;
+     * The returned instance will have the specified currency and the amount
+     * from this instance. No currency conversion or alteration to the scale occurs.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param currency  the currency to use, not null
+     * @return the new instance with the input currency set, never null
+     */
+    public BigMoney withCurrencyUnit(CurrencyUnit currency) {
+<span class="fc" id="L495">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">        if (this.currency == currency) {</span>
+<span class="fc" id="L497">            return this;</span>
+        }
+<span class="fc" id="L499">        return new BigMoney(currency, amount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the scale of the {@code BigDecimal} amount.
+     * &lt;p&gt;
+     * The scale has the same meaning as in {@link BigDecimal}.
+     * Positive values represent the number of decimal places in use.
+     * Negative numbers represent the opposite.
+     * For example, a scale of 2 means that the money will have two decimal places
+     * such as 'USD 43.25'. The scale of will not be negative.
+     * 
+     * @return the scale in use
+     * @see #withScale
+     */
+    public int getScale() {
+<span class="fc" id="L516">        return amount.scale();</span>
+    }
+
+    /**
+     * Checks if this money has the scale of the currency.
+     * &lt;p&gt;
+     * Each currency has a default scale, such as 2 for USD and 0 for JPY.
+     * This method checks if the current scale matches the default scale.
+     * 
+     * @return true if the scale equals the current default scale
+     */
+    public boolean isCurrencyScale() {
+<span class="fc bfc" id="L528" title="All 2 branches covered.">        return amount.scale() == currency.getDecimalPlaces();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the specified scale,
+     * truncating the amount if necessary.
+     * &lt;p&gt;
+     * The returned instance will have this currency and the new scaled amount.
+     * For example, scaling 'USD 43.2' to a scale of 2 will yield 'USD 43.20'.
+     * No rounding is performed on the amount, so it must have a
+     * scale less than or equal to the new scale.
+     * A negative scale may be passed in, but the result will have a minimum scale of zero.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param scale  the scale to use
+     * @return the new instance with the input amount set, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney withScale(int scale) {
+<span class="fc" id="L549">        return withScale(scale, RoundingMode.UNNECESSARY);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the specified scale,
+     * using the specified rounding mode if necessary.
+     * &lt;p&gt;
+     * The returned instance will have this currency and the new scaled amount.
+     * For example, scaling 'USD 43.271' to a scale of 1 with HALF_EVEN rounding
+     * will yield 'USD 43.3'.
+     * A negative scale may be passed in, but the result will have a minimum scale of zero.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param scale  the scale to use
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new instance with the input amount set, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney withScale(int scale, RoundingMode roundingMode) {
+<span class="fc" id="L569">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">        if (scale == amount.scale()) {</span>
+<span class="fc" id="L571">            return this;</span>
+        }
+<span class="fc" id="L573">        return BigMoney.of(currency, amount.setScale(scale, roundingMode));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the scale of the currency,
+     * truncating the amount if necessary.
+     * &lt;p&gt;
+     * The returned instance will have this currency and the new scaled amount.
+     * For example, scaling 'USD 43.271' will yield 'USD 43.27' as USD has a scale of 2.
+     * No rounding is performed on the amount, so it must have a
+     * scale less than or equal to the new scale.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @return the new instance with the input amount set, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney withCurrencyScale() {
+<span class="fc" id="L592">        return withScale(currency.getDecimalPlaces(), RoundingMode.UNNECESSARY);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the scale of the currency,
+     * using the specified rounding mode if necessary.
+     * &lt;p&gt;
+     * The returned instance will have this currency and the new scaled amount.
+     * For example, scaling 'USD 43.271' will yield 'USD 43.27' as USD has a scale of 2.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new instance with the input amount set, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney withCurrencyScale(RoundingMode roundingMode) {
+<span class="fc" id="L609">        return withScale(currency.getDecimalPlaces(), roundingMode);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the amount.
+     * &lt;p&gt;
+     * This returns the value of the money as a {@code BigDecimal}.
+     * The scale will be the scale of this money.
+     * 
+     * @return the amount, never null
+     */
+    public BigDecimal getAmount() {
+<span class="fc" id="L622">        return amount;</span>
+    }
+
+    /**
+     * Gets the amount in major units as a {@code BigDecimal} with scale 0.
+     * &lt;p&gt;
+     * This returns the monetary amount in terms of the major units of the currency,
+     * truncating the amount if necessary.
+     * For example, 'EUR 2.35' will return 2, and 'BHD -1.345' will return -1.
+     * &lt;p&gt;
+     * This is returned as a {@code BigDecimal} rather than a {@code BigInteger}.
+     * This is to allow further calculations to be performed on the result.
+     * Should you need a {@code BigInteger}, simply call {@link BigDecimal#toBigInteger()}.
+     * 
+     * @return the major units part of the amount, never null
+     */
+    public BigDecimal getAmountMajor() {
+<span class="fc" id="L639">        return amount.setScale(0, RoundingMode.DOWN);</span>
+    }
+
+    /**
+     * Gets the amount in major units as a {@code long}.
+     * &lt;p&gt;
+     * This returns the monetary amount in terms of the major units of the currency,
+     * truncating the amount if necessary.
+     * For example, 'EUR 2.35' will return 2, and 'BHD -1.345' will return -1.
+     * 
+     * @return the major units part of the amount
+     * @throws ArithmeticException if the amount is too large for a {@code long}
+     */
+    public long getAmountMajorLong() {
+<span class="fc" id="L653">        return getAmountMajor().longValueExact();</span>
+    }
+
+    /**
+     * Gets the amount in major units as an {@code int}.
+     * &lt;p&gt;
+     * This returns the monetary amount in terms of the major units of the currency,
+     * truncating the amount if necessary.
+     * For example, 'EUR 2.35' will return 2, and 'BHD -1.345' will return -1.
+     * 
+     * @return the major units part of the amount
+     * @throws ArithmeticException if the amount is too large for an {@code int}
+     */
+    public int getAmountMajorInt() {
+<span class="fc" id="L667">        return getAmountMajor().intValueExact();</span>
+    }
+
+    /**
+     * Gets the amount in minor units as a {@code BigDecimal} with scale 0.
+     * &lt;p&gt;
+     * This returns the monetary amount in terms of the minor units of the currency,
+     * truncating the amount if necessary.
+     * For example, 'EUR 2.35' will return 235, and 'BHD -1.345' will return -1345.
+     * &lt;p&gt;
+     * This is returned as a {@code BigDecimal} rather than a {@code BigInteger}.
+     * This is to allow further calculations to be performed on the result.
+     * Should you need a {@code BigInteger}, simply call {@link BigDecimal#toBigInteger()}.
+     * 
+     * @return the minor units part of the amount, never null
+     */
+    public BigDecimal getAmountMinor() {
+<span class="fc" id="L684">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
+<span class="fc" id="L685">        return amount.setScale(cdp, RoundingMode.DOWN).movePointRight(cdp);</span>
+    }
+
+    /**
+     * Gets the amount in minor units as a {@code long}.
+     * &lt;p&gt;
+     * This returns the monetary amount in terms of the minor units of the currency,
+     * truncating the amount if necessary.
+     * For example, 'EUR 2.35' will return 235, and 'BHD -1.345' will return -1345.
+     * 
+     * @return the minor units part of the amount
+     * @throws ArithmeticException if the amount is too large for a {@code long}
+     */
+    public long getAmountMinorLong() {
+<span class="fc" id="L699">        return getAmountMinor().longValueExact();</span>
+    }
+
+    /**
+     * Gets the amount in minor units as an {@code int}.
+     * &lt;p&gt;
+     * This returns the monetary amount in terms of the minor units of the currency,
+     * truncating the amount if necessary.
+     * For example, 'EUR 2.35' will return 235, and 'BHD -1.345' will return -1345.
+     * 
+     * @return the minor units part of the amount
+     * @throws ArithmeticException if the amount is too large for an {@code int}
+     */
+    public int getAmountMinorInt() {
+<span class="fc" id="L713">        return getAmountMinor().intValueExact();</span>
+    }
+
+    /**
+     * Gets the minor part of the amount.
+     * &lt;p&gt;
+     * This return the minor unit part of the monetary amount.
+     * This is defined as the amount in minor units excluding major units.
+     * &lt;p&gt;
+     * For example, EUR has a scale of 2, so the minor part is always between 0 and 99
+     * for positive amounts, and 0 and -99 for negative amounts.
+     * Thus 'EUR 2.35' will return 35, and 'EUR -1.34' will return -34.
+     * 
+     * @return the minor part of the amount, negative if the amount is negative
+     */
+    public int getMinorPart() {
+<span class="fc" id="L729">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
+<span class="fc" id="L730">        return amount.setScale(cdp, RoundingMode.DOWN)</span>
+<span class="fc" id="L731">                    .remainder(BigDecimal.ONE)</span>
+<span class="fc" id="L732">                    .movePointRight(cdp).intValueExact();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the amount is zero.
+     * 
+     * @return true if the amount is zero
+     */
+    public boolean isZero() {
+<span class="fc bfc" id="L742" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) == 0;</span>
+    }
+
+    /**
+     * Checks if the amount is greater than zero.
+     * 
+     * @return true if the amount is greater than zero
+     */
+    public boolean isPositive() {
+<span class="fc bfc" id="L751" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt; 0;</span>
+    }
+
+    /**
+     * Checks if the amount is zero or greater.
+     * 
+     * @return true if the amount is zero or greater
+     */
+    public boolean isPositiveOrZero() {
+<span class="fc bfc" id="L760" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt;= 0;</span>
+    }
+
+    /**
+     * Checks if the amount is less than zero.
+     * 
+     * @return true if the amount is less than zero
+     */
+    public boolean isNegative() {
+<span class="fc bfc" id="L769" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt; 0;</span>
+    }
+
+    /**
+     * Checks if the amount is zero or less.
+     * 
+     * @return true if the amount is zero or less
+     */
+    public boolean isNegativeOrZero() {
+<span class="fc bfc" id="L778" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt;= 0;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the specified amount.
+     * &lt;p&gt;
+     * The returned instance will have this currency and the new amount.
+     * The scale of the returned instance will be that of the specified BigDecimal.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amount  the monetary amount to set in the returned instance, not null
+     * @return the new instance with the input amount set, never null
+     */
+    public BigMoney withAmount(BigDecimal amount) {
+<span class="fc" id="L794">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L795" title="All 2 branches covered.">        if (this.amount.equals(amount)) {</span>
+<span class="fc" id="L796">            return this;</span>
+        }
+<span class="fc" id="L798">        return BigMoney.of(currency, amount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the specified amount using a well-defined
+     * conversion from a {@code double}.
+     * &lt;p&gt;
+     * The returned instance will have this currency and the new amount.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.425d' will be converted to '1.425'.
+     * The scale of the money will be that of the BigDecimal produced.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amount  the monetary amount to set in the returned instance
+     * @return the new instance with the input amount set, never null
+     */
+    public BigMoney withAmount(double amount) {
+<span class="fc" id="L820">        return withAmount(BigDecimal.valueOf(amount));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Validates that the currency of this money and the specified money match.
+     * 
+     * @param moneyProvider  the money to check, not null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    private BigMoney checkCurrencyEqual(BigMoneyProvider moneyProvider) {
+<span class="fc" id="L831">        BigMoney money = of(moneyProvider);</span>
+<span class="fc bfc" id="L832" title="All 2 branches covered.">        if (isSameCurrency(money) == false) {</span>
+<span class="fc" id="L833">            throw new CurrencyMismatchException(getCurrencyUnit(), money.getCurrencyUnit());</span>
+        }
+<span class="fc" id="L835">        return money;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with a collection of monetary amounts added.
+     * &lt;p&gt;
+     * This adds the specified amounts to this monetary amount, returning a new object.
+     * The amounts are added as though using {@link #plus(BigMoneyProvider)}.
+     * The amounts must be in the same currency.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param moniesToAdd  the monetary values to add, no null elements, not null
+     * @return the new instance with the input amounts added, never null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public BigMoney plus(Iterable&lt;? extends BigMoneyProvider&gt; moniesToAdd) {
+<span class="fc" id="L853">        BigDecimal total = amount;</span>
+<span class="fc bfc" id="L854" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToAdd) {</span>
+<span class="fc" id="L855">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
+<span class="fc" id="L856">            total = total.add(money.amount);</span>
+<span class="fc" id="L857">        }</span>
+<span class="fc" id="L858">        return with(total);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the amount added.
+     * &lt;p&gt;
+     * This adds the specified amount to this monetary amount, returning a new object.
+     * The amount added must be in the same currency.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the two scales.
+     * For example, 'USD 25.95' plus 'USD 3.021' gives 'USD 28.971'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param moneyToAdd  the monetary value to add, not null
+     * @return the new instance with the input amount added, never null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public BigMoney plus(BigMoneyProvider moneyToAdd) {
+<span class="fc" id="L879">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
+<span class="fc" id="L880">        return plus(toAdd.getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount added.
+     * &lt;p&gt;
+     * This adds the specified amount to this monetary amount, returning a new object.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the two scales.
+     * For example, 'USD 25.95' plus '3.021' gives 'USD 28.971'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToAdd  the monetary value to add, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plus(BigDecimal amountToAdd) {
+<span class="fc" id="L898">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L899" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L900">            return this;</span>
+        }
+<span class="fc" id="L902">        BigDecimal newAmount = amount.add(amountToAdd);</span>
+<span class="fc" id="L903">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount added.
+     * &lt;p&gt;
+     * This adds the specified amount to this monetary amount, returning a new object.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the two scales.
+     * For example, 'USD 25.95' plus '3.021d' gives 'USD 28.971'.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToAdd  the monetary value to add, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plus(double amountToAdd) {
+<span class="fc bfc" id="L927" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L928">            return this;</span>
+        }
+<span class="fc" id="L930">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L931">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount in major units added.
+     * &lt;p&gt;
+     * This adds the specified amount in major units to this monetary amount,
+     * returning a new object. The minor units will be untouched in the result.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the current scale and 0.
+     * For example, 'USD 23.45' plus '138' gives 'USD 161.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToAdd  the monetary value to add, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plusMajor(long amountToAdd) {
+<span class="fc bfc" id="L950" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L951">            return this;</span>
+        }
+<span class="fc" id="L953">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L954">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount in minor units added.
+     * &lt;p&gt;
+     * This adds the specified amount in minor units to this monetary amount,
+     * returning a new object.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the current scale and the default currency scale.
+     * For example, 'USD 23.45' plus '138' gives 'USD 24.83'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToAdd  the monetary value to add, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plusMinor(long amountToAdd) {
+<span class="fc bfc" id="L973" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L974">            return this;</span>
+        }
+<span class="fc" id="L976">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L977">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the amount in the same currency added
+     * retaining the scale by rounding the result.
+     * &lt;p&gt;
+     * The scale of the result will be the same as the scale of this instance.
+     * For example,'USD 25.95' plus 'USD 3.021' gives 'USD 28.97' with most rounding modes.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param moneyToAdd  the monetary value to add, not null
+     * @param roundingMode  the rounding mode to use to adjust the scale, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plusRetainScale(BigMoneyProvider moneyToAdd, RoundingMode roundingMode) {
+<span class="fc" id="L995">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
+<span class="fc" id="L996">        return plusRetainScale(toAdd.getAmount(), roundingMode);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount added retaining
+     * the scale by rounding the result.
+     * &lt;p&gt;
+     * The scale of the result will be the same as the scale of this instance.
+     * For example,'USD 25.95' plus '3.021' gives 'USD 28.97' with most rounding modes.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToAdd  the monetary value to add, not null
+     * @param roundingMode  the rounding mode to use to adjust the scale, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plusRetainScale(BigDecimal amountToAdd, RoundingMode roundingMode) {
+<span class="fc" id="L1013">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1014" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1015">            return this;</span>
+        }
+<span class="fc" id="L1017">        BigDecimal newAmount = amount.add(amountToAdd);</span>
+<span class="fc" id="L1018">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1019">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount added retaining
+     * the scale by rounding the result.
+     * &lt;p&gt;
+     * The scale of the result will be the same as the scale of this instance.
+     * For example,'USD 25.95' plus '3.021d' gives 'USD 28.97' with most rounding modes.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToAdd  the monetary value to add, not null
+     * @param roundingMode  the rounding mode to use to adjust the scale, not null
+     * @return the new instance with the input amount added, never null
+     */
+    public BigMoney plusRetainScale(double amountToAdd, RoundingMode roundingMode) {
+<span class="fc bfc" id="L1042" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L1043">            return this;</span>
+        }
+<span class="fc" id="L1045">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L1046">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1047">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with a collection of monetary amounts subtracted.
+     * &lt;p&gt;
+     * This subtracts the specified amounts from this monetary amount, returning a new object.
+     * The amounts are subtracted one by one as though using {@link #minus(BigMoneyProvider)}.
+     * The amounts must be in the same currency.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param moniesToSubtract  the monetary values to subtract, no null elements, not null
+     * @return the new instance with the input amounts subtracted, never null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public BigMoney minus(Iterable&lt;? extends BigMoneyProvider&gt; moniesToSubtract) {
+<span class="fc" id="L1065">        BigDecimal total = amount;</span>
+<span class="fc bfc" id="L1066" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToSubtract) {</span>
+<span class="fc" id="L1067">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
+<span class="fc" id="L1068">            total = total.subtract(money.amount);</span>
+<span class="fc" id="L1069">        }</span>
+<span class="fc" id="L1070">        return with(total);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the amount subtracted.
+     * &lt;p&gt;
+     * This subtracts the specified amount from this monetary amount, returning a new object.
+     * The amount subtracted must be in the same currency.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the two scales.
+     * For example,'USD 25.95' minus 'USD 3.021' gives 'USD 22.929'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param moneyToSubtract  the monetary value to subtract, not null
+     * @return the new instance with the input amount subtracted, never null
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public BigMoney minus(BigMoneyProvider moneyToSubtract) {
+<span class="fc" id="L1091">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
+<span class="fc" id="L1092">        return minus(toSubtract.getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount subtracted.
+     * &lt;p&gt;
+     * This subtracts the specified amount from this monetary amount, returning a new object.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the two scales.
+     * For example,'USD 25.95' minus '3.021' gives 'USD 22.929'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToSubtract  the monetary value to subtract, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minus(BigDecimal amountToSubtract) {
+<span class="fc" id="L1110">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1111" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1112">            return this;</span>
+        }
+<span class="fc" id="L1114">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
+<span class="fc" id="L1115">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount subtracted.
+     * &lt;p&gt;
+     * This subtracts the specified amount from this monetary amount, returning a new object.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the two scales.
+     * For example,'USD 25.95' minus '3.021d' gives 'USD 22.929'.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToSubtract  the monetary value to subtract, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minus(double amountToSubtract) {
+<span class="fc bfc" id="L1139" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1140">            return this;</span>
+        }
+<span class="fc" id="L1142">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1143">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount in major units subtracted.
+     * &lt;p&gt;
+     * This subtracts the specified amount in major units from this monetary amount,
+     * returning a new object. The minor units will be untouched in the result.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the current scale and 0.
+     * For example, 'USD 23.45' minus '138' gives 'USD -114.55'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToSubtract  the monetary value to subtract, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minusMajor(long amountToSubtract) {
+<span class="fc bfc" id="L1162" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1163">            return this;</span>
+        }
+<span class="fc" id="L1165">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1166">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount in minor units subtracted.
+     * &lt;p&gt;
+     * This subtracts the specified amount in minor units from this monetary amount,
+     * returning a new object.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The scale of the result will be the maximum of the current scale and the default currency scale.
+     * For example, USD 23.45 minus '138' gives 'USD 22.07'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToSubtract  the monetary value to subtract, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minusMinor(long amountToSubtract) {
+<span class="fc bfc" id="L1185" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1186">            return this;</span>
+        }
+<span class="fc" id="L1188">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L1189">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the amount in the same currency subtracted
+     * retaining the scale by rounding the result.
+     * &lt;p&gt;
+     * The scale of the result will be the same as the scale of this instance.
+     * For example,'USD 25.95' minus 'USD 3.029' gives 'USD 22.92 with most rounding modes.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param moneyToSubtract  the monetary value to add, not null
+     * @param roundingMode  the rounding mode to use to adjust the scale, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minusRetainScale(BigMoneyProvider moneyToSubtract, RoundingMode roundingMode) {
+<span class="fc" id="L1207">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
+<span class="fc" id="L1208">        return minusRetainScale(toSubtract.getAmount(), roundingMode);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount subtracted retaining
+     * the scale by rounding the result.
+     * &lt;p&gt;
+     * The scale of the result will be the same as the scale of this instance.
+     * For example,'USD 25.95' minus '3.029' gives 'USD 22.92' with most rounding modes.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToSubtract  the monetary value to add, not null
+     * @param roundingMode  the rounding mode to use to adjust the scale, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minusRetainScale(BigDecimal amountToSubtract, RoundingMode roundingMode) {
+<span class="fc" id="L1225">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1226" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1227">            return this;</span>
+        }
+<span class="fc" id="L1229">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
+<span class="fc" id="L1230">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1231">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with the amount subtracted retaining
+     * the scale by rounding the result.
+     * &lt;p&gt;
+     * The scale of the result will be the same as the scale of this instance.
+     * For example,'USD 25.95' minus '3.029d' gives 'USD 22.92' with most rounding modes.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param amountToSubtract  the monetary value to add, not null
+     * @param roundingMode  the rounding mode to use to adjust the scale, not null
+     * @return the new instance with the input amount subtracted, never null
+     */
+    public BigMoney minusRetainScale(double amountToSubtract, RoundingMode roundingMode) {
+<span class="fc bfc" id="L1254" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1255">            return this;</span>
+        }
+<span class="fc" id="L1257">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1258">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1259">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value multiplied by the specified value.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The result has a scale equal to the sum of the two scales.
+     * For example, 'USD 1.13' multiplied by '2.5' gives 'USD 2.825'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToMultiplyBy  the scalar value to multiply by, not null
+     * @return the new multiplied instance, never null
+     */
+    public BigMoney multipliedBy(BigDecimal valueToMultiplyBy) {
+<span class="fc" id="L1276">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc bfc" id="L1277" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1278">            return this;</span>
+        }
+<span class="fc" id="L1280">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
+<span class="fc" id="L1281">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value multiplied by the specified value.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The result has a scale equal to the sum of the two scales.
+     * For example, 'USD 1.13' multiplied by '2.5' gives 'USD 2.825'.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToMultiplyBy  the scalar value to multiply by, not null
+     * @return the new multiplied instance, never null
+     */
+    public BigMoney multipliedBy(double valueToMultiplyBy) {
+<span class="fc bfc" id="L1303" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
+<span class="fc" id="L1304">            return this;</span>
+        }
+<span class="fc" id="L1306">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
+<span class="fc" id="L1307">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value multiplied by the specified value.
+     * &lt;p&gt;
+     * No precision is lost in the result.
+     * The result has a scale equal to the scale of this money.
+     * For example, 'USD 1.13' multiplied by '2' gives 'USD 2.26'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToMultiplyBy  the scalar value to multiply by, not null
+     * @return the new multiplied instance, never null
+     */
+    public BigMoney multipliedBy(long valueToMultiplyBy) {
+<span class="fc bfc" id="L1323" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
+<span class="fc" id="L1324">            return this;</span>
+        }
+<span class="fc" id="L1326">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
+<span class="fc" id="L1327">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value multiplied by the specified value
+     * using the specified rounding mode to adjust the scale of the result.
+     * &lt;p&gt;
+     * This multiplies this money by the specified value, retaining the scale of this money.
+     * This will frequently lose precision, hence the need for a rounding mode.
+     * For example, 'USD 1.13' multiplied by '2.5' and rounding down gives 'USD 2.82'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToMultiplyBy  the scalar value to multiply by, not null
+     * @param roundingMode  the rounding mode to use to bring the decimal places back in line, not null
+     * @return the new multiplied instance, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney multiplyRetainScale(BigDecimal valueToMultiplyBy, RoundingMode roundingMode) {
+<span class="fc" id="L1347">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc" id="L1348">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1349" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1350">            return this;</span>
+        }
+<span class="fc" id="L1352">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
+<span class="fc" id="L1353">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1354">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value multiplied by the specified value
+     * using the specified rounding mode to adjust the scale of the result.
+     * &lt;p&gt;
+     * This multiplies this money by the specified value, retaining the scale of this money.
+     * This will frequently lose precision, hence the need for a rounding mode.
+     * For example, 'USD 1.13' multiplied by '2.5' and rounding down gives 'USD 2.82'.
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToMultiplyBy  the scalar value to multiply by, not null
+     * @param roundingMode  the rounding mode to use to bring the decimal places back in line, not null
+     * @return the new multiplied instance, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney multiplyRetainScale(double valueToMultiplyBy, RoundingMode roundingMode) {
+<span class="fc" id="L1379">        return multiplyRetainScale(BigDecimal.valueOf(valueToMultiplyBy), roundingMode);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value divided by the specified value
+     * using the specified rounding mode to adjust the scale.
+     * &lt;p&gt;
+     * The result has the same scale as this instance.
+     * For example, 'USD 1.13' divided by '2.5' and rounding down gives 'USD 0.45'
+     * (amount rounded down from 0.452).
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToDivideBy  the scalar value to divide by, not null
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new divided instance, never null
+     * @throws ArithmeticException if dividing by zero
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney dividedBy(BigDecimal valueToDivideBy, RoundingMode roundingMode) {
+<span class="fc" id="L1400">        MoneyUtils.checkNotNull(valueToDivideBy, &quot;Divisor must not be null&quot;);</span>
+<span class="fc" id="L1401">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1402" title="All 2 branches covered.">        if (valueToDivideBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1403">            return this;</span>
+        }
+<span class="fc" id="L1405">        BigDecimal newAmount = amount.divide(valueToDivideBy, roundingMode);</span>
+<span class="fc" id="L1406">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value divided by the specified value
+     * using the specified rounding mode to adjust the scale.
+     * &lt;p&gt;
+     * The result has the same scale as this instance.
+     * For example, 'USD 1.13' divided by '2.5' and rounding down gives 'USD 0.45'
+     * (amount rounded down from 0.452).
+     * &lt;p&gt;
+     * The amount is converted via {@link BigDecimal#valueOf(double)} which yields
+     * the most expected answer for most programming scenarios.
+     * Any {@code double} literal in code will be converted to
+     * exactly the same BigDecimal with the same scale.
+     * For example, the literal '1.45d' will be converted to '1.45'.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToDivideBy  the scalar value to divide by, not null
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new divided instance, never null
+     * @throws ArithmeticException if dividing by zero
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney dividedBy(double valueToDivideBy, RoundingMode roundingMode) {
+<span class="fc" id="L1432">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1433" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
+<span class="fc" id="L1434">            return this;</span>
+        }
+<span class="fc" id="L1436">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
+<span class="fc" id="L1437">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value divided by the specified value
+     * using the specified rounding mode to adjust the decimal places in the result.
+     * &lt;p&gt;
+     * The result has the same scale as this instance.
+     * For example, 'USD 1.13' divided by '2' and rounding down gives 'USD 0.56'
+     * (amount rounded down from 0.565).
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param valueToDivideBy  the scalar value to divide by, not null
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new divided instance, never null
+     * @throws ArithmeticException if dividing by zero
+     */
+    public BigMoney dividedBy(long valueToDivideBy, RoundingMode roundingMode) {
+<span class="fc bfc" id="L1456" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
+<span class="fc" id="L1457">            return this;</span>
+        }
+<span class="fc" id="L1459">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
+<span class="fc" id="L1460">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value with the amount negated.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @return the new instance with the amount negated, never null
+     */
+    public BigMoney negated() {
+<span class="fc bfc" id="L1472" title="All 2 branches covered.">        if (isZero()) {</span>
+<span class="fc" id="L1473">            return this;</span>
+        }
+<span class="fc" id="L1475">        return BigMoney.of(currency, amount.negate());</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value with a positive amount.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @return the new instance with the amount converted to be positive, never null
+     */
+    public BigMoney abs() {
+<span class="fc bfc" id="L1486" title="All 2 branches covered.">        return (isNegative() ? negated() : this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value rounded to the specified scale without
+     * changing the current scale.
+     * &lt;p&gt;
+     * Scale is described in {@link BigDecimal} and represents the point below which
+     * the monetary value is zero. Negative scales round increasingly large numbers.
+     * Unlike {@link #withScale(int)}, this scale of the result is unchanged.
+     * &lt;ul&gt;
+     * &lt;li&gt;Rounding 'EUR 45.23' to a scale of -1 returns 40.00 or 50.00 depending on the rounding mode.
+     * &lt;li&gt;Rounding 'EUR 45.23' to a scale of 0 returns 45.00 or 46.00 depending on the rounding mode.
+     * &lt;li&gt;Rounding 'EUR 45.23' to a scale of 1 returns 45.20 or 45.30 depending on the rounding mode.
+     * &lt;li&gt;Rounding 'EUR 45.23' to a scale of 2 has no effect (it already has that scale).
+     * &lt;li&gt;Rounding 'EUR 45.23' to a scale of 3 has no effect (the scale is not increased).
+     * &lt;/ul&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param scale  the new scale
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the new instance with the amount converted to be positive, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney rounded(int scale, RoundingMode roundingMode) {
+<span class="fc" id="L1512">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1513" title="All 2 branches covered.">        if (scale &gt;= getScale()) {</span>
+<span class="fc" id="L1514">            return this;</span>
+        }
+<span class="fc" id="L1516">        int currentScale = amount.scale();</span>
+<span class="fc" id="L1517">        BigDecimal newAmount = amount.setScale(scale, roundingMode).setScale(currentScale);</span>
+<span class="fc" id="L1518">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this monetary value converted into another currency
+     * using the specified conversion rate.
+     * &lt;p&gt;
+     * The scale of the result will be the sum of the scale of this money and
+     * the scale of the multiplier. If desired, the scale of the result can be
+     * adjusted to the scale of the new currency using {@link #withCurrencyScale()}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param currency  the new currency, not null
+     * @param conversionMultipler  the conversion factor between the currencies, not null
+     * @return the new multiplied instance, never null
+     * @throws IllegalArgumentException if the currency is the same as this currency and the
+     *  conversion is not one; or if the conversion multiplier is negative
+     */
+    public BigMoney convertedTo(CurrencyUnit currency, BigDecimal conversionMultipler) {
+<span class="fc" id="L1539">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L1540">        MoneyUtils.checkNotNull(conversionMultipler, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc bfc" id="L1541" title="All 2 branches covered.">        if (this.currency == currency) {</span>
+<span class="fc bfc" id="L1542" title="All 2 branches covered.">            if (conversionMultipler.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1543">                return this;</span>
+            }
+<span class="fc" id="L1545">            throw new IllegalArgumentException(&quot;Cannot convert to the same currency&quot;);</span>
+        }
+<span class="fc bfc" id="L1547" title="All 2 branches covered.">        if (conversionMultipler.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
+<span class="fc" id="L1548">            throw new IllegalArgumentException(&quot;Cannot convert using a negative conversion multiplier&quot;);</span>
+        }
+<span class="fc" id="L1550">        BigDecimal newAmount = amount.multiply(conversionMultipler);</span>
+<span class="fc" id="L1551">        return BigMoney.of(currency, newAmount);</span>
+    }
+
+    /**
+     * Returns a copy of this monetary value converted into another currency
+     * using the specified conversion rate, with a rounding mode used to adjust
+     * the decimal places in the result.
+     * &lt;p&gt;
+     * The result will have the same scale as this instance even though it will
+     * be in a different currency.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method.
+     * 
+     * @param currency  the new currency, not null
+     * @param conversionMultipler  the conversion factor between the currencies, not null
+     * @param roundingMode  the rounding mode to use to bring the decimal places back in line, not null
+     * @return the new multiplied instance, never null
+     * @throws IllegalArgumentException if the currency is the same as this currency and the
+     *  conversion is not one; or if the conversion multiplier is negative
+     * @throws ArithmeticException if the rounding fails
+     */
+    public BigMoney convertRetainScale(CurrencyUnit currency, BigDecimal conversionMultipler, RoundingMode roundingMode) {
+<span class="fc" id="L1573">        return convertedTo(currency, conversionMultipler).withScale(getScale(), roundingMode);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implements the {@code BigMoneyProvider} interface, trivially
+     * returning {@code this}.
+     * 
+     * @return the money instance, never null
+     */
+    @Override
+    public BigMoney toBigMoney() {
+<span class="fc" id="L1585">        return this;</span>
+    }
+
+    /**
+     * Converts this money to an instance of {@code Money} without rounding.
+     * If the scale of this money exceeds the currency scale an exception will be thrown.
+     * 
+     * @return the money instance, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public Money toMoney() {
+<span class="fc" id="L1596">        return Money.of(this);</span>
+    }
+
+    /**
+     * Converts this money to an instance of {@code Money}.
+     * 
+     * @param roundingMode  the rounding mode to use, not null
+     * @return the money instance, never null
+     * @throws ArithmeticException if the rounding fails
+     */
+    public Money toMoney(RoundingMode roundingMode) {
+<span class="fc" id="L1607">        return Money.of(this, roundingMode);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this instance and the specified instance have the same currency.
+     * 
+     * @param money  the money to check, not null
+     * @return true if they have the same currency
+     */
+    public boolean isSameCurrency(BigMoneyProvider money) {
+<span class="fc" id="L1618">        return (currency.equals(of(money).getCurrencyUnit()));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this monetary value to another.
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other monetary value, not null
+     * @return -1 if this is less than , 0 if equal, 1 if greater than
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    @Override
+    public int compareTo(BigMoneyProvider other) {
+<span class="fc" id="L1632">        BigMoney otherMoney = of(other);</span>
+<span class="fc bfc" id="L1633" title="All 2 branches covered.">        if (currency.equals(otherMoney.currency) == false) {</span>
+<span class="fc" id="L1634">            throw new CurrencyMismatchException(getCurrencyUnit(), otherMoney.getCurrencyUnit());</span>
+        }
+<span class="fc" id="L1636">        return amount.compareTo(otherMoney.amount);</span>
+    }
+
+    /**
+     * Checks if this monetary value is equal to another.
+     * &lt;p&gt;
+     * This ignores the scale of the amount.
+     * Thus, 'USD 30.00' and 'USD 30' are equal.
+     * &lt;p&gt;
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other monetary value, not null
+     * @return true is this is greater than the specified monetary value
+     * @throws CurrencyMismatchException if the currencies differ
+     * @see #equals(Object)
+     */
+    public boolean isEqual(BigMoneyProvider other) {
+<span class="fc bfc" id="L1653" title="All 2 branches covered.">        return compareTo(other) == 0;</span>
+    }
+
+    /**
+     * Checks if this monetary value is greater than another.
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other monetary value, not null
+     * @return true is this is greater than the specified monetary value
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public boolean isGreaterThan(BigMoneyProvider other) {
+<span class="fc bfc" id="L1665" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+    }
+
+    /**
+     * Checks if this monetary value is less than another.
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other monetary value, not null
+     * @return true is this is less than the specified monetary value
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public boolean isLessThan(BigMoneyProvider other) {
+<span class="fc bfc" id="L1677" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this monetary value equals another.
+     * &lt;p&gt;
+     * Like BigDecimal, this method compares the scale of the amount.
+     * Thus, 'USD 30.00' and 'USD 30' are not equal.
+     * &lt;p&gt;
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other object, null returns false
+     * @return true if this instance equals the other instance
+     * @see #isEqual
+     */
+    @Override
+    public boolean equals(Object other) {
+<span class="fc bfc" id="L1695" title="All 2 branches covered.">        if (this == other) {</span>
+<span class="fc" id="L1696">            return true;</span>
+        }
+<span class="fc bfc" id="L1698" title="All 2 branches covered.">        if (other instanceof BigMoney) {</span>
+<span class="fc" id="L1699">            BigMoney otherMoney = (BigMoney) other;</span>
+<span class="fc bfc" id="L1700" title="All 2 branches covered.">            return currency.equals(otherMoney.getCurrencyUnit()) &amp;&amp;</span>
+<span class="fc bfc" id="L1701" title="All 2 branches covered.">                    amount.equals(otherMoney.amount);</span>
+        }
+<span class="fc" id="L1703">        return false;</span>
+    }
+
+    /**
+     * Returns a hash code for this monetary value.
+     * 
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L1713">        return currency.hashCode() ^ amount.hashCode();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets this monetary value as a string.
+     * &lt;p&gt;
+     * The format is the 3 letter ISO currency code, followed by a space,
+     * followed by the amount as per {@link BigDecimal#toPlainString()}.
+     * 
+     * @return the string representation of this monetary value, never null
+     */
+    @Override
+    @ToString
+    public String toString() {
+<span class="fc" id="L1728">        return new StringBuilder()</span>
+<span class="fc" id="L1729">            .append(currency.getCode())</span>
+<span class="fc" id="L1730">            .append(' ')</span>
+<span class="fc" id="L1731">            .append(amount.toPlainString())</span>
+<span class="fc" id="L1732">            .toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

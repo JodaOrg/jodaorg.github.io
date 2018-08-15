@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MoneyParseContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Money</a> &gt; <a href="index.source.html" class="el_package">org.joda.money.format</a> &gt; <span class="el_source">MoneyParseContext.java</span></div><h1>MoneyParseContext.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2009-present, Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.money.format;
+
+import java.math.BigDecimal;
+import java.text.ParsePosition;
+import java.util.Locale;
+
+import org.joda.money.BigMoney;
+import org.joda.money.CurrencyUnit;
+
+/**
+ * Context used when parsing money.
+ * &lt;p&gt;
+ * This class is mutable and intended for use by a single thread.
+ * A new instance is created for each parse.
+ */
+public final class MoneyParseContext {
+
+    /**
+     * The locale to parse using.
+     */
+    private Locale locale;
+    /**
+     * The text to parse.
+     */
+    private CharSequence text;
+    /**
+     * The text index.
+     */
+    private int textIndex;
+    /**
+     * The text error index.
+     */
+<span class="fc" id="L48">    private int textErrorIndex = -1;</span>
+    /**
+     * The parsed currency.
+     */
+    private CurrencyUnit currency;
+    /**
+     * The parsed amount.
+     */
+    private BigDecimal amount;
+
+    /**
+     * Constructor.
+     * 
+     * @param locale  the locale, not null
+     * @param text  the text to parse, not null
+     * @param index  the current text index
+     */
+<span class="fc" id="L65">    MoneyParseContext(Locale locale, CharSequence text, int index) {</span>
+<span class="fc" id="L66">        this.locale = locale;</span>
+<span class="fc" id="L67">        this.text = text;</span>
+<span class="fc" id="L68">        this.textIndex = index;</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Constructor.
+     * 
+     * @param locale  the locale, not null
+     * @param text  the text to parse, not null
+     * @param index  the current text index
+     * @param errorIndex  the error index
+     * @param currency  the currency
+     * @param amount  the parsed amount
+     */
+<span class="fc" id="L81">    MoneyParseContext(Locale locale, CharSequence text, int index, int errorIndex, CurrencyUnit currency, BigDecimal amount) {</span>
+<span class="fc" id="L82">        this.locale = locale;</span>
+<span class="fc" id="L83">        this.text = text;</span>
+<span class="fc" id="L84">        this.textIndex = index;</span>
+<span class="fc" id="L85">        this.textErrorIndex = errorIndex;</span>
+<span class="fc" id="L86">        this.currency = currency;</span>
+<span class="fc" id="L87">        this.amount = amount;</span>
+<span class="fc" id="L88">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the locale.
+     * 
+     * @return the locale, not null
+     */
+    public Locale getLocale() {
+<span class="fc" id="L97">        return locale;</span>
+    }
+
+    /**
+     * Sets the locale.
+     * 
+     * @param locale  the locale, not null
+     */
+    public void setLocale(Locale locale) {
+<span class="fc" id="L106">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L107">        this.locale = locale;</span>
+<span class="fc" id="L108">    }</span>
+
+    /**
+     * Gets the text being parsed.
+     * 
+     * @return the text being parsed, never null
+     */
+    public CharSequence getText() {
+<span class="fc" id="L116">        return text;</span>
+    }
+
+    /**
+     * Sets the text.
+     * 
+     * @param text  the text being parsed, not null
+     */
+    public void setText(CharSequence text) {
+<span class="fc" id="L125">        MoneyFormatter.checkNotNull(text, &quot;Text must not be null&quot;);</span>
+<span class="fc" id="L126">        this.text = text;</span>
+<span class="fc" id="L127">    }</span>
+
+    /**
+     * Gets the length of the text being parsed.
+     * 
+     * @return the length of the text being parsed
+     */
+    public int getTextLength() {
+<span class="fc" id="L135">        return text.length();</span>
+    }
+
+    /**
+     * Gets a substring of the text being parsed.
+     * 
+     * @param start  the start index
+     * @param end  the end index
+     * @return the substring, not null
+     */
+    public String getTextSubstring(int start, int end) {
+<span class="fc" id="L146">        return text.subSequence(start, end).toString();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the current parse position index.
+     * 
+     * @return the current parse position index
+     */
+    public int getIndex() {
+<span class="fc" id="L156">        return textIndex;</span>
+    }
+
+    /**
+     * Sets the current parse position index.
+     * 
+     * @param index  the current parse position index
+     */
+    public void setIndex(int index) {
+<span class="fc" id="L165">        this.textIndex = index;</span>
+<span class="fc" id="L166">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the error index.
+     * 
+     * @return the error index, negative if no error
+     */
+    public int getErrorIndex() {
+<span class="fc" id="L175">        return textErrorIndex;</span>
+    }
+
+    /**
+     * Sets the error index.
+     * 
+     * @param index  the error index
+     */
+    public void setErrorIndex(int index) {
+<span class="fc" id="L184">        this.textErrorIndex = index;</span>
+<span class="fc" id="L185">    }</span>
+
+    /**
+     * Sets the error index from the current index.
+     */
+    public void setError() {
+<span class="fc" id="L191">        this.textErrorIndex = textIndex;</span>
+<span class="fc" id="L192">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the parsed currency.
+     * 
+     * @return the parsed currency, null if not parsed yet
+     */
+    public CurrencyUnit getCurrency() {
+<span class="fc" id="L201">        return currency;</span>
+    }
+
+    /**
+     * Sets the parsed currency.
+     * 
+     * @param currency  the parsed currency, may be null
+     */
+    public void setCurrency(CurrencyUnit currency) {
+<span class="fc" id="L210">        this.currency = currency;</span>
+<span class="fc" id="L211">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the parsed amount.
+     * 
+     * @return the parsed amount, null if not parsed yet
+     */
+    public BigDecimal getAmount() {
+<span class="fc" id="L220">        return amount;</span>
+    }
+
+    /**
+     * Sets the parsed currency.
+     * 
+     * @param amount  the parsed amount, may be null
+     */
+    public void setAmount(BigDecimal amount) {
+<span class="fc" id="L229">        this.amount = amount;</span>
+<span class="fc" id="L230">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the parse has found an error.
+     * 
+     * @return whether a parse error has occurred
+     */
+    public boolean isError() {
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        return textErrorIndex &gt;= 0;</span>
+    }
+
+    /**
+     * Checks if the text has been fully parsed such that there is no more text to parse.
+     * 
+     * @return true if fully parsed
+     */
+    public boolean isFullyParsed() {
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        return textIndex == getTextLength();</span>
+    }
+
+    /**
+     * Checks if the context contains a currency and amount suitable for creating
+     * a monetary value.
+     * 
+     * @return true if able to create a monetary value
+     */
+    public boolean isComplete() {
+<span class="fc bfc" id="L258" title="All 4 branches covered.">        return currency != null &amp;&amp; amount != null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates a child context.
+     * 
+     * @return the child context, never null
+     */
+    MoneyParseContext createChild() {
+<span class="fc" id="L268">        return new MoneyParseContext(locale, text, textIndex, textErrorIndex, currency, amount);</span>
+    }
+
+    /**
+     * Merges the child context back into this instance.
+     * 
+     * @param child  the child context, not null
+     */
+    void mergeChild(MoneyParseContext child) {
+<span class="fc" id="L277">        setLocale(child.getLocale());</span>
+<span class="fc" id="L278">        setText(child.getText());</span>
+<span class="fc" id="L279">        setIndex(child.getIndex());</span>
+<span class="fc" id="L280">        setErrorIndex(child.getErrorIndex());</span>
+<span class="fc" id="L281">        setCurrency(child.getCurrency());</span>
+<span class="fc" id="L282">        setAmount(child.getAmount());</span>
+<span class="fc" id="L283">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Converts the indexes to a parse position.
+     * 
+     * @return the parse position, never null
+     */
+    public ParsePosition toParsePosition() {
+<span class="fc" id="L292">        ParsePosition pp = new ParsePosition(textIndex);</span>
+<span class="fc" id="L293">        pp.setErrorIndex(textErrorIndex);</span>
+<span class="fc" id="L294">        return pp;</span>
+    }
+
+    /**
+     * Converts the context to a {@code BigMoney}.
+     * 
+     * @return the monetary value, never null
+     * @throws MoneyFormatException if either the currency or amount is missing
+     */
+    public BigMoney toBigMoney() {
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (currency == null) {</span>
+<span class="fc" id="L305">            throw new MoneyFormatException(&quot;Cannot convert to BigMoney as no currency found&quot;);</span>
+        }
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        if (amount == null) {</span>
+<span class="fc" id="L308">            throw new MoneyFormatException(&quot;Cannot convert to BigMoney as no amount found&quot;);</span>
+        }
+<span class="fc" id="L310">        return BigMoney.of(currency, amount);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
