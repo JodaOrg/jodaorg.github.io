@@ -268,7 +268,7 @@ import org.joda.convert.ToString;
             int decimalPlaces, 
             boolean force) {
 
-<span class="fc" id="L271">        List&lt;String&gt; countryCodes = Collections.&lt;String&gt;emptyList();</span>
+<span class="fc" id="L271">        List&lt;String&gt; countryCodes = Collections.emptyList();</span>
 <span class="fc" id="L272">        return registerCurrency(currencyCode, numericCurrencyCode, decimalPlaces, countryCodes, force);</span>
     }
 
@@ -301,7 +301,7 @@ import org.joda.convert.ToString;
      * @return the sorted, independent, list of all registered currencies, never null
      */
     public static List&lt;CurrencyUnit&gt; registeredCurrencies() {
-<span class="fc" id="L304">        return new ArrayList&lt;CurrencyUnit&gt;(currenciesByCode.values());</span>
+<span class="fc" id="L304">        return new ArrayList&lt;&gt;(currenciesByCode.values());</span>
     }
 
     /**
@@ -313,7 +313,7 @@ import org.joda.convert.ToString;
      * @return the sorted, independent, list of all registered countries, never null
      */
     public static List&lt;String&gt; registeredCountries() {
-<span class="fc" id="L316">        return new ArrayList&lt;String&gt;(currenciesByCountry.keySet());</span>
+<span class="fc" id="L316">        return new ArrayList&lt;&gt;(currenciesByCountry.keySet());</span>
     }
 
     //-----------------------------------------------------------------------
@@ -434,49 +434,18 @@ import org.joda.convert.ToString;
 
     //-----------------------------------------------------------------------
     /**
-     * Obtains an instance of {@code CurrencyUnit} for the specified three-letter currency code.
-     * &lt;p&gt;
-     * This method exists to match the API of {@link Currency}.
-     *
-     * @param currencyCode  the three-letter currency code, not null
-     * @return the singleton instance, never null
-     * @throws IllegalCurrencyException if the currency is unknown
-     * @deprecated Use {@link CurrencyUnit#of(String)}
-     */
-    @Deprecated
-    public static CurrencyUnit getInstance(String currencyCode) {
-<span class="nc" id="L448">        return CurrencyUnit.of(currencyCode);</span>
-    }
-
-    /**
-     * Obtains an instance of {@code CurrencyUnit} for the specified locale.
-     * &lt;p&gt;
-     * This method exists to match the API of {@link Currency}.
-     *
-     * @param locale  the locale, not null
-     * @return the singleton instance, never null
-     * @throws IllegalCurrencyException if the currency is unknown
-     * @deprecated Use {@link CurrencyUnit#of(Locale)}
-     */
-    @Deprecated
-    public static CurrencyUnit getInstance(Locale locale) {
-<span class="fc" id="L463">        return CurrencyUnit.of(locale);</span>
-    }
-
-    //-----------------------------------------------------------------------
-    /**
      * Constructor, creating a new currency instance.
      * 
      * @param code  the three-letter currency code, not null
      * @param numericCode  the numeric currency code, from 0 to 999, -1 if none
      * @param decimalPlaces  the decimal places, not null
      */
-<span class="fc" id="L474">    CurrencyUnit(String code, short numericCode, short decimalPlaces) {</span>
-<span class="pc bpc" id="L475" title="1 of 4 branches missed.">        assert code != null : &quot;Joda-Money bug: Currency code must not be null&quot;;</span>
-<span class="fc" id="L476">        this.code = code;</span>
-<span class="fc" id="L477">        this.numericCode = numericCode;</span>
-<span class="fc" id="L478">        this.decimalPlaces = decimalPlaces;</span>
-<span class="fc" id="L479">    }</span>
+<span class="fc" id="L443">    CurrencyUnit(String code, short numericCode, short decimalPlaces) {</span>
+<span class="pc bpc" id="L444" title="1 of 4 branches missed.">        assert code != null : &quot;Joda-Money bug: Currency code must not be null&quot;;</span>
+<span class="fc" id="L445">        this.code = code;</span>
+<span class="fc" id="L446">        this.numericCode = numericCode;</span>
+<span class="fc" id="L447">        this.decimalPlaces = decimalPlaces;</span>
+<span class="fc" id="L448">    }</span>
 
     /**
      * Block malicious data streams.
@@ -485,7 +454,7 @@ import org.joda.convert.ToString;
      * @throws InvalidObjectException if an error occurs
      */
     private void readObject(ObjectInputStream ois) throws InvalidObjectException {
-<span class="nc" id="L488">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
+<span class="nc" id="L457">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
     }
 
     /**
@@ -494,7 +463,7 @@ import org.joda.convert.ToString;
      * @return the replacing object, never null
      */
     private Object writeReplace() {
-<span class="fc" id="L497">        return new Ser(Ser.CURRENCY_UNIT, this);</span>
+<span class="fc" id="L466">        return new Ser(Ser.CURRENCY_UNIT, this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -506,7 +475,7 @@ import org.joda.convert.ToString;
      * @return the three-letter upper-case currency code, never null
      */
     public String getCode() {
-<span class="fc" id="L509">        return code;</span>
+<span class="fc" id="L478">        return code;</span>
     }
 
     /**
@@ -517,7 +486,7 @@ import org.joda.convert.ToString;
      * @return the numeric currency code, -1 if no numeric code
      */
     public int getNumericCode() {
-<span class="fc" id="L520">        return numericCode;</span>
+<span class="fc" id="L489">        return numericCode;</span>
     }
 
     /**
@@ -529,17 +498,17 @@ import org.joda.convert.ToString;
      * @return the three digit numeric currency code, empty is no code, never null
      */
     public String getNumeric3Code() {
-<span class="fc bfc" id="L532" title="All 2 branches covered.">        if (numericCode &lt; 0) {</span>
-<span class="fc" id="L533">            return &quot;&quot;;</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">        if (numericCode &lt; 0) {</span>
+<span class="fc" id="L502">            return &quot;&quot;;</span>
         }
-<span class="fc" id="L535">        String str = Integer.toString(numericCode);</span>
-<span class="fc bfc" id="L536" title="All 2 branches covered.">        if (str.length() == 1) {</span>
-<span class="fc" id="L537">            return &quot;00&quot; + str;</span>
+<span class="fc" id="L504">        String str = Integer.toString(numericCode);</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">        if (str.length() == 1) {</span>
+<span class="fc" id="L506">            return &quot;00&quot; + str;</span>
         }
-<span class="fc bfc" id="L539" title="All 2 branches covered.">        if (str.length() == 2) {</span>
-<span class="fc" id="L540">            return &quot;0&quot; + str;</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (str.length() == 2) {</span>
+<span class="fc" id="L509">            return &quot;0&quot; + str;</span>
         }
-<span class="fc" id="L542">        return str;</span>
+<span class="fc" id="L511">        return str;</span>
     }
 
     /**
@@ -552,13 +521,13 @@ import org.joda.convert.ToString;
      * @return the country codes, may be empty, not null
      */
     public Set&lt;String&gt; getCountryCodes() {
-<span class="fc" id="L555">        Set&lt;String&gt; countryCodes = new HashSet&lt;String&gt;();</span>
-<span class="fc bfc" id="L556" title="All 2 branches covered.">        for (Entry&lt;String, CurrencyUnit&gt; entry : currenciesByCountry.entrySet()) {</span>
-<span class="fc bfc" id="L557" title="All 2 branches covered.">            if (this.equals(entry.getValue())) {</span>
-<span class="fc" id="L558">                countryCodes.add(entry.getKey());</span>
+<span class="fc" id="L524">        Set&lt;String&gt; countryCodes = new HashSet&lt;String&gt;();</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        for (Entry&lt;String, CurrencyUnit&gt; entry : currenciesByCountry.entrySet()) {</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">            if (this.equals(entry.getValue())) {</span>
+<span class="fc" id="L527">                countryCodes.add(entry.getKey());</span>
             }
-<span class="fc" id="L560">        }</span>
-<span class="fc" id="L561">        return countryCodes;</span>
+<span class="fc" id="L529">        }</span>
+<span class="fc" id="L530">        return countryCodes;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -574,7 +543,7 @@ import org.joda.convert.ToString;
      * @return the decimal places, from 0 to 9 (normally 0, 2 or 3)
      */
     public int getDecimalPlaces() {
-<span class="fc bfc" id="L577" title="All 2 branches covered.">        return decimalPlaces &lt; 0 ? 0 : decimalPlaces;</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        return decimalPlaces &lt; 0 ? 0 : decimalPlaces;</span>
     }
 
     /**
@@ -583,39 +552,7 @@ import org.joda.convert.ToString;
      * @return true if this is a pseudo-currency
      */
     public boolean isPseudoCurrency() {
-<span class="fc bfc" id="L586" title="All 2 branches covered.">        return decimalPlaces &lt; 0;</span>
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Gets the ISO-4217 three-letter currency code.
-     * &lt;p&gt;
-     * This method matches the API of {@link Currency}.
-     * 
-     * @return the currency code, never null
-     * @deprecated Use {@link CurrencyUnit#getCode()}
-     */
-    @Deprecated
-    public String getCurrencyCode() {
-<span class="fc" id="L600">        return code;</span>
-    }
-
-    /**
-     * Gets the number of fractional digits typically used by this currency.
-     * &lt;p&gt;
-     * Different currencies have different numbers of fractional digits by default.
-     * For example, 'GBP' has 2 fractional digits, but 'JPY' has zero.
-     * Pseudo-currencies are indicated by -1.
-     * &lt;p&gt;
-     * This method matches the API of {@link Currency}.
-     * The alternative method {@link #getDecimalPlaces()} may be more useful.
-     * 
-     * @return the fractional digits, from 0 to 9 (normally 0, 2 or 3), or -1 for pseudo-currencies
-     * @deprecated Use {@link CurrencyUnit#getDecimalPlaces()}
-     */
-    @Deprecated
-    public int getDefaultFractionDigits() {
-<span class="fc" id="L618">        return decimalPlaces;</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">        return decimalPlaces &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -631,9 +568,9 @@ import org.joda.convert.ToString;
      */
     public String getSymbol() {
         try {
-<span class="fc" id="L634">            return Currency.getInstance(code).getSymbol();</span>
-<span class="nc" id="L635">        } catch (IllegalArgumentException ex) {</span>
-<span class="nc" id="L636">            return code;</span>
+<span class="fc" id="L571">            return Currency.getInstance(code).getSymbol();</span>
+<span class="nc" id="L572">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L573">            return code;</span>
         }
     }
 
@@ -649,11 +586,11 @@ import org.joda.convert.ToString;
      * @return the JDK currency instance, never null
      */
     public String getSymbol(Locale locale) {
-<span class="fc" id="L652">        MoneyUtils.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L589">        MoneyUtils.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
         try {
-<span class="fc" id="L654">            return Currency.getInstance(code).getSymbol(locale);</span>
-<span class="nc" id="L655">        } catch (IllegalArgumentException ex) {</span>
-<span class="nc" id="L656">            return code;</span>
+<span class="fc" id="L591">            return Currency.getInstance(code).getSymbol(locale);</span>
+<span class="nc" id="L592">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L593">            return code;</span>
         }
     }
 
@@ -667,7 +604,7 @@ import org.joda.convert.ToString;
      * @throws IllegalArgumentException if no matching currency exists in the JDK
      */
     public Currency toCurrency() {
-<span class="fc" id="L670">        return Currency.getInstance(code);</span>
+<span class="fc" id="L607">        return Currency.getInstance(code);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -679,7 +616,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public int compareTo(CurrencyUnit other) {
-<span class="fc" id="L682">        return code.compareTo(other.code);</span>
+<span class="fc" id="L619">        return code.compareTo(other.code);</span>
     }
 
     /**
@@ -692,13 +629,13 @@ import org.joda.convert.ToString;
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L695" title="All 2 branches covered.">        if (obj == this) {</span>
-<span class="fc" id="L696">            return true;</span>
+<span class="fc bfc" id="L632" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L633">            return true;</span>
         }
-<span class="fc bfc" id="L698" title="All 2 branches covered.">        if (obj instanceof CurrencyUnit) {</span>
-<span class="fc" id="L699">            return code.equals(((CurrencyUnit) obj).code);</span>
+<span class="fc bfc" id="L635" title="All 2 branches covered.">        if (obj instanceof CurrencyUnit) {</span>
+<span class="fc" id="L636">            return code.equals(((CurrencyUnit) obj).code);</span>
         }
-<span class="fc" id="L701">        return false;</span>
+<span class="fc" id="L638">        return false;</span>
     }
 
     /**
@@ -708,7 +645,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L711">        return code.hashCode();</span>
+<span class="fc" id="L648">        return code.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -720,7 +657,7 @@ import org.joda.convert.ToString;
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L723">        return code;</span>
+<span class="fc" id="L660">        return code;</span>
     }
 
 }

@@ -386,40 +386,13 @@ import org.joda.convert.ToString;
 
     //-----------------------------------------------------------------------
     /**
-     * Ensures that a {@code BigMoney} is not {@code null}.
-     * &lt;p&gt;
-     * If the input money is not {@code null}, then it is returned, providing
-     * that the currency matches the specified currency.
-     * If the input money is {@code null}, then zero money in the currency
-     * is returned with a scale of zero.
-     * 
-     * @param money  the monetary value to check, may be null
-     * @param currency  the currency to use, not null
-     * @return the input money or zero in the specified currency, never null
-     * @throws CurrencyMismatchException if the input money is non-null and the currencies differ
-     * @deprecated This method encourages nulls, so is deprecated
-     */
-    @Deprecated
-    public static BigMoney nonNull(BigMoney money, CurrencyUnit currency) {
-<span class="fc bfc" id="L404" title="All 2 branches covered.">        if (money == null) {</span>
-<span class="fc" id="L405">            return zero(currency);</span>
-        }
-<span class="fc bfc" id="L407" title="All 2 branches covered.">        if (money.getCurrencyUnit().equals(currency) == false) {</span>
-<span class="fc" id="L408">            MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
-<span class="fc" id="L409">            throw new CurrencyMismatchException(money.getCurrencyUnit(), currency);</span>
-        }
-<span class="fc" id="L411">        return money;</span>
-    }
-
-    //-----------------------------------------------------------------------
-    /**
      * Private no-args constructor, for use as JPA Embeddable (for example).
      */
     @SuppressWarnings(&quot;unused&quot;)
-<span class="nc" id="L419">    private BigMoney() {</span>
-<span class="nc" id="L420">        this.currency = null;</span>
-<span class="nc" id="L421">        this.amount = null;</span>
-<span class="nc" id="L422">    }</span>
+<span class="nc" id="L392">    private BigMoney() {</span>
+<span class="nc" id="L393">        this.currency = null;</span>
+<span class="nc" id="L394">        this.amount = null;</span>
+<span class="nc" id="L395">    }</span>
 
     /**
      * Constructor, creating a new monetary instance.
@@ -427,12 +400,12 @@ import org.joda.convert.ToString;
      * @param currency  the currency to use, not null
      * @param amount  the amount of money, not null
      */
-<span class="fc" id="L430">    BigMoney(CurrencyUnit currency, BigDecimal amount) {</span>
-<span class="pc bpc" id="L431" title="1 of 4 branches missed.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
-<span class="pc bpc" id="L432" title="1 of 4 branches missed.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
-<span class="fc" id="L433">        this.currency = currency;</span>
-<span class="fc bfc" id="L434" title="All 2 branches covered.">        this.amount = (amount.scale() &lt; 0 ? amount.setScale(0) : amount);</span>
-<span class="fc" id="L435">    }</span>
+<span class="fc" id="L403">    BigMoney(CurrencyUnit currency, BigDecimal amount) {</span>
+<span class="pc bpc" id="L404" title="1 of 4 branches missed.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
+<span class="pc bpc" id="L405" title="1 of 4 branches missed.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
+<span class="fc" id="L406">        this.currency = currency;</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        this.amount = (amount.scale() &lt; 0 ? amount.setScale(0) : amount);</span>
+<span class="fc" id="L408">    }</span>
 
     /**
      * Block malicious data streams.
@@ -441,7 +414,7 @@ import org.joda.convert.ToString;
      * @throws InvalidObjectException if an error occurs
      */
     private void readObject(ObjectInputStream ois) throws InvalidObjectException {
-<span class="nc" id="L444">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
+<span class="nc" id="L417">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
     }
 
     /**
@@ -450,7 +423,7 @@ import org.joda.convert.ToString;
      * @return the replacing object, never null
      */
     private Object writeReplace() {
-<span class="fc" id="L453">        return new Ser(Ser.BIG_MONEY, this);</span>
+<span class="fc" id="L426">        return new Ser(Ser.BIG_MONEY, this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -463,10 +436,10 @@ import org.joda.convert.ToString;
      * @return the new instance, never null
      */
     private BigMoney with(BigDecimal newAmount) {
-<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (newAmount == amount) {</span>
-<span class="fc" id="L467">            return this;</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">        if (newAmount == amount) {</span>
+<span class="fc" id="L440">            return this;</span>
         }
-<span class="fc" id="L469">        return new BigMoney(currency, newAmount);</span>
+<span class="fc" id="L442">        return new BigMoney(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -476,7 +449,7 @@ import org.joda.convert.ToString;
      * @return the currency, never null
      */
     public CurrencyUnit getCurrencyUnit() {
-<span class="fc" id="L479">        return currency;</span>
+<span class="fc" id="L452">        return currency;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -492,11 +465,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input currency set, never null
      */
     public BigMoney withCurrencyUnit(CurrencyUnit currency) {
-<span class="fc" id="L495">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc bfc" id="L496" title="All 2 branches covered.">        if (this.currency == currency) {</span>
-<span class="fc" id="L497">            return this;</span>
+<span class="fc" id="L468">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">        if (this.currency == currency) {</span>
+<span class="fc" id="L470">            return this;</span>
         }
-<span class="fc" id="L499">        return new BigMoney(currency, amount);</span>
+<span class="fc" id="L472">        return new BigMoney(currency, amount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -513,7 +486,7 @@ import org.joda.convert.ToString;
      * @see #withScale
      */
     public int getScale() {
-<span class="fc" id="L516">        return amount.scale();</span>
+<span class="fc" id="L489">        return amount.scale();</span>
     }
 
     /**
@@ -525,7 +498,7 @@ import org.joda.convert.ToString;
      * @return true if the scale equals the current default scale
      */
     public boolean isCurrencyScale() {
-<span class="fc bfc" id="L528" title="All 2 branches covered.">        return amount.scale() == currency.getDecimalPlaces();</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">        return amount.scale() == currency.getDecimalPlaces();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -546,7 +519,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withScale(int scale) {
-<span class="fc" id="L549">        return withScale(scale, RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L522">        return withScale(scale, RoundingMode.UNNECESSARY);</span>
     }
 
     /**
@@ -566,11 +539,11 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withScale(int scale, RoundingMode roundingMode) {
-<span class="fc" id="L569">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L570" title="All 2 branches covered.">        if (scale == amount.scale()) {</span>
-<span class="fc" id="L571">            return this;</span>
+<span class="fc" id="L542">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        if (scale == amount.scale()) {</span>
+<span class="fc" id="L544">            return this;</span>
         }
-<span class="fc" id="L573">        return BigMoney.of(currency, amount.setScale(scale, roundingMode));</span>
+<span class="fc" id="L546">        return BigMoney.of(currency, amount.setScale(scale, roundingMode));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -589,7 +562,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withCurrencyScale() {
-<span class="fc" id="L592">        return withScale(currency.getDecimalPlaces(), RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L565">        return withScale(currency.getDecimalPlaces(), RoundingMode.UNNECESSARY);</span>
     }
 
     /**
@@ -606,7 +579,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withCurrencyScale(RoundingMode roundingMode) {
-<span class="fc" id="L609">        return withScale(currency.getDecimalPlaces(), roundingMode);</span>
+<span class="fc" id="L582">        return withScale(currency.getDecimalPlaces(), roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -619,7 +592,7 @@ import org.joda.convert.ToString;
      * @return the amount, never null
      */
     public BigDecimal getAmount() {
-<span class="fc" id="L622">        return amount;</span>
+<span class="fc" id="L595">        return amount;</span>
     }
 
     /**
@@ -636,7 +609,7 @@ import org.joda.convert.ToString;
      * @return the major units part of the amount, never null
      */
     public BigDecimal getAmountMajor() {
-<span class="fc" id="L639">        return amount.setScale(0, RoundingMode.DOWN);</span>
+<span class="fc" id="L612">        return amount.setScale(0, RoundingMode.DOWN);</span>
     }
 
     /**
@@ -650,7 +623,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the amount is too large for a {@code long}
      */
     public long getAmountMajorLong() {
-<span class="fc" id="L653">        return getAmountMajor().longValueExact();</span>
+<span class="fc" id="L626">        return getAmountMajor().longValueExact();</span>
     }
 
     /**
@@ -664,7 +637,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the amount is too large for an {@code int}
      */
     public int getAmountMajorInt() {
-<span class="fc" id="L667">        return getAmountMajor().intValueExact();</span>
+<span class="fc" id="L640">        return getAmountMajor().intValueExact();</span>
     }
 
     /**
@@ -681,8 +654,8 @@ import org.joda.convert.ToString;
      * @return the minor units part of the amount, never null
      */
     public BigDecimal getAmountMinor() {
-<span class="fc" id="L684">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
-<span class="fc" id="L685">        return amount.setScale(cdp, RoundingMode.DOWN).movePointRight(cdp);</span>
+<span class="fc" id="L657">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
+<span class="fc" id="L658">        return amount.setScale(cdp, RoundingMode.DOWN).movePointRight(cdp);</span>
     }
 
     /**
@@ -696,7 +669,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the amount is too large for a {@code long}
      */
     public long getAmountMinorLong() {
-<span class="fc" id="L699">        return getAmountMinor().longValueExact();</span>
+<span class="fc" id="L672">        return getAmountMinor().longValueExact();</span>
     }
 
     /**
@@ -710,7 +683,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the amount is too large for an {@code int}
      */
     public int getAmountMinorInt() {
-<span class="fc" id="L713">        return getAmountMinor().intValueExact();</span>
+<span class="fc" id="L686">        return getAmountMinor().intValueExact();</span>
     }
 
     /**
@@ -726,10 +699,10 @@ import org.joda.convert.ToString;
      * @return the minor part of the amount, negative if the amount is negative
      */
     public int getMinorPart() {
-<span class="fc" id="L729">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
-<span class="fc" id="L730">        return amount.setScale(cdp, RoundingMode.DOWN)</span>
-<span class="fc" id="L731">                    .remainder(BigDecimal.ONE)</span>
-<span class="fc" id="L732">                    .movePointRight(cdp).intValueExact();</span>
+<span class="fc" id="L702">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
+<span class="fc" id="L703">        return amount.setScale(cdp, RoundingMode.DOWN)</span>
+<span class="fc" id="L704">                    .remainder(BigDecimal.ONE)</span>
+<span class="fc" id="L705">                    .movePointRight(cdp).intValueExact();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -739,7 +712,7 @@ import org.joda.convert.ToString;
      * @return true if the amount is zero
      */
     public boolean isZero() {
-<span class="fc bfc" id="L742" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) == 0;</span>
+<span class="fc bfc" id="L715" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) == 0;</span>
     }
 
     /**
@@ -748,7 +721,7 @@ import org.joda.convert.ToString;
      * @return true if the amount is greater than zero
      */
     public boolean isPositive() {
-<span class="fc bfc" id="L751" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt; 0;</span>
+<span class="fc bfc" id="L724" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt; 0;</span>
     }
 
     /**
@@ -757,7 +730,7 @@ import org.joda.convert.ToString;
      * @return true if the amount is zero or greater
      */
     public boolean isPositiveOrZero() {
-<span class="fc bfc" id="L760" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt;= 0;</span>
+<span class="fc bfc" id="L733" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt;= 0;</span>
     }
 
     /**
@@ -766,7 +739,7 @@ import org.joda.convert.ToString;
      * @return true if the amount is less than zero
      */
     public boolean isNegative() {
-<span class="fc bfc" id="L769" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt; 0;</span>
+<span class="fc bfc" id="L742" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt; 0;</span>
     }
 
     /**
@@ -775,7 +748,7 @@ import org.joda.convert.ToString;
      * @return true if the amount is zero or less
      */
     public boolean isNegativeOrZero() {
-<span class="fc bfc" id="L778" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt;= 0;</span>
+<span class="fc bfc" id="L751" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt;= 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -791,11 +764,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount set, never null
      */
     public BigMoney withAmount(BigDecimal amount) {
-<span class="fc" id="L794">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L795" title="All 2 branches covered.">        if (this.amount.equals(amount)) {</span>
-<span class="fc" id="L796">            return this;</span>
+<span class="fc" id="L767">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">        if (this.amount.equals(amount)) {</span>
+<span class="fc" id="L769">            return this;</span>
         }
-<span class="fc" id="L798">        return BigMoney.of(currency, amount);</span>
+<span class="fc" id="L771">        return BigMoney.of(currency, amount);</span>
     }
 
     /**
@@ -817,7 +790,7 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount set, never null
      */
     public BigMoney withAmount(double amount) {
-<span class="fc" id="L820">        return withAmount(BigDecimal.valueOf(amount));</span>
+<span class="fc" id="L793">        return withAmount(BigDecimal.valueOf(amount));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -828,11 +801,11 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     private BigMoney checkCurrencyEqual(BigMoneyProvider moneyProvider) {
-<span class="fc" id="L831">        BigMoney money = of(moneyProvider);</span>
-<span class="fc bfc" id="L832" title="All 2 branches covered.">        if (isSameCurrency(money) == false) {</span>
-<span class="fc" id="L833">            throw new CurrencyMismatchException(getCurrencyUnit(), money.getCurrencyUnit());</span>
+<span class="fc" id="L804">        BigMoney money = of(moneyProvider);</span>
+<span class="fc bfc" id="L805" title="All 2 branches covered.">        if (isSameCurrency(money) == false) {</span>
+<span class="fc" id="L806">            throw new CurrencyMismatchException(getCurrencyUnit(), money.getCurrencyUnit());</span>
         }
-<span class="fc" id="L835">        return money;</span>
+<span class="fc" id="L808">        return money;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -850,12 +823,12 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney plus(Iterable&lt;? extends BigMoneyProvider&gt; moniesToAdd) {
-<span class="fc" id="L853">        BigDecimal total = amount;</span>
-<span class="fc bfc" id="L854" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToAdd) {</span>
-<span class="fc" id="L855">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
-<span class="fc" id="L856">            total = total.add(money.amount);</span>
-<span class="fc" id="L857">        }</span>
-<span class="fc" id="L858">        return with(total);</span>
+<span class="fc" id="L826">        BigDecimal total = amount;</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToAdd) {</span>
+<span class="fc" id="L828">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
+<span class="fc" id="L829">            total = total.add(money.amount);</span>
+<span class="fc" id="L830">        }</span>
+<span class="fc" id="L831">        return with(total);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -876,8 +849,8 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney plus(BigMoneyProvider moneyToAdd) {
-<span class="fc" id="L879">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
-<span class="fc" id="L880">        return plus(toAdd.getAmount());</span>
+<span class="fc" id="L852">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
+<span class="fc" id="L853">        return plus(toAdd.getAmount());</span>
     }
 
     /**
@@ -895,12 +868,12 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plus(BigDecimal amountToAdd) {
-<span class="fc" id="L898">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L899" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L900">            return this;</span>
+<span class="fc" id="L871">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L873">            return this;</span>
         }
-<span class="fc" id="L902">        BigDecimal newAmount = amount.add(amountToAdd);</span>
-<span class="fc" id="L903">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L875">        BigDecimal newAmount = amount.add(amountToAdd);</span>
+<span class="fc" id="L876">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -924,11 +897,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plus(double amountToAdd) {
-<span class="fc bfc" id="L927" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L928">            return this;</span>
+<span class="fc bfc" id="L900" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L901">            return this;</span>
         }
-<span class="fc" id="L930">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
-<span class="fc" id="L931">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L903">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L904">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -947,11 +920,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusMajor(long amountToAdd) {
-<span class="fc bfc" id="L950" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L951">            return this;</span>
+<span class="fc bfc" id="L923" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L924">            return this;</span>
         }
-<span class="fc" id="L953">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
-<span class="fc" id="L954">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L926">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L927">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -970,11 +943,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusMinor(long amountToAdd) {
-<span class="fc bfc" id="L973" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L974">            return this;</span>
+<span class="fc bfc" id="L946" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L947">            return this;</span>
         }
-<span class="fc" id="L976">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd, currency.getDecimalPlaces()));</span>
-<span class="fc" id="L977">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L949">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L950">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -992,8 +965,8 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusRetainScale(BigMoneyProvider moneyToAdd, RoundingMode roundingMode) {
-<span class="fc" id="L995">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
-<span class="fc" id="L996">        return plusRetainScale(toAdd.getAmount(), roundingMode);</span>
+<span class="fc" id="L968">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
+<span class="fc" id="L969">        return plusRetainScale(toAdd.getAmount(), roundingMode);</span>
     }
 
     /**
@@ -1010,13 +983,13 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusRetainScale(BigDecimal amountToAdd, RoundingMode roundingMode) {
-<span class="fc" id="L1013">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L1014" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L1015">            return this;</span>
+<span class="fc" id="L986">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L987" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L988">            return this;</span>
         }
-<span class="fc" id="L1017">        BigDecimal newAmount = amount.add(amountToAdd);</span>
-<span class="fc" id="L1018">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1019">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L990">        BigDecimal newAmount = amount.add(amountToAdd);</span>
+<span class="fc" id="L991">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L992">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1039,12 +1012,12 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusRetainScale(double amountToAdd, RoundingMode roundingMode) {
-<span class="fc bfc" id="L1042" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L1043">            return this;</span>
+<span class="fc bfc" id="L1015" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L1016">            return this;</span>
         }
-<span class="fc" id="L1045">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
-<span class="fc" id="L1046">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1047">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1018">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L1019">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1020">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1062,12 +1035,12 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney minus(Iterable&lt;? extends BigMoneyProvider&gt; moniesToSubtract) {
-<span class="fc" id="L1065">        BigDecimal total = amount;</span>
-<span class="fc bfc" id="L1066" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToSubtract) {</span>
-<span class="fc" id="L1067">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
-<span class="fc" id="L1068">            total = total.subtract(money.amount);</span>
-<span class="fc" id="L1069">        }</span>
-<span class="fc" id="L1070">        return with(total);</span>
+<span class="fc" id="L1038">        BigDecimal total = amount;</span>
+<span class="fc bfc" id="L1039" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToSubtract) {</span>
+<span class="fc" id="L1040">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
+<span class="fc" id="L1041">            total = total.subtract(money.amount);</span>
+<span class="fc" id="L1042">        }</span>
+<span class="fc" id="L1043">        return with(total);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1088,8 +1061,8 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney minus(BigMoneyProvider moneyToSubtract) {
-<span class="fc" id="L1091">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
-<span class="fc" id="L1092">        return minus(toSubtract.getAmount());</span>
+<span class="fc" id="L1064">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
+<span class="fc" id="L1065">        return minus(toSubtract.getAmount());</span>
     }
 
     /**
@@ -1107,12 +1080,12 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minus(BigDecimal amountToSubtract) {
-<span class="fc" id="L1110">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L1111" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L1112">            return this;</span>
+<span class="fc" id="L1083">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1084" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1085">            return this;</span>
         }
-<span class="fc" id="L1114">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
-<span class="fc" id="L1115">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1087">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
+<span class="fc" id="L1088">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1136,11 +1109,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minus(double amountToSubtract) {
-<span class="fc bfc" id="L1139" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1140">            return this;</span>
+<span class="fc bfc" id="L1112" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1113">            return this;</span>
         }
-<span class="fc" id="L1142">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
-<span class="fc" id="L1143">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1115">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1116">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1159,11 +1132,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusMajor(long amountToSubtract) {
-<span class="fc bfc" id="L1162" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1163">            return this;</span>
+<span class="fc bfc" id="L1135" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1136">            return this;</span>
         }
-<span class="fc" id="L1165">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
-<span class="fc" id="L1166">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1138">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1139">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1182,11 +1155,11 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusMinor(long amountToSubtract) {
-<span class="fc bfc" id="L1185" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1186">            return this;</span>
+<span class="fc bfc" id="L1158" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1159">            return this;</span>
         }
-<span class="fc" id="L1188">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract, currency.getDecimalPlaces()));</span>
-<span class="fc" id="L1189">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1161">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L1162">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1204,8 +1177,8 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusRetainScale(BigMoneyProvider moneyToSubtract, RoundingMode roundingMode) {
-<span class="fc" id="L1207">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
-<span class="fc" id="L1208">        return minusRetainScale(toSubtract.getAmount(), roundingMode);</span>
+<span class="fc" id="L1180">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
+<span class="fc" id="L1181">        return minusRetainScale(toSubtract.getAmount(), roundingMode);</span>
     }
 
     /**
@@ -1222,13 +1195,13 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusRetainScale(BigDecimal amountToSubtract, RoundingMode roundingMode) {
-<span class="fc" id="L1225">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L1226" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L1227">            return this;</span>
+<span class="fc" id="L1198">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1199" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1200">            return this;</span>
         }
-<span class="fc" id="L1229">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
-<span class="fc" id="L1230">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1231">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1202">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
+<span class="fc" id="L1203">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1204">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1251,12 +1224,12 @@ import org.joda.convert.ToString;
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusRetainScale(double amountToSubtract, RoundingMode roundingMode) {
-<span class="fc bfc" id="L1254" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1255">            return this;</span>
+<span class="fc bfc" id="L1227" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1228">            return this;</span>
         }
-<span class="fc" id="L1257">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
-<span class="fc" id="L1258">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1259">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1230">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1231">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1232">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1273,12 +1246,12 @@ import org.joda.convert.ToString;
      * @return the new multiplied instance, never null
      */
     public BigMoney multipliedBy(BigDecimal valueToMultiplyBy) {
-<span class="fc" id="L1276">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
-<span class="fc bfc" id="L1277" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1278">            return this;</span>
+<span class="fc" id="L1249">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc bfc" id="L1250" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1251">            return this;</span>
         }
-<span class="fc" id="L1280">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
-<span class="fc" id="L1281">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1253">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
+<span class="fc" id="L1254">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1300,11 +1273,11 @@ import org.joda.convert.ToString;
      * @return the new multiplied instance, never null
      */
     public BigMoney multipliedBy(double valueToMultiplyBy) {
-<span class="fc bfc" id="L1303" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
-<span class="fc" id="L1304">            return this;</span>
+<span class="fc bfc" id="L1276" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
+<span class="fc" id="L1277">            return this;</span>
         }
-<span class="fc" id="L1306">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
-<span class="fc" id="L1307">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1279">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
+<span class="fc" id="L1280">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1320,11 +1293,11 @@ import org.joda.convert.ToString;
      * @return the new multiplied instance, never null
      */
     public BigMoney multipliedBy(long valueToMultiplyBy) {
-<span class="fc bfc" id="L1323" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
-<span class="fc" id="L1324">            return this;</span>
+<span class="fc bfc" id="L1296" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
+<span class="fc" id="L1297">            return this;</span>
         }
-<span class="fc" id="L1326">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
-<span class="fc" id="L1327">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1299">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
+<span class="fc" id="L1300">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1344,14 +1317,14 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney multiplyRetainScale(BigDecimal valueToMultiplyBy, RoundingMode roundingMode) {
-<span class="fc" id="L1347">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
-<span class="fc" id="L1348">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1349" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1350">            return this;</span>
+<span class="fc" id="L1320">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc" id="L1321">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1322" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1323">            return this;</span>
         }
-<span class="fc" id="L1352">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
-<span class="fc" id="L1353">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1354">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1325">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
+<span class="fc" id="L1326">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1327">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1376,7 +1349,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney multiplyRetainScale(double valueToMultiplyBy, RoundingMode roundingMode) {
-<span class="fc" id="L1379">        return multiplyRetainScale(BigDecimal.valueOf(valueToMultiplyBy), roundingMode);</span>
+<span class="fc" id="L1352">        return multiplyRetainScale(BigDecimal.valueOf(valueToMultiplyBy), roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1397,13 +1370,13 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney dividedBy(BigDecimal valueToDivideBy, RoundingMode roundingMode) {
-<span class="fc" id="L1400">        MoneyUtils.checkNotNull(valueToDivideBy, &quot;Divisor must not be null&quot;);</span>
-<span class="fc" id="L1401">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1402" title="All 2 branches covered.">        if (valueToDivideBy.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1403">            return this;</span>
+<span class="fc" id="L1373">        MoneyUtils.checkNotNull(valueToDivideBy, &quot;Divisor must not be null&quot;);</span>
+<span class="fc" id="L1374">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1375" title="All 2 branches covered.">        if (valueToDivideBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1376">            return this;</span>
         }
-<span class="fc" id="L1405">        BigDecimal newAmount = amount.divide(valueToDivideBy, roundingMode);</span>
-<span class="fc" id="L1406">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1378">        BigDecimal newAmount = amount.divide(valueToDivideBy, roundingMode);</span>
+<span class="fc" id="L1379">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1429,12 +1402,12 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney dividedBy(double valueToDivideBy, RoundingMode roundingMode) {
-<span class="fc" id="L1432">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1433" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
-<span class="fc" id="L1434">            return this;</span>
+<span class="fc" id="L1405">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1406" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
+<span class="fc" id="L1407">            return this;</span>
         }
-<span class="fc" id="L1436">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
-<span class="fc" id="L1437">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1409">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
+<span class="fc" id="L1410">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1453,11 +1426,11 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if dividing by zero
      */
     public BigMoney dividedBy(long valueToDivideBy, RoundingMode roundingMode) {
-<span class="fc bfc" id="L1456" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
-<span class="fc" id="L1457">            return this;</span>
+<span class="fc bfc" id="L1429" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
+<span class="fc" id="L1430">            return this;</span>
         }
-<span class="fc" id="L1459">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
-<span class="fc" id="L1460">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1432">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
+<span class="fc" id="L1433">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1469,10 +1442,10 @@ import org.joda.convert.ToString;
      * @return the new instance with the amount negated, never null
      */
     public BigMoney negated() {
-<span class="fc bfc" id="L1472" title="All 2 branches covered.">        if (isZero()) {</span>
-<span class="fc" id="L1473">            return this;</span>
+<span class="fc bfc" id="L1445" title="All 2 branches covered.">        if (isZero()) {</span>
+<span class="fc" id="L1446">            return this;</span>
         }
-<span class="fc" id="L1475">        return BigMoney.of(currency, amount.negate());</span>
+<span class="fc" id="L1448">        return BigMoney.of(currency, amount.negate());</span>
     }
 
     /**
@@ -1483,7 +1456,7 @@ import org.joda.convert.ToString;
      * @return the new instance with the amount converted to be positive, never null
      */
     public BigMoney abs() {
-<span class="fc bfc" id="L1486" title="All 2 branches covered.">        return (isNegative() ? negated() : this);</span>
+<span class="fc bfc" id="L1459" title="All 2 branches covered.">        return (isNegative() ? negated() : this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1509,13 +1482,13 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney rounded(int scale, RoundingMode roundingMode) {
-<span class="fc" id="L1512">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1513" title="All 2 branches covered.">        if (scale &gt;= getScale()) {</span>
-<span class="fc" id="L1514">            return this;</span>
+<span class="fc" id="L1485">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1486" title="All 2 branches covered.">        if (scale &gt;= getScale()) {</span>
+<span class="fc" id="L1487">            return this;</span>
         }
-<span class="fc" id="L1516">        int currentScale = amount.scale();</span>
-<span class="fc" id="L1517">        BigDecimal newAmount = amount.setScale(scale, roundingMode).setScale(currentScale);</span>
-<span class="fc" id="L1518">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1489">        int currentScale = amount.scale();</span>
+<span class="fc" id="L1490">        BigDecimal newAmount = amount.setScale(scale, roundingMode).setScale(currentScale);</span>
+<span class="fc" id="L1491">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1536,19 +1509,19 @@ import org.joda.convert.ToString;
      *  conversion is not one; or if the conversion multiplier is negative
      */
     public BigMoney convertedTo(CurrencyUnit currency, BigDecimal conversionMultipler) {
-<span class="fc" id="L1539">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc" id="L1540">        MoneyUtils.checkNotNull(conversionMultipler, &quot;Multiplier must not be null&quot;);</span>
-<span class="fc bfc" id="L1541" title="All 2 branches covered.">        if (this.currency == currency) {</span>
-<span class="fc bfc" id="L1542" title="All 2 branches covered.">            if (conversionMultipler.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1543">                return this;</span>
+<span class="fc" id="L1512">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L1513">        MoneyUtils.checkNotNull(conversionMultipler, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc bfc" id="L1514" title="All 2 branches covered.">        if (this.currency == currency) {</span>
+<span class="fc bfc" id="L1515" title="All 2 branches covered.">            if (conversionMultipler.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1516">                return this;</span>
             }
-<span class="fc" id="L1545">            throw new IllegalArgumentException(&quot;Cannot convert to the same currency&quot;);</span>
+<span class="fc" id="L1518">            throw new IllegalArgumentException(&quot;Cannot convert to the same currency&quot;);</span>
         }
-<span class="fc bfc" id="L1547" title="All 2 branches covered.">        if (conversionMultipler.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
-<span class="fc" id="L1548">            throw new IllegalArgumentException(&quot;Cannot convert using a negative conversion multiplier&quot;);</span>
+<span class="fc bfc" id="L1520" title="All 2 branches covered.">        if (conversionMultipler.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
+<span class="fc" id="L1521">            throw new IllegalArgumentException(&quot;Cannot convert using a negative conversion multiplier&quot;);</span>
         }
-<span class="fc" id="L1550">        BigDecimal newAmount = amount.multiply(conversionMultipler);</span>
-<span class="fc" id="L1551">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1523">        BigDecimal newAmount = amount.multiply(conversionMultipler);</span>
+<span class="fc" id="L1524">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1570,7 +1543,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney convertRetainScale(CurrencyUnit currency, BigDecimal conversionMultipler, RoundingMode roundingMode) {
-<span class="fc" id="L1573">        return convertedTo(currency, conversionMultipler).withScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1546">        return convertedTo(currency, conversionMultipler).withScale(getScale(), roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1582,7 +1555,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public BigMoney toBigMoney() {
-<span class="fc" id="L1585">        return this;</span>
+<span class="fc" id="L1558">        return this;</span>
     }
 
     /**
@@ -1593,7 +1566,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public Money toMoney() {
-<span class="fc" id="L1596">        return Money.of(this);</span>
+<span class="fc" id="L1569">        return Money.of(this);</span>
     }
 
     /**
@@ -1604,7 +1577,7 @@ import org.joda.convert.ToString;
      * @throws ArithmeticException if the rounding fails
      */
     public Money toMoney(RoundingMode roundingMode) {
-<span class="fc" id="L1607">        return Money.of(this, roundingMode);</span>
+<span class="fc" id="L1580">        return Money.of(this, roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1615,7 +1588,7 @@ import org.joda.convert.ToString;
      * @return true if they have the same currency
      */
     public boolean isSameCurrency(BigMoneyProvider money) {
-<span class="fc" id="L1618">        return (currency.equals(of(money).getCurrencyUnit()));</span>
+<span class="fc" id="L1591">        return (currency.equals(of(money).getCurrencyUnit()));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1629,11 +1602,11 @@ import org.joda.convert.ToString;
      */
     @Override
     public int compareTo(BigMoneyProvider other) {
-<span class="fc" id="L1632">        BigMoney otherMoney = of(other);</span>
-<span class="fc bfc" id="L1633" title="All 2 branches covered.">        if (currency.equals(otherMoney.currency) == false) {</span>
-<span class="fc" id="L1634">            throw new CurrencyMismatchException(getCurrencyUnit(), otherMoney.getCurrencyUnit());</span>
+<span class="fc" id="L1605">        BigMoney otherMoney = of(other);</span>
+<span class="fc bfc" id="L1606" title="All 2 branches covered.">        if (currency.equals(otherMoney.currency) == false) {</span>
+<span class="fc" id="L1607">            throw new CurrencyMismatchException(getCurrencyUnit(), otherMoney.getCurrencyUnit());</span>
         }
-<span class="fc" id="L1636">        return amount.compareTo(otherMoney.amount);</span>
+<span class="fc" id="L1609">        return amount.compareTo(otherMoney.amount);</span>
     }
 
     /**
@@ -1650,7 +1623,7 @@ import org.joda.convert.ToString;
      * @see #equals(Object)
      */
     public boolean isEqual(BigMoneyProvider other) {
-<span class="fc bfc" id="L1653" title="All 2 branches covered.">        return compareTo(other) == 0;</span>
+<span class="fc bfc" id="L1626" title="All 2 branches covered.">        return compareTo(other) == 0;</span>
     }
 
     /**
@@ -1662,7 +1635,7 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public boolean isGreaterThan(BigMoneyProvider other) {
-<span class="fc bfc" id="L1665" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L1638" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -1674,7 +1647,7 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public boolean isLessThan(BigMoneyProvider other) {
-<span class="fc bfc" id="L1677" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L1650" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1692,15 +1665,15 @@ import org.joda.convert.ToString;
      */
     @Override
     public boolean equals(Object other) {
-<span class="fc bfc" id="L1695" title="All 2 branches covered.">        if (this == other) {</span>
-<span class="fc" id="L1696">            return true;</span>
+<span class="fc bfc" id="L1668" title="All 2 branches covered.">        if (this == other) {</span>
+<span class="fc" id="L1669">            return true;</span>
         }
-<span class="fc bfc" id="L1698" title="All 2 branches covered.">        if (other instanceof BigMoney) {</span>
-<span class="fc" id="L1699">            BigMoney otherMoney = (BigMoney) other;</span>
-<span class="fc bfc" id="L1700" title="All 2 branches covered.">            return currency.equals(otherMoney.getCurrencyUnit()) &amp;&amp;</span>
-<span class="fc bfc" id="L1701" title="All 2 branches covered.">                    amount.equals(otherMoney.amount);</span>
+<span class="fc bfc" id="L1671" title="All 2 branches covered.">        if (other instanceof BigMoney) {</span>
+<span class="fc" id="L1672">            BigMoney otherMoney = (BigMoney) other;</span>
+<span class="fc bfc" id="L1673" title="All 2 branches covered.">            return currency.equals(otherMoney.getCurrencyUnit()) &amp;&amp;</span>
+<span class="fc bfc" id="L1674" title="All 2 branches covered.">                    amount.equals(otherMoney.amount);</span>
         }
-<span class="fc" id="L1703">        return false;</span>
+<span class="fc" id="L1676">        return false;</span>
     }
 
     /**
@@ -1710,7 +1683,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1713">        return currency.hashCode() ^ amount.hashCode();</span>
+<span class="fc" id="L1686">        return currency.hashCode() ^ amount.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1725,11 +1698,11 @@ import org.joda.convert.ToString;
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1728">        return new StringBuilder()</span>
-<span class="fc" id="L1729">            .append(currency.getCode())</span>
-<span class="fc" id="L1730">            .append(' ')</span>
-<span class="fc" id="L1731">            .append(amount.toPlainString())</span>
-<span class="fc" id="L1732">            .toString();</span>
+<span class="fc" id="L1701">        return new StringBuilder()</span>
+<span class="fc" id="L1702">            .append(currency.getCode())</span>
+<span class="fc" id="L1703">            .append(' ')</span>
+<span class="fc" id="L1704">            .append(amount.toPlainString())</span>
+<span class="fc" id="L1705">            .toString();</span>
     }
 
 }

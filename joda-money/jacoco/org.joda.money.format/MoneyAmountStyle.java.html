@@ -16,7 +16,6 @@
 package org.joda.money.format;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -55,59 +54,59 @@ public final class MoneyAmountStyle implements Serializable {
      * and groups large amounts in 3's using a comma.
      * Forced decimal point is disabled.
      */
-<span class="fc" id="L58">    public static final MoneyAmountStyle ASCII_DECIMAL_POINT_GROUP3_COMMA =</span>
+<span class="fc" id="L57">    public static final MoneyAmountStyle ASCII_DECIMAL_POINT_GROUP3_COMMA =</span>
         new MoneyAmountStyle('0', '+', '-', '.', GroupingStyle.FULL, ',', 3, 0, false, false);
     /**
      * A style that uses ASCII digits/negative sign, the decimal point
      * and groups large amounts in 3's using a space.
      * Forced decimal point is disabled.
      */
-<span class="fc" id="L65">    public static final MoneyAmountStyle ASCII_DECIMAL_POINT_GROUP3_SPACE =</span>
+<span class="fc" id="L64">    public static final MoneyAmountStyle ASCII_DECIMAL_POINT_GROUP3_SPACE =</span>
         new MoneyAmountStyle('0', '+', '-', '.', GroupingStyle.FULL, ' ', 3, 0, false, false);
     /**
      * A style that uses ASCII digits/negative sign, the decimal point
      * and no grouping of large amounts.
      * Forced decimal point is disabled.
      */
-<span class="fc" id="L72">    public static final MoneyAmountStyle ASCII_DECIMAL_POINT_NO_GROUPING =</span>
+<span class="fc" id="L71">    public static final MoneyAmountStyle ASCII_DECIMAL_POINT_NO_GROUPING =</span>
         new MoneyAmountStyle('0', '+', '-', '.', GroupingStyle.NONE, ',', 3, 0, false, false);
     /**
      * A style that uses ASCII digits/negative sign, the decimal comma
      * and groups large amounts in 3's using a dot.
      * Forced decimal point is disabled.
      */
-<span class="fc" id="L79">    public static final MoneyAmountStyle ASCII_DECIMAL_COMMA_GROUP3_DOT =</span>
+<span class="fc" id="L78">    public static final MoneyAmountStyle ASCII_DECIMAL_COMMA_GROUP3_DOT =</span>
         new MoneyAmountStyle('0', '+', '-', ',', GroupingStyle.FULL, '.', 3, 0, false, false);
     /**
      * A style that uses ASCII digits/negative sign, the decimal comma
      * and groups large amounts in 3's using a space.
      * Forced decimal point is disabled.
      */
-<span class="fc" id="L86">    public static final MoneyAmountStyle ASCII_DECIMAL_COMMA_GROUP3_SPACE =</span>
+<span class="fc" id="L85">    public static final MoneyAmountStyle ASCII_DECIMAL_COMMA_GROUP3_SPACE =</span>
         new MoneyAmountStyle('0', '+', '-', ',', GroupingStyle.FULL, ' ', 3, 0, false, false);
     /**
      * A style that uses ASCII digits/negative sign, the decimal point
      * and no grouping of large amounts.
      * Forced decimal point is disabled.
      */
-<span class="fc" id="L93">    public static final MoneyAmountStyle ASCII_DECIMAL_COMMA_NO_GROUPING =</span>
+<span class="fc" id="L92">    public static final MoneyAmountStyle ASCII_DECIMAL_COMMA_NO_GROUPING =</span>
         new MoneyAmountStyle('0', '+', '-', ',', GroupingStyle.NONE, '.', 3, 0, false, false);
     /**
      * A style that will be filled in with localized values using the locale of the formatter.
      * Grouping is enabled. Forced decimal point is disabled.
      */
-<span class="fc" id="L99">    public static final MoneyAmountStyle LOCALIZED_GROUPING =</span>
+<span class="fc" id="L98">    public static final MoneyAmountStyle LOCALIZED_GROUPING =</span>
         new MoneyAmountStyle(-1, -1, -1, -1, GroupingStyle.FULL, -1, -1, -1, false, false);
     /**
      * A style that will be filled in with localized values using the locale of the formatter.
      * Grouping is disabled. Forced decimal point is disabled.
      */
-<span class="fc" id="L105">    public static final MoneyAmountStyle LOCALIZED_NO_GROUPING =</span>
+<span class="fc" id="L104">    public static final MoneyAmountStyle LOCALIZED_NO_GROUPING =</span>
         new MoneyAmountStyle(-1, -1, -1, -1, GroupingStyle.NONE, -1, -1, -1, false, false);
     /**
      * Cache of localized styles.
      */
-<span class="fc" id="L110">    private static final ConcurrentMap&lt;Locale, MoneyAmountStyle&gt; LOCALIZED_CACHE = new ConcurrentHashMap&lt;Locale, MoneyAmountStyle&gt;();</span>
+<span class="fc" id="L109">    private static final ConcurrentMap&lt;Locale, MoneyAmountStyle&gt; LOCALIZED_CACHE = new ConcurrentHashMap&lt;Locale, MoneyAmountStyle&gt;();</span>
     /**
      * Serialization version.
      */
@@ -166,7 +165,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance, never null
      */
     public static MoneyAmountStyle of(Locale locale) {
-<span class="fc" id="L169">        return getLocalizedStyle(locale);</span>
+<span class="fc" id="L168">        return getLocalizedStyle(locale);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -188,18 +187,18 @@ public final class MoneyAmountStyle implements Serializable {
                 int positiveCharacter, int negativeCharacter,
                 int decimalPointCharacter, GroupingStyle groupingStyle,
                 int groupingCharacter, int groupingSize, int extendedGroupingSize,
-<span class="fc" id="L191">                boolean forceDecimalPoint, boolean absValue) {</span>
-<span class="fc" id="L192">        this.zeroCharacter = zeroCharacter;</span>
-<span class="fc" id="L193">        this.positiveCharacter = positiveCharacter;</span>
-<span class="fc" id="L194">        this.negativeCharacter = negativeCharacter;</span>
-<span class="fc" id="L195">        this.decimalPointCharacter = decimalPointCharacter;</span>
-<span class="fc" id="L196">        this.groupingStyle = groupingStyle;</span>
-<span class="fc" id="L197">        this.groupingCharacter = groupingCharacter;</span>
-<span class="fc" id="L198">        this.groupingSize = groupingSize;</span>
-<span class="fc" id="L199">        this.extendedGroupingSize = extendedGroupingSize;</span>
-<span class="fc" id="L200">        this.forceDecimalPoint = forceDecimalPoint;</span>
-<span class="fc" id="L201">        this.absValue = absValue;</span>
-<span class="fc" id="L202">    }</span>
+<span class="fc" id="L190">                boolean forceDecimalPoint, boolean absValue) {</span>
+<span class="fc" id="L191">        this.zeroCharacter = zeroCharacter;</span>
+<span class="fc" id="L192">        this.positiveCharacter = positiveCharacter;</span>
+<span class="fc" id="L193">        this.negativeCharacter = negativeCharacter;</span>
+<span class="fc" id="L194">        this.decimalPointCharacter = decimalPointCharacter;</span>
+<span class="fc" id="L195">        this.groupingStyle = groupingStyle;</span>
+<span class="fc" id="L196">        this.groupingCharacter = groupingCharacter;</span>
+<span class="fc" id="L197">        this.groupingSize = groupingSize;</span>
+<span class="fc" id="L198">        this.extendedGroupingSize = extendedGroupingSize;</span>
+<span class="fc" id="L199">        this.forceDecimalPoint = forceDecimalPoint;</span>
+<span class="fc" id="L200">        this.absValue = absValue;</span>
+<span class="fc" id="L201">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -217,38 +216,38 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle localize(Locale locale) {
-<span class="fc" id="L220">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
-<span class="fc" id="L221">        MoneyAmountStyle result = this;</span>
-<span class="fc" id="L222">        MoneyAmountStyle protoStyle = null;</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (zeroCharacter &lt; 0) {</span>
-<span class="fc" id="L224">            protoStyle = getLocalizedStyle(locale);</span>
-<span class="fc" id="L225">            result = result.withZeroCharacter(protoStyle.getZeroCharacter());</span>
+<span class="fc" id="L219">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L220">        MoneyAmountStyle result = this;</span>
+<span class="fc" id="L221">        MoneyAmountStyle protoStyle = null;</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (zeroCharacter &lt; 0) {</span>
+<span class="fc" id="L223">            protoStyle = getLocalizedStyle(locale);</span>
+<span class="fc" id="L224">            result = result.withZeroCharacter(protoStyle.getZeroCharacter());</span>
         }
-<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (positiveCharacter &lt; 0) {</span>
-<span class="fc" id="L228">            protoStyle = getLocalizedStyle(locale);</span>
-<span class="fc" id="L229">            result = result.withPositiveSignCharacter(protoStyle.getPositiveSignCharacter());</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (positiveCharacter &lt; 0) {</span>
+<span class="fc" id="L227">            protoStyle = getLocalizedStyle(locale);</span>
+<span class="fc" id="L228">            result = result.withPositiveSignCharacter(protoStyle.getPositiveSignCharacter());</span>
         }
-<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (negativeCharacter &lt; 0) {</span>
-<span class="fc" id="L232">            protoStyle = getLocalizedStyle(locale);</span>
-<span class="fc" id="L233">            result = result.withNegativeSignCharacter(protoStyle.getNegativeSignCharacter());</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (negativeCharacter &lt; 0) {</span>
+<span class="fc" id="L231">            protoStyle = getLocalizedStyle(locale);</span>
+<span class="fc" id="L232">            result = result.withNegativeSignCharacter(protoStyle.getNegativeSignCharacter());</span>
         }
-<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (decimalPointCharacter &lt; 0) {</span>
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
-<span class="fc" id="L237">            result = result.withDecimalPointCharacter(protoStyle.getDecimalPointCharacter());</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        if (decimalPointCharacter &lt; 0) {</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
+<span class="fc" id="L236">            result = result.withDecimalPointCharacter(protoStyle.getDecimalPointCharacter());</span>
         }
-<span class="fc bfc" id="L239" title="All 2 branches covered.">        if (groupingCharacter &lt; 0) {</span>
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
-<span class="fc" id="L241">            result = result.withGroupingCharacter(protoStyle.getGroupingCharacter());</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        if (groupingCharacter &lt; 0) {</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
+<span class="fc" id="L240">            result = result.withGroupingCharacter(protoStyle.getGroupingCharacter());</span>
         }
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (groupingSize &lt; 0) {</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
-<span class="fc" id="L245">            result = result.withGroupingSize(protoStyle.getGroupingSize());</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        if (groupingSize &lt; 0) {</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
+<span class="fc" id="L244">            result = result.withGroupingSize(protoStyle.getGroupingSize());</span>
         }
-<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (extendedGroupingSize &lt; 0) {</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
-<span class="fc" id="L249">            result = result.withExtendedGroupingSize(protoStyle.getExtendedGroupingSize());</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (extendedGroupingSize &lt; 0) {</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">            protoStyle = (protoStyle == null ? getLocalizedStyle(locale) : protoStyle);</span>
+<span class="fc" id="L248">            result = result.withExtendedGroupingSize(protoStyle.getExtendedGroupingSize());</span>
         }
-<span class="fc" id="L251">        return result;</span>
+<span class="fc" id="L250">        return result;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -265,25 +264,19 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the symbols, never null
      */
     private static MoneyAmountStyle getLocalizedStyle(Locale locale) {
-<span class="fc" id="L268">        MoneyAmountStyle protoStyle = LOCALIZED_CACHE.get(locale);</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">        if (protoStyle == null) {</span>
-            DecimalFormatSymbols symbols;
-            try {
-<span class="fc" id="L272">                Method method = DecimalFormatSymbols.class.getMethod(&quot;getInstance&quot;, new Class[] {Locale.class});</span>
-<span class="fc" id="L273">                symbols = (DecimalFormatSymbols) method.invoke(null, new Object[] {locale});  // handle JDK 6</span>
-<span class="nc" id="L274">            } catch (Exception ex) {</span>
-<span class="nc" id="L275">                symbols = new DecimalFormatSymbols(locale);  // handle JDK 5</span>
-<span class="fc" id="L276">            }</span>
-<span class="fc" id="L277">            NumberFormat format = NumberFormat.getCurrencyInstance(locale);</span>
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">            int size = (format instanceof DecimalFormat ? ((DecimalFormat) format).getGroupingSize() : 3);</span>
-<span class="fc" id="L279">            protoStyle = new MoneyAmountStyle(</span>
-<span class="fc" id="L280">                    symbols.getZeroDigit(),</span>
-<span class="fc" id="L281">                    '+', symbols.getMinusSign(),</span>
-<span class="fc" id="L282">                    symbols.getMonetaryDecimalSeparator(),</span>
-<span class="fc" id="L283">                    GroupingStyle.FULL, symbols.getGroupingSeparator(), size, 0, false, false);</span>
-<span class="fc" id="L284">            LOCALIZED_CACHE.putIfAbsent(locale, protoStyle);</span>
+<span class="fc" id="L267">        MoneyAmountStyle protoStyle = LOCALIZED_CACHE.get(locale);</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (protoStyle == null) {</span>
+<span class="fc" id="L269">            DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);</span>
+<span class="fc" id="L270">            NumberFormat format = NumberFormat.getCurrencyInstance(locale);</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">            int size = (format instanceof DecimalFormat ? ((DecimalFormat) format).getGroupingSize() : 3);</span>
+<span class="fc" id="L272">            protoStyle = new MoneyAmountStyle(</span>
+<span class="fc" id="L273">                    symbols.getZeroDigit(),</span>
+<span class="fc" id="L274">                    '+', symbols.getMinusSign(),</span>
+<span class="fc" id="L275">                    symbols.getMonetaryDecimalSeparator(),</span>
+<span class="fc" id="L276">                    GroupingStyle.FULL, symbols.getGroupingSeparator(), size, 0, false, false);</span>
+<span class="fc" id="L277">            LOCALIZED_CACHE.putIfAbsent(locale, protoStyle);</span>
         }
-<span class="fc" id="L286">        return protoStyle;</span>
+<span class="fc" id="L279">        return protoStyle;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -297,7 +290,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the zero character, null if to be determined by locale
      */
     public Character getZeroCharacter() {
-<span class="fc bfc" id="L300" title="All 2 branches covered.">        return zeroCharacter &lt; 0 ? null : (char) zeroCharacter;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">        return zeroCharacter &lt; 0 ? null : (char) zeroCharacter;</span>
     }
 
     /**
@@ -314,11 +307,11 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withZeroCharacter(Character zeroCharacter) {
-<span class="fc bfc" id="L317" title="All 2 branches covered.">        int zeroVal = (zeroCharacter == null ? -1 : zeroCharacter);</span>
-<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (zeroVal == this.zeroCharacter) {</span>
-<span class="fc" id="L319">            return this;</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        int zeroVal = (zeroCharacter == null ? -1 : zeroCharacter);</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">        if (zeroVal == this.zeroCharacter) {</span>
+<span class="fc" id="L312">            return this;</span>
         }
-<span class="fc" id="L321">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L314">        return new MoneyAmountStyle(</span>
                 zeroVal,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -334,7 +327,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the format for positive amounts, null if to be determined by locale
      */
     public Character getPositiveSignCharacter() {
-<span class="fc bfc" id="L337" title="All 2 branches covered.">        return positiveCharacter &lt; 0 ? null : (char) positiveCharacter;</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        return positiveCharacter &lt; 0 ? null : (char) positiveCharacter;</span>
     }
 
     /**
@@ -346,11 +339,11 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withPositiveSignCharacter(Character positiveCharacter) {
-<span class="fc bfc" id="L349" title="All 2 branches covered.">        int positiveVal = (positiveCharacter == null ? -1 : positiveCharacter);</span>
-<span class="fc bfc" id="L350" title="All 2 branches covered.">        if (positiveVal == this.positiveCharacter) {</span>
-<span class="fc" id="L351">            return this;</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        int positiveVal = (positiveCharacter == null ? -1 : positiveCharacter);</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">        if (positiveVal == this.positiveCharacter) {</span>
+<span class="fc" id="L344">            return this;</span>
         }
-<span class="fc" id="L353">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L346">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveVal, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -366,7 +359,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the format for negative amounts, null if to be determined by locale
      */
     public Character getNegativeSignCharacter() {
-<span class="fc bfc" id="L369" title="All 2 branches covered.">        return negativeCharacter &lt; 0 ? null : (char) negativeCharacter;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        return negativeCharacter &lt; 0 ? null : (char) negativeCharacter;</span>
     }
 
     /**
@@ -378,11 +371,11 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withNegativeSignCharacter(Character negativeCharacter) {
-<span class="fc bfc" id="L381" title="All 2 branches covered.">        int negativeVal = (negativeCharacter == null ? -1 : negativeCharacter);</span>
-<span class="fc bfc" id="L382" title="All 2 branches covered.">        if (negativeVal == this.negativeCharacter) {</span>
-<span class="fc" id="L383">            return this;</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">        int negativeVal = (negativeCharacter == null ? -1 : negativeCharacter);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (negativeVal == this.negativeCharacter) {</span>
+<span class="fc" id="L376">            return this;</span>
         }
-<span class="fc" id="L385">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L378">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeVal,
                 decimalPointCharacter, groupingStyle,
@@ -396,7 +389,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the decimal point character, null if to be determined by locale
      */
     public Character getDecimalPointCharacter() {
-<span class="fc bfc" id="L399" title="All 2 branches covered.">        return decimalPointCharacter &lt; 0 ? null : (char) decimalPointCharacter;</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        return decimalPointCharacter &lt; 0 ? null : (char) decimalPointCharacter;</span>
     }
 
     /**
@@ -408,11 +401,11 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withDecimalPointCharacter(Character decimalPointCharacter) {
-<span class="fc bfc" id="L411" title="All 2 branches covered.">        int dpVal = (decimalPointCharacter == null ? -1 : decimalPointCharacter);</span>
-<span class="fc bfc" id="L412" title="All 2 branches covered.">        if (dpVal == this.decimalPointCharacter) {</span>
-<span class="fc" id="L413">            return this;</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">        int dpVal = (decimalPointCharacter == null ? -1 : decimalPointCharacter);</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        if (dpVal == this.decimalPointCharacter) {</span>
+<span class="fc" id="L406">            return this;</span>
         }
-<span class="fc" id="L415">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L408">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 dpVal, groupingStyle,
@@ -426,7 +419,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the grouping character, null if to be determined by locale
      */
     public Character getGroupingCharacter() {
-<span class="fc bfc" id="L429" title="All 2 branches covered.">        return groupingCharacter &lt; 0 ? null : (char) groupingCharacter;</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        return groupingCharacter &lt; 0 ? null : (char) groupingCharacter;</span>
     }
 
     /**
@@ -438,11 +431,11 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withGroupingCharacter(Character groupingCharacter) {
-<span class="fc bfc" id="L441" title="All 2 branches covered.">        int groupingVal = (groupingCharacter == null ? -1 : groupingCharacter);</span>
-<span class="fc bfc" id="L442" title="All 2 branches covered.">        if (groupingVal == this.groupingCharacter) {</span>
-<span class="fc" id="L443">            return this;</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">        int groupingVal = (groupingCharacter == null ? -1 : groupingCharacter);</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">        if (groupingVal == this.groupingCharacter) {</span>
+<span class="fc" id="L436">            return this;</span>
         }
-<span class="fc" id="L445">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L438">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -456,7 +449,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the size of each group, null if to be determined by locale
      */
     public Integer getGroupingSize() {
-<span class="fc bfc" id="L459" title="All 2 branches covered.">        return groupingSize &lt; 0 ? null : groupingSize;</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">        return groupingSize &lt; 0 ? null : groupingSize;</span>
     }
 
     /**
@@ -468,14 +461,14 @@ public final class MoneyAmountStyle implements Serializable {
      * @throws IllegalArgumentException if the grouping size is zero or less
      */
     public MoneyAmountStyle withGroupingSize(Integer groupingSize) {
-<span class="fc bfc" id="L471" title="All 2 branches covered.">        int sizeVal = (groupingSize == null ? -1 : groupingSize);</span>
-<span class="fc bfc" id="L472" title="All 4 branches covered.">        if (groupingSize != null &amp;&amp; sizeVal &lt;= 0) {</span>
-<span class="fc" id="L473">            throw new IllegalArgumentException(&quot;Grouping size must be greater than zero&quot;);</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        int sizeVal = (groupingSize == null ? -1 : groupingSize);</span>
+<span class="fc bfc" id="L465" title="All 4 branches covered.">        if (groupingSize != null &amp;&amp; sizeVal &lt;= 0) {</span>
+<span class="fc" id="L466">            throw new IllegalArgumentException(&quot;Grouping size must be greater than zero&quot;);</span>
         }
-<span class="fc bfc" id="L475" title="All 2 branches covered.">        if (sizeVal == this.groupingSize) {</span>
-<span class="fc" id="L476">            return this;</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">        if (sizeVal == this.groupingSize) {</span>
+<span class="fc" id="L469">            return this;</span>
         }
-<span class="fc" id="L478">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L471">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -494,7 +487,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the size of each group, null if to be determined by locale
      */
     public Integer getExtendedGroupingSize() {
-<span class="fc bfc" id="L497" title="All 2 branches covered.">        return extendedGroupingSize &lt; 0 ? null : extendedGroupingSize;</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">        return extendedGroupingSize &lt; 0 ? null : extendedGroupingSize;</span>
     }
 
     /**
@@ -506,14 +499,14 @@ public final class MoneyAmountStyle implements Serializable {
      * @throws IllegalArgumentException if the grouping size is zero or less
      */
     public MoneyAmountStyle withExtendedGroupingSize(Integer extendedGroupingSize) {
-<span class="pc bpc" id="L509" title="1 of 2 branches missed.">        int sizeVal = (extendedGroupingSize == null ? -1 : extendedGroupingSize);</span>
-<span class="pc bpc" id="L510" title="2 of 4 branches missed.">        if (extendedGroupingSize != null &amp;&amp; sizeVal &lt; 0) {</span>
-<span class="nc" id="L511">            throw new IllegalArgumentException(&quot;Extended grouping size must not be negative&quot;);</span>
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">        int sizeVal = (extendedGroupingSize == null ? -1 : extendedGroupingSize);</span>
+<span class="pc bpc" id="L503" title="2 of 4 branches missed.">        if (extendedGroupingSize != null &amp;&amp; sizeVal &lt; 0) {</span>
+<span class="nc" id="L504">            throw new IllegalArgumentException(&quot;Extended grouping size must not be negative&quot;);</span>
         }
-<span class="pc bpc" id="L513" title="1 of 2 branches missed.">        if (sizeVal == this.extendedGroupingSize) {</span>
-<span class="nc" id="L514">            return this;</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">        if (sizeVal == this.extendedGroupingSize) {</span>
+<span class="nc" id="L507">            return this;</span>
         }
-<span class="fc" id="L516">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L509">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -527,7 +520,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the grouping style, not null
      */
     public GroupingStyle getGroupingStyle() {
-<span class="fc" id="L530">        return groupingStyle;</span>
+<span class="fc" id="L523">        return groupingStyle;</span>
     }
 
     /**
@@ -537,11 +530,11 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withGroupingStyle(GroupingStyle groupingStyle) {
-<span class="fc" id="L540">        MoneyFormatter.checkNotNull(groupingStyle, &quot;groupingStyle&quot;);</span>
-<span class="fc bfc" id="L541" title="All 2 branches covered.">        if (this.groupingStyle == groupingStyle) {</span>
-<span class="fc" id="L542">            return this;</span>
+<span class="fc" id="L533">        MoneyFormatter.checkNotNull(groupingStyle, &quot;groupingStyle&quot;);</span>
+<span class="fc bfc" id="L534" title="All 2 branches covered.">        if (this.groupingStyle == groupingStyle) {</span>
+<span class="fc" id="L535">            return this;</span>
         }
-<span class="fc" id="L544">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L537">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -555,7 +548,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return whether to force the decimal point on output
      */
     public boolean isForcedDecimalPoint() {
-<span class="fc" id="L558">        return forceDecimalPoint;</span>
+<span class="fc" id="L551">        return forceDecimalPoint;</span>
     }
 
     /**
@@ -565,10 +558,10 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withForcedDecimalPoint(boolean forceDecimalPoint) {
-<span class="fc bfc" id="L568" title="All 2 branches covered.">        if (this.forceDecimalPoint == forceDecimalPoint) {</span>
-<span class="fc" id="L569">            return this;</span>
+<span class="fc bfc" id="L561" title="All 2 branches covered.">        if (this.forceDecimalPoint == forceDecimalPoint) {</span>
+<span class="fc" id="L562">            return this;</span>
         }
-<span class="fc" id="L571">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L564">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -586,7 +579,7 @@ public final class MoneyAmountStyle implements Serializable {
      * @return true to output the absolute value, false for the signed value
      */
     public boolean isAbsValue() {
-<span class="fc" id="L589">        return absValue;</span>
+<span class="fc" id="L582">        return absValue;</span>
     }
 
     /**
@@ -600,10 +593,10 @@ public final class MoneyAmountStyle implements Serializable {
      * @return the new instance for chaining, never null
      */
     public MoneyAmountStyle withAbsValue(boolean absValue) {
-<span class="fc bfc" id="L603" title="All 2 branches covered.">        if (this.absValue == absValue) {</span>
-<span class="fc" id="L604">            return this;</span>
+<span class="fc bfc" id="L596" title="All 2 branches covered.">        if (this.absValue == absValue) {</span>
+<span class="fc" id="L597">            return this;</span>
         }
-<span class="fc" id="L606">        return new MoneyAmountStyle(</span>
+<span class="fc" id="L599">        return new MoneyAmountStyle(</span>
                 zeroCharacter,
                 positiveCharacter, negativeCharacter,
                 decimalPointCharacter, groupingStyle,
@@ -619,14 +612,14 @@ public final class MoneyAmountStyle implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-<span class="fc bfc" id="L622" title="All 2 branches covered.">        if (other == this) {</span>
-<span class="fc" id="L623">            return true;</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">        if (other == this) {</span>
+<span class="fc" id="L616">            return true;</span>
         }
-<span class="fc bfc" id="L625" title="All 2 branches covered.">        if (other instanceof MoneyAmountStyle == false) {</span>
-<span class="fc" id="L626">            return false;</span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">        if (other instanceof MoneyAmountStyle == false) {</span>
+<span class="fc" id="L619">            return false;</span>
         }
-<span class="fc" id="L628">        MoneyAmountStyle otherStyle = (MoneyAmountStyle) other;</span>
-<span class="fc bfc" id="L629" title="All 18 branches covered.">        return (zeroCharacter == otherStyle.zeroCharacter) &amp;&amp;</span>
+<span class="fc" id="L621">        MoneyAmountStyle otherStyle = (MoneyAmountStyle) other;</span>
+<span class="fc bfc" id="L622" title="All 18 branches covered.">        return (zeroCharacter == otherStyle.zeroCharacter) &amp;&amp;</span>
                 (positiveCharacter == otherStyle.positiveCharacter) &amp;&amp;
                 (negativeCharacter == otherStyle.negativeCharacter) &amp;&amp;
                 (decimalPointCharacter == otherStyle.decimalPointCharacter) &amp;&amp;
@@ -644,17 +637,17 @@ public final class MoneyAmountStyle implements Serializable {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L647">        int hash = 13;</span>
-<span class="fc" id="L648">        hash += zeroCharacter * 17;</span>
-<span class="fc" id="L649">        hash += positiveCharacter * 17;</span>
-<span class="fc" id="L650">        hash += negativeCharacter * 17;</span>
-<span class="fc" id="L651">        hash += decimalPointCharacter * 17;</span>
-<span class="fc" id="L652">        hash += groupingStyle.hashCode() * 17;</span>
-<span class="fc" id="L653">        hash += groupingCharacter * 17;</span>
-<span class="fc" id="L654">        hash += groupingSize * 17;</span>
-<span class="fc bfc" id="L655" title="All 2 branches covered.">        hash += (forceDecimalPoint ? 2 : 4);</span>
-<span class="fc bfc" id="L656" title="All 2 branches covered.">        hash += (absValue ? 3 : 9);</span>
-<span class="fc" id="L657">        return hash;</span>
+<span class="fc" id="L640">        int hash = 13;</span>
+<span class="fc" id="L641">        hash += zeroCharacter * 17;</span>
+<span class="fc" id="L642">        hash += positiveCharacter * 17;</span>
+<span class="fc" id="L643">        hash += negativeCharacter * 17;</span>
+<span class="fc" id="L644">        hash += decimalPointCharacter * 17;</span>
+<span class="fc" id="L645">        hash += groupingStyle.hashCode() * 17;</span>
+<span class="fc" id="L646">        hash += groupingCharacter * 17;</span>
+<span class="fc" id="L647">        hash += groupingSize * 17;</span>
+<span class="fc bfc" id="L648" title="All 2 branches covered.">        hash += (forceDecimalPoint ? 2 : 4);</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">        hash += (absValue ? 3 : 9);</span>
+<span class="fc" id="L650">        return hash;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -665,10 +658,10 @@ public final class MoneyAmountStyle implements Serializable {
      */
     @Override
     public String toString() {
-<span class="fc" id="L668">        return &quot;MoneyAmountStyle['&quot; + getZeroCharacter() + &quot;','&quot; + getPositiveSignCharacter() + &quot;','&quot; +</span>
-<span class="fc" id="L669">            getNegativeSignCharacter() + &quot;','&quot; + getDecimalPointCharacter() + &quot;','&quot; +</span>
-<span class="fc" id="L670">            getGroupingStyle() + &quot;,&quot; + getGroupingCharacter() + &quot;','&quot; + getGroupingSize() + &quot;',&quot; +</span>
-<span class="fc" id="L671">            isForcedDecimalPoint() + &quot;',&quot; + isAbsValue() + &quot;]&quot;;</span>
+<span class="fc" id="L661">        return &quot;MoneyAmountStyle['&quot; + getZeroCharacter() + &quot;','&quot; + getPositiveSignCharacter() + &quot;','&quot; +</span>
+<span class="fc" id="L662">            getNegativeSignCharacter() + &quot;','&quot; + getDecimalPointCharacter() + &quot;','&quot; +</span>
+<span class="fc" id="L663">            getGroupingStyle() + &quot;,&quot; + getGroupingCharacter() + &quot;','&quot; + getGroupingSize() + &quot;',&quot; +</span>
+<span class="fc" id="L664">            isForcedDecimalPoint() + &quot;',&quot; + isAbsValue() + &quot;]&quot;;</span>
     }
 
 }
