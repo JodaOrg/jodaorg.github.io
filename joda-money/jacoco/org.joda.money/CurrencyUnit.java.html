@@ -537,13 +537,11 @@ import org.joda.convert.ToString;
      * Different currencies have different numbers of decimal places by default.
      * For example, 'GBP' has 2 decimal places, but 'JPY' has zero.
      * Pseudo-currencies will return zero.
-     * &lt;p&gt;
-     * See also {@link #getDefaultFractionDigits()}.
      * 
      * @return the decimal places, from 0 to 9 (normally 0, 2 or 3)
      */
     public int getDecimalPlaces() {
-<span class="fc bfc" id="L546" title="All 2 branches covered.">        return decimalPlaces &lt; 0 ? 0 : decimalPlaces;</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">        return decimalPlaces &lt; 0 ? 0 : decimalPlaces;</span>
     }
 
     /**
@@ -552,7 +550,7 @@ import org.joda.convert.ToString;
      * @return true if this is a pseudo-currency
      */
     public boolean isPseudoCurrency() {
-<span class="fc bfc" id="L555" title="All 2 branches covered.">        return decimalPlaces &lt; 0;</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">        return decimalPlaces &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -568,9 +566,9 @@ import org.joda.convert.ToString;
      */
     public String getSymbol() {
         try {
-<span class="fc" id="L571">            return Currency.getInstance(code).getSymbol();</span>
-<span class="nc" id="L572">        } catch (IllegalArgumentException ex) {</span>
-<span class="nc" id="L573">            return code;</span>
+<span class="fc" id="L569">            return Currency.getInstance(code).getSymbol();</span>
+<span class="nc" id="L570">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L571">            return code;</span>
         }
     }
 
@@ -586,11 +584,11 @@ import org.joda.convert.ToString;
      * @return the JDK currency instance, never null
      */
     public String getSymbol(Locale locale) {
-<span class="fc" id="L589">        MoneyUtils.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L587">        MoneyUtils.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
         try {
-<span class="fc" id="L591">            return Currency.getInstance(code).getSymbol(locale);</span>
-<span class="nc" id="L592">        } catch (IllegalArgumentException ex) {</span>
-<span class="nc" id="L593">            return code;</span>
+<span class="fc" id="L589">            return Currency.getInstance(code).getSymbol(locale);</span>
+<span class="nc" id="L590">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L591">            return code;</span>
         }
     }
 
@@ -604,7 +602,7 @@ import org.joda.convert.ToString;
      * @throws IllegalArgumentException if no matching currency exists in the JDK
      */
     public Currency toCurrency() {
-<span class="fc" id="L607">        return Currency.getInstance(code);</span>
+<span class="fc" id="L605">        return Currency.getInstance(code);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -616,7 +614,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public int compareTo(CurrencyUnit other) {
-<span class="fc" id="L619">        return code.compareTo(other.code);</span>
+<span class="fc" id="L617">        return code.compareTo(other.code);</span>
     }
 
     /**
@@ -629,13 +627,13 @@ import org.joda.convert.ToString;
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L632" title="All 2 branches covered.">        if (obj == this) {</span>
-<span class="fc" id="L633">            return true;</span>
+<span class="fc bfc" id="L630" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L631">            return true;</span>
         }
-<span class="fc bfc" id="L635" title="All 2 branches covered.">        if (obj instanceof CurrencyUnit) {</span>
-<span class="fc" id="L636">            return code.equals(((CurrencyUnit) obj).code);</span>
+<span class="fc bfc" id="L633" title="All 2 branches covered.">        if (obj instanceof CurrencyUnit) {</span>
+<span class="fc" id="L634">            return code.equals(((CurrencyUnit) obj).code);</span>
         }
-<span class="fc" id="L638">        return false;</span>
+<span class="fc" id="L636">        return false;</span>
     }
 
     /**
@@ -645,7 +643,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L648">        return code.hashCode();</span>
+<span class="fc" id="L646">        return code.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -657,7 +655,7 @@ import org.joda.convert.ToString;
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L660">        return code;</span>
+<span class="fc" id="L658">        return code;</span>
     }
 
 }
