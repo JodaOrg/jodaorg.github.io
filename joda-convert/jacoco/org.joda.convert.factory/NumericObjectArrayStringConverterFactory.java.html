@@ -106,12 +106,12 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc" id="L106">                Long[] array = new Long[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L107" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L108">                    String split = str.substring(base, sep);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : new Long(split);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Long.valueOf(split);</span>
 <span class="fc" id="L110">                    base = sep + 1;</span>
 <span class="fc" id="L111">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L112">                }</span>
 <span class="fc" id="L113">                String split = str.substring(base, str.length());</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : new Long(split);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Long.valueOf(split);</span>
 <span class="fc" id="L115">                return Arrays.copyOf(array, count);</span>
             }
             @Override
@@ -148,12 +148,12 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc" id="L148">                Integer[] array = new Integer[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L149" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L150">                    String split = str.substring(base, sep);</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : new Integer(split);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Integer.valueOf(split);</span>
 <span class="fc" id="L152">                    base = sep + 1;</span>
 <span class="fc" id="L153">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L154">                }</span>
 <span class="fc" id="L155">                String split = str.substring(base, str.length());</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : new Integer(split);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Integer.valueOf(split);</span>
 <span class="fc" id="L157">                return Arrays.copyOf(array, count);</span>
             }
             @Override
@@ -190,12 +190,12 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc" id="L190">                Short[] array = new Short[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L191" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L192">                    String split = str.substring(base, sep);</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : new Short(split);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Short.valueOf(split);</span>
 <span class="fc" id="L194">                    base = sep + 1;</span>
 <span class="fc" id="L195">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L196">                }</span>
 <span class="fc" id="L197">                String split = str.substring(base, str.length());</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : new Short(split);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Short.valueOf(split);</span>
 <span class="fc" id="L199">                return Arrays.copyOf(array, count);</span>
             }
             @Override
@@ -232,12 +232,12 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc" id="L232">                Double[] array = new Double[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L233" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L234">                    String split = str.substring(base, sep);</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : new Double(split);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Double.valueOf(split);</span>
 <span class="fc" id="L236">                    base = sep + 1;</span>
 <span class="fc" id="L237">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L238">                }</span>
 <span class="fc" id="L239">                String split = str.substring(base, str.length());</span>
-<span class="fc bfc" id="L240" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : new Double(split);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Double.valueOf(split);</span>
 <span class="fc" id="L241">                return Arrays.copyOf(array, count);</span>
             }
             @Override
@@ -274,12 +274,12 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc" id="L274">                Float[] array = new Float[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L275" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L276">                    String split = str.substring(base, sep);</span>
-<span class="fc bfc" id="L277" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : new Float(split);</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Float.valueOf(split);</span>
 <span class="fc" id="L278">                    base = sep + 1;</span>
 <span class="fc" id="L279">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L280">                }</span>
 <span class="fc" id="L281">                String split = str.substring(base, str.length());</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : new Float(split);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Float.valueOf(split);</span>
 <span class="fc" id="L283">                return Arrays.copyOf(array, count);</span>
             }
             @Override
