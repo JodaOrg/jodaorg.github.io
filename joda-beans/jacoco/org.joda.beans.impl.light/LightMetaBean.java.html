@@ -26,10 +26,12 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -59,12 +61,14 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
     /**
      * The empty object array.
      */
-<span class="fc" id="L62">    private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];</span>
+<span class="fc" id="L64">    private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];</span>
 
     /** The bean type. */
     private final Class&lt;T&gt; beanType;
     /** The meta-property instances of the bean. */
     private final Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap;
+    /** The aliases. */
+    private final Map&lt;String, String&gt; aliasMap;
     /** The constructor to use. */
     private final Function&lt;Object[], T&gt; constructorFn;
     /** The construction data array. */
@@ -83,7 +87,7 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
      */
     @Deprecated
     public static &lt;B extends Bean&gt; LightMetaBean&lt;B&gt; of(Class&lt;B&gt; beanClass) {
-<span class="fc" id="L86">        return new LightMetaBean&lt;&gt;(beanClass);</span>
+<span class="fc" id="L90">        return new LightMetaBean&lt;&gt;(beanClass);</span>
     }
 
     /**
@@ -92,95 +96,96 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
      * @deprecated Use method handles version of this method
      */
     @Deprecated
-<span class="fc" id="L95">    private LightMetaBean(Class&lt;T&gt; beanType) {</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (beanType == null) {</span>
-<span class="nc" id="L97">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
+<span class="fc" id="L99">    private LightMetaBean(Class&lt;T&gt; beanType) {</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (beanType == null) {</span>
+<span class="nc" id="L101">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
         }
-<span class="fc" id="L99">        this.beanType = beanType;</span>
-<span class="fc" id="L100">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc" id="L101">        Field[] fields = beanType.getDeclaredFields();</span>
-<span class="fc" id="L102">        List&lt;Class&lt;?&gt;&gt; propertyTypes = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (Field field : fields) {</span>
-<span class="pc bpc" id="L104" title="1 of 4 branches missed.">            if (!Modifier.isStatic(field.getModifiers()) &amp;&amp; field.getAnnotation(PropertyDefinition.class) != null) {</span>
+<span class="fc" id="L103">        this.beanType = beanType;</span>
+<span class="fc" id="L104">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L105">        Field[] fields = beanType.getDeclaredFields();</span>
+<span class="fc" id="L106">        List&lt;Class&lt;?&gt;&gt; propertyTypes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (Field field : fields) {</span>
+<span class="pc bpc" id="L108" title="1 of 4 branches missed.">            if (!Modifier.isStatic(field.getModifiers()) &amp;&amp; field.getAnnotation(PropertyDefinition.class) != null) {</span>
                 // handle code that uses new annotation location but old meta-bean approach
-<span class="fc" id="L106">                PropertyDefinition pdef = field.getAnnotation(PropertyDefinition.class);</span>
-<span class="fc" id="L107">                String name = field.getName();</span>
-<span class="fc bfc" id="L108" title="All 6 branches covered.">                if (pdef.get().equals(&quot;field&quot;) || pdef.get().startsWith(&quot;optional&quot;) || pdef.get().equals(&quot;&quot;)) {</span>
-<span class="fc" id="L109">                    field.setAccessible(true);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                    if (!ImmutableBean.class.isAssignableFrom(beanType)) {</span>
-<span class="nc" id="L111">                        map.put(name, MutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
+<span class="fc" id="L110">                PropertyDefinition pdef = field.getAnnotation(PropertyDefinition.class);</span>
+<span class="fc" id="L111">                String name = field.getName();</span>
+<span class="fc bfc" id="L112" title="All 6 branches covered.">                if (pdef.get().equals(&quot;field&quot;) || pdef.get().startsWith(&quot;optional&quot;) || pdef.get().equals(&quot;&quot;)) {</span>
+<span class="fc" id="L113">                    field.setAccessible(true);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">                    if (!ImmutableBean.class.isAssignableFrom(beanType)) {</span>
+<span class="nc" id="L115">                        map.put(name, MutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
                     } else {
-<span class="fc" id="L113">                        map.put(name, ImmutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
+<span class="fc" id="L117">                        map.put(name, ImmutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
                     }
                 } else {
-<span class="fc" id="L116">                    String getterName = &quot;get&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
-<span class="fc" id="L117">                    Method getMethod = null;</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">                    if (field.getType() == boolean.class) {</span>
-<span class="fc" id="L119">                        getMethod = findGetMethod(beanType,</span>
-<span class="fc" id="L120">                                &quot;is&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1));</span>
+<span class="fc" id="L120">                    String getterName = &quot;get&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
+<span class="fc" id="L121">                    Method getMethod = null;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                    if (field.getType() == boolean.class) {</span>
+<span class="fc" id="L123">                        getMethod = findGetMethod(beanType,</span>
+<span class="fc" id="L124">                                &quot;is&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1));</span>
                     }
-<span class="fc bfc" id="L122" title="All 2 branches covered.">                    if (getMethod == null) {</span>
-<span class="fc" id="L123">                        getMethod = findGetMethod(beanType, getterName);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">                        if (getMethod == null) {</span>
-<span class="nc" id="L125">                            throw new IllegalArgumentException(</span>
-<span class="nc" id="L126">                                    &quot;Unable to find property getter: &quot; + beanType.getSimpleName() + &quot;.&quot; + getterName + &quot;()&quot;);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">                    if (getMethod == null) {</span>
+<span class="fc" id="L127">                        getMethod = findGetMethod(beanType, getterName);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">                        if (getMethod == null) {</span>
+<span class="nc" id="L129">                            throw new IllegalArgumentException(</span>
+<span class="nc" id="L130">                                    &quot;Unable to find property getter: &quot; + beanType.getSimpleName() + &quot;.&quot; + getterName + &quot;()&quot;);</span>
                         }
                     }
-<span class="fc" id="L129">                    getMethod.setAccessible(true);</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                    if (ImmutableBean.class.isAssignableFrom(beanType)) {</span>
-<span class="fc" id="L131">                        map.put(name, ImmutableLightMetaProperty.&lt;Object&gt;of(this, field, getMethod, name, propertyTypes.size()));</span>
+<span class="fc" id="L133">                    getMethod.setAccessible(true);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                    if (ImmutableBean.class.isAssignableFrom(beanType)) {</span>
+<span class="fc" id="L135">                        map.put(name, ImmutableLightMetaProperty.&lt;Object&gt;of(this, field, getMethod, name, propertyTypes.size()));</span>
 
                     } else {
-<span class="nc" id="L134">                        String setterName = &quot;set&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
-<span class="nc" id="L135">                        Method setMethod = findSetMethod(beanType, setterName, field.getType());</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">                        if (setMethod == null) {</span>
-<span class="nc" id="L137">                            throw new IllegalArgumentException(</span>
-<span class="nc" id="L138">                                    &quot;Unable to find property setter: &quot; + beanType.getSimpleName() + &quot;.&quot; + setterName + &quot;()&quot;);</span>
+<span class="nc" id="L138">                        String setterName = &quot;set&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
+<span class="nc" id="L139">                        Method setMethod = findSetMethod(beanType, setterName, field.getType());</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                        if (setMethod == null) {</span>
+<span class="nc" id="L141">                            throw new IllegalArgumentException(</span>
+<span class="nc" id="L142">                                    &quot;Unable to find property setter: &quot; + beanType.getSimpleName() + &quot;.&quot; + setterName + &quot;()&quot;);</span>
                         }
-<span class="nc" id="L140">                        map.put(name, MutableLightMetaProperty.of(</span>
-<span class="nc" id="L141">                                this, field, getMethod, setMethod, name, propertyTypes.size()));</span>
+<span class="nc" id="L144">                        map.put(name, MutableLightMetaProperty.of(</span>
+<span class="nc" id="L145">                                this, field, getMethod, setMethod, name, propertyTypes.size()));</span>
                     }
                 }
-<span class="fc" id="L144">                propertyTypes.add(field.getType());</span>
+<span class="fc" id="L148">                propertyTypes.add(field.getType());</span>
 
-<span class="pc bpc" id="L146" title="3 of 4 branches missed.">            } else if (!Modifier.isStatic(field.getModifiers()) &amp;&amp; !Modifier.isTransient(field.getModifiers())) {</span>
+<span class="pc bpc" id="L150" title="3 of 4 branches missed.">            } else if (!Modifier.isStatic(field.getModifiers()) &amp;&amp; !Modifier.isTransient(field.getModifiers())) {</span>
                 // handle annotation moving package
                 // this is a best efforts approach
-<span class="nc" id="L149">                String name = field.getName();</span>
-<span class="nc" id="L150">                field.setAccessible(true);</span>
-<span class="nc bnc" id="L151" title="All 4 branches missed.">                if (!ImmutableBean.class.isAssignableFrom(beanType) &amp;&amp; !Modifier.isFinal(field.getModifiers())) {</span>
-<span class="nc" id="L152">                    map.put(name, MutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
+<span class="nc" id="L153">                String name = field.getName();</span>
+<span class="nc" id="L154">                field.setAccessible(true);</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">                if (!ImmutableBean.class.isAssignableFrom(beanType) &amp;&amp; !Modifier.isFinal(field.getModifiers())) {</span>
+<span class="nc" id="L156">                    map.put(name, MutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
                 } else {
-<span class="nc" id="L154">                    map.put(name, ImmutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
+<span class="nc" id="L158">                    map.put(name, ImmutableLightMetaProperty.of(this, field, name, propertyTypes.size()));</span>
                 }
-<span class="nc" id="L156">                propertyTypes.add(field.getType());</span>
+<span class="nc" id="L160">                propertyTypes.add(field.getType());</span>
             }
         }
         // derived
-<span class="fc" id="L160">        Method[] methods = beanType.getDeclaredMethods();</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (Method method : methods) {</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (!Modifier.isStatic(method.getModifiers()) &amp;&amp;</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">                    method.getAnnotation(DerivedProperty.class) != null &amp;&amp;</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">                    method.getName().startsWith(&quot;get&quot;) &amp;&amp;</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                    method.getName().length() &gt; 3 &amp;&amp;</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                    Character.isUpperCase(method.getName().charAt(3)) &amp;&amp;</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">                    method.getParameterTypes().length == 0) {</span>
-<span class="fc" id="L168">                String methodName = method.getName();</span>
-<span class="fc" id="L169">                String propertyName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">                if (!Modifier.isPublic(method.getModifiers())) {</span>
-<span class="nc" id="L171">                    method.setAccessible(true);</span>
+<span class="fc" id="L164">        Method[] methods = beanType.getDeclaredMethods();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        for (Method method : methods) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">            if (!Modifier.isStatic(method.getModifiers()) &amp;&amp;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                    method.getAnnotation(DerivedProperty.class) != null &amp;&amp;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">                    method.getName().startsWith(&quot;get&quot;) &amp;&amp;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">                    method.getName().length() &gt; 3 &amp;&amp;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">                    Character.isUpperCase(method.getName().charAt(3)) &amp;&amp;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">                    method.getParameterTypes().length == 0) {</span>
+<span class="fc" id="L172">                String methodName = method.getName();</span>
+<span class="fc" id="L173">                String propertyName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">                if (!Modifier.isPublic(method.getModifiers())) {</span>
+<span class="nc" id="L175">                    method.setAccessible(true);</span>
                 }
-<span class="fc" id="L173">                MetaProperty&lt;Object&gt; mp = ImmutableLightMetaProperty.of(this, method, propertyName, -1);</span>
-<span class="fc" id="L174">                map.put(propertyName, mp);</span>
+<span class="fc" id="L177">                MetaProperty&lt;Object&gt; mp = ImmutableLightMetaProperty.of(this, method, propertyName, -1);</span>
+<span class="fc" id="L178">                map.put(propertyName, mp);</span>
             }
         }
 
-<span class="fc" id="L178">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
-<span class="fc" id="L179">        Constructor&lt;T&gt; construct = findConstructor(beanType, propertyTypes);</span>
-<span class="fc" id="L180">        construct.setAccessible(true);</span>
-<span class="fc" id="L181">        this.constructionData = buildConstructionData(construct);</span>
-<span class="fc" id="L182">        this.constructorFn = args -&gt; build(construct, args);</span>
-<span class="fc" id="L183">    }</span>
+<span class="fc" id="L182">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L183">        this.aliasMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L184">        Constructor&lt;T&gt; construct = findConstructor(beanType, propertyTypes);</span>
+<span class="fc" id="L185">        construct.setAccessible(true);</span>
+<span class="fc" id="L186">        this.constructionData = buildConstructionData(construct);</span>
+<span class="fc" id="L187">        this.constructorFn = args -&gt; build(construct, args);</span>
+<span class="fc" id="L188">    }</span>
 
     /**
      * Creates an instance of the bean.
@@ -193,16 +198,16 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
     @Deprecated
     private T build(Constructor&lt;T&gt; constructor, Object[] args) {
         try {
-<span class="fc" id="L196">            return constructor.newInstance(args);</span>
+<span class="fc" id="L201">            return constructor.newInstance(args);</span>
 
-<span class="nc" id="L198">        } catch (IllegalArgumentException | IllegalAccessException | InstantiationException ex) {</span>
-<span class="nc" id="L199">            throw new IllegalArgumentException(</span>
-<span class="nc" id="L200">                    &quot;Bean cannot be created: &quot; + beanName() + &quot; from &quot; + args, ex);</span>
-<span class="nc" id="L201">        } catch (InvocationTargetException ex) {</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (ex.getCause() instanceof RuntimeException) {</span>
-<span class="nc" id="L203">                throw (RuntimeException) ex.getCause();</span>
+<span class="nc" id="L203">        } catch (IllegalArgumentException | IllegalAccessException | InstantiationException ex) {</span>
+<span class="nc" id="L204">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L205">                    &quot;Bean cannot be created: &quot; + beanName() + &quot; from &quot; + args, ex);</span>
+<span class="nc" id="L206">        } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">            if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L208">                throw (RuntimeException) ex.getCause();</span>
             }
-<span class="nc" id="L205">            throw new RuntimeException(ex);</span>
+<span class="nc" id="L210">            throw new RuntimeException(ex);</span>
         }
     }
 
@@ -228,7 +233,7 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
     public static &lt;B extends Bean&gt; LightMetaBean&lt;B&gt; of(Class&lt;B&gt; beanType, MethodHandles.Lookup lookup) {
         // the field name order is undefined
         // but since they are not being matched against default values that is OK
-<span class="nc" id="L231">        return new LightMetaBean&lt;&gt;(beanType, lookup, fieldNames(beanType), EMPTY_OBJECT_ARRAY);</span>
+<span class="nc" id="L236">        return new LightMetaBean&lt;&gt;(beanType, lookup, fieldNames(beanType), EMPTY_OBJECT_ARRAY);</span>
     }
 
     /**
@@ -255,19 +260,19 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
 
         // the field name order is undefined (not source code order)
         // this is fundamentally broken as they are being matched against default values (in source code order)
-<span class="nc" id="L258">        return new LightMetaBean&lt;&gt;(beanType, lookup, fieldNames(beanType), defaultValues);</span>
+<span class="nc" id="L263">        return new LightMetaBean&lt;&gt;(beanType, lookup, fieldNames(beanType), defaultValues);</span>
     }
 
     // determine the field names by reflection
     private static String[] fieldNames(Class&lt;?&gt; beanType) {
-<span class="nc" id="L263">        Field[] fields = Stream.of(beanType.getDeclaredFields())</span>
-<span class="nc bnc" id="L264" title="All 4 branches missed.">                .filter(f -&gt; !Modifier.isStatic(f.getModifiers()) &amp;&amp; f.getAnnotation(PropertyDefinition.class) != null)</span>
-<span class="nc" id="L265">                .toArray(Field[]::new);</span>
-<span class="nc" id="L266">        List&lt;String&gt; fieldNames = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">        for (int i = 0; i &lt; fields.length; i++) {</span>
-<span class="nc" id="L268">            fieldNames.add(fields[i].getName());</span>
+<span class="nc" id="L268">        Field[] fields = Stream.of(beanType.getDeclaredFields())</span>
+<span class="nc bnc" id="L269" title="All 4 branches missed.">                .filter(f -&gt; !Modifier.isStatic(f.getModifiers()) &amp;&amp; f.getAnnotation(PropertyDefinition.class) != null)</span>
+<span class="nc" id="L270">                .toArray(Field[]::new);</span>
+<span class="nc" id="L271">        List&lt;String&gt; fieldNames = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        for (int i = 0; i &lt; fields.length; i++) {</span>
+<span class="nc" id="L273">            fieldNames.add(fields[i].getName());</span>
         }
-<span class="nc" id="L270">        return fieldNames.toArray(new String[fieldNames.size()]);</span>
+<span class="nc" id="L275">        return fieldNames.toArray(new String[fieldNames.size()]);</span>
     }
 
     /**
@@ -293,114 +298,135 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
             String[] fieldNames,
             Object... defaultValues) {
 
-<span class="fc" id="L296">        return new LightMetaBean&lt;&gt;(beanType, lookup, fieldNames, defaultValues);</span>
+<span class="fc" id="L301">        return new LightMetaBean&lt;&gt;(beanType, lookup, fieldNames, defaultValues);</span>
     }
 
     /**
      * Constructor.
-     * 
-     * @param beanType  the bean type, not null
      */
-<span class="fc" id="L304">    private LightMetaBean(Class&lt;T&gt; beanType, MethodHandles.Lookup lookup, String[] fieldNames, Object[] defaultValues) {</span>
-<span class="pc bpc" id="L305" title="1 of 2 branches missed.">        if (beanType == null) {</span>
-<span class="nc" id="L306">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
+    private LightMetaBean(
+            Class&lt;T&gt; beanType,
+            MethodHandles.Lookup lookup,
+            String[] fieldNames,
+<span class="fc" id="L311">            Object[] defaultValues) {</span>
+
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">        if (beanType == null) {</span>
+<span class="nc" id="L314">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L308" title="1 of 2 branches missed.">        if (lookup == null) {</span>
-<span class="nc" id="L309">            throw new NullPointerException(&quot;Lookup must not be null&quot;);</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">        if (lookup == null) {</span>
+<span class="nc" id="L317">            throw new NullPointerException(&quot;Lookup must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">        if (fieldNames == null) {</span>
-<span class="nc" id="L312">            throw new NullPointerException(&quot;Field names array must not be null&quot;);</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">        if (fieldNames == null) {</span>
+<span class="nc" id="L320">            throw new NullPointerException(&quot;Field names array must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">        if (defaultValues == null) {</span>
-<span class="nc" id="L315">            throw new NullPointerException(&quot;Default values array must not be null&quot;);</span>
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        if (defaultValues == null) {</span>
+<span class="nc" id="L323">            throw new NullPointerException(&quot;Default values array must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L317" title="2 of 4 branches missed.">        if (defaultValues.length &gt; 0 &amp;&amp; defaultValues.length != fieldNames.length) {</span>
-<span class="nc" id="L318">            throw new IllegalArgumentException(&quot;Number of default values must match number of fields&quot;);</span>
+<span class="pc bpc" id="L325" title="2 of 4 branches missed.">        if (defaultValues.length &gt; 0 &amp;&amp; defaultValues.length != fieldNames.length) {</span>
+<span class="nc" id="L326">            throw new IllegalArgumentException(&quot;Number of default values must match number of fields&quot;);</span>
         }
-<span class="fc" id="L320">        this.beanType = beanType;</span>
+<span class="fc" id="L328">        this.beanType = beanType;</span>
         // handle ordered or random
-<span class="fc" id="L322">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc" id="L323">        List&lt;Class&lt;?&gt;&gt; propertyTypes = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">        for (int i = 0; i &lt; fieldNames.length; i++) {</span>
-<span class="fc" id="L325">            String fieldName = fieldNames[i];</span>
+<span class="fc" id="L330">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L331">        List&lt;Class&lt;?&gt;&gt; propertyTypes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        for (int i = 0; i &lt; fieldNames.length; i++) {</span>
+<span class="fc" id="L333">            String fieldName = fieldNames[i];</span>
             Field field;
             try {
-<span class="fc" id="L328">                field = beanType.getDeclaredField(fieldName);</span>
-<span class="nc" id="L329">            } catch (NoSuchFieldException ex) {</span>
-<span class="nc" id="L330">                throw new IllegalArgumentException(ex);</span>
-<span class="fc" id="L331">            }</span>
-<span class="pc bpc" id="L332" title="1 of 2 branches missed.">            if (Modifier.isStatic(field.getModifiers())) {</span>
-<span class="nc" id="L333">                throw new IllegalArgumentException(&quot;Field must not be static&quot;);</span>
+<span class="fc" id="L336">                field = beanType.getDeclaredField(fieldName);</span>
+<span class="nc" id="L337">            } catch (NoSuchFieldException ex) {</span>
+<span class="nc" id="L338">                throw new IllegalArgumentException(ex);</span>
+<span class="fc" id="L339">            }</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">            if (Modifier.isStatic(field.getModifiers())) {</span>
+<span class="nc" id="L341">                throw new IllegalArgumentException(&quot;Field must not be static&quot;);</span>
             }
-<span class="pc bpc" id="L335" title="1 of 2 branches missed.">            if (field.getAnnotation(PropertyDefinition.class) == null) {</span>
-<span class="nc" id="L336">                throw new IllegalArgumentException(&quot;Field must have PropertyDefinition annotation&quot;);</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">            if (field.getAnnotation(PropertyDefinition.class) == null) {</span>
+<span class="nc" id="L344">                throw new IllegalArgumentException(&quot;Field must have PropertyDefinition annotation&quot;);</span>
             }
-<span class="fc" id="L338">            PropertyDefinition pdef = field.getAnnotation(PropertyDefinition.class);</span>
-<span class="fc" id="L339">            String name = field.getName();</span>
-<span class="fc bfc" id="L340" title="All 6 branches covered.">            if (pdef.get().equals(&quot;field&quot;) || pdef.get().startsWith(&quot;optional&quot;) || pdef.get().equals(&quot;&quot;)) {</span>
-<span class="fc" id="L341">                map.put(name, LightMetaProperty.of(this, field, lookup, name, propertyTypes.size()));</span>
+<span class="fc" id="L346">            PropertyDefinition pdef = field.getAnnotation(PropertyDefinition.class);</span>
+<span class="fc" id="L347">            String name = field.getName();</span>
+<span class="fc bfc" id="L348" title="All 6 branches covered.">            if (pdef.get().equals(&quot;field&quot;) || pdef.get().startsWith(&quot;optional&quot;) || pdef.get().equals(&quot;&quot;)) {</span>
+<span class="fc" id="L349">                map.put(name, LightMetaProperty.of(this, field, lookup, name, propertyTypes.size()));</span>
             } else {
-<span class="fc" id="L343">                String getterName = &quot;get&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
-<span class="fc" id="L344">                Method getMethod = null;</span>
-<span class="fc bfc" id="L345" title="All 2 branches covered.">                if (field.getType() == boolean.class) {</span>
-<span class="fc" id="L346">                    getMethod = findGetMethod(</span>
-<span class="fc" id="L347">                            beanType, &quot;is&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1));</span>
+<span class="fc" id="L351">                String getterName = &quot;get&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
+<span class="fc" id="L352">                Method getMethod = null;</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">                if (field.getType() == boolean.class) {</span>
+<span class="fc" id="L354">                    getMethod = findGetMethod(</span>
+<span class="fc" id="L355">                            beanType, &quot;is&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1));</span>
                 }
-<span class="fc bfc" id="L349" title="All 2 branches covered.">                if (getMethod == null) {</span>
-<span class="fc" id="L350">                    getMethod = findGetMethod(beanType, getterName);</span>
-<span class="pc bpc" id="L351" title="1 of 2 branches missed.">                    if (getMethod == null) {</span>
-<span class="nc" id="L352">                        throw new IllegalArgumentException(</span>
-<span class="nc" id="L353">                                &quot;Unable to find property getter: &quot; + beanType.getSimpleName() + &quot;.&quot; + getterName + &quot;()&quot;);</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">                if (getMethod == null) {</span>
+<span class="fc" id="L358">                    getMethod = findGetMethod(beanType, getterName);</span>
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">                    if (getMethod == null) {</span>
+<span class="nc" id="L360">                        throw new IllegalArgumentException(</span>
+<span class="nc" id="L361">                                &quot;Unable to find property getter: &quot; + beanType.getSimpleName() + &quot;.&quot; + getterName + &quot;()&quot;);</span>
                     }
                 }
-<span class="fc" id="L356">                Method setMethod = null;</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">                if (!ImmutableBean.class.isAssignableFrom(beanType)) {</span>
-<span class="fc" id="L358">                    String setterName = &quot;set&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
-<span class="fc" id="L359">                    setMethod = findSetMethod(beanType, setterName, field.getType());</span>
-<span class="pc bpc" id="L360" title="1 of 2 branches missed.">                    if (setMethod == null) {</span>
-<span class="nc" id="L361">                        throw new IllegalArgumentException(</span>
-<span class="nc" id="L362">                                &quot;Unable to find property setter: &quot; + beanType.getSimpleName() + &quot;.&quot; + setterName + &quot;()&quot;);</span>
+<span class="fc" id="L364">                Method setMethod = null;</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">                if (!ImmutableBean.class.isAssignableFrom(beanType)) {</span>
+<span class="fc" id="L366">                    String setterName = &quot;set&quot; + name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
+<span class="fc" id="L367">                    setMethod = findSetMethod(beanType, setterName, field.getType());</span>
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">                    if (setMethod == null) {</span>
+<span class="nc" id="L369">                        throw new IllegalArgumentException(</span>
+<span class="nc" id="L370">                                &quot;Unable to find property setter: &quot; + beanType.getSimpleName() + &quot;.&quot; + setterName + &quot;()&quot;);</span>
                     }
                 }
-<span class="fc" id="L365">                map.put(name,</span>
-<span class="fc" id="L366">                        LightMetaProperty.of(this, field, getMethod, setMethod, lookup, name, propertyTypes.size()));</span>
+<span class="fc" id="L373">                map.put(name,</span>
+<span class="fc" id="L374">                        LightMetaProperty.of(this, field, getMethod, setMethod, lookup, name, propertyTypes.size()));</span>
             }
-<span class="fc" id="L368">            propertyTypes.add(field.getType());</span>
+<span class="fc" id="L376">            propertyTypes.add(field.getType());</span>
         }
-<span class="fc" id="L370">        Constructor&lt;?&gt; constructor = findConstructor(beanType, propertyTypes);</span>
-<span class="pc bpc" id="L371" title="1 of 2 branches missed.">        if (defaultValues.length == 0) {</span>
-<span class="nc" id="L372">            defaultValues = buildConstructionData(constructor);</span>
+<span class="fc" id="L378">        Constructor&lt;?&gt; constructor = findConstructor(beanType, propertyTypes);</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">        if (defaultValues.length == 0) {</span>
+<span class="nc" id="L380">            defaultValues = buildConstructionData(constructor);</span>
         }
         // derived
-<span class="fc" id="L375">        Method[] methods = beanType.getDeclaredMethods();</span>
-<span class="fc bfc" id="L376" title="All 2 branches covered.">        for (Method method : methods) {</span>
-<span class="fc bfc" id="L377" title="All 2 branches covered.">            if (!Modifier.isStatic(method.getModifiers()) &amp;&amp;</span>
-<span class="fc bfc" id="L378" title="All 2 branches covered.">                    method.getAnnotation(DerivedProperty.class) != null &amp;&amp;</span>
-<span class="pc bpc" id="L379" title="1 of 2 branches missed.">                    method.getName().startsWith(&quot;get&quot;) &amp;&amp;</span>
-<span class="pc bpc" id="L380" title="1 of 2 branches missed.">                    method.getName().length() &gt; 3 &amp;&amp;</span>
-<span class="pc bpc" id="L381" title="1 of 2 branches missed.">                    Character.isUpperCase(method.getName().charAt(3)) &amp;&amp;</span>
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">                    method.getParameterTypes().length == 0) {</span>
-<span class="fc" id="L383">                String methodName = method.getName();</span>
-<span class="fc" id="L384">                String propertyName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);</span>
-<span class="fc" id="L385">                MetaProperty&lt;Object&gt; mp = LightMetaProperty.of(this, method, lookup, propertyName, -1);</span>
-<span class="fc" id="L386">                map.put(propertyName, mp);</span>
+<span class="fc" id="L383">        Method[] methods = beanType.getDeclaredMethods();</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">        for (Method method : methods) {</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">            if (!Modifier.isStatic(method.getModifiers()) &amp;&amp;</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">                    method.getAnnotation(DerivedProperty.class) != null &amp;&amp;</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">                    method.getName().startsWith(&quot;get&quot;) &amp;&amp;</span>
+<span class="pc bpc" id="L388" title="1 of 2 branches missed.">                    method.getName().length() &gt; 3 &amp;&amp;</span>
+<span class="pc bpc" id="L389" title="1 of 2 branches missed.">                    Character.isUpperCase(method.getName().charAt(3)) &amp;&amp;</span>
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">                    method.getParameterTypes().length == 0) {</span>
+<span class="fc" id="L391">                String methodName = method.getName();</span>
+<span class="fc" id="L392">                String propertyName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);</span>
+<span class="fc" id="L393">                MetaProperty&lt;Object&gt; mp = LightMetaProperty.of(this, method, lookup, propertyName, -1);</span>
+<span class="fc" id="L394">                map.put(propertyName, mp);</span>
             }
         }
-<span class="fc" id="L389">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
-<span class="fc" id="L390">        this.constructionData = defaultValues;</span>
-<span class="fc" id="L391">        MethodHandle handle = findConstructorHandle(beanType, lookup, constructor);</span>
-<span class="fc" id="L392">        this.constructorFn = args -&gt; build(handle, args);</span>
-<span class="fc" id="L393">    }</span>
+<span class="fc" id="L397">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L398">        this.aliasMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L399">        this.constructionData = defaultValues;</span>
+<span class="fc" id="L400">        MethodHandle handle = findConstructorHandle(beanType, lookup, constructor);</span>
+<span class="fc" id="L401">        this.constructorFn = args -&gt; build(handle, args);</span>
+<span class="fc" id="L402">    }</span>
+
+    /**
+     * Constructor used internally.
+     */
+    private LightMetaBean(
+            Class&lt;T&gt; beanType,
+            Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap,
+            Map&lt;String, String&gt; aliasMap,
+            Function&lt;Object[], T&gt; constructorFn,
+<span class="fc" id="L412">            Object[] constructionData) {</span>
+        
+<span class="fc" id="L414">        this.beanType = beanType;</span>
+<span class="fc" id="L415">        this.metaPropertyMap = metaPropertyMap;</span>
+<span class="fc" id="L416">        this.aliasMap = aliasMap;</span>
+<span class="fc" id="L417">        this.constructorFn = constructorFn;</span>
+<span class="fc" id="L418">        this.constructionData = constructionData;</span>
+<span class="fc" id="L419">    }</span>
 
     // finds a method on class or public method on super-type
     private static Method findGetMethod(Class&lt;? extends Bean&gt; beanType, String getterName) {
         try {
-<span class="fc" id="L398">            return beanType.getDeclaredMethod(getterName);</span>
-<span class="nc" id="L399">        } catch (NoSuchMethodException ex) {</span>
+<span class="fc" id="L424">            return beanType.getDeclaredMethod(getterName);</span>
+<span class="nc" id="L425">        } catch (NoSuchMethodException ex) {</span>
             try {
-<span class="nc" id="L401">                return beanType.getMethod(getterName);</span>
-<span class="nc" id="L402">            } catch (NoSuchMethodException ex2) {</span>
-<span class="nc" id="L403">                return null;</span>
+<span class="nc" id="L427">                return beanType.getMethod(getterName);</span>
+<span class="nc" id="L428">            } catch (NoSuchMethodException ex2) {</span>
+<span class="nc" id="L429">                return null;</span>
             }
         }
     }
@@ -408,24 +434,24 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
     // finds a method on class or public method on super-type
     private static Method findSetMethod(Class&lt;? extends Bean&gt; beanType, String setterName, Class&lt;?&gt; fieldType) {
         try {
-<span class="fc" id="L411">            return beanType.getDeclaredMethod(setterName, fieldType);</span>
-<span class="nc" id="L412">        } catch (NoSuchMethodException ex) {</span>
-<span class="nc" id="L413">            Method[] methods = beanType.getMethods();</span>
-<span class="nc" id="L414">            List&lt;Method&gt; potential = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">            for (Method method : methods) {</span>
-<span class="nc bnc" id="L416" title="All 4 branches missed.">                if (method.getName().equals(setterName) &amp;&amp; method.getParameterTypes().length == 1) {</span>
-<span class="nc" id="L417">                    potential.add(method);</span>
+<span class="fc" id="L437">            return beanType.getDeclaredMethod(setterName, fieldType);</span>
+<span class="nc" id="L438">        } catch (NoSuchMethodException ex) {</span>
+<span class="nc" id="L439">            Method[] methods = beanType.getMethods();</span>
+<span class="nc" id="L440">            List&lt;Method&gt; potential = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">            for (Method method : methods) {</span>
+<span class="nc bnc" id="L442" title="All 4 branches missed.">                if (method.getName().equals(setterName) &amp;&amp; method.getParameterTypes().length == 1) {</span>
+<span class="nc" id="L443">                    potential.add(method);</span>
                 }
             }
-<span class="nc bnc" id="L420" title="All 2 branches missed.">            if (potential.size() == 1) {</span>
-<span class="nc" id="L421">                return potential.get(0);</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">            if (potential.size() == 1) {</span>
+<span class="nc" id="L447">                return potential.get(0);</span>
             }
-<span class="nc bnc" id="L423" title="All 2 branches missed.">            for (Method method : potential) {</span>
-<span class="nc bnc" id="L424" title="All 2 branches missed.">                if (method.getParameterTypes()[0].equals(fieldType)) {</span>
-<span class="nc" id="L425">                    return method;</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">            for (Method method : potential) {</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">                if (method.getParameterTypes()[0].equals(fieldType)) {</span>
+<span class="nc" id="L451">                    return method;</span>
                 }
-<span class="nc" id="L427">            }</span>
-<span class="nc" id="L428">            return null;</span>
+<span class="nc" id="L453">            }</span>
+<span class="nc" id="L454">            return null;</span>
         }
     }
 
@@ -437,55 +463,55 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
 
         try {
             // spreader allows an Object[] to invoke the positional arguments
-<span class="fc" id="L440">            MethodType constructorType = MethodType.methodType(Void.TYPE, constructor.getParameterTypes());</span>
-<span class="fc" id="L441">            MethodHandle baseHandle = lookup.findConstructor(beanType, constructorType)</span>
-<span class="fc" id="L442">                    .asSpreader(Object[].class, constructor.getParameterTypes().length);</span>
+<span class="fc" id="L466">            MethodType constructorType = MethodType.methodType(Void.TYPE, constructor.getParameterTypes());</span>
+<span class="fc" id="L467">            MethodHandle baseHandle = lookup.findConstructor(beanType, constructorType)</span>
+<span class="fc" id="L468">                    .asSpreader(Object[].class, constructor.getParameterTypes().length);</span>
             // change the return type so caller can use invokeExact()
-<span class="fc" id="L444">            return baseHandle.asType(baseHandle.type().changeReturnType(Bean.class));</span>
-<span class="nc" id="L445">        } catch (NoSuchMethodException ex) {</span>
-<span class="nc" id="L446">            throw new IllegalArgumentException(&quot;Unable to find constructor: &quot; + beanType.getSimpleName());</span>
-<span class="nc" id="L447">        } catch (IllegalAccessException ex) {</span>
-<span class="nc" id="L448">            throw new IllegalArgumentException(&quot;Unable to access constructor: &quot; + beanType.getSimpleName());</span>
+<span class="fc" id="L470">            return baseHandle.asType(baseHandle.type().changeReturnType(Bean.class));</span>
+<span class="nc" id="L471">        } catch (NoSuchMethodException ex) {</span>
+<span class="nc" id="L472">            throw new IllegalArgumentException(&quot;Unable to find constructor: &quot; + beanType.getSimpleName());</span>
+<span class="nc" id="L473">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L474">            throw new IllegalArgumentException(&quot;Unable to access constructor: &quot; + beanType.getSimpleName());</span>
         }
     }
 
     // finds constructor which matches types exactly
     private static &lt;T extends Bean&gt; Constructor&lt;T&gt; findConstructor(Class&lt;T&gt; beanType, List&lt;Class&lt;?&gt;&gt; propertyTypes) {
-<span class="fc" id="L454">        Class&lt;?&gt;[] types = propertyTypes.toArray(new Class&lt;?&gt;[propertyTypes.size()]);</span>
+<span class="fc" id="L480">        Class&lt;?&gt;[] types = propertyTypes.toArray(new Class&lt;?&gt;[propertyTypes.size()]);</span>
         try {
-<span class="fc" id="L456">            Constructor&lt;T&gt; con = beanType.getDeclaredConstructor(types);</span>
-<span class="fc" id="L457">            return con;</span>
+<span class="fc" id="L482">            Constructor&lt;T&gt; con = beanType.getDeclaredConstructor(types);</span>
+<span class="fc" id="L483">            return con;</span>
             
-<span class="fc" id="L459">        } catch (NoSuchMethodException ex) {</span>
+<span class="fc" id="L485">        } catch (NoSuchMethodException ex) {</span>
             // try a more lenient search
             // this handles cases where field is a concrete class and constructor is an interface
             @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L463">            Constructor&lt;T&gt;[] cons = (Constructor&lt;T&gt;[]) beanType.getDeclaredConstructors();</span>
-<span class="fc" id="L464">            Constructor&lt;T&gt; match = null;</span>
-<span class="fc bfc" id="L465" title="All 2 branches covered.">            for (int i = 0; i &lt; cons.length; i++) {</span>
-<span class="fc" id="L466">                Constructor&lt;T&gt; con = cons[i];</span>
-<span class="fc" id="L467">                Class&lt;?&gt;[] conTypes = con.getParameterTypes();</span>
-<span class="pc bpc" id="L468" title="1 of 2 branches missed.">                if (conTypes.length == types.length) {</span>
-<span class="fc bfc" id="L469" title="All 2 branches covered.">                    for (int j = 0; j &lt; types.length; j++) {</span>
-<span class="pc bpc" id="L470" title="1 of 2 branches missed.">                        if (!conTypes[j].isAssignableFrom(types[j])) {</span>
-<span class="nc" id="L471">                            break;</span>
+<span class="fc" id="L489">            Constructor&lt;T&gt;[] cons = (Constructor&lt;T&gt;[]) beanType.getDeclaredConstructors();</span>
+<span class="fc" id="L490">            Constructor&lt;T&gt; match = null;</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">            for (int i = 0; i &lt; cons.length; i++) {</span>
+<span class="fc" id="L492">                Constructor&lt;T&gt; con = cons[i];</span>
+<span class="fc" id="L493">                Class&lt;?&gt;[] conTypes = con.getParameterTypes();</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">                if (conTypes.length == types.length) {</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">                    for (int j = 0; j &lt; types.length; j++) {</span>
+<span class="pc bpc" id="L496" title="1 of 2 branches missed.">                        if (!conTypes[j].isAssignableFrom(types[j])) {</span>
+<span class="nc" id="L497">                            break;</span>
                         }
                     }
-<span class="pc bpc" id="L474" title="1 of 2 branches missed.">                    if (match != null) {</span>
-<span class="nc" id="L475">                        throw new UnsupportedOperationException(&quot;Unable to find constructor: More than one matches&quot;);</span>
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">                    if (match != null) {</span>
+<span class="nc" id="L501">                        throw new UnsupportedOperationException(&quot;Unable to find constructor: More than one matches&quot;);</span>
                     }
-<span class="fc" id="L477">                    match = con;</span>
+<span class="fc" id="L503">                    match = con;</span>
                 }
             }
-<span class="pc bpc" id="L480" title="1 of 2 branches missed.">            if (match == null) {</span>
-<span class="nc" id="L481">                String msg = &quot;Unable to find constructor: &quot; + beanType.getSimpleName() + &quot;(&quot;;</span>
-<span class="nc bnc" id="L482" title="All 2 branches missed.">                for (Class&lt;?&gt; type : types) {</span>
-<span class="nc" id="L483">                    msg += Objects.toString(type.getName(), &quot;&lt;null&gt;&quot;);</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">            if (match == null) {</span>
+<span class="nc" id="L507">                String msg = &quot;Unable to find constructor: &quot; + beanType.getSimpleName() + &quot;(&quot;;</span>
+<span class="nc bnc" id="L508" title="All 2 branches missed.">                for (Class&lt;?&gt; type : types) {</span>
+<span class="nc" id="L509">                    msg += Objects.toString(type.getName(), &quot;&lt;null&gt;&quot;);</span>
                 }
-<span class="nc" id="L485">                msg += &quot;)&quot;;</span>
-<span class="nc" id="L486">                throw new UnsupportedOperationException(msg, ex);</span>
+<span class="nc" id="L511">                msg += &quot;)&quot;;</span>
+<span class="nc" id="L512">                throw new UnsupportedOperationException(msg, ex);</span>
             }
-<span class="fc" id="L488">            return match;</span>
+<span class="fc" id="L514">            return match;</span>
         }
     }
 
@@ -493,81 +519,112 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
     // needs to have default values for primitives
     // note that this does not handle empty collections/maps
     private static Object[] buildConstructionData(Constructor&lt;?&gt; constructor) {
-<span class="fc" id="L496">        Class&lt;?&gt;[] parameterTypes = constructor.getParameterTypes();</span>
-<span class="fc" id="L497">        Object[] args = new Object[parameterTypes.length];</span>
-<span class="fc bfc" id="L498" title="All 2 branches covered.">        for (int i = 0; i &lt; parameterTypes.length; i++) {</span>
-<span class="fc bfc" id="L499" title="All 2 branches covered.">            if (parameterTypes[i] == boolean.class) {</span>
-<span class="fc" id="L500">                args[i] = false;</span>
-<span class="fc bfc" id="L501" title="All 2 branches covered.">            } else if (parameterTypes[i] == int.class) {</span>
-<span class="fc" id="L502">                args[i] = (int) 0;</span>
-<span class="pc bpc" id="L503" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == long.class) {</span>
-<span class="nc" id="L504">                args[i] = (long) 0;</span>
-<span class="pc bpc" id="L505" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == short.class) {</span>
-<span class="nc" id="L506">                args[i] = (short) 0;</span>
-<span class="pc bpc" id="L507" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == byte.class) {</span>
-<span class="nc" id="L508">                args[i] = (byte) 0;</span>
-<span class="pc bpc" id="L509" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == float.class) {</span>
-<span class="nc" id="L510">                args[i] = (float) 0;</span>
-<span class="pc bpc" id="L511" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == double.class) {</span>
-<span class="nc" id="L512">                args[i] = (double) 0;</span>
-<span class="pc bpc" id="L513" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == char.class) {</span>
-<span class="nc" id="L514">                args[i] = (char) 0;</span>
+<span class="fc" id="L522">        Class&lt;?&gt;[] parameterTypes = constructor.getParameterTypes();</span>
+<span class="fc" id="L523">        Object[] args = new Object[parameterTypes.length];</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">        for (int i = 0; i &lt; parameterTypes.length; i++) {</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">            if (parameterTypes[i] == boolean.class) {</span>
+<span class="fc" id="L526">                args[i] = false;</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">            } else if (parameterTypes[i] == int.class) {</span>
+<span class="fc" id="L528">                args[i] = (int) 0;</span>
+<span class="pc bpc" id="L529" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == long.class) {</span>
+<span class="nc" id="L530">                args[i] = (long) 0;</span>
+<span class="pc bpc" id="L531" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == short.class) {</span>
+<span class="nc" id="L532">                args[i] = (short) 0;</span>
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == byte.class) {</span>
+<span class="nc" id="L534">                args[i] = (byte) 0;</span>
+<span class="pc bpc" id="L535" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == float.class) {</span>
+<span class="nc" id="L536">                args[i] = (float) 0;</span>
+<span class="pc bpc" id="L537" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == double.class) {</span>
+<span class="nc" id="L538">                args[i] = (double) 0;</span>
+<span class="pc bpc" id="L539" title="1 of 2 branches missed.">            } else if (parameterTypes[i] == char.class) {</span>
+<span class="nc" id="L540">                args[i] = (char) 0;</span>
             }
         }
-<span class="fc" id="L517">        return args;</span>
+<span class="fc" id="L543">        return args;</span>
     }
 
     private T build(MethodHandle handle, Object[] args) {
         try {
-<span class="fc" id="L522">            return (T) handle.invokeExact(args);</span>
+<span class="fc" id="L548">            return (T) handle.invokeExact(args);</span>
             
-<span class="nc" id="L524">        } catch (Error ex) {</span>
-<span class="nc" id="L525">            throw ex;</span>
-<span class="nc" id="L526">        } catch (Throwable ex) {</span>
-<span class="nc" id="L527">            throw new IllegalArgumentException(</span>
-<span class="nc" id="L528">                    &quot;Bean cannot be created: &quot; + beanName() + &quot; from &quot; + Arrays.toString(args), ex);</span>
+<span class="nc" id="L550">        } catch (Error ex) {</span>
+<span class="nc" id="L551">            throw ex;</span>
+<span class="nc" id="L552">        } catch (Throwable ex) {</span>
+<span class="nc" id="L553">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L554">                    &quot;Bean cannot be created: &quot; + beanName() + &quot; from &quot; + Arrays.toString(args), ex);</span>
         }
     }
 
     //-----------------------------------------------------------------------
     T build(Object[] args) {
-<span class="fc" id="L534">        return constructorFn.apply(args);</span>
+<span class="fc" id="L560">        return constructorFn.apply(args);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds an alias to the meta-bean.
+     * &lt;p&gt;
+     * When using {@link #metaProperty(String)}, the alias will return the
+     * meta-property of the real name.
+     * 
+     * @param alias  the alias
+     * @param realName  the real name
+     * @return the new meta-bean instance
+     * @throws IllegalArgumentException if the realName is invalid
+     */
+    public LightMetaBean&lt;T&gt; withAlias(String alias, String realName) {
+<span class="pc bpc" id="L576" title="1 of 2 branches missed.">        if (!metaPropertyMap.containsKey(realName)) {</span>
+<span class="nc" id="L577">            throw new IllegalArgumentException(&quot;Invalid property name: &quot; + realName);</span>
+        }
+<span class="fc" id="L579">        Map&lt;String, String&gt; aliasMap = new HashMap&lt;&gt;(this.aliasMap);</span>
+<span class="fc" id="L580">        aliasMap.put(alias, realName);</span>
+<span class="fc" id="L581">        return new LightMetaBean&lt;&gt;(beanType, metaPropertyMap, aliasMap, constructorFn, constructionData);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public boolean isBuildable() {
-<span class="nc" id="L540">        return true;</span>
+<span class="nc" id="L587">        return true;</span>
     }
 
     @Override
     public BeanBuilder&lt;T&gt; builder() {
-<span class="fc" id="L545">        return new LightBeanBuilder&lt;&gt;(this, constructionData.clone());</span>
+<span class="fc" id="L592">        return new LightBeanBuilder&lt;&gt;(this, constructionData.clone());</span>
     }
 
     @Override
     public Class&lt;T&gt; beanType() {
-<span class="fc" id="L550">        return beanType;</span>
+<span class="fc" id="L597">        return beanType;</span>
+    }
+
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;R&gt; MetaProperty&lt;R&gt; metaProperty(String propertyName) {
+<span class="fc" id="L603">        MetaProperty&lt;?&gt; mp = metaPropertyMap().get(aliasMap.getOrDefault(propertyName, propertyName));</span>
+<span class="pc bpc" id="L604" title="1 of 2 branches missed.">        if (mp == null) {</span>
+<span class="nc" id="L605">            throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+        }
+<span class="fc" id="L607">        return (MetaProperty&lt;R&gt;) mp;</span>
     }
 
     @Override
     public Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap() {
-<span class="fc" id="L555">        return metaPropertyMap;</span>
+<span class="fc" id="L612">        return metaPropertyMap;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L561" title="All 2 branches missed.">        if (obj instanceof LightMetaBean) {</span>
-<span class="nc" id="L562">            LightMetaBean&lt;?&gt; other = (LightMetaBean&lt;?&gt;) obj;</span>
-<span class="nc" id="L563">            return this.beanType.equals(other.beanType);</span>
+<span class="nc bnc" id="L618" title="All 2 branches missed.">        if (obj instanceof LightMetaBean) {</span>
+<span class="nc" id="L619">            LightMetaBean&lt;?&gt; other = (LightMetaBean&lt;?&gt;) obj;</span>
+<span class="nc" id="L620">            return this.beanType.equals(other.beanType);</span>
         }
-<span class="nc" id="L565">        return false;</span>
+<span class="nc" id="L622">        return false;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L570">        return beanType.hashCode() + 3;</span>
+<span class="nc" id="L627">        return beanType.hashCode() + 3;</span>
     }
 
     /**
@@ -577,8 +634,8 @@ public final class LightMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&
      */
     @Override
     public String toString() {
-<span class="nc" id="L580">        return &quot;MetaBean:&quot; + beanName();</span>
+<span class="nc" id="L637">        return &quot;MetaBean:&quot; + beanName();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

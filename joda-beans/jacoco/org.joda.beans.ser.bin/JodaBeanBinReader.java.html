@@ -386,190 +386,198 @@ public class JodaBeanBinReader extends MsgPack {
                 }
 <span class="fc" id="L387">                return Byte.valueOf((byte) value);</span>
                 
+<span class="pc bpc" id="L389" title="1 of 4 branches missed.">            } else if (type == Double.class || type == double.class) {</span>
+                // handle case where property type has changed from integral to double
+<span class="fc" id="L391">                return Double.valueOf((double) value);</span>
+                
+<span class="pc bpc" id="L393" title="2 of 4 branches missed.">            } else if (type == Float.class || type == float.class) {</span>
+                // handle case where property type has changed from integral to float
+<span class="nc" id="L395">                return Float.valueOf((float) value);</span>
+                
             } else {
-<span class="pc bpc" id="L390" title="2 of 4 branches missed.">                if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L391">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was &quot; + value);</span>
+<span class="pc bpc" id="L398" title="2 of 4 branches missed.">                if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L399">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was &quot; + value);</span>
                 }
-<span class="fc" id="L393">                return Integer.valueOf((int) value);</span>
+<span class="fc" id="L401">                return Integer.valueOf((int) value);</span>
             }
         }
-<span class="pc bpc" id="L396" title="1 of 6 branches missed.">        switch (typeByte) {</span>
+<span class="pc bpc" id="L404" title="1 of 6 branches missed.">        switch (typeByte) {</span>
             case TRUE:
-<span class="fc" id="L398">                return Boolean.TRUE;</span>
+<span class="fc" id="L406">                return Boolean.TRUE;</span>
             case FALSE:
-<span class="fc" id="L400">                return Boolean.FALSE;</span>
+<span class="fc" id="L408">                return Boolean.FALSE;</span>
             case FLOAT_32:
-<span class="fc" id="L402">                return Float.valueOf(input.readFloat());</span>
+<span class="fc" id="L410">                return Float.valueOf(input.readFloat());</span>
             case FLOAT_64:
-<span class="fc" id="L404">                return Double.valueOf(input.readDouble());</span>
+<span class="fc" id="L412">                return Double.valueOf(input.readDouble());</span>
             case BIN_8:
             case BIN_16:
             case BIN_32:
-<span class="fc" id="L408">                return acceptBinary(typeByte);</span>
+<span class="fc" id="L416">                return acceptBinary(typeByte);</span>
         }
-<span class="nc" id="L410">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected &quot; + type.getName() + &quot;, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L418">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected &quot; + type.getName() + &quot;, but was: 0x&quot; + toHex(typeByte));</span>
     }
 
     //-----------------------------------------------------------------------
     private int acceptMap(int typeByte) throws IOException {
         int size;
-<span class="pc bpc" id="L416" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_MAP &amp;&amp; typeByte &lt;= MAX_FIX_MAP) {</span>
-<span class="fc" id="L417">            size = (typeByte - MIN_FIX_MAP);</span>
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">        } else if (typeByte == MAP_16) {</span>
-<span class="fc" id="L419">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L420" title="All 2 branches missed.">        } else if (typeByte == MAP_32) {</span>
-<span class="nc" id="L421">            size = input.readInt();</span>
-<span class="nc bnc" id="L422" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L423">                throw new IllegalArgumentException(&quot;Invalid binary data: Map too large&quot;);</span>
+<span class="pc bpc" id="L424" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_MAP &amp;&amp; typeByte &lt;= MAX_FIX_MAP) {</span>
+<span class="fc" id="L425">            size = (typeByte - MIN_FIX_MAP);</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">        } else if (typeByte == MAP_16) {</span>
+<span class="fc" id="L427">            size = input.readUnsignedShort();</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">        } else if (typeByte == MAP_32) {</span>
+<span class="nc" id="L429">            size = input.readInt();</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">            if (size &lt; 0) {</span>
+<span class="nc" id="L431">                throw new IllegalArgumentException(&quot;Invalid binary data: Map too large&quot;);</span>
             }
         } else {
-<span class="nc" id="L426">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L434">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map, but was: 0x&quot; + toHex(typeByte));</span>
         }
-<span class="fc" id="L428">        return size;</span>
+<span class="fc" id="L436">        return size;</span>
     }
 
     private int acceptArray(int typeByte) throws IOException {
         int size;
-<span class="pc bpc" id="L433" title="2 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_ARRAY &amp;&amp; typeByte &lt;= MAX_FIX_ARRAY) {</span>
-<span class="fc" id="L434">            size = (typeByte - MIN_FIX_ARRAY);</span>
-<span class="nc bnc" id="L435" title="All 2 branches missed.">        } else if (typeByte == ARRAY_16) {</span>
-<span class="nc" id="L436">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L437" title="All 2 branches missed.">        } else if (typeByte == ARRAY_32) {</span>
-<span class="nc" id="L438">            size = input.readInt();</span>
-<span class="nc bnc" id="L439" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L440">                throw new IllegalArgumentException(&quot;Invalid binary data: Array too large&quot;);</span>
+<span class="pc bpc" id="L441" title="2 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_ARRAY &amp;&amp; typeByte &lt;= MAX_FIX_ARRAY) {</span>
+<span class="fc" id="L442">            size = (typeByte - MIN_FIX_ARRAY);</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">        } else if (typeByte == ARRAY_16) {</span>
+<span class="nc" id="L444">            size = input.readUnsignedShort();</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">        } else if (typeByte == ARRAY_32) {</span>
+<span class="nc" id="L446">            size = input.readInt();</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">            if (size &lt; 0) {</span>
+<span class="nc" id="L448">                throw new IllegalArgumentException(&quot;Invalid binary data: Array too large&quot;);</span>
             }
         } else {
-<span class="nc" id="L443">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected array, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L451">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected array, but was: 0x&quot; + toHex(typeByte));</span>
         }
-<span class="fc" id="L445">        return size;</span>
+<span class="fc" id="L453">        return size;</span>
     }
 
     private String acceptString(int typeByte) throws IOException {
         int size;
-<span class="pc bpc" id="L450" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_STR &amp;&amp; typeByte &lt;= MAX_FIX_STR) {</span>
-<span class="fc" id="L451">            size = (typeByte - MIN_FIX_STR);</span>
-<span class="pc bpc" id="L452" title="1 of 2 branches missed.">        } else if (typeByte == STR_8) {</span>
-<span class="fc" id="L453">            size = input.readUnsignedByte();</span>
-<span class="nc bnc" id="L454" title="All 2 branches missed.">        } else if (typeByte == STR_16) {</span>
-<span class="nc" id="L455">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L456" title="All 2 branches missed.">        } else if (typeByte == STR_32) {</span>
-<span class="nc" id="L457">            size = input.readInt();</span>
-<span class="nc bnc" id="L458" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L459">                throw new IllegalArgumentException(&quot;Invalid binary data: String too large&quot;);</span>
+<span class="pc bpc" id="L458" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_STR &amp;&amp; typeByte &lt;= MAX_FIX_STR) {</span>
+<span class="fc" id="L459">            size = (typeByte - MIN_FIX_STR);</span>
+<span class="pc bpc" id="L460" title="1 of 2 branches missed.">        } else if (typeByte == STR_8) {</span>
+<span class="fc" id="L461">            size = input.readUnsignedByte();</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">        } else if (typeByte == STR_16) {</span>
+<span class="nc" id="L463">            size = input.readUnsignedShort();</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">        } else if (typeByte == STR_32) {</span>
+<span class="nc" id="L465">            size = input.readInt();</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">            if (size &lt; 0) {</span>
+<span class="nc" id="L467">                throw new IllegalArgumentException(&quot;Invalid binary data: String too large&quot;);</span>
             }
         } else {
-<span class="nc" id="L462">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected string, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L470">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected string, but was: 0x&quot; + toHex(typeByte));</span>
         }
-<span class="fc" id="L464">        return acceptStringBytes(size);</span>
+<span class="fc" id="L472">        return acceptStringBytes(size);</span>
     }
 
     private String acceptStringBytes(int size) throws IOException {
-<span class="fc" id="L468">        byte[] bytes = new byte[size];</span>
-<span class="fc" id="L469">        input.readFully(bytes);</span>
+<span class="fc" id="L476">        byte[] bytes = new byte[size];</span>
+<span class="fc" id="L477">        input.readFully(bytes);</span>
         // inline common ASCII case for much better performance
-<span class="fc" id="L471">        char[] chars = new char[size];</span>
-<span class="fc bfc" id="L472" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L473">            byte b = bytes[i];</span>
-<span class="pc bpc" id="L474" title="1 of 2 branches missed.">            if (b &gt;= 0) {</span>
-<span class="fc" id="L475">                chars[i] = (char) b;</span>
+<span class="fc" id="L479">        char[] chars = new char[size];</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L481">            byte b = bytes[i];</span>
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">            if (b &gt;= 0) {</span>
+<span class="fc" id="L483">                chars[i] = (char) b;</span>
             } else {
-<span class="nc" id="L477">                return new String(bytes, UTF_8);</span>
+<span class="nc" id="L485">                return new String(bytes, UTF_8);</span>
             }
         }
-<span class="fc" id="L480">        return new String(chars);</span>
+<span class="fc" id="L488">        return new String(chars);</span>
     }
 
     private byte[] acceptBinary(int typeByte) throws IOException {
         int size;
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">        if (typeByte == BIN_8) {</span>
-<span class="fc" id="L486">            size = input.readUnsignedByte();</span>
-<span class="nc bnc" id="L487" title="All 2 branches missed.">        } else if (typeByte == BIN_16) {</span>
-<span class="nc" id="L488">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L489" title="All 2 branches missed.">        } else if (typeByte == BIN_32) {</span>
-<span class="nc" id="L490">            size = input.readInt();</span>
-<span class="nc bnc" id="L491" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L492">                throw new IllegalArgumentException(&quot;Invalid binary data: Binary too large&quot;);</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">        if (typeByte == BIN_8) {</span>
+<span class="fc" id="L494">            size = input.readUnsignedByte();</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">        } else if (typeByte == BIN_16) {</span>
+<span class="nc" id="L496">            size = input.readUnsignedShort();</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">        } else if (typeByte == BIN_32) {</span>
+<span class="nc" id="L498">            size = input.readInt();</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">            if (size &lt; 0) {</span>
+<span class="nc" id="L500">                throw new IllegalArgumentException(&quot;Invalid binary data: Binary too large&quot;);</span>
             }
         } else {
-<span class="nc" id="L495">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected binary, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L503">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected binary, but was: 0x&quot; + toHex(typeByte));</span>
         }
-<span class="fc" id="L497">        byte[] bytes = new byte[size];</span>
-<span class="fc" id="L498">        input.readFully(bytes);</span>
-<span class="fc" id="L499">        return bytes;</span>
+<span class="fc" id="L505">        byte[] bytes = new byte[size];</span>
+<span class="fc" id="L506">        input.readFully(bytes);</span>
+<span class="fc" id="L507">        return bytes;</span>
     }
 
     private int acceptInteger(int typeByte) throws IOException {
-<span class="pc bpc" id="L503" title="2 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) {</span>
-<span class="fc" id="L504">            return typeByte;</span>
+<span class="pc bpc" id="L511" title="2 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) {</span>
+<span class="fc" id="L512">            return typeByte;</span>
         }
-<span class="nc bnc" id="L506" title="All 9 branches missed.">        switch (typeByte) {</span>
+<span class="nc bnc" id="L514" title="All 9 branches missed.">        switch (typeByte) {</span>
             case UINT_8:
-<span class="nc" id="L508">                return input.readUnsignedByte();</span>
+<span class="nc" id="L516">                return input.readUnsignedByte();</span>
             case UINT_16:
-<span class="nc" id="L510">                return input.readUnsignedShort();</span>
+<span class="nc" id="L518">                return input.readUnsignedShort();</span>
             case UINT_32: {
-<span class="nc" id="L512">                int val = input.readInt();</span>
-<span class="nc bnc" id="L513" title="All 2 branches missed.">                if (val &lt; 0) {</span>
-<span class="nc" id="L514">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large unsigned int&quot;);</span>
+<span class="nc" id="L520">                int val = input.readInt();</span>
+<span class="nc bnc" id="L521" title="All 2 branches missed.">                if (val &lt; 0) {</span>
+<span class="nc" id="L522">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large unsigned int&quot;);</span>
                 }
-<span class="nc" id="L516">                return val;</span>
+<span class="nc" id="L524">                return val;</span>
             }
             case UINT_64: {
-<span class="nc" id="L519">                long val = input.readLong();</span>
-<span class="nc bnc" id="L520" title="All 4 branches missed.">                if (val &lt; 0 || val &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L521">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large unsigned int&quot;);</span>
+<span class="nc" id="L527">                long val = input.readLong();</span>
+<span class="nc bnc" id="L528" title="All 4 branches missed.">                if (val &lt; 0 || val &gt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L529">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large unsigned int&quot;);</span>
                 }
-<span class="nc" id="L523">                return (int) val;</span>
+<span class="nc" id="L531">                return (int) val;</span>
             }
             case SINT_8:
-<span class="nc" id="L526">                return input.readByte();</span>
+<span class="nc" id="L534">                return input.readByte();</span>
             case SINT_16:
-<span class="nc" id="L528">                return input.readShort();</span>
+<span class="nc" id="L536">                return input.readShort();</span>
             case SINT_32:
-<span class="nc" id="L530">                return input.readInt();</span>
+<span class="nc" id="L538">                return input.readInt();</span>
             case SINT_64: {
-<span class="nc" id="L532">                long val = input.readLong();</span>
-<span class="nc bnc" id="L533" title="All 4 branches missed.">                if (val &lt; Integer.MIN_VALUE || val &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L534">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large signed int&quot;);</span>
+<span class="nc" id="L540">                long val = input.readLong();</span>
+<span class="nc bnc" id="L541" title="All 4 branches missed.">                if (val &lt; Integer.MIN_VALUE || val &gt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L542">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large signed int&quot;);</span>
                 }
-<span class="nc" id="L536">                return (int) val;</span>
+<span class="nc" id="L544">                return (int) val;</span>
             }
         }
-<span class="nc" id="L539">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L547">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was: 0x&quot; + toHex(typeByte));</span>
     }
 
     private long acceptLong(int typeByte) throws IOException {
-<span class="pc bpc" id="L543" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) {</span>
-<span class="fc" id="L544">            return typeByte;</span>
+<span class="pc bpc" id="L551" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) {</span>
+<span class="fc" id="L552">            return typeByte;</span>
         }
-<span class="pc bpc" id="L546" title="7 of 9 branches missed.">        switch (typeByte) {</span>
+<span class="pc bpc" id="L554" title="7 of 9 branches missed.">        switch (typeByte) {</span>
             case UINT_8:
-<span class="fc" id="L548">                return input.readUnsignedByte();</span>
+<span class="fc" id="L556">                return input.readUnsignedByte();</span>
             case UINT_16:
-<span class="fc" id="L550">                return input.readUnsignedShort();</span>
+<span class="fc" id="L558">                return input.readUnsignedShort();</span>
             case UINT_32: {
-<span class="nc" id="L552">                return ((long) input.readInt()) &amp; 0xFFFFFFFFL;</span>
+<span class="nc" id="L560">                return ((long) input.readInt()) &amp; 0xFFFFFFFFL;</span>
             }
             case UINT_64: {
-<span class="nc" id="L555">                long val = input.readLong();</span>
-<span class="nc bnc" id="L556" title="All 2 branches missed.">                if (val &lt; 0) {</span>
-<span class="nc" id="L557">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected long, but was large unsigned int&quot;);</span>
+<span class="nc" id="L563">                long val = input.readLong();</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">                if (val &lt; 0) {</span>
+<span class="nc" id="L565">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected long, but was large unsigned int&quot;);</span>
                 }
-<span class="nc" id="L559">                return val;</span>
+<span class="nc" id="L567">                return val;</span>
             }
             case SINT_8:
-<span class="nc" id="L562">                return input.readByte();</span>
+<span class="nc" id="L570">                return input.readByte();</span>
             case SINT_16:
-<span class="nc" id="L564">                return input.readShort();</span>
+<span class="nc" id="L572">                return input.readShort();</span>
             case SINT_32:
-<span class="nc" id="L566">                return input.readInt();</span>
+<span class="nc" id="L574">                return input.readInt();</span>
             case SINT_64: {
-<span class="nc" id="L568">                return input.readLong();</span>
+<span class="nc" id="L576">                return input.readLong();</span>
             }
         }
-<span class="nc" id="L571">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected long, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L579">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected long, but was: 0x&quot; + toHex(typeByte));</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -40,11 +40,11 @@ import org.joda.convert.StringConverter;
  * hold the type in a few places.
  * &lt;p&gt;
  * Beans are output using JSON objects where the key is the property name.
- * The type of the bean will be sent using the '&amp;#64type' property name if necessary.
+ * The type of the bean will be sent using the '&amp;#64;type' property name if necessary.
  * &lt;p&gt;
  * Most simple types, defined by Joda-Convert, are output as JSON strings.
  * If the simple type requires additional type information, the value is replaced by
- * a JSON object containing the keys '&amp;#64type' and 'value'.
+ * a JSON object containing the keys '&amp;#64;type' and 'value'.
  * &lt;p&gt;
  * Null values are generally omitted, but where included are sent as 'null'.
  * Boolean values are sent as 'true' and 'false'.
@@ -58,7 +58,7 @@ import org.joda.convert.StringConverter;
  * written to aid with deserialization.
  * At this level, the data read back may not be identical to that written.
  * If the collection type requires additional type information, the value is replaced by
- * a JSON object containing the keys '&amp;#64meta' and 'value'.
+ * a JSON object containing the keys '&amp;#64;meta' and 'value'.
  * &lt;p&gt;
  * Type names are shortened by the package of the root type if possible.
  * Certain basic types are also handled, such as String, Integer, File and URI.
@@ -451,4 +451,4 @@ public class JodaBeanJsonWriter {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

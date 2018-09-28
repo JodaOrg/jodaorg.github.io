@@ -138,12 +138,14 @@ public class JodaBeanXmlReader {
 <span class="nc" id="L138">                reader = factory().createXMLEventReader(input);</span>
 <span class="nc" id="L139">                return read(rootType);</span>
             } finally {
-<span class="nc" id="L141">                reader.close();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                if (reader != null) {</span>
+<span class="nc" id="L142">                    reader.close();</span>
+                }
             }
-<span class="nc" id="L143">        } catch (RuntimeException ex) {</span>
-<span class="nc" id="L144">            throw ex;</span>
-<span class="nc" id="L145">        } catch (Exception ex) {</span>
-<span class="nc" id="L146">            throw new RuntimeException(ex);</span>
+<span class="nc" id="L145">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L146">            throw ex;</span>
+<span class="nc" id="L147">        } catch (Exception ex) {</span>
+<span class="nc" id="L148">            throw new RuntimeException(ex);</span>
         }
     }
 
@@ -154,7 +156,7 @@ public class JodaBeanXmlReader {
      * @return the bean, not null
      */
     public Bean read(final Reader input) {
-<span class="nc" id="L157">        return read(input, Bean.class);</span>
+<span class="nc" id="L159">        return read(input, Bean.class);</span>
     }
 
     /**
@@ -168,15 +170,17 @@ public class JodaBeanXmlReader {
     public &lt;T&gt; T read(final Reader input, Class&lt;T&gt; rootType) {
         try {
             try {
-<span class="fc" id="L171">                reader = factory().createXMLEventReader(input);</span>
-<span class="fc" id="L172">                return read(rootType);</span>
+<span class="fc" id="L173">                reader = factory().createXMLEventReader(input);</span>
+<span class="fc" id="L174">                return read(rootType);</span>
             } finally {
-<span class="fc" id="L174">                reader.close();</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">                if (reader != null) {</span>
+<span class="fc" id="L177">                    reader.close();</span>
+                }
             }
-<span class="fc" id="L176">        } catch (RuntimeException ex) {</span>
-<span class="fc" id="L177">            throw ex;</span>
-<span class="fc" id="L178">        } catch (Exception ex) {</span>
-<span class="fc" id="L179">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L180">        } catch (RuntimeException ex) {</span>
+<span class="fc" id="L181">            throw ex;</span>
+<span class="fc" id="L182">        } catch (Exception ex) {</span>
+<span class="fc" id="L183">            throw new RuntimeException(ex);</span>
         }
     }
 
@@ -188,10 +192,10 @@ public class JodaBeanXmlReader {
      * @return the factory, not null
      */
     private XMLInputFactory factory() {
-<span class="fc" id="L191">        XMLInputFactory factory = XMLInputFactory.newInstance();</span>
-<span class="fc" id="L192">        factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);</span>
-<span class="fc" id="L193">        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);</span>
-<span class="fc" id="L194">        return factory;</span>
+<span class="fc" id="L195">        XMLInputFactory factory = XMLInputFactory.newInstance();</span>
+<span class="fc" id="L196">        factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);</span>
+<span class="fc" id="L197">        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);</span>
+<span class="fc" id="L198">        return factory;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -203,28 +207,28 @@ public class JodaBeanXmlReader {
      * @throws Exception if an error occurs
      */
     private &lt;T&gt; T read(final Class&lt;T&gt; rootType) throws Exception {
-<span class="fc" id="L206">        StartElement start = advanceToStartElement();</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (start.getName().equals(BEAN_QNAME) == false) {</span>
-<span class="fc" id="L208">            throw new IllegalArgumentException(&quot;Expected root element 'bean' but found '&quot; + start.getName() + &quot;'&quot;);</span>
+<span class="fc" id="L210">        StartElement start = advanceToStartElement();</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        if (start.getName().equals(BEAN_QNAME) == false) {</span>
+<span class="fc" id="L212">            throw new IllegalArgumentException(&quot;Expected root element 'bean' but found '&quot; + start.getName() + &quot;'&quot;);</span>
         }
-<span class="fc" id="L210">        Attribute attr = start.getAttributeByName(TYPE_QNAME);</span>
-<span class="fc bfc" id="L211" title="All 4 branches covered.">        if (attr == null &amp;&amp; rootType == Bean.class) {</span>
-<span class="fc" id="L212">            throw new IllegalArgumentException(&quot;Root element attribute must specify '&quot; + TYPE + &quot;'&quot;);</span>
+<span class="fc" id="L214">        Attribute attr = start.getAttributeByName(TYPE_QNAME);</span>
+<span class="fc bfc" id="L215" title="All 4 branches covered.">        if (attr == null &amp;&amp; rootType == Bean.class) {</span>
+<span class="fc" id="L216">            throw new IllegalArgumentException(&quot;Root element attribute must specify '&quot; + TYPE + &quot;'&quot;);</span>
         }
-<span class="fc" id="L214">        Class&lt;?&gt; effectiveType = rootType;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">        if (attr != null) {</span>
-<span class="fc" id="L216">            String typeStr = attr.getValue();</span>
-<span class="fc" id="L217">            effectiveType = SerTypeMapper.decodeType(typeStr, settings, null, knownTypes);</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">            if (rootType.isAssignableFrom(effectiveType) == false) {</span>
-<span class="fc" id="L219">                throw new IllegalArgumentException(&quot;Specified root type is incompatible with XML root type: &quot; + rootType.getName() + &quot; and &quot; + effectiveType.getName());</span>
+<span class="fc" id="L218">        Class&lt;?&gt; effectiveType = rootType;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (attr != null) {</span>
+<span class="fc" id="L220">            String typeStr = attr.getValue();</span>
+<span class="fc" id="L221">            effectiveType = SerTypeMapper.decodeType(typeStr, settings, null, knownTypes);</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">            if (rootType.isAssignableFrom(effectiveType) == false) {</span>
+<span class="fc" id="L223">                throw new IllegalArgumentException(&quot;Specified root type is incompatible with XML root type: &quot; + rootType.getName() + &quot; and &quot; + effectiveType.getName());</span>
             }
         }
-<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(effectiveType) == false) {</span>
-<span class="fc" id="L223">            throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + effectiveType.getName());</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(effectiveType) == false) {</span>
+<span class="fc" id="L227">            throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + effectiveType.getName());</span>
         }
-<span class="fc" id="L225">        basePackage = effectiveType.getPackage().getName() + &quot;.&quot;;</span>
-<span class="fc" id="L226">        Object parsed = parseBean(effectiveType);</span>
-<span class="fc" id="L227">        return rootType.cast(parsed);</span>
+<span class="fc" id="L229">        basePackage = effectiveType.getPackage().getName() + &quot;.&quot;;</span>
+<span class="fc" id="L230">        Object parsed = parseBean(effectiveType);</span>
+<span class="fc" id="L231">        return rootType.cast(parsed);</span>
     }
 
     /**
@@ -237,82 +241,82 @@ public class JodaBeanXmlReader {
      */
     @SuppressWarnings(&quot;null&quot;)
     private Object parseBean(final Class&lt;?&gt; beanType) throws Exception {
-<span class="fc" id="L240">        String propName = &quot;&quot;;</span>
+<span class="fc" id="L244">        String propName = &quot;&quot;;</span>
         try {
-<span class="fc" id="L242">            XMLEvent event = null;</span>
+<span class="fc" id="L246">            XMLEvent event = null;</span>
             // handle case where whole bean is Joda-Convert string
-<span class="fc bfc" id="L244" title="All 2 branches covered.">            if (settings.getConverter().isConvertible(beanType)) {</span>
-<span class="fc" id="L245">                StringBuilder buf = new StringBuilder();</span>
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">                while (reader.hasNext()) {</span>
-<span class="fc" id="L247">                    event = nextEvent(&quot;&gt;btxt &quot;);</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">                    if (event.isCharacters()) {</span>
-<span class="fc" id="L249">                        buf.append(event.asCharacters().getData());</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">                    } else if (event.isEndElement()) {</span>
-<span class="fc" id="L251">                        return settings.getConverter().convertFromString(beanType, buf.toString());</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">                    } else if (event.isStartElement()) {</span>
-<span class="fc" id="L253">                        break;  // not serialized via Joda-Convert</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">                    } else if (event.isEndDocument()) {</span>
-<span class="nc" id="L255">                        throw new IllegalArgumentException(&quot;Unexpected end of document&quot;);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">            if (settings.getConverter().isConvertible(beanType)) {</span>
+<span class="fc" id="L249">                StringBuilder buf = new StringBuilder();</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                while (reader.hasNext()) {</span>
+<span class="fc" id="L251">                    event = nextEvent(&quot;&gt;btxt &quot;);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">                    if (event.isCharacters()) {</span>
+<span class="fc" id="L253">                        buf.append(event.asCharacters().getData());</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">                    } else if (event.isEndElement()) {</span>
+<span class="fc" id="L255">                        return settings.getConverter().convertFromString(beanType, buf.toString());</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">                    } else if (event.isStartElement()) {</span>
+<span class="fc" id="L257">                        break;  // not serialized via Joda-Convert</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">                    } else if (event.isEndDocument()) {</span>
+<span class="nc" id="L259">                        throw new IllegalArgumentException(&quot;Unexpected end of document&quot;);</span>
                     }
                 }
-<span class="fc" id="L258">            } else {</span>
-<span class="fc" id="L259">                event = nextEvent(&quot;&gt;bean &quot;);</span>
+<span class="fc" id="L262">            } else {</span>
+<span class="fc" id="L263">                event = nextEvent(&quot;&gt;bean &quot;);</span>
             }
             // handle structured bean
-<span class="fc" id="L262">            SerDeserializer deser = settings.getDeserializers().findDeserializer(beanType);</span>
-<span class="fc" id="L263">            MetaBean metaBean = deser.findMetaBean(beanType);</span>
-<span class="fc" id="L264">            BeanBuilder&lt;?&gt; builder = deser.createBuilder(beanType, metaBean);</span>
+<span class="fc" id="L266">            SerDeserializer deser = settings.getDeserializers().findDeserializer(beanType);</span>
+<span class="fc" id="L267">            MetaBean metaBean = deser.findMetaBean(beanType);</span>
+<span class="fc" id="L268">            BeanBuilder&lt;?&gt; builder = deser.createBuilder(beanType, metaBean);</span>
             // handle beans with structure
-<span class="fc bfc" id="L266" title="All 2 branches covered.">            while (event.isEndElement() == false) {</span>
-<span class="fc bfc" id="L267" title="All 2 branches covered.">                if (event.isStartElement()) {</span>
-<span class="fc" id="L268">                    StartElement start = event.asStartElement();</span>
-<span class="fc" id="L269">                    propName = start.getName().getLocalPart();</span>
-<span class="fc" id="L270">                    MetaProperty&lt;?&gt; metaProp = deser.findMetaProperty(beanType, metaBean, propName);</span>
-<span class="fc bfc" id="L271" title="All 4 branches covered.">                    if (metaProp == null || metaProp.style().isDerived()) {</span>
-<span class="fc" id="L272">                        int depth = 0;</span>
-<span class="fc" id="L273">                        event = nextEvent(&quot; skip &quot;);</span>
-<span class="pc bpc" id="L274" title="1 of 4 branches missed.">                        while (event.isEndElement() == false || depth &gt; 0) {</span>
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">                            if (event.isStartElement()) {</span>
-<span class="nc" id="L276">                                depth++;</span>
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">                            } else if (event.isEndElement()) {</span>
-<span class="nc" id="L278">                                depth--;</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">            while (event.isEndElement() == false) {</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">                if (event.isStartElement()) {</span>
+<span class="fc" id="L272">                    StartElement start = event.asStartElement();</span>
+<span class="fc" id="L273">                    propName = start.getName().getLocalPart();</span>
+<span class="fc" id="L274">                    MetaProperty&lt;?&gt; metaProp = deser.findMetaProperty(beanType, metaBean, propName);</span>
+<span class="fc bfc" id="L275" title="All 4 branches covered.">                    if (metaProp == null || metaProp.style().isDerived()) {</span>
+<span class="fc" id="L276">                        int depth = 0;</span>
+<span class="fc" id="L277">                        event = nextEvent(&quot; skip &quot;);</span>
+<span class="pc bpc" id="L278" title="1 of 4 branches missed.">                        while (event.isEndElement() == false || depth &gt; 0) {</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">                            if (event.isStartElement()) {</span>
+<span class="nc" id="L280">                                depth++;</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">                            } else if (event.isEndElement()) {</span>
+<span class="nc" id="L282">                                depth--;</span>
                             }
-<span class="fc" id="L280">                            event = nextEvent(&quot; skip &quot;);</span>
+<span class="fc" id="L284">                            event = nextEvent(&quot; skip &quot;);</span>
                         }
                         // skip elements
-<span class="fc" id="L283">                    } else {</span>
-<span class="fc" id="L284">                        Class&lt;?&gt; childType = parseTypeAttribute(start, SerOptional.extractType(metaProp, beanType));</span>
+<span class="fc" id="L287">                    } else {</span>
+<span class="fc" id="L288">                        Class&lt;?&gt; childType = parseTypeAttribute(start, SerOptional.extractType(metaProp, beanType));</span>
                         Object value;
-<span class="fc bfc" id="L286" title="All 2 branches covered.">                        if (Bean.class.isAssignableFrom(childType)) {</span>
-<span class="fc" id="L287">                            value = parseBean(childType);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">                        if (Bean.class.isAssignableFrom(childType)) {</span>
+<span class="fc" id="L291">                            value = parseBean(childType);</span>
                         } else {
-<span class="fc" id="L289">                            SerIterable iterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
-<span class="fc bfc" id="L290" title="All 2 branches covered.">                            if (iterable != null) {</span>
-<span class="fc" id="L291">                                value = parseIterable(start, iterable);</span>
+<span class="fc" id="L293">                            SerIterable iterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">                            if (iterable != null) {</span>
+<span class="fc" id="L295">                                value = parseIterable(start, iterable);</span>
                             } else {
                                 // metatype
-<span class="fc" id="L294">                                Attribute metaTypeAttr = start.getAttributeByName(METATYPE_QNAME);</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">                                if (metaTypeAttr != null) {</span>
-<span class="fc" id="L296">                                    iterable = settings.getIteratorFactory().createIterable(metaTypeAttr.getValue(), settings, knownTypes);</span>
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">                                    if (iterable == null) {</span>
-<span class="nc" id="L298">                                        throw new IllegalArgumentException(&quot;Invalid metaType&quot;);</span>
+<span class="fc" id="L298">                                Attribute metaTypeAttr = start.getAttributeByName(METATYPE_QNAME);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">                                if (metaTypeAttr != null) {</span>
+<span class="fc" id="L300">                                    iterable = settings.getIteratorFactory().createIterable(metaTypeAttr.getValue(), settings, knownTypes);</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">                                    if (iterable == null) {</span>
+<span class="nc" id="L302">                                        throw new IllegalArgumentException(&quot;Invalid metaType&quot;);</span>
                                     }
-<span class="fc" id="L300">                                    value = parseIterable(start, iterable);</span>
+<span class="fc" id="L304">                                    value = parseIterable(start, iterable);</span>
                                 } else {
-<span class="fc" id="L302">                                    String text = advanceAndParseText();</span>
-<span class="fc" id="L303">                                    value = settings.getConverter().convertFromString(childType, text);</span>
+<span class="fc" id="L306">                                    String text = advanceAndParseText();</span>
+<span class="fc" id="L307">                                    value = settings.getConverter().convertFromString(childType, text);</span>
                                 }
                             }
                         }
-<span class="fc" id="L307">                        deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, beanType, value));</span>
+<span class="fc" id="L311">                        deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, beanType, value));</span>
                     }
-<span class="fc" id="L309">                    propName = &quot;&quot;;</span>
+<span class="fc" id="L313">                    propName = &quot;&quot;;</span>
                 }
-<span class="fc" id="L311">                event = nextEvent(&quot;.bean &quot;);</span>
+<span class="fc" id="L315">                event = nextEvent(&quot;.bean &quot;);</span>
             }
-<span class="fc" id="L313">            return deser.build(beanType, builder);</span>
-<span class="fc" id="L314">        } catch (Exception ex) {</span>
-<span class="fc" id="L315">            throw new RuntimeException(&quot;Error parsing bean: &quot; + beanType.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
+<span class="fc" id="L317">            return deser.build(beanType, builder);</span>
+<span class="fc" id="L318">        } catch (Exception ex) {</span>
+<span class="fc" id="L319">            throw new RuntimeException(&quot;Error parsing bean: &quot; + beanType.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
         }
     }
 
@@ -323,190 +327,190 @@ public class JodaBeanXmlReader {
      * @return the iterable, not null
      */
     private Object parseIterable(final StartElement iterableEvent, final SerIterable iterable) throws Exception {
-<span class="fc" id="L326">        Attribute rowsAttr = iterableEvent.getAttributeByName(ROWS_QNAME);</span>
-<span class="fc" id="L327">        Attribute columnsAttr = iterableEvent.getAttributeByName(COLS_QNAME);</span>
-<span class="pc bpc" id="L328" title="1 of 4 branches missed.">        if (rowsAttr != null &amp;&amp; columnsAttr != null) {</span>
-<span class="fc" id="L329">            iterable.dimensions(new int[] {Integer.parseInt(rowsAttr.getValue()), Integer.parseInt(columnsAttr.getValue())});</span>
+<span class="fc" id="L330">        Attribute rowsAttr = iterableEvent.getAttributeByName(ROWS_QNAME);</span>
+<span class="fc" id="L331">        Attribute columnsAttr = iterableEvent.getAttributeByName(COLS_QNAME);</span>
+<span class="pc bpc" id="L332" title="1 of 4 branches missed.">        if (rowsAttr != null &amp;&amp; columnsAttr != null) {</span>
+<span class="fc" id="L333">            iterable.dimensions(new int[] {Integer.parseInt(rowsAttr.getValue()), Integer.parseInt(columnsAttr.getValue())});</span>
         }
-<span class="fc" id="L331">        XMLEvent event = nextEvent(&quot;&gt;iter &quot;);</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">        while (event.isEndElement() == false) {</span>
-<span class="fc bfc" id="L333" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
-<span class="fc" id="L334">                StartElement start = event.asStartElement();</span>
-<span class="fc bfc" id="L335" title="All 2 branches covered.">                QName expectedType = iterable.category() == SerCategory.MAP ? ENTRY_QNAME : ITEM_QNAME;</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">                if (start.getName().equals(expectedType) == false) {</span>
-<span class="nc" id="L337">                    throw new IllegalArgumentException(&quot;Expected '&quot; + expectedType.getLocalPart() + &quot;' but found '&quot; + start.getName() + &quot;'&quot;);</span>
+<span class="fc" id="L335">        XMLEvent event = nextEvent(&quot;&gt;iter &quot;);</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">        while (event.isEndElement() == false) {</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L338">                StartElement start = event.asStartElement();</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">                QName expectedType = iterable.category() == SerCategory.MAP ? ENTRY_QNAME : ITEM_QNAME;</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">                if (start.getName().equals(expectedType) == false) {</span>
+<span class="nc" id="L341">                    throw new IllegalArgumentException(&quot;Expected '&quot; + expectedType.getLocalPart() + &quot;' but found '&quot; + start.getName() + &quot;'&quot;);</span>
                 }
-<span class="fc" id="L339">                int count = 1;</span>
-<span class="fc" id="L340">                Object key = null;</span>
-<span class="fc" id="L341">                Object column = null;</span>
-<span class="fc" id="L342">                Object value = null;</span>
-<span class="fc bfc" id="L343" title="All 2 branches covered.">                if (iterable.category() == SerCategory.COUNTED) {</span>
-<span class="fc" id="L344">                    Attribute countAttr = start.getAttributeByName(COUNT_QNAME);</span>
-<span class="fc bfc" id="L345" title="All 2 branches covered.">                    if (countAttr != null) {</span>
-<span class="fc" id="L346">                        count = Integer.parseInt(countAttr.getValue());</span>
+<span class="fc" id="L343">                int count = 1;</span>
+<span class="fc" id="L344">                Object key = null;</span>
+<span class="fc" id="L345">                Object column = null;</span>
+<span class="fc" id="L346">                Object value = null;</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">                if (iterable.category() == SerCategory.COUNTED) {</span>
+<span class="fc" id="L348">                    Attribute countAttr = start.getAttributeByName(COUNT_QNAME);</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">                    if (countAttr != null) {</span>
+<span class="fc" id="L350">                        count = Integer.parseInt(countAttr.getValue());</span>
                     }
-<span class="fc" id="L348">                    value = parseValue(iterable, start);</span>
+<span class="fc" id="L352">                    value = parseValue(iterable, start);</span>
                     
-<span class="fc bfc" id="L350" title="All 4 branches covered.">                } else if (iterable.category() == SerCategory.TABLE || iterable.category() == SerCategory.GRID) {</span>
-<span class="fc" id="L351">                    Attribute rowAttr = start.getAttributeByName(ROW_QNAME);</span>
-<span class="fc" id="L352">                    Attribute colAttr = start.getAttributeByName(COL_QNAME);</span>
-<span class="pc bpc" id="L353" title="2 of 4 branches missed.">                    if (rowAttr == null || colAttr == null) {</span>
-<span class="nc" id="L354">                        throw new IllegalArgumentException(&quot;Unable to read table as row/col attribute missing&quot;);</span>
+<span class="fc bfc" id="L354" title="All 4 branches covered.">                } else if (iterable.category() == SerCategory.TABLE || iterable.category() == SerCategory.GRID) {</span>
+<span class="fc" id="L355">                    Attribute rowAttr = start.getAttributeByName(ROW_QNAME);</span>
+<span class="fc" id="L356">                    Attribute colAttr = start.getAttributeByName(COL_QNAME);</span>
+<span class="pc bpc" id="L357" title="2 of 4 branches missed.">                    if (rowAttr == null || colAttr == null) {</span>
+<span class="nc" id="L358">                        throw new IllegalArgumentException(&quot;Unable to read table as row/col attribute missing&quot;);</span>
                     }
-<span class="fc" id="L356">                    String rowStr = rowAttr.getValue();</span>
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">                    if (iterable.keyType() != null) {</span>
-<span class="fc" id="L358">                        key = settings.getConverter().convertFromString(iterable.keyType(), rowStr);</span>
+<span class="fc" id="L360">                    String rowStr = rowAttr.getValue();</span>
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">                    if (iterable.keyType() != null) {</span>
+<span class="fc" id="L362">                        key = settings.getConverter().convertFromString(iterable.keyType(), rowStr);</span>
                     } else {
-<span class="nc" id="L360">                        key = rowStr;</span>
+<span class="nc" id="L364">                        key = rowStr;</span>
                     }
-<span class="fc" id="L362">                    String colStr = colAttr.getValue();</span>
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">                    if (iterable.columnType() != null) {</span>
-<span class="fc" id="L364">                        column = settings.getConverter().convertFromString(iterable.columnType(), colStr);</span>
+<span class="fc" id="L366">                    String colStr = colAttr.getValue();</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">                    if (iterable.columnType() != null) {</span>
+<span class="fc" id="L368">                        column = settings.getConverter().convertFromString(iterable.columnType(), colStr);</span>
                     } else {
-<span class="nc" id="L366">                        column = colStr;</span>
+<span class="nc" id="L370">                        column = colStr;</span>
                     }
-<span class="fc" id="L368">                    value = parseValue(iterable, start);</span>
+<span class="fc" id="L372">                    value = parseValue(iterable, start);</span>
                     
-<span class="fc bfc" id="L370" title="All 2 branches covered.">                } else if (iterable.category() == SerCategory.MAP) {</span>
-<span class="fc" id="L371">                    Attribute keyAttr = start.getAttributeByName(KEY_QNAME);</span>
-<span class="fc bfc" id="L372" title="All 2 branches covered.">                    if (keyAttr != null) {</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">                } else if (iterable.category() == SerCategory.MAP) {</span>
+<span class="fc" id="L375">                    Attribute keyAttr = start.getAttributeByName(KEY_QNAME);</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">                    if (keyAttr != null) {</span>
                         // item is value with a key attribute
-<span class="fc" id="L374">                        String keyStr = keyAttr.getValue();</span>
-<span class="pc bpc" id="L375" title="1 of 2 branches missed.">                        if (iterable.keyType() != null) {</span>
-<span class="fc" id="L376">                            key = settings.getConverter().convertFromString(iterable.keyType(), keyStr);</span>
+<span class="fc" id="L378">                        String keyStr = keyAttr.getValue();</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">                        if (iterable.keyType() != null) {</span>
+<span class="fc" id="L380">                            key = settings.getConverter().convertFromString(iterable.keyType(), keyStr);</span>
                         } else {
-<span class="nc" id="L378">                            key = keyStr;</span>
+<span class="nc" id="L382">                            key = keyStr;</span>
                         }
-<span class="fc" id="L380">                        value = parseValue(iterable, start);</span>
+<span class="fc" id="L384">                        value = parseValue(iterable, start);</span>
                         
-<span class="fc" id="L382">                    } else {</span>
+<span class="fc" id="L386">                    } else {</span>
                         // two items nested in this entry
-<span class="fc" id="L384">                        event = nextEvent(&quot;&gt;&gt;map &quot;);</span>
-<span class="fc" id="L385">                        int loop = 0;</span>
-<span class="fc bfc" id="L386" title="All 2 branches covered.">                        while (event.isEndElement() == false) {</span>
-<span class="fc bfc" id="L387" title="All 2 branches covered.">                            if (event.isStartElement()) {</span>
-<span class="fc" id="L388">                                start = event.asStartElement();</span>
-<span class="pc bpc" id="L389" title="1 of 2 branches missed.">                                if (start.getName().equals(ITEM_QNAME) == false) {</span>
-<span class="nc" id="L390">                                    throw new IllegalArgumentException(&quot;Expected 'item' but found '&quot; + start.getName() + &quot;'&quot;);</span>
+<span class="fc" id="L388">                        event = nextEvent(&quot;&gt;&gt;map &quot;);</span>
+<span class="fc" id="L389">                        int loop = 0;</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">                        while (event.isEndElement() == false) {</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">                            if (event.isStartElement()) {</span>
+<span class="fc" id="L392">                                start = event.asStartElement();</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">                                if (start.getName().equals(ITEM_QNAME) == false) {</span>
+<span class="nc" id="L394">                                    throw new IllegalArgumentException(&quot;Expected 'item' but found '&quot; + start.getName() + &quot;'&quot;);</span>
                                 }
-<span class="fc bfc" id="L392" title="All 2 branches covered.">                                if (key == null) {</span>
-<span class="fc" id="L393">                                    key = parseKey(iterable, start);</span>
+<span class="fc bfc" id="L396" title="All 2 branches covered.">                                if (key == null) {</span>
+<span class="fc" id="L397">                                    key = parseKey(iterable, start);</span>
                                 } else {
-<span class="fc" id="L395">                                    value = parseValue(iterable, start);</span>
+<span class="fc" id="L399">                                    value = parseValue(iterable, start);</span>
                                 }
-<span class="fc" id="L397">                                loop++;</span>
+<span class="fc" id="L401">                                loop++;</span>
                             }
-<span class="fc" id="L399">                            event = nextEvent(&quot;..map &quot;);</span>
+<span class="fc" id="L403">                            event = nextEvent(&quot;..map &quot;);</span>
                         }
-<span class="pc bpc" id="L401" title="1 of 2 branches missed.">                        if (loop != 2) {</span>
-<span class="nc" id="L402">                            throw new IllegalArgumentException(&quot;Expected 2 'item's but found &quot; + loop);</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">                        if (loop != 2) {</span>
+<span class="nc" id="L406">                            throw new IllegalArgumentException(&quot;Expected 2 'item's but found &quot; + loop);</span>
                         }
                     }                    
                     
-<span class="fc" id="L406">                } else {  // COLLECTION</span>
-<span class="fc" id="L407">                    value = parseValue(iterable, start);</span>
+<span class="fc" id="L410">                } else {  // COLLECTION</span>
+<span class="fc" id="L411">                    value = parseValue(iterable, start);</span>
                 }
-<span class="fc" id="L409">                iterable.add(key, column, value, count);</span>
+<span class="fc" id="L413">                iterable.add(key, column, value, count);</span>
             }
-<span class="fc" id="L411">            event = nextEvent(&quot;.iter &quot;);</span>
+<span class="fc" id="L415">            event = nextEvent(&quot;.iter &quot;);</span>
         }
-<span class="fc" id="L413">        return iterable.build();</span>
+<span class="fc" id="L417">        return iterable.build();</span>
     }
 
     private Object parseKey(final SerIterable iterable, StartElement start) throws Exception {
         // type
-<span class="fc" id="L418">        Class&lt;?&gt; childType = parseTypeAttribute(start, iterable.keyType());</span>
-<span class="fc bfc" id="L419" title="All 4 branches covered.">        if (Bean.class.isAssignableFrom(childType) || settings.getConverter().isConvertible(childType)) {</span>
-<span class="fc" id="L420">            return parseBean(childType);</span>
-<span class="pc bpc" id="L421" title="1 of 2 branches missed.">        } else if (childType.isAssignableFrom(String.class)) {</span>
-<span class="fc" id="L422">            return parseBean(String.class);</span>
+<span class="fc" id="L422">        Class&lt;?&gt; childType = parseTypeAttribute(start, iterable.keyType());</span>
+<span class="fc bfc" id="L423" title="All 4 branches covered.">        if (Bean.class.isAssignableFrom(childType) || settings.getConverter().isConvertible(childType)) {</span>
+<span class="fc" id="L424">            return parseBean(childType);</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">        } else if (childType.isAssignableFrom(String.class)) {</span>
+<span class="fc" id="L426">            return parseBean(String.class);</span>
         } else {
-<span class="nc" id="L424">            throw new IllegalArgumentException(&quot;Unable to read map as parsed key type is neither a bean nor a simple type: &quot; + childType.getName());</span>
+<span class="nc" id="L428">            throw new IllegalArgumentException(&quot;Unable to read map as parsed key type is neither a bean nor a simple type: &quot; + childType.getName());</span>
         }
     }
 
     private Object parseValue(final SerIterable iterable, StartElement start) throws Exception {
         // null
         Object value;
-<span class="fc" id="L431">        Attribute nullAttr = start.getAttributeByName(NULL_QNAME);</span>
-<span class="fc bfc" id="L432" title="All 2 branches covered.">        if (nullAttr != null) {</span>
-<span class="pc bpc" id="L433" title="1 of 2 branches missed.">            if (nullAttr.getValue().equals(&quot;true&quot;) == false) {</span>
-<span class="nc" id="L434">                throw new IllegalArgumentException(&quot;Unexpected value for null attribute&quot;);</span>
+<span class="fc" id="L435">        Attribute nullAttr = start.getAttributeByName(NULL_QNAME);</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">        if (nullAttr != null) {</span>
+<span class="pc bpc" id="L437" title="1 of 2 branches missed.">            if (nullAttr.getValue().equals(&quot;true&quot;) == false) {</span>
+<span class="nc" id="L438">                throw new IllegalArgumentException(&quot;Unexpected value for null attribute&quot;);</span>
             }
-<span class="fc" id="L436">            advanceAndParseText();  // move to end tag and ignore any text</span>
-<span class="fc" id="L437">            value = null;</span>
+<span class="fc" id="L440">            advanceAndParseText();  // move to end tag and ignore any text</span>
+<span class="fc" id="L441">            value = null;</span>
         } else {
             // type
-<span class="fc" id="L440">            Class&lt;?&gt; childType = parseTypeAttribute(start, iterable.valueType());</span>
-<span class="fc bfc" id="L441" title="All 2 branches covered.">            if (Bean.class.isAssignableFrom(childType)) {</span>
-<span class="fc" id="L442">                value = parseBean(childType);</span>
+<span class="fc" id="L444">            Class&lt;?&gt; childType = parseTypeAttribute(start, iterable.valueType());</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">            if (Bean.class.isAssignableFrom(childType)) {</span>
+<span class="fc" id="L446">                value = parseBean(childType);</span>
             } else {
                 // try deep generic parameters
-<span class="fc" id="L445">                SerIterable childIterable = settings.getIteratorFactory().createIterable(iterable);</span>
-<span class="fc bfc" id="L446" title="All 2 branches covered.">                if (childIterable != null) {</span>
-<span class="fc" id="L447">                    value = parseIterable(start, childIterable);</span>
+<span class="fc" id="L449">                SerIterable childIterable = settings.getIteratorFactory().createIterable(iterable);</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">                if (childIterable != null) {</span>
+<span class="fc" id="L451">                    value = parseIterable(start, childIterable);</span>
                 } else {
                     // metatype
-<span class="fc" id="L450">                    Attribute metaTypeAttr = start.getAttributeByName(METATYPE_QNAME);</span>
-<span class="fc bfc" id="L451" title="All 2 branches covered.">                    if (metaTypeAttr != null) {</span>
-<span class="fc" id="L452">                        childIterable = settings.getIteratorFactory().createIterable(metaTypeAttr.getValue(), settings, knownTypes);</span>
-<span class="pc bpc" id="L453" title="1 of 2 branches missed.">                        if (childIterable == null) {</span>
-<span class="nc" id="L454">                            throw new IllegalArgumentException(&quot;Invalid metaType&quot;);</span>
+<span class="fc" id="L454">                    Attribute metaTypeAttr = start.getAttributeByName(METATYPE_QNAME);</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">                    if (metaTypeAttr != null) {</span>
+<span class="fc" id="L456">                        childIterable = settings.getIteratorFactory().createIterable(metaTypeAttr.getValue(), settings, knownTypes);</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">                        if (childIterable == null) {</span>
+<span class="nc" id="L458">                            throw new IllegalArgumentException(&quot;Invalid metaType&quot;);</span>
                         }
-<span class="fc" id="L456">                        value = parseIterable(start, childIterable);</span>
+<span class="fc" id="L460">                        value = parseIterable(start, childIterable);</span>
                     } else {
-<span class="fc" id="L458">                        String text = advanceAndParseText();</span>
-<span class="fc" id="L459">                        value = settings.getConverter().convertFromString(childType, text);</span>
+<span class="fc" id="L462">                        String text = advanceAndParseText();</span>
+<span class="fc" id="L463">                        value = settings.getConverter().convertFromString(childType, text);</span>
                     }
                 }
             }
         }
-<span class="fc" id="L464">        return value;</span>
+<span class="fc" id="L468">        return value;</span>
     }
 
     //-----------------------------------------------------------------------
     private Class&lt;?&gt; parseTypeAttribute(StartElement start, Class&lt;?&gt; defaultType) throws ClassNotFoundException {
-<span class="fc" id="L469">        Attribute typeAttr = start.getAttributeByName(TYPE_QNAME);</span>
-<span class="fc bfc" id="L470" title="All 2 branches covered.">        if (typeAttr == null) {</span>
-<span class="fc bfc" id="L471" title="All 2 branches covered.">            return (defaultType == Object.class ? String.class : defaultType);</span>
+<span class="fc" id="L473">        Attribute typeAttr = start.getAttributeByName(TYPE_QNAME);</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">        if (typeAttr == null) {</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">            return (defaultType == Object.class ? String.class : defaultType);</span>
         }
-<span class="fc" id="L473">        String typeStr = typeAttr.getValue();</span>
-<span class="fc" id="L474">        return settings.getDeserializers().decodeType(typeStr, settings, basePackage, knownTypes, defaultType);</span>
+<span class="fc" id="L477">        String typeStr = typeAttr.getValue();</span>
+<span class="fc" id="L478">        return settings.getDeserializers().decodeType(typeStr, settings, basePackage, knownTypes, defaultType);</span>
     }
 
     // reader can be anywhere, but normally at StartDocument
     private StartElement advanceToStartElement() throws Exception {
-<span class="pc bpc" id="L479" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
-<span class="fc" id="L480">            XMLEvent event = nextEvent(&quot;advnc &quot;);</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
-<span class="fc" id="L482">                return event.asStartElement();</span>
+<span class="pc bpc" id="L483" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L484">            XMLEvent event = nextEvent(&quot;advnc &quot;);</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L486">                return event.asStartElement();</span>
             }
-<span class="fc" id="L484">        }</span>
-<span class="nc" id="L485">        throw new IllegalArgumentException(&quot;Unexpected end of document&quot;);</span>
+<span class="fc" id="L488">        }</span>
+<span class="nc" id="L489">        throw new IllegalArgumentException(&quot;Unexpected end of document&quot;);</span>
     }
 
     // reader must be at StartElement
     private String advanceAndParseText() throws Exception {
-<span class="fc" id="L490">        StringBuilder buf = new StringBuilder();</span>
-<span class="pc bpc" id="L491" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
-<span class="fc" id="L492">            XMLEvent event = nextEvent(&quot;text  &quot;);</span>
-<span class="fc bfc" id="L493" title="All 2 branches covered.">            if (event.isCharacters()) {</span>
-<span class="fc" id="L494">                buf.append(event.asCharacters().getData());</span>
-<span class="fc bfc" id="L495" title="All 2 branches covered.">            } else if (event.isEndElement()) {</span>
-<span class="fc" id="L496">                return buf.toString();</span>
-<span class="pc bpc" id="L497" title="1 of 2 branches missed.">            } else if (event.isStartElement()) {</span>
-<span class="nc" id="L498">                throw new IllegalArgumentException(&quot;Unexpected start tag&quot;);</span>
+<span class="fc" id="L494">        StringBuilder buf = new StringBuilder();</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L496">            XMLEvent event = nextEvent(&quot;text  &quot;);</span>
+<span class="fc bfc" id="L497" title="All 2 branches covered.">            if (event.isCharacters()) {</span>
+<span class="fc" id="L498">                buf.append(event.asCharacters().getData());</span>
+<span class="fc bfc" id="L499" title="All 2 branches covered.">            } else if (event.isEndElement()) {</span>
+<span class="fc" id="L500">                return buf.toString();</span>
+<span class="pc bpc" id="L501" title="1 of 2 branches missed.">            } else if (event.isStartElement()) {</span>
+<span class="nc" id="L502">                throw new IllegalArgumentException(&quot;Unexpected start tag&quot;);</span>
             }
-<span class="fc" id="L500">        }</span>
-<span class="nc" id="L501">        throw new IllegalArgumentException(&quot;Unexpected end of document&quot;);</span>
+<span class="fc" id="L504">        }</span>
+<span class="nc" id="L505">        throw new IllegalArgumentException(&quot;Unexpected end of document&quot;);</span>
     }
 
     // provide for debugging
     private XMLEvent nextEvent(String location) throws Exception {
-<span class="fc" id="L506">        XMLEvent event = reader.nextEvent();</span>
+<span class="fc" id="L510">        XMLEvent event = reader.nextEvent();</span>
 //        System.out.println(location + event.toString().replace('\n', ' ') + &quot; &quot; + event.getClass().getSimpleName());
-<span class="fc" id="L508">        return event;</span>
+<span class="fc" id="L512">        return event;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
