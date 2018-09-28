@@ -8,10 +8,9 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Joda-Time &#x2013; Java date and time API - Upgrade from 2.9 to 2.9.5</title>
+		<title>Joda-Time &#x2013; Source Code Management</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
-		<meta name="author" content="Stephen Colebourne" />
 		<meta http-equiv="content-language" content="en" />
 
 		<link href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/cosmo/bootstrap.min.css" rel="stylesheet" />
@@ -49,7 +48,7 @@
 		</script>
 		</head>
 
-	<body class="page-upgradeto295 project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-scm project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -153,144 +152,38 @@
 		<div class="span12">
 			<div class="body-content">
 <div class="section"> 
- <h2 id="Upgrade">Upgrade</h2> 
- <p> These are the release notes and advice for upgrading Joda-Time from version 2.8 to version 2.9.5. </p> 
+ <h2 id="Overview">Overview</h2>
+ <a name="Overview"></a> 
+ <p>This project uses <a class="externalLink" href="https://git-scm.com/">Git</a> to manage its source code. Instructions on Git use can be found at <a class="externalLink" href="https://git-scm.com/documentation">https://git-scm.com/documentation</a>.</p>
+</div> 
+<div class="section"> 
+ <h2 id="Web_Browser_Access">Web Browser Access</h2>
+ <a name="Web_Browser_Access"></a> 
+ <p>The following is a link to a browsable version of the source repository:</p> 
  <div class="source"> 
-  <pre>
-Joda-Time version 2.9.5
------------------------
-
-Joda-Time is a date and time handling library that seeks to replace the JDK
-Date and Calendar classes. For Java SE 8 and later, please use java.time instead.
-
-This release contains some bug fixes, a time-zone update and some minor internal changes.
-The release runs on JDK 5 or later.
-
-Joda-Time is licensed under the business-friendly Apache License Version 2.
-This is the same license as all of Apache, plus other open source projects such as Spring.
-
-**  Please also check out our related projects   **
-** http://www.joda.org/joda-time/related.html **
-
-Changes in 2.9.5
-----------------
- - Add Norwegian period translations [#378]
-
- - Add Duration.dividedBy(long,RoundingMode) [#69, #379]
-
- - DateTimeZone data updated to version 2016i
-
- - Fixed bug where clock read twice when comparing two nulls in DateTimeComparator [#404]
-
- - Fixed minor issues with historic time-zone data [#373]
-
- - Fix bug in time-zone binary search [#332, #386]
-  The fix in v2.9.2 caused problems when the time-zone being parsed
-  was not the last element in the input string. New approach uses a
-  different approach to the problem.
-
- - Update tests for JDK 9 [#394]
-
- - Close buffered reader correctly in zone info compiler [#396]
-
- - Handle locale correctly zone info compiler [#397]
-
-
-Changes in 2.9.4
-----------------
- - DateTimeZone data updated to version 2016d
-
- - Loading time-zone provider now occurs in a privileged block [#327, #375]
-
-
-Changes in 2.9.3
-----------------
- - DateTimeZone data updated to version 2016c
-
- - Make DateTimeUtils.SYSTEM_MILLIS_PROVIDER public [#357]
-
- - Fix bug when adding months at the maximum limits of integer [#361]
-
- - Add Turkish period translations [#364]
-
-
-Changes in 2.9.2
-----------------
- - DateTimeZone data updated to version 2016a (version 2.9 had time-zone data 2015g)
-
- - Fix bug in time-zone binary search [#332]
-
- - Minor fixes to code internals [#339, #326, #344, #350, #343]
-
- - Better document behaviour [#325]
-
-
-Changes in 2.9.1
-----------------
-- Fix bug introduced by Long.MIN_VALUE and Long.MAX_VALUE changes [#328]
-
-
-Enhancements in 2.9
--------------------
-- Faster parsing of time-zone identifiers [#282]
-
-- Added Interval.parseWithOffset(String) [#299, #296]
-  Provides a way to parse the fixed offset in an interval string
-
-- Add DateTimeFormatter methods for StringBuilder [#298]
-
-- Add Russian period translations [#320]
-
-- Add Italian period translations [#312]
-
-- Add Czech period translations [#313]
-
-- Clarify that PeriodFormatterBuilder is in an invalid state once built [#309]
-
-- Allow DateTime and Interval to refer to values at Long.MIN_VALUE and Long.MAX_VALUE [#297, #190]
-  A DateTime may be created with any millisecond value, however at the very edges there may be
-  some undesirable effects, for example always using UTC instead of the time-zone
-
-- Better error message for malformed tzdb files [#319]
-
-- Better error message for interval constructor [#321]
-
-
-Compatibility between 2.8 and 2.9
----------------------------------
-Build system - Yes
-
-Binary compatible - Yes
-
-Source compatible - Yes
-
-Serialization compatible - Yes
-
-Data compatible - Yes
- - DateTimeZone data updated to version 2015g
-
-Semantic compatible - Yes
-
-
-Bug fixes in 2.9
-----------------
-- Fixed to handle JDK 8u60 [#288, #291]
-  Without this fix, formatting a time-zone will print &quot;+00:00&quot; instead of &quot;GMT&quot; for the GMT time-zone
-
-- Fix parsing of basic form ISO style where year has unnecessary plus sign [#86]
-  For example, +20151030 will now be correctly parsed as year 2015.
-
-- Fix overflow bug in intervals [#315]
-
-
-
-Scala
------
-Joda-Time uses annotations from Joda-Convert.
-In the Java programming language, this dependency is optional, however in Scala it is not.
-Scala users must manually add the Joda-Convert v1.2 dependency.
-</pre>
- </div> 
+  <pre><a class="externalLink" href="https://github.com/JodaOrg/joda-time">https://github.com/JodaOrg/joda-time</a></pre>
+ </div>
+</div> 
+<div class="section"> 
+ <h2 id="Anonymous_Access">Anonymous Access</h2>
+ <a name="Anonymous_Access"></a> 
+ <p>The source can be checked out anonymously from Git with this command (See <a class="externalLink" href="https://git-scm.com/docs/git-clone">https://git-scm.com/docs/git-clone</a>):</p> 
+ <div class="source"> 
+  <pre>$ git clone https://github.com/JodaOrg/joda-time.git</pre>
+ </div>
+</div> 
+<div class="section"> 
+ <h2 id="Developer_Access">Developer Access</h2>
+ <a name="Developer_Access"></a> 
+ <p>Only project developers can access the Git tree via this method (See <a class="externalLink" href="https://git-scm.com/docs/git-clone">https://git-scm.com/docs/git-clone</a>).</p> 
+ <div class="source"> 
+  <pre>$ git clone git@github.com:JodaOrg/joda-time.git</pre>
+ </div>
+</div> 
+<div class="section"> 
+ <h2 id="Access_from_Behind_a_Firewall">Access from Behind a Firewall</h2>
+ <a name="Access_from_Behind_a_Firewall"></a> 
+ <p>Refer to the documentation of the SCM used for more information about access behind a firewall.</p>
 </div>
 			</div>
 		</div>
@@ -384,7 +277,30 @@ Scala users must manually add the Joda-Convert v1.2 dependency.
 					<ul class="nav nav-list">
 						<li class="nav-header">Reports</li>
 						<li >
-							<a href="project-info.html" title="Project Information">Project Information <i class="icon-chevron-right"></i></a>
+							<a href="project-info.html" title="Project Information">Project Information <i class="icon-chevron-down"></i></a>
+							<ul class="nav nav-list">
+						<li >
+							<a href="dependencies.html" title="Dependencies">Dependencies</a>
+						</li>
+						<li >
+							<a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
+						</li>
+						<li >
+							<a href="issue-management.html" title="Issue Management">Issue Management</a>
+						</li>
+						<li >
+							<a href="licenses.html" title="Licenses">Licenses</a>
+						</li>
+						<li >
+							<a href="team.html" title="Team">Team</a>
+						</li>
+						<li class="active">
+							<a href="#" title="Source Code Management">Source Code Management</a>
+						</li>
+						<li >
+							<a href="summary.html" title="Summary">Summary</a>
+						</li>
+							</ul>
 						</li>
 						<li >
 							<a href="project-reports.html" title="Project Reports">Project Reports <i class="icon-chevron-right"></i></a>
