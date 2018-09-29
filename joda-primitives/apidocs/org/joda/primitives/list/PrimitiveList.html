@@ -105,7 +105,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;, <a href="../../../../org/joda/primitives/PrimitiveCollectable.html" title="interface in org.joda.primitives">PrimitiveCollectable</a>&lt;E&gt;, <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.html" title="interface in org.joda.primitives.collection">PrimitiveCollection</a>&lt;E&gt;</dd>
+<dd>java.util.Collection&lt;E&gt;, java.lang.Iterable&lt;E&gt;, java.util.List&lt;E&gt;, <a href="../../../../org/joda/primitives/PrimitiveCollectable.html" title="interface in org.joda.primitives">PrimitiveCollectable</a>&lt;E&gt;, <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.html" title="interface in org.joda.primitives.collection">PrimitiveCollection</a>&lt;E&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -118,10 +118,10 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">PrimitiveList&lt;E&gt;</span>
-extends <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.html" title="interface in org.joda.primitives.collection">PrimitiveCollection</a>&lt;E&gt;, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;E&gt;</pre>
+extends <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.html" title="interface in org.joda.primitives.collection">PrimitiveCollection</a>&lt;E&gt;, java.util.List&lt;E&gt;</pre>
 <div class="block">Base interface for all primitive list interfaces.
  <p>
- This interface extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> allowing seamless integration with other APIs.
+ This interface extends <code>List</code> allowing seamless integration with other APIs.
  All List methods can be used, using the primitive wrapper class.
  However, it will be <em>much</em> more efficient to use the direct primitive methods
  in the subinterface.</div>
@@ -185,22 +185,22 @@ extends <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.
 <li class="blockList"><a name="methods.inherited.from.class.java.util.List">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#add-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#add-int-E-" title="class or interface in java.util">add</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#addAll-int-java.util.Collection-" title="class or interface in java.util">addAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util">contains</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#get-int-" title="class or interface in java.util">get</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#indexOf-java.lang.Object-" title="class or interface in java.util">indexOf</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#iterator--" title="class or interface in java.util">iterator</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#lastIndexOf-java.lang.Object-" title="class or interface in java.util">lastIndexOf</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#listIterator--" title="class or interface in java.util">listIterator</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#listIterator-int-" title="class or interface in java.util">listIterator</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#remove-int-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#replaceAll-java.util.function.UnaryOperator-" title="class or interface in java.util">replaceAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#set-int-E-" title="class or interface in java.util">set</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#size--" title="class or interface in java.util">size</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#sort-java.util.Comparator-" title="class or interface in java.util">sort</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#spliterator--" title="class or interface in java.util">spliterator</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util">subList</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#toArray--" title="class or interface in java.util">toArray</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true#toArray-T:A-" title="class or interface in java.util">toArray</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.List</h3>
+<code>add, add, addAll, addAll, clear, contains, containsAll, equals, get, hashCode, indexOf, isEmpty, iterator, lastIndexOf, listIterator, listIterator, remove, remove, removeAll, replaceAll, retainAll, set, size, sort, spliterator, subList, toArray, toArray</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>parallelStream, removeIf, stream</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -263,8 +263,8 @@ extends <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if the collection was modified</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the index is invalid</dd>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if remove is not supported</dd>
+<dd><code>java.lang.IndexOutOfBoundsException</code> - if the index is invalid</dd>
+<dd><code>java.lang.UnsupportedOperationException</code> - if remove is not supported</dd>
 </dl>
 </li>
 </ul>
@@ -337,6 +337,6 @@ extends <a href="../../../../org/joda/primitives/collection/PrimitiveCollection.
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small>Copyright &#169; 2005&#x2013;2014 <a href="http://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
+<p class="legalCopy"><small>Copyright &#169; 2005&#x2013;2018 <a href="https://www.joda.org">Joda.org</a>. All rights reserved.</small></p>
 </body>
 </html>
