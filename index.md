@@ -10,17 +10,17 @@ The Joda project provides quality low-level libraries for the Java platform.
 
 These are the projects:
 
-- [Joda-Time](http://www.joda.org/joda-time/) - Basic types for Date and Time
-- [Joda-Money](http://www.joda.org/joda-money/) - Basic types for Money
-- [Joda-Beans](http://www.joda.org/joda-beans/) - Next generation JavaBeans
-- [Joda-Convert](http://www.joda.org/joda-convert/) - String to Object conversion
-- [Joda-Collect](http://www.joda.org/joda-collect/) - Additional collection data structures
+- [Joda-Time](https://www.joda.org/joda-time/) - Basic types for Date and Time
+- [Joda-Money](https://www.joda.org/joda-money/) - Basic types for Money
+- [Joda-Beans](https://www.joda.org/joda-beans/) - Next generation JavaBeans
+- [Joda-Convert](https://www.joda.org/joda-convert/) - String to Object conversion
+- [Joda-Collect](https://www.joda.org/joda-collect/) - Additional collection data structures
 
 Each project aims to be focussed on a specific area and to have minimal dependencies.
 
 #### Pronunciation
- The 'J' in 'Joda' is pronounced the same as the 'J' in [Java](http://dictionary.reference.com/browse/Java).
- The project is not capable of wielding a [light saber](http://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
+ The 'J' in 'Joda' is pronounced the same as the 'J' in [Java](https://www.dictionary.com/browse/java).
+ The project is not capable of wielding a [light saber](https://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
 
 #### Stephen Colebourne
 
@@ -28,11 +28,11 @@ The projects have various authors and contributors.
 They are curated and managed by Stephen Colebourne, aka jodastephen.
 
 - [GitHub](https://github.com/jodastephen)
-- [Blog](http://blog.joda.org)
+- [Blog](https://blog.joda.org)
 - [Twitter](https://twitter.com/jodastephen)
-- [Stack Overflow](http://stackoverflow.com/users/38896/jodastephen)
+- [Stack Overflow](https://stackoverflow.com/users/38896/jodastephen)
 - [Ohloh](https://www.ohloh.net/accounts/scolebourne)
-- [LinkedIn](http://www.linkedin.com/in/stephencolebourne)
+- [LinkedIn](https://www.linkedin.com/in/stephencolebourne)
 - Email - scolebourne at the domain name of this page
 
 <script>
