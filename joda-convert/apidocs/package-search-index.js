@@ -1,1 +1,1 @@
-packageSearchIndex = [{"m":"org.joda.convert","l":"org.joda.convert"},{"m":"org.joda.convert","l":"org.joda.convert.factory"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"org.joda.convert","l":"org.joda.convert"},{"m":"org.joda.convert","l":"org.joda.convert.factory"}]

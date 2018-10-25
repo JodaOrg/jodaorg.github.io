@@ -63,24 +63,24 @@ public final class RenameHandler {
      * This is a singleton instance which is mutated.
      * It will be populated by the contents of the {@code Renamed.ini} configuration files.
      */
-    public static final RenameHandler INSTANCE;
+<span class="fc" id="L66">    public static final RenameHandler INSTANCE = create(false);</span>
     static {
         // log errors to System.err, as problems in static initializers can be troublesome to diagnose
-<span class="fc" id="L69">        RenameHandler handler = new RenameHandler();</span>
         try {
-            // don't just call loadFromClasspath() as that mutates and might leave an invalid state
-<span class="fc" id="L72">            handler = create(true);</span>
-<span class="nc" id="L73">        } catch (IllegalStateException ex) {</span>
-<span class="nc" id="L74">            System.err.println(&quot;ERROR: &quot; + ex.getMessage());</span>
-<span class="nc" id="L75">            ex.printStackTrace();</span>
-<span class="nc" id="L76">        } catch (RuntimeException ex) {</span>
-<span class="nc" id="L77">            System.err.println(&quot;ERROR: Failed to load Renamed.ini files: &quot; + ex.getMessage());</span>
-<span class="nc" id="L78">            ex.printStackTrace();</span>
-<span class="nc" id="L79">        } catch (Error ex) {</span>
-<span class="nc" id="L80">            System.err.println(&quot;ERROR: Failed to load Renamed.ini files: &quot; + ex.getMessage());</span>
-<span class="nc" id="L81">            ex.printStackTrace();</span>
-<span class="pc" id="L82">        }</span>
-<span class="fc" id="L83">        INSTANCE = handler;</span>
+            // calling loadFromClasspath() is the best option even though it mutates INSTANCE
+            // only serious errors will be caught here, most errors will log from parseRenameFile()
+<span class="fc" id="L72">            INSTANCE.loadFromClasspath();</span>
+
+<span class="nc" id="L74">        } catch (IllegalStateException ex) {</span>
+<span class="nc" id="L75">            System.err.println(&quot;ERROR: &quot; + ex.getMessage());</span>
+<span class="nc" id="L76">            ex.printStackTrace();</span>
+<span class="nc" id="L77">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L78">            System.err.println(&quot;ERROR: Failed to load Renamed.ini files: &quot; + ex.getMessage());</span>
+<span class="nc" id="L79">            ex.printStackTrace();</span>
+<span class="nc" id="L80">        } catch (Error ex) {</span>
+<span class="nc" id="L81">            System.err.println(&quot;ERROR: Failed to load Renamed.ini files: &quot; + ex.getMessage());</span>
+<span class="nc" id="L82">            ex.printStackTrace();</span>
+<span class="pc" id="L83">        }</span>
 <span class="fc" id="L84">    }</span>
 
     /**
@@ -122,7 +122,7 @@ public final class RenameHandler {
      */
     public static RenameHandler create(boolean loadFromClasspath) {
 <span class="fc" id="L124">        RenameHandler handler = new RenameHandler();</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (loadFromClasspath) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (loadFromClasspath) {</span>
 <span class="fc" id="L126">            handler.loadFromClasspath();</span>
         }
 <span class="fc" id="L128">        return handler;</span>
@@ -166,7 +166,7 @@ public final class RenameHandler {
      * @return a copy of the set of enum types with renames, not null
      */
     public Map&lt;String, Class&lt;?&gt;&gt; getTypeRenames() {
-<span class="nc" id="L169">        return new HashMap&lt;String, Class&lt;?&gt;&gt;(typeRenames);</span>
+<span class="fc" id="L169">        return new HashMap&lt;String, Class&lt;?&gt;&gt;(typeRenames);</span>
     }
 
     /**
@@ -421,4 +421,4 @@ public final class RenameHandler {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
