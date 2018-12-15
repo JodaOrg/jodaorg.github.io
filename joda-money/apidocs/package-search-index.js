@@ -1,1 +1,1 @@
-packageSearchIndex = [{"m":"org.joda.money","l":"org.joda.money"},{"m":"org.joda.money","l":"org.joda.money.format"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"org.joda.money","l":"org.joda.money"},{"m":"org.joda.money","l":"org.joda.money.format"}]

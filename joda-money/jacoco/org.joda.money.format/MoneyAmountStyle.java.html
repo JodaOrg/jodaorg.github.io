@@ -268,7 +268,7 @@ public final class MoneyAmountStyle implements Serializable {
 <span class="fc" id="L268">            DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);</span>
 <span class="fc" id="L269">            NumberFormat format = NumberFormat.getCurrencyInstance(locale);</span>
 <span class="pc bpc" id="L270" title="1 of 2 branches missed.">            int size = (format instanceof DecimalFormat ? ((DecimalFormat) format).getGroupingSize() : 3);</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">            size = size &lt;= 0 ? 3 : size;</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">            size = size &lt;= 0 ? 3 : size;</span>
 <span class="fc" id="L272">            protoStyle = new MoneyAmountStyle(</span>
 <span class="fc" id="L273">                    symbols.getZeroDigit(),</span>
                     '+', 
@@ -671,4 +671,4 @@ public final class MoneyAmountStyle implements Serializable {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
