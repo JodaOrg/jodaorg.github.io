@@ -82,9 +82,9 @@ class MapMetaBean implements DynamicMetaBean {
     @Override
     public Iterable&lt;MetaProperty&lt;?&gt;&gt; metaPropertyIterable() {
 <span class="nc" id="L84">        return new Iterable&lt;MetaProperty&lt;?&gt;&gt;() {</span>
-<span class="nc" id="L85">            private final Iterator&lt;String&gt; it = bean.keySet().iterator();</span>
             @Override
             public Iterator&lt;MetaProperty&lt;?&gt;&gt; iterator() {
+<span class="nc" id="L87">                Iterator&lt;String&gt; it = bean.keySet().iterator();</span>
 <span class="nc" id="L88">                return new Iterator&lt;MetaProperty&lt;?&gt;&gt;() {</span>
                     @Override
                     public boolean hasNext() {
@@ -140,4 +140,4 @@ class MapMetaBean implements DynamicMetaBean {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

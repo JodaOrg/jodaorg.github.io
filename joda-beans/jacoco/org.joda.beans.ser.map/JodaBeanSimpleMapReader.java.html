@@ -62,7 +62,7 @@ public class JodaBeanSimpleMapReader {
      * Reads and parses to a bean.
      * 
      * @param &lt;T&gt;  the root type
-     * @param input  the input string, not null
+     * @param input  the map input, not null
      * @param rootType  the root type, not null
      * @return the bean, not null
      */
@@ -82,38 +82,39 @@ public class JodaBeanSimpleMapReader {
     /**
      * Parses the root bean.
      * 
-     * @param rootType  the root type, not null
+     * @param input  the map input, not null
+     * @param declaredType  the declared type, not null
      * @return the bean, not null
      * @throws Exception if an error occurs
      */
     private &lt;T&gt; T parseRoot(Map&lt;String, Object&gt; input, Class&lt;T&gt; declaredType) throws Exception {
-<span class="fc" id="L90">        Object parsed = parseBean(input, declaredType);</span>
-<span class="fc" id="L91">        return declaredType.cast(parsed);</span>
+<span class="fc" id="L91">        Object parsed = parseBean(input, declaredType);</span>
+<span class="fc" id="L92">        return declaredType.cast(parsed);</span>
     }
 
     // parse a bean, event after object start passed in
     private Object parseBean(Map&lt;String, Object&gt; input, Class&lt;?&gt; beanType) throws Exception {
-<span class="fc" id="L96">        String propName = &quot;&quot;;</span>
+<span class="fc" id="L97">        String propName = &quot;&quot;;</span>
         try {
-<span class="fc" id="L98">            SerDeserializer deser = settings.getDeserializers().findDeserializer(beanType);</span>
-<span class="fc" id="L99">            MetaBean metaBean = deser.findMetaBean(beanType);</span>
-<span class="fc" id="L100">            BeanBuilder&lt;?&gt; builder = deser.createBuilder(beanType, metaBean);</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">            for (Entry&lt;String, Object&gt; entry : input.entrySet()) {</span>
+<span class="fc" id="L99">            SerDeserializer deser = settings.getDeserializers().findDeserializer(beanType);</span>
+<span class="fc" id="L100">            MetaBean metaBean = deser.findMetaBean(beanType);</span>
+<span class="fc" id="L101">            BeanBuilder&lt;?&gt; builder = deser.createBuilder(beanType, metaBean);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            for (Entry&lt;String, Object&gt; entry : input.entrySet()) {</span>
                 // property name
-<span class="fc" id="L103">                propName = entry.getKey();</span>
-<span class="fc" id="L104">                MetaProperty&lt;?&gt; metaProp = deser.findMetaProperty(beanType, metaBean, propName);</span>
+<span class="fc" id="L104">                propName = entry.getKey();</span>
+<span class="fc" id="L105">                MetaProperty&lt;?&gt; metaProp = deser.findMetaProperty(beanType, metaBean, propName);</span>
                 // ignore unknown properties
-<span class="pc bpc" id="L106" title="1 of 4 branches missed.">                if (metaProp != null &amp;&amp; !metaProp.style().isDerived()) {</span>
-<span class="fc" id="L107">                    Object value = parseObject(</span>
-<span class="fc" id="L108">                            entry.getValue(), SerOptional.extractType(metaProp, beanType), metaProp, beanType, null);</span>
-<span class="fc" id="L109">                    deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, beanType, value));</span>
+<span class="pc bpc" id="L107" title="1 of 4 branches missed.">                if (metaProp != null &amp;&amp; !metaProp.style().isDerived()) {</span>
+<span class="fc" id="L108">                    Object value = parseObject(</span>
+<span class="fc" id="L109">                            entry.getValue(), SerOptional.extractType(metaProp, beanType), metaProp, beanType, null);</span>
+<span class="fc" id="L110">                    deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, beanType, value));</span>
                 }
-<span class="fc" id="L111">                propName = &quot;&quot;;</span>
-<span class="fc" id="L112">            }</span>
-<span class="fc" id="L113">            return deser.build(beanType, builder);</span>
-<span class="fc" id="L114">        } catch (Exception ex) {</span>
-<span class="fc" id="L115">            throw new IllegalArgumentException(</span>
-<span class="fc" id="L116">                    &quot;Error parsing bean: &quot; + beanType.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
+<span class="fc" id="L112">                propName = &quot;&quot;;</span>
+<span class="fc" id="L113">            }</span>
+<span class="fc" id="L114">            return deser.build(beanType, builder);</span>
+<span class="fc" id="L115">        } catch (Exception ex) {</span>
+<span class="fc" id="L116">            throw new IllegalArgumentException(</span>
+<span class="fc" id="L117">                    &quot;Error parsing bean: &quot; + beanType.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
         }
     }
 
@@ -127,242 +128,242 @@ public class JodaBeanSimpleMapReader {
             SerIterable parentIterable) throws Exception {
 
         // parse based on type
-<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(declaredType)) {</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            if (input instanceof Map) {</span>
-<span class="fc" id="L132">                return parseBean((Map&lt;String, Object&gt;) input, declaredType);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(declaredType)) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            if (input instanceof Map) {</span>
+<span class="fc" id="L133">                return parseBean((Map&lt;String, Object&gt;) input, declaredType);</span>
             } else {
-<span class="nc" id="L134">                return parseSimple(input, declaredType);</span>
+<span class="nc" id="L135">                return parseSimple(input, declaredType);</span>
             }
         } else {
-<span class="fc bfc" id="L137" title="All 4 branches covered.">            if (input instanceof List || input instanceof Map) {</span>
-<span class="fc" id="L138">                SerIterable childIterable = null;</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">                if (metaProp != null) {</span>
-<span class="fc" id="L140">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType, true);</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">                } else if (parentIterable != null) {</span>
-<span class="fc" id="L142">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">            if (input instanceof List || input instanceof Map) {</span>
+<span class="fc" id="L139">                SerIterable childIterable = null;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                if (metaProp != null) {</span>
+<span class="fc" id="L141">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType, true);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">                } else if (parentIterable != null) {</span>
+<span class="fc" id="L143">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
                 }
-<span class="fc bfc" id="L144" title="All 2 branches covered.">                if (childIterable == null) {</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">                    if (input instanceof List) {</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">                        if (declaredType.isArray()) {</span>
-<span class="fc" id="L147">                            childIterable = SerIteratorFactory.array(declaredType.getComponentType());</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                if (childIterable == null) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                    if (input instanceof List) {</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                        if (declaredType.isArray()) {</span>
+<span class="fc" id="L148">                            childIterable = SerIteratorFactory.array(declaredType.getComponentType());</span>
                         } else {
-<span class="fc" id="L149">                            childIterable = SerIteratorFactory.list(Object.class, Collections.&lt;Class&lt;?&gt;&gt;emptyList());</span>
+<span class="fc" id="L150">                            childIterable = SerIteratorFactory.list(Object.class, Collections.&lt;Class&lt;?&gt;&gt;emptyList());</span>
                         }
                     } else {
-<span class="fc" id="L152">                        childIterable = SerIteratorFactory.map(</span>
-<span class="fc" id="L153">                                String.class, Object.class, Collections.&lt;Class&lt;?&gt;&gt;emptyList());</span>
+<span class="fc" id="L153">                        childIterable = SerIteratorFactory.map(</span>
+<span class="fc" id="L154">                                String.class, Object.class, Collections.&lt;Class&lt;?&gt;&gt;emptyList());</span>
                     }
                 }
-<span class="fc" id="L156">                return parseIterable(input, childIterable);</span>
+<span class="fc" id="L157">                return parseIterable(input, childIterable);</span>
             } else {
-<span class="fc" id="L158">                return parseSimple(input, declaredType);</span>
+<span class="fc" id="L159">                return parseSimple(input, declaredType);</span>
             }
         }
     }
 
     //-----------------------------------------------------------------------
     private Object parseIterable(Object input, SerIterable iterable) throws Exception {
-<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (iterable.category() == SerCategory.MAP) {</span>
-<span class="fc" id="L166">            return parseIterableMap(input, iterable);</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.COUNTED) {</span>
-<span class="fc" id="L168">            return parseIterableCounted(input, iterable);</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        } else if (iterable.category() == SerCategory.TABLE) {</span>
-<span class="nc" id="L170">            return parseIterableTable(input, iterable);</span>
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        } else if (iterable.category() == SerCategory.GRID) {</span>
-<span class="nc" id="L172">            return parseIterableGrid(input, iterable);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (iterable.category() == SerCategory.MAP) {</span>
+<span class="fc" id="L167">            return parseIterableMap(input, iterable);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.COUNTED) {</span>
+<span class="fc" id="L169">            return parseIterableCounted(input, iterable);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        } else if (iterable.category() == SerCategory.TABLE) {</span>
+<span class="nc" id="L171">            return parseIterableTable(input, iterable);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        } else if (iterable.category() == SerCategory.GRID) {</span>
+<span class="nc" id="L173">            return parseIterableGrid(input, iterable);</span>
         } else {
-<span class="fc" id="L174">            return parseIterableArray(input, iterable);</span>
+<span class="fc" id="L175">            return parseIterableArray(input, iterable);</span>
         }
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     private Object parseIterableMap(Object input, SerIterable iterable) throws Exception {
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (input instanceof Map) {</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">            for (Entry&lt;String, Object&gt; entry : ((Map&lt;String, Object&gt;) input).entrySet()) {</span>
-<span class="fc" id="L182">                String keyStr = entry.getKey();</span>
-<span class="fc" id="L183">                Object key = convertText(keyStr, iterable.keyType());</span>
-<span class="fc" id="L184">                Object value = parseObject(entry.getValue(), iterable.valueType(), null, null, iterable);</span>
-<span class="fc" id="L185">                iterable.add(key, null, value, 1);</span>
-<span class="fc" id="L186">            }</span>
-<span class="fc" id="L187">            return iterable.build();</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">        } else if (input instanceof List) {</span>
-<span class="nc" id="L189">            List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">            for (Object inputVal : inputList) {</span>
-<span class="nc" id="L191">                List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">                if (inputData.size() != 3) {</span>
-<span class="nc" id="L193">                    throw new IllegalArgumentException(&quot;Expected table iterable to have entries of size 3&quot;);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (input instanceof Map) {</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            for (Entry&lt;String, Object&gt; entry : ((Map&lt;String, Object&gt;) input).entrySet()) {</span>
+<span class="fc" id="L183">                String keyStr = entry.getKey();</span>
+<span class="fc" id="L184">                Object key = convertText(keyStr, iterable.keyType());</span>
+<span class="fc" id="L185">                Object value = parseObject(entry.getValue(), iterable.valueType(), null, null, iterable);</span>
+<span class="fc" id="L186">                iterable.add(key, null, value, 1);</span>
+<span class="fc" id="L187">            }</span>
+<span class="fc" id="L188">            return iterable.build();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        } else if (input instanceof List) {</span>
+<span class="nc" id="L190">            List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            for (Object inputVal : inputList) {</span>
+<span class="nc" id="L192">                List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">                if (inputData.size() != 3) {</span>
+<span class="nc" id="L194">                    throw new IllegalArgumentException(&quot;Expected table iterable to have entries of size 3&quot;);</span>
                 }
-<span class="nc" id="L195">                Object key = parseObject(inputData.get(0), iterable.keyType(), null, null, null);</span>
-<span class="nc" id="L196">                Object value = parseObject(inputData.get(2), iterable.valueType(), null, null, iterable);</span>
-<span class="nc" id="L197">                iterable.add(key, null, value, 1);</span>
-<span class="nc" id="L198">            }</span>
-<span class="nc" id="L199">            return iterable.build();</span>
+<span class="nc" id="L196">                Object key = parseObject(inputData.get(0), iterable.keyType(), null, null, null);</span>
+<span class="nc" id="L197">                Object value = parseObject(inputData.get(2), iterable.valueType(), null, null, iterable);</span>
+<span class="nc" id="L198">                iterable.add(key, null, value, 1);</span>
+<span class="nc" id="L199">            }</span>
+<span class="nc" id="L200">            return iterable.build();</span>
         } else {
-<span class="nc" id="L201">            throw new IllegalArgumentException(&quot;Invalid data: Expected List or Map but found &quot; + input);</span>
+<span class="nc" id="L202">            throw new IllegalArgumentException(&quot;Invalid data: Expected List or Map but found &quot; + input);</span>
         }
     }
 
     private Object parseIterableTable(Object input, SerIterable iterable) throws Exception {
-<span class="nc" id="L206">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">        for (Object inputVal : inputList) {</span>
-<span class="nc" id="L208">            List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">            if (inputData.size() != 3) {</span>
-<span class="nc" id="L210">                throw new IllegalArgumentException(&quot;Expected table iterable to have entries of size 3&quot;);</span>
+<span class="nc" id="L207">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        for (Object inputVal : inputList) {</span>
+<span class="nc" id="L209">            List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">            if (inputData.size() != 3) {</span>
+<span class="nc" id="L211">                throw new IllegalArgumentException(&quot;Expected table iterable to have entries of size 3&quot;);</span>
             }
-<span class="nc" id="L212">            Object key = parseObject(inputData.get(0), iterable.keyType(), null, null, null);</span>
-<span class="nc" id="L213">            Object col = parseObject(inputData.get(1), iterable.columnType(), null, null, null);</span>
-<span class="nc" id="L214">            Object value = parseObject(inputData.get(2), iterable.valueType(), null, null, iterable);</span>
-<span class="nc" id="L215">            iterable.add(key, col, value, 1);</span>
-<span class="nc" id="L216">        }</span>
-<span class="nc" id="L217">        return iterable.build();</span>
+<span class="nc" id="L213">            Object key = parseObject(inputData.get(0), iterable.keyType(), null, null, null);</span>
+<span class="nc" id="L214">            Object col = parseObject(inputData.get(1), iterable.columnType(), null, null, null);</span>
+<span class="nc" id="L215">            Object value = parseObject(inputData.get(2), iterable.valueType(), null, null, iterable);</span>
+<span class="nc" id="L216">            iterable.add(key, col, value, 1);</span>
+<span class="nc" id="L217">        }</span>
+<span class="nc" id="L218">        return iterable.build();</span>
     }
 
     private Object parseIterableGrid(Object input, SerIterable iterable) throws Exception {
-<span class="nc" id="L221">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">        if (inputList.size() &lt; 2) {</span>
-<span class="nc" id="L223">            throw new IllegalArgumentException(&quot;Expected counted iterable to be size 3&quot;);</span>
+<span class="nc" id="L222">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        if (inputList.size() &lt; 2) {</span>
+<span class="nc" id="L224">            throw new IllegalArgumentException(&quot;Expected counted iterable to be size 3&quot;);</span>
         }
-<span class="nc" id="L225">        Integer rows = (Integer) inputList.get(0);</span>
-<span class="nc" id="L226">        Integer columns = (Integer) inputList.get(1);</span>
-<span class="nc" id="L227">        iterable.dimensions(new int[] {rows, columns});</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">        for (Object inputVal : inputList.subList(2, inputList.size())) {</span>
-<span class="nc" id="L229">            List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">            if (inputData.size() != 2) {</span>
-<span class="nc" id="L231">                throw new IllegalArgumentException(&quot;Expected grid iterable to have entries of size 3&quot;);</span>
+<span class="nc" id="L226">        Integer rows = (Integer) inputList.get(0);</span>
+<span class="nc" id="L227">        Integer columns = (Integer) inputList.get(1);</span>
+<span class="nc" id="L228">        iterable.dimensions(new int[] {rows, columns});</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        for (Object inputVal : inputList.subList(2, inputList.size())) {</span>
+<span class="nc" id="L230">            List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            if (inputData.size() != 2) {</span>
+<span class="nc" id="L232">                throw new IllegalArgumentException(&quot;Expected grid iterable to have entries of size 3&quot;);</span>
             }
-<span class="nc" id="L233">            Integer row = (Integer) inputData.get(0);</span>
-<span class="nc" id="L234">            Integer col = (Integer) inputData.get(1);</span>
-<span class="nc" id="L235">            Object value = parseObject(inputData.get(2), iterable.valueType(), null, null, iterable);</span>
-<span class="nc" id="L236">            iterable.add(row, col, value, 1);</span>
-<span class="nc" id="L237">        }</span>
-<span class="nc" id="L238">        return iterable.build();</span>
+<span class="nc" id="L234">            Integer row = (Integer) inputData.get(0);</span>
+<span class="nc" id="L235">            Integer col = (Integer) inputData.get(1);</span>
+<span class="nc" id="L236">            Object value = parseObject(inputData.get(2), iterable.valueType(), null, null, iterable);</span>
+<span class="nc" id="L237">            iterable.add(row, col, value, 1);</span>
+<span class="nc" id="L238">        }</span>
+<span class="nc" id="L239">        return iterable.build();</span>
     }
 
     private Object parseIterableCounted(Object input, SerIterable iterable) throws Exception {
-<span class="fc" id="L242">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        for (Object inputVal : inputList) {</span>
-<span class="nc" id="L244">            List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
-<span class="nc bnc" id="L245" title="All 2 branches missed.">            if (inputData.size() != 2) {</span>
-<span class="nc" id="L246">                throw new IllegalArgumentException(&quot;Expected counted iterable to have entries of size 2&quot;);</span>
+<span class="fc" id="L243">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">        for (Object inputVal : inputList) {</span>
+<span class="nc" id="L245">            List&lt;?&gt; inputData = (List&lt;?&gt;) inputVal;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">            if (inputData.size() != 2) {</span>
+<span class="nc" id="L247">                throw new IllegalArgumentException(&quot;Expected counted iterable to have entries of size 2&quot;);</span>
             }
-<span class="nc" id="L248">            Object value = parseObject(inputData.get(0), iterable.valueType(), null, null, iterable);</span>
-<span class="nc" id="L249">            Integer count = (Integer) inputData.get(1);</span>
-<span class="nc" id="L250">            iterable.add(null, null, value, count);</span>
-<span class="nc" id="L251">        }</span>
-<span class="fc" id="L252">        return iterable.build();</span>
+<span class="nc" id="L249">            Object value = parseObject(inputData.get(0), iterable.valueType(), null, null, iterable);</span>
+<span class="nc" id="L250">            Integer count = (Integer) inputData.get(1);</span>
+<span class="nc" id="L251">            iterable.add(null, null, value, count);</span>
+<span class="nc" id="L252">        }</span>
+<span class="fc" id="L253">        return iterable.build();</span>
     }
 
     private Object parseIterableArray(Object input, SerIterable iterable) throws Exception {
-<span class="fc" id="L256">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
-<span class="fc bfc" id="L257" title="All 2 branches covered.">        for (Object inputVal : inputList) {</span>
-<span class="fc" id="L258">            Object value = parseObject(inputVal, iterable.valueType(), null, null, iterable);</span>
-<span class="fc" id="L259">            iterable.add(null, null, value, 1);</span>
-<span class="fc" id="L260">        }</span>
-<span class="fc" id="L261">        return iterable.build();</span>
+<span class="fc" id="L257">        List&lt;?&gt; inputList = (List&lt;?&gt;) input;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        for (Object inputVal : inputList) {</span>
+<span class="fc" id="L259">            Object value = parseObject(inputVal, iterable.valueType(), null, null, iterable);</span>
+<span class="fc" id="L260">            iterable.add(null, null, value, 1);</span>
+<span class="fc" id="L261">        }</span>
+<span class="fc" id="L262">        return iterable.build();</span>
     }
 
     private Object parseSimple(Object input, Class&lt;?&gt; type) throws Exception {
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        if (input == null) {</span>
-<span class="nc bnc" id="L266" title="All 4 branches missed.">            if (type == double.class || type == Double.class) {</span>
-<span class="nc" id="L267">                return Double.NaN;  // leniently accept null for NaN</span>
-<span class="nc bnc" id="L268" title="All 4 branches missed.">            } else if (type == float.class || type == Float.class) {</span>
-<span class="nc" id="L269">                return Float.NaN;  // leniently accept null for NaN</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">        if (input == null) {</span>
+<span class="nc bnc" id="L267" title="All 4 branches missed.">            if (type == double.class || type == Double.class) {</span>
+<span class="nc" id="L268">                return Double.NaN;  // leniently accept null for NaN</span>
+<span class="nc bnc" id="L269" title="All 4 branches missed.">            } else if (type == float.class || type == Float.class) {</span>
+<span class="nc" id="L270">                return Float.NaN;  // leniently accept null for NaN</span>
             } else {
-<span class="nc" id="L271">                return null;</span>
+<span class="nc" id="L272">                return null;</span>
             }
         }
-<span class="fc bfc" id="L274" title="All 2 branches covered.">        if (input instanceof String) {</span>
-<span class="fc" id="L275">            return convertText(input, type);</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        if (input instanceof String) {</span>
+<span class="fc" id="L276">            return convertText(input, type);</span>
         }
-<span class="fc bfc" id="L277" title="All 2 branches covered.">        if (input instanceof Boolean) {</span>
-<span class="fc" id="L278">            return input;</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        if (input instanceof Boolean) {</span>
+<span class="fc" id="L279">            return input;</span>
         }
-<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (input instanceof Long) {</span>
-<span class="fc" id="L281">            Long inputLong = (Long) input;</span>
-<span class="pc bpc" id="L282" title="2 of 4 branches missed.">            if (type == Long.class || type == long.class) {</span>
-<span class="fc" id="L283">                return inputLong;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (input instanceof Long) {</span>
+<span class="fc" id="L282">            Long inputLong = (Long) input;</span>
+<span class="pc bpc" id="L283" title="2 of 4 branches missed.">            if (type == Long.class || type == long.class) {</span>
+<span class="fc" id="L284">                return inputLong;</span>
             } else {
-<span class="nc" id="L285">                return convertInteger(inputLong.longValue(), type);</span>
+<span class="nc" id="L286">                return convertInteger(inputLong.longValue(), type);</span>
             }
         }
-<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (input instanceof Integer) {</span>
-<span class="fc" id="L289">            Integer inputInteger = (Integer) input;</span>
-<span class="fc bfc" id="L290" title="All 4 branches covered.">            if (type == Integer.class || type == int.class) {</span>
-<span class="fc" id="L291">                return inputInteger;</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        if (input instanceof Integer) {</span>
+<span class="fc" id="L290">            Integer inputInteger = (Integer) input;</span>
+<span class="fc bfc" id="L291" title="All 4 branches covered.">            if (type == Integer.class || type == int.class) {</span>
+<span class="fc" id="L292">                return inputInteger;</span>
             } else {
-<span class="fc" id="L293">                return convertInteger(inputInteger.longValue(), type);</span>
+<span class="fc" id="L294">                return convertInteger(inputInteger.longValue(), type);</span>
             }
         }
-<span class="fc bfc" id="L296" title="All 2 branches covered.">        if (input instanceof Double) {</span>
-<span class="fc" id="L297">            Double inputDouble = (Double) input;</span>
-<span class="pc bpc" id="L298" title="2 of 4 branches missed.">            if (type == Double.class || type == double.class) {</span>
-<span class="fc" id="L299">                return inputDouble;</span>
-<span class="nc bnc" id="L300" title="All 4 branches missed.">            } else if (type == Float.class || type == float.class) {</span>
-<span class="nc" id="L301">                return inputDouble.floatValue();</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">        if (input instanceof Double) {</span>
+<span class="fc" id="L298">            Double inputDouble = (Double) input;</span>
+<span class="pc bpc" id="L299" title="2 of 4 branches missed.">            if (type == Double.class || type == double.class) {</span>
+<span class="fc" id="L300">                return inputDouble;</span>
+<span class="nc bnc" id="L301" title="All 4 branches missed.">            } else if (type == Float.class || type == float.class) {</span>
+<span class="nc" id="L302">                return inputDouble.floatValue();</span>
             } else {
-<span class="nc" id="L303">                return convertInteger(inputDouble.longValue(), type);</span>
+<span class="nc" id="L304">                return convertInteger(inputDouble.longValue(), type);</span>
             }
         }
-<span class="fc bfc" id="L306" title="All 2 branches covered.">        if (input instanceof Float) {</span>
-<span class="fc" id="L307">            Float inputFloat = (Float) input;</span>
-<span class="pc bpc" id="L308" title="2 of 4 branches missed.">            if (type == Float.class || type == float.class) {</span>
-<span class="fc" id="L309">                return inputFloat;</span>
-<span class="nc bnc" id="L310" title="All 4 branches missed.">            } else if (type == Double.class || type == double.class) {</span>
-<span class="nc" id="L311">                return inputFloat.doubleValue();</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        if (input instanceof Float) {</span>
+<span class="fc" id="L308">            Float inputFloat = (Float) input;</span>
+<span class="pc bpc" id="L309" title="2 of 4 branches missed.">            if (type == Float.class || type == float.class) {</span>
+<span class="fc" id="L310">                return inputFloat;</span>
+<span class="nc bnc" id="L311" title="All 4 branches missed.">            } else if (type == Double.class || type == double.class) {</span>
+<span class="nc" id="L312">                return inputFloat.doubleValue();</span>
             } else {
-<span class="nc" id="L313">                return convertInteger(inputFloat.longValue(), type);</span>
+<span class="nc" id="L314">                return convertInteger(inputFloat.longValue(), type);</span>
             }
         }
-<span class="pc bpc" id="L316" title="1 of 4 branches missed.">        if (input instanceof Short || input instanceof Byte) {</span>
-<span class="fc" id="L317">            return input;</span>
+<span class="pc bpc" id="L317" title="1 of 4 branches missed.">        if (input instanceof Short || input instanceof Byte) {</span>
+<span class="fc" id="L318">            return input;</span>
         }
-<span class="nc" id="L319">        throw new IllegalArgumentException(&quot;Invalid data: Expected simple type but found &quot; + input);</span>
+<span class="nc" id="L320">        throw new IllegalArgumentException(&quot;Invalid data: Expected simple type but found &quot; + input);</span>
     }
 
     private Object convertText(Object input, Class&lt;?&gt; type) {
-<span class="fc bfc" id="L323" title="All 4 branches covered.">        if (type == Object.class || type.isAssignableFrom(String.class)) {</span>
-<span class="fc" id="L324">            return input;</span>
+<span class="fc bfc" id="L324" title="All 4 branches covered.">        if (type == Object.class || type.isAssignableFrom(String.class)) {</span>
+<span class="fc" id="L325">            return input;</span>
         }
-<span class="fc" id="L326">        return settings.getConverter().convertFromString(type, (String) input);</span>
+<span class="fc" id="L327">        return settings.getConverter().convertFromString(type, (String) input);</span>
     }
 
     private Object convertInteger(long value, Class&lt;?&gt; type) {
-<span class="pc bpc" id="L330" title="2 of 4 branches missed.">        if (type == Long.class || type == long.class) {</span>
-<span class="nc" id="L331">            return Long.valueOf(value);</span>
+<span class="pc bpc" id="L331" title="2 of 4 branches missed.">        if (type == Long.class || type == long.class) {</span>
+<span class="nc" id="L332">            return Long.valueOf(value);</span>
             
-<span class="pc bpc" id="L333" title="2 of 4 branches missed.">        } else if (type == Short.class || type == short.class) {</span>
-<span class="nc bnc" id="L334" title="All 4 branches missed.">            if (value &lt; Short.MIN_VALUE || value &gt; Short.MAX_VALUE) {</span>
-<span class="nc" id="L335">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of short: &quot; + value);</span>
+<span class="pc bpc" id="L334" title="2 of 4 branches missed.">        } else if (type == Short.class || type == short.class) {</span>
+<span class="nc bnc" id="L335" title="All 4 branches missed.">            if (value &lt; Short.MIN_VALUE || value &gt; Short.MAX_VALUE) {</span>
+<span class="nc" id="L336">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of short: &quot; + value);</span>
             }
-<span class="nc" id="L337">            return Short.valueOf((short) value);</span>
+<span class="nc" id="L338">            return Short.valueOf((short) value);</span>
             
-<span class="pc bpc" id="L339" title="2 of 4 branches missed.">        } else if (type == Byte.class || type == byte.class) {</span>
-<span class="nc bnc" id="L340" title="All 4 branches missed.">            if (value &lt; Byte.MIN_VALUE || value &gt; Byte.MAX_VALUE) {</span>
-<span class="nc" id="L341">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of byte: &quot; + value);</span>
+<span class="pc bpc" id="L340" title="2 of 4 branches missed.">        } else if (type == Byte.class || type == byte.class) {</span>
+<span class="nc bnc" id="L341" title="All 4 branches missed.">            if (value &lt; Byte.MIN_VALUE || value &gt; Byte.MAX_VALUE) {</span>
+<span class="nc" id="L342">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of byte: &quot; + value);</span>
             }
-<span class="nc" id="L343">            return Byte.valueOf((byte) value);</span>
+<span class="nc" id="L344">            return Byte.valueOf((byte) value);</span>
             
-<span class="pc bpc" id="L345" title="2 of 4 branches missed.">        } else if (type == Double.class || type == double.class) {</span>
-<span class="nc" id="L346">            double dblVal = (double) value;</span>
-<span class="nc bnc" id="L347" title="All 2 branches missed.">            if (value != (long) dblVal) {</span>
-<span class="nc" id="L348">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of double: &quot; + value);</span>
+<span class="pc bpc" id="L346" title="2 of 4 branches missed.">        } else if (type == Double.class || type == double.class) {</span>
+<span class="nc" id="L347">            double dblVal = (double) value;</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">            if (value != (long) dblVal) {</span>
+<span class="nc" id="L349">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of double: &quot; + value);</span>
             }
-<span class="nc" id="L350">            return Double.valueOf(dblVal);</span>
+<span class="nc" id="L351">            return Double.valueOf(dblVal);</span>
             
-<span class="pc bpc" id="L352" title="2 of 4 branches missed.">        } else if (type == Float.class || type == float.class) {</span>
-<span class="nc" id="L353">            float fltVal = (float) value;</span>
-<span class="nc bnc" id="L354" title="All 2 branches missed.">            if (value != (long) fltVal) {</span>
-<span class="nc" id="L355">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of float: &quot; + value);</span>
+<span class="pc bpc" id="L353" title="2 of 4 branches missed.">        } else if (type == Float.class || type == float.class) {</span>
+<span class="nc" id="L354">            float fltVal = (float) value;</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">            if (value != (long) fltVal) {</span>
+<span class="nc" id="L356">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of float: &quot; + value);</span>
             }
-<span class="nc" id="L357">            return Float.valueOf(fltVal);</span>
+<span class="nc" id="L358">            return Float.valueOf(fltVal);</span>
             
         } else {
-<span class="pc bpc" id="L360" title="2 of 4 branches missed.">            if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L361">                throw new IllegalArgumentException(&quot;Invalid data: Expected int, but was &quot; + value);</span>
+<span class="pc bpc" id="L361" title="2 of 4 branches missed.">            if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L362">                throw new IllegalArgumentException(&quot;Invalid data: Expected int, but was &quot; + value);</span>
             }
-<span class="fc" id="L363">            return Integer.valueOf((int) value);</span>
+<span class="fc" id="L364">            return Integer.valueOf((int) value);</span>
         }
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

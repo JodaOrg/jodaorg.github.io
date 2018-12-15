@@ -348,7 +348,7 @@ abstract class AbstractJsonReader {
     }
 
     private Object parseSimple(JsonEvent event, Class&lt;?&gt; type) throws Exception {
-<span class="pc bfc" id="L351" title="All 7 branches covered.">        switch (event) {</span>
+<span class="fc bfc" id="L351" title="All 7 branches covered.">        switch (event) {</span>
             case STRING: {
 <span class="fc" id="L353">                String text = input.parseString();</span>
 <span class="fc" id="L354">                return parseText(text, type);</span>
@@ -425,4 +425,4 @@ abstract class AbstractJsonReader {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

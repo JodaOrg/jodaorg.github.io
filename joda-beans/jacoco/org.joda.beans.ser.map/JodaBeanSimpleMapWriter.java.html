@@ -220,7 +220,7 @@ public class JodaBeanSimpleMapWriter {
 <span class="pc bpc" id="L220" title="1 of 2 branches missed.">        while (itemIterator.hasNext()) {</span>
 <span class="nc" id="L221">            itemIterator.next();</span>
 <span class="nc" id="L222">            Object outputValue = writeObject(itemIterator.valueType(), itemIterator.value(), itemIterator);</span>
-<span class="nc" id="L223">            Integer outputCount = itemIterator.count();</span>
+<span class="nc" id="L223">            int outputCount = itemIterator.count();</span>
 <span class="nc" id="L224">            result.add(Arrays.asList(outputValue, outputCount));</span>
 <span class="nc" id="L225">        }</span>
 <span class="fc" id="L226">        return result;</span>
@@ -270,4 +270,4 @@ public class JodaBeanSimpleMapWriter {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

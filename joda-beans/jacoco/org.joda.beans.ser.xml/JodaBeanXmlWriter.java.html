@@ -28,6 +28,7 @@ import static org.joda.beans.ser.xml.JodaBeanXml.ROW;
 import static org.joda.beans.ser.xml.JodaBeanXml.ROWS;
 import static org.joda.beans.ser.xml.JodaBeanXml.TYPE;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,9 +73,13 @@ public class JodaBeanXmlWriter {
      */
     private final JodaBeanSer settings;
     /**
-     * The string builder.
+     * The string builder, unused if writing to an {@code Appendable}.
      */
     private final StringBuilder builder;
+    /**
+     * The location to output to.
+     */
+    private Appendable output;
     /**
      * The root bean.
      */
@@ -86,16 +91,16 @@ public class JodaBeanXmlWriter {
     /**
      * The known types.
      */
-<span class="fc" id="L89">    private Map&lt;Class&lt;?&gt;, String&gt; knownTypes = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L94">    private Map&lt;Class&lt;?&gt;, String&gt; knownTypes = new HashMap&lt;&gt;();</span>
 
     /**
      * Creates an instance.
      * 
      * @param settings  the settings to use, not null
      */
-    public JodaBeanXmlWriter(final JodaBeanSer settings) {
-<span class="fc" id="L97">        this(settings, new StringBuilder(1024));</span>
-<span class="fc" id="L98">    }</span>
+    public JodaBeanXmlWriter(JodaBeanSer settings) {
+<span class="fc" id="L102">        this(settings, new StringBuilder(1024));</span>
+<span class="fc" id="L103">    }</span>
 
     /**
      * Creates an instance.
@@ -103,10 +108,10 @@ public class JodaBeanXmlWriter {
      * @param settings  the settings to use, not null
      * @param builder  the builder to output to, not null
      */
-<span class="fc" id="L106">    public JodaBeanXmlWriter(final JodaBeanSer settings, final StringBuilder builder) {</span>
-<span class="fc" id="L107">        this.settings = settings;</span>
-<span class="fc" id="L108">        this.builder = builder;</span>
-<span class="fc" id="L109">    }</span>
+<span class="fc" id="L111">    public JodaBeanXmlWriter(JodaBeanSer settings, StringBuilder builder) {</span>
+<span class="fc" id="L112">        this.settings = settings;</span>
+<span class="fc" id="L113">        this.builder = builder;</span>
+<span class="fc" id="L114">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -117,8 +122,8 @@ public class JodaBeanXmlWriter {
      * @param bean  the bean to output, not null
      * @return the XML, not null
      */
-    public String write(final Bean bean) {
-<span class="fc" id="L121">        return write(bean, true);</span>
+    public String write(Bean bean) {
+<span class="fc" id="L126">        return write(bean, true);</span>
     }
 
     /**
@@ -128,8 +133,8 @@ public class JodaBeanXmlWriter {
      * @param rootType  true to output the root type
      * @return the XML, not null
      */
-    public String write(final Bean bean, final boolean rootType) {
-<span class="fc" id="L132">        return writeToBuilder(bean, rootType).toString();</span>
+    public String write(Bean bean, boolean rootType) {
+<span class="fc" id="L137">        return writeToBuilder(bean, rootType).toString();</span>
     }
 
     /**
@@ -139,9 +144,11 @@ public class JodaBeanXmlWriter {
      * 
      * @param bean  the bean to output, not null
      * @return the builder, not null
+     * @deprecated Use {@link #write(Bean, Appendable)}
      */
-    public StringBuilder writeToBuilder(final Bean bean) {
-<span class="nc" id="L144">        return writeToBuilder(bean, true);</span>
+    @Deprecated
+    public StringBuilder writeToBuilder(Bean bean) {
+<span class="nc" id="L151">        return writeToBuilder(bean, true);</span>
     }
 
     /**
@@ -150,315 +157,352 @@ public class JodaBeanXmlWriter {
      * @param bean  the bean to output, not null
      * @param rootType  true to output the root type
      * @return the builder, not null
+     * @deprecated Use {@link #write(Bean, boolean, Appendable)}
      */
-    public StringBuilder writeToBuilder(final Bean bean, final boolean rootType) {
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        if (bean == null) {</span>
-<span class="nc" id="L156">            throw new NullPointerException(&quot;bean&quot;);</span>
+    @Deprecated
+    public StringBuilder writeToBuilder(Bean bean, boolean rootType) {
+        try {
+<span class="fc" id="L165">            write(bean, rootType, this.builder);</span>
+<span class="nc" id="L166">        } catch (IOException ex) {</span>
+<span class="nc" id="L167">            throw new IllegalStateException(ex);</span>
+<span class="fc" id="L168">        }</span>
+<span class="fc" id="L169">        return builder;</span>
+    }
+
+    /**
+     * Writes the bean to the {@code Appendable}.
+     * &lt;p&gt;
+     * The type of the bean will be set in the message.
+     *
+     * @param bean  the bean to output, not null
+     * @param output  the output appendable, not null
+     * @throws IOException if an error occurs
+     */
+    public void write(Bean bean, Appendable output) throws IOException {
+<span class="fc" id="L182">        write(bean, true, output);</span>
+<span class="fc" id="L183">    }</span>
+
+    /**
+     * Writes the bean to the {@code Appendable}.
+     *
+     * @param bean  the bean to output, not null
+     * @param rootType  true to output the root type
+     * @param output  the output appendable, not null
+     * @throws IOException if an error occurs
+     */
+    public void write(Bean bean, boolean rootType, Appendable output) throws IOException {
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">        if (bean == null) {</span>
+<span class="nc" id="L195">            throw new NullPointerException(&quot;bean&quot;);</span>
         }
-<span class="fc" id="L158">        this.rootBean = bean;</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        this.basePackage = (rootType ? bean.getClass().getPackage().getName() + &quot;.&quot; : null);</span>
+<span class="fc" id="L197">        this.output = output;</span>
+<span class="fc" id="L198">        this.rootBean = bean;</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        this.basePackage = (rootType ? bean.getClass().getPackage().getName() + &quot;.&quot; : null);</span>
         
-<span class="fc" id="L161">        String type = rootBean.getClass().getName();</span>
-<span class="fc" id="L162">        writeHeader();</span>
-<span class="fc" id="L163">        builder.append('&lt;').append(BEAN);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if (rootType) {</span>
-<span class="fc" id="L165">            appendAttribute(builder, TYPE, type);</span>
+<span class="fc" id="L201">        String type = rootBean.getClass().getName();</span>
+<span class="fc" id="L202">        writeHeader();</span>
+<span class="fc" id="L203">        output.append('&lt;').append(BEAN);</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (rootType) {</span>
+<span class="fc" id="L205">            appendAttribute(output, TYPE, type);</span>
         }
-<span class="fc" id="L167">        builder.append('&gt;').append(settings.getNewLine());</span>
-<span class="fc" id="L168">        writeBean(rootBean, settings.getIndent());</span>
-<span class="fc" id="L169">        builder.append('&lt;').append('/').append(BEAN).append('&gt;').append(settings.getNewLine());</span>
-<span class="fc" id="L170">        return builder;</span>
-    }
+<span class="fc" id="L207">        output.append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L208">        writeBean(rootBean, settings.getIndent());</span>
+<span class="fc" id="L209">        output.append('&lt;').append('/').append(BEAN).append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L210">    }</span>
 
-    private void writeHeader() {
-<span class="fc" id="L174">        builder.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;).append(settings.getNewLine());</span>
-<span class="fc" id="L175">    }</span>
+    private void writeHeader() throws IOException {
+<span class="fc" id="L213">        output.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;).append(settings.getNewLine());</span>
+<span class="fc" id="L214">    }</span>
 
     //-----------------------------------------------------------------------
-    private boolean writeBean(final Bean bean, final String currentIndent) {
-<span class="fc" id="L179">        boolean output = false;</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
-<span class="pc bpc" id="L181" title="1 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
-<span class="fc" id="L182">                output = true;</span>
-<span class="fc" id="L183">                Object value = SerOptional.extractValue(prop, bean);</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">                if (value != null) {</span>
-<span class="fc" id="L185">                    String propName = prop.name();</span>
-<span class="fc" id="L186">                    Class&lt;?&gt; propType = SerOptional.extractType(prop, bean.getClass());</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">                    if (value instanceof Bean) {</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">                        if (settings.getConverter().isConvertible(value.getClass())) {</span>
-<span class="fc" id="L189">                            writeSimple(currentIndent, propName, new StringBuilder(), propType, value);</span>
+    private boolean willWriteBean(Bean bean) {
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
+<span class="pc bpc" id="L219" title="5 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
+<span class="fc" id="L220">                return true;</span>
+            }
+<span class="nc" id="L222">        }</span>
+<span class="fc" id="L223">        return false;</span>
+    }
+
+    private void writeBean(Bean bean, String currentIndent) throws IOException {
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
+<span class="pc bpc" id="L228" title="1 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
+<span class="fc" id="L229">                Object value = SerOptional.extractValue(prop, bean);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">                if (value != null) {</span>
+<span class="fc" id="L231">                    String propName = prop.name();</span>
+<span class="fc" id="L232">                    Class&lt;?&gt; propType = SerOptional.extractType(prop, bean.getClass());</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">                    if (value instanceof Bean) {</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">                        if (settings.getConverter().isConvertible(value.getClass())) {</span>
+<span class="fc" id="L235">                            writeSimple(currentIndent, propName, new StringBuilder(), propType, value);</span>
                         } else {
-<span class="fc" id="L191">                            writeBean(currentIndent, propName, new StringBuilder(), propType, (Bean) value);</span>
+<span class="fc" id="L237">                            writeBean(currentIndent, propName, new StringBuilder(), propType, (Bean) value);</span>
                         }
                     } else {
-<span class="fc" id="L194">                        SerIterator itemIterator = settings.getIteratorFactory().create(value, prop, bean.getClass());</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">                        if (itemIterator != null) {</span>
-<span class="fc" id="L196">                            writeElements(currentIndent, propName, new StringBuilder(), itemIterator);</span>
+<span class="fc" id="L240">                        SerIterator itemIterator = settings.getIteratorFactory().create(value, prop, bean.getClass());</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">                        if (itemIterator != null) {</span>
+<span class="fc" id="L242">                            writeElements(currentIndent, propName, new StringBuilder(), itemIterator);</span>
                         } else {
-<span class="fc" id="L198">                            writeSimple(currentIndent, propName, new StringBuilder(), propType, value);</span>
+<span class="fc" id="L244">                            writeSimple(currentIndent, propName, new StringBuilder(), propType, value);</span>
                         }
                     }
                 }
             }
-<span class="fc" id="L203">        }</span>
-<span class="fc" id="L204">        return output;</span>
-    }
+<span class="fc" id="L249">        }</span>
+<span class="fc" id="L250">    }</span>
 
     //-----------------------------------------------------------------------
-    private void writeBean(final String currentIndent, final String tagName, final StringBuilder attrs, final Class&lt;?&gt; propType, final Bean value) {
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L210">            throw new IllegalArgumentException(&quot;Bean cannot be null&quot;);</span>
+    private void writeBean(String currentIndent, String tagName, StringBuilder attrs, Class&lt;?&gt; propType, Bean value) throws IOException {
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">        if (value == null) {</span>
+<span class="nc" id="L255">            throw new IllegalArgumentException(&quot;Bean cannot be null&quot;);</span>
         }
-<span class="fc" id="L212">        builder.append(currentIndent).append('&lt;').append(tagName).append(attrs);</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (value.getClass() != propType) {</span>
-<span class="fc" id="L214">            String typeStr = SerTypeMapper.encodeType(value.getClass(), settings, basePackage, knownTypes);</span>
-<span class="fc" id="L215">            appendAttribute(builder, TYPE, typeStr);</span>
+<span class="fc" id="L257">        output.append(currentIndent).append('&lt;').append(tagName).append(attrs);</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        if (value.getClass() != propType) {</span>
+<span class="fc" id="L259">            String typeStr = SerTypeMapper.encodeType(value.getClass(), settings, basePackage, knownTypes);</span>
+<span class="fc" id="L260">            appendAttribute(output, TYPE, typeStr);</span>
         }
-<span class="fc" id="L217">        int insertPoint = builder.length();</span>
-<span class="fc" id="L218">        builder.append('&gt;').append(settings.getNewLine());</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (writeBean(value, currentIndent + settings.getIndent())) {</span>
-<span class="fc" id="L220">            builder.append(currentIndent).append('&lt;').append('/').append(tagName).append('&gt;').append(settings.getNewLine());</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">        if (willWriteBean(value)) {</span>
+<span class="fc" id="L263">            output.append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L264">            writeBean(value, currentIndent + settings.getIndent());</span>
+<span class="fc" id="L265">            output.append(currentIndent).append('&lt;').append('/').append(tagName).append('&gt;').append(settings.getNewLine());</span>
         } else {
-<span class="fc" id="L222">            builder.insert(insertPoint, '/');</span>
+<span class="fc" id="L267">            output.append('/').append('&gt;').append(settings.getNewLine());</span>
         }
-<span class="fc" id="L224">    }</span>
+<span class="fc" id="L269">    }</span>
 
     //-----------------------------------------------------------------------
-    private void writeElements(final String currentIndent, final String tagName, final StringBuilder attrs, final SerIterator itemIterator) {
-<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (itemIterator.metaTypeRequired()) {</span>
-<span class="fc" id="L229">            appendAttribute(attrs, METATYPE, itemIterator.metaTypeName());</span>
+    private void writeElements(String currentIndent, String tagName, StringBuilder attrs, SerIterator itemIterator) throws IOException {
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        if (itemIterator.metaTypeRequired()) {</span>
+<span class="fc" id="L274">            appendAttribute(attrs, METATYPE, itemIterator.metaTypeName());</span>
         }
-<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (itemIterator.category() == SerCategory.GRID) {</span>
-<span class="fc" id="L232">            appendAttribute(attrs, ROWS, Integer.toString(itemIterator.dimensionSize(0)));</span>
-<span class="fc" id="L233">            appendAttribute(attrs, COLS, Integer.toString(itemIterator.dimensionSize(1)));</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">        if (itemIterator.category() == SerCategory.GRID) {</span>
+<span class="fc" id="L277">            appendAttribute(attrs, ROWS, Integer.toString(itemIterator.dimensionSize(0)));</span>
+<span class="fc" id="L278">            appendAttribute(attrs, COLS, Integer.toString(itemIterator.dimensionSize(1)));</span>
         }
-<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (itemIterator.size() == 0) {</span>
-<span class="fc" id="L236">            builder.append(currentIndent).append('&lt;').append(tagName).append(attrs).append('/').append('&gt;').append(settings.getNewLine());</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (itemIterator.size() == 0) {</span>
+<span class="fc" id="L281">            output.append(currentIndent).append('&lt;').append(tagName).append(attrs).append('/').append('&gt;').append(settings.getNewLine());</span>
         } else {
-<span class="fc" id="L238">            builder.append(currentIndent).append('&lt;').append(tagName).append(attrs).append('&gt;').append(settings.getNewLine());</span>
-<span class="fc" id="L239">            writeElements(currentIndent + settings.getIndent(), itemIterator);</span>
-<span class="fc" id="L240">            builder.append(currentIndent).append('&lt;').append('/').append(tagName).append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L283">            output.append(currentIndent).append('&lt;').append(tagName).append(attrs).append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L284">            writeElements(currentIndent + settings.getIndent(), itemIterator);</span>
+<span class="fc" id="L285">            output.append(currentIndent).append('&lt;').append('/').append(tagName).append('&gt;').append(settings.getNewLine());</span>
         }
-<span class="fc" id="L242">    }</span>
+<span class="fc" id="L287">    }</span>
 
-    private void writeElements(final String currentIndent, final SerIterator itemIterator) {
+    private void writeElements(String currentIndent, SerIterator itemIterator) throws IOException {
         // find converter once for performance, and before checking if key is bean
-<span class="fc" id="L246">        StringConverter&lt;Object&gt; keyConverter = null;</span>
-<span class="fc" id="L247">        StringConverter&lt;Object&gt; rowConverter = null;</span>
-<span class="fc" id="L248">        StringConverter&lt;Object&gt; columnConverter = null;</span>
-<span class="fc" id="L249">        boolean keyBean = false;</span>
-<span class="fc bfc" id="L250" title="All 4 branches covered.">        if (itemIterator.category() == SerCategory.TABLE || itemIterator.category() == SerCategory.GRID) {</span>
+<span class="fc" id="L291">        StringConverter&lt;Object&gt; keyConverter = null;</span>
+<span class="fc" id="L292">        StringConverter&lt;Object&gt; rowConverter = null;</span>
+<span class="fc" id="L293">        StringConverter&lt;Object&gt; columnConverter = null;</span>
+<span class="fc" id="L294">        boolean keyBean = false;</span>
+<span class="fc bfc" id="L295" title="All 4 branches covered.">        if (itemIterator.category() == SerCategory.TABLE || itemIterator.category() == SerCategory.GRID) {</span>
             try {
-<span class="fc" id="L252">                rowConverter = settings.getConverter().findConverterNoGenerics(itemIterator.keyType());</span>
-<span class="nc" id="L253">            } catch (RuntimeException ex) {</span>
-<span class="nc" id="L254">                throw new IllegalArgumentException(&quot;Unable to write table/grid as declared key type is not a simple type: &quot; + itemIterator.keyType().getName(), ex);</span>
-<span class="fc" id="L255">            }</span>
+<span class="fc" id="L297">                rowConverter = settings.getConverter().findConverterNoGenerics(itemIterator.keyType());</span>
+<span class="nc" id="L298">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L299">                throw new IllegalArgumentException(&quot;Unable to write table/grid as declared key type is not a simple type: &quot; + itemIterator.keyType().getName(), ex);</span>
+<span class="fc" id="L300">            }</span>
             try {
-<span class="fc" id="L257">                columnConverter = settings.getConverter().findConverterNoGenerics(itemIterator.columnType());</span>
-<span class="nc" id="L258">            } catch (RuntimeException ex) {</span>
-<span class="nc" id="L259">                throw new IllegalArgumentException(&quot;Unable to write table/grid as declared column type is not a simple type: &quot; + itemIterator.columnType().getName(), ex);</span>
-<span class="fc" id="L260">            }</span>
-<span class="fc bfc" id="L261" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.MAP) {</span>
+<span class="fc" id="L302">                columnConverter = settings.getConverter().findConverterNoGenerics(itemIterator.columnType());</span>
+<span class="nc" id="L303">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L304">                throw new IllegalArgumentException(&quot;Unable to write table/grid as declared column type is not a simple type: &quot; + itemIterator.columnType().getName(), ex);</span>
+<span class="fc" id="L305">            }</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.MAP) {</span>
             // if key type is known and convertible use short key format, else use full bean format
-<span class="fc bfc" id="L263" title="All 2 branches covered.">            if (settings.getConverter().isConvertible(itemIterator.keyType())) {</span>
-<span class="fc" id="L264">                keyConverter = settings.getConverter().findConverterNoGenerics(itemIterator.keyType());</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">            if (settings.getConverter().isConvertible(itemIterator.keyType())) {</span>
+<span class="fc" id="L309">                keyConverter = settings.getConverter().findConverterNoGenerics(itemIterator.keyType());</span>
             } else {
-<span class="fc" id="L266">                keyBean = true;</span>
+<span class="fc" id="L311">                keyBean = true;</span>
             }
         }
         // output each item
-<span class="fc bfc" id="L270" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
-<span class="fc" id="L271">            itemIterator.next();</span>
-<span class="fc" id="L272">            StringBuilder attr = new StringBuilder(32);</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">            if (keyConverter != null) {</span>
-<span class="fc" id="L274">                String keyStr = convertToString(keyConverter, itemIterator.key(), &quot;map key&quot;);</span>
-<span class="fc" id="L275">                appendAttribute(attr, KEY, keyStr);</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">        while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L316">            itemIterator.next();</span>
+<span class="fc" id="L317">            StringBuilder attr = new StringBuilder(32);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">            if (keyConverter != null) {</span>
+<span class="fc" id="L319">                String keyStr = convertToString(keyConverter, itemIterator.key(), &quot;map key&quot;);</span>
+<span class="fc" id="L320">                appendAttribute(attr, KEY, keyStr);</span>
             }
-<span class="fc bfc" id="L277" title="All 2 branches covered.">            if (rowConverter != null) {</span>
-<span class="fc" id="L278">                String rowStr = convertToString(rowConverter, itemIterator.key(), &quot;table row&quot;);</span>
-<span class="fc" id="L279">                appendAttribute(attr, ROW, rowStr);</span>
-<span class="fc" id="L280">                String colStr = convertToString(columnConverter, itemIterator.column(), &quot;table column&quot;);</span>
-<span class="fc" id="L281">                appendAttribute(attr, COL, colStr);</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">            if (rowConverter != null) {</span>
+<span class="fc" id="L323">                String rowStr = convertToString(rowConverter, itemIterator.key(), &quot;table row&quot;);</span>
+<span class="fc" id="L324">                appendAttribute(attr, ROW, rowStr);</span>
+<span class="fc" id="L325">                String colStr = convertToString(columnConverter, itemIterator.column(), &quot;table column&quot;);</span>
+<span class="fc" id="L326">                appendAttribute(attr, COL, colStr);</span>
             }
-<span class="fc bfc" id="L283" title="All 2 branches covered.">            if (itemIterator.count() != 1) {</span>
-<span class="fc" id="L284">                appendAttribute(attr, COUNT, Integer.toString(itemIterator.count()));</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">            if (itemIterator.count() != 1) {</span>
+<span class="fc" id="L329">                appendAttribute(attr, COUNT, Integer.toString(itemIterator.count()));</span>
             }
-<span class="fc bfc" id="L286" title="All 2 branches covered.">            if (keyBean) {</span>
-<span class="fc" id="L287">                Object key = itemIterator.key();</span>
-<span class="fc" id="L288">                builder.append(currentIndent).append('&lt;').append(ENTRY).append(attr).append('&gt;').append(settings.getNewLine());</span>
-<span class="fc" id="L289">                writeKeyElement(currentIndent + settings.getIndent(), key, itemIterator);</span>
-<span class="fc" id="L290">                writeValueElement(currentIndent + settings.getIndent(), ITEM, new StringBuilder(), itemIterator);</span>
-<span class="fc" id="L291">                builder.append(currentIndent).append('&lt;').append('/').append(ENTRY).append('&gt;').append(settings.getNewLine());</span>
-<span class="fc" id="L292">            } else {</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">                String tagName = itemIterator.category() == SerCategory.MAP ? ENTRY : ITEM;</span>
-<span class="fc" id="L294">                writeValueElement(currentIndent, tagName, attr, itemIterator);</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">            if (keyBean) {</span>
+<span class="fc" id="L332">                Object key = itemIterator.key();</span>
+<span class="fc" id="L333">                output.append(currentIndent).append('&lt;').append(ENTRY).append(attr).append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L334">                writeKeyElement(currentIndent + settings.getIndent(), key, itemIterator);</span>
+<span class="fc" id="L335">                writeValueElement(currentIndent + settings.getIndent(), ITEM, new StringBuilder(), itemIterator);</span>
+<span class="fc" id="L336">                output.append(currentIndent).append('&lt;').append('/').append(ENTRY).append('&gt;').append(settings.getNewLine());</span>
+<span class="fc" id="L337">            } else {</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">                String tagName = itemIterator.category() == SerCategory.MAP ? ENTRY : ITEM;</span>
+<span class="fc" id="L339">                writeValueElement(currentIndent, tagName, attr, itemIterator);</span>
             }
-<span class="fc" id="L296">        }</span>
-<span class="fc" id="L297">    }</span>
+<span class="fc" id="L341">        }</span>
+<span class="fc" id="L342">    }</span>
 
     private String convertToString(StringConverter&lt;Object&gt; converter, Object obj, String description) {
-<span class="fc bfc" id="L300" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L301">            throw new IllegalArgumentException(&quot;Unable to write &quot; + description + &quot; as it cannot be null: &quot; + obj);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L346">            throw new IllegalArgumentException(&quot;Unable to write &quot; + description + &quot; as it cannot be null: &quot; + obj);</span>
         }
-<span class="fc" id="L303">        String str = encodeAttribute(converter.convertToString(obj));</span>
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">        if (str == null) {</span>
-<span class="nc" id="L305">            throw new IllegalArgumentException(&quot;Unable to write &quot; + description + &quot; as it cannot be a null string: &quot; + obj);</span>
+<span class="fc" id="L348">        String str = encodeAttribute(converter.convertToString(obj));</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">        if (str == null) {</span>
+<span class="nc" id="L350">            throw new IllegalArgumentException(&quot;Unable to write &quot; + description + &quot; as it cannot be a null string: &quot; + obj);</span>
         }
-<span class="fc" id="L307">        return str;</span>
+<span class="fc" id="L352">        return str;</span>
     }
 
-    private void writeKeyElement(final String currentIndent, Object key, final SerIterator itemIterator) {
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">        if (key == null) {</span>
-<span class="nc" id="L312">            throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be null: &quot; + key);</span>
+    private void writeKeyElement(String currentIndent, Object key, SerIterator itemIterator) throws IOException {
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">        if (key == null) {</span>
+<span class="nc" id="L357">            throw new IllegalArgumentException(&quot;Unable to write map key as it cannot be null: &quot; + key);</span>
         }
         // if key type is known and convertible use short key format
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (settings.getConverter().isConvertible(itemIterator.keyType())) {</span>
-<span class="nc" id="L316">            writeSimple(currentIndent, ITEM, new StringBuilder(), Object.class, key);</span>
-<span class="fc bfc" id="L317" title="All 2 branches covered.">        } else if (key instanceof Bean) {</span>
-<span class="fc" id="L318">            writeBean(currentIndent, ITEM, new StringBuilder(), itemIterator.keyType(), (Bean) key);</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">        if (settings.getConverter().isConvertible(itemIterator.keyType())) {</span>
+<span class="nc" id="L361">            writeSimple(currentIndent, ITEM, new StringBuilder(), Object.class, key);</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        } else if (key instanceof Bean) {</span>
+<span class="fc" id="L363">            writeBean(currentIndent, ITEM, new StringBuilder(), itemIterator.keyType(), (Bean) key);</span>
         } else {
             // this case covers where the key type is not known, such as an Object meta-property
             try {
-<span class="fc" id="L322">                writeSimple(currentIndent, ITEM, new StringBuilder(), Object.class, key);</span>
-<span class="nc" id="L323">            } catch (RuntimeException ex) {</span>
-<span class="nc" id="L324">                throw new IllegalArgumentException(&quot;Unable to write map as declared key type is neither a bean nor a simple type: &quot; + itemIterator.keyType().getName(), ex);</span>
-<span class="fc" id="L325">            }</span>
+<span class="fc" id="L367">                writeSimple(currentIndent, ITEM, new StringBuilder(), Object.class, key);</span>
+<span class="nc" id="L368">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L369">                throw new IllegalArgumentException(&quot;Unable to write map as declared key type is neither a bean nor a simple type: &quot; + itemIterator.keyType().getName(), ex);</span>
+<span class="fc" id="L370">            }</span>
         }
-<span class="fc" id="L327">    }</span>
+<span class="fc" id="L372">    }</span>
 
-    private void writeValueElement(final String currentIndent, final String tagName, final StringBuilder attrs, final SerIterator itemIterator) {
-<span class="fc" id="L330">        Object value = itemIterator.value();</span>
-<span class="fc" id="L331">        Class&lt;?&gt; valueType = itemIterator.valueType();</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (value == null) {</span>
-<span class="fc" id="L333">            appendAttribute(attrs, NULL, &quot;true&quot;);</span>
-<span class="fc" id="L334">            builder.append(currentIndent).append('&lt;').append(tagName).append(attrs).append(&quot;/&gt;&quot;).append(settings.getNewLine());</span>
-<span class="fc bfc" id="L335" title="All 2 branches covered.">        } else if (value instanceof Bean) {</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">            if (settings.getConverter().isConvertible(value.getClass())) {</span>
-<span class="nc" id="L337">                writeSimple(currentIndent, tagName, attrs, valueType, value);</span>
+    private void writeValueElement(String currentIndent, String tagName, StringBuilder attrs, SerIterator itemIterator) throws IOException {
+<span class="fc" id="L375">        Object value = itemIterator.value();</span>
+<span class="fc" id="L376">        Class&lt;?&gt; valueType = itemIterator.valueType();</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L378">            appendAttribute(attrs, NULL, &quot;true&quot;);</span>
+<span class="fc" id="L379">            output.append(currentIndent).append('&lt;').append(tagName).append(attrs).append(&quot;/&gt;&quot;).append(settings.getNewLine());</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">        } else if (value instanceof Bean) {</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">            if (settings.getConverter().isConvertible(value.getClass())) {</span>
+<span class="nc" id="L382">                writeSimple(currentIndent, tagName, attrs, valueType, value);</span>
             } else {
-<span class="fc" id="L339">                writeBean(currentIndent, tagName, attrs, valueType, (Bean) value);</span>
+<span class="fc" id="L384">                writeBean(currentIndent, tagName, attrs, valueType, (Bean) value);</span>
             }
         } else {
-<span class="fc" id="L342">            SerIterator childIterator = settings.getIteratorFactory().createChild(value, itemIterator);</span>
-<span class="fc bfc" id="L343" title="All 2 branches covered.">            if (childIterator != null) {</span>
-<span class="fc" id="L344">                writeElements(currentIndent, tagName, attrs, childIterator);</span>
+<span class="fc" id="L387">            SerIterator childIterator = settings.getIteratorFactory().createChild(value, itemIterator);</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">            if (childIterator != null) {</span>
+<span class="fc" id="L389">                writeElements(currentIndent, tagName, attrs, childIterator);</span>
             } else {
-<span class="fc" id="L346">                writeSimple(currentIndent, tagName, attrs, valueType, value);</span>
+<span class="fc" id="L391">                writeSimple(currentIndent, tagName, attrs, valueType, value);</span>
             }
         }
-<span class="fc" id="L349">    }</span>
+<span class="fc" id="L394">    }</span>
 
     //-----------------------------------------------------------------------
-    private void writeSimple(final String currentIndent, final String tagName, final StringBuilder attrs, final Class&lt;?&gt; declaredType, final Object value) {
+    private void writeSimple(String currentIndent, String tagName, StringBuilder attrs, Class&lt;?&gt; declaredType, Object value) throws IOException {
         Class&lt;?&gt; effectiveType;
-<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (declaredType == Object.class) {</span>
-<span class="fc" id="L355">            Class&lt;?&gt; realType = value.getClass();</span>
-<span class="fc bfc" id="L356" title="All 2 branches covered.">            if (realType != String.class) {</span>
-<span class="fc" id="L357">                effectiveType = settings.getConverter().findTypedConverter(realType).getEffectiveType();</span>
-<span class="fc" id="L358">                String typeStr = SerTypeMapper.encodeType(effectiveType, settings, basePackage, knownTypes);</span>
-<span class="fc" id="L359">                appendAttribute(attrs, TYPE, typeStr);</span>
-<span class="fc" id="L360">            } else {</span>
-<span class="fc" id="L361">                effectiveType = realType;</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        if (declaredType == Object.class) {</span>
+<span class="fc" id="L400">            Class&lt;?&gt; realType = value.getClass();</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">            if (realType != String.class) {</span>
+<span class="fc" id="L402">                effectiveType = settings.getConverter().findTypedConverter(realType).getEffectiveType();</span>
+<span class="fc" id="L403">                String typeStr = SerTypeMapper.encodeType(effectiveType, settings, basePackage, knownTypes);</span>
+<span class="fc" id="L404">                appendAttribute(attrs, TYPE, typeStr);</span>
+<span class="fc" id="L405">            } else {</span>
+<span class="fc" id="L406">                effectiveType = realType;</span>
             }
-<span class="fc bfc" id="L363" title="All 2 branches covered.">        } else if (settings.getConverter().isConvertible(declaredType) == false) {</span>
-<span class="fc" id="L364">            effectiveType = settings.getConverter().findTypedConverter(value.getClass()).getEffectiveType();</span>
-<span class="fc" id="L365">            String typeStr = SerTypeMapper.encodeType(effectiveType, settings, basePackage, knownTypes);</span>
-<span class="fc" id="L366">            appendAttribute(attrs, TYPE, typeStr);</span>
-<span class="fc" id="L367">        } else {</span>
-<span class="fc" id="L368">            effectiveType = declaredType;</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">        } else if (settings.getConverter().isConvertible(declaredType) == false) {</span>
+<span class="fc" id="L409">            effectiveType = settings.getConverter().findTypedConverter(value.getClass()).getEffectiveType();</span>
+<span class="fc" id="L410">            String typeStr = SerTypeMapper.encodeType(effectiveType, settings, basePackage, knownTypes);</span>
+<span class="fc" id="L411">            appendAttribute(attrs, TYPE, typeStr);</span>
+<span class="fc" id="L412">        } else {</span>
+<span class="fc" id="L413">            effectiveType = declaredType;</span>
         }
         try {
-<span class="fc" id="L371">            String converted = settings.getConverter().convertToString(effectiveType, value);</span>
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">            if (converted == null) {</span>
-<span class="nc" id="L373">                throw new IllegalArgumentException(&quot;Unable to write because converter returned a null string: &quot; + value);</span>
+<span class="fc" id="L416">            String converted = settings.getConverter().convertToString(effectiveType, value);</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">            if (converted == null) {</span>
+<span class="nc" id="L418">                throw new IllegalArgumentException(&quot;Unable to write because converter returned a null string: &quot; + value);</span>
             }
-<span class="fc" id="L375">            builder.append(currentIndent).append('&lt;').append(tagName).append(attrs).append('&gt;');</span>
-<span class="fc" id="L376">            appendEncoded(converted);</span>
-<span class="fc" id="L377">            builder.append('&lt;').append('/').append(tagName).append('&gt;').append(settings.getNewLine());</span>
-<span class="nc" id="L378">        } catch (RuntimeException ex) {</span>
-<span class="nc" id="L379">            throw new IllegalArgumentException(&quot;Unable to convert type &quot; + effectiveType.getName() + &quot; declared as &quot; + declaredType.getName(), ex);</span>
-<span class="fc" id="L380">        }</span>
-<span class="fc" id="L381">    }</span>
+<span class="fc" id="L420">            output.append(currentIndent).append('&lt;').append(tagName).append(attrs).append('&gt;');</span>
+<span class="fc" id="L421">            appendEncoded(converted);</span>
+<span class="fc" id="L422">            output.append('&lt;').append('/').append(tagName).append('&gt;').append(settings.getNewLine());</span>
+<span class="nc" id="L423">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L424">            throw new IllegalArgumentException(&quot;Unable to convert type &quot; + effectiveType.getName() + &quot; declared as &quot; + declaredType.getName(), ex);</span>
+<span class="fc" id="L425">        }</span>
+<span class="fc" id="L426">    }</span>
 
-    private StringBuilder appendEncoded(final String text) {
-<span class="fc bfc" id="L384" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
-<span class="fc" id="L385">            char ch = text.charAt(i);</span>
-<span class="fc bfc" id="L386" title="All 5 branches covered.">            switch (ch) {</span>
+    private void appendEncoded(String text) throws IOException {
+<span class="fc bfc" id="L429" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L430">            char ch = text.charAt(i);</span>
+<span class="fc bfc" id="L431" title="All 5 branches covered.">            switch (ch) {</span>
                 case '&amp;':
-<span class="fc" id="L388">                    builder.append(&quot;&amp;amp;&quot;);</span>
-<span class="fc" id="L389">                    break;</span>
+<span class="fc" id="L433">                    output.append(&quot;&amp;amp;&quot;);</span>
+<span class="fc" id="L434">                    break;</span>
                 case '&lt;':
-<span class="fc" id="L391">                    builder.append(&quot;&amp;lt;&quot;);</span>
-<span class="fc" id="L392">                    break;</span>
+<span class="fc" id="L436">                    output.append(&quot;&amp;lt;&quot;);</span>
+<span class="fc" id="L437">                    break;</span>
                 case '&gt;':
-<span class="fc" id="L394">                    builder.append(&quot;&amp;gt;&quot;);</span>
-<span class="fc" id="L395">                    break;</span>
+<span class="fc" id="L439">                    output.append(&quot;&amp;gt;&quot;);</span>
+<span class="fc" id="L440">                    break;</span>
                 case '\t':
                 case '\n':
                 case '\r':
-<span class="fc" id="L399">                    builder.append(ch);</span>
-<span class="fc" id="L400">                    break;</span>
+<span class="fc" id="L444">                    output.append(ch);</span>
+<span class="fc" id="L445">                    break;</span>
                 default:
-<span class="pc bpc" id="L402" title="1 of 2 branches missed.">                    if ((int) ch &lt; 32) {</span>
-<span class="nc" id="L403">                        throw new IllegalArgumentException(&quot;Invalid character for XML: &quot; + ((int) ch));</span>
+<span class="pc bpc" id="L447" title="1 of 2 branches missed.">                    if ((int) ch &lt; 32) {</span>
+<span class="nc" id="L448">                        throw new IllegalArgumentException(&quot;Invalid character for XML: &quot; + ((int) ch));</span>
                     }
-<span class="fc" id="L405">                    builder.append(ch);</span>
+<span class="fc" id="L450">                    output.append(ch);</span>
                     break;
             }
         }
-<span class="fc" id="L409">        return builder;</span>
-    }
+<span class="fc" id="L454">    }</span>
 
     //-----------------------------------------------------------------------
-    private StringBuilder appendAttribute(final StringBuilder buf, final String attrName, final String encodedValue) {
-<span class="fc" id="L414">        return buf.append(' ').append(attrName).append('=').append('\&quot;').append(encodedValue).append('\&quot;');</span>
-    }
+    private void appendAttribute(Appendable buf, String attrName, String encodedValue) throws IOException {
+<span class="fc" id="L458">        buf.append(' ').append(attrName).append('=').append('\&quot;').append(encodedValue).append('\&quot;');</span>
+<span class="fc" id="L459">    }</span>
 
-    private String encodeAttribute(final String text) {
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">        if (text == null) {</span>
-<span class="nc" id="L419">            return null;</span>
+    private String encodeAttribute(String text) {
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">        if (text == null) {</span>
+<span class="nc" id="L463">            return null;</span>
         }
-<span class="fc" id="L421">        return appendEncodedAttribute(new StringBuilder(text.length() + 16), text).toString();</span>
+<span class="fc" id="L465">        return appendEncodedAttribute(new StringBuilder(text.length() + 16), text).toString();</span>
     }
 
-    private StringBuilder appendEncodedAttribute(final StringBuilder builder, final String text) {
-<span class="fc bfc" id="L425" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
-<span class="fc" id="L426">            char ch = text.charAt(i);</span>
-<span class="pc bpc" id="L427" title="8 of 9 branches missed.">            switch (ch) {</span>
+    private StringBuilder appendEncodedAttribute(StringBuilder builder, String text) {
+<span class="fc bfc" id="L469" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L470">            char ch = text.charAt(i);</span>
+<span class="pc bpc" id="L471" title="8 of 9 branches missed.">            switch (ch) {</span>
                 case '&amp;':
-<span class="nc" id="L429">                    builder.append(&quot;&amp;amp;&quot;);</span>
-<span class="nc" id="L430">                    break;</span>
+<span class="nc" id="L473">                    builder.append(&quot;&amp;amp;&quot;);</span>
+<span class="nc" id="L474">                    break;</span>
                 case '&lt;':
-<span class="nc" id="L432">                    builder.append(&quot;&amp;lt;&quot;);</span>
-<span class="nc" id="L433">                    break;</span>
+<span class="nc" id="L476">                    builder.append(&quot;&amp;lt;&quot;);</span>
+<span class="nc" id="L477">                    break;</span>
                 case '&gt;':
-<span class="nc" id="L435">                    builder.append(&quot;&amp;gt;&quot;);</span>
-<span class="nc" id="L436">                    break;</span>
+<span class="nc" id="L479">                    builder.append(&quot;&amp;gt;&quot;);</span>
+<span class="nc" id="L480">                    break;</span>
                 case '&quot;':
-<span class="nc" id="L438">                    builder.append(&quot;&amp;quot;&quot;);</span>
-<span class="nc" id="L439">                    break;</span>
+<span class="nc" id="L482">                    builder.append(&quot;&amp;quot;&quot;);</span>
+<span class="nc" id="L483">                    break;</span>
                 case '\'':
-<span class="nc" id="L441">                    builder.append(&quot;&amp;apos;&quot;);</span>
-<span class="nc" id="L442">                    break;</span>
+<span class="nc" id="L485">                    builder.append(&quot;&amp;apos;&quot;);</span>
+<span class="nc" id="L486">                    break;</span>
                 case '\t':
-<span class="nc" id="L444">                    builder.append(&quot;&amp;#09;&quot;);</span>
-<span class="nc" id="L445">                    break;</span>
+<span class="nc" id="L488">                    builder.append(&quot;&amp;#09;&quot;);</span>
+<span class="nc" id="L489">                    break;</span>
                 case '\n':
-<span class="nc" id="L447">                    builder.append(&quot;&amp;#0A;&quot;);</span>
-<span class="nc" id="L448">                    break;</span>
+<span class="nc" id="L491">                    builder.append(&quot;&amp;#0A;&quot;);</span>
+<span class="nc" id="L492">                    break;</span>
                 case '\r':
-<span class="nc" id="L450">                    builder.append(&quot;&amp;#0D;&quot;);</span>
-<span class="nc" id="L451">                    break;</span>
+<span class="nc" id="L494">                    builder.append(&quot;&amp;#0D;&quot;);</span>
+<span class="nc" id="L495">                    break;</span>
                 default:
-<span class="pc bpc" id="L453" title="1 of 2 branches missed.">                    if ((int) ch &lt; 32) {</span>
-<span class="nc" id="L454">                        throw new IllegalArgumentException(&quot;Invalid character for XML: &quot; + ((int) ch));</span>
+<span class="pc bpc" id="L497" title="1 of 2 branches missed.">                    if ((int) ch &lt; 32) {</span>
+<span class="nc" id="L498">                        throw new IllegalArgumentException(&quot;Invalid character for XML: &quot; + ((int) ch));</span>
                     }
-<span class="fc" id="L456">                    builder.append(ch);</span>
+<span class="fc" id="L500">                    builder.append(ch);</span>
                     break;
             }
         }
-<span class="fc" id="L460">        return builder;</span>
+<span class="fc" id="L504">        return builder;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

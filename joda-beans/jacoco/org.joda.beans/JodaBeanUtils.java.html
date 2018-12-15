@@ -1077,49 +1077,44 @@ public final class JodaBeanUtils {
         Object clone(Object value) {
 <span class="pc bpc" id="L1078" title="1 of 2 branches missed.">            if (value == null) {</span>
 <span class="nc" id="L1079">                return value;</span>
-<span class="pc bpc" id="L1080" title="5 of 10 branches missed.">            } else if (value instanceof ImmutableMap ||</span>
+<span class="pc bpc" id="L1080" title="4 of 8 branches missed.">            } else if (value instanceof ImmutableMap ||</span>
                     value instanceof ImmutableCollection ||
-                    value instanceof ImmutableMap ||
                     value instanceof ImmutableMultimap ||
                     value instanceof ImmutableTable) {
-<span class="nc" id="L1085">                return value;</span>
-<span class="pc bpc" id="L1086" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
-<span class="nc" id="L1087">                return cloneAlways((Bean) value);</span>
-<span class="pc bpc" id="L1088" title="1 of 2 branches missed.">            } else if (value instanceof SortedMultiset) {</span>
-<span class="nc" id="L1089">                SortedMultiset set = (SortedMultiset) value;</span>
-<span class="nc" id="L1090">                return cloneIterable(set, TreeMultiset.create(set.comparator()));</span>
-<span class="pc bpc" id="L1091" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
-<span class="nc" id="L1092">                return cloneIterable((Multiset) value, LinkedHashMultiset.create());</span>
-<span class="pc bpc" id="L1093" title="1 of 2 branches missed.">            } else if (value instanceof SetMultimap) {</span>
-<span class="nc" id="L1094">                return cloneMultimap((Multimap) value, LinkedHashMultimap.create());</span>
-<span class="pc bpc" id="L1095" title="1 of 2 branches missed.">            } else if (value instanceof ListMultimap) {</span>
-<span class="nc" id="L1096">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
-<span class="pc bpc" id="L1097" title="1 of 2 branches missed.">            } else if (value instanceof Multimap) {</span>
-<span class="nc" id="L1098">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
-<span class="pc bpc" id="L1099" title="1 of 2 branches missed.">            } else if (value instanceof BiMap) {</span>
-<span class="nc" id="L1100">                return cloneMap((BiMap) value, HashBiMap.create());</span>
-<span class="pc bpc" id="L1101" title="1 of 2 branches missed.">            } else if (value instanceof Table) {</span>
-<span class="nc" id="L1102">                return cloneTable((Table) value, HashBasedTable.create());</span>
+<span class="nc" id="L1084">                return value;</span>
+<span class="pc bpc" id="L1085" title="1 of 2 branches missed.">            } else if (value instanceof SortedMultiset) {</span>
+<span class="nc" id="L1086">                SortedMultiset set = (SortedMultiset) value;</span>
+<span class="nc" id="L1087">                return cloneIterable(set, TreeMultiset.create(set.comparator()));</span>
+<span class="pc bpc" id="L1088" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
+<span class="nc" id="L1089">                return cloneIterable((Multiset) value, LinkedHashMultiset.create());</span>
+<span class="pc bpc" id="L1090" title="1 of 2 branches missed.">            } else if (value instanceof SetMultimap) {</span>
+<span class="nc" id="L1091">                return cloneMultimap((Multimap) value, LinkedHashMultimap.create());</span>
+<span class="pc bpc" id="L1092" title="2 of 4 branches missed.">            } else if (value instanceof ListMultimap || value instanceof Multimap) {</span>
+<span class="nc" id="L1093">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
+<span class="pc bpc" id="L1094" title="1 of 2 branches missed.">            } else if (value instanceof BiMap) {</span>
+<span class="nc" id="L1095">                return cloneMap((BiMap) value, HashBiMap.create());</span>
+<span class="pc bpc" id="L1096" title="1 of 2 branches missed.">            } else if (value instanceof Table) {</span>
+<span class="nc" id="L1097">                return cloneTable((Table) value, HashBasedTable.create());</span>
             }
-<span class="fc" id="L1104">            return super.clone(value);</span>
+<span class="fc" id="L1099">            return super.clone(value);</span>
         }
 
         Object cloneMultimap(Multimap original, Multimap cloned) {
-<span class="nc bnc" id="L1108" title="All 2 branches missed.">            for (Object key : original.keySet()) {</span>
-<span class="nc" id="L1109">                Collection values = original.get(key);</span>
-<span class="nc bnc" id="L1110" title="All 2 branches missed.">                for (Object value : values) {</span>
-<span class="nc" id="L1111">                    cloned.put(clone(key), clone(value));</span>
-<span class="nc" id="L1112">                }</span>
-<span class="nc" id="L1113">            }</span>
-<span class="nc" id="L1114">            return cloned;</span>
+<span class="nc bnc" id="L1103" title="All 2 branches missed.">            for (Object key : original.keySet()) {</span>
+<span class="nc" id="L1104">                Collection values = original.get(key);</span>
+<span class="nc bnc" id="L1105" title="All 2 branches missed.">                for (Object value : values) {</span>
+<span class="nc" id="L1106">                    cloned.put(clone(key), clone(value));</span>
+<span class="nc" id="L1107">                }</span>
+<span class="nc" id="L1108">            }</span>
+<span class="nc" id="L1109">            return cloned;</span>
         }
 
         Object cloneTable(Table original, Table cloned) {
-<span class="nc bnc" id="L1118" title="All 2 branches missed.">            for (Object item : original.cellSet()) {</span>
-<span class="nc" id="L1119">                Table.Cell cell = (Table.Cell) item;</span>
-<span class="nc" id="L1120">                cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));</span>
-<span class="nc" id="L1121">            }</span>
-<span class="nc" id="L1122">            return cloned;</span>
+<span class="nc bnc" id="L1113" title="All 2 branches missed.">            for (Object item : original.cellSet()) {</span>
+<span class="nc" id="L1114">                Table.Cell cell = (Table.Cell) item;</span>
+<span class="nc" id="L1115">                cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));</span>
+<span class="nc" id="L1116">            }</span>
+<span class="nc" id="L1117">            return cloned;</span>
         }
     }
 
@@ -1129,33 +1124,33 @@ public final class JodaBeanUtils {
      */
     @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
     private static class CollectCloner extends GuavaCloner {
-<span class="fc" id="L1132">        CollectCloner() {</span>
-<span class="fc" id="L1133">        }</span>
+<span class="fc" id="L1127">        CollectCloner() {</span>
+<span class="fc" id="L1128">        }</span>
 
         @Override
         Object clone(Object value) {
-<span class="fc bfc" id="L1137" title="All 2 branches covered.">            if (value == null) {</span>
-<span class="fc" id="L1138">                return value;</span>
-<span class="pc bpc" id="L1139" title="1 of 2 branches missed.">            } else if (value instanceof ImmutableGrid) {</span>
-<span class="nc" id="L1140">                return value;</span>
-<span class="pc bpc" id="L1141" title="1 of 2 branches missed.">            } else if (value instanceof DenseGrid) {</span>
-<span class="nc" id="L1142">                Grid grid = (Grid) value;</span>
-<span class="nc" id="L1143">                return cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));</span>
-<span class="pc bpc" id="L1144" title="1 of 2 branches missed.">            } else if (value instanceof Grid) {</span>
-<span class="nc" id="L1145">                Grid grid = (Grid) value;</span>
-<span class="nc" id="L1146">                return cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));</span>
+<span class="fc bfc" id="L1132" title="All 2 branches covered.">            if (value == null) {</span>
+<span class="fc" id="L1133">                return value;</span>
+<span class="pc bpc" id="L1134" title="1 of 2 branches missed.">            } else if (value instanceof ImmutableGrid) {</span>
+<span class="nc" id="L1135">                return value;</span>
+<span class="pc bpc" id="L1136" title="1 of 2 branches missed.">            } else if (value instanceof DenseGrid) {</span>
+<span class="nc" id="L1137">                Grid grid = (Grid) value;</span>
+<span class="nc" id="L1138">                return cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));</span>
+<span class="pc bpc" id="L1139" title="1 of 2 branches missed.">            } else if (value instanceof Grid) {</span>
+<span class="nc" id="L1140">                Grid grid = (Grid) value;</span>
+<span class="nc" id="L1141">                return cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));</span>
             }
-<span class="fc" id="L1148">            return super.clone(value);</span>
+<span class="fc" id="L1143">            return super.clone(value);</span>
         }
 
         Object cloneGrid(Grid original, Grid cloned) {
-<span class="nc bnc" id="L1152" title="All 2 branches missed.">            for (Object item : original.cells()) {</span>
-<span class="nc" id="L1153">                Grid.Cell cell = (Grid.Cell) item;</span>
-<span class="nc" id="L1154">                cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));</span>
-<span class="nc" id="L1155">            }</span>
-<span class="nc" id="L1156">            return cloned;</span>
+<span class="nc bnc" id="L1147" title="All 2 branches missed.">            for (Object item : original.cells()) {</span>
+<span class="nc" id="L1148">                Grid.Cell cell = (Grid.Cell) item;</span>
+<span class="nc" id="L1149">                cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));</span>
+<span class="nc" id="L1150">            }</span>
+<span class="nc" id="L1151">            return cloned;</span>
         }
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
