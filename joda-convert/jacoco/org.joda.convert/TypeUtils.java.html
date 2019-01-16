@@ -86,11 +86,11 @@ final class TypeUtils {
         }
 <span class="fc" id="L87">        int first = str.indexOf('&lt;');</span>
 <span class="fc bfc" id="L88" title="All 2 branches covered.">        if (first &lt; 0) {</span>
-<span class="fc" id="L89">            return RenameHandler.INSTANCE.loadType(str);</span>
+<span class="fc" id="L89">            return StringConvert.loadType(str);</span>
         }
 <span class="fc" id="L91">        int last = str.lastIndexOf('&gt;');</span>
 <span class="fc" id="L92">        String baseStr = str.substring(0, first);</span>
-<span class="fc" id="L93">        Class&lt;?&gt; base = RenameHandler.INSTANCE.loadType(baseStr);</span>
+<span class="fc" id="L93">        Class&lt;?&gt; base = StringConvert.loadType(baseStr);</span>
 <span class="fc" id="L94">        String argsStr = str.substring(first + 1, last);</span>
 <span class="fc" id="L95">        List&lt;String&gt; splitArgs = split(argsStr);</span>
 <span class="fc" id="L96">        List&lt;Type&gt; types = new ArrayList&lt;Type&gt;();</span>
@@ -106,11 +106,11 @@ final class TypeUtils {
 <span class="fc" id="L106">                argType = wildExtendsType(Object.class);</span>
 <span class="fc bfc" id="L107" title="All 2 branches covered.">            } else if (splitArg.endsWith(&quot;[]&quot;)) {</span>
 <span class="fc" id="L108">                String componentStr = splitArg.substring(0, splitArg.length() - 2);</span>
-<span class="fc" id="L109">                Class&lt;?&gt; componentCls = RenameHandler.INSTANCE.loadType(componentStr);</span>
+<span class="fc" id="L109">                Class&lt;?&gt; componentCls = StringConvert.loadType(componentStr);</span>
 <span class="fc" id="L110">                argType = Array.newInstance(componentCls, 0).getClass();</span>
 <span class="pc bpc" id="L111" title="1 of 4 branches missed.">            } else if (splitArg.startsWith(&quot;[L&quot;) &amp;&amp; splitArg.endsWith(&quot;;&quot;)) {</span>
 <span class="fc" id="L112">                String componentStr = splitArg.substring(2, splitArg.length() - 1);</span>
-<span class="fc" id="L113">                Class&lt;?&gt; componentCls = RenameHandler.INSTANCE.loadType(componentStr);</span>
+<span class="fc" id="L113">                Class&lt;?&gt; componentCls = StringConvert.loadType(componentStr);</span>
 <span class="fc" id="L114">                argType = Array.newInstance(componentCls, 0).getClass();</span>
 <span class="fc" id="L115">            } else {</span>
 <span class="fc" id="L116">                argType = doParse(splitArg);</span>
