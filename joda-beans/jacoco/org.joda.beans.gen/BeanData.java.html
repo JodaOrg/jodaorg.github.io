@@ -327,8 +327,16 @@ class BeanData {
      * Is the builder generated
      * @return true if generated
      */
+    public boolean isBuilderGenerated() {
+<span class="nc bnc" id="L331" title="All 8 branches missed.">        return (isImmutable() &amp;&amp; isEffectiveBuilderScopeVisible()) || (isMutable() &amp;&amp; isBuilderScopeVisible());</span>
+    }
+
+    /**
+     * Is the builder generated
+     * @return true if generated
+     */
     public boolean isSkipBuilderGeneration() {
-<span class="nc bnc" id="L331" title="All 6 branches missed.">        return (isMutable() &amp;&amp; isBuilderScopeVisible() == false) || isBeanStyleLight();</span>
+<span class="nc bnc" id="L339" title="All 6 branches missed.">        return (isMutable() &amp;&amp; isBuilderScopeVisible() == false) || isBeanStyleLight();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -337,7 +345,7 @@ class BeanData {
      * @return the factory name
      */
     public boolean isFactoryRequired() {
-<span class="nc bnc" id="L340" title="All 2 branches missed.">        return factoryName.length() &gt; 0;</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">        return factoryName.length() &gt; 0;</span>
     }
 
     /**
@@ -345,7 +353,7 @@ class BeanData {
      * @return the factory name
      */
     public String getFactoryName() {
-<span class="nc" id="L348">        return factoryName;</span>
+<span class="nc" id="L356">        return factoryName;</span>
     }
 
     /**
@@ -353,8 +361,8 @@ class BeanData {
      * @param name  the factory name
      */
     public void setFactoryName(String name) {
-<span class="nc" id="L356">        factoryName = name;</span>
-<span class="nc" id="L357">    }</span>
+<span class="nc" id="L364">        factoryName = name;</span>
+<span class="nc" id="L365">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -362,7 +370,7 @@ class BeanData {
      * @return the flag
      */
     public boolean isCacheHashCode() {
-<span class="nc" id="L365">        return cacheHashCode;</span>
+<span class="nc" id="L373">        return cacheHashCode;</span>
     }
 
     /**
@@ -370,8 +378,8 @@ class BeanData {
      * @param cacheHashCode  the flag
      */
     public void setCacheHashCode(boolean cacheHashCode) {
-<span class="nc" id="L373">        this.cacheHashCode = cacheHashCode;</span>
-<span class="nc" id="L374">    }</span>
+<span class="nc" id="L381">        this.cacheHashCode = cacheHashCode;</span>
+<span class="nc" id="L382">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -379,12 +387,12 @@ class BeanData {
      * @return the flag
      */
     public boolean isPropertyChangeSupport() {
-<span class="nc bnc" id="L382" title="All 2 branches missed.">        for (PropertyData prop : properties) {</span>
-<span class="nc bnc" id="L383" title="All 2 branches missed.">            if (prop.isBound()) {</span>
-<span class="nc" id="L384">                return true;</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">        for (PropertyData prop : properties) {</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">            if (prop.isBound()) {</span>
+<span class="nc" id="L392">                return true;</span>
             }
-<span class="nc" id="L386">        }</span>
-<span class="nc" id="L387">        return false;</span>
+<span class="nc" id="L394">        }</span>
+<span class="nc" id="L395">        return false;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -393,7 +401,7 @@ class BeanData {
      * @return the flag
      */
     public boolean isImmutable() {
-<span class="nc" id="L396">        return immutable;</span>
+<span class="nc" id="L404">        return immutable;</span>
     }
 
     /**
@@ -401,7 +409,7 @@ class BeanData {
      * @return the flag
      */
     public boolean isMutable() {
-<span class="nc bnc" id="L404" title="All 2 branches missed.">        return !immutable;</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">        return !immutable;</span>
     }
 
     /**
@@ -409,15 +417,15 @@ class BeanData {
      * @param immutable  the flag
      */
     public void setImmutable(boolean immutable) {
-<span class="nc" id="L412">        this.immutable = immutable;</span>
-<span class="nc" id="L413">    }</span>
+<span class="nc" id="L420">        this.immutable = immutable;</span>
+<span class="nc" id="L421">    }</span>
 
     /**
      * Checks whether the bean can be constructed.
      * @return the flag
      */
     public boolean isConstructable() {
-<span class="nc" id="L420">        return constructable;</span>
+<span class="nc" id="L428">        return constructable;</span>
     }
 
     /**
@@ -425,15 +433,15 @@ class BeanData {
      * @param constructable  the flag
      */
     public void setConstructable(boolean constructable) {
-<span class="nc" id="L428">        this.constructable = constructable;</span>
-<span class="nc" id="L429">    }</span>
+<span class="nc" id="L436">        this.constructable = constructable;</span>
+<span class="nc" id="L437">    }</span>
 
     /**
      * Gets whether the bean has a manual constructor to use.
      * @return the flag, zero for none, one for builder based, two for argument based
      */
     public int getImmutableConstructor() {
-<span class="nc" id="L436">        return immutableConstructor;</span>
+<span class="nc" id="L444">        return immutableConstructor;</span>
     }
 
     /**
@@ -441,15 +449,15 @@ class BeanData {
      * @param manualConstructor  the flag
      */
     public void setImmutableConstructor(int manualConstructor) {
-<span class="nc" id="L444">        this.immutableConstructor = manualConstructor;</span>
-<span class="nc" id="L445">    }</span>
+<span class="nc" id="L452">        this.immutableConstructor = manualConstructor;</span>
+<span class="nc" id="L453">    }</span>
 
     /**
      * Gets whether the bean has a validator.
      * @return the method name
      */
     public String getImmutableValidator() {
-<span class="nc" id="L452">        return immutableValidator;</span>
+<span class="nc" id="L460">        return immutableValidator;</span>
     }
 
     /**
@@ -457,15 +465,15 @@ class BeanData {
      * @param immutableValidator  the method name
      */
     public void setImmutableValidator(String immutableValidator) {
-<span class="nc" id="L460">        this.immutableValidator = immutableValidator;</span>
-<span class="nc" id="L461">    }</span>
+<span class="nc" id="L468">        this.immutableValidator = immutableValidator;</span>
+<span class="nc" id="L469">    }</span>
 
     /**
      * Gets whether the bean has an apply defaults method.
      * @return the method name
      */
     public String getImmutableDefaults() {
-<span class="nc" id="L468">        return immutableDefaults;</span>
+<span class="nc" id="L476">        return immutableDefaults;</span>
     }
 
     /**
@@ -473,15 +481,15 @@ class BeanData {
      * @param immutableDefaults  the method name
      */
     public void setImmutableDefaults(String immutableDefaults) {
-<span class="nc" id="L476">        this.immutableDefaults = immutableDefaults;</span>
-<span class="nc" id="L477">    }</span>
+<span class="nc" id="L484">        this.immutableDefaults = immutableDefaults;</span>
+<span class="nc" id="L485">    }</span>
 
     /**
      * Gets whether the bean has a pre-build method.
      * @return the method name
      */
     public String getImmutablePreBuild() {
-<span class="nc" id="L484">        return immutablePreBuild;</span>
+<span class="nc" id="L492">        return immutablePreBuild;</span>
     }
 
     /**
@@ -489,15 +497,15 @@ class BeanData {
      * @param immutablePreBuild  the method name
      */
     public void setImmutablePreBuild(String immutablePreBuild) {
-<span class="nc" id="L492">        this.immutablePreBuild = immutablePreBuild;</span>
-<span class="nc" id="L493">    }</span>
+<span class="nc" id="L500">        this.immutablePreBuild = immutablePreBuild;</span>
+<span class="nc" id="L501">    }</span>
 
     /**
      * Gets the constructor style to generate.
      * @return the flag, zero for none, one for builder based, two for argument based
      */
     public int getConstructorStyle() {
-<span class="nc" id="L500">        return constructorStyle;</span>
+<span class="nc" id="L508">        return constructorStyle;</span>
     }
 
     /**
@@ -505,15 +513,15 @@ class BeanData {
      * @param constructorStyle  the constructor style
      */
     public void setConstructorStyle(int constructorStyle) {
-<span class="nc" id="L508">        this.constructorStyle = constructorStyle;</span>
-<span class="nc" id="L509">    }</span>
+<span class="nc" id="L516">        this.constructorStyle = constructorStyle;</span>
+<span class="nc" id="L517">    }</span>
 
     /**
      * Gets the constructor scope to generate.
      * @return the scope
      */
     public String getConstructorScope() {
-<span class="nc" id="L516">        return constructorScope;</span>
+<span class="nc" id="L524">        return constructorScope;</span>
     }
 
     /**
@@ -521,20 +529,20 @@ class BeanData {
      * @param constructorScope  the constructor scope
      */
     public void setConstructorScope(String constructorScope) {
-<span class="nc" id="L524">        this.constructorScope = constructorScope;</span>
-<span class="nc" id="L525">    }</span>
+<span class="nc" id="L532">        this.constructorScope = constructorScope;</span>
+<span class="nc" id="L533">    }</span>
 
     /**
      * Is the constructor scope valid.
      * @return true if valid
      */
     public boolean isConstructorScopeValid() {
-<span class="nc bnc" id="L532" title="All 2 branches missed.">        return &quot;smart&quot;.equals(constructorScope) ||</span>
-<span class="nc bnc" id="L533" title="All 2 branches missed.">                &quot;private&quot;.equals(constructorScope) ||</span>
-<span class="nc bnc" id="L534" title="All 2 branches missed.">                &quot;package&quot;.equals(constructorScope) ||</span>
-<span class="nc bnc" id="L535" title="All 2 branches missed.">                &quot;protected&quot;.equals(constructorScope) ||</span>
-<span class="nc bnc" id="L536" title="All 2 branches missed.">                &quot;public&quot;.equals(constructorScope) ||</span>
-<span class="nc bnc" id="L537" title="All 2 branches missed.">                &quot;public@ConstructorProperties&quot;.equals(constructorScope);</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">        return &quot;smart&quot;.equals(constructorScope) ||</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">                &quot;private&quot;.equals(constructorScope) ||</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">                &quot;package&quot;.equals(constructorScope) ||</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">                &quot;protected&quot;.equals(constructorScope) ||</span>
+<span class="nc bnc" id="L544" title="All 2 branches missed.">                &quot;public&quot;.equals(constructorScope) ||</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">                &quot;public@ConstructorProperties&quot;.equals(constructorScope);</span>
     }
 
     /**
@@ -542,14 +550,14 @@ class BeanData {
      * @return the scope
      */
     public String getEffectiveConstructorScope() {
-<span class="nc bnc" id="L545" title="All 2 branches missed.">        if (&quot;smart&quot;.equals(constructorScope)) {</span>
-<span class="nc bnc" id="L546" title="All 2 branches missed.">            return isTypeFinal() ? &quot;private &quot; : &quot;protected &quot;;</span>
-<span class="nc bnc" id="L547" title="All 2 branches missed.">        } else if (&quot;package&quot;.equals(constructorScope)) {</span>
-<span class="nc" id="L548">            return &quot;&quot;;</span>
-<span class="nc bnc" id="L549" title="All 2 branches missed.">        } else if (&quot;public@ConstructorProperties&quot;.equals(constructorScope)) {</span>
-<span class="nc" id="L550">            return &quot;public &quot;;</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">        if (&quot;smart&quot;.equals(constructorScope)) {</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">            return isTypeFinal() ? &quot;private &quot; : &quot;protected &quot;;</span>
+<span class="nc bnc" id="L555" title="All 2 branches missed.">        } else if (&quot;package&quot;.equals(constructorScope)) {</span>
+<span class="nc" id="L556">            return &quot;&quot;;</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">        } else if (&quot;public@ConstructorProperties&quot;.equals(constructorScope)) {</span>
+<span class="nc" id="L558">            return &quot;public &quot;;</span>
         }
-<span class="nc" id="L552">        return constructorScope + &quot; &quot;;</span>
+<span class="nc" id="L560">        return constructorScope + &quot; &quot;;</span>
     }
 
     /**
@@ -557,7 +565,7 @@ class BeanData {
      * @return true if the annotation is needed
      */
     public boolean isConstructorPropertiesAnnotation() {
-<span class="nc" id="L560">        return &quot;public@ConstructorProperties&quot;.equals(constructorScope);</span>
+<span class="nc" id="L568">        return &quot;public@ConstructorProperties&quot;.equals(constructorScope);</span>
     }
 
     /**
@@ -565,7 +573,7 @@ class BeanData {
      * @return the flag
      */
     public boolean isSerializable() {
-<span class="nc" id="L568">        return serializable;</span>
+<span class="nc" id="L576">        return serializable;</span>
     }
 
     /**
@@ -573,15 +581,15 @@ class BeanData {
      * @param serializable  the flag
      */
     public void setSerializable(boolean serializable) {
-<span class="nc" id="L576">        this.serializable = serializable;</span>
-<span class="nc" id="L577">    }</span>
+<span class="nc" id="L584">        this.serializable = serializable;</span>
+<span class="nc" id="L585">    }</span>
 
     /**
      * Checks whether the bean has a manual serialization id.
      * @return the flag
      */
     public boolean isManualSerializationId() {
-<span class="nc" id="L584">        return manualSerVersionId;</span>
+<span class="nc" id="L592">        return manualSerVersionId;</span>
     }
 
     /**
@@ -589,15 +597,15 @@ class BeanData {
      * @param manualSerVersionId  the flag
      */
     public void setManualSerializationId(boolean manualSerVersionId) {
-<span class="nc" id="L592">        this.manualSerVersionId = manualSerVersionId;</span>
-<span class="nc" id="L593">    }</span>
+<span class="nc" id="L600">        this.manualSerVersionId = manualSerVersionId;</span>
+<span class="nc" id="L601">    }</span>
 
     /**
      * Checks if the clone is manual.
      * @return true if manual
      */
     public boolean isManualClone() {
-<span class="nc" id="L600">        return manualClone;</span>
+<span class="nc" id="L608">        return manualClone;</span>
     }
 
     /**
@@ -605,15 +613,15 @@ class BeanData {
      * @param manualClone  true if manual
      */
     public void setManualClone(boolean manualClone) {
-<span class="nc" id="L608">        this.manualClone = manualClone;</span>
-<span class="nc" id="L609">    }</span>
+<span class="nc" id="L616">        this.manualClone = manualClone;</span>
+<span class="nc" id="L617">    }</span>
 
     /**
      * Checks if the equals/hashCode is manual.
      * @return true if manual
      */
     public boolean isManualEqualsHashCode() {
-<span class="nc" id="L616">        return manualEqualsHashCode;</span>
+<span class="nc" id="L624">        return manualEqualsHashCode;</span>
     }
 
     /**
@@ -621,15 +629,15 @@ class BeanData {
      * @param manualEqualsHashCode  true if manual
      */
     public void setManualEqualsHashCode(boolean manualEqualsHashCode) {
-<span class="nc" id="L624">        this.manualEqualsHashCode = manualEqualsHashCode;</span>
-<span class="nc" id="L625">    }</span>
+<span class="nc" id="L632">        this.manualEqualsHashCode = manualEqualsHashCode;</span>
+<span class="nc" id="L633">    }</span>
 
     /**
      * Checks if the toString is manual.
      * @return true if manual
      */
     public boolean isManualToStringCode() {
-<span class="nc" id="L632">        return manualToStringCode;</span>
+<span class="nc" id="L640">        return manualToStringCode;</span>
     }
 
     /**
@@ -637,15 +645,15 @@ class BeanData {
      * @param manualToStringCode  true if manual
      */
     public void setManualToStringCode(boolean manualToStringCode) {
-<span class="nc" id="L640">        this.manualToStringCode = manualToStringCode;</span>
-<span class="nc" id="L641">    }</span>
+<span class="nc" id="L648">        this.manualToStringCode = manualToStringCode;</span>
+<span class="nc" id="L649">    }</span>
 
     /**
      * Gets the clone style.
      * @return the clone style
      */
     public String getCloneStyle() {
-<span class="nc" id="L648">        return cloneStyle;</span>
+<span class="nc" id="L656">        return cloneStyle;</span>
     }
 
     /**
@@ -653,17 +661,17 @@ class BeanData {
      * @param cloneStyle  the clone style
      */
     public void setCloneStyle(String cloneStyle) {
-<span class="nc" id="L656">        this.cloneStyle = cloneStyle;</span>
-<span class="nc" id="L657">    }</span>
+<span class="nc" id="L664">        this.cloneStyle = cloneStyle;</span>
+<span class="nc" id="L665">    }</span>
 
     /**
      * Is the clone style valid.
      * @return true if valid
      */
     public boolean isCloneStyleValid() {
-<span class="nc bnc" id="L664" title="All 2 branches missed.">        return &quot;smart&quot;.equals(cloneStyle) ||</span>
-<span class="nc bnc" id="L665" title="All 2 branches missed.">                &quot;omit&quot;.equals(cloneStyle) ||</span>
-<span class="nc bnc" id="L666" title="All 2 branches missed.">                &quot;generate&quot;.equals(cloneStyle);</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">        return &quot;smart&quot;.equals(cloneStyle) ||</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">                &quot;omit&quot;.equals(cloneStyle) ||</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">                &quot;generate&quot;.equals(cloneStyle);</span>
     }
 
     /**
@@ -671,7 +679,7 @@ class BeanData {
      * @return true to generate
      */
     public boolean isSkipCloneGeneration() {
-<span class="nc bnc" id="L674" title="All 6 branches missed.">        return (&quot;smart&quot;.equals(cloneStyle) &amp;&amp; isImmutable()) || &quot;omit&quot;.equals(cloneStyle);</span>
+<span class="nc bnc" id="L682" title="All 6 branches missed.">        return (&quot;smart&quot;.equals(cloneStyle) &amp;&amp; isImmutable()) || &quot;omit&quot;.equals(cloneStyle);</span>
     }
 
     /**
@@ -679,65 +687,65 @@ class BeanData {
      * @param parts  the type to set
      */
     public void setTypeParts(String[] parts) {
-<span class="nc bnc" id="L682" title="All 2 branches missed.">        this.typeFinal = parts[0] != null;</span>
-<span class="nc" id="L683">        this.typeScope = parts[1];</span>
-<span class="nc" id="L684">        this.typeFull = parts[2];</span>
-<span class="nc" id="L685">        this.typeRaw = parts[3];</span>
-<span class="nc bnc" id="L686" title="All 2 branches missed.">        if (parts[8] != null) {</span>
-<span class="nc" id="L687">            this.typeGenericName = new String[] {parts[4], parts[6], parts[8]};</span>
-<span class="nc" id="L688">            this.typeGenericExtends = new String[3];</span>
-<span class="nc bnc" id="L689" title="All 2 branches missed.">            this.typeGenericExtends[0] = parts[5] != null ? parts[5] : &quot;&quot;;</span>
-<span class="nc bnc" id="L690" title="All 2 branches missed.">            this.typeGenericExtends[1] = parts[7] != null ? parts[7] : &quot;&quot;;</span>
-<span class="nc bnc" id="L691" title="All 2 branches missed.">            this.typeGenericExtends[2] = parts[9] != null ? parts[9] : &quot;&quot;;</span>
-<span class="nc bnc" id="L692" title="All 2 branches missed.">        } else if (parts[6] != null) {</span>
-<span class="nc" id="L693">            this.typeGenericName = new String[] {parts[4], parts[6]};</span>
-<span class="nc" id="L694">            this.typeGenericExtends = new String[2];</span>
-<span class="nc bnc" id="L695" title="All 2 branches missed.">            this.typeGenericExtends[0] = parts[5] != null ? parts[5] : &quot;&quot;;</span>
-<span class="nc bnc" id="L696" title="All 2 branches missed.">            this.typeGenericExtends[1] = parts[7] != null ? parts[7] : &quot;&quot;;</span>
-<span class="nc bnc" id="L697" title="All 2 branches missed.">        } else if (parts[4] != null) {</span>
-<span class="nc" id="L698">            this.typeGenericName = new String[] {parts[4]};</span>
-<span class="nc" id="L699">            this.typeGenericExtends = new String[1];</span>
-<span class="nc bnc" id="L700" title="All 2 branches missed.">            this.typeGenericExtends[0] = parts[5] != null ? parts[5] : &quot;&quot;;</span>
+<span class="nc bnc" id="L690" title="All 2 branches missed.">        this.typeFinal = parts[0] != null;</span>
+<span class="nc" id="L691">        this.typeScope = parts[1];</span>
+<span class="nc" id="L692">        this.typeFull = parts[2];</span>
+<span class="nc" id="L693">        this.typeRaw = parts[3];</span>
+<span class="nc bnc" id="L694" title="All 2 branches missed.">        if (parts[8] != null) {</span>
+<span class="nc" id="L695">            this.typeGenericName = new String[] {parts[4], parts[6], parts[8]};</span>
+<span class="nc" id="L696">            this.typeGenericExtends = new String[3];</span>
+<span class="nc bnc" id="L697" title="All 2 branches missed.">            this.typeGenericExtends[0] = parts[5] != null ? parts[5] : &quot;&quot;;</span>
+<span class="nc bnc" id="L698" title="All 2 branches missed.">            this.typeGenericExtends[1] = parts[7] != null ? parts[7] : &quot;&quot;;</span>
+<span class="nc bnc" id="L699" title="All 2 branches missed.">            this.typeGenericExtends[2] = parts[9] != null ? parts[9] : &quot;&quot;;</span>
+<span class="nc bnc" id="L700" title="All 2 branches missed.">        } else if (parts[6] != null) {</span>
+<span class="nc" id="L701">            this.typeGenericName = new String[] {parts[4], parts[6]};</span>
+<span class="nc" id="L702">            this.typeGenericExtends = new String[2];</span>
+<span class="nc bnc" id="L703" title="All 2 branches missed.">            this.typeGenericExtends[0] = parts[5] != null ? parts[5] : &quot;&quot;;</span>
+<span class="nc bnc" id="L704" title="All 2 branches missed.">            this.typeGenericExtends[1] = parts[7] != null ? parts[7] : &quot;&quot;;</span>
+<span class="nc bnc" id="L705" title="All 2 branches missed.">        } else if (parts[4] != null) {</span>
+<span class="nc" id="L706">            this.typeGenericName = new String[] {parts[4]};</span>
+<span class="nc" id="L707">            this.typeGenericExtends = new String[1];</span>
+<span class="nc bnc" id="L708" title="All 2 branches missed.">            this.typeGenericExtends[0] = parts[5] != null ? parts[5] : &quot;&quot;;</span>
         } else {
-<span class="nc" id="L702">            this.typeGenericName = new String[0];</span>
-<span class="nc" id="L703">            this.typeGenericExtends = new String[0];</span>
+<span class="nc" id="L710">            this.typeGenericName = new String[0];</span>
+<span class="nc" id="L711">            this.typeGenericExtends = new String[0];</span>
         }
-<span class="nc" id="L705">    }</span>
+<span class="nc" id="L713">    }</span>
 
     /**
      * Sets the bean superclass type.
      * @param parts  the superclass to set
      */
     public void setSuperTypeParts(String[] parts) {
-<span class="nc bnc" id="L712" title="All 2 branches missed.">        if (parts.length == 1) {</span>
-<span class="nc" id="L713">            this.root = true;</span>
-<span class="nc" id="L714">            this.immutable = &quot;ImmutableBean&quot;.equals(parts[0]);</span>
-<span class="nc" id="L715">            this.superTypeFull = &quot;&quot;;</span>
-<span class="nc" id="L716">            this.superTypeRaw = &quot;&quot;;</span>
-<span class="nc" id="L717">            this.superTypeGeneric = &quot;&quot;;</span>
+<span class="nc bnc" id="L720" title="All 2 branches missed.">        if (parts.length == 1) {</span>
+<span class="nc" id="L721">            this.root = true;</span>
+<span class="nc" id="L722">            this.immutable = &quot;ImmutableBean&quot;.equals(parts[0]);</span>
+<span class="nc" id="L723">            this.superTypeFull = &quot;&quot;;</span>
+<span class="nc" id="L724">            this.superTypeRaw = &quot;&quot;;</span>
+<span class="nc" id="L725">            this.superTypeGeneric = &quot;&quot;;</span>
         } else {
-<span class="nc" id="L719">            this.root = &quot;DirectBean&quot;.equals(parts[0]);</span>
-<span class="nc" id="L720">            this.immutable = false;</span>
-<span class="nc" id="L721">            this.superTypeFull = parts[0];</span>
-<span class="nc" id="L722">            this.superTypeRaw = parts[1];</span>
-<span class="nc bnc" id="L723" title="All 2 branches missed.">            if (parts[4] != null) {</span>
-<span class="nc" id="L724">                this.superTypeGeneric = parts[2] + &quot;, &quot; + parts[3] + &quot;, &quot; + parts[4];</span>
-<span class="nc bnc" id="L725" title="All 2 branches missed.">            } else if (parts[3] != null) {</span>
-<span class="nc" id="L726">                this.superTypeGeneric = parts[2] + &quot;, &quot; + parts[3];</span>
-<span class="nc bnc" id="L727" title="All 2 branches missed.">            } else if (parts[2] != null) {</span>
-<span class="nc" id="L728">                this.superTypeGeneric = parts[2];</span>
+<span class="nc" id="L727">            this.root = &quot;DirectBean&quot;.equals(parts[0]);</span>
+<span class="nc" id="L728">            this.immutable = false;</span>
+<span class="nc" id="L729">            this.superTypeFull = parts[0];</span>
+<span class="nc" id="L730">            this.superTypeRaw = parts[1];</span>
+<span class="nc bnc" id="L731" title="All 2 branches missed.">            if (parts[4] != null) {</span>
+<span class="nc" id="L732">                this.superTypeGeneric = parts[2] + &quot;, &quot; + parts[3] + &quot;, &quot; + parts[4];</span>
+<span class="nc bnc" id="L733" title="All 2 branches missed.">            } else if (parts[3] != null) {</span>
+<span class="nc" id="L734">                this.superTypeGeneric = parts[2] + &quot;, &quot; + parts[3];</span>
+<span class="nc bnc" id="L735" title="All 2 branches missed.">            } else if (parts[2] != null) {</span>
+<span class="nc" id="L736">                this.superTypeGeneric = parts[2];</span>
             } else {
-<span class="nc" id="L730">                this.superTypeGeneric = &quot;&quot;;</span>
+<span class="nc" id="L738">                this.superTypeGeneric = &quot;&quot;;</span>
             }
         }
-<span class="nc" id="L733">    }</span>
+<span class="nc" id="L741">    }</span>
 
     /**
      * Gets the modifiable list of properties.
      * @return the properties, not null
      */
     public List&lt;PropertyData&gt; getProperties() {
-<span class="nc" id="L740">        return properties;</span>
+<span class="nc" id="L748">        return properties;</span>
     }
 
     /**
@@ -745,7 +753,7 @@ class BeanData {
      * @return true if manual
      */
     public boolean isTypeFinal() {
-<span class="nc" id="L748">        return typeFinal;</span>
+<span class="nc" id="L756">        return typeFinal;</span>
     }
 
     /**
@@ -753,15 +761,15 @@ class BeanData {
      * @param typeFinal  true if final, false if subclassable
      */
     public void setTypeFinal(boolean typeFinal) {
-<span class="nc" id="L756">        this.typeFinal = typeFinal;</span>
-<span class="nc" id="L757">    }</span>
+<span class="nc" id="L764">        this.typeFinal = typeFinal;</span>
+<span class="nc" id="L765">    }</span>
 
     /**
      * Gets the scope of the type.
      * @return true if manual
      */
     public String getTypeScope() {
-<span class="nc" id="L764">        return typeScope;</span>
+<span class="nc" id="L772">        return typeScope;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -770,7 +778,7 @@ class BeanData {
      * @return true if this is a subclass of another bean
      */
     public boolean isSubClass() {
-<span class="nc bnc" id="L773" title="All 2 branches missed.">        return !root;</span>
+<span class="nc bnc" id="L781" title="All 2 branches missed.">        return !root;</span>
     }
 
     /**
@@ -778,7 +786,7 @@ class BeanData {
      * @return true if this is the root class with no bean superclasses
      */
     public boolean isRootClass() {
-<span class="nc" id="L781">        return root;</span>
+<span class="nc" id="L789">        return root;</span>
     }
 
     /**
@@ -786,7 +794,7 @@ class BeanData {
      * @return true if this extends DirectBean
      */
     public boolean isExtendsDirectBean() {
-<span class="nc" id="L789">        return &quot;DirectBean&quot;.equals(superTypeFull);</span>
+<span class="nc" id="L797">        return &quot;DirectBean&quot;.equals(superTypeFull);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -795,7 +803,7 @@ class BeanData {
      * @return true if generified
      */
     public boolean isTypeGeneric() {
-<span class="nc bnc" id="L798" title="All 2 branches missed.">        return typeGenericName.length &gt; 0;</span>
+<span class="nc bnc" id="L806" title="All 2 branches missed.">        return typeGenericName.length &gt; 0;</span>
     }
 
     /**
@@ -803,7 +811,7 @@ class BeanData {
      * @return zero if no type parameters, one or two if it has type parameters
      */
     public int getTypeGenericCount() {
-<span class="nc" id="L806">        return typeGenericName.length;</span>
+<span class="nc" id="L814">        return typeGenericName.length;</span>
     }
 
     /**
@@ -811,7 +819,7 @@ class BeanData {
      * @return the type
      */
     public String getType() {
-<span class="nc" id="L814">        return typeFull;</span>
+<span class="nc" id="L822">        return typeFull;</span>
     }
 
     /**
@@ -820,17 +828,17 @@ class BeanData {
      * @return the generic type, or a blank string if not generic, not null
      */
     public String getTypeGeneric(boolean includeBrackets) {
-<span class="nc bnc" id="L823" title="All 2 branches missed.">        if (isTypeGeneric() == false) {</span>
-<span class="nc" id="L824">            return &quot;&quot;;</span>
+<span class="nc bnc" id="L831" title="All 2 branches missed.">        if (isTypeGeneric() == false) {</span>
+<span class="nc" id="L832">            return &quot;&quot;;</span>
         }
-<span class="nc" id="L826">        String result = typeGenericName[0] + typeGenericExtends[0];</span>
-<span class="nc bnc" id="L827" title="All 2 branches missed.">        if (typeGenericExtends.length &gt; 1) {</span>
-<span class="nc" id="L828">            result += &quot;, &quot; + typeGenericName[1] + typeGenericExtends[1];</span>
-<span class="nc bnc" id="L829" title="All 2 branches missed.">            if (typeGenericExtends.length &gt; 2) {</span>
-<span class="nc" id="L830">                result += &quot;, &quot; + typeGenericName[2] + typeGenericExtends[2];</span>
+<span class="nc" id="L834">        String result = typeGenericName[0] + typeGenericExtends[0];</span>
+<span class="nc bnc" id="L835" title="All 2 branches missed.">        if (typeGenericExtends.length &gt; 1) {</span>
+<span class="nc" id="L836">            result += &quot;, &quot; + typeGenericName[1] + typeGenericExtends[1];</span>
+<span class="nc bnc" id="L837" title="All 2 branches missed.">            if (typeGenericExtends.length &gt; 2) {</span>
+<span class="nc" id="L838">                result += &quot;, &quot; + typeGenericName[2] + typeGenericExtends[2];</span>
             }
         }
-<span class="nc bnc" id="L833" title="All 4 branches missed.">        return includeBrackets &amp;&amp; result.length() &gt; 0 ? '&lt;' + result + '&gt;' : result;</span>
+<span class="nc bnc" id="L841" title="All 4 branches missed.">        return includeBrackets &amp;&amp; result.length() &gt; 0 ? '&lt;' + result + '&gt;' : result;</span>
     }
 
     /**
@@ -839,17 +847,17 @@ class BeanData {
      * @return the generic type name, or a blank string if not generic, not null
      */
     public String getTypeGenericName(boolean includeBrackets) {
-<span class="nc bnc" id="L842" title="All 2 branches missed.">        if (isTypeGeneric() == false) {</span>
-<span class="nc" id="L843">            return &quot;&quot;;</span>
+<span class="nc bnc" id="L850" title="All 2 branches missed.">        if (isTypeGeneric() == false) {</span>
+<span class="nc" id="L851">            return &quot;&quot;;</span>
         }
-<span class="nc" id="L845">        String result = typeGenericName[0];</span>
-<span class="nc bnc" id="L846" title="All 2 branches missed.">        if (typeGenericExtends.length &gt; 1) {</span>
-<span class="nc" id="L847">            result += &quot;, &quot; + typeGenericName[1];</span>
-<span class="nc bnc" id="L848" title="All 2 branches missed.">            if (typeGenericExtends.length &gt; 2) {</span>
-<span class="nc" id="L849">                result += &quot;, &quot; + typeGenericName[2];</span>
+<span class="nc" id="L853">        String result = typeGenericName[0];</span>
+<span class="nc bnc" id="L854" title="All 2 branches missed.">        if (typeGenericExtends.length &gt; 1) {</span>
+<span class="nc" id="L855">            result += &quot;, &quot; + typeGenericName[1];</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">            if (typeGenericExtends.length &gt; 2) {</span>
+<span class="nc" id="L857">                result += &quot;, &quot; + typeGenericName[2];</span>
             }
         }
-<span class="nc bnc" id="L852" title="All 4 branches missed.">        return includeBrackets &amp;&amp; result.length() &gt; 0 ? '&lt;' + result + '&gt;' : result;</span>
+<span class="nc bnc" id="L860" title="All 4 branches missed.">        return includeBrackets &amp;&amp; result.length() &gt; 0 ? '&lt;' + result + '&gt;' : result;</span>
     }
 
     /**
@@ -857,7 +865,7 @@ class BeanData {
      * @return the generic type name, or a blank string if not generic, not null
      */
     public String getTypeGenericDiamond() {
-<span class="nc bnc" id="L860" title="All 2 branches missed.">        return isTypeGeneric() ? &quot;&lt;&gt;&quot; : &quot;&quot;;</span>
+<span class="nc bnc" id="L868" title="All 2 branches missed.">        return isTypeGeneric() ? &quot;&lt;&gt;&quot; : &quot;&quot;;</span>
     }
 
     /**
@@ -865,7 +873,7 @@ class BeanData {
      * @return the type name, with generic diamond if necessary, not null
      */
     public String getTypeWithDiamond() {
-<span class="nc bnc" id="L868" title="All 2 branches missed.">        return isTypeGeneric() ? getTypeRaw() + &quot;&lt;&gt;&quot; : getTypeRaw();</span>
+<span class="nc bnc" id="L876" title="All 2 branches missed.">        return isTypeGeneric() ? getTypeRaw() + &quot;&lt;&gt;&quot; : getTypeRaw();</span>
     }
 
     /**
@@ -875,8 +883,8 @@ class BeanData {
      * @return the generic type name, not null
      */
     public String getTypeGenericName(int typeParamIndex, boolean includeBrackets) {
-<span class="nc" id="L878">        String result = typeGenericName[typeParamIndex];</span>
-<span class="nc bnc" id="L879" title="All 4 branches missed.">        return includeBrackets &amp;&amp; result.length() &gt; 0 ? '&lt;' + result + '&gt;' : result;</span>
+<span class="nc" id="L886">        String result = typeGenericName[typeParamIndex];</span>
+<span class="nc bnc" id="L887" title="All 4 branches missed.">        return includeBrackets &amp;&amp; result.length() &gt; 0 ? '&lt;' + result + '&gt;' : result;</span>
     }
 
     /**
@@ -885,8 +893,8 @@ class BeanData {
      * @return the generic type extends clause, or a blank string if not generic or no extends, not null
      */
     public String getTypeGenericErased(int typeParamIndex) {
-<span class="nc" id="L888">        String extend = typeGenericExtends[typeParamIndex];</span>
-<span class="nc bnc" id="L889" title="All 2 branches missed.">        return extend.startsWith(&quot; extends &quot;) ? extend.substring(9) : &quot;Object&quot;;</span>
+<span class="nc" id="L896">        String extend = typeGenericExtends[typeParamIndex];</span>
+<span class="nc bnc" id="L897" title="All 2 branches missed.">        return extend.startsWith(&quot; extends &quot;) ? extend.substring(9) : &quot;Object&quot;;</span>
     }
 
     /**
@@ -895,7 +903,7 @@ class BeanData {
      * @return the generic type extends clause, or a blank string if not generic or no extends, not null
      */
     public String getTypeGenericExtends(int typeParamIndex) {
-<span class="nc" id="L898">        return typeGenericExtends[typeParamIndex];</span>
+<span class="nc" id="L906">        return typeGenericExtends[typeParamIndex];</span>
     }
 
     /**
@@ -905,14 +913,14 @@ class BeanData {
      * @return the generic type extends clause, or a blank string if not generic or no extends, not null
      */
     public String getTypeGenericExtends(int typeParamIndex, String[] typeParamNames) {
-<span class="nc" id="L908">        String genericClause = typeGenericExtends[typeParamIndex];</span>
-<span class="nc" id="L909">        genericClause = genericClause.replace(&quot;&lt;&quot; + typeGenericName[typeParamIndex] + &quot;&gt;&quot;, &quot;&lt;&quot; + typeParamNames[typeParamIndex] + &quot;&gt;&quot;);</span>
-<span class="nc bnc" id="L910" title="All 2 branches missed.">        for (int i = 0; i &lt; typeGenericName.length; i++) {</span>
-<span class="nc" id="L911">            genericClause = genericClause.replace(&quot;&lt;&quot; + typeGenericName[i] + &quot;&gt;&quot;, &quot;&lt;&quot; + typeParamNames[i] + &quot;&gt;&quot;);</span>
-<span class="nc" id="L912">            genericClause = genericClause.replace(&quot; extends &quot; + typeGenericName[i] + &quot;&gt;&quot;, &quot; extends &quot; + typeParamNames[i] + &quot;&gt;&quot;);</span>
-<span class="nc" id="L913">            genericClause = genericClause.replace(&quot; super &quot; + typeGenericName[i] + &quot;&gt;&quot;, &quot; super &quot; + typeParamNames[i] + &quot;&gt;&quot;);</span>
+<span class="nc" id="L916">        String genericClause = typeGenericExtends[typeParamIndex];</span>
+<span class="nc" id="L917">        genericClause = genericClause.replace(&quot;&lt;&quot; + typeGenericName[typeParamIndex] + &quot;&gt;&quot;, &quot;&lt;&quot; + typeParamNames[typeParamIndex] + &quot;&gt;&quot;);</span>
+<span class="nc bnc" id="L918" title="All 2 branches missed.">        for (int i = 0; i &lt; typeGenericName.length; i++) {</span>
+<span class="nc" id="L919">            genericClause = genericClause.replace(&quot;&lt;&quot; + typeGenericName[i] + &quot;&gt;&quot;, &quot;&lt;&quot; + typeParamNames[i] + &quot;&gt;&quot;);</span>
+<span class="nc" id="L920">            genericClause = genericClause.replace(&quot; extends &quot; + typeGenericName[i] + &quot;&gt;&quot;, &quot; extends &quot; + typeParamNames[i] + &quot;&gt;&quot;);</span>
+<span class="nc" id="L921">            genericClause = genericClause.replace(&quot; super &quot; + typeGenericName[i] + &quot;&gt;&quot;, &quot; super &quot; + typeParamNames[i] + &quot;&gt;&quot;);</span>
         }
-<span class="nc" id="L915">        return genericClause;</span>
+<span class="nc" id="L923">        return genericClause;</span>
     }
 
     /**
@@ -920,7 +928,7 @@ class BeanData {
      * @return the generic type extends clause, or a blank string if not generic or no extends, not null
      */
     public String getTypeNoExtends() {
-<span class="nc" id="L923">        return typeRaw + getTypeGenericName(true);</span>
+<span class="nc" id="L931">        return typeRaw + getTypeGenericName(true);</span>
     }
 
     /**
@@ -928,7 +936,7 @@ class BeanData {
      * @return the raw type, not null
      */
     public String getTypeRaw() {
-<span class="nc" id="L931">        return typeRaw;</span>
+<span class="nc" id="L939">        return typeRaw;</span>
     }
 
     /**
@@ -936,17 +944,17 @@ class BeanData {
      * @return the wildcarded type, not null
      */
     public String getTypeWildcard() {
-<span class="nc bnc" id="L939" title="All 2 branches missed.">        if (isTypeGeneric() == false) {</span>
-<span class="nc" id="L940">            return typeRaw;</span>
+<span class="nc bnc" id="L947" title="All 2 branches missed.">        if (isTypeGeneric() == false) {</span>
+<span class="nc" id="L948">            return typeRaw;</span>
         }
-<span class="nc" id="L942">        String result = &quot;?&quot;;</span>
-<span class="nc bnc" id="L943" title="All 2 branches missed.">        if (typeGenericExtends.length &gt; 1) {</span>
-<span class="nc" id="L944">            result += &quot;, ?&quot;;</span>
-<span class="nc bnc" id="L945" title="All 2 branches missed.">            if (typeGenericExtends.length &gt; 2) {</span>
-<span class="nc" id="L946">                result += &quot;, ?&quot;;</span>
+<span class="nc" id="L950">        String result = &quot;?&quot;;</span>
+<span class="nc bnc" id="L951" title="All 2 branches missed.">        if (typeGenericExtends.length &gt; 1) {</span>
+<span class="nc" id="L952">            result += &quot;, ?&quot;;</span>
+<span class="nc bnc" id="L953" title="All 2 branches missed.">            if (typeGenericExtends.length &gt; 2) {</span>
+<span class="nc" id="L954">                result += &quot;, ?&quot;;</span>
             }
         }
-<span class="nc" id="L949">        return typeRaw + '&lt;' + result + '&gt;';</span>
+<span class="nc" id="L957">        return typeRaw + '&lt;' + result + '&gt;';</span>
     }
 
     /**
@@ -955,16 +963,16 @@ class BeanData {
      * @return true if a type parameter of this bean
      */
     public boolean isTypeGenerifiedBy(String type) {
-<span class="nc bnc" id="L958" title="All 4 branches missed.">        if (typeGenericName.length &gt; 2 &amp;&amp; typeGenericName[2].equals(type)) {</span>
-<span class="nc" id="L959">            return true;</span>
+<span class="nc bnc" id="L966" title="All 4 branches missed.">        if (typeGenericName.length &gt; 2 &amp;&amp; typeGenericName[2].equals(type)) {</span>
+<span class="nc" id="L967">            return true;</span>
         }
-<span class="nc bnc" id="L961" title="All 4 branches missed.">        if (typeGenericName.length &gt; 1 &amp;&amp; typeGenericName[1].equals(type)) {</span>
-<span class="nc" id="L962">            return true;</span>
+<span class="nc bnc" id="L969" title="All 4 branches missed.">        if (typeGenericName.length &gt; 1 &amp;&amp; typeGenericName[1].equals(type)) {</span>
+<span class="nc" id="L970">            return true;</span>
         }
-<span class="nc bnc" id="L964" title="All 4 branches missed.">        if (typeGenericName.length &gt; 0 &amp;&amp; typeGenericName[0].equals(type)) {</span>
-<span class="nc" id="L965">            return true;</span>
+<span class="nc bnc" id="L972" title="All 4 branches missed.">        if (typeGenericName.length &gt; 0 &amp;&amp; typeGenericName[0].equals(type)) {</span>
+<span class="nc" id="L973">            return true;</span>
         }
-<span class="nc" id="L967">        return false;</span>
+<span class="nc" id="L975">        return false;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -973,7 +981,7 @@ class BeanData {
      * @return true if generified
      */
     public boolean isSuperTypeGeneric() {
-<span class="nc bnc" id="L976" title="All 2 branches missed.">        return superTypeGeneric.length() &gt; 0;</span>
+<span class="nc bnc" id="L984" title="All 2 branches missed.">        return superTypeGeneric.length() &gt; 0;</span>
     }
 
     /**
@@ -981,7 +989,7 @@ class BeanData {
      * @return the superclass
      */
     public String getSuperType() {
-<span class="nc" id="L984">        return superTypeFull;</span>
+<span class="nc" id="L992">        return superTypeFull;</span>
     }
 
     /**
@@ -990,7 +998,7 @@ class BeanData {
      * @return the generic type, or a blank string if not generic, not null
      */
     public String getSuperTypeGeneric(boolean includeBrackets) {
-<span class="nc bnc" id="L993" title="All 4 branches missed.">        return includeBrackets &amp;&amp; superTypeGeneric.length() &gt; 0 ? '&lt;' + superTypeGeneric + '&gt;' : superTypeGeneric;</span>
+<span class="nc bnc" id="L1001" title="All 4 branches missed.">        return includeBrackets &amp;&amp; superTypeGeneric.length() &gt; 0 ? '&lt;' + superTypeGeneric + '&gt;' : superTypeGeneric;</span>
     }
 
     /**
@@ -998,7 +1006,7 @@ class BeanData {
      * @return the raw type, not null
      */
     public String getSuperTypeRaw() {
-<span class="nc" id="L1001">        return superTypeRaw;</span>
+<span class="nc" id="L1009">        return superTypeRaw;</span>
     }
 
     /**
@@ -1006,12 +1014,12 @@ class BeanData {
      * @return true if validated
      */
     public boolean isValidated() {
-<span class="nc bnc" id="L1009" title="All 2 branches missed.">        for (PropertyData property : properties) {</span>
-<span class="nc bnc" id="L1010" title="All 2 branches missed.">            if (property.isValidated()) {</span>
-<span class="nc" id="L1011">                return true;</span>
+<span class="nc bnc" id="L1017" title="All 2 branches missed.">        for (PropertyData property : properties) {</span>
+<span class="nc bnc" id="L1018" title="All 2 branches missed.">            if (property.isValidated()) {</span>
+<span class="nc" id="L1019">                return true;</span>
             }
-<span class="nc" id="L1013">        }</span>
-<span class="nc" id="L1014">        return false;</span>
+<span class="nc" id="L1021">        }</span>
+<span class="nc" id="L1022">        return false;</span>
     }
 
     /**
@@ -1019,7 +1027,7 @@ class BeanData {
      * @return the scope, not null
      */
     public String getNestedClassConstructorScope() {
-<span class="nc bnc" id="L1022" title="All 2 branches missed.">        return (isTypeFinal() ? &quot;private&quot; : &quot;protected&quot;);</span>
+<span class="nc bnc" id="L1030" title="All 2 branches missed.">        return (isTypeFinal() ? &quot;private&quot; : &quot;protected&quot;);</span>
     }
 
 }

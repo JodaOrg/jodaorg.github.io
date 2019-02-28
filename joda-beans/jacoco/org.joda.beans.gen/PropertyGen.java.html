@@ -103,301 +103,292 @@ class PropertyGen {
 <span class="nc" id="L103">            list.add(&quot;\t * &quot; + comment);</span>
 <span class="nc" id="L104">        }</span>
 <span class="nc" id="L105">        list.add(&quot;\t * @return the property, not null&quot;);</span>
-<span class="nc" id="L106">        list.add(&quot;\t */&quot;);</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc" id="L108">            list.add(&quot;\t@Deprecated&quot;);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (data.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L107">            list.add(&quot;\t * &quot; + data.getDeprecatedComment());</span>
         }
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        list.add(&quot;\tpublic &quot; + (data.getBean().isTypeFinal() ? &quot;&quot; : &quot;final &quot;) + &quot;Property&lt;&quot; + propertyType() + &quot;&gt; &quot; + data.getPropertyName() + &quot;() {&quot;);</span>
-<span class="nc" id="L111">        list.add(&quot;\t\treturn metaBean().&quot; + data.getPropertyName() + &quot;().createProperty(this);&quot;);</span>
-<span class="nc" id="L112">        list.add(&quot;\t}&quot;);</span>
-<span class="nc" id="L113">        list.add(&quot;&quot;);</span>
-<span class="nc" id="L114">        return list;</span>
+<span class="nc" id="L109">        list.add(&quot;\t */&quot;);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
+<span class="nc" id="L111">            list.add(&quot;\t@Deprecated&quot;);</span>
+        }
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        list.add(&quot;\tpublic &quot; + (data.getBean().isTypeFinal() ? &quot;&quot; : &quot;final &quot;) + &quot;Property&lt;&quot; + propertyType() + &quot;&gt; &quot; + data.getPropertyName() + &quot;() {&quot;);</span>
+<span class="nc" id="L114">        list.add(&quot;\t\treturn metaBean().&quot; + data.getPropertyName() + &quot;().createProperty(this);&quot;);</span>
+<span class="nc" id="L115">        list.add(&quot;\t}&quot;);</span>
+<span class="nc" id="L116">        list.add(&quot;&quot;);</span>
+<span class="nc" id="L117">        return list;</span>
     }
 
     List&lt;String&gt; generateMetaProperty() {
-<span class="nc" id="L118">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L119">        String propertyType = propertyType();</span>
-<span class="nc" id="L120">        list.add(&quot;\t\t/**&quot;);</span>
-<span class="nc" id="L121">        list.add(&quot;\t\t * The meta-property for the {@code &quot; + data.getPropertyName() + &quot;} property.&quot;);</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">            for (String comment : data.getComments()) {</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">                if (comment.contains(&quot;@deprecated&quot;)) {</span>
-<span class="nc" id="L125">                    list.add(&quot;\t\t * &quot; + comment);</span>
-                }
-<span class="nc" id="L127">            }</span>
+<span class="nc" id="L121">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L122">        String propertyType = propertyType();</span>
+<span class="nc" id="L123">        list.add(&quot;\t\t/**&quot;);</span>
+<span class="nc" id="L124">        list.add(&quot;\t\t * The meta-property for the {@code &quot; + data.getPropertyName() + &quot;} property.&quot;);</span>
+<span class="nc" id="L125">        list.add(&quot;\t\t * @return the meta-property, not null&quot;);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (data.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L127">            list.add(&quot;\t\t * &quot; + data.getDeprecatedComment());</span>
         }
-<span class="nc" id="L129">        list.add(&quot;\t\t * @return the meta-property, not null&quot;);</span>
-<span class="nc" id="L130">        list.add(&quot;\t\t */&quot;);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc" id="L132">            list.add(&quot;\t\t@Deprecated&quot;);</span>
+<span class="nc" id="L129">        list.add(&quot;\t\t */&quot;);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
+<span class="nc" id="L131">            list.add(&quot;\t\t@Deprecated&quot;);</span>
         }
-<span class="nc bnc" id="L134" title="All 2 branches missed.">        list.add(&quot;\t\tpublic &quot; + (data.getBean().isTypeFinal() ? &quot;&quot; : &quot;final &quot;) + &quot;MetaProperty&lt;&quot; + propertyType + &quot;&gt; &quot; + data.getPropertyName() + &quot;() {&quot;);</span>
-<span class="nc" id="L135">        list.add(&quot;\t\t\treturn &quot; + data.getMetaFieldName() + &quot;;&quot;);</span>
-<span class="nc" id="L136">        list.add(&quot;\t\t}&quot;);</span>
-<span class="nc" id="L137">        list.add(&quot;&quot;);</span>
-<span class="nc" id="L138">        return list;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        list.add(&quot;\t\tpublic &quot; + (data.getBean().isTypeFinal() ? &quot;&quot; : &quot;final &quot;) + &quot;MetaProperty&lt;&quot; + propertyType + &quot;&gt; &quot; + data.getPropertyName() + &quot;() {&quot;);</span>
+<span class="nc" id="L134">        list.add(&quot;\t\t\treturn &quot; + data.getMetaFieldName() + &quot;;&quot;);</span>
+<span class="nc" id="L135">        list.add(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L136">        list.add(&quot;&quot;);</span>
+<span class="nc" id="L137">        return list;</span>
     }
 
     List&lt;String&gt; generatePropertyGetCase() {
-<span class="nc" id="L142">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L143">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
-<span class="nc" id="L145">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
+<span class="nc" id="L141">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L142">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
+<span class="nc" id="L144">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
         }
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (data.getStyle().isReadable()) {</span>
-<span class="nc" id="L148">            list.add(&quot;\t\t\t\t\treturn ((&quot; + data.getBean().getTypeWildcard() + &quot;) bean).&quot; + data.getGetterGen().generateGetInvoke(data) + &quot;;&quot;);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (data.getStyle().isReadable()) {</span>
+<span class="nc" id="L147">            list.add(&quot;\t\t\t\t\treturn ((&quot; + data.getBean().getTypeWildcard() + &quot;) bean).&quot; + data.getGetterGen().generateGetInvoke(data) + &quot;;&quot;);</span>
         } else {
-<span class="nc" id="L150">            list.add(&quot;\t\t\t\t\tif (quiet) {&quot;);</span>
-<span class="nc" id="L151">            list.add(&quot;\t\t\t\t\t\treturn null;&quot;);</span>
-<span class="nc" id="L152">            list.add(&quot;\t\t\t\t\t}&quot;);</span>
-<span class="nc" id="L153">            list.add(&quot;\t\t\t\t\tthrow new UnsupportedOperationException(\&quot;Property cannot be read: &quot; + data.getPropertyName() + &quot;\&quot;);&quot;);</span>
+<span class="nc" id="L149">            list.add(&quot;\t\t\t\t\tif (quiet) {&quot;);</span>
+<span class="nc" id="L150">            list.add(&quot;\t\t\t\t\t\treturn null;&quot;);</span>
+<span class="nc" id="L151">            list.add(&quot;\t\t\t\t\t}&quot;);</span>
+<span class="nc" id="L152">            list.add(&quot;\t\t\t\t\tthrow new UnsupportedOperationException(\&quot;Property cannot be read: &quot; + data.getPropertyName() + &quot;\&quot;);&quot;);</span>
         }
-<span class="nc" id="L155">        return list;</span>
+<span class="nc" id="L154">        return list;</span>
     }
 
     List&lt;String&gt; generatePropertySetCase() {
-<span class="nc" id="L159">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L160">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
-<span class="nc" id="L162">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
+<span class="nc" id="L158">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L159">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
+<span class="nc" id="L161">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
         }
-<span class="nc" id="L164">        String setter = data.getSetterGen().generateSetInvoke(data, castObject() + &quot;newValue&quot;);</span>
-<span class="nc bnc" id="L165" title="All 4 branches missed.">        if (data.getStyle().isWritable() &amp;&amp; setter != null) {</span>
-<span class="nc" id="L166">            list.add(&quot;\t\t\t\t\t((&quot; + data.getBean().getTypeNoExtends() + &quot;) bean).&quot; + setter + &quot;;&quot;);</span>
-<span class="nc" id="L167">            list.add(&quot;\t\t\t\t\treturn;&quot;);</span>
+<span class="nc" id="L163">        String setter = data.getSetterGen().generateSetInvoke(data, castObject() + &quot;newValue&quot;);</span>
+<span class="nc bnc" id="L164" title="All 4 branches missed.">        if (data.getStyle().isWritable() &amp;&amp; setter != null) {</span>
+<span class="nc" id="L165">            list.add(&quot;\t\t\t\t\t((&quot; + data.getBean().getTypeNoExtends() + &quot;) bean).&quot; + setter + &quot;;&quot;);</span>
+<span class="nc" id="L166">            list.add(&quot;\t\t\t\t\treturn;&quot;);</span>
         } else {
-<span class="nc" id="L169">            list.add(&quot;\t\t\t\t\tif (quiet) {&quot;);</span>
-<span class="nc" id="L170">            list.add(&quot;\t\t\t\t\t\treturn;&quot;);</span>
-<span class="nc" id="L171">            list.add(&quot;\t\t\t\t\t}&quot;);</span>
-<span class="nc" id="L172">            list.add(&quot;\t\t\t\t\tthrow new UnsupportedOperationException(\&quot;Property cannot be written: &quot; + data.getPropertyName() + &quot;\&quot;);&quot;);</span>
+<span class="nc" id="L168">            list.add(&quot;\t\t\t\t\tif (quiet) {&quot;);</span>
+<span class="nc" id="L169">            list.add(&quot;\t\t\t\t\t\treturn;&quot;);</span>
+<span class="nc" id="L170">            list.add(&quot;\t\t\t\t\t}&quot;);</span>
+<span class="nc" id="L171">            list.add(&quot;\t\t\t\t\tthrow new UnsupportedOperationException(\&quot;Property cannot be written: &quot; + data.getPropertyName() + &quot;\&quot;);&quot;);</span>
         }
-<span class="nc" id="L174">        return list;</span>
+<span class="nc" id="L173">        return list;</span>
     }
 
     String generateLambdaGetter() {
-<span class="nc" id="L178">        return &quot;b -&gt; b.&quot; + data.getGetterGen().generateGetInvoke(data);</span>
+<span class="nc" id="L177">        return &quot;b -&gt; b.&quot; + data.getGetterGen().generateGetInvoke(data);</span>
     }
 
     String generateLambdaSetter() {
-<span class="nc" id="L182">        String propType = propertyType(data.getTypeBeanErased());</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">        String cast = propType.equals(&quot;Object&quot;) ? &quot;&quot; : &quot;(&quot; + propType + &quot;) &quot;;</span>
-<span class="nc" id="L184">        return &quot;(b, v) -&gt; b.&quot; + data.getSetterGen().generateSetInvoke(data, cast + &quot;v&quot;);</span>
+<span class="nc" id="L181">        String propType = propertyType(data.getTypeBeanErased());</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        String cast = propType.equals(&quot;Object&quot;) ? &quot;&quot; : &quot;(&quot; + propType + &quot;) &quot;;</span>
+<span class="nc" id="L183">        return &quot;(b, v) -&gt; b.&quot; + data.getSetterGen().generateSetInvoke(data, cast + &quot;v&quot;);</span>
     }
 
     //-----------------------------------------------------------------------
     boolean isSpecialInit() {
-<span class="nc" id="L189">        return data.getBuilderGen().isSpecialInit(data);</span>
+<span class="nc" id="L188">        return data.getBuilderGen().isSpecialInit(data);</span>
     }
 
     String generateInit() {
-<span class="nc" id="L193">        return data.getBuilderGen().generateInit(data);</span>
+<span class="nc" id="L192">        return data.getBuilderGen().generateInit(data);</span>
     }
 
     List&lt;String&gt; generateBuilderField() {
-<span class="nc" id="L197">        return data.getBuilderGen().generateField(&quot;\t\t&quot;, data);</span>
+<span class="nc" id="L196">        return data.getBuilderGen().generateField(&quot;\t\t&quot;, data);</span>
     }
 
     List&lt;String&gt; generateBuilderConstructorAssign(String beanToCopyFrom) {
-<span class="nc" id="L201">        return data.getCopyGen().generateCopyToMutable(&quot;\t\t\t&quot;, data, beanToCopyFrom);</span>
+<span class="nc" id="L200">        return data.getCopyGen().generateCopyToMutable(&quot;\t\t\t&quot;, data, beanToCopyFrom);</span>
     }
 
     List&lt;String&gt; generateBuilderFieldGet() {
-<span class="nc" id="L205">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L206">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
-<span class="nc" id="L208">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
+<span class="nc" id="L204">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L205">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
+<span class="nc" id="L207">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
         }
-<span class="nc" id="L210">        list.add(&quot;\t\t\t\t\treturn &quot; + generateBuilderFieldName() + &quot;;&quot;);</span>
-<span class="nc" id="L211">        return list;</span>
+<span class="nc" id="L209">        list.add(&quot;\t\t\t\t\treturn &quot; + generateBuilderFieldName() + &quot;;&quot;);</span>
+<span class="nc" id="L210">        return list;</span>
     }
 
     List&lt;String&gt; generateBuilderFieldSet() {
-<span class="nc" id="L215">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L216">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
-<span class="nc" id="L218">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
+<span class="nc" id="L214">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L215">        list.add(&quot;\t\t\t\tcase &quot; + data.getPropertyName().hashCode() + &quot;:  // &quot; + data.getPropertyName());</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        if (data.getAlias() != null) {</span>
+<span class="nc" id="L217">            list.add(&quot;\t\t\t\tcase &quot; + data.getAlias().hashCode() + &quot;:  // &quot; + data.getAlias() + &quot; (alias)&quot;);</span>
         }
-<span class="nc" id="L220">        list.add(&quot;\t\t\t\t\tthis.&quot; + generateBuilderFieldName() + &quot; = (&quot; + propertyType(getBuilderType()) + &quot;) newValue;&quot;);</span>
-<span class="nc" id="L221">        list.add(&quot;\t\t\t\t\tbreak;&quot;);</span>
-<span class="nc" id="L222">        return list;</span>
+<span class="nc" id="L219">        list.add(&quot;\t\t\t\t\tthis.&quot; + generateBuilderFieldName() + &quot; = (&quot; + propertyType(getBuilderType()) + &quot;) newValue;&quot;);</span>
+<span class="nc" id="L220">        list.add(&quot;\t\t\t\t\tbreak;&quot;);</span>
+<span class="nc" id="L221">        return list;</span>
     }
 
     String generateBuilderFieldName() {
-<span class="nc" id="L226">        return data.getFieldName();</span>
+<span class="nc" id="L225">        return data.getFieldName();</span>
     }
 
     List&lt;String&gt; generateBuilderSetMethod() {
-<span class="nc" id="L230">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L231">        list.add(&quot;\t\t/**&quot;);</span>
-<span class="nc" id="L232">        list.add(&quot;\t\t * Sets &quot; + data.getFirstComment());</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">        for (String comment : data.getComments()) {</span>
-<span class="nc" id="L234">            list.add(&quot;\t\t * &quot; + comment);</span>
-<span class="nc" id="L235">        }</span>
-<span class="nc" id="L236">        list.add(&quot;\t\t * @param &quot; + data.getPropertyName() + &quot;  the new value&quot; + data.getNotNullJavadoc());</span>
-<span class="nc" id="L237">        list.add(&quot;\t\t * @return this, for chaining, not null&quot;);</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">            for (String comment : data.getComments()) {</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">                if (comment.contains(&quot;@deprecated&quot;)) {</span>
-<span class="nc" id="L241">                    list.add(&quot;\t\t * &quot; + comment);</span>
-                }
-<span class="nc" id="L243">            }</span>
+<span class="nc" id="L229">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L230">        list.add(&quot;\t\t/**&quot;);</span>
+<span class="nc" id="L231">        list.add(&quot;\t\t * Sets &quot; + data.getFirstComment());</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">        for (String comment : data.getComments()) {</span>
+<span class="nc" id="L233">            list.add(&quot;\t\t * &quot; + comment);</span>
+<span class="nc" id="L234">        }</span>
+<span class="nc" id="L235">        list.add(&quot;\t\t * @param &quot; + data.getPropertyName() + &quot;  the new value&quot; + data.getNotNullJavadoc());</span>
+<span class="nc" id="L236">        list.add(&quot;\t\t * @return this, for chaining, not null&quot;);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (data.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L238">            list.add(&quot;\t\t * &quot; + data.getDeprecatedComment());</span>
         }
-<span class="nc" id="L245">        list.add(&quot;\t\t */&quot;);</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc" id="L247">            list.add(&quot;\t\t@Deprecated&quot;);</span>
+<span class="nc" id="L240">        list.add(&quot;\t\t */&quot;);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
+<span class="nc" id="L242">            list.add(&quot;\t\t@Deprecated&quot;);</span>
         }
-<span class="nc" id="L249">        String builderType = getBuilderType();</span>
-<span class="nc bnc" id="L250" title="All 6 branches missed.">        if (builderType.endsWith(&quot;[]&quot;) &amp;&amp; !builderType.endsWith(&quot;[][]&quot;) &amp;&amp; !builderType.equals(&quot;byte[]&quot;)) {</span>
-<span class="nc" id="L251">            list.add(&quot;\t\tpublic Builder&quot; + data.getBean().getTypeGenericName(true) + &quot; &quot; + data.getPropertyName() +</span>
-<span class="nc" id="L252">                    &quot;(&quot; + builderType.substring(0, builderType.length() - 2) + &quot;... &quot; + data.getPropertyName() + &quot;) {&quot;);</span>
+<span class="nc" id="L244">        String builderType = getBuilderType();</span>
+<span class="nc bnc" id="L245" title="All 6 branches missed.">        if (builderType.endsWith(&quot;[]&quot;) &amp;&amp; !builderType.endsWith(&quot;[][]&quot;) &amp;&amp; !builderType.equals(&quot;byte[]&quot;)) {</span>
+<span class="nc" id="L246">            list.add(&quot;\t\tpublic Builder&quot; + data.getBean().getTypeGenericName(true) + &quot; &quot; + data.getPropertyName() +</span>
+<span class="nc" id="L247">                    &quot;(&quot; + builderType.substring(0, builderType.length() - 2) + &quot;... &quot; + data.getPropertyName() + &quot;) {&quot;);</span>
         } else {
-<span class="nc" id="L254">            list.add(&quot;\t\tpublic Builder&quot; + data.getBean().getTypeGenericName(true) + &quot; &quot; + data.getPropertyName() +</span>
-<span class="nc" id="L255">                    &quot;(&quot; + builderType + &quot; &quot; + data.getPropertyName() + &quot;) {&quot;);</span>
+<span class="nc" id="L249">            list.add(&quot;\t\tpublic Builder&quot; + data.getBean().getTypeGenericName(true) + &quot; &quot; + data.getPropertyName() +</span>
+<span class="nc" id="L250">                    &quot;(&quot; + builderType + &quot; &quot; + data.getPropertyName() + &quot;) {&quot;);</span>
         }
-<span class="nc bnc" id="L257" title="All 2 branches missed.">        if (data.isValidated()) {</span>
-<span class="nc" id="L258">            list.add(&quot;\t\t\t&quot; + data.getValidationMethodName() + &quot;(&quot; + data.getPropertyName() + &quot;, \&quot;&quot; + data.getPropertyName() + &quot;\&quot;);&quot;);</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        if (data.isValidated()) {</span>
+<span class="nc" id="L253">            list.add(&quot;\t\t\t&quot; + data.getValidationMethodName() + &quot;(&quot; + data.getPropertyName() + &quot;, \&quot;&quot; + data.getPropertyName() + &quot;\&quot;);&quot;);</span>
         }
-<span class="nc" id="L260">        list.add(&quot;\t\t\tthis.&quot; + generateBuilderFieldName() + &quot; = &quot; + data.getPropertyName() + &quot;;&quot;);</span>
-<span class="nc" id="L261">        list.add(&quot;\t\t\treturn this;&quot;);</span>
-<span class="nc" id="L262">        list.add(&quot;\t\t}&quot;);</span>
-<span class="nc" id="L263">        list.add(&quot;&quot;);</span>
-<span class="nc" id="L264">        generateBuilderSetCollectionMethod(list);</span>
-<span class="nc" id="L265">        return list;</span>
+<span class="nc" id="L255">        list.add(&quot;\t\t\tthis.&quot; + generateBuilderFieldName() + &quot; = &quot; + data.getPropertyName() + &quot;;&quot;);</span>
+<span class="nc" id="L256">        list.add(&quot;\t\t\treturn this;&quot;);</span>
+<span class="nc" id="L257">        list.add(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L258">        list.add(&quot;&quot;);</span>
+<span class="nc" id="L259">        generateBuilderSetCollectionMethod(list);</span>
+<span class="nc" id="L260">        return list;</span>
     }
 
     String getBuilderType() {
-<span class="nc" id="L269">        return data.getBuilderGen().generateType(data);</span>
+<span class="nc" id="L264">        return data.getBuilderGen().generateType(data);</span>
     }
 
     private void generateBuilderSetCollectionMethod(List&lt;String&gt; list) {
-<span class="nc" id="L273">        String code = data.getVarArgsCode();</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">        if (code == null) {</span>
-<span class="nc" id="L275">            return;</span>
+<span class="nc" id="L268">        String code = data.getVarArgsCode();</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">        if (code == null) {</span>
+<span class="nc" id="L270">            return;</span>
         }
-<span class="nc" id="L277">        String argType = data.getTypeGenericsSimple();</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">        if (argType.equals(&quot;?&quot;)) {</span>
-<span class="nc" id="L279">            argType = &quot;Object&quot;;</span>
+<span class="nc" id="L272">        String argType = data.getTypeGenericsSimple();</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">        if (argType.equals(&quot;?&quot;)) {</span>
+<span class="nc" id="L274">            argType = &quot;Object&quot;;</span>
         }
-<span class="nc bnc" id="L281" title="All 2 branches missed.">        if (argType.startsWith(&quot;? extends &quot;)) {</span>
-<span class="nc" id="L282">            argType = argType.substring(10);</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">        if (argType.startsWith(&quot;? extends &quot;)) {</span>
+<span class="nc" id="L277">            argType = argType.substring(10);</span>
         }
-<span class="nc bnc" id="L284" title="All 4 branches missed.">        boolean safeVarargs = argType.length() == 1 || argType.contains(&quot;&lt;&quot;);</span>
+<span class="nc bnc" id="L279" title="All 4 branches missed.">        boolean safeVarargs = argType.length() == 1 || argType.contains(&quot;&lt;&quot;);</span>
         // generate based on varargs
-<span class="nc" id="L286">        list.add(&quot;\t\t/**&quot;);</span>
-<span class="nc" id="L287">        list.add(&quot;\t\t * Sets the {@code &quot; + data.getPropertyName() + &quot;} property in the builder&quot;);</span>
-<span class="nc" id="L288">        list.add(&quot;\t\t * from an array of objects.&quot;);</span>
-<span class="nc" id="L289">        list.add(&quot;\t\t * @param &quot; + data.getPropertyName() + &quot;  the new value&quot; + data.getNotNullJavadoc());</span>
-<span class="nc" id="L290">        list.add(&quot;\t\t * @return this, for chaining, not null&quot;);</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">            for (String comment : data.getComments()) {</span>
-<span class="nc bnc" id="L293" title="All 2 branches missed.">                if (comment.contains(&quot;@deprecated&quot;)) {</span>
-<span class="nc" id="L294">                    list.add(&quot;\t\t * &quot; + comment);</span>
-                }
-<span class="nc" id="L296">            }</span>
+<span class="nc" id="L281">        list.add(&quot;\t\t/**&quot;);</span>
+<span class="nc" id="L282">        list.add(&quot;\t\t * Sets the {@code &quot; + data.getPropertyName() + &quot;} property in the builder&quot;);</span>
+<span class="nc" id="L283">        list.add(&quot;\t\t * from an array of objects.&quot;);</span>
+<span class="nc" id="L284">        list.add(&quot;\t\t * @param &quot; + data.getPropertyName() + &quot;  the new value&quot; + data.getNotNullJavadoc());</span>
+<span class="nc" id="L285">        list.add(&quot;\t\t * @return this, for chaining, not null&quot;);</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (data.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L287">            list.add(&quot;\t\t * &quot; + data.getDeprecatedComment());</span>
         }
-<span class="nc" id="L298">        list.add(&quot;\t\t */&quot;);</span>
-<span class="nc bnc" id="L299" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
-<span class="nc" id="L300">            list.add(&quot;\t\t@Deprecated&quot;);</span>
+<span class="nc" id="L289">        list.add(&quot;\t\t */&quot;);</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">        if (data.isDeprecated()) {</span>
+<span class="nc" id="L291">            list.add(&quot;\t\t@Deprecated&quot;);</span>
         }
-<span class="nc bnc" id="L302" title="All 2 branches missed.">        if (safeVarargs) {</span>
-<span class="nc" id="L303">            list.add(&quot;\t\t@SafeVarargs&quot;);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        if (safeVarargs) {</span>
+<span class="nc" id="L294">            list.add(&quot;\t\t@SafeVarargs&quot;);</span>
         }
-<span class="nc bnc" id="L305" title="All 2 branches missed.">        list.add(&quot;\t\tpublic &quot; + (safeVarargs ? &quot;final &quot; : &quot;&quot;) +</span>
-<span class="nc" id="L306">                &quot;Builder&quot; + data.getBean().getTypeGenericName(true) + &quot; &quot; + data.getPropertyName() +</span>
-<span class="nc" id="L307">                &quot;(&quot; + argType + &quot;... &quot; + data.getPropertyName() + &quot;) {&quot;);</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">        if (code.contains(&quot;Arrays.asList&quot;)) {</span>
-<span class="nc" id="L309">            data.getBean().ensureImport(Arrays.class);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">        list.add(&quot;\t\tpublic &quot; + (safeVarargs ? &quot;final &quot; : &quot;&quot;) +</span>
+<span class="nc" id="L297">                &quot;Builder&quot; + data.getBean().getTypeGenericName(true) + &quot; &quot; + data.getPropertyName() +</span>
+<span class="nc" id="L298">                &quot;(&quot; + argType + &quot;... &quot; + data.getPropertyName() + &quot;) {&quot;);</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        if (code.contains(&quot;Arrays.asList&quot;)) {</span>
+<span class="nc" id="L300">            data.getBean().ensureImport(Arrays.class);</span>
         }
-<span class="nc" id="L311">        code = code.replace(&quot;$value&quot;, data.getPropertyName());</span>
-<span class="nc" id="L312">        code = code.replace(&quot;&lt;&gt;&quot;, data.getTypeGenerics());</span>
-<span class="nc" id="L313">        list.add(&quot;\t\t\treturn &quot; + data.getPropertyName() + &quot;(&quot; + code + &quot;);&quot;);</span>
-<span class="nc" id="L314">        list.add(&quot;\t\t}&quot;);</span>
-<span class="nc" id="L315">        list.add(&quot;&quot;);</span>
-<span class="nc" id="L316">    }</span>
+<span class="nc" id="L302">        code = code.replace(&quot;$value&quot;, data.getPropertyName());</span>
+<span class="nc" id="L303">        code = code.replace(&quot;&lt;&gt;&quot;, data.getTypeGenerics());</span>
+<span class="nc" id="L304">        list.add(&quot;\t\t\treturn &quot; + data.getPropertyName() + &quot;(&quot; + code + &quot;);&quot;);</span>
+<span class="nc" id="L305">        list.add(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L306">        list.add(&quot;&quot;);</span>
+<span class="nc" id="L307">    }</span>
 
     //-----------------------------------------------------------------------
     private String readWrite() {
-<span class="nc bnc" id="L320" title="All 7 branches missed.">        switch (data.getStyle()) {</span>
+<span class="nc bnc" id="L311" title="All 7 branches missed.">        switch (data.getStyle()) {</span>
             case READ_WRITE:
-<span class="nc" id="L322">                return &quot;ReadWrite&quot;;</span>
+<span class="nc" id="L313">                return &quot;ReadWrite&quot;;</span>
             case READ_ONLY:
-<span class="nc" id="L324">                return &quot;ReadOnly&quot;;</span>
+<span class="nc" id="L315">                return &quot;ReadOnly&quot;;</span>
             case WRITE_ONLY:
-<span class="nc" id="L326">                return &quot;WriteOnly&quot;;</span>
+<span class="nc" id="L317">                return &quot;WriteOnly&quot;;</span>
             case DERIVED:
-<span class="nc" id="L328">                return &quot;Derived&quot;;</span>
+<span class="nc" id="L319">                return &quot;Derived&quot;;</span>
             case READ_ONLY_BUILDABLE:
-<span class="nc" id="L330">                return &quot;ReadOnlyBuildable&quot;;</span>
+<span class="nc" id="L321">                return &quot;ReadOnlyBuildable&quot;;</span>
             case IMMUTABLE:
-<span class="nc" id="L332">                return &quot;Immutable&quot;;</span>
+<span class="nc" id="L323">                return &quot;Immutable&quot;;</span>
             default:
                 break;
         }
-<span class="nc" id="L336">        throw new RuntimeException(&quot;Invalid style&quot;);</span>
+<span class="nc" id="L327">        throw new RuntimeException(&quot;Invalid style&quot;);</span>
     }
 
     private String actualType() {
-<span class="nc" id="L340">        String pt = propertyType();</span>
-<span class="nc bnc" id="L341" title="All 2 branches missed.">        if (pt.equals(data.getType())) {</span>
-<span class="nc" id="L342">            int genericStart = pt.indexOf('&lt;');</span>
-<span class="nc bnc" id="L343" title="All 2 branches missed.">            if (genericStart &gt;= 0) {</span>
-<span class="nc" id="L344">                return &quot;(Class) &quot; + pt.substring(0, genericStart) + &quot;.class&quot;;</span>
+<span class="nc" id="L331">        String pt = propertyType();</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">        if (pt.equals(data.getType())) {</span>
+<span class="nc" id="L333">            int genericStart = pt.indexOf('&lt;');</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">            if (genericStart &gt;= 0) {</span>
+<span class="nc" id="L335">                return &quot;(Class) &quot; + pt.substring(0, genericStart) + &quot;.class&quot;;</span>
             }
-<span class="nc bnc" id="L346" title="All 2 branches missed.">            if (data.getType().length() == 1) {</span>
-<span class="nc" id="L347">                return &quot;Object.class&quot;;</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">            if (data.getType().length() == 1) {</span>
+<span class="nc" id="L338">                return &quot;Object.class&quot;;</span>
             }
-<span class="nc bnc" id="L349" title="All 2 branches missed.">            if (data.isGenericArrayType()) {</span>
-<span class="nc" id="L350">                return &quot;Object[].class&quot;;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">            if (data.isGenericArrayType()) {</span>
+<span class="nc" id="L341">                return &quot;Object[].class&quot;;</span>
             }
-<span class="nc" id="L352">            return pt + &quot;.class&quot;;</span>
+<span class="nc" id="L343">            return pt + &quot;.class&quot;;</span>
         }
-<span class="nc" id="L354">        return pt + &quot;.TYPE&quot;;</span>
+<span class="nc" id="L345">        return pt + &quot;.TYPE&quot;;</span>
     }
 
     private String castObject() {
-<span class="nc" id="L358">        String pt = propertyType();</span>
-<span class="nc" id="L359">        return &quot;(&quot; + pt + &quot;) &quot;;</span>
+<span class="nc" id="L349">        String pt = propertyType();</span>
+<span class="nc" id="L350">        return &quot;(&quot; + pt + &quot;) &quot;;</span>
     }
 
     private String propertyType() {
-<span class="nc" id="L363">        return propertyType(data.getType());</span>
+<span class="nc" id="L354">        return propertyType(data.getType());</span>
     }
 
     private String propertyType(String type) {
-<span class="nc bnc" id="L367" title="All 2 branches missed.">        if (type.equals(&quot;boolean&quot;)) {</span>
-<span class="nc" id="L368">            return &quot;Boolean&quot;;</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">        if (type.equals(&quot;boolean&quot;)) {</span>
+<span class="nc" id="L359">            return &quot;Boolean&quot;;</span>
         }
-<span class="nc bnc" id="L370" title="All 2 branches missed.">        if (type.equals(&quot;byte&quot;)) {</span>
-<span class="nc" id="L371">            return &quot;Byte&quot;;</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        if (type.equals(&quot;byte&quot;)) {</span>
+<span class="nc" id="L362">            return &quot;Byte&quot;;</span>
         }
-<span class="nc bnc" id="L373" title="All 2 branches missed.">        if (type.equals(&quot;short&quot;)) {</span>
-<span class="nc" id="L374">            return &quot;Short&quot;;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        if (type.equals(&quot;short&quot;)) {</span>
+<span class="nc" id="L365">            return &quot;Short&quot;;</span>
         }
-<span class="nc bnc" id="L376" title="All 2 branches missed.">        if (type.equals(&quot;char&quot;)) {</span>
-<span class="nc" id="L377">            return &quot;Character&quot;;</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">        if (type.equals(&quot;char&quot;)) {</span>
+<span class="nc" id="L368">            return &quot;Character&quot;;</span>
         }
-<span class="nc bnc" id="L379" title="All 2 branches missed.">        if (type.equals(&quot;int&quot;)) {</span>
-<span class="nc" id="L380">            return &quot;Integer&quot;;</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">        if (type.equals(&quot;int&quot;)) {</span>
+<span class="nc" id="L371">            return &quot;Integer&quot;;</span>
         }
-<span class="nc bnc" id="L382" title="All 2 branches missed.">        if (type.equals(&quot;long&quot;)) {</span>
-<span class="nc" id="L383">            return &quot;Long&quot;;</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">        if (type.equals(&quot;long&quot;)) {</span>
+<span class="nc" id="L374">            return &quot;Long&quot;;</span>
         }
-<span class="nc bnc" id="L385" title="All 2 branches missed.">        if (type.equals(&quot;float&quot;)) {</span>
-<span class="nc" id="L386">            return &quot;Float&quot;;</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">        if (type.equals(&quot;float&quot;)) {</span>
+<span class="nc" id="L377">            return &quot;Float&quot;;</span>
         }
-<span class="nc bnc" id="L388" title="All 2 branches missed.">        if (type.equals(&quot;double&quot;)) {</span>
-<span class="nc" id="L389">            return &quot;Double&quot;;</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">        if (type.equals(&quot;double&quot;)) {</span>
+<span class="nc" id="L380">            return &quot;Double&quot;;</span>
         }
-<span class="nc" id="L391">        return type;</span>
+<span class="nc" id="L382">        return type;</span>
     }
 
     PropertyData getData() {
-<span class="nc" id="L395">        return data;</span>
+<span class="nc" id="L386">        return data;</span>
     }
 
     // resolves awkward generics
     static String resolveWildcard(String input) {
-<span class="nc bnc" id="L400" title="All 2 branches missed.">        return input.equals(&quot;&lt;?&gt;&quot;) ? &quot;&lt;Object&gt;&quot; : input;</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">        return input.equals(&quot;&lt;?&gt;&quot;) ? &quot;&lt;Object&gt;&quot; : input;</span>
     }
 
 }

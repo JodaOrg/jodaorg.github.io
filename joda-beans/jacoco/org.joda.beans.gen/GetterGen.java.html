@@ -179,109 +179,118 @@ import java.util.List;
 <span class="nc" id="L179">                list.add(&quot;\t * &quot; + comment);</span>
 <span class="nc" id="L180">            }</span>
 <span class="nc" id="L181">            list.add(&quot;\t * @return the optional value of the property, not null&quot;);</span>
-<span class="nc" id="L182">            list.add(&quot;\t */&quot;);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">            if (prop.isOverrideGet()) {</span>
-<span class="nc" id="L184">                list.add(&quot;\t@Override&quot;);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            if (prop.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L183">                list.add(&quot;\t * &quot; + prop.getDeprecatedComment());</span>
             }
-<span class="nc bnc" id="L186" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
-<span class="nc" id="L187">                list.add(&quot;\t@Deprecated&quot;);</span>
+<span class="nc" id="L185">            list.add(&quot;\t */&quot;);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            if (prop.isOverrideGet()) {</span>
+<span class="nc" id="L187">                list.add(&quot;\t@Override&quot;);</span>
             }
-<span class="nc bnc" id="L189" title="All 2 branches missed.">            if (&quot;Double&quot;.equals(prop.getType())) {</span>
-<span class="nc" id="L190">                list.add(&quot;\tpublic OptionalDouble get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
-<span class="nc" id="L191">                list.add(&quot;\t\treturn &quot; + prop.getFieldName() + &quot; != null ? &quot; +</span>
-<span class="nc" id="L192">                    &quot;OptionalDouble.of(&quot; + prop.getFieldName() + &quot;) : OptionalDouble.empty();&quot;);</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">            } else if (&quot;Integer&quot;.equals(prop.getType())) {</span>
-<span class="nc" id="L194">                list.add(&quot;\tpublic OptionalInt get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
-<span class="nc" id="L195">                list.add(&quot;\t\treturn &quot; + prop.getFieldName() + &quot; != null ? &quot; +</span>
-<span class="nc" id="L196">                    &quot;OptionalInt.of(&quot; + prop.getFieldName() + &quot;) : OptionalInt.empty();&quot;);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">            } else if (&quot;Long&quot;.equals(prop.getType())) {</span>
-<span class="nc" id="L198">                list.add(&quot;\tpublic OptionalLong get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
-<span class="nc" id="L199">                list.add(&quot;\t\treturn &quot; + prop.getFieldName() + &quot; != null ? &quot; +</span>
-<span class="nc" id="L200">                    &quot;OptionalLong.of(&quot; + prop.getFieldName() + &quot;) : OptionalLong.empty();&quot;);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
+<span class="nc" id="L190">                list.add(&quot;\t@Deprecated&quot;);</span>
+            }
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            if (&quot;Double&quot;.equals(prop.getType())) {</span>
+<span class="nc" id="L193">                list.add(&quot;\tpublic OptionalDouble get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
+<span class="nc" id="L194">                list.add(&quot;\t\treturn &quot; + prop.getFieldName() + &quot; != null ? &quot; +</span>
+<span class="nc" id="L195">                    &quot;OptionalDouble.of(&quot; + prop.getFieldName() + &quot;) : OptionalDouble.empty();&quot;);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            } else if (&quot;Integer&quot;.equals(prop.getType())) {</span>
+<span class="nc" id="L197">                list.add(&quot;\tpublic OptionalInt get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
+<span class="nc" id="L198">                list.add(&quot;\t\treturn &quot; + prop.getFieldName() + &quot; != null ? &quot; +</span>
+<span class="nc" id="L199">                    &quot;OptionalInt.of(&quot; + prop.getFieldName() + &quot;) : OptionalInt.empty();&quot;);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">            } else if (&quot;Long&quot;.equals(prop.getType())) {</span>
+<span class="nc" id="L201">                list.add(&quot;\tpublic OptionalLong get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
+<span class="nc" id="L202">                list.add(&quot;\t\treturn &quot; + prop.getFieldName() + &quot; != null ? &quot; +</span>
+<span class="nc" id="L203">                    &quot;OptionalLong.of(&quot; + prop.getFieldName() + &quot;) : OptionalLong.empty();&quot;);</span>
             } else {
-<span class="nc" id="L202">                list.add(&quot;\tpublic Optional&lt;&quot; + prop.getType() + &quot;&gt; get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
-<span class="nc" id="L203">                list.add(&quot;\t\treturn Optional.ofNullable(&quot; + prop.getFieldName() + &quot;);&quot;);</span>
+<span class="nc" id="L205">                list.add(&quot;\tpublic Optional&lt;&quot; + prop.getType() + &quot;&gt; get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
+<span class="nc" id="L206">                list.add(&quot;\t\treturn Optional.ofNullable(&quot; + prop.getFieldName() + &quot;);&quot;);</span>
             }
-<span class="nc" id="L205">            list.add(&quot;\t}&quot;);</span>
-<span class="nc" id="L206">            list.add(&quot;&quot;);</span>
-<span class="nc" id="L207">            return list;</span>
+<span class="nc" id="L208">            list.add(&quot;\t}&quot;);</span>
+<span class="nc" id="L209">            list.add(&quot;&quot;);</span>
+<span class="nc" id="L210">            return list;</span>
         }
         @Override
         String generateGetInvoke(PropertyData prop) {
-<span class="nc" id="L211">            return prop.getFieldName();</span>
+<span class="nc" id="L214">            return prop.getFieldName();</span>
         }
     }
 
-<span class="nc" id="L215">    static final class OptionalGuavaGetterGen extends GetterGen {</span>
-<span class="nc" id="L216">        static final GetterGen PUBLIC = new OptionalGuavaGetterGen();</span>
+<span class="nc" id="L218">    static final class OptionalGuavaGetterGen extends GetterGen {</span>
+<span class="nc" id="L219">        static final GetterGen PUBLIC = new OptionalGuavaGetterGen();</span>
         @Override
         List&lt;String&gt; generateGetter(PropertyData prop) {
-<span class="nc" id="L219">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L220">            list.add(&quot;\t/**&quot;);</span>
-<span class="nc" id="L221">            list.add(&quot;\t * Gets &quot; + prop.getFirstComment());</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">            for (String comment : prop.getComments()) {</span>
-<span class="nc" id="L223">                list.add(&quot;\t * &quot; + comment);</span>
-<span class="nc" id="L224">            }</span>
-<span class="nc" id="L225">            list.add(&quot;\t * @return the optional value of the property, not null&quot;);</span>
-<span class="nc" id="L226">            list.add(&quot;\t */&quot;);</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">            if (prop.isOverrideGet()) {</span>
-<span class="nc" id="L228">                list.add(&quot;\t@Override&quot;);</span>
+<span class="nc" id="L222">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L223">            list.add(&quot;\t/**&quot;);</span>
+<span class="nc" id="L224">            list.add(&quot;\t * Gets &quot; + prop.getFirstComment());</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">            for (String comment : prop.getComments()) {</span>
+<span class="nc" id="L226">                list.add(&quot;\t * &quot; + comment);</span>
+<span class="nc" id="L227">            }</span>
+<span class="nc" id="L228">            list.add(&quot;\t * @return the optional value of the property, not null&quot;);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">            if (prop.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L230">                list.add(&quot;\t * &quot; + prop.getDeprecatedComment());</span>
             }
-<span class="nc bnc" id="L230" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
-<span class="nc" id="L231">                list.add(&quot;\t@Deprecated&quot;);</span>
+<span class="nc" id="L232">            list.add(&quot;\t */&quot;);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">            if (prop.isOverrideGet()) {</span>
+<span class="nc" id="L234">                list.add(&quot;\t@Override&quot;);</span>
             }
-<span class="nc" id="L233">            list.add(&quot;\tpublic Optional&lt;&quot; + prop.getType() + &quot;&gt; get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
-<span class="nc" id="L234">            list.add(&quot;\t\treturn Optional.fromNullable(&quot; + prop.getFieldName() + &quot;);&quot;);</span>
-<span class="nc" id="L235">            list.add(&quot;\t}&quot;);</span>
-<span class="nc" id="L236">            list.add(&quot;&quot;);</span>
-<span class="nc" id="L237">            return list;</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
+<span class="nc" id="L237">                list.add(&quot;\t@Deprecated&quot;);</span>
+            }
+<span class="nc" id="L239">            list.add(&quot;\tpublic Optional&lt;&quot; + prop.getType() + &quot;&gt; get&quot; + prop.getUpperName() + &quot;() {&quot;);</span>
+<span class="nc" id="L240">            list.add(&quot;\t\treturn Optional.fromNullable(&quot; + prop.getFieldName() + &quot;);&quot;);</span>
+<span class="nc" id="L241">            list.add(&quot;\t}&quot;);</span>
+<span class="nc" id="L242">            list.add(&quot;&quot;);</span>
+<span class="nc" id="L243">            return list;</span>
         }
         @Override
         String generateGetInvoke(PropertyData prop) {
-<span class="nc" id="L241">            return prop.getFieldName();</span>
+<span class="nc" id="L247">            return prop.getFieldName();</span>
         }
     }
 
-<span class="nc" id="L245">    static class ManualGetterGen extends GetterGen {</span>
-<span class="nc" id="L246">        static final GetterGen INSTANCE = new ManualGetterGen();</span>
+<span class="nc" id="L251">    static class ManualGetterGen extends GetterGen {</span>
+<span class="nc" id="L252">        static final GetterGen INSTANCE = new ManualGetterGen();</span>
         @Override
         List&lt;String&gt; generateGetter(PropertyData prop) {
-<span class="nc" id="L249">            return Collections.emptyList();</span>
+<span class="nc" id="L255">            return Collections.emptyList();</span>
         }
     }
 
-<span class="nc" id="L253">    static class NoGetterGen extends GetterGen {</span>
-<span class="nc" id="L254">        static final GetterGen INSTANCE = new NoGetterGen();</span>
+<span class="nc" id="L259">    static class NoGetterGen extends GetterGen {</span>
+<span class="nc" id="L260">        static final GetterGen INSTANCE = new NoGetterGen();</span>
         @Override
         List&lt;String&gt; generateGetter(PropertyData prop) {
-<span class="nc" id="L257">            return Collections.emptyList();</span>
+<span class="nc" id="L263">            return Collections.emptyList();</span>
         }
         @Override
         String generateGetInvoke(PropertyData prop) {
-<span class="nc" id="L261">            return prop.getFieldName();</span>
+<span class="nc" id="L267">            return prop.getFieldName();</span>
         }
     }
 
     private static List&lt;String&gt; doGenerateGetter(PropertyData prop, String access, String prefix, String expression) {
-<span class="nc" id="L266">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L267">        list.add(&quot;\t/**&quot;);</span>
-<span class="nc" id="L268">        list.add(&quot;\t * Gets &quot; + prop.getFirstComment());</span>
-<span class="nc bnc" id="L269" title="All 2 branches missed.">        for (String comment : prop.getComments()) {</span>
-<span class="nc" id="L270">            list.add(&quot;\t * &quot; + comment);</span>
-<span class="nc" id="L271">        }</span>
-<span class="nc" id="L272">        list.add(&quot;\t * @return the value of the property&quot; + prop.getNotNullJavadoc());</span>
-<span class="nc" id="L273">        list.add(&quot;\t */&quot;);</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">        if (prop.isOverrideGet()) {</span>
-<span class="nc" id="L275">            list.add(&quot;\t@Override&quot;);</span>
+<span class="nc" id="L272">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L273">        list.add(&quot;\t/**&quot;);</span>
+<span class="nc" id="L274">        list.add(&quot;\t * Gets &quot; + prop.getFirstComment());</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">        for (String comment : prop.getComments()) {</span>
+<span class="nc" id="L276">            list.add(&quot;\t * &quot; + comment);</span>
+<span class="nc" id="L277">        }</span>
+<span class="nc" id="L278">        list.add(&quot;\t * @return the value of the property&quot; + prop.getNotNullJavadoc());</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">        if (prop.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L280">            list.add(&quot;\t * &quot; + prop.getDeprecatedComment());</span>
         }
-<span class="nc bnc" id="L277" title="All 2 branches missed.">        if (prop.isDeprecated()) {</span>
-<span class="nc" id="L278">            list.add(&quot;\t@Deprecated&quot;);</span>
+<span class="nc" id="L282">        list.add(&quot;\t */&quot;);</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">        if (prop.isOverrideGet()) {</span>
+<span class="nc" id="L284">            list.add(&quot;\t@Override&quot;);</span>
         }
-<span class="nc" id="L280">        list.add(&quot;\t&quot; + access + prop.getType() + &quot; &quot; + prefix + prop.getUpperName() + &quot;() {&quot;);</span>
-<span class="nc" id="L281">        list.add(&quot;\t\treturn &quot; + expression + &quot;;&quot;);</span>
-<span class="nc" id="L282">        list.add(&quot;\t}&quot;);</span>
-<span class="nc" id="L283">        list.add(&quot;&quot;);</span>
-<span class="nc" id="L284">        return list;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (prop.isDeprecated()) {</span>
+<span class="nc" id="L287">            list.add(&quot;\t@Deprecated&quot;);</span>
+        }
+<span class="nc" id="L289">        list.add(&quot;\t&quot; + access + prop.getType() + &quot; &quot; + prefix + prop.getUpperName() + &quot;() {&quot;);</span>
+<span class="nc" id="L290">        list.add(&quot;\t\treturn &quot; + expression + &quot;;&quot;);</span>
+<span class="nc" id="L291">        list.add(&quot;\t}&quot;);</span>
+<span class="nc" id="L292">        list.add(&quot;&quot;);</span>
+<span class="nc" id="L293">        return list;</span>
     }
 
 }

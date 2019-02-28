@@ -83,21 +83,24 @@ import java.util.List;
 <span class="nc" id="L83">                list.add(&quot;\t * &quot; + comment);</span>
 <span class="nc" id="L84">            }</span>
 <span class="nc" id="L85">            list.add(&quot;\t * @param &quot; + prop.getPropertyName() + &quot;  the new value of the property&quot; + prop.getNotNullJavadoc());</span>
-<span class="nc" id="L86">            list.add(&quot;\t */&quot;);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">            if (prop.isOverrideSet()) {</span>
-<span class="nc" id="L88">                list.add(&quot;\t@Override&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (prop.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L87">                list.add(&quot;\t * &quot; + prop.getDeprecatedComment());</span>
             }
-<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
-<span class="nc" id="L91">                list.add(&quot;\t@Deprecated&quot;);</span>
+<span class="nc" id="L89">            list.add(&quot;\t */&quot;);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (prop.isOverrideSet()) {</span>
+<span class="nc" id="L91">                list.add(&quot;\t@Override&quot;);</span>
             }
-<span class="nc" id="L93">            list.add(&quot;\t&quot; + access + &quot;void set&quot; + prop.getUpperName() + &quot;(&quot; + prop.getType() +  &quot; &quot; + prop.getPropertyName() + &quot;) {&quot;);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (prop.isValidated()) {</span>
-<span class="nc" id="L95">                list.add(&quot;\t\t&quot; + prop.getValidationMethodName() + &quot;(&quot; + prop.getPropertyName() + &quot;, \&quot;&quot; + prop.getPropertyName() + &quot;\&quot;);&quot;);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
+<span class="nc" id="L94">                list.add(&quot;\t@Deprecated&quot;);</span>
             }
-<span class="nc" id="L97">            list.add(&quot;\t\tthis.&quot; + prop.getFieldName() + &quot; = &quot; + prop.getPropertyName() + &quot;;&quot;);</span>
-<span class="nc" id="L98">            list.add(&quot;\t}&quot;);</span>
-<span class="nc" id="L99">            list.add(&quot;&quot;);</span>
-<span class="nc" id="L100">            return list;</span>
+<span class="nc" id="L96">            list.add(&quot;\t&quot; + access + &quot;void set&quot; + prop.getUpperName() + &quot;(&quot; + prop.getType() +  &quot; &quot; + prop.getPropertyName() + &quot;) {&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            if (prop.isValidated()) {</span>
+<span class="nc" id="L98">                list.add(&quot;\t\t&quot; + prop.getValidationMethodName() + &quot;(&quot; + prop.getPropertyName() + &quot;, \&quot;&quot; + prop.getPropertyName() + &quot;\&quot;);&quot;);</span>
+            }
+<span class="nc" id="L100">            list.add(&quot;\t\tthis.&quot; + prop.getFieldName() + &quot; = &quot; + prop.getPropertyName() + &quot;;&quot;);</span>
+<span class="nc" id="L101">            list.add(&quot;\t}&quot;);</span>
+<span class="nc" id="L102">            list.add(&quot;&quot;);</span>
+<span class="nc" id="L103">            return list;</span>
         }
     }
 
@@ -105,113 +108,119 @@ import java.util.List;
         private final String setPattern;
         private final String access;
         PatternSetterGen(String setPattern) {
-<span class="nc" id="L108">            this(setPattern, &quot;public&quot;);</span>
-<span class="nc" id="L109">        }</span>
-<span class="nc" id="L110">        PatternSetterGen(String setPattern, String access) {</span>
-<span class="nc" id="L111">            this.setPattern = setPattern;</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">            this.access = (access.equals(&quot;package&quot;) ? &quot;&quot; : access + ' ');;</span>
-<span class="nc" id="L113">        }</span>
+<span class="nc" id="L111">            this(setPattern, &quot;public&quot;);</span>
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">        PatternSetterGen(String setPattern, String access) {</span>
+<span class="nc" id="L114">            this.setPattern = setPattern;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            this.access = (access.equals(&quot;package&quot;) ? &quot;&quot; : access + ' ');;</span>
+<span class="nc" id="L116">        }</span>
         @Override
         boolean isSetterGenerated(PropertyData prop) {
-<span class="nc" id="L116">            return true;</span>
+<span class="nc" id="L119">            return true;</span>
         }
         @Override
         List&lt;String&gt; generateSetter(String indent, PropertyData prop) {
-<span class="nc" id="L120">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L121">            list.add(indent + &quot;/**&quot;);</span>
-<span class="nc" id="L122">            list.add(indent + &quot; * Sets &quot; + prop.getFirstComment());</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">            for (String comment : prop.getComments()) {</span>
-<span class="nc" id="L124">                list.add(indent + &quot; * &quot; + comment);</span>
-<span class="nc" id="L125">            }</span>
-<span class="nc" id="L126">            list.add(indent + &quot; * @param &quot; + prop.getPropertyName() + &quot;  the new value of the property&quot; + prop.getNotNullJavadoc());</span>
-<span class="nc" id="L127">            list.add(indent + &quot; */&quot;);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">            if (prop.isOverrideSet()) {</span>
-<span class="nc" id="L129">                list.add(&quot;\t@Override&quot;);</span>
+<span class="nc" id="L123">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L124">            list.add(indent + &quot;/**&quot;);</span>
+<span class="nc" id="L125">            list.add(indent + &quot; * Sets &quot; + prop.getFirstComment());</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            for (String comment : prop.getComments()) {</span>
+<span class="nc" id="L127">                list.add(indent + &quot; * &quot; + comment);</span>
+<span class="nc" id="L128">            }</span>
+<span class="nc" id="L129">            list.add(indent + &quot; * @param &quot; + prop.getPropertyName() + &quot;  the new value of the property&quot; + prop.getNotNullJavadoc());</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            if (prop.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L131">                list.add(indent + &quot; * &quot; + prop.getDeprecatedComment());</span>
             }
-<span class="nc bnc" id="L131" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
-<span class="nc" id="L132">                list.add(indent + &quot;@Deprecated&quot;);</span>
+<span class="nc" id="L133">            list.add(indent + &quot; */&quot;);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            if (prop.isOverrideSet()) {</span>
+<span class="nc" id="L135">                list.add(&quot;\t@Override&quot;);</span>
             }
-<span class="nc" id="L134">            list.add(indent + access + &quot;void set&quot; + prop.getUpperName() + &quot;(&quot; + prop.getType() +  &quot; &quot; + prop.getPropertyName() + &quot;) {&quot;);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (prop.isValidated()) {</span>
-<span class="nc" id="L136">                list.add(&quot;\t\t&quot; + prop.getValidationMethodName() + &quot;(&quot; + prop.getPropertyName() + &quot;, \&quot;&quot; + prop.getPropertyName() + &quot;\&quot;);&quot;);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
+<span class="nc" id="L138">                list.add(indent + &quot;@Deprecated&quot;);</span>
             }
-<span class="nc" id="L138">            final String[] split = setPattern.split(&quot;\n&quot;);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">            for (String line : split) {</span>
-<span class="nc" id="L140">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
-<span class="nc" id="L141">                line = line.replace(&quot;$value&quot;, prop.getPropertyName());</span>
-<span class="nc bnc" id="L142" title="All 4 branches missed.">                if (split.length == 1 &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
-<span class="nc" id="L143">                    line += &quot;;&quot;;</span>
+<span class="nc" id="L140">            list.add(indent + access + &quot;void set&quot; + prop.getUpperName() + &quot;(&quot; + prop.getType() +  &quot; &quot; + prop.getPropertyName() + &quot;) {&quot;);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            if (prop.isValidated()) {</span>
+<span class="nc" id="L142">                list.add(&quot;\t\t&quot; + prop.getValidationMethodName() + &quot;(&quot; + prop.getPropertyName() + &quot;, \&quot;&quot; + prop.getPropertyName() + &quot;\&quot;);&quot;);</span>
+            }
+<span class="nc" id="L144">            final String[] split = setPattern.split(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">            for (String line : split) {</span>
+<span class="nc" id="L146">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
+<span class="nc" id="L147">                line = line.replace(&quot;$value&quot;, prop.getPropertyName());</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">                if (split.length == 1 &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
+<span class="nc" id="L149">                    line += &quot;;&quot;;</span>
                 }
-<span class="nc" id="L145">                list.add(indent + &quot;\t&quot; + line);</span>
+<span class="nc" id="L151">                list.add(indent + &quot;\t&quot; + line);</span>
             }
-<span class="nc" id="L147">            list.add(indent + &quot;}&quot;);</span>
-<span class="nc" id="L148">            list.add(&quot;&quot;);</span>
-<span class="nc" id="L149">            return list;</span>
+<span class="nc" id="L153">            list.add(indent + &quot;}&quot;);</span>
+<span class="nc" id="L154">            list.add(&quot;&quot;);</span>
+<span class="nc" id="L155">            return list;</span>
         }
     }
 
-<span class="nc" id="L153">    static class NoSetterGen extends SetterGen {</span>
-<span class="nc" id="L154">        static final SetterGen INSTANCE = new NoSetterGen();</span>
+<span class="nc" id="L159">    static class NoSetterGen extends SetterGen {</span>
+<span class="nc" id="L160">        static final SetterGen INSTANCE = new NoSetterGen();</span>
         @Override
         boolean isSetterGenerated(PropertyData prop) {
-<span class="nc" id="L157">            return false;</span>
+<span class="nc" id="L163">            return false;</span>
         }
         @Override
         List&lt;String&gt; generateSetter(String indent, PropertyData prop) {
-<span class="nc" id="L161">            return Collections.emptyList();</span>
+<span class="nc" id="L167">            return Collections.emptyList();</span>
         }
     }
 
-<span class="nc" id="L165">    static class FieldSetterGen extends SetterGen {</span>
-<span class="nc" id="L166">        static final SetterGen INSTANCE = new FieldSetterGen();</span>
+<span class="nc" id="L171">    static class FieldSetterGen extends SetterGen {</span>
+<span class="nc" id="L172">        static final SetterGen INSTANCE = new FieldSetterGen();</span>
         @Override
         boolean isSetterGenerated(PropertyData prop) {
-<span class="nc" id="L169">            return true;</span>
+<span class="nc" id="L175">            return true;</span>
         }
         @Override
         List&lt;String&gt; generateSetter(String indent, PropertyData prop) {
-<span class="nc" id="L173">            return Collections.emptyList();</span>
+<span class="nc" id="L179">            return Collections.emptyList();</span>
         }
         @Override
         String generateSetInvoke(PropertyData prop, String newValue) {
-<span class="nc" id="L177">            return prop.getFieldName() + &quot; = &quot; + newValue;</span>
+<span class="nc" id="L183">            return prop.getFieldName() + &quot; = &quot; + newValue;</span>
         }
     }
 
-<span class="nc" id="L181">    static class ObservableSetterGen extends SetterGen {</span>
-<span class="nc" id="L182">        static final SetterGen PUBLIC = new ObservableSetterGen();</span>
+<span class="nc" id="L187">    static class ObservableSetterGen extends SetterGen {</span>
+<span class="nc" id="L188">        static final SetterGen PUBLIC = new ObservableSetterGen();</span>
         @Override
         boolean isSetterGenerated(PropertyData prop) {
-<span class="nc" id="L185">            return true;</span>
+<span class="nc" id="L191">            return true;</span>
         }
         @Override
         List&lt;String&gt; generateSetter(String indent, PropertyData prop) {
-<span class="nc" id="L189">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L190">            list.add(&quot;\t/**&quot;);</span>
-<span class="nc" id="L191">            list.add(&quot;\t * Sets &quot; + prop.getFirstComment());</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">            for (String comment : prop.getComments()) {</span>
-<span class="nc" id="L193">                list.add(&quot;\t * &quot; + comment);</span>
-<span class="nc" id="L194">            }</span>
-<span class="nc" id="L195">            list.add(&quot;\t * @param &quot; + prop.getPropertyName() + &quot;  the new value of the property&quot; + prop.getNotNullJavadoc());</span>
-<span class="nc" id="L196">            list.add(&quot;\t */&quot;);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">            if (prop.isOverrideSet()) {</span>
-<span class="nc" id="L198">                list.add(&quot;\t@Override&quot;);</span>
+<span class="nc" id="L195">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L196">            list.add(&quot;\t/**&quot;);</span>
+<span class="nc" id="L197">            list.add(&quot;\t * Sets &quot; + prop.getFirstComment());</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">            for (String comment : prop.getComments()) {</span>
+<span class="nc" id="L199">                list.add(&quot;\t * &quot; + comment);</span>
+<span class="nc" id="L200">            }</span>
+<span class="nc" id="L201">            list.add(&quot;\t * @param &quot; + prop.getPropertyName() + &quot;  the new value of the property&quot; + prop.getNotNullJavadoc());</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (prop.getDeprecatedComment() != null) {</span>
+<span class="nc" id="L203">                list.add(&quot;\t * &quot; + prop.getDeprecatedComment());</span>
             }
-<span class="nc bnc" id="L200" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
-<span class="nc" id="L201">                list.add(&quot;\t@Deprecated&quot;);</span>
+<span class="nc" id="L205">            list.add(&quot;\t */&quot;);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">            if (prop.isOverrideSet()) {</span>
+<span class="nc" id="L207">                list.add(&quot;\t@Override&quot;);</span>
             }
-<span class="nc" id="L203">            list.add(&quot;\tpublic void set&quot; + prop.getUpperName() + &quot;(&quot; + prop.getType() +  &quot; &quot; + prop.getPropertyName() + &quot;) {&quot;);</span>
-<span class="nc bnc" id="L204" title="All 2 branches missed.">            if (prop.isValidated()) {</span>
-<span class="nc" id="L205">                list.add(&quot;\t\t&quot; + prop.getValidationMethodName() + &quot;(&quot; + prop.getPropertyName() + &quot;, \&quot;&quot; + prop.getPropertyName() + &quot;\&quot;);&quot;);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">            if (prop.isDeprecated()) {</span>
+<span class="nc" id="L210">                list.add(&quot;\t@Deprecated&quot;);</span>
             }
-<span class="nc" id="L207">            String old = &quot;old&quot; + prop.getUpperName();</span>
-<span class="nc" id="L208">            list.add(&quot;\t\t&quot; + prop.getFieldType() + &quot; &quot; + old + &quot; = this.&quot; + prop.getFieldName() + &quot;;&quot;);</span>
-<span class="nc" id="L209">            list.add(&quot;\t\tthis.&quot; + prop.getFieldName() + &quot; = &quot; + prop.getPropertyName() + &quot;;&quot;);</span>
-<span class="nc" id="L210">            list.add(&quot;\t\tthis.&quot; + prop.getConfig().getPrefix() + &quot;propertyChangeSupport.firePropertyChange(\&quot;&quot; +</span>
-<span class="nc" id="L211">                prop.getPropertyName() + &quot;\&quot;, &quot; + old + &quot;, &quot; + prop.getPropertyName() + &quot;);&quot;);</span>
-<span class="nc" id="L212">            list.add(&quot;\t}&quot;);</span>
-<span class="nc" id="L213">            list.add(&quot;&quot;);</span>
-<span class="nc" id="L214">            return list;</span>
+<span class="nc" id="L212">            list.add(&quot;\tpublic void set&quot; + prop.getUpperName() + &quot;(&quot; + prop.getType() +  &quot; &quot; + prop.getPropertyName() + &quot;) {&quot;);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (prop.isValidated()) {</span>
+<span class="nc" id="L214">                list.add(&quot;\t\t&quot; + prop.getValidationMethodName() + &quot;(&quot; + prop.getPropertyName() + &quot;, \&quot;&quot; + prop.getPropertyName() + &quot;\&quot;);&quot;);</span>
+            }
+<span class="nc" id="L216">            String old = &quot;old&quot; + prop.getUpperName();</span>
+<span class="nc" id="L217">            list.add(&quot;\t\t&quot; + prop.getFieldType() + &quot; &quot; + old + &quot; = this.&quot; + prop.getFieldName() + &quot;;&quot;);</span>
+<span class="nc" id="L218">            list.add(&quot;\t\tthis.&quot; + prop.getFieldName() + &quot; = &quot; + prop.getPropertyName() + &quot;;&quot;);</span>
+<span class="nc" id="L219">            list.add(&quot;\t\tthis.&quot; + prop.getConfig().getPrefix() + &quot;propertyChangeSupport.firePropertyChange(\&quot;&quot; +</span>
+<span class="nc" id="L220">                prop.getPropertyName() + &quot;\&quot;, &quot; + old + &quot;, &quot; + prop.getPropertyName() + &quot;);&quot;);</span>
+<span class="nc" id="L221">            list.add(&quot;\t}&quot;);</span>
+<span class="nc" id="L222">            list.add(&quot;&quot;);</span>
+<span class="nc" id="L223">            return list;</span>
         }
     }
 
