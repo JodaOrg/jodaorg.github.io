@@ -24,31 +24,29 @@ import java.util.regex.Pattern;
 
 /**
  * A property parsed from the source file.
- * 
- * @author Stephen Colebourne
  */
 class PropertyParser {
 
     /** The getter pattern. */
-<span class="nc" id="L33">    private static final Pattern ALIAS_PATTERN = Pattern.compile(&quot;.*[ ,(]alias[ ]*[=][ ]*[\&quot;]([a-zA-z_][a-zA-z0-9_]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L31">    private static final Pattern ALIAS_PATTERN = Pattern.compile(&quot;.*[ ,(]alias[ ]*[=][ ]*[\&quot;]([a-zA-z_][a-zA-z0-9_]*)[\&quot;].*&quot;);</span>
     /** The getter pattern. */
-<span class="nc" id="L35">    private static final Pattern GETTER_PATTERN = Pattern.compile(&quot;.*[ ,(]get[ ]*[=][ ]*[\&quot;]([a-zA-Z-]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L33">    private static final Pattern GETTER_PATTERN = Pattern.compile(&quot;.*[ ,(]get[ ]*[=][ ]*[\&quot;]([a-zA-Z-]*)[\&quot;].*&quot;);</span>
     /** The setter pattern. */
-<span class="nc" id="L37">    private static final Pattern SETTER_PATTERN = Pattern.compile(&quot;.*[ ,(]set[ ]*[=][ ]*[\&quot;]([ !#-~]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L35">    private static final Pattern SETTER_PATTERN = Pattern.compile(&quot;.*[ ,(]set[ ]*[=][ ]*[\&quot;]([ !#-~]*)[\&quot;].*&quot;);</span>
     /** The override pattern. */
-<span class="nc" id="L39">    private static final Pattern OVERRIDE_GET_PATTERN = Pattern.compile(&quot;.*[ ,(]overrideGet[ ]*[=][ ]*(true|false).*&quot;);</span>
+<span class="nc" id="L37">    private static final Pattern OVERRIDE_GET_PATTERN = Pattern.compile(&quot;.*[ ,(]overrideGet[ ]*[=][ ]*(true|false).*&quot;);</span>
     /** The override pattern. */
-<span class="nc" id="L41">    private static final Pattern OVERRIDE_SET_PATTERN = Pattern.compile(&quot;.*[ ,(]overrideSet[ ]*[=][ ]*(true|false).*&quot;);</span>
+<span class="nc" id="L39">    private static final Pattern OVERRIDE_SET_PATTERN = Pattern.compile(&quot;.*[ ,(]overrideSet[ ]*[=][ ]*(true|false).*&quot;);</span>
     /** The type pattern. */
-<span class="nc" id="L43">    private static final Pattern TYPE_PATTERN = Pattern.compile(&quot;.*[ ,(]type[ ]*[=][ ]*[\&quot;]([a-zA-Z0-9 ,_&lt;&gt;?.]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L41">    private static final Pattern TYPE_PATTERN = Pattern.compile(&quot;.*[ ,(]type[ ]*[=][ ]*[\&quot;]([a-zA-Z0-9 ,_&lt;&gt;?.]*)[\&quot;].*&quot;);</span>
     /** The type builder pattern. */
-<span class="nc" id="L45">    private static final Pattern BUILDER_TYPE_PATTERN = Pattern.compile(&quot;.*[ ,(]builderType[ ]*[=][ ]*[\&quot;]([a-zA-Z0-9 ,_&lt;&gt;?.]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L43">    private static final Pattern BUILDER_TYPE_PATTERN = Pattern.compile(&quot;.*[ ,(]builderType[ ]*[=][ ]*[\&quot;]([a-zA-Z0-9 ,_&lt;&gt;?.]*)[\&quot;].*&quot;);</span>
     /** The equalsHashCode pattern. */
-<span class="nc" id="L47">    private static final Pattern EQ_HASH_PATTERN = Pattern.compile(&quot;.*[ ,(]equalsHashCodeStyle[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L45">    private static final Pattern EQ_HASH_PATTERN = Pattern.compile(&quot;.*[ ,(]equalsHashCodeStyle[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The toString pattern. */
-<span class="nc" id="L49">    private static final Pattern TO_STR_PATTERN = Pattern.compile(&quot;.*[ ,(]toStringStyle[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L47">    private static final Pattern TO_STR_PATTERN = Pattern.compile(&quot;.*[ ,(]toStringStyle[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The validation pattern. */
-<span class="nc" id="L51">    private static final Pattern VALIDATION_PATTERN = Pattern.compile(&quot;.*[ ,(]validate[ ]*[=][ ]*[\&quot;]([a-zA-Z_.]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L49">    private static final Pattern VALIDATION_PATTERN = Pattern.compile(&quot;.*[ ,(]validate[ ]*[=][ ]*[\&quot;]([a-zA-Z_.]*)[\&quot;].*&quot;);</span>
 
     /** The bean generator. */
     private final BeanParser beanParser;
@@ -63,407 +61,407 @@ class PropertyParser {
      * Constructor.
      * @param beanParser  the bean parser
      */
-<span class="nc" id="L66">    PropertyParser(BeanParser beanParser) {</span>
-<span class="nc" id="L67">        this.beanParser = beanParser;</span>
-<span class="nc" id="L68">    }</span>
+<span class="nc" id="L64">    PropertyParser(BeanParser beanParser) {</span>
+<span class="nc" id="L65">        this.beanParser = beanParser;</span>
+<span class="nc" id="L66">    }</span>
 
     //-----------------------------------------------------------------------
     PropertyGen parse(BeanData beanData, List&lt;String&gt; content, int lineIndex) {
-<span class="nc" id="L72">        propertyIndex = lineIndex;</span>
-<span class="nc" id="L73">        annotationIndex = parseAnnotationStart(content, lineIndex);</span>
-<span class="nc" id="L74">        fieldIndex = parseCodeIndex(content);</span>
-<span class="nc" id="L75">        PropertyData data = new PropertyData(beanData, beanParser.getConfig(), lineIndex);</span>
-<span class="nc" id="L76">        data.setAlias(parseAlias(content));</span>
-<span class="nc" id="L77">        data.setGetStyle(parseGetStyle(content));</span>
-<span class="nc" id="L78">        data.setSetStyle(parseSetStyle(content));</span>
-<span class="nc" id="L79">        data.setOverrideGet(parseOverrideGet(content));</span>
-<span class="nc" id="L80">        data.setOverrideSet(parseOverrideSet(content));</span>
-<span class="nc" id="L81">        data.setTypeStyle(parseTypeStyle(content));</span>
-<span class="nc" id="L82">        data.setBuilderTypeStyle(parseBuilderTypeStyle(content));</span>
-<span class="nc" id="L83">        data.setEqualsHashCodeStyle(parseEqualsHashCodeStyle(content));</span>
-<span class="nc" id="L84">        data.setToStringStyle(parseToStringStyle(content));</span>
-<span class="nc" id="L85">        data.setValidation(parseValidation(content));</span>
-<span class="nc" id="L86">        data.setDeprecated(parseDeprecated(content));</span>
-<span class="nc" id="L87">        data.setFieldName(parseFieldName(content));</span>
-<span class="nc" id="L88">        data.setPropertyName(makePropertyName(data.getFieldName()));</span>
-<span class="nc" id="L89">        data.setUpperName(makeUpperName(data.getPropertyName()));</span>
-<span class="nc" id="L90">        data.setFinal(parseFinal(content));</span>
-<span class="nc" id="L91">        data.setFieldType(parseFieldType(content));</span>
-<span class="nc" id="L92">        data.setInitializer(parseFieldInitializer(content));</span>
-<span class="nc" id="L93">        data.resolveType();</span>
-<span class="nc" id="L94">        data.resolveBuilderType();</span>
-<span class="nc" id="L95">        data.resolveValidation();</span>
-<span class="nc" id="L96">        data.resolveGetterGen(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L97">        data.resolveSetterGen(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L98">        data.resolveCopyGen(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L99">        data.resolveBuilderGen();</span>
-<span class="nc" id="L100">        data.resolveEqualsHashCodeStyle(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L101">        data.resolveToStringStyle(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L102">        data.setMetaFieldName(beanParser.getFieldPrefix() + data.getPropertyName());</span>
-<span class="nc" id="L103">        parseComments(content, data);</span>
-<span class="nc bnc" id="L104" title="All 6 branches missed.">        if (beanData.isBeanStyleLightOrMinimal() &amp;&amp; beanData.isMutable() &amp;&amp; data.getSetterGen() instanceof SetterGen.NoSetterGen) {</span>
-<span class="nc" id="L105">            throw new IllegalArgumentException(&quot;Light and Minimal style beans do not support final fields when mutable&quot;);</span>
+<span class="nc" id="L70">        propertyIndex = lineIndex;</span>
+<span class="nc" id="L71">        annotationIndex = parseAnnotationStart(content, lineIndex);</span>
+<span class="nc" id="L72">        fieldIndex = parseCodeIndex(content);</span>
+<span class="nc" id="L73">        PropertyData data = new PropertyData(beanData, beanParser.getConfig(), lineIndex);</span>
+<span class="nc" id="L74">        data.setAlias(parseAlias(content));</span>
+<span class="nc" id="L75">        data.setGetStyle(parseGetStyle(content));</span>
+<span class="nc" id="L76">        data.setSetStyle(parseSetStyle(content));</span>
+<span class="nc" id="L77">        data.setOverrideGet(parseOverrideGet(content));</span>
+<span class="nc" id="L78">        data.setOverrideSet(parseOverrideSet(content));</span>
+<span class="nc" id="L79">        data.setTypeStyle(parseTypeStyle(content));</span>
+<span class="nc" id="L80">        data.setBuilderTypeStyle(parseBuilderTypeStyle(content));</span>
+<span class="nc" id="L81">        data.setEqualsHashCodeStyle(parseEqualsHashCodeStyle(content));</span>
+<span class="nc" id="L82">        data.setToStringStyle(parseToStringStyle(content));</span>
+<span class="nc" id="L83">        data.setValidation(parseValidation(content));</span>
+<span class="nc" id="L84">        data.setDeprecated(parseDeprecated(content));</span>
+<span class="nc" id="L85">        data.setFieldName(parseFieldName(content));</span>
+<span class="nc" id="L86">        data.setPropertyName(makePropertyName(data.getFieldName()));</span>
+<span class="nc" id="L87">        data.setUpperName(makeUpperName(data.getPropertyName()));</span>
+<span class="nc" id="L88">        data.setFinal(parseFinal(content));</span>
+<span class="nc" id="L89">        data.setFieldType(parseFieldType(content));</span>
+<span class="nc" id="L90">        data.setInitializer(parseFieldInitializer(content));</span>
+<span class="nc" id="L91">        data.resolveType();</span>
+<span class="nc" id="L92">        data.resolveBuilderType();</span>
+<span class="nc" id="L93">        data.resolveValidation();</span>
+<span class="nc" id="L94">        data.resolveGetterGen(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L95">        data.resolveSetterGen(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L96">        data.resolveCopyGen(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L97">        data.resolveBuilderGen();</span>
+<span class="nc" id="L98">        data.resolveEqualsHashCodeStyle(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L99">        data.resolveToStringStyle(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L100">        data.setMetaFieldName(beanParser.getFieldPrefix() + data.getPropertyName());</span>
+<span class="nc" id="L101">        parseComments(content, data);</span>
+<span class="nc bnc" id="L102" title="All 6 branches missed.">        if (beanData.isBeanStyleLightOrMinimal() &amp;&amp; beanData.isMutable() &amp;&amp; data.getSetterGen() instanceof SetterGen.NoSetterGen) {</span>
+<span class="nc" id="L103">            throw new IllegalArgumentException(&quot;Light and Minimal style beans do not support final fields when mutable&quot;);</span>
         }
-<span class="nc" id="L107">        return new PropertyGen(data);</span>
+<span class="nc" id="L105">        return new PropertyGen(data);</span>
     }
 
     PropertyGen parseDerived(BeanData beanData, List&lt;String&gt; content, int lineIndex) {
-<span class="nc" id="L111">        propertyIndex = lineIndex;</span>
-<span class="nc" id="L112">        annotationIndex = parseAnnotationStart(content, lineIndex);</span>
-<span class="nc" id="L113">        fieldIndex = parseCodeIndex(content);</span>
-<span class="nc" id="L114">        PropertyData data = new PropertyData(beanData, beanParser.getConfig(), lineIndex);</span>
-<span class="nc" id="L115">        data.setGetStyle(&quot;manual&quot;);</span>
-<span class="nc" id="L116">        data.setSetStyle(&quot;&quot;);</span>
-<span class="nc" id="L117">        data.setTypeStyle(&quot;&quot;);</span>
-<span class="nc" id="L118">        data.setBuilderTypeStyle(&quot;&quot;);</span>
-<span class="nc" id="L119">        data.setDeprecated(parseDeprecated(content));</span>
-<span class="nc" id="L120">        data.setPropertyName(parseMethodNameAsPropertyName(content));</span>
-<span class="nc" id="L121">        data.setUpperName(makeUpperName(data.getPropertyName()));</span>
-<span class="nc" id="L122">        data.setFieldType(parseMethodType(content));</span>
-<span class="nc" id="L123">        data.setInitializer(parseFieldInitializer(content));</span>
-<span class="nc" id="L124">        data.resolveType();</span>
-<span class="nc" id="L125">        data.resolveBuilderType();</span>
-<span class="nc" id="L126">        data.resolveValidation();</span>
-<span class="nc" id="L127">        data.resolveGetterGen(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L128">        data.resolveSetterGen(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L129">        data.resolveCopyGen(beanParser.getFile(), lineIndex);</span>
-<span class="nc" id="L130">        data.resolveBuilderGen();</span>
-<span class="nc" id="L131">        data.setMetaFieldName(beanParser.getFieldPrefix() + data.getPropertyName());</span>
-<span class="nc" id="L132">        parseComments(content, data);</span>
-<span class="nc" id="L133">        return new PropertyGen(data);</span>
+<span class="nc" id="L109">        propertyIndex = lineIndex;</span>
+<span class="nc" id="L110">        annotationIndex = parseAnnotationStart(content, lineIndex);</span>
+<span class="nc" id="L111">        fieldIndex = parseCodeIndex(content);</span>
+<span class="nc" id="L112">        PropertyData data = new PropertyData(beanData, beanParser.getConfig(), lineIndex);</span>
+<span class="nc" id="L113">        data.setGetStyle(&quot;manual&quot;);</span>
+<span class="nc" id="L114">        data.setSetStyle(&quot;&quot;);</span>
+<span class="nc" id="L115">        data.setTypeStyle(&quot;&quot;);</span>
+<span class="nc" id="L116">        data.setBuilderTypeStyle(&quot;&quot;);</span>
+<span class="nc" id="L117">        data.setDeprecated(parseDeprecated(content));</span>
+<span class="nc" id="L118">        data.setPropertyName(parseMethodNameAsPropertyName(content));</span>
+<span class="nc" id="L119">        data.setUpperName(makeUpperName(data.getPropertyName()));</span>
+<span class="nc" id="L120">        data.setFieldType(parseMethodType(content));</span>
+<span class="nc" id="L121">        data.setInitializer(parseFieldInitializer(content));</span>
+<span class="nc" id="L122">        data.resolveType();</span>
+<span class="nc" id="L123">        data.resolveBuilderType();</span>
+<span class="nc" id="L124">        data.resolveValidation();</span>
+<span class="nc" id="L125">        data.resolveGetterGen(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L126">        data.resolveSetterGen(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L127">        data.resolveCopyGen(beanParser.getFile(), lineIndex);</span>
+<span class="nc" id="L128">        data.resolveBuilderGen();</span>
+<span class="nc" id="L129">        data.setMetaFieldName(beanParser.getFieldPrefix() + data.getPropertyName());</span>
+<span class="nc" id="L130">        parseComments(content, data);</span>
+<span class="nc" id="L131">        return new PropertyGen(data);</span>
     }
 
     private void parseComments(List&lt;String&gt; content, PropertyData data) {
-<span class="nc" id="L137">        List&lt;String&gt; comments = parseComment(content, data.getPropertyName());</span>
-<span class="nc" id="L138">        data.setFirstComment(comments.get(0));</span>
-<span class="nc" id="L139">        data.getComments().addAll(comments.subList(1, comments.size()));</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">        for (Iterator&lt;String&gt; it = data.getComments().iterator(); it.hasNext(); ) {</span>
-<span class="nc" id="L141">            String comment = it.next();</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">            if (comment.trim().startsWith(&quot;@deprecated&quot;)) {</span>
-<span class="nc" id="L143">                data.setDeprecatedComment(comment.trim());</span>
-<span class="nc" id="L144">                data.setDeprecated(true);</span>
-<span class="nc" id="L145">                it.remove();</span>
+<span class="nc" id="L135">        List&lt;String&gt; comments = parseComment(content, data.getPropertyName());</span>
+<span class="nc" id="L136">        data.setFirstComment(comments.get(0));</span>
+<span class="nc" id="L137">        data.getComments().addAll(comments.subList(1, comments.size()));</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (Iterator&lt;String&gt; it = data.getComments().iterator(); it.hasNext(); ) {</span>
+<span class="nc" id="L139">            String comment = it.next();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            if (comment.trim().startsWith(&quot;@deprecated&quot;)) {</span>
+<span class="nc" id="L141">                data.setDeprecatedComment(comment.trim());</span>
+<span class="nc" id="L142">                data.setDeprecated(true);</span>
+<span class="nc" id="L143">                it.remove();</span>
             }
-<span class="nc" id="L147">        }</span>
-<span class="nc bnc" id="L148" title="All 4 branches missed.">        if (data.isDeprecated() &amp;&amp; data.getDeprecatedComment() == null) {</span>
-<span class="nc" id="L149">            data.setDeprecatedComment(&quot;@deprecated Deprecated&quot;);</span>
+<span class="nc" id="L145">        }</span>
+<span class="nc bnc" id="L146" title="All 4 branches missed.">        if (data.isDeprecated() &amp;&amp; data.getDeprecatedComment() == null) {</span>
+<span class="nc" id="L147">            data.setDeprecatedComment(&quot;@deprecated Deprecated&quot;);</span>
         }
-<span class="nc" id="L151">    }</span>
+<span class="nc" id="L149">    }</span>
 
     //-----------------------------------------------------------------------
     private String makePropertyName(String name) {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (name.startsWith(beanParser.getFieldPrefix())) {</span>
-<span class="nc" id="L156">            return name.substring(beanParser.getFieldPrefix().length());</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (name.startsWith(beanParser.getFieldPrefix())) {</span>
+<span class="nc" id="L154">            return name.substring(beanParser.getFieldPrefix().length());</span>
         }
-<span class="nc" id="L158">        return name;</span>
+<span class="nc" id="L156">        return name;</span>
     }
 
     private String makeUpperName(String name) {
-<span class="nc" id="L162">        return name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
+<span class="nc" id="L160">        return name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);</span>
     }
 
     //-----------------------------------------------------------------------
     private int parseAnnotationStart(List&lt;String&gt; content, int lineIndex) {
-<span class="nc bnc" id="L167" title="All 4 branches missed.">        while (lineIndex &gt; 0 &amp;&amp; content.get(lineIndex - 1).trim().startsWith(&quot;@&quot;)) {</span>
-<span class="nc" id="L168">            return lineIndex - 1;</span>
+<span class="nc bnc" id="L165" title="All 4 branches missed.">        while (lineIndex &gt; 0 &amp;&amp; content.get(lineIndex - 1).trim().startsWith(&quot;@&quot;)) {</span>
+<span class="nc" id="L166">            lineIndex = lineIndex - 1;</span>
         }
-<span class="nc" id="L170">        return lineIndex;</span>
+<span class="nc" id="L168">        return lineIndex;</span>
     }
 
     private int parseCodeIndex(List&lt;String&gt; content) {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">        for (int index = propertyIndex; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L175">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (line.startsWith(&quot;@&quot;) == false) {</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">                if (line.length() == 0 ||</span>
-<span class="nc bnc" id="L178" title="All 4 branches missed.">                        line.startsWith(&quot;//&quot;) ||</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">                        (index &gt; propertyIndex &amp;&amp; content.get(index - 1).endsWith(&quot;,&quot;))) {</span>
-<span class="nc" id="L180">                    continue;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        for (int index = propertyIndex; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L173">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (line.startsWith(&quot;@&quot;) == false) {</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                if (line.length() == 0 ||</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">                        line.startsWith(&quot;//&quot;) ||</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                        (index &gt; propertyIndex &amp;&amp; content.get(index - 1).endsWith(&quot;,&quot;))) {</span>
+<span class="nc" id="L178">                    continue;</span>
                 }
-<span class="nc" id="L182">                return index;</span>
+<span class="nc" id="L180">                return index;</span>
             }
         }
-<span class="nc" id="L185">        throw new BeanCodeGenException(</span>
+<span class="nc" id="L183">        throw new BeanCodeGenException(</span>
             &quot;Unable to locate field for property at line &quot; + (propertyIndex + 1),
-<span class="nc" id="L187">            beanParser.getFile(), propertyIndex + 1);</span>
+<span class="nc" id="L185">            beanParser.getFile(), propertyIndex + 1);</span>
     }
 
     private String parseAlias(List&lt;String&gt; content) {
-<span class="nc" id="L191">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L192">        Matcher matcher = ALIAS_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L194">            return matcher.group(1);</span>
+<span class="nc" id="L189">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L190">        Matcher matcher = ALIAS_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L192">            return matcher.group(1);</span>
         }
-<span class="nc" id="L196">        return &quot;&quot;;</span>
+<span class="nc" id="L194">        return &quot;&quot;;</span>
     }
 
     private String parseGetStyle(List&lt;String&gt; content) {
-<span class="nc" id="L200">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L201">        Matcher matcher = GETTER_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L203">            return matcher.group(1);</span>
+<span class="nc" id="L198">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L199">        Matcher matcher = GETTER_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L201">            return matcher.group(1);</span>
         }
-<span class="nc" id="L205">        return &quot;smart&quot;;</span>
+<span class="nc" id="L203">        return &quot;smart&quot;;</span>
     }
 
     private String parseSetStyle(List&lt;String&gt; content) {
-<span class="nc" id="L209">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L210">        Matcher matcher = SETTER_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L211" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L212">            return matcher.group(1);</span>
+<span class="nc" id="L207">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L208">        Matcher matcher = SETTER_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L210">            return matcher.group(1);</span>
         }
-<span class="nc" id="L214">        return &quot;smart&quot;;</span>
+<span class="nc" id="L212">        return &quot;smart&quot;;</span>
     }
 
     private boolean parseOverrideGet(List&lt;String&gt; content) {
-<span class="nc" id="L218">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L219">        Matcher matcher = OVERRIDE_GET_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L221">            return &quot;true&quot;.equals(matcher.group(1));</span>
+<span class="nc" id="L216">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L217">        Matcher matcher = OVERRIDE_GET_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L219">            return &quot;true&quot;.equals(matcher.group(1));</span>
         }
-<span class="nc" id="L223">        return false;</span>
+<span class="nc" id="L221">        return false;</span>
     }
 
     private boolean parseOverrideSet(List&lt;String&gt; content) {
-<span class="nc" id="L227">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L228">        Matcher matcher = OVERRIDE_SET_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L230">            return &quot;true&quot;.equals(matcher.group(1));</span>
+<span class="nc" id="L225">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L226">        Matcher matcher = OVERRIDE_SET_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L228">            return &quot;true&quot;.equals(matcher.group(1));</span>
         }
-<span class="nc" id="L232">        return false;</span>
+<span class="nc" id="L230">        return false;</span>
     }
 
     private String parseTypeStyle(List&lt;String&gt; content) {
-<span class="nc" id="L236">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L237">        Matcher matcher = TYPE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L239">            return matcher.group(1);</span>
+<span class="nc" id="L234">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L235">        Matcher matcher = TYPE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L237">            return matcher.group(1);</span>
         }
-<span class="nc" id="L241">        return &quot;smart&quot;;</span>
+<span class="nc" id="L239">        return &quot;smart&quot;;</span>
     }
 
     private String parseBuilderTypeStyle(List&lt;String&gt; content) {
-<span class="nc" id="L245">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L246">        Matcher matcher = BUILDER_TYPE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L248">            return matcher.group(1);</span>
+<span class="nc" id="L243">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L244">        Matcher matcher = BUILDER_TYPE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L246">            return matcher.group(1);</span>
         }
-<span class="nc" id="L250">        return &quot;smart&quot;;</span>
+<span class="nc" id="L248">        return &quot;smart&quot;;</span>
     }
 
     private String parseEqualsHashCodeStyle(List&lt;String&gt; content) {
-<span class="nc" id="L254">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L255">        Matcher matcher = EQ_HASH_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L257">            return matcher.group(1);</span>
+<span class="nc" id="L252">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L253">        Matcher matcher = EQ_HASH_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L255">            return matcher.group(1);</span>
         }
-<span class="nc" id="L259">        return &quot;smart&quot;;</span>
+<span class="nc" id="L257">        return &quot;smart&quot;;</span>
     }
     
     private String parseToStringStyle(List&lt;String&gt; content) {
-<span class="nc" id="L263">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L264">        Matcher matcher = TO_STR_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L266">            return matcher.group(1);</span>
+<span class="nc" id="L261">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L262">        Matcher matcher = TO_STR_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L264">            return matcher.group(1);</span>
         }
-<span class="nc" id="L268">        return &quot;smart&quot;;</span>
+<span class="nc" id="L266">        return &quot;smart&quot;;</span>
     }
     
     private String parseValidation(List&lt;String&gt; content) {
-<span class="nc" id="L272">        String line = content.get(propertyIndex).trim();</span>
-<span class="nc" id="L273">        Matcher matcher = VALIDATION_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L275">            return matcher.group(1);</span>
+<span class="nc" id="L270">        String line = content.get(propertyIndex).trim();</span>
+<span class="nc" id="L271">        Matcher matcher = VALIDATION_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L273">            return matcher.group(1);</span>
         }
-<span class="nc" id="L277">        return &quot;&quot;;</span>
+<span class="nc" id="L275">        return &quot;&quot;;</span>
     }
 
     private boolean parseDeprecated(List&lt;String&gt; content) {
-<span class="nc bnc" id="L281" title="All 2 branches missed.">        for (int index = annotationIndex; index &lt; fieldIndex; index++) {</span>
-<span class="nc" id="L282">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L283" title="All 4 branches missed.">            if (line.equals(&quot;@Deprecated&quot;) || line.startsWith(&quot;@Deprecated &quot;)) {</span>
-<span class="nc" id="L284">                return true;</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">        for (int index = annotationIndex; index &lt; fieldIndex; index++) {</span>
+<span class="nc" id="L280">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L281" title="All 4 branches missed.">            if (line.equals(&quot;@Deprecated&quot;) || line.startsWith(&quot;@Deprecated &quot;)) {</span>
+<span class="nc" id="L282">                return true;</span>
             }
         }
-<span class="nc" id="L287">        return false;</span>
+<span class="nc" id="L285">        return false;</span>
     }
 
     //-----------------------------------------------------------------------
     private String parseFieldName(List&lt;String&gt; content) {
-<span class="nc" id="L292">        String line = parseFieldDefinition(content);</span>
-<span class="nc" id="L293">        String[] parts = line.split(&quot; &quot;);</span>
-<span class="nc" id="L294">        String last = parts[parts.length - 1];</span>
-<span class="nc bnc" id="L295" title="All 4 branches missed.">        if (last.endsWith(&quot;;&quot;) &amp;&amp; last.length() &gt; 1) {</span>
-<span class="nc" id="L296">            return last.substring(0, last.length() - 1);</span>
+<span class="nc" id="L290">        String line = parseFieldDefinition(content);</span>
+<span class="nc" id="L291">        String[] parts = line.split(&quot; &quot;);</span>
+<span class="nc" id="L292">        String last = parts[parts.length - 1];</span>
+<span class="nc bnc" id="L293" title="All 4 branches missed.">        if (last.endsWith(&quot;;&quot;) &amp;&amp; last.length() &gt; 1) {</span>
+<span class="nc" id="L294">            return last.substring(0, last.length() - 1);</span>
         }
-<span class="nc" id="L298">        throw new BeanCodeGenException(</span>
-<span class="nc" id="L299">            &quot;Unable to locate field name at line &quot; + (propertyIndex + 1), beanParser.getFile(), propertyIndex + 1);</span>
+<span class="nc" id="L296">        throw new BeanCodeGenException(</span>
+<span class="nc" id="L297">            &quot;Unable to locate field name at line &quot; + (propertyIndex + 1), beanParser.getFile(), propertyIndex + 1);</span>
     }
 
     private boolean parseFinal(List&lt;String&gt; content) {
-<span class="nc" id="L303">        String line = parseFieldDefinition(content);</span>
-<span class="nc" id="L304">        String[] parts = line.split(&quot; &quot;);</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">        if (parts.length &lt; 2) {</span>
-<span class="nc" id="L306">            throw new BeanCodeGenException(</span>
-<span class="nc" id="L307">                &quot;Unable to locate field type at line &quot; + (propertyIndex + 1), beanParser.getFile(), propertyIndex + 1);</span>
+<span class="nc" id="L301">        String line = parseFieldDefinition(content);</span>
+<span class="nc" id="L302">        String[] parts = line.split(&quot; &quot;);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">        if (parts.length &lt; 2) {</span>
+<span class="nc" id="L304">            throw new BeanCodeGenException(</span>
+<span class="nc" id="L305">                &quot;Unable to locate field type at line &quot; + (propertyIndex + 1), beanParser.getFile(), propertyIndex + 1);</span>
         }
-<span class="nc bnc" id="L309" title="All 6 branches missed.">        if (parts[0].equals(&quot;final&quot;) || parts[1].equals(&quot;final&quot;) ||</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">                (parts.length &gt;= 3 &amp;&amp; parts[2].equals(&quot;final&quot;))) {</span>
-<span class="nc" id="L311">            return true;</span>
+<span class="nc bnc" id="L307" title="All 6 branches missed.">        if (parts[0].equals(&quot;final&quot;) || parts[1].equals(&quot;final&quot;) ||</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">                (parts.length &gt;= 3 &amp;&amp; parts[2].equals(&quot;final&quot;))) {</span>
+<span class="nc" id="L309">            return true;</span>
         }
-<span class="nc" id="L313">        return false;</span>
+<span class="nc" id="L311">        return false;</span>
     }
 
     private String parseFieldType(List&lt;String&gt; content) {
-<span class="nc" id="L317">        String line = parseFieldDefinition(content);</span>
-<span class="nc" id="L318">        String[] parts = line.split(&quot; &quot;);</span>
-<span class="nc bnc" id="L319" title="All 2 branches missed.">        if (parts.length &lt; 2) {</span>
-<span class="nc" id="L320">            throw new BeanCodeGenException(</span>
-<span class="nc" id="L321">                &quot;Unable to locate field type at line &quot; + (propertyIndex + 1), beanParser.getFile(), propertyIndex + 1);</span>
+<span class="nc" id="L315">        String line = parseFieldDefinition(content);</span>
+<span class="nc" id="L316">        String[] parts = line.split(&quot; &quot;);</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">        if (parts.length &lt; 2) {</span>
+<span class="nc" id="L318">            throw new BeanCodeGenException(</span>
+<span class="nc" id="L319">                &quot;Unable to locate field type at line &quot; + (propertyIndex + 1), beanParser.getFile(), propertyIndex + 1);</span>
         }
-<span class="nc" id="L323">        int partsPos = parts.length - 2;</span>
-<span class="nc" id="L324">        String type = parts[partsPos];</span>
+<span class="nc" id="L321">        int partsPos = parts.length - 2;</span>
+<span class="nc" id="L322">        String type = parts[partsPos];</span>
         while (true) {
-<span class="nc" id="L326">            int open = 0, openPos = 0, close = 0, closePos = 0;</span>
-<span class="nc bnc" id="L327" title="All 2 branches missed.">            while ((openPos = type.indexOf('&lt;', openPos)) &gt;= 0) {</span>
-<span class="nc" id="L328">                open++;</span>
-<span class="nc" id="L329">                openPos++;</span>
+<span class="nc" id="L324">            int open = 0, openPos = 0, close = 0, closePos = 0;</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">            while ((openPos = type.indexOf('&lt;', openPos)) &gt;= 0) {</span>
+<span class="nc" id="L326">                open++;</span>
+<span class="nc" id="L327">                openPos++;</span>
             }
-<span class="nc bnc" id="L331" title="All 2 branches missed.">            while ((closePos = type.indexOf('&gt;', closePos)) &gt;= 0) {</span>
-<span class="nc" id="L332">                close++;</span>
-<span class="nc" id="L333">                closePos++;</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">            while ((closePos = type.indexOf('&gt;', closePos)) &gt;= 0) {</span>
+<span class="nc" id="L330">                close++;</span>
+<span class="nc" id="L331">                closePos++;</span>
             }
-<span class="nc bnc" id="L335" title="All 2 branches missed.">            if (open == close) {</span>
-<span class="nc" id="L336">                break;</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">            if (open == close) {</span>
+<span class="nc" id="L334">                break;</span>
             }
-<span class="nc bnc" id="L338" title="All 2 branches missed.">            if (partsPos == 0) {</span>
-<span class="nc" id="L339">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">            if (partsPos == 0) {</span>
+<span class="nc" id="L337">                throw new BeanCodeGenException(</span>
                     &quot;Unable to locate field type at line &quot; + (propertyIndex + 1) + &quot;, mismatched generics&quot;,
-<span class="nc" id="L341">                    beanParser.getFile(), propertyIndex + 1);</span>
+<span class="nc" id="L339">                    beanParser.getFile(), propertyIndex + 1);</span>
             }
-<span class="nc" id="L343">            partsPos--;</span>
-<span class="nc" id="L344">            type = parts[partsPos] + &quot; &quot; + type;</span>
-<span class="nc" id="L345">        }</span>
-<span class="nc" id="L346">        return type;</span>
+<span class="nc" id="L341">            partsPos--;</span>
+<span class="nc" id="L342">            type = parts[partsPos] + &quot; &quot; + type;</span>
+<span class="nc" id="L343">        }</span>
+<span class="nc" id="L344">        return type;</span>
     }
 
     private String parseFieldDefinition(List&lt;String&gt; content) {
-<span class="nc" id="L350">        String line = content.get(fieldIndex).trim();</span>
-<span class="nc bnc" id="L351" title="All 2 branches missed.">        if (line.contains(&quot;//&quot;)) {</span>
-<span class="nc" id="L352">            line = line.substring(0, line.indexOf(&quot;//&quot;)).trim();</span>
+<span class="nc" id="L348">        String line = content.get(fieldIndex).trim();</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">        if (line.contains(&quot;//&quot;)) {</span>
+<span class="nc" id="L350">            line = line.substring(0, line.indexOf(&quot;//&quot;)).trim();</span>
         }
-<span class="nc bnc" id="L354" title="All 2 branches missed.">        if (line.contains(&quot;=&quot;)) {</span>
-<span class="nc" id="L355">            line = line.substring(0, line.indexOf(&quot;=&quot;)).trim() + &quot;;&quot;;</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">        if (line.contains(&quot;=&quot;)) {</span>
+<span class="nc" id="L353">            line = line.substring(0, line.indexOf(&quot;=&quot;)).trim() + &quot;;&quot;;</span>
         }
-<span class="nc" id="L357">        return line.replace(&quot;  &quot;, &quot; &quot;);</span>
+<span class="nc" id="L355">        return line.replace(&quot;  &quot;, &quot; &quot;);</span>
     }
 
     private String parseFieldInitializer(List&lt;String&gt; content) {
-<span class="nc" id="L361">        String line = content.get(fieldIndex).trim();</span>
-<span class="nc bnc" id="L362" title="All 2 branches missed.">        if (line.contains(&quot;//&quot;)) {</span>
-<span class="nc" id="L363">            line = line.substring(0, line.indexOf(&quot;//&quot;)).trim();</span>
+<span class="nc" id="L359">        String line = content.get(fieldIndex).trim();</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        if (line.contains(&quot;//&quot;)) {</span>
+<span class="nc" id="L361">            line = line.substring(0, line.indexOf(&quot;//&quot;)).trim();</span>
         }
-<span class="nc bnc" id="L365" title="All 2 branches missed.">        if (line.contains(&quot; = &quot;)) {</span>
-<span class="nc" id="L366">            line = line.substring(line.indexOf(&quot; = &quot;) + 3).trim();</span>
-<span class="nc bnc" id="L367" title="All 2 branches missed.">            if (line.endsWith(&quot;;&quot;) == false) {</span>
-<span class="nc" id="L368">                throw new BeanCodeGenException(&quot;Field line does not end with semi-colon&quot;, beanParser.getFile(), fieldIndex);</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">        if (line.contains(&quot; = &quot;)) {</span>
+<span class="nc" id="L364">            line = line.substring(line.indexOf(&quot; = &quot;) + 3).trim();</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">            if (line.endsWith(&quot;;&quot;) == false) {</span>
+<span class="nc" id="L366">                throw new BeanCodeGenException(&quot;Field line does not end with semi-colon&quot;, beanParser.getFile(), fieldIndex);</span>
             }
-<span class="nc" id="L370">            return line.substring(0, line.length() - 1).trim();</span>
+<span class="nc" id="L368">            return line.substring(0, line.length() - 1).trim();</span>
         }
-<span class="nc" id="L372">        return &quot;&quot;;</span>
+<span class="nc" id="L370">        return &quot;&quot;;</span>
     }
 
     //-----------------------------------------------------------------------
     private String parseMethodNameAsPropertyName(List&lt;String&gt; content) {
-<span class="nc" id="L377">        String name = parseMethodDefinition(content)[1];</span>
-<span class="nc bnc" id="L378" title="All 4 branches missed.">        if (name.length() == 0 || Character.isUpperCase(name.charAt(0)) == false) {</span>
-<span class="nc" id="L379">            throw new BeanCodeGenException(&quot;@DerivedProperty method name invalid: '&quot; + name + &quot;'&quot;, beanParser.getFile(), fieldIndex);</span>
+<span class="nc" id="L375">        String name = parseMethodDefinition(content)[1];</span>
+<span class="nc bnc" id="L376" title="All 4 branches missed.">        if (name.length() == 0 || Character.isUpperCase(name.charAt(0)) == false) {</span>
+<span class="nc" id="L377">            throw new BeanCodeGenException(&quot;@DerivedProperty method name invalid: '&quot; + name + &quot;'&quot;, beanParser.getFile(), fieldIndex);</span>
         }
-<span class="nc" id="L381">        return Character.toLowerCase(name.charAt(0)) + name.substring(1);</span>
+<span class="nc" id="L379">        return Character.toLowerCase(name.charAt(0)) + name.substring(1);</span>
     }
 
     private String parseMethodType(List&lt;String&gt; content) {
-<span class="nc" id="L385">        String[] parts = parseMethodDefinition(content);</span>
-<span class="nc" id="L386">        return parts[0];</span>
+<span class="nc" id="L383">        String[] parts = parseMethodDefinition(content);</span>
+<span class="nc" id="L384">        return parts[0];</span>
     }
 
     private String[] parseMethodDefinition(List&lt;String&gt; content) {
-<span class="nc" id="L390">        String line = content.get(fieldIndex).trim();</span>
-<span class="nc bnc" id="L391" title="All 2 branches missed.">        if (line.startsWith(&quot;public &quot;)) {</span>
-<span class="nc" id="L392">            line = line.substring(7).trim();</span>
-<span class="nc bnc" id="L393" title="All 2 branches missed.">        } else if (line.startsWith(&quot;private &quot;)) {</span>
-<span class="nc" id="L394">            line = line.substring(8).trim();</span>
-<span class="nc bnc" id="L395" title="All 2 branches missed.">        } else if (line.startsWith(&quot;protected &quot;)) {</span>
-<span class="nc" id="L396">            line = line.substring(10).trim();</span>
+<span class="nc" id="L388">        String line = content.get(fieldIndex).trim();</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">        if (line.startsWith(&quot;public &quot;)) {</span>
+<span class="nc" id="L390">            line = line.substring(7).trim();</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">        } else if (line.startsWith(&quot;private &quot;)) {</span>
+<span class="nc" id="L392">            line = line.substring(8).trim();</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        } else if (line.startsWith(&quot;protected &quot;)) {</span>
+<span class="nc" id="L394">            line = line.substring(10).trim();</span>
         }
-<span class="nc" id="L398">        String lineEnd = &quot;() {&quot;;</span>
-<span class="nc bnc" id="L399" title="All 2 branches missed.">        if (line.startsWith(&quot;abstract &quot;)) {</span>
-<span class="nc" id="L400">            line = line.substring(9).trim();</span>
-<span class="nc" id="L401">            lineEnd = &quot;();&quot;;</span>
-<span class="nc bnc" id="L402" title="All 2 branches missed.">        } else if (line.startsWith(&quot;final &quot;)) {</span>
-<span class="nc" id="L403">            line = line.substring(6).trim();</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">        } else if (line.startsWith(&quot;static &quot;)) {</span>
-<span class="nc" id="L405">            throw new BeanCodeGenException(&quot;@DerivedProperty method cannot be static&quot;, beanParser.getFile(), fieldIndex);</span>
+<span class="nc" id="L396">        String lineEnd = &quot;() {&quot;;</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">        if (line.startsWith(&quot;abstract &quot;)) {</span>
+<span class="nc" id="L398">            line = line.substring(9).trim();</span>
+<span class="nc" id="L399">            lineEnd = &quot;();&quot;;</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">        } else if (line.startsWith(&quot;final &quot;)) {</span>
+<span class="nc" id="L401">            line = line.substring(6).trim();</span>
+<span class="nc bnc" id="L402" title="All 2 branches missed.">        } else if (line.startsWith(&quot;static &quot;)) {</span>
+<span class="nc" id="L403">            throw new BeanCodeGenException(&quot;@DerivedProperty method cannot be static&quot;, beanParser.getFile(), fieldIndex);</span>
         }
-<span class="nc" id="L407">        int getIndex = line.indexOf(&quot; get&quot;);</span>
-<span class="nc bnc" id="L408" title="All 2 branches missed.">        if (getIndex &lt; 0) {</span>
-<span class="nc" id="L409">            throw new BeanCodeGenException(&quot;@DerivedProperty method must start with 'get'&quot;, beanParser.getFile(), fieldIndex);</span>
+<span class="nc" id="L405">        int getIndex = line.indexOf(&quot; get&quot;);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">        if (getIndex &lt; 0) {</span>
+<span class="nc" id="L407">            throw new BeanCodeGenException(&quot;@DerivedProperty method must start with 'get'&quot;, beanParser.getFile(), fieldIndex);</span>
         }
-<span class="nc bnc" id="L411" title="All 2 branches missed.">        if (line.endsWith(lineEnd) == false) {</span>
-<span class="nc" id="L412">            throw new BeanCodeGenException(&quot;@DerivedProperty method must end with '&quot; + lineEnd + &quot;'&quot;, beanParser.getFile(), fieldIndex);</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">        if (line.endsWith(lineEnd) == false) {</span>
+<span class="nc" id="L410">            throw new BeanCodeGenException(&quot;@DerivedProperty method must end with '&quot; + lineEnd + &quot;'&quot;, beanParser.getFile(), fieldIndex);</span>
         }
-<span class="nc" id="L414">        line = line.substring(0, line.length() - lineEnd.length());</span>
-<span class="nc" id="L415">        String[] split = new String[2];</span>
-<span class="nc" id="L416">        split[0] = line.substring(0, getIndex).trim();</span>
-<span class="nc" id="L417">        split[1] = line.substring(getIndex + 4).trim();</span>
-<span class="nc" id="L418">        return split;</span>
+<span class="nc" id="L412">        line = line.substring(0, line.length() - lineEnd.length());</span>
+<span class="nc" id="L413">        String[] split = new String[2];</span>
+<span class="nc" id="L414">        split[0] = line.substring(0, getIndex).trim();</span>
+<span class="nc" id="L415">        split[1] = line.substring(getIndex + 4).trim();</span>
+<span class="nc" id="L416">        return split;</span>
     }
 
     //-----------------------------------------------------------------------
     private List&lt;String&gt; parseComment(List&lt;String&gt; content, String propertyName) {
-<span class="nc" id="L423">        List&lt;String&gt; comments = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L424">        String commentEnd = content.get(annotationIndex - 1).trim();</span>
-<span class="nc bnc" id="L425" title="All 2 branches missed.">        if (commentEnd.equals(&quot;*/&quot;)) {</span>
-<span class="nc" id="L426">            int startCommentIndex = -1;</span>
-<span class="nc bnc" id="L427" title="All 2 branches missed.">            for (int index = annotationIndex - 1; index &gt;= 0; index--) {</span>
-<span class="nc" id="L428">                String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L429" title="All 2 branches missed.">                if (line.equals(&quot;/**&quot;)) {</span>
-<span class="nc" id="L430">                    startCommentIndex = index + 1;</span>
-<span class="nc" id="L431">                    break;</span>
+<span class="nc" id="L421">        List&lt;String&gt; comments = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L422">        String commentEnd = content.get(annotationIndex - 1).trim();</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">        if (commentEnd.equals(&quot;*/&quot;)) {</span>
+<span class="nc" id="L424">            int startCommentIndex = -1;</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">            for (int index = annotationIndex - 1; index &gt;= 0; index--) {</span>
+<span class="nc" id="L426">                String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">                if (line.equals(&quot;/**&quot;)) {</span>
+<span class="nc" id="L428">                    startCommentIndex = index + 1;</span>
+<span class="nc" id="L429">                    break;</span>
                 }
             }
-<span class="nc bnc" id="L434" title="All 2 branches missed.">            if (startCommentIndex == -1) {</span>
-<span class="nc" id="L435">                throw new BeanCodeGenException(&quot;Unable to locate comment start at line &quot; + annotationIndex, beanParser.getFile(), annotationIndex);</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">            if (startCommentIndex == -1) {</span>
+<span class="nc" id="L433">                throw new BeanCodeGenException(&quot;Unable to locate comment start at line &quot; + annotationIndex, beanParser.getFile(), annotationIndex);</span>
             }
-<span class="nc bnc" id="L437" title="All 2 branches missed.">            if (startCommentIndex &lt; annotationIndex - 1) {</span>
-<span class="nc bnc" id="L438" title="All 2 branches missed.">                for (int i = startCommentIndex; i &lt; annotationIndex - 1; i++) {</span>
-<span class="nc" id="L439">                    String commentLine = content.get(i).trim();</span>
-<span class="nc bnc" id="L440" title="All 2 branches missed.">                    if (commentLine.startsWith(&quot;*&quot;)) {</span>
-<span class="nc" id="L441">                        commentLine = commentLine.substring(1).trim();</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">            if (startCommentIndex &lt; annotationIndex - 1) {</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">                for (int i = startCommentIndex; i &lt; annotationIndex - 1; i++) {</span>
+<span class="nc" id="L437">                    String commentLine = content.get(i).trim();</span>
+<span class="nc bnc" id="L438" title="All 2 branches missed.">                    if (commentLine.startsWith(&quot;*&quot;)) {</span>
+<span class="nc" id="L439">                        commentLine = commentLine.substring(1).trim();</span>
                     }
-<span class="nc bnc" id="L443" title="All 4 branches missed.">                    if (commentLine.startsWith(&quot;@return&quot;) == false &amp;&amp; commentLine.startsWith(&quot;@param&quot;) == false &amp;&amp;</span>
-<span class="nc bnc" id="L444" title="All 4 branches missed.">                            commentLine.startsWith(&quot;@throws&quot;) == false &amp;&amp; commentLine.startsWith(&quot;@exception&quot;) == false) {</span>
-<span class="nc" id="L445">                        comments.add(commentLine);</span>
+<span class="nc bnc" id="L441" title="All 4 branches missed.">                    if (commentLine.startsWith(&quot;@return&quot;) == false &amp;&amp; commentLine.startsWith(&quot;@param&quot;) == false &amp;&amp;</span>
+<span class="nc bnc" id="L442" title="All 4 branches missed.">                            commentLine.startsWith(&quot;@throws&quot;) == false &amp;&amp; commentLine.startsWith(&quot;@exception&quot;) == false) {</span>
+<span class="nc" id="L443">                        comments.add(commentLine);</span>
                     }
                 }
-<span class="nc" id="L448">                String firstLine = comments.get(0);</span>
-<span class="nc bnc" id="L449" title="All 2 branches missed.">                if (firstLine.length() &gt; 0) {</span>
-<span class="nc" id="L450">                    comments.set(0, firstLine.substring(0, 1).toLowerCase(Locale.ENGLISH) + firstLine.substring(1));</span>
+<span class="nc" id="L446">                String firstLine = comments.get(0);</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">                if (firstLine.length() &gt; 0) {</span>
+<span class="nc" id="L448">                    comments.set(0, firstLine.substring(0, 1).toLowerCase(Locale.ENGLISH) + firstLine.substring(1));</span>
                 } else {
-<span class="nc" id="L452">                    comments.remove(0);</span>
+<span class="nc" id="L450">                    comments.remove(0);</span>
                 }
             }
-<span class="nc bnc" id="L455" title="All 4 branches missed.">        } else if (commentEnd.startsWith(&quot;/**&quot;) &amp;&amp; commentEnd.endsWith(&quot;*/&quot;)) {</span>
-<span class="nc" id="L456">            int startPos = commentEnd.indexOf(&quot;/**&quot;) + 3;</span>
-<span class="nc" id="L457">            int endPos = commentEnd.lastIndexOf(&quot;*/&quot;);</span>
-<span class="nc" id="L458">            String comment = commentEnd.substring(startPos, endPos).trim();</span>
-<span class="nc bnc" id="L459" title="All 2 branches missed.">            if (comment.length() &gt; 0) {</span>
-<span class="nc" id="L460">                comments.add(comment.substring(0, 1).toLowerCase(Locale.ENGLISH) + comment.substring(1));</span>
+<span class="nc bnc" id="L453" title="All 4 branches missed.">        } else if (commentEnd.startsWith(&quot;/**&quot;) &amp;&amp; commentEnd.endsWith(&quot;*/&quot;)) {</span>
+<span class="nc" id="L454">            int startPos = commentEnd.indexOf(&quot;/**&quot;) + 3;</span>
+<span class="nc" id="L455">            int endPos = commentEnd.lastIndexOf(&quot;*/&quot;);</span>
+<span class="nc" id="L456">            String comment = commentEnd.substring(startPos, endPos).trim();</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">            if (comment.length() &gt; 0) {</span>
+<span class="nc" id="L458">                comments.add(comment.substring(0, 1).toLowerCase(Locale.ENGLISH) + comment.substring(1));</span>
             }
         }
-<span class="nc bnc" id="L463" title="All 2 branches missed.">        if (comments.size() == 0) {</span>
-<span class="nc" id="L464">            comments.add(&quot;the &quot; + propertyName + &quot;.&quot;);</span>
+<span class="nc bnc" id="L461" title="All 2 branches missed.">        if (comments.size() == 0) {</span>
+<span class="nc" id="L462">            comments.add(&quot;the &quot; + propertyName + &quot;.&quot;);</span>
         }
-<span class="nc" id="L466">        return comments;</span>
+<span class="nc" id="L464">        return comments;</span>
     }
 
 }

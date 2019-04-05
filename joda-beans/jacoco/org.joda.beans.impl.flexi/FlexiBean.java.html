@@ -40,8 +40,6 @@ import org.joda.beans.impl.BasicProperty;
  * As such, there is one instance of meta-bean for each flexi-bean.
  * &lt;p&gt;
  * The keys of a flexi-bean must be simple identifiers as per '[a-zA-z_][a-zA-z0-9_]*'.
- * 
- * @author Stephen Colebourne
  */
 public final class FlexiBean implements DynamicBean, Serializable {
     // Alternate way to implement this would be to create a list/map of real property
@@ -50,12 +48,12 @@ public final class FlexiBean implements DynamicBean, Serializable {
     /** Serialization version. */
     private static final long serialVersionUID = 1L;
     /** Valid regex for keys. */
-<span class="fc" id="L53">    private static final Pattern VALID_KEY = Pattern.compile(&quot;[a-zA-z_][a-zA-z0-9_]*&quot;);</span>
+<span class="fc" id="L51">    private static final Pattern VALID_KEY = Pattern.compile(&quot;[a-zA-z_][a-zA-z0-9_]*&quot;);</span>
 
     /** The meta-bean. */
-<span class="fc" id="L56">    private final transient FlexiMetaBean metaBean = new FlexiMetaBean(this);  // CSIGNORE</span>
+<span class="fc" id="L54">    private final transient FlexiMetaBean metaBean = new FlexiMetaBean(this);  // CSIGNORE</span>
     /** The underlying data. */
-<span class="fc" id="L58">    volatile Map&lt;String, Object&gt; data = Collections.emptyMap();// CSIGNORE</span>
+<span class="fc" id="L56">    volatile Map&lt;String, Object&gt; data = Collections.emptyMap();// CSIGNORE</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -66,28 +64,28 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the meta-bean, not null
      */
     public static DynamicMetaBean meta() {
-<span class="nc" id="L69">        return new FlexiBean().metaBean();</span>
+<span class="nc" id="L67">        return new FlexiBean().metaBean();</span>
     }
 
     //-----------------------------------------------------------------------
     /**
      * Constructor.
      */
-<span class="fc" id="L76">    public FlexiBean() {</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L74">    public FlexiBean() {</span>
+<span class="fc" id="L75">    }</span>
 
     /**
      * Constructor that copies all the data entries from the specified bean.
      * 
      * @param copyFrom  the bean to copy from, not null
      */
-<span class="fc" id="L84">    public FlexiBean(FlexiBean copyFrom) {</span>
-<span class="fc" id="L85">        putAll(copyFrom.data);</span>
-<span class="fc" id="L86">    }</span>
+<span class="fc" id="L82">    public FlexiBean(FlexiBean copyFrom) {</span>
+<span class="fc" id="L83">        putAll(copyFrom.data);</span>
+<span class="fc" id="L84">    }</span>
 
     // resolve to setup transient field
     private Object readResolve() throws ObjectStreamException {
-<span class="fc" id="L90">        return new FlexiBean(this);</span>
+<span class="fc" id="L88">        return new FlexiBean(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -97,10 +95,10 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the data, not null
      */
     private Map&lt;String, Object&gt; dataWritable() {
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (data == Collections.EMPTY_MAP) {</span>
-<span class="fc" id="L101">            data = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (data == Collections.EMPTY_MAP) {</span>
+<span class="fc" id="L99">            data = new LinkedHashMap&lt;&gt;();</span>
         }
-<span class="fc" id="L103">        return data;</span>
+<span class="fc" id="L101">        return data;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -110,7 +108,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the number of properties
      */
     public int size() {
-<span class="fc" id="L113">        return data.size();</span>
+<span class="fc" id="L111">        return data.size();</span>
     }
 
     /**
@@ -120,7 +118,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return true if the bean contains the property
      */
     public boolean contains(String propertyName) {
-<span class="fc" id="L123">        return propertyExists(propertyName);</span>
+<span class="fc" id="L121">        return propertyExists(propertyName);</span>
     }
 
     /**
@@ -132,7 +130,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the value of the property, may be null
      */
     public Object get(String propertyName) {
-<span class="fc" id="L135">        return data.get(propertyName);</span>
+<span class="fc" id="L133">        return data.get(propertyName);</span>
     }
 
     /**
@@ -147,7 +145,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws ClassCastException if the type is incorrect
      */
     public &lt;T&gt; T get(String propertyName, Class&lt;T&gt; type) {
-<span class="fc" id="L150">        return type.cast(get(propertyName));</span>
+<span class="fc" id="L148">        return type.cast(get(propertyName));</span>
     }
 
     /**
@@ -160,8 +158,8 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the value of the property, may be null
      */
     public String getString(String propertyName) {
-<span class="fc" id="L163">        Object obj = get(propertyName);</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">        return obj != null ? obj.toString() : null;</span>
+<span class="fc" id="L161">        Object obj = get(propertyName);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        return obj != null ? obj.toString() : null;</span>
     }
 
     /**
@@ -173,7 +171,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws NullPointerException if the property does not exist or is null
      */
     public boolean getBoolean(String propertyName) {
-<span class="fc" id="L176">        return (Boolean) get(propertyName);</span>
+<span class="fc" id="L174">        return (Boolean) get(propertyName);</span>
     }
 
     /**
@@ -185,7 +183,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws NullPointerException if the property does not exist or is null
      */
     public int getInt(String propertyName) {
-<span class="fc" id="L188">        return ((Number) get(propertyName)).intValue();</span>
+<span class="fc" id="L186">        return ((Number) get(propertyName)).intValue();</span>
     }
 
     /**
@@ -197,8 +195,8 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws ClassCastException if the value is not compatible
      */
     public int getInt(String propertyName, int defaultValue) {
-<span class="fc" id="L200">        Object obj = get(propertyName);</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">        return obj != null ? ((Number) get(propertyName)).intValue() : defaultValue;</span>
+<span class="fc" id="L198">        Object obj = get(propertyName);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        return obj != null ? ((Number) get(propertyName)).intValue() : defaultValue;</span>
     }
 
     /**
@@ -210,7 +208,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws NullPointerException if the property does not exist or is null
      */
     public long getLong(String propertyName) {
-<span class="fc" id="L213">        return ((Number) get(propertyName)).longValue();</span>
+<span class="fc" id="L211">        return ((Number) get(propertyName)).longValue();</span>
     }
 
     /**
@@ -222,8 +220,8 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws ClassCastException if the value is not compatible
      */
     public long getLong(String propertyName, long defaultValue) {
-<span class="fc" id="L225">        Object obj = get(propertyName);</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        return obj != null ? ((Number) get(propertyName)).longValue() : defaultValue;</span>
+<span class="fc" id="L223">        Object obj = get(propertyName);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        return obj != null ? ((Number) get(propertyName)).longValue() : defaultValue;</span>
     }
 
     /**
@@ -235,7 +233,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws NullPointerException if the property does not exist or is null
      */
     public double getDouble(String propertyName) {
-<span class="fc" id="L238">        return ((Number) get(propertyName)).doubleValue();</span>
+<span class="fc" id="L236">        return ((Number) get(propertyName)).doubleValue();</span>
     }
 
     /**
@@ -247,8 +245,8 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @throws ClassCastException if the value is not compatible
      */
     public double getDouble(String propertyName, double defaultValue) {
-<span class="fc" id="L250">        Object obj = get(propertyName);</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        return obj != null ? ((Number) get(propertyName)).doubleValue() : defaultValue;</span>
+<span class="fc" id="L248">        Object obj = get(propertyName);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        return obj != null ? ((Number) get(propertyName)).doubleValue() : defaultValue;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -262,8 +260,8 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return {@code this} for chaining, not null
      */
     public FlexiBean append(String propertyName, Object newValue) {
-<span class="fc" id="L265">        put(propertyName, newValue);</span>
-<span class="fc" id="L266">        return this;</span>
+<span class="fc" id="L263">        put(propertyName, newValue);</span>
+<span class="fc" id="L264">        return this;</span>
     }
 
     /**
@@ -275,8 +273,8 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @param newValue  the new value, may be null
      */
     public void set(String propertyName, Object newValue) {
-<span class="fc" id="L278">        put(propertyName, newValue);</span>
-<span class="fc" id="L279">    }</span>
+<span class="fc" id="L276">        put(propertyName, newValue);</span>
+<span class="fc" id="L277">    }</span>
 
     /**
      * Sets a property in this bean to the specified value.
@@ -288,10 +286,10 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the old value of the property, may be null
      */
     public Object put(String propertyName, Object newValue) {
-<span class="fc bfc" id="L291" title="All 2 branches covered.">        if (VALID_KEY.matcher(propertyName).matches() == false) {</span>
-<span class="fc" id="L292">            throw new IllegalArgumentException(&quot;Invalid key for FlexiBean: &quot; + propertyName);</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        if (VALID_KEY.matcher(propertyName).matches() == false) {</span>
+<span class="fc" id="L290">            throw new IllegalArgumentException(&quot;Invalid key for FlexiBean: &quot; + propertyName);</span>
         }
-<span class="fc" id="L294">        return dataWritable().put(propertyName, newValue);</span>
+<span class="fc" id="L292">        return dataWritable().put(propertyName, newValue);</span>
     }
 
     /**
@@ -302,19 +300,19 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @param map  the map of properties to add, not null
      */
     public void putAll(Map&lt;String, ? extends Object&gt; map) {
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        if (map.size() &gt; 0) {</span>
-<span class="fc bfc" id="L306" title="All 2 branches covered.">            for (String key : map.keySet()) {</span>
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">                if (VALID_KEY.matcher(key).matches() == false) {</span>
-<span class="nc" id="L308">                    throw new IllegalArgumentException(&quot;Invalid key for FlexiBean: &quot; + key);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        if (map.size() &gt; 0) {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">            for (String key : map.keySet()) {</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">                if (VALID_KEY.matcher(key).matches() == false) {</span>
+<span class="nc" id="L306">                    throw new IllegalArgumentException(&quot;Invalid key for FlexiBean: &quot; + key);</span>
                 }
-<span class="fc" id="L310">            }</span>
-<span class="fc bfc" id="L311" title="All 2 branches covered.">            if (data == Collections.EMPTY_MAP) {</span>
-<span class="fc" id="L312">                data = new LinkedHashMap&lt;&gt;(map);</span>
+<span class="fc" id="L308">            }</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">            if (data == Collections.EMPTY_MAP) {</span>
+<span class="fc" id="L310">                data = new LinkedHashMap&lt;&gt;(map);</span>
             } else {
-<span class="fc" id="L314">                data.putAll(map);</span>
+<span class="fc" id="L312">                data.putAll(map);</span>
             }
         }
-<span class="fc" id="L317">    }</span>
+<span class="fc" id="L315">    }</span>
 
     /**
      * Puts the properties in the specified bean into this bean.
@@ -324,14 +322,14 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @param other  the map of properties to add, not null
      */
     public void putAll(FlexiBean other) {
-<span class="fc bfc" id="L327" title="All 2 branches covered.">        if (other.size() &gt; 0) {</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">            if (data == Collections.EMPTY_MAP) {</span>
-<span class="fc" id="L329">                data = new LinkedHashMap&lt;&gt;(other.data);</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        if (other.size() &gt; 0) {</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">            if (data == Collections.EMPTY_MAP) {</span>
+<span class="fc" id="L327">                data = new LinkedHashMap&lt;&gt;(other.data);</span>
             } else {
-<span class="fc" id="L331">                data.putAll(other.data);</span>
+<span class="fc" id="L329">                data.putAll(other.data);</span>
             }
         }
-<span class="fc" id="L334">    }</span>
+<span class="fc" id="L332">    }</span>
 
     /**
      * Removes a property.
@@ -341,17 +339,17 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @param propertyName  the property name, not empty
      */
     public void remove(String propertyName) {
-<span class="fc" id="L344">        propertyRemove(propertyName);</span>
-<span class="fc" id="L345">    }</span>
+<span class="fc" id="L342">        propertyRemove(propertyName);</span>
+<span class="fc" id="L343">    }</span>
 
     /**
      * Removes all properties.
      */
     public void clear() {
-<span class="fc bfc" id="L351" title="All 2 branches covered.">        if (data != Collections.EMPTY_MAP) {</span>
-<span class="fc" id="L352">            data.clear();</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">        if (data != Collections.EMPTY_MAP) {</span>
+<span class="fc" id="L350">            data.clear();</span>
         }
-<span class="fc" id="L354">    }</span>
+<span class="fc" id="L352">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -361,7 +359,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return true if the property exists
      */
     public boolean propertyExists(String propertyName) {
-<span class="fc" id="L364">        return data.containsKey(propertyName);</span>
+<span class="fc" id="L362">        return data.containsKey(propertyName);</span>
     }
 
     /**
@@ -371,10 +369,10 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return the value of the property, may be null
      */
     public Object propertyGet(String propertyName) {
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">        if (propertyExists(propertyName) == false) {</span>
-<span class="nc" id="L375">            throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">        if (propertyExists(propertyName) == false) {</span>
+<span class="nc" id="L373">            throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
         }
-<span class="fc" id="L377">        return data.get(propertyName);</span>
+<span class="fc" id="L375">        return data.get(propertyName);</span>
     }
 
     /**
@@ -384,38 +382,38 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @param newValue  the new value of the property, may be null
      */
     public void propertySet(String propertyName, Object newValue) {
-<span class="fc" id="L387">        put(propertyName, newValue);</span>
-<span class="fc" id="L388">    }</span>
+<span class="fc" id="L385">        put(propertyName, newValue);</span>
+<span class="fc" id="L386">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public DynamicMetaBean metaBean() {
-<span class="fc" id="L393">        return metaBean;</span>
+<span class="fc" id="L391">        return metaBean;</span>
     }
 
     @Override
     public Property&lt;Object&gt; property(String name) {
-<span class="fc" id="L398">        return BasicProperty.of(this, FlexiMetaProperty.of(metaBean, name));</span>
+<span class="fc" id="L396">        return BasicProperty.of(this, FlexiMetaProperty.of(metaBean, name));</span>
     }
 
     @Override
     public Set&lt;String&gt; propertyNames() {
-<span class="fc" id="L403">        return data.keySet();</span>
+<span class="fc" id="L401">        return data.keySet();</span>
     }
 
     @Override
     public void propertyDefine(String propertyName, Class&lt;?&gt; propertyType) {
-<span class="fc bfc" id="L408" title="All 2 branches covered.">        if (propertyExists(propertyName) == false) {</span>
-<span class="fc" id="L409">            put(propertyName, null);</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (propertyExists(propertyName) == false) {</span>
+<span class="fc" id="L407">            put(propertyName, null);</span>
         }
-<span class="fc" id="L411">    }</span>
+<span class="fc" id="L409">    }</span>
 
     @Override
     public void propertyRemove(String propertyName) {
-<span class="fc bfc" id="L415" title="All 2 branches covered.">        if (data != Collections.EMPTY_MAP) {</span>
-<span class="fc" id="L416">            data.remove(propertyName);</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">        if (data != Collections.EMPTY_MAP) {</span>
+<span class="fc" id="L414">            data.remove(propertyName);</span>
         }
-<span class="fc" id="L418">    }</span>
+<span class="fc" id="L416">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -424,10 +422,10 @@ public final class FlexiBean implements DynamicBean, Serializable {
      * @return a map representing the contents of the bean, not null
      */
     public Map&lt;String, Object&gt; toMap() {
-<span class="fc bfc" id="L427" title="All 2 branches covered.">        if (size() == 0) {</span>
-<span class="fc" id="L428">            return Collections.emptyMap();</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        if (size() == 0) {</span>
+<span class="fc" id="L426">            return Collections.emptyMap();</span>
         }
-<span class="fc" id="L430">        return Collections.unmodifiableMap(new LinkedHashMap&lt;&gt;(data));</span>
+<span class="fc" id="L428">        return Collections.unmodifiableMap(new LinkedHashMap&lt;&gt;(data));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -438,7 +436,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      */
     @Override
     public FlexiBean clone() {
-<span class="fc" id="L441">        return new FlexiBean(this);</span>
+<span class="fc" id="L439">        return new FlexiBean(this);</span>
     }
 
     /**
@@ -449,14 +447,14 @@ public final class FlexiBean implements DynamicBean, Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L452" title="All 2 branches covered.">        if (obj == this) {</span>
-<span class="fc" id="L453">            return true;</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">        if (obj == this) {</span>
+<span class="fc" id="L451">            return true;</span>
         }
-<span class="fc bfc" id="L455" title="All 2 branches covered.">        if (obj instanceof FlexiBean) {</span>
-<span class="fc" id="L456">            FlexiBean other = (FlexiBean) obj;</span>
-<span class="fc" id="L457">            return this.data.equals(other.data);</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">        if (obj instanceof FlexiBean) {</span>
+<span class="fc" id="L454">            FlexiBean other = (FlexiBean) obj;</span>
+<span class="fc" id="L455">            return this.data.equals(other.data);</span>
         }
-<span class="fc" id="L459">        return super.equals(obj);</span>
+<span class="fc" id="L457">        return super.equals(obj);</span>
     }
 
     /**
@@ -466,7 +464,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L469">        return data.hashCode();</span>
+<span class="fc" id="L467">        return data.hashCode();</span>
     }
 
     /**
@@ -478,7 +476,7 @@ public final class FlexiBean implements DynamicBean, Serializable {
      */
     @Override
     public String toString() {
-<span class="fc" id="L481">        return getClass().getSimpleName() + data.toString();</span>
+<span class="fc" id="L479">        return getClass().getSimpleName() + data.toString();</span>
     }
 
 }

@@ -31,7 +31,6 @@ import org.joda.beans.PropertyStyle;
  * An immutable meta-property based on a getter interface.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  * @deprecated Replaced by method handles
  */
 @Deprecated
@@ -59,32 +58,32 @@ final class MutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaProperty&
             final String propertyName,
             int constructorIndex) {
         
-<span class="nc" id="L62">        PropertyGetter getter = new PropertyGetter() {</span>
+<span class="nc" id="L61">        PropertyGetter getter = new PropertyGetter() {</span>
             @Override
             public Object get(Bean bean) {
                 try {
-<span class="nc" id="L66">                    return field.get(bean);</span>
-<span class="nc" id="L67">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L68">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L65">                    return field.get(bean);</span>
+<span class="nc" id="L66">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L67">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
                 }
             }
         };
-<span class="nc" id="L72">        PropertySetter setter = new PropertySetter() {</span>
+<span class="nc" id="L71">        PropertySetter setter = new PropertySetter() {</span>
             @Override
             public void set(Bean bean, Object value) {
                 try {
-<span class="nc" id="L76">                    field.set(bean, value);</span>
-<span class="nc" id="L77">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L78">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="nc" id="L79">                }</span>
-<span class="nc" id="L80">            }</span>
+<span class="nc" id="L75">                    field.set(bean, value);</span>
+<span class="nc" id="L76">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L77">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L78">                }</span>
+<span class="nc" id="L79">            }</span>
         };
-<span class="nc" id="L82">        return new MutableLightMetaProperty&lt;&gt;(</span>
+<span class="nc" id="L81">        return new MutableLightMetaProperty&lt;&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="nc" id="L85">                (Class&lt;P&gt;) field.getType(), </span>
-<span class="nc" id="L86">                field.getGenericType(), </span>
-<span class="nc" id="L87">                Arrays.asList(field.getAnnotations()), </span>
+<span class="nc" id="L84">                (Class&lt;P&gt;) field.getType(), </span>
+<span class="nc" id="L85">                field.getGenericType(), </span>
+<span class="nc" id="L86">                Arrays.asList(field.getAnnotations()), </span>
                 getter,
                 setter,
                 constructorIndex);
@@ -108,43 +107,43 @@ final class MutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaProperty&
             final String propertyName,
             int constructorIndex) {
         
-<span class="nc" id="L111">        PropertyGetter getter = new PropertyGetter() {</span>
+<span class="nc" id="L110">        PropertyGetter getter = new PropertyGetter() {</span>
             @Override
             public Object get(Bean bean) {
                 try {
-<span class="nc" id="L115">                    return getMethod.invoke(bean);</span>
-<span class="nc" id="L116">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L117">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="nc" id="L118">                } catch (InvocationTargetException ex) {</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
-<span class="nc" id="L120">                        throw (RuntimeException) ex.getCause();</span>
+<span class="nc" id="L114">                    return getMethod.invoke(bean);</span>
+<span class="nc" id="L115">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L116">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L117">                } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L119">                        throw (RuntimeException) ex.getCause();</span>
                     }
-<span class="nc" id="L122">                    throw new RuntimeException(ex);</span>
+<span class="nc" id="L121">                    throw new RuntimeException(ex);</span>
                 }
             }
         };
-<span class="nc" id="L126">        PropertySetter setter = new PropertySetter() {</span>
+<span class="nc" id="L125">        PropertySetter setter = new PropertySetter() {</span>
             @Override
             public void set(Bean bean, Object value) {
                 try {
-<span class="nc" id="L130">                    setMethod.invoke(bean, value);</span>
-<span class="nc" id="L131">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L132">                    throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + propertyName, ex);</span>
-<span class="nc" id="L133">                } catch (InvocationTargetException ex) {</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
-<span class="nc" id="L135">                        throw (RuntimeException) ex.getCause();</span>
+<span class="nc" id="L129">                    setMethod.invoke(bean, value);</span>
+<span class="nc" id="L130">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L131">                    throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + propertyName, ex);</span>
+<span class="nc" id="L132">                } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L134">                        throw (RuntimeException) ex.getCause();</span>
                     }
-<span class="nc" id="L137">                    throw new RuntimeException(ex);</span>
-<span class="nc" id="L138">                }</span>
-<span class="nc" id="L139">            }</span>
+<span class="nc" id="L136">                    throw new RuntimeException(ex);</span>
+<span class="nc" id="L137">                }</span>
+<span class="nc" id="L138">            }</span>
         };
         // special case for optional
-<span class="nc" id="L142">        return new MutableLightMetaProperty&lt;&gt;(</span>
+<span class="nc" id="L141">        return new MutableLightMetaProperty&lt;&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="nc" id="L145">                (Class&lt;P&gt;) field.getType(), </span>
-<span class="nc" id="L146">                field.getGenericType(), </span>
-<span class="nc" id="L147">                Arrays.asList(field.getAnnotations()), </span>
+<span class="nc" id="L144">                (Class&lt;P&gt;) field.getType(), </span>
+<span class="nc" id="L145">                field.getGenericType(), </span>
+<span class="nc" id="L146">                Arrays.asList(field.getAnnotations()), </span>
                 getter,
                 setter,
                 constructorIndex);
@@ -172,28 +171,28 @@ final class MutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaProperty&
             PropertySetter setter,
             int constructorIndex) {
         
-<span class="nc" id="L175">        super(metaBean, propertyName, propertyType, propertyGenericType, annotations, constructorIndex);</span>
-<span class="nc" id="L176">        this.getter = getter;</span>
-<span class="nc" id="L177">        this.setter = setter;</span>
-<span class="nc" id="L178">    }</span>
+<span class="nc" id="L174">        super(metaBean, propertyName, propertyType, propertyGenericType, annotations, constructorIndex);</span>
+<span class="nc" id="L175">        this.getter = getter;</span>
+<span class="nc" id="L176">        this.setter = setter;</span>
+<span class="nc" id="L177">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public PropertyStyle style() {
-<span class="nc" id="L183">        return PropertyStyle.READ_WRITE;</span>
+<span class="nc" id="L182">        return PropertyStyle.READ_WRITE;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public P get(Bean bean) {
-<span class="nc" id="L190">        return (P) getter.get(bean);</span>
+<span class="nc" id="L189">        return (P) getter.get(bean);</span>
     }
 
     @Override
     public void set(Bean bean, Object value) {
-<span class="nc" id="L195">        setter.set(bean, value);</span>
-<span class="nc" id="L196">    }</span>
+<span class="nc" id="L194">        setter.set(bean, value);</span>
+<span class="nc" id="L195">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

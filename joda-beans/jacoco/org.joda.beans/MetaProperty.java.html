@@ -28,7 +28,6 @@ import org.joda.convert.StringConvert;
  * to a particular bean, such as the property type and name.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 public interface MetaProperty&lt;P&gt; {
 
@@ -42,7 +41,7 @@ public interface MetaProperty&lt;P&gt; {
      * @return the property, not null
      */
     public default Property&lt;P&gt; createProperty(Bean bean) {
-<span class="fc" id="L45">        return BasicProperty.of(bean, this);</span>
+<span class="fc" id="L44">        return BasicProperty.of(bean, this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -129,13 +128,13 @@ public interface MetaProperty&lt;P&gt; {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public default &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
-<span class="nc" id="L132">        List&lt;Annotation&gt; annotations = annotations();</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (Annotation annotation : annotations) {</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
-<span class="nc" id="L135">                return (A) annotation;</span>
+<span class="nc" id="L131">        List&lt;Annotation&gt; annotations = annotations();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (Annotation annotation : annotations) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
+<span class="nc" id="L134">                return (A) annotation;</span>
             }
-<span class="nc" id="L137">        }</span>
-<span class="nc" id="L138">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+<span class="nc" id="L136">        }</span>
+<span class="nc" id="L137">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
     }
 
     //-----------------------------------------------------------------------
@@ -184,9 +183,9 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default P put(Bean bean, Object value) {
-<span class="fc" id="L187">        P old = get(bean);</span>
-<span class="fc" id="L188">        set(bean, value);</span>
-<span class="fc" id="L189">        return old;</span>
+<span class="fc" id="L186">        P old = get(bean);</span>
+<span class="fc" id="L187">        set(bean, value);</span>
+<span class="fc" id="L188">        return old;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -207,7 +206,7 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value cannot be converted to a string (use appropriate subclasses)
      */
     public default String getString(Bean bean) {
-<span class="fc" id="L210">        return getString(bean, JodaBeanUtils.stringConverter());</span>
+<span class="fc" id="L209">        return getString(bean, JodaBeanUtils.stringConverter());</span>
     }
 
     /**
@@ -227,8 +226,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value cannot be converted to a string (use appropriate subclasses)
      */
     public default String getString(Bean bean, StringConvert stringConvert) {
-<span class="fc" id="L230">        P value = get(bean);</span>
-<span class="fc" id="L231">        return stringConvert.convertToString(propertyType(), value);</span>
+<span class="fc" id="L229">        P value = get(bean);</span>
+<span class="fc" id="L230">        return stringConvert.convertToString(propertyType(), value);</span>
     }
 
     /**
@@ -245,8 +244,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void setString(Bean bean, String value) {
-<span class="nc" id="L248">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
-<span class="nc" id="L249">    }</span>
+<span class="nc" id="L247">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
+<span class="nc" id="L248">    }</span>
 
     /**
      * Sets the value of the property on the specified bean from a string by conversion.
@@ -263,8 +262,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void setString(Bean bean, String value, StringConvert stringConvert) {
-<span class="nc" id="L266">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
-<span class="nc" id="L267">    }</span>
+<span class="nc" id="L265">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
+<span class="nc" id="L266">    }</span>
 
     //-----------------------------------------------------------------------
     /**

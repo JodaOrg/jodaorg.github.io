@@ -36,7 +36,6 @@ import org.joda.beans.impl.BasicBeanBuilder;
  * Typically, the meta-bean will be created as a public static final constant.
  * Only one method from {@link Bean} needs to be implemented, which simply returns the meta-bean.
  * 
- * @author Stephen Colebourne
  * @param &lt;T&gt;  the type of the bean
  */
 public final class ReflectiveMetaBean&lt;T extends Bean&gt; implements TypedMetaBean&lt;T&gt; {
@@ -57,7 +56,7 @@ public final class ReflectiveMetaBean&lt;T extends Bean&gt; implements TypedMeta
      * @return the meta-bean, not null
      */
     public static &lt;B extends Bean&gt; ReflectiveMetaBean&lt;B&gt; of(Class&lt;B&gt; beanClass, String... propertyNames) {
-<span class="fc" id="L60">        return new ReflectiveMetaBean&lt;&gt;(beanClass, propertyNames);</span>
+<span class="fc" id="L59">        return new ReflectiveMetaBean&lt;&gt;(beanClass, propertyNames);</span>
     }
 
     /**
@@ -66,65 +65,65 @@ public final class ReflectiveMetaBean&lt;T extends Bean&gt; implements TypedMeta
      * @param beanType  the bean type, not null
      * @param propertyNames  the property names, not null
      */
-<span class="fc" id="L69">    private ReflectiveMetaBean(Class&lt;T&gt; beanType, String[] propertyNames) {</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (beanType == null) {</span>
-<span class="nc" id="L71">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
+<span class="fc" id="L68">    private ReflectiveMetaBean(Class&lt;T&gt; beanType, String[] propertyNames) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (beanType == null) {</span>
+<span class="nc" id="L70">            throw new NullPointerException(&quot;Bean class must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (propertyNames == null) {</span>
-<span class="nc" id="L74">            throw new NullPointerException(&quot;Property names must not be null&quot;);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (propertyNames == null) {</span>
+<span class="nc" id="L73">            throw new NullPointerException(&quot;Property names must not be null&quot;);</span>
         }
-<span class="fc" id="L76">        this.beanType = beanType;</span>
-<span class="fc" id="L77">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (String name : propertyNames) {</span>
-<span class="fc" id="L79">            map.put(name, new ReflectiveMetaProperty&lt;&gt;(this, beanType, name));</span>
+<span class="fc" id="L75">        this.beanType = beanType;</span>
+<span class="fc" id="L76">        Map&lt;String, MetaProperty&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (String name : propertyNames) {</span>
+<span class="fc" id="L78">            map.put(name, new ReflectiveMetaProperty&lt;&gt;(this, beanType, name));</span>
         }
-<span class="fc" id="L81">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L80">        this.metaPropertyMap = Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L81">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public boolean isBuildable() {
         try {
-<span class="nc" id="L88">            beanType.getDeclaredConstructor().newInstance();</span>
-<span class="nc" id="L89">            return true;</span>
-<span class="nc" id="L90">        } catch (Exception ex) {</span>
-<span class="nc" id="L91">            return false;</span>
+<span class="nc" id="L87">            beanType.getDeclaredConstructor().newInstance();</span>
+<span class="nc" id="L88">            return true;</span>
+<span class="nc" id="L89">        } catch (Exception ex) {</span>
+<span class="nc" id="L90">            return false;</span>
         }
     }
 
     @Override
     public BeanBuilder&lt;T&gt; builder() {
         try {
-<span class="fc" id="L98">            T bean = beanType.getDeclaredConstructor().newInstance();</span>
-<span class="fc" id="L99">            return new BasicBeanBuilder&lt;&gt;(bean);</span>
-<span class="nc" id="L100">        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ex) {</span>
-<span class="nc" id="L101">            throw new UnsupportedOperationException(&quot;Bean cannot be created: &quot; + beanName(), ex);</span>
+<span class="fc" id="L97">            T bean = beanType.getDeclaredConstructor().newInstance();</span>
+<span class="fc" id="L98">            return new BasicBeanBuilder&lt;&gt;(bean);</span>
+<span class="nc" id="L99">        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ex) {</span>
+<span class="nc" id="L100">            throw new UnsupportedOperationException(&quot;Bean cannot be created: &quot; + beanName(), ex);</span>
         }
     }
 
     @Override
     public Class&lt;T&gt; beanType() {
-<span class="fc" id="L107">        return beanType;</span>
+<span class="fc" id="L106">        return beanType;</span>
     }
 
     @Override
     public Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropertyMap() {
-<span class="fc" id="L112">        return metaPropertyMap;</span>
+<span class="fc" id="L111">        return metaPropertyMap;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (obj instanceof ReflectiveMetaBean) {</span>
-<span class="nc" id="L119">            ReflectiveMetaBean&lt;?&gt; other = (ReflectiveMetaBean&lt;?&gt;) obj;</span>
-<span class="nc" id="L120">            return this.beanType.equals(other.beanType);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (obj instanceof ReflectiveMetaBean) {</span>
+<span class="nc" id="L118">            ReflectiveMetaBean&lt;?&gt; other = (ReflectiveMetaBean&lt;?&gt;) obj;</span>
+<span class="nc" id="L119">            return this.beanType.equals(other.beanType);</span>
         }
-<span class="nc" id="L122">        return false;</span>
+<span class="nc" id="L121">        return false;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L127">        return beanType.hashCode() + 3;</span>
+<span class="nc" id="L126">        return beanType.hashCode() + 3;</span>
     }
 
     /**
@@ -134,7 +133,7 @@ public final class ReflectiveMetaBean&lt;T extends Bean&gt; implements TypedMeta
      */
     @Override
     public String toString() {
-<span class="nc" id="L137">        return &quot;MetaBean:&quot; + beanName();</span>
+<span class="nc" id="L136">        return &quot;MetaBean:&quot; + beanName();</span>
     }
 
 }

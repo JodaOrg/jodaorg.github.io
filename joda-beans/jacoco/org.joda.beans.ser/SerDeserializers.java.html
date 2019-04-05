@@ -53,29 +53,27 @@ import org.joda.convert.RenameHandler;
  * the classpath is static and fixed and the transformations are common.
  * &lt;p&gt;
  * Implementations must be thread-safe singletons.
- *
- * @author Stephen Colebourne
  */
 public final class SerDeserializers {
 
     /**
      * Deserializers loaded from the classpath.
      */
-<span class="fc" id="L64">    private static final Map&lt;Class&lt;?&gt;, SerDeserializer&gt; CLASSPATH_STRICT = loadFromClasspath();</span>
+<span class="fc" id="L62">    private static final Map&lt;Class&lt;?&gt;, SerDeserializer&gt; CLASSPATH_STRICT = loadFromClasspath();</span>
     /**
      * Deserializers loaded from the classpath.
      */
-<span class="fc" id="L68">    private static final Map&lt;Class&lt;?&gt;, SerDeserializer&gt; CLASSPATH_LENIENT = CLASSPATH_STRICT.entrySet().stream()</span>
-<span class="fc" id="L69">            .map(e -&gt; new SimpleEntry&lt;&gt;(e.getKey(), toLenient(e.getValue())))</span>
-<span class="fc" id="L70">            .collect(toMap(e -&gt; e.getKey(), e -&gt; e.getValue()));</span>
+<span class="fc" id="L66">    private static final Map&lt;Class&lt;?&gt;, SerDeserializer&gt; CLASSPATH_LENIENT = CLASSPATH_STRICT.entrySet().stream()</span>
+<span class="fc" id="L67">            .map(e -&gt; new SimpleEntry&lt;&gt;(e.getKey(), toLenient(e.getValue())))</span>
+<span class="fc" id="L68">            .collect(toMap(e -&gt; e.getKey(), e -&gt; e.getValue()));</span>
     /**
      * Shared global instance which can be mutated.
      */
-<span class="fc" id="L74">    public static final SerDeserializers INSTANCE = new SerDeserializers(false);</span>
+<span class="fc" id="L72">    public static final SerDeserializers INSTANCE = new SerDeserializers(false);</span>
     /**
      * Lenient instance which can be mutated.
      */
-<span class="fc" id="L78">    public static final SerDeserializers LENIENT = new SerDeserializers(true);</span>
+<span class="fc" id="L76">    public static final SerDeserializers LENIENT = new SerDeserializers(true);</span>
 
     /**
      * Whether deserialization is lenient.
@@ -88,20 +86,20 @@ public final class SerDeserializers {
     /**
      * The deserializers.
      */
-<span class="fc" id="L91">    private final ConcurrentMap&lt;Class&lt;?&gt;, SerDeserializer&gt; deserializers = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L89">    private final ConcurrentMap&lt;Class&lt;?&gt;, SerDeserializer&gt; deserializers = new ConcurrentHashMap&lt;&gt;();</span>
     /**
      * The deserializer providers.
      */
-<span class="fc" id="L95">    private final CopyOnWriteArrayList&lt;SerDeserializerProvider&gt; providers = new CopyOnWriteArrayList&lt;&gt;();</span>
+<span class="fc" id="L93">    private final CopyOnWriteArrayList&lt;SerDeserializerProvider&gt; providers = new CopyOnWriteArrayList&lt;&gt;();</span>
 
     /**
      * Creates an instance.
      */
-<span class="fc" id="L100">    public SerDeserializers() {</span>
-<span class="fc" id="L101">        this.lenient = false;</span>
-<span class="fc" id="L102">        this.defaultDeserializer = DefaultDeserializer.INSTANCE;</span>
-<span class="fc" id="L103">        this.deserializers.putAll(CLASSPATH_STRICT);</span>
-<span class="fc" id="L104">    }</span>
+<span class="fc" id="L98">    public SerDeserializers() {</span>
+<span class="fc" id="L99">        this.lenient = false;</span>
+<span class="fc" id="L100">        this.defaultDeserializer = DefaultDeserializer.INSTANCE;</span>
+<span class="fc" id="L101">        this.deserializers.putAll(CLASSPATH_STRICT);</span>
+<span class="fc" id="L102">    }</span>
 
     /**
      * Creates an instance using additional providers.
@@ -109,8 +107,8 @@ public final class SerDeserializers {
      * @param providers  the providers to use
      */
     public SerDeserializers(SerDeserializerProvider... providers) {
-<span class="fc" id="L112">        this(false, providers);</span>
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L110">        this(false, providers);</span>
+<span class="fc" id="L111">    }</span>
 
     /**
      * Creates an instance using additional providers.
@@ -118,12 +116,12 @@ public final class SerDeserializers {
      * @param lenient  whether to deserialize leniently
      * @param providers  the providers to use
      */
-<span class="fc" id="L121">    public SerDeserializers(boolean lenient, SerDeserializerProvider... providers) {</span>
-<span class="fc" id="L122">        this.lenient = lenient;</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        this.defaultDeserializer = lenient ? LenientDeserializer.INSTANCE : DefaultDeserializer.INSTANCE;</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        this.deserializers.putAll(lenient ? CLASSPATH_LENIENT : CLASSPATH_STRICT);</span>
-<span class="fc" id="L125">        this.providers.addAll(Arrays.asList(providers));</span>
-<span class="fc" id="L126">    }</span>
+<span class="fc" id="L119">    public SerDeserializers(boolean lenient, SerDeserializerProvider... providers) {</span>
+<span class="fc" id="L120">        this.lenient = lenient;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        this.defaultDeserializer = lenient ? LenientDeserializer.INSTANCE : DefaultDeserializer.INSTANCE;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        this.deserializers.putAll(lenient ? CLASSPATH_LENIENT : CLASSPATH_STRICT);</span>
+<span class="fc" id="L123">        this.providers.addAll(Arrays.asList(providers));</span>
+<span class="fc" id="L124">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -134,8 +132,8 @@ public final class SerDeserializers {
      * @return this, for chaining, not null
      */
     public SerDeserializers register(Class&lt;?&gt; type, SerDeserializer deserializer) {
-<span class="fc" id="L137">        deserializers.put(type, deserializer);</span>
-<span class="fc" id="L138">        return this;</span>
+<span class="fc" id="L135">        deserializers.put(type, deserializer);</span>
+<span class="fc" id="L136">        return this;</span>
     }
 
     /**
@@ -144,7 +142,7 @@ public final class SerDeserializers {
      * @return the map of deserializers, not null
      */
     public ConcurrentMap&lt;Class&lt;?&gt;, SerDeserializer&gt; getDeserializers() {
-<span class="fc" id="L147">        return deserializers;</span>
+<span class="fc" id="L145">        return deserializers;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -155,8 +153,8 @@ public final class SerDeserializers {
      * @return this, for chaining, not null
      */
     public SerDeserializers registerProvider(SerDeserializerProvider provider) {
-<span class="nc" id="L158">        providers.add(provider);</span>
-<span class="nc" id="L159">        return this;</span>
+<span class="nc" id="L156">        providers.add(provider);</span>
+<span class="nc" id="L157">        return this;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -169,17 +167,17 @@ public final class SerDeserializers {
      * @return the deserializer, not null
      */
     public SerDeserializer findDeserializer(Class&lt;?&gt; type) {
-<span class="fc" id="L172">        SerDeserializer deser = deserializers.get(type);</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (deser != null) {</span>
-<span class="fc" id="L174">            return deser;</span>
+<span class="fc" id="L170">        SerDeserializer deser = deserializers.get(type);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (deser != null) {</span>
+<span class="fc" id="L172">            return deser;</span>
         }
-<span class="fc bfc" id="L176" title="All 2 branches covered.">        for (SerDeserializerProvider provider : providers) {</span>
-<span class="fc" id="L177">            deser = provider.findDeserializer(type);</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if (deser != null) {</span>
-<span class="fc" id="L179">                return deser;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        for (SerDeserializerProvider provider : providers) {</span>
+<span class="fc" id="L175">            deser = provider.findDeserializer(type);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            if (deser != null) {</span>
+<span class="fc" id="L177">                return deser;</span>
             }
-<span class="nc" id="L181">        }</span>
-<span class="fc" id="L182">        return defaultDeserializer;</span>
+<span class="nc" id="L179">        }</span>
+<span class="fc" id="L180">        return defaultDeserializer;</span>
     }
 
     /**
@@ -200,136 +198,136 @@ public final class SerDeserializers {
             Map&lt;String, Class&lt;?&gt;&gt; knownTypes,
             Class&lt;?&gt; defaultType) throws ClassNotFoundException {
         
-<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (lenient) {</span>
-<span class="fc" id="L204">            return SerTypeMapper.decodeType(</span>
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">                    typeStr, settings, basePackage, knownTypes, defaultType == Object.class ? String.class : defaultType);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        if (lenient) {</span>
+<span class="fc" id="L202">            return SerTypeMapper.decodeType(</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">                    typeStr, settings, basePackage, knownTypes, defaultType == Object.class ? String.class : defaultType);</span>
         }
-<span class="fc" id="L207">        return SerTypeMapper.decodeType(typeStr, settings, basePackage, knownTypes);</span>
+<span class="fc" id="L205">        return SerTypeMapper.decodeType(typeStr, settings, basePackage, knownTypes);</span>
     }
 
     //-----------------------------------------------------------------------
     // loads config files
     private static Map&lt;Class&lt;?&gt;, SerDeserializer&gt; loadFromClasspath() {
         // log errors to System.err, as problems in static initializers can be troublesome to diagnose
-<span class="fc" id="L214">        Map&lt;Class&lt;?&gt;, SerDeserializer&gt; result = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L215">        URL url = null;</span>
+<span class="fc" id="L212">        Map&lt;Class&lt;?&gt;, SerDeserializer&gt; result = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L213">        URL url = null;</span>
         try {
             // this is the new location of the file, working on Java 8, Java 9 class path and Java 9 module path
-<span class="fc" id="L218">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            if (loader == null) {</span>
-<span class="nc" id="L220">                loader = RenameHandler.class.getClassLoader();</span>
+<span class="fc" id="L216">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">            if (loader == null) {</span>
+<span class="nc" id="L218">                loader = RenameHandler.class.getClassLoader();</span>
             }
-<span class="fc" id="L222">            Enumeration&lt;URL&gt; en = loader.getResources(&quot;META-INF/org/joda/beans/JodaBeans.ini&quot;);</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">            while (en.hasMoreElements()) {</span>
-<span class="fc" id="L224">                url = en.nextElement();</span>
-<span class="fc" id="L225">                List&lt;String&gt; lines = loadRenameFile(url);</span>
-<span class="fc" id="L226">                parseRenameFile(lines, url, result);</span>
-<span class="fc" id="L227">            }</span>
-<span class="nc" id="L228">        } catch (Error | Exception ex) {</span>
-<span class="nc" id="L229">            System.err.println(&quot;ERROR: Unable to load JodaBeans.ini: &quot; + url + &quot;: &quot; + ex.getMessage());</span>
-<span class="nc" id="L230">            ex.printStackTrace();</span>
-<span class="nc" id="L231">            result.clear();</span>
-<span class="fc" id="L232">        }</span>
-<span class="fc" id="L233">        return result;</span>
+<span class="fc" id="L220">            Enumeration&lt;URL&gt; en = loader.getResources(&quot;META-INF/org/joda/beans/JodaBeans.ini&quot;);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">            while (en.hasMoreElements()) {</span>
+<span class="fc" id="L222">                url = en.nextElement();</span>
+<span class="fc" id="L223">                List&lt;String&gt; lines = loadRenameFile(url);</span>
+<span class="fc" id="L224">                parseRenameFile(lines, url, result);</span>
+<span class="fc" id="L225">            }</span>
+<span class="nc" id="L226">        } catch (Error | Exception ex) {</span>
+<span class="nc" id="L227">            System.err.println(&quot;ERROR: Unable to load JodaBeans.ini: &quot; + url + &quot;: &quot; + ex.getMessage());</span>
+<span class="nc" id="L228">            ex.printStackTrace();</span>
+<span class="nc" id="L229">            result.clear();</span>
+<span class="fc" id="L230">        }</span>
+<span class="fc" id="L231">        return result;</span>
     }
 
     // loads a single rename file
     private static List&lt;String&gt; loadRenameFile(URL url) throws IOException {
-<span class="fc" id="L238">        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), UTF_8))) {</span>
-<span class="fc" id="L239">            return reader.lines()</span>
-<span class="pc bpc" id="L240" title="1 of 4 branches missed.">                    .filter(line -&gt; !line.isEmpty() &amp;&amp; !line.startsWith(&quot;#&quot;))</span>
-<span class="fc" id="L241">                    .collect(toList());</span>
+<span class="fc" id="L236">        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), UTF_8))) {</span>
+<span class="fc" id="L237">            return reader.lines()</span>
+<span class="pc bpc" id="L238" title="1 of 4 branches missed.">                    .filter(line -&gt; !line.isEmpty() &amp;&amp; !line.startsWith(&quot;#&quot;))</span>
+<span class="fc" id="L239">                    .collect(toList());</span>
         }
     }
 
     // parses a single rename file
     private static void parseRenameFile(List&lt;String&gt; lines, URL url, Map&lt;Class&lt;?&gt;, SerDeserializer&gt; map) {
         // format allows multiple [deserializers] so file can be merged
-<span class="fc" id="L248">        boolean deserializers = false;</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">        for (String line : lines) {</span>
+<span class="fc" id="L246">        boolean deserializers = false;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        for (String line : lines) {</span>
             try {
-<span class="fc bfc" id="L251" title="All 2 branches covered.">                if (line.equals(&quot;[deserializers]&quot;)) {</span>
-<span class="fc" id="L252">                    deserializers = true;</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">                } else if (deserializers) {</span>
-<span class="fc" id="L254">                    int equalsPos = line.indexOf('=');</span>
-<span class="fc bfc" id="L255" title="All 2 branches covered.">                    String beanName = equalsPos &gt;= 0 ? line.substring(0, equalsPos).trim() : line;</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">                    String deserName = equalsPos &gt;= 0 ? line.substring(equalsPos + 1).trim() : line;</span>
-<span class="fc" id="L257">                    registerFromClasspath(beanName, deserName, map);</span>
-<span class="fc" id="L258">                } else {</span>
-<span class="nc" id="L259">                    throw new IllegalArgumentException(&quot;JodaBeans.ini must start with [deserializers]&quot;);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">                if (line.equals(&quot;[deserializers]&quot;)) {</span>
+<span class="fc" id="L250">                    deserializers = true;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">                } else if (deserializers) {</span>
+<span class="fc" id="L252">                    int equalsPos = line.indexOf('=');</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">                    String beanName = equalsPos &gt;= 0 ? line.substring(0, equalsPos).trim() : line;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">                    String deserName = equalsPos &gt;= 0 ? line.substring(equalsPos + 1).trim() : line;</span>
+<span class="fc" id="L255">                    registerFromClasspath(beanName, deserName, map);</span>
+<span class="fc" id="L256">                } else {</span>
+<span class="nc" id="L257">                    throw new IllegalArgumentException(&quot;JodaBeans.ini must start with [deserializers]&quot;);</span>
                 }
-<span class="nc" id="L261">            } catch (Exception ex) {</span>
-<span class="nc" id="L262">                System.err.println(&quot;ERROR: Invalid JodaBeans.ini: &quot; + url + &quot;: &quot; + ex.getMessage());</span>
-<span class="fc" id="L263">            }</span>
-<span class="fc" id="L264">        }</span>
-<span class="fc" id="L265">    }</span>
+<span class="nc" id="L259">            } catch (Exception ex) {</span>
+<span class="nc" id="L260">                System.err.println(&quot;ERROR: Invalid JodaBeans.ini: &quot; + url + &quot;: &quot; + ex.getMessage());</span>
+<span class="fc" id="L261">            }</span>
+<span class="fc" id="L262">        }</span>
+<span class="fc" id="L263">    }</span>
 
     // parses and registers the classes
     private static void registerFromClasspath(
             String beanName, String deserName, Map&lt;Class&lt;?&gt;, SerDeserializer&gt; map) throws Exception {
 
-<span class="fc" id="L271">        Class&lt;? extends Bean&gt; beanClass = Class.forName(beanName).asSubclass(Bean.class);</span>
-<span class="fc" id="L272">        Class&lt;?&gt; deserClass = Class.forName(deserName);</span>
+<span class="fc" id="L269">        Class&lt;? extends Bean&gt; beanClass = Class.forName(beanName).asSubclass(Bean.class);</span>
+<span class="fc" id="L270">        Class&lt;?&gt; deserClass = Class.forName(deserName);</span>
 
-<span class="fc" id="L274">        Field field = null;</span>
+<span class="fc" id="L272">        Field field = null;</span>
         SerDeserializer deser;
         try {
-<span class="fc" id="L277">            field = deserClass.getDeclaredField(&quot;DESERIALIZER&quot;);</span>
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">            if (!Modifier.isStatic(field.getModifiers())) {</span>
-<span class="nc" id="L279">                throw new IllegalStateException(&quot;Field &quot; + field + &quot; must be static&quot;);</span>
+<span class="fc" id="L275">            field = deserClass.getDeclaredField(&quot;DESERIALIZER&quot;);</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            if (!Modifier.isStatic(field.getModifiers())) {</span>
+<span class="nc" id="L277">                throw new IllegalStateException(&quot;Field &quot; + field + &quot; must be static&quot;);</span>
             }
-<span class="fc" id="L281">            deser = SerDeserializer.class.cast(field.get(null));</span>
-<span class="fc" id="L282">        } catch (NoSuchFieldException ex) {</span>
-<span class="fc" id="L283">            Constructor&lt;?&gt; cons = null;</span>
+<span class="fc" id="L279">            deser = SerDeserializer.class.cast(field.get(null));</span>
+<span class="fc" id="L280">        } catch (NoSuchFieldException ex) {</span>
+<span class="fc" id="L281">            Constructor&lt;?&gt; cons = null;</span>
             try {
-<span class="fc" id="L285">                cons = deserClass.getConstructor();</span>
-<span class="fc" id="L286">                deser = SerDeserializer.class.cast(cons.newInstance());</span>
-<span class="nc" id="L287">            } catch (NoSuchMethodException ex2) {</span>
-<span class="nc" id="L288">                throw new IllegalStateException(</span>
-<span class="nc" id="L289">                        &quot;Class &quot; + deserClass.getName() + &quot; must have field DESERIALIZER or a no-arg constructor&quot;);</span>
-<span class="nc" id="L290">            } catch (IllegalAccessException ex2) {</span>
-<span class="nc" id="L291">                cons.setAccessible(true);</span>
-<span class="nc" id="L292">                deser = SerDeserializer.class.cast(cons.newInstance());</span>
-<span class="fc" id="L293">            }</span>
-<span class="nc" id="L294">        } catch (IllegalAccessException ex) {</span>
-<span class="nc" id="L295">            field.setAccessible(true);</span>
-<span class="nc" id="L296">            deser = SerDeserializer.class.cast(field.get(null));</span>
-<span class="fc" id="L297">        }</span>
-<span class="fc" id="L298">        map.put(beanClass, deser);</span>
-<span class="fc" id="L299">    }</span>
+<span class="fc" id="L283">                cons = deserClass.getConstructor();</span>
+<span class="fc" id="L284">                deser = SerDeserializer.class.cast(cons.newInstance());</span>
+<span class="nc" id="L285">            } catch (NoSuchMethodException ex2) {</span>
+<span class="nc" id="L286">                throw new IllegalStateException(</span>
+<span class="nc" id="L287">                        &quot;Class &quot; + deserClass.getName() + &quot; must have field DESERIALIZER or a no-arg constructor&quot;);</span>
+<span class="nc" id="L288">            } catch (IllegalAccessException ex2) {</span>
+<span class="nc" id="L289">                cons.setAccessible(true);</span>
+<span class="nc" id="L290">                deser = SerDeserializer.class.cast(cons.newInstance());</span>
+<span class="fc" id="L291">            }</span>
+<span class="nc" id="L292">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L293">            field.setAccessible(true);</span>
+<span class="nc" id="L294">            deser = SerDeserializer.class.cast(field.get(null));</span>
+<span class="fc" id="L295">        }</span>
+<span class="fc" id="L296">        map.put(beanClass, deser);</span>
+<span class="fc" id="L297">    }</span>
 
     // makes the deserializer lenient
     private static SerDeserializer toLenient(SerDeserializer underlying) {
-<span class="fc" id="L303">        return new SerDeserializer() {</span>
+<span class="fc" id="L301">        return new SerDeserializer() {</span>
 
             @Override
             public MetaBean findMetaBean(Class&lt;?&gt; beanType) {
-<span class="fc" id="L307">                return underlying.findMetaBean(beanType);</span>
+<span class="fc" id="L305">                return underlying.findMetaBean(beanType);</span>
             }
 
             @Override
             public BeanBuilder&lt;?&gt; createBuilder(Class&lt;?&gt; beanType, MetaBean metaBean) {
-<span class="fc" id="L312">                return underlying.createBuilder(beanType, metaBean);</span>
+<span class="fc" id="L310">                return underlying.createBuilder(beanType, metaBean);</span>
             }
 
             @Override
             public MetaProperty&lt;?&gt; findMetaProperty(Class&lt;?&gt; beanType, MetaBean metaBean, String propertyName) {
                 // dynamic beans force code by exception
                 try {
-<span class="fc" id="L319">                    return underlying.findMetaProperty(beanType, metaBean, propertyName);</span>
-<span class="fc" id="L320">                } catch (NoSuchElementException ex) {</span>
-<span class="fc" id="L321">                    return null;</span>
+<span class="fc" id="L317">                    return underlying.findMetaProperty(beanType, metaBean, propertyName);</span>
+<span class="fc" id="L318">                } catch (NoSuchElementException ex) {</span>
+<span class="fc" id="L319">                    return null;</span>
                 }
             }
 
             @Override
             public void setValue(BeanBuilder&lt;?&gt; builder, MetaProperty&lt;?&gt; metaProp, Object value) {
-<span class="fc" id="L327">                underlying.setValue(builder, metaProp, value);</span>
-<span class="fc" id="L328">            }</span>
+<span class="fc" id="L325">                underlying.setValue(builder, metaProp, value);</span>
+<span class="fc" id="L326">            }</span>
 
             @Override
             public Object build(Class&lt;?&gt; beanType, BeanBuilder&lt;?&gt; builder) {
-<span class="fc" id="L332">                return underlying.build(beanType, builder);</span>
+<span class="fc" id="L330">                return underlying.build(beanType, builder);</span>
             }
         };
     }
@@ -337,7 +335,7 @@ public final class SerDeserializers {
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L340">        return getClass().getSimpleName();</span>
+<span class="nc" id="L338">        return getClass().getSimpleName();</span>
     }
 
 }

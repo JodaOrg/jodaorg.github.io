@@ -21,10 +21,8 @@ import java.util.List;
 
 /**
  * A generator of builder code.
- * 
- * @author Stephen Colebourne
  */
-<span class="nc" id="L27">abstract class BuilderGen {</span>
+<span class="nc" id="L25">abstract class BuilderGen {</span>
 
     /**
      * Generates the builder field.
@@ -58,104 +56,104 @@ import java.util.List;
      * @return the generated code, not null
      */
     String generateType(PropertyData prop) {
-<span class="nc" id="L61">        return prop.getBuilderType();</span>
+<span class="nc" id="L59">        return prop.getBuilderType();</span>
     }
 
     //-----------------------------------------------------------------------
     static class PatternBuilderGen extends BuilderGen {
         private final String type;
         private final String init;
-<span class="nc" id="L68">        PatternBuilderGen(String type, String init) {</span>
-<span class="nc" id="L69">            this.type = type;</span>
-<span class="nc" id="L70">            this.init = init;</span>
-<span class="nc" id="L71">        }</span>
+<span class="nc" id="L66">        PatternBuilderGen(String type, String init) {</span>
+<span class="nc" id="L67">            this.type = type;</span>
+<span class="nc" id="L68">            this.init = init;</span>
+<span class="nc" id="L69">        }</span>
         @Override
         List&lt;String&gt; generateField(String indent, PropertyData prop) {
-<span class="nc" id="L74">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (prop.isNotNull()) {</span>
-<span class="nc" id="L76">                String init = this.init;</span>
-<span class="nc" id="L77">                init = init.replace(&quot;&lt;&gt;&quot;, PropertyGen.resolveWildcard(prop.getTypeGenerics()));</span>
-<span class="nc" id="L78">                list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot; = &quot; + init + &quot;;&quot;);</span>
-<span class="nc" id="L79">            } else {</span>
-<span class="nc" id="L80">                list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot;;&quot;);</span>
+<span class="nc" id="L72">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (prop.isNotNull()) {</span>
+<span class="nc" id="L74">                String init = this.init;</span>
+<span class="nc" id="L75">                init = init.replace(&quot;&lt;&gt;&quot;, PropertyGen.resolveWildcard(prop.getTypeGenerics()));</span>
+<span class="nc" id="L76">                list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot; = &quot; + init + &quot;;&quot;);</span>
+<span class="nc" id="L77">            } else {</span>
+<span class="nc" id="L78">                list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot;;&quot;);</span>
             }
-<span class="nc" id="L82">            return list;</span>
+<span class="nc" id="L80">            return list;</span>
         }
         @Override
         boolean isSpecialInit(PropertyData prop) {
-<span class="nc" id="L86">            return true;</span>
+<span class="nc" id="L84">            return true;</span>
         }
         @Override
         String generateInit(PropertyData prop) {
-<span class="nc" id="L90">            return init;</span>
+<span class="nc" id="L88">            return init;</span>
         }
         @Override
         String generateType(PropertyData prop) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (!&quot;smart&quot;.equals(prop.getBuilderTypeStyle())) {</span>
-<span class="nc" id="L95">                return prop.getBuilderType().replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (!&quot;smart&quot;.equals(prop.getBuilderTypeStyle())) {</span>
+<span class="nc" id="L93">                return prop.getBuilderType().replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
             }
-<span class="nc" id="L97">            return type.replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
+<span class="nc" id="L95">            return type.replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
         }
     }
 
     static class SimpleBuilderGen extends BuilderGen {
-<span class="nc" id="L102">        SimpleBuilderGen() {</span>
-<span class="nc" id="L103">        }</span>
+<span class="nc" id="L100">        SimpleBuilderGen() {</span>
+<span class="nc" id="L101">        }</span>
         @Override
         List&lt;String&gt; generateField(String indent, PropertyData prop) {
-<span class="nc" id="L106">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L107">            list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot;;&quot;);</span>
-<span class="nc" id="L108">            return list;</span>
+<span class="nc" id="L104">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L105">            list.add(indent + &quot;private &quot; + generateType(prop) + &quot; &quot; + prop.getFieldName() + &quot;;&quot;);</span>
+<span class="nc" id="L106">            return list;</span>
         }
         @Override
         boolean isSpecialInit(PropertyData prop) {
-<span class="nc" id="L112">            return false;</span>
+<span class="nc" id="L110">            return false;</span>
         }
         @Override
         String generateInit(PropertyData prop) {
-<span class="nc" id="L116">            return defaultType(prop);</span>
+<span class="nc" id="L114">            return defaultType(prop);</span>
         }
         @Override
         String generateType(PropertyData prop) {
-<span class="nc" id="L120">            return prop.getBuilderType().replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
+<span class="nc" id="L118">            return prop.getBuilderType().replace(&quot;&lt;&gt;&quot;, prop.getTypeGenerics());</span>
         }
     }
 
-<span class="nc" id="L124">    static class NoBuilderGen extends BuilderGen {</span>
-<span class="nc" id="L125">        static final BuilderGen INSTANCE = new NoBuilderGen();</span>
+<span class="nc" id="L122">    static class NoBuilderGen extends BuilderGen {</span>
+<span class="nc" id="L123">        static final BuilderGen INSTANCE = new NoBuilderGen();</span>
         @Override
         List&lt;String&gt; generateField(String indent, PropertyData prop) {
-<span class="nc" id="L128">            return Collections.emptyList();</span>
+<span class="nc" id="L126">            return Collections.emptyList();</span>
         }
         @Override
         boolean isSpecialInit(PropertyData prop) {
-<span class="nc" id="L132">            return false;</span>
+<span class="nc" id="L130">            return false;</span>
         }
         @Override
         String generateInit(PropertyData prop) {
-<span class="nc" id="L136">            return defaultType(prop);</span>
+<span class="nc" id="L134">            return defaultType(prop);</span>
         }
     }
 
     private static String defaultType(PropertyData prop) {
-<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (prop.getType().equals(&quot;long&quot;)) {</span>
-<span class="nc" id="L142">            return &quot;0L&quot;;</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;int&quot;)) {</span>
-<span class="nc" id="L144">            return &quot;0&quot;;</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;short&quot;)) {</span>
-<span class="nc" id="L146">            return &quot;Short.valueOf(0)&quot;;</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;byte&quot;)) {</span>
-<span class="nc" id="L148">            return &quot;Byte.valueOf(0)&quot;;</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;double&quot;)) {</span>
-<span class="nc" id="L150">            return &quot;0d&quot;;</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;float&quot;)) {</span>
-<span class="nc" id="L152">            return &quot;0f&quot;;</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;char&quot;)) {</span>
-<span class="nc" id="L154">            return &quot;Character.valueOf((char) 0)&quot;;</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;boolean&quot;)) {</span>
-<span class="nc" id="L156">            return &quot;Boolean.FALSE&quot;;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (prop.getType().equals(&quot;long&quot;)) {</span>
+<span class="nc" id="L140">            return &quot;0L&quot;;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;int&quot;)) {</span>
+<span class="nc" id="L142">            return &quot;0&quot;;</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;short&quot;)) {</span>
+<span class="nc" id="L144">            return &quot;Short.valueOf(0)&quot;;</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;byte&quot;)) {</span>
+<span class="nc" id="L146">            return &quot;Byte.valueOf(0)&quot;;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;double&quot;)) {</span>
+<span class="nc" id="L148">            return &quot;0d&quot;;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;float&quot;)) {</span>
+<span class="nc" id="L150">            return &quot;0f&quot;;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;char&quot;)) {</span>
+<span class="nc" id="L152">            return &quot;Character.valueOf((char) 0)&quot;;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        } else if (prop.getType().equals(&quot;boolean&quot;)) {</span>
+<span class="nc" id="L154">            return &quot;Boolean.FALSE&quot;;</span>
         }
-<span class="nc" id="L158">        return &quot;null&quot;;</span>
+<span class="nc" id="L156">        return &quot;null&quot;;</span>
     }
 
 }

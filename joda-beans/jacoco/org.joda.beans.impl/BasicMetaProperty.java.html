@@ -21,7 +21,6 @@ import org.joda.beans.MetaProperty;
  * An abstract base meta-property.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 public abstract class BasicMetaProperty&lt;P&gt; implements MetaProperty&lt;P&gt; {
 
@@ -33,32 +32,32 @@ public abstract class BasicMetaProperty&lt;P&gt; implements MetaProperty&lt;P&gt
      * 
      * @param propertyName  the property name, not empty
      */
-<span class="fc" id="L36">    protected BasicMetaProperty(String propertyName) {</span>
-<span class="pc bpc" id="L37" title="2 of 4 branches missed.">        if (propertyName == null || propertyName.length() == 0) {</span>
-<span class="nc" id="L38">            throw new NullPointerException(&quot;Property name must not be null or empty&quot;);</span>
+<span class="fc" id="L35">    protected BasicMetaProperty(String propertyName) {</span>
+<span class="pc bpc" id="L36" title="2 of 4 branches missed.">        if (propertyName == null || propertyName.length() == 0) {</span>
+<span class="nc" id="L37">            throw new NullPointerException(&quot;Property name must not be null or empty&quot;);</span>
         }
-<span class="fc" id="L40">        this.name = propertyName;</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L39">        this.name = propertyName;</span>
+<span class="fc" id="L40">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public String name() {
-<span class="fc" id="L46">        return name;</span>
+<span class="fc" id="L45">        return name;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public boolean equals(Object obj) {
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (obj instanceof MetaProperty&lt;?&gt;) {</span>
-<span class="fc" id="L53">            MetaProperty&lt;?&gt; other = (MetaProperty&lt;?&gt;) obj;</span>
-<span class="pc bpc" id="L54" title="1 of 4 branches missed.">            return name().equals(other.name()) &amp;&amp; declaringType().equals(other.declaringType());</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (obj instanceof MetaProperty&lt;?&gt;) {</span>
+<span class="fc" id="L52">            MetaProperty&lt;?&gt; other = (MetaProperty&lt;?&gt;) obj;</span>
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">            return name().equals(other.name()) &amp;&amp; declaringType().equals(other.declaringType());</span>
         }
-<span class="nc" id="L56">        return false;</span>
+<span class="nc" id="L55">        return false;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L61">        return name().hashCode() ^ declaringType().hashCode();</span>
+<span class="fc" id="L60">        return name().hashCode() ^ declaringType().hashCode();</span>
     }
 
     /**
@@ -68,7 +67,7 @@ public abstract class BasicMetaProperty&lt;P&gt; implements MetaProperty&lt;P&gt
      */
     @Override
     public String toString() {
-<span class="fc" id="L71">        return declaringType().getSimpleName() + &quot;:&quot; + name();</span>
+<span class="fc" id="L70">        return declaringType().getSimpleName() + &quot;:&quot; + name();</span>
     }
 
 }

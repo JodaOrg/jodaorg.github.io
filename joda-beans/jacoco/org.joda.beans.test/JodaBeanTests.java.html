@@ -64,10 +64,8 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
  * This class provides a solution, allowing bean test coverage to be artificially increased.
  * Always remember that the goal of artificially increasing coverage is so that you can
  * see what you really need to test, not to avoid writing tests altogether.
- * 
- * @author Stephen Colebourne
  */
-<span class="nc" id="L70">public final class JodaBeanTests {</span>
+<span class="nc" id="L68">public final class JodaBeanTests {</span>
 
     /**
      * This constant can be used to pass to increase test coverage.
@@ -88,11 +86,11 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
      * @param bean  the bean to test
      */
     public static void coverMutableBean(Bean bean) {
-<span class="fc" id="L91">        assertNotNull(bean, &quot;coverImmutableBean() called with null bean&quot;);</span>
-<span class="fc" id="L92">        assertFalse(bean instanceof ImmutableBean);</span>
-<span class="fc" id="L93">        assertNotSame(JodaBeanUtils.clone(bean), bean);</span>
-<span class="fc" id="L94">        coverBean(bean);</span>
-<span class="fc" id="L95">    }</span>
+<span class="fc" id="L89">        assertNotNull(bean, &quot;coverImmutableBean() called with null bean&quot;);</span>
+<span class="fc" id="L90">        assertFalse(bean instanceof ImmutableBean);</span>
+<span class="fc" id="L91">        assertNotSame(JodaBeanUtils.clone(bean), bean);</span>
+<span class="fc" id="L92">        coverBean(bean);</span>
+<span class="fc" id="L93">    }</span>
 
     /**
      * Test an immutable bean for the primary purpose of increasing test coverage.
@@ -100,10 +98,10 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
      * @param bean  the bean to test
      */
     public static void coverImmutableBean(ImmutableBean bean) {
-<span class="nc" id="L103">        assertNotNull(bean, &quot;coverImmutableBean() called with null bean&quot;);</span>
-<span class="nc" id="L104">        assertSame(JodaBeanUtils.clone(bean), bean);</span>
-<span class="nc" id="L105">        coverBean(bean);</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L101">        assertNotNull(bean, &quot;coverImmutableBean() called with null bean&quot;);</span>
+<span class="nc" id="L102">        assertSame(JodaBeanUtils.clone(bean), bean);</span>
+<span class="nc" id="L103">        coverBean(bean);</span>
+<span class="nc" id="L104">    }</span>
 
     /**
      * Test a bean equals method for the primary purpose of increasing test coverage.
@@ -116,420 +114,420 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
      */
     @SuppressWarnings(&quot;unlikely-arg-type&quot;)
     public static void coverBeanEquals(Bean bean1, Bean bean2) {
-<span class="nc" id="L119">        assertNotNull(bean1, &quot;coverBeanEquals() called with null bean&quot;);</span>
-<span class="nc" id="L120">        assertNotNull(bean2, &quot;coverBeanEquals() called with null bean&quot;);</span>
-<span class="nc" id="L121">        assertFalse(bean1.equals(null));</span>
-<span class="nc" id="L122">        assertFalse(bean1.equals(&quot;NonBean&quot;));</span>
-<span class="nc" id="L123">        assertTrue(bean1.equals(bean1));</span>
-<span class="nc" id="L124">        assertTrue(bean2.equals(bean2));</span>
-<span class="nc" id="L125">        ignoreThrows(() -&gt; assertEquals(bean1, JodaBeanUtils.cloneAlways(bean1)));</span>
-<span class="nc" id="L126">        ignoreThrows(() -&gt; assertEquals(bean2, JodaBeanUtils.cloneAlways(bean2)));</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        assertTrue(bean1.hashCode() == bean1.hashCode());</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">        assertTrue(bean2.hashCode() == bean2.hashCode());</span>
-<span class="nc bnc" id="L129" title="All 4 branches missed.">        if (bean1.equals(bean2) || bean1.getClass() != bean2.getClass()) {</span>
-<span class="nc" id="L130">            return;</span>
+<span class="nc" id="L117">        assertNotNull(bean1, &quot;coverBeanEquals() called with null bean&quot;);</span>
+<span class="nc" id="L118">        assertNotNull(bean2, &quot;coverBeanEquals() called with null bean&quot;);</span>
+<span class="nc" id="L119">        assertFalse(bean1.equals(null));</span>
+<span class="nc" id="L120">        assertFalse(bean1.equals(&quot;NonBean&quot;));</span>
+<span class="nc" id="L121">        assertTrue(bean1.equals(bean1));</span>
+<span class="nc" id="L122">        assertTrue(bean2.equals(bean2));</span>
+<span class="nc" id="L123">        ignoreThrows(() -&gt; assertEquals(bean1, JodaBeanUtils.cloneAlways(bean1)));</span>
+<span class="nc" id="L124">        ignoreThrows(() -&gt; assertEquals(bean2, JodaBeanUtils.cloneAlways(bean2)));</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        assertTrue(bean1.hashCode() == bean1.hashCode());</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        assertTrue(bean2.hashCode() == bean2.hashCode());</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">        if (bean1.equals(bean2) || bean1.getClass() != bean2.getClass()) {</span>
+<span class="nc" id="L128">            return;</span>
         }
-<span class="nc" id="L132">        MetaBean metaBean = bean1.metaBean();</span>
-<span class="nc" id="L133">        List&lt;MetaProperty&lt;?&gt;&gt; buildableProps = metaBean.metaPropertyMap().values().stream()</span>
-<span class="nc" id="L134">                .filter(mp -&gt; mp.style().isBuildable())</span>
-<span class="nc" id="L135">                .collect(Collectors.toList());</span>
-<span class="nc" id="L136">        Set&lt;Bean&gt; builtBeansSet = new HashSet&lt;&gt;();</span>
-<span class="nc" id="L137">        builtBeansSet.add(bean1);</span>
-<span class="nc" id="L138">        builtBeansSet.add(bean2);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">            for (int j = 0; j &lt; 2; j++) {</span>
+<span class="nc" id="L130">        MetaBean metaBean = bean1.metaBean();</span>
+<span class="nc" id="L131">        List&lt;MetaProperty&lt;?&gt;&gt; buildableProps = metaBean.metaPropertyMap().values().stream()</span>
+<span class="nc" id="L132">                .filter(mp -&gt; mp.style().isBuildable())</span>
+<span class="nc" id="L133">                .collect(Collectors.toList());</span>
+<span class="nc" id="L134">        Set&lt;Bean&gt; builtBeansSet = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L135">        builtBeansSet.add(bean1);</span>
+<span class="nc" id="L136">        builtBeansSet.add(bean2);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            for (int j = 0; j &lt; 2; j++) {</span>
                 try {
-<span class="nc" id="L142">                    BeanBuilder&lt;? extends Bean&gt; bld = metaBean.builder();</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">                    for (int k = 0; k &lt; buildableProps.size(); k++) {</span>
-<span class="nc" id="L144">                        MetaProperty&lt;?&gt; mp = buildableProps.get(k);</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">                        if (j == 0) {</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">                            bld.set(mp, mp.get(k &lt; i ? bean1 : bean2));</span>
+<span class="nc" id="L140">                    BeanBuilder&lt;? extends Bean&gt; bld = metaBean.builder();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                    for (int k = 0; k &lt; buildableProps.size(); k++) {</span>
+<span class="nc" id="L142">                        MetaProperty&lt;?&gt; mp = buildableProps.get(k);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                        if (j == 0) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                            bld.set(mp, mp.get(k &lt; i ? bean1 : bean2));</span>
                         } else {
-<span class="nc bnc" id="L148" title="All 2 branches missed.">                            bld.set(mp, mp.get(i &lt;= k ? bean1 : bean2));</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                            bld.set(mp, mp.get(i &lt;= k ? bean1 : bean2));</span>
                         }
                     }
-<span class="nc" id="L151">                    builtBeansSet.add(bld.build());</span>
-<span class="nc" id="L152">                } catch (RuntimeException ex) {</span>
+<span class="nc" id="L149">                    builtBeansSet.add(bld.build());</span>
+<span class="nc" id="L150">                } catch (RuntimeException ex) {</span>
                     // ignore
-<span class="nc" id="L154">                }</span>
+<span class="nc" id="L152">                }</span>
             }
         }
-<span class="nc" id="L157">        List&lt;Bean&gt; builtBeansList = new ArrayList&lt;&gt;(builtBeansSet);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">        for (int i = 0; i &lt; builtBeansList.size() - 1; i++) {</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">            for (int j = i + 1; j &lt; builtBeansList.size(); j++) {</span>
-<span class="nc" id="L160">                builtBeansList.get(i).equals(builtBeansList.get(j));</span>
+<span class="nc" id="L155">        List&lt;Bean&gt; builtBeansList = new ArrayList&lt;&gt;(builtBeansSet);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        for (int i = 0; i &lt; builtBeansList.size() - 1; i++) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            for (int j = i + 1; j &lt; builtBeansList.size(); j++) {</span>
+<span class="nc" id="L158">                builtBeansList.get(i).equals(builtBeansList.get(j));</span>
             }
         }
-<span class="nc" id="L163">    }</span>
+<span class="nc" id="L161">    }</span>
 
     // provide test coverage to all beans
     private static void coverBean(Bean bean) {
-<span class="fc" id="L167">        coverProperties(bean);</span>
-<span class="fc" id="L168">        coverNonProperties(bean);</span>
-<span class="fc" id="L169">        coverEquals(bean);</span>
-<span class="fc" id="L170">    }</span>
+<span class="fc" id="L165">        coverProperties(bean);</span>
+<span class="fc" id="L166">        coverNonProperties(bean);</span>
+<span class="fc" id="L167">        coverEquals(bean);</span>
+<span class="fc" id="L168">    }</span>
 
     // cover parts of a bean that are property-based
     private static void coverProperties(Bean bean) {
-<span class="fc" id="L174">        MetaBean metaBean = bean.metaBean();</span>
-<span class="fc" id="L175">        Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropMap = metaBean.metaPropertyMap();</span>
-<span class="fc" id="L176">        assertNotNull(metaPropMap);</span>
-<span class="fc" id="L177">        assertEquals(metaBean.metaPropertyCount(), metaPropMap.size());</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; mp : metaBean.metaPropertyIterable()) {</span>
-<span class="fc" id="L179">            assertTrue(metaBean.metaPropertyExists(mp.name()));</span>
-<span class="fc" id="L180">            assertEquals(metaBean.metaProperty(mp.name()), mp);</span>
+<span class="fc" id="L172">        MetaBean metaBean = bean.metaBean();</span>
+<span class="fc" id="L173">        Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropMap = metaBean.metaPropertyMap();</span>
+<span class="fc" id="L174">        assertNotNull(metaPropMap);</span>
+<span class="fc" id="L175">        assertEquals(metaBean.metaPropertyCount(), metaPropMap.size());</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; mp : metaBean.metaPropertyIterable()) {</span>
+<span class="fc" id="L177">            assertTrue(metaBean.metaPropertyExists(mp.name()));</span>
+<span class="fc" id="L178">            assertEquals(metaBean.metaProperty(mp.name()), mp);</span>
             // Ensure we don't use interned value
-<span class="fc" id="L182">            assertEquals(metaBean.metaProperty(new String(mp.name())), mp);</span>
-<span class="fc" id="L183">            assertEquals(metaPropMap.values().contains(mp), true);</span>
-<span class="fc" id="L184">            assertEquals(metaPropMap.keySet().contains(mp.name()), true);</span>
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if (mp.style().isReadable()) {</span>
-<span class="fc" id="L186">                ignoreThrows(() -&gt; mp.get(bean));</span>
+<span class="fc" id="L180">            assertEquals(metaBean.metaProperty(new String(mp.name())), mp);</span>
+<span class="fc" id="L181">            assertEquals(metaPropMap.values().contains(mp), true);</span>
+<span class="fc" id="L182">            assertEquals(metaPropMap.keySet().contains(mp.name()), true);</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">            if (mp.style().isReadable()) {</span>
+<span class="fc" id="L184">                ignoreThrows(() -&gt; mp.get(bean));</span>
             } else {
-<span class="nc" id="L188">                assertThrows(() -&gt; mp.get(bean), UnsupportedOperationException.class);</span>
+<span class="nc" id="L186">                assertThrows(() -&gt; mp.get(bean), UnsupportedOperationException.class);</span>
             }
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (mp.style().isWritable()) {</span>
-<span class="fc" id="L191">                ignoreThrows(() -&gt; mp.set(bean, &quot;&quot;));</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">            if (mp.style().isWritable()) {</span>
+<span class="fc" id="L189">                ignoreThrows(() -&gt; mp.set(bean, &quot;&quot;));</span>
             } else {
-<span class="nc" id="L193">                assertThrows(() -&gt; mp.set(bean, &quot;&quot;), UnsupportedOperationException.class);</span>
+<span class="nc" id="L191">                assertThrows(() -&gt; mp.set(bean, &quot;&quot;), UnsupportedOperationException.class);</span>
             }
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">            if (mp.style().isBuildable()) {</span>
-<span class="fc" id="L196">                ignoreThrows(() -&gt; metaBean.builder().get(mp));</span>
-<span class="fc" id="L197">                ignoreThrows(() -&gt; metaBean.builder().get(mp.name()));</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">                for (Object setValue : sampleValues(mp)) {</span>
-<span class="fc" id="L199">                    ignoreThrows(() -&gt; metaBean.builder().set(mp, setValue));</span>
-<span class="fc" id="L200">                }</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">                for (Object setValue : sampleValues(mp)) {</span>
-<span class="fc" id="L202">                    ignoreThrows(() -&gt; metaBean.builder().set(mp.name(), setValue));</span>
-<span class="fc" id="L203">                }</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">            if (mp.style().isBuildable()) {</span>
+<span class="fc" id="L194">                ignoreThrows(() -&gt; metaBean.builder().get(mp));</span>
+<span class="fc" id="L195">                ignoreThrows(() -&gt; metaBean.builder().get(mp.name()));</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                for (Object setValue : sampleValues(mp)) {</span>
+<span class="fc" id="L197">                    ignoreThrows(() -&gt; metaBean.builder().set(mp, setValue));</span>
+<span class="fc" id="L198">                }</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">                for (Object setValue : sampleValues(mp)) {</span>
+<span class="fc" id="L200">                    ignoreThrows(() -&gt; metaBean.builder().set(mp.name(), setValue));</span>
+<span class="fc" id="L201">                }</span>
             }
-<span class="fc" id="L205">            ignoreThrows(() -&gt; {</span>
-<span class="fc" id="L206">                Method m = metaBean.getClass().getDeclaredMethod(mp.name());</span>
-<span class="fc" id="L207">                m.setAccessible(true);</span>
-<span class="fc" id="L208">                m.invoke(metaBean);</span>
-<span class="fc" id="L209">            });</span>
-<span class="fc" id="L210">            ignoreThrows(() -&gt; {</span>
-<span class="fc" id="L211">                Method m = metaBean.getClass().getDeclaredMethod(</span>
+<span class="fc" id="L203">            ignoreThrows(() -&gt; {</span>
+<span class="fc" id="L204">                Method m = metaBean.getClass().getDeclaredMethod(mp.name());</span>
+<span class="fc" id="L205">                m.setAccessible(true);</span>
+<span class="fc" id="L206">                m.invoke(metaBean);</span>
+<span class="fc" id="L207">            });</span>
+<span class="fc" id="L208">            ignoreThrows(() -&gt; {</span>
+<span class="fc" id="L209">                Method m = metaBean.getClass().getDeclaredMethod(</span>
                         &quot;propertySet&quot;, Bean.class, String.class, Object.class, Boolean.TYPE);
-<span class="fc" id="L213">                m.setAccessible(true);</span>
-<span class="fc" id="L214">                m.invoke(metaBean, bean, mp.name(), &quot;&quot;, true);</span>
-<span class="fc" id="L215">            });</span>
-<span class="fc" id="L216">        }</span>
-<span class="fc" id="L217">        ignoreThrows(() -&gt; {</span>
-<span class="fc" id="L218">            Method m = metaBean.getClass().getDeclaredMethod(</span>
+<span class="fc" id="L211">                m.setAccessible(true);</span>
+<span class="fc" id="L212">                m.invoke(metaBean, bean, mp.name(), &quot;&quot;, true);</span>
+<span class="fc" id="L213">            });</span>
+<span class="fc" id="L214">        }</span>
+<span class="fc" id="L215">        ignoreThrows(() -&gt; {</span>
+<span class="fc" id="L216">            Method m = metaBean.getClass().getDeclaredMethod(</span>
                     &quot;propertyGet&quot;, Bean.class, String.class, Boolean.TYPE);
-<span class="fc" id="L220">            m.setAccessible(true);</span>
-<span class="fc" id="L221">            m.invoke(metaBean, bean, &quot;Not a real property name&quot;, true);</span>
-<span class="fc" id="L222">        });</span>
-<span class="fc" id="L223">        MetaProperty&lt;String&gt; fakeMetaProp = StandaloneMetaProperty.of(&quot;fake&quot;, metaBean, String.class);</span>
-<span class="pc" id="L224">        ignoreThrows(() -&gt; metaBean.builder().set(fakeMetaProp, JodaBeanTests.TEST_COVERAGE_STRING));</span>
-<span class="pc" id="L225">        ignoreThrows(() -&gt; metaBean.builder().set(JodaBeanTests.TEST_COVERAGE_PROPERTY, JodaBeanTests.TEST_COVERAGE_STRING));</span>
-<span class="fc" id="L226">        ignoreThrows(() -&gt; bean.property(JodaBeanTests.TEST_COVERAGE_PROPERTY));</span>
-<span class="fc" id="L227">    }</span>
+<span class="fc" id="L218">            m.setAccessible(true);</span>
+<span class="fc" id="L219">            m.invoke(metaBean, bean, &quot;Not a real property name&quot;, true);</span>
+<span class="fc" id="L220">        });</span>
+<span class="fc" id="L221">        MetaProperty&lt;String&gt; fakeMetaProp = StandaloneMetaProperty.of(&quot;fake&quot;, metaBean, String.class);</span>
+<span class="pc" id="L222">        ignoreThrows(() -&gt; metaBean.builder().set(fakeMetaProp, JodaBeanTests.TEST_COVERAGE_STRING));</span>
+<span class="pc" id="L223">        ignoreThrows(() -&gt; metaBean.builder().set(JodaBeanTests.TEST_COVERAGE_PROPERTY, JodaBeanTests.TEST_COVERAGE_STRING));</span>
+<span class="fc" id="L224">        ignoreThrows(() -&gt; bean.property(JodaBeanTests.TEST_COVERAGE_PROPERTY));</span>
+<span class="fc" id="L225">    }</span>
 
     private static void assertNotNull(Map&lt;String, MetaProperty&lt;?&gt;&gt; metaPropMap) {
-<span class="fc" id="L230">    }</span>
+<span class="fc" id="L228">    }</span>
 
     // cover parts of a bean that are not property-based
     private static void coverNonProperties(Bean bean) {
-<span class="fc" id="L234">        MetaBean metaBean = bean.metaBean();</span>
-<span class="fc" id="L235">        assertFalse(metaBean.metaPropertyExists(&quot;&quot;));</span>
-<span class="pc" id="L236">        assertThrows(() -&gt; metaBean.builder().get(&quot;foo_bar&quot;), NoSuchElementException.class);</span>
-<span class="pc" id="L237">        assertThrows(() -&gt; metaBean.builder().set(&quot;foo_bar&quot;, &quot;&quot;), NoSuchElementException.class);</span>
-<span class="pc" id="L238">        assertThrows(() -&gt; metaBean.metaProperty(&quot;foo_bar&quot;), NoSuchElementException.class);</span>
+<span class="fc" id="L232">        MetaBean metaBean = bean.metaBean();</span>
+<span class="fc" id="L233">        assertFalse(metaBean.metaPropertyExists(&quot;&quot;));</span>
+<span class="pc" id="L234">        assertThrows(() -&gt; metaBean.builder().get(&quot;foo_bar&quot;), NoSuchElementException.class);</span>
+<span class="pc" id="L235">        assertThrows(() -&gt; metaBean.builder().set(&quot;foo_bar&quot;, &quot;&quot;), NoSuchElementException.class);</span>
+<span class="pc" id="L236">        assertThrows(() -&gt; metaBean.metaProperty(&quot;foo_bar&quot;), NoSuchElementException.class);</span>
 
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">        if (metaBean instanceof DirectMetaBean) {</span>
-<span class="fc" id="L241">            DirectMetaProperty&lt;String&gt; dummy =</span>
-<span class="fc" id="L242">                    DirectMetaProperty.ofReadWrite(metaBean, &quot;foo_bar&quot;, metaBean.beanType(), String.class);</span>
-<span class="pc" id="L243">            assertThrows(() -&gt; dummy.get(bean), NoSuchElementException.class);</span>
-<span class="pc" id="L244">            assertThrows(() -&gt; dummy.set(bean, &quot;&quot;), NoSuchElementException.class);</span>
-<span class="pc" id="L245">            assertThrows(() -&gt; dummy.setString(bean, &quot;&quot;), NoSuchElementException.class);</span>
-<span class="pc" id="L246">            assertThrows(() -&gt; metaBean.builder().get(dummy), NoSuchElementException.class);</span>
-<span class="pc" id="L247">            assertThrows(() -&gt; metaBean.builder().set(dummy, &quot;&quot;), NoSuchElementException.class);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        if (metaBean instanceof DirectMetaBean) {</span>
+<span class="fc" id="L239">            DirectMetaProperty&lt;String&gt; dummy =</span>
+<span class="fc" id="L240">                    DirectMetaProperty.ofReadWrite(metaBean, &quot;foo_bar&quot;, metaBean.beanType(), String.class);</span>
+<span class="pc" id="L241">            assertThrows(() -&gt; dummy.get(bean), NoSuchElementException.class);</span>
+<span class="pc" id="L242">            assertThrows(() -&gt; dummy.set(bean, &quot;&quot;), NoSuchElementException.class);</span>
+<span class="pc" id="L243">            assertThrows(() -&gt; dummy.setString(bean, &quot;&quot;), NoSuchElementException.class);</span>
+<span class="pc" id="L244">            assertThrows(() -&gt; metaBean.builder().get(dummy), NoSuchElementException.class);</span>
+<span class="pc" id="L245">            assertThrows(() -&gt; metaBean.builder().set(dummy, &quot;&quot;), NoSuchElementException.class);</span>
         }
 
-<span class="fc" id="L250">        Set&lt;String&gt; propertyNameSet = bean.propertyNames();</span>
-<span class="fc" id="L251">        assertNotNull(propertyNameSet);</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">        for (String propertyName : propertyNameSet) {</span>
-<span class="fc" id="L253">            assertNotNull(bean.property(propertyName));</span>
-<span class="fc" id="L254">        }</span>
-<span class="pc" id="L255">        assertThrows(() -&gt; bean.property(&quot;&quot;), NoSuchElementException.class);</span>
+<span class="fc" id="L248">        Set&lt;String&gt; propertyNameSet = bean.propertyNames();</span>
+<span class="fc" id="L249">        assertNotNull(propertyNameSet);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        for (String propertyName : propertyNameSet) {</span>
+<span class="fc" id="L251">            assertNotNull(bean.property(propertyName));</span>
+<span class="fc" id="L252">        }</span>
+<span class="pc" id="L253">        assertThrows(() -&gt; bean.property(&quot;&quot;), NoSuchElementException.class);</span>
 
-<span class="fc" id="L257">        Class&lt;? extends Bean&gt; beanClass = bean.getClass();</span>
-<span class="fc" id="L258">        ignoreThrows(() -&gt; {</span>
-<span class="fc" id="L259">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot;);</span>
-<span class="fc" id="L260">            m.setAccessible(true);</span>
-<span class="fc" id="L261">            m.invoke(null);</span>
-<span class="fc" id="L262">        });</span>
-<span class="fc" id="L263">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L264">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot; + beanClass.getSimpleName(), Class.class);</span>
-<span class="nc" id="L265">            m.setAccessible(true);</span>
-<span class="nc" id="L266">            m.invoke(null, String.class);</span>
-<span class="nc" id="L267">        });</span>
-<span class="fc" id="L268">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L269">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot; + beanClass.getSimpleName(), Class.class, Class.class);</span>
-<span class="nc" id="L270">            m.setAccessible(true);</span>
-<span class="nc" id="L271">            m.invoke(null, String.class, String.class);</span>
-<span class="nc" id="L272">        });</span>
-<span class="fc" id="L273">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L274">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot; + beanClass.getSimpleName(), Class.class, Class.class, Class.class);</span>
-<span class="nc" id="L275">            m.setAccessible(true);</span>
-<span class="nc" id="L276">            m.invoke(null, String.class, String.class, String.class);</span>
-<span class="nc" id="L277">        });</span>
+<span class="fc" id="L255">        Class&lt;? extends Bean&gt; beanClass = bean.getClass();</span>
+<span class="fc" id="L256">        ignoreThrows(() -&gt; {</span>
+<span class="fc" id="L257">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot;);</span>
+<span class="fc" id="L258">            m.setAccessible(true);</span>
+<span class="fc" id="L259">            m.invoke(null);</span>
+<span class="fc" id="L260">        });</span>
+<span class="fc" id="L261">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L262">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot; + beanClass.getSimpleName(), Class.class);</span>
+<span class="nc" id="L263">            m.setAccessible(true);</span>
+<span class="nc" id="L264">            m.invoke(null, String.class);</span>
+<span class="nc" id="L265">        });</span>
+<span class="fc" id="L266">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L267">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot; + beanClass.getSimpleName(), Class.class, Class.class);</span>
+<span class="nc" id="L268">            m.setAccessible(true);</span>
+<span class="nc" id="L269">            m.invoke(null, String.class, String.class);</span>
+<span class="nc" id="L270">        });</span>
+<span class="fc" id="L271">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L272">            Method m = beanClass.getDeclaredMethod(&quot;meta&quot; + beanClass.getSimpleName(), Class.class, Class.class, Class.class);</span>
+<span class="nc" id="L273">            m.setAccessible(true);</span>
+<span class="nc" id="L274">            m.invoke(null, String.class, String.class, String.class);</span>
+<span class="nc" id="L275">        });</span>
 
-<span class="fc" id="L279">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L280">            Method m = bean.getClass().getDeclaredMethod(&quot;builder&quot;);</span>
-<span class="nc" id="L281">            m.setAccessible(true);</span>
-<span class="nc" id="L282">            m.invoke(null);</span>
-<span class="nc" id="L283">        });</span>
-<span class="fc" id="L284">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L285">            Method m = bean.getClass().getDeclaredMethod(&quot;toBuilder&quot;);</span>
-<span class="nc" id="L286">            m.setAccessible(true);</span>
-<span class="nc" id="L287">            m.invoke(bean);</span>
-<span class="nc" id="L288">        });</span>
+<span class="fc" id="L277">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L278">            Method m = bean.getClass().getDeclaredMethod(&quot;builder&quot;);</span>
+<span class="nc" id="L279">            m.setAccessible(true);</span>
+<span class="nc" id="L280">            m.invoke(null);</span>
+<span class="nc" id="L281">        });</span>
+<span class="fc" id="L282">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L283">            Method m = bean.getClass().getDeclaredMethod(&quot;toBuilder&quot;);</span>
+<span class="nc" id="L284">            m.setAccessible(true);</span>
+<span class="nc" id="L285">            m.invoke(bean);</span>
+<span class="nc" id="L286">        });</span>
 
-<span class="fc" id="L290">        assertNotNull(bean.toString());</span>
-<span class="fc" id="L291">        assertNotNull(metaBean.toString());</span>
-<span class="fc" id="L292">        assertNotNull(metaBean.builder().toString());</span>
-<span class="fc" id="L293">    }</span>
+<span class="fc" id="L288">        assertNotNull(bean.toString());</span>
+<span class="fc" id="L289">        assertNotNull(metaBean.toString());</span>
+<span class="fc" id="L290">        assertNotNull(metaBean.builder().toString());</span>
+<span class="fc" id="L291">    }</span>
 
     // different combinations of values to cover equals()
     @SuppressWarnings(&quot;unlikely-arg-type&quot;)
     private static void coverEquals(Bean bean) {
         // create beans with different data and compare each to the input bean
         // this will normally trigger each of the possible branches in equals
-<span class="fc" id="L300">        List&lt;MetaProperty&lt;?&gt;&gt; buildableProps = bean.metaBean().metaPropertyMap().values().stream()</span>
-<span class="fc" id="L301">                .filter(mp -&gt; mp.style().isBuildable())</span>
-<span class="fc" id="L302">                .collect(Collectors.toList());</span>
-<span class="fc bfc" id="L303" title="All 2 branches covered.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
+<span class="fc" id="L298">        List&lt;MetaProperty&lt;?&gt;&gt; buildableProps = bean.metaBean().metaPropertyMap().values().stream()</span>
+<span class="fc" id="L299">                .filter(mp -&gt; mp.style().isBuildable())</span>
+<span class="fc" id="L300">                .collect(Collectors.toList());</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
             try {
-<span class="fc" id="L305">                BeanBuilder&lt;? extends Bean&gt; bld = bean.metaBean().builder();</span>
-<span class="pc bpc" id="L306" title="1 of 2 branches missed.">                for (int j = 0; j &lt; buildableProps.size(); j++) {</span>
-<span class="fc" id="L307">                    MetaProperty&lt;?&gt; mp = buildableProps.get(j);</span>
-<span class="fc bfc" id="L308" title="All 2 branches covered.">                    if (j &lt; i) {</span>
-<span class="fc" id="L309">                        bld.set(mp, mp.get(bean));</span>
+<span class="fc" id="L303">                BeanBuilder&lt;? extends Bean&gt; bld = bean.metaBean().builder();</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">                for (int j = 0; j &lt; buildableProps.size(); j++) {</span>
+<span class="fc" id="L305">                    MetaProperty&lt;?&gt; mp = buildableProps.get(j);</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">                    if (j &lt; i) {</span>
+<span class="fc" id="L307">                        bld.set(mp, mp.get(bean));</span>
                     } else {
-<span class="fc" id="L311">                        List&lt;?&gt; samples = sampleValues(mp);</span>
-<span class="fc" id="L312">                        bld.set(mp, samples.get(0));</span>
+<span class="fc" id="L309">                        List&lt;?&gt; samples = sampleValues(mp);</span>
+<span class="fc" id="L310">                        bld.set(mp, samples.get(0));</span>
                     }
                 }
-<span class="nc" id="L315">                Bean built = bld.build();</span>
-<span class="nc" id="L316">                coverBeanEquals(bean, built);</span>
-<span class="nc" id="L317">                assertEquals(built, built);</span>
-<span class="nc" id="L318">                assertEquals(built.hashCode(), built.hashCode());</span>
-<span class="fc" id="L319">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L313">                Bean built = bld.build();</span>
+<span class="nc" id="L314">                coverBeanEquals(bean, built);</span>
+<span class="nc" id="L315">                assertEquals(built, built);</span>
+<span class="nc" id="L316">                assertEquals(built.hashCode(), built.hashCode());</span>
+<span class="fc" id="L317">            } catch (RuntimeException ex) {</span>
                 // ignore
-<span class="nc" id="L321">            }</span>
+<span class="nc" id="L319">            }</span>
         }
         // cover the remaining equals edge cases
-<span class="fc" id="L324">        assertFalse(bean.equals(null));</span>
-<span class="fc" id="L325">        assertFalse(bean.equals(&quot;NonBean&quot;));</span>
-<span class="fc" id="L326">        assertTrue(bean.equals(bean));</span>
-<span class="fc" id="L327">        ignoreThrows(() -&gt; assertEquals(bean, JodaBeanUtils.cloneAlways(bean)));</span>
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">        assertTrue(bean.hashCode() == bean.hashCode());</span>
-<span class="fc" id="L329">    }</span>
+<span class="fc" id="L322">        assertFalse(bean.equals(null));</span>
+<span class="fc" id="L323">        assertFalse(bean.equals(&quot;NonBean&quot;));</span>
+<span class="fc" id="L324">        assertTrue(bean.equals(bean));</span>
+<span class="fc" id="L325">        ignoreThrows(() -&gt; assertEquals(bean, JodaBeanUtils.cloneAlways(bean)));</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">        assertTrue(bean.hashCode() == bean.hashCode());</span>
+<span class="fc" id="L327">    }</span>
 
     // sample values for setters
     private static List&lt;?&gt; sampleValues(MetaProperty&lt;?&gt; mp) {
-<span class="fc" id="L333">        Class&lt;?&gt; type = mp.propertyType();</span>
+<span class="fc" id="L331">        Class&lt;?&gt; type = mp.propertyType();</span>
         // enum constants
-<span class="pc bpc" id="L335" title="1 of 2 branches missed.">        if (Enum.class.isAssignableFrom(type)) {</span>
-<span class="nc" id="L336">            return Arrays.asList(type.getEnumConstants());</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">        if (Enum.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L334">            return Arrays.asList(type.getEnumConstants());</span>
         }
         // lookup pre-canned samples
-<span class="fc" id="L339">        List&lt;?&gt; sample = SAMPLES.get(type);</span>
-<span class="fc bfc" id="L340" title="All 2 branches covered.">        if (sample != null) {</span>
-<span class="fc" id="L341">            return sample;</span>
+<span class="fc" id="L337">        List&lt;?&gt; sample = SAMPLES.get(type);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (sample != null) {</span>
+<span class="fc" id="L339">            return sample;</span>
         }
         // find any potential declared constants, using some plural rules
-<span class="fc" id="L344">        String typeName = type.getName();</span>
-<span class="fc" id="L345">        List&lt;Object&gt; samples = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L346">        samples.addAll(buildSampleConstants(type, type));</span>
-<span class="fc" id="L347">        ignoreThrows(() -&gt; {</span>
+<span class="fc" id="L342">        String typeName = type.getName();</span>
+<span class="fc" id="L343">        List&lt;Object&gt; samples = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L344">        samples.addAll(buildSampleConstants(type, type));</span>
+<span class="fc" id="L345">        ignoreThrows(() -&gt; {</span>
             // cat -&gt; cats
-<span class="nc" id="L349">            samples.addAll(buildSampleConstants(Class.forName(typeName + &quot;s&quot;), type));</span>
-<span class="nc" id="L350">        });</span>
-<span class="fc" id="L351">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L347">            samples.addAll(buildSampleConstants(Class.forName(typeName + &quot;s&quot;), type));</span>
+<span class="nc" id="L348">        });</span>
+<span class="fc" id="L349">        ignoreThrows(() -&gt; {</span>
             // dish -&gt; dishes
-<span class="nc" id="L353">            samples.addAll(buildSampleConstants(Class.forName(typeName + &quot;es&quot;), type));</span>
-<span class="nc" id="L354">        });</span>
-<span class="fc" id="L355">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L351">            samples.addAll(buildSampleConstants(Class.forName(typeName + &quot;es&quot;), type));</span>
+<span class="nc" id="L352">        });</span>
+<span class="fc" id="L353">        ignoreThrows(() -&gt; {</span>
             // lady -&gt; ladies
-<span class="nc" id="L357">            samples.addAll(buildSampleConstants(Class.forName(typeName.substring(0, typeName.length() - 1) + &quot;ies&quot;), type));</span>
-<span class="nc" id="L358">        });</span>
-<span class="fc" id="L359">        ignoreThrows(() -&gt; {</span>
+<span class="nc" id="L355">            samples.addAll(buildSampleConstants(Class.forName(typeName.substring(0, typeName.length() - 1) + &quot;ies&quot;), type));</span>
+<span class="nc" id="L356">        });</span>
+<span class="fc" id="L357">        ignoreThrows(() -&gt; {</span>
             // index -&gt; indices
-<span class="nc" id="L361">            samples.addAll(buildSampleConstants(Class.forName(typeName.substring(0, typeName.length() - 2) + &quot;ices&quot;), type));</span>
-<span class="nc" id="L362">        });</span>
+<span class="nc" id="L359">            samples.addAll(buildSampleConstants(Class.forName(typeName.substring(0, typeName.length() - 2) + &quot;ices&quot;), type));</span>
+<span class="nc" id="L360">        });</span>
         // none
-<span class="fc" id="L364">        return samples;</span>
+<span class="fc" id="L362">        return samples;</span>
     }
 
     // adds sample constants to the 
     private static List&lt;Object&gt; buildSampleConstants(Class&lt;?&gt; queryType, Class&lt;?&gt; targetType) {
-<span class="fc" id="L369">        List&lt;Object&gt; samples = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L370" title="All 2 branches covered.">        for (Field field : queryType.getFields()) {</span>
-<span class="pc bpc" id="L371" title="1 of 2 branches missed.">            if (field.getType() == targetType &amp;&amp;</span>
-<span class="nc bnc" id="L372" title="All 2 branches missed.">                    Modifier.isPublic(field.getModifiers()) &amp;&amp;</span>
-<span class="nc bnc" id="L373" title="All 2 branches missed.">                    Modifier.isStatic(field.getModifiers()) &amp;&amp;</span>
-<span class="nc bnc" id="L374" title="All 2 branches missed.">                    Modifier.isFinal(field.getModifiers()) &amp;&amp;</span>
-<span class="nc bnc" id="L375" title="All 2 branches missed.">                    field.isSynthetic() == false) {</span>
-<span class="nc" id="L376">                ignoreThrows(() -&gt; samples.add(field.get(null)));</span>
+<span class="fc" id="L367">        List&lt;Object&gt; samples = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">        for (Field field : queryType.getFields()) {</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">            if (field.getType() == targetType &amp;&amp;</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">                    Modifier.isPublic(field.getModifiers()) &amp;&amp;</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">                    Modifier.isStatic(field.getModifiers()) &amp;&amp;</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">                    Modifier.isFinal(field.getModifiers()) &amp;&amp;</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                    field.isSynthetic() == false) {</span>
+<span class="nc" id="L374">                ignoreThrows(() -&gt; samples.add(field.get(null)));</span>
             }
         }
-<span class="fc" id="L379">        return samples;</span>
+<span class="fc" id="L377">        return samples;</span>
     }
 
     private static final Map&lt;Class&lt;?&gt;, List&lt;?&gt;&gt; SAMPLES;
     static {
-<span class="fc" id="L384">        Map&lt;Class&lt;?&gt;, List&lt;?&gt;&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L385">        map.put(String.class, Arrays.asList(&quot;Hello&quot;, &quot;Goodbye&quot;, &quot; &quot;, &quot;&quot;));</span>
-<span class="fc" id="L386">        map.put(Byte.class, Arrays.asList((byte) 0, (byte) 1));</span>
-<span class="fc" id="L387">        map.put(Byte.TYPE, Arrays.asList((byte) 0, (byte) 1));</span>
-<span class="fc" id="L388">        map.put(Short.class, Arrays.asList((short) 0, (short) 1));</span>
-<span class="fc" id="L389">        map.put(Short.TYPE, Arrays.asList((short) 0, (short) 1));</span>
-<span class="fc" id="L390">        map.put(Integer.class, Arrays.asList((int) 0, (int) 1));</span>
-<span class="fc" id="L391">        map.put(Integer.TYPE, Arrays.asList((int) 0, (int) 1));</span>
-<span class="fc" id="L392">        map.put(Long.class, Arrays.asList((long) 0, (long) 1));</span>
-<span class="fc" id="L393">        map.put(Long.TYPE, Arrays.asList((long) 0, (long) 1));</span>
-<span class="fc" id="L394">        map.put(Float.class, Arrays.asList((float) 0, (float) 1));</span>
-<span class="fc" id="L395">        map.put(Float.TYPE, Arrays.asList((float) 0, (float) 1));</span>
-<span class="fc" id="L396">        map.put(Double.class, Arrays.asList((double) 0, (double) 1));</span>
-<span class="fc" id="L397">        map.put(Double.TYPE, Arrays.asList((double) 0, (double) 1));</span>
-<span class="fc" id="L398">        map.put(Character.class, Arrays.asList(' ', 'A', 'z'));</span>
-<span class="fc" id="L399">        map.put(Character.TYPE, Arrays.asList(' ', 'A', 'z'));</span>
-<span class="fc" id="L400">        map.put(Boolean.class, Arrays.asList(Boolean.TRUE, Boolean.FALSE));</span>
-<span class="fc" id="L401">        map.put(Boolean.TYPE, Arrays.asList(Boolean.TRUE, Boolean.FALSE));</span>
-<span class="fc" id="L402">        map.put(LocalDate.class, Arrays.asList(LocalDate.now(ZoneOffset.UTC), LocalDate.of(2012, 6, 30)));</span>
-<span class="fc" id="L403">        map.put(LocalTime.class, Arrays.asList(LocalTime.now(ZoneOffset.UTC), LocalTime.of(11, 30)));</span>
-<span class="fc" id="L404">        map.put(LocalDateTime.class,</span>
-<span class="fc" id="L405">                Arrays.asList(LocalDateTime.now(ZoneOffset.UTC), LocalDateTime.of(2012, 6, 30, 11, 30)));</span>
-<span class="fc" id="L406">        map.put(OffsetTime.class, Arrays.asList(</span>
-<span class="fc" id="L407">                OffsetTime.now(ZoneOffset.UTC), OffsetTime.of(11, 30, 0, 0, ZoneOffset.ofHours(1))));</span>
-<span class="fc" id="L408">        map.put(OffsetDateTime.class, Arrays.asList(</span>
-<span class="fc" id="L409">                OffsetDateTime.now(ZoneOffset.UTC),</span>
-<span class="fc" id="L410">                OffsetDateTime.of(2012, 6, 30, 11, 30, 0, 0, ZoneOffset.ofHours(1))));</span>
-<span class="fc" id="L411">        map.put(ZonedDateTime.class, Arrays.asList(</span>
-<span class="fc" id="L412">                ZonedDateTime.now(ZoneOffset.UTC),</span>
-<span class="fc" id="L413">                ZonedDateTime.of(2012, 6, 30, 11, 30, 0, 0, ZoneId.systemDefault())));</span>
-<span class="fc" id="L414">        map.put(Instant.class, Arrays.asList(Instant.now(), Instant.EPOCH));</span>
-<span class="fc" id="L415">        map.put(Year.class, Arrays.asList(Year.now(ZoneOffset.UTC), Year.of(2012)));</span>
-<span class="fc" id="L416">        map.put(YearMonth.class, Arrays.asList(YearMonth.now(ZoneOffset.UTC), YearMonth.of(2012, 6)));</span>
-<span class="fc" id="L417">        map.put(MonthDay.class, Arrays.asList(MonthDay.now(ZoneOffset.UTC), MonthDay.of(12, 25)));</span>
-<span class="fc" id="L418">        map.put(Month.class, Arrays.asList(Month.JULY, Month.DECEMBER));</span>
-<span class="fc" id="L419">        map.put(DayOfWeek.class, Arrays.asList(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY));</span>
-<span class="fc" id="L420">        map.put(URI.class, Arrays.asList(URI.create(&quot;http://www.opengamma.com&quot;), URI.create(&quot;http://www.joda.org&quot;)));</span>
-<span class="fc" id="L421">        map.put(Class.class, Arrays.asList(Throwable.class, RuntimeException.class, String.class));</span>
-<span class="fc" id="L422">        map.put(Object.class, Arrays.asList(&quot;&quot;, 6));</span>
-<span class="fc" id="L423">        map.put(Collection.class, Arrays.asList(new ArrayList&lt;&gt;()));</span>
-<span class="fc" id="L424">        map.put(List.class, Arrays.asList(new ArrayList&lt;&gt;()));</span>
-<span class="fc" id="L425">        map.put(Set.class, Arrays.asList(new HashSet&lt;&gt;()));</span>
-<span class="fc" id="L426">        map.put(SortedSet.class, Arrays.asList(new TreeSet&lt;&gt;()));</span>
+<span class="fc" id="L382">        Map&lt;Class&lt;?&gt;, List&lt;?&gt;&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L383">        map.put(String.class, Arrays.asList(&quot;Hello&quot;, &quot;Goodbye&quot;, &quot; &quot;, &quot;&quot;));</span>
+<span class="fc" id="L384">        map.put(Byte.class, Arrays.asList((byte) 0, (byte) 1));</span>
+<span class="fc" id="L385">        map.put(Byte.TYPE, Arrays.asList((byte) 0, (byte) 1));</span>
+<span class="fc" id="L386">        map.put(Short.class, Arrays.asList((short) 0, (short) 1));</span>
+<span class="fc" id="L387">        map.put(Short.TYPE, Arrays.asList((short) 0, (short) 1));</span>
+<span class="fc" id="L388">        map.put(Integer.class, Arrays.asList((int) 0, (int) 1));</span>
+<span class="fc" id="L389">        map.put(Integer.TYPE, Arrays.asList((int) 0, (int) 1));</span>
+<span class="fc" id="L390">        map.put(Long.class, Arrays.asList((long) 0, (long) 1));</span>
+<span class="fc" id="L391">        map.put(Long.TYPE, Arrays.asList((long) 0, (long) 1));</span>
+<span class="fc" id="L392">        map.put(Float.class, Arrays.asList((float) 0, (float) 1));</span>
+<span class="fc" id="L393">        map.put(Float.TYPE, Arrays.asList((float) 0, (float) 1));</span>
+<span class="fc" id="L394">        map.put(Double.class, Arrays.asList((double) 0, (double) 1));</span>
+<span class="fc" id="L395">        map.put(Double.TYPE, Arrays.asList((double) 0, (double) 1));</span>
+<span class="fc" id="L396">        map.put(Character.class, Arrays.asList(' ', 'A', 'z'));</span>
+<span class="fc" id="L397">        map.put(Character.TYPE, Arrays.asList(' ', 'A', 'z'));</span>
+<span class="fc" id="L398">        map.put(Boolean.class, Arrays.asList(Boolean.TRUE, Boolean.FALSE));</span>
+<span class="fc" id="L399">        map.put(Boolean.TYPE, Arrays.asList(Boolean.TRUE, Boolean.FALSE));</span>
+<span class="fc" id="L400">        map.put(LocalDate.class, Arrays.asList(LocalDate.now(ZoneOffset.UTC), LocalDate.of(2012, 6, 30)));</span>
+<span class="fc" id="L401">        map.put(LocalTime.class, Arrays.asList(LocalTime.now(ZoneOffset.UTC), LocalTime.of(11, 30)));</span>
+<span class="fc" id="L402">        map.put(LocalDateTime.class,</span>
+<span class="fc" id="L403">                Arrays.asList(LocalDateTime.now(ZoneOffset.UTC), LocalDateTime.of(2012, 6, 30, 11, 30)));</span>
+<span class="fc" id="L404">        map.put(OffsetTime.class, Arrays.asList(</span>
+<span class="fc" id="L405">                OffsetTime.now(ZoneOffset.UTC), OffsetTime.of(11, 30, 0, 0, ZoneOffset.ofHours(1))));</span>
+<span class="fc" id="L406">        map.put(OffsetDateTime.class, Arrays.asList(</span>
+<span class="fc" id="L407">                OffsetDateTime.now(ZoneOffset.UTC),</span>
+<span class="fc" id="L408">                OffsetDateTime.of(2012, 6, 30, 11, 30, 0, 0, ZoneOffset.ofHours(1))));</span>
+<span class="fc" id="L409">        map.put(ZonedDateTime.class, Arrays.asList(</span>
+<span class="fc" id="L410">                ZonedDateTime.now(ZoneOffset.UTC),</span>
+<span class="fc" id="L411">                ZonedDateTime.of(2012, 6, 30, 11, 30, 0, 0, ZoneId.systemDefault())));</span>
+<span class="fc" id="L412">        map.put(Instant.class, Arrays.asList(Instant.now(), Instant.EPOCH));</span>
+<span class="fc" id="L413">        map.put(Year.class, Arrays.asList(Year.now(ZoneOffset.UTC), Year.of(2012)));</span>
+<span class="fc" id="L414">        map.put(YearMonth.class, Arrays.asList(YearMonth.now(ZoneOffset.UTC), YearMonth.of(2012, 6)));</span>
+<span class="fc" id="L415">        map.put(MonthDay.class, Arrays.asList(MonthDay.now(ZoneOffset.UTC), MonthDay.of(12, 25)));</span>
+<span class="fc" id="L416">        map.put(Month.class, Arrays.asList(Month.JULY, Month.DECEMBER));</span>
+<span class="fc" id="L417">        map.put(DayOfWeek.class, Arrays.asList(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY));</span>
+<span class="fc" id="L418">        map.put(URI.class, Arrays.asList(URI.create(&quot;http://www.opengamma.com&quot;), URI.create(&quot;http://www.joda.org&quot;)));</span>
+<span class="fc" id="L419">        map.put(Class.class, Arrays.asList(Throwable.class, RuntimeException.class, String.class));</span>
+<span class="fc" id="L420">        map.put(Object.class, Arrays.asList(&quot;&quot;, 6));</span>
+<span class="fc" id="L421">        map.put(Collection.class, Arrays.asList(new ArrayList&lt;&gt;()));</span>
+<span class="fc" id="L422">        map.put(List.class, Arrays.asList(new ArrayList&lt;&gt;()));</span>
+<span class="fc" id="L423">        map.put(Set.class, Arrays.asList(new HashSet&lt;&gt;()));</span>
+<span class="fc" id="L424">        map.put(SortedSet.class, Arrays.asList(new TreeSet&lt;&gt;()));</span>
         try {
-<span class="fc" id="L428">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableList&quot;);</span>
-<span class="fc" id="L429">            Method method = cls.getDeclaredMethod(&quot;of&quot;);</span>
-<span class="fc" id="L430">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
-<span class="nc" id="L431">        } catch (Exception ex) {</span>
+<span class="fc" id="L426">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableList&quot;);</span>
+<span class="fc" id="L427">            Method method = cls.getDeclaredMethod(&quot;of&quot;);</span>
+<span class="fc" id="L428">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
+<span class="nc" id="L429">        } catch (Exception ex) {</span>
             // ignore
-<span class="fc" id="L433">        }</span>
+<span class="fc" id="L431">        }</span>
         try {
-<span class="fc" id="L435">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableSet&quot;);</span>
-<span class="fc" id="L436">            Method method = cls.getDeclaredMethod(&quot;of&quot;);</span>
-<span class="fc" id="L437">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
-<span class="nc" id="L438">        } catch (Exception ex) {</span>
+<span class="fc" id="L433">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableSet&quot;);</span>
+<span class="fc" id="L434">            Method method = cls.getDeclaredMethod(&quot;of&quot;);</span>
+<span class="fc" id="L435">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
+<span class="nc" id="L436">        } catch (Exception ex) {</span>
             // ignore
-<span class="fc" id="L440">        }</span>
+<span class="fc" id="L438">        }</span>
         try {
-<span class="fc" id="L442">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableSortedSet&quot;);</span>
-<span class="fc" id="L443">            Method method = cls.getDeclaredMethod(&quot;naturalOrder&quot;);</span>
-<span class="fc" id="L444">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
-<span class="nc" id="L445">        } catch (Exception ex) {</span>
+<span class="fc" id="L440">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableSortedSet&quot;);</span>
+<span class="fc" id="L441">            Method method = cls.getDeclaredMethod(&quot;naturalOrder&quot;);</span>
+<span class="fc" id="L442">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
+<span class="nc" id="L443">        } catch (Exception ex) {</span>
             // ignore
-<span class="fc" id="L447">        }</span>
+<span class="fc" id="L445">        }</span>
         try {
-<span class="fc" id="L449">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableMap&quot;);</span>
-<span class="fc" id="L450">            Method method = cls.getDeclaredMethod(&quot;of&quot;);</span>
-<span class="fc" id="L451">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
-<span class="nc" id="L452">        } catch (Exception ex) {</span>
+<span class="fc" id="L447">            Class&lt;?&gt; cls = Class.forName(&quot;com.google.common.collect.ImmutableMap&quot;);</span>
+<span class="fc" id="L448">            Method method = cls.getDeclaredMethod(&quot;of&quot;);</span>
+<span class="fc" id="L449">            map.put(cls, Arrays.asList(method.invoke(null)));</span>
+<span class="nc" id="L450">        } catch (Exception ex) {</span>
             // ignore
-<span class="fc" id="L454">        }</span>
-<span class="fc" id="L455">        SAMPLES = map;</span>
-<span class="fc" id="L456">    }</span>
+<span class="fc" id="L452">        }</span>
+<span class="fc" id="L453">        SAMPLES = map;</span>
+<span class="fc" id="L454">    }</span>
 
     //-----------------------------------------------------------------------
     private static void assertNotNull(Object obj) {
-<span class="pc bpc" id="L460" title="1 of 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L461">            throw new AssertionError(&quot;Expected (a != null), but found (a == null)&quot;);</span>
+<span class="pc bpc" id="L458" title="1 of 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L459">            throw new AssertionError(&quot;Expected (a != null), but found (a == null)&quot;);</span>
         }
-<span class="fc" id="L463">    }</span>
+<span class="fc" id="L461">    }</span>
 
     private static void assertNotNull(Object obj, String message) {
-<span class="pc bpc" id="L466" title="1 of 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L467">            throw new AssertionError(message);</span>
+<span class="pc bpc" id="L464" title="1 of 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L465">            throw new AssertionError(message);</span>
         }
-<span class="fc" id="L469">    }</span>
+<span class="fc" id="L467">    }</span>
 
     private static void assertSame(Object a, Object b) {
-<span class="nc bnc" id="L472" title="All 2 branches missed.">        if (a != b) {</span>
-<span class="nc" id="L473">            throw new AssertionError(&quot;Expected (a == b), but found (a != b)&quot;);</span>
+<span class="nc bnc" id="L470" title="All 2 branches missed.">        if (a != b) {</span>
+<span class="nc" id="L471">            throw new AssertionError(&quot;Expected (a == b), but found (a != b)&quot;);</span>
         }
-<span class="nc" id="L475">    }</span>
+<span class="nc" id="L473">    }</span>
 
     private static void assertNotSame(Object a, Object b) {
-<span class="pc bpc" id="L478" title="1 of 2 branches missed.">        if (a == b) {</span>
-<span class="nc" id="L479">            throw new AssertionError(&quot;Expected (a != b), but found (a == b)&quot;);</span>
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">        if (a == b) {</span>
+<span class="nc" id="L477">            throw new AssertionError(&quot;Expected (a != b), but found (a == b)&quot;);</span>
         }
-<span class="fc" id="L481">    }</span>
+<span class="fc" id="L479">    }</span>
 
     private static void assertEquals(Object actual, Object expected) {
-<span class="pc bpc" id="L484" title="1 of 2 branches missed.">        if (!Objects.equals(actual, expected)) {</span>
-<span class="nc" id="L485">            throw new AssertionError(&quot;Expected &quot; + expected + &quot;, but found &quot; + actual);</span>
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">        if (!Objects.equals(actual, expected)) {</span>
+<span class="nc" id="L483">            throw new AssertionError(&quot;Expected &quot; + expected + &quot;, but found &quot; + actual);</span>
         }
-<span class="fc" id="L487">    }</span>
+<span class="fc" id="L485">    }</span>
 
     private static void assertEquals(int actual, int expected) {
-<span class="pc bpc" id="L490" title="1 of 2 branches missed.">        if (actual != expected) {</span>
-<span class="nc" id="L491">            throw new AssertionError(&quot;Expected &quot; + expected + &quot;, but found &quot; + actual);</span>
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">        if (actual != expected) {</span>
+<span class="nc" id="L489">            throw new AssertionError(&quot;Expected &quot; + expected + &quot;, but found &quot; + actual);</span>
         }
-<span class="fc" id="L493">    }</span>
+<span class="fc" id="L491">    }</span>
 
     private static void assertTrue(boolean actual) {
-<span class="pc bpc" id="L496" title="1 of 2 branches missed.">        if (!actual) {</span>
-<span class="nc" id="L497">            throw new AssertionError(&quot;Expected value to be true, but was false&quot;);</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">        if (!actual) {</span>
+<span class="nc" id="L495">            throw new AssertionError(&quot;Expected value to be true, but was false&quot;);</span>
         }
-<span class="fc" id="L499">    }</span>
+<span class="fc" id="L497">    }</span>
 
     private static void assertFalse(boolean actual) {
-<span class="pc bpc" id="L502" title="1 of 2 branches missed.">        if (actual) {</span>
-<span class="nc" id="L503">            throw new AssertionError(&quot;Expected value to be false, but was true&quot;);</span>
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">        if (actual) {</span>
+<span class="nc" id="L501">            throw new AssertionError(&quot;Expected value to be false, but was true&quot;);</span>
         }
-<span class="fc" id="L505">    }</span>
+<span class="fc" id="L503">    }</span>
 
     //-----------------------------------------------------------------------
     private static void assertThrows(AssertRunnable runner, Class&lt;? extends Throwable&gt; expected) {
-<span class="fc" id="L509">        assertNotNull(runner, &quot;assertThrows() called with null AssertRunnable&quot;);</span>
-<span class="fc" id="L510">        assertNotNull(expected, &quot;assertThrows() called with null expected Class&quot;);</span>
+<span class="fc" id="L507">        assertNotNull(runner, &quot;assertThrows() called with null AssertRunnable&quot;);</span>
+<span class="fc" id="L508">        assertNotNull(expected, &quot;assertThrows() called with null expected Class&quot;);</span>
 
         try {
-<span class="nc" id="L513">            runner.run();</span>
-<span class="nc" id="L514">            throw new AssertionError(&quot;Expected &quot; + expected.getSimpleName() + &quot; but code succeeded normally&quot;);</span>
-<span class="nc" id="L515">        } catch (AssertionError ex) {</span>
-<span class="nc" id="L516">            throw ex;</span>
-<span class="fc" id="L517">        } catch (Throwable ex) {</span>
-<span class="pc bpc" id="L518" title="1 of 2 branches missed.">            if (!expected.isInstance(ex)) {</span>
-<span class="nc" id="L519">                throw new AssertionError(</span>
-<span class="nc" id="L520">                        &quot;Expected &quot; + expected.getSimpleName() + &quot; but received &quot; + ex.getClass().getSimpleName(), ex);</span>
+<span class="nc" id="L511">            runner.run();</span>
+<span class="nc" id="L512">            throw new AssertionError(&quot;Expected &quot; + expected.getSimpleName() + &quot; but code succeeded normally&quot;);</span>
+<span class="nc" id="L513">        } catch (AssertionError ex) {</span>
+<span class="nc" id="L514">            throw ex;</span>
+<span class="fc" id="L515">        } catch (Throwable ex) {</span>
+<span class="pc bpc" id="L516" title="1 of 2 branches missed.">            if (!expected.isInstance(ex)) {</span>
+<span class="nc" id="L517">                throw new AssertionError(</span>
+<span class="nc" id="L518">                        &quot;Expected &quot; + expected.getSimpleName() + &quot; but received &quot; + ex.getClass().getSimpleName(), ex);</span>
             }
         }
-<span class="fc" id="L523">    }</span>
+<span class="fc" id="L521">    }</span>
 
     private static void ignoreThrows(AssertRunnable runner) {
-<span class="fc" id="L526">        assertNotNull(runner, &quot;ignoreThrows() called with null AssertRunnable&quot;);</span>
+<span class="fc" id="L524">        assertNotNull(runner, &quot;ignoreThrows() called with null AssertRunnable&quot;);</span>
         try {
-<span class="fc" id="L528">            runner.run();</span>
-<span class="fc" id="L529">        } catch (Throwable ex) {</span>
+<span class="fc" id="L526">            runner.run();</span>
+<span class="fc" id="L527">        } catch (Throwable ex) {</span>
             // ignore
-<span class="fc" id="L531">        }</span>
-<span class="fc" id="L532">    }</span>
+<span class="fc" id="L529">        }</span>
+<span class="fc" id="L530">    }</span>
 
     @FunctionalInterface
     interface AssertRunnable {

@@ -22,30 +22,28 @@ import org.joda.beans.MetaProperty;
 
 /**
  * Lenient deserializer that ignores unknown properties.
- *
- * @author Stephen Colebourne
  */
 class LenientDeserializer extends DefaultDeserializer {
 
     /**
      * Singleton.
      */
-<span class="fc" id="L33">    public static final SerDeserializer INSTANCE = new LenientDeserializer();</span>
+<span class="fc" id="L31">    public static final SerDeserializer INSTANCE = new LenientDeserializer();</span>
 
     /**
      * Creates an instance.
      */
-<span class="fc" id="L38">    protected LenientDeserializer() {</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L36">    protected LenientDeserializer() {</span>
+<span class="fc" id="L37">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public MetaProperty&lt;?&gt; findMetaProperty(Class&lt;?&gt; beanType, MetaBean metaBean, String propertyName) {
         // dynamic beans force code by exception
         try {
-<span class="fc" id="L46">            return metaBean.metaProperty(propertyName);</span>
-<span class="nc" id="L47">        } catch (NoSuchElementException ex) {</span>
-<span class="nc" id="L48">            return null;</span>
+<span class="fc" id="L44">            return metaBean.metaProperty(propertyName);</span>
+<span class="nc" id="L45">        } catch (NoSuchElementException ex) {</span>
+<span class="nc" id="L46">            return null;</span>
         }
     }
 

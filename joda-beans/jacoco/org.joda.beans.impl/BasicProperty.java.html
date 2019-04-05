@@ -28,7 +28,6 @@ import org.joda.beans.Property;
  * This implementation is also a map entry to aid performance in maps.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 public final class BasicProperty&lt;P&gt; implements Property&lt;P&gt; {
 
@@ -46,7 +45,7 @@ public final class BasicProperty&lt;P&gt; implements Property&lt;P&gt; {
      * @return the property, not null
      */
     public static &lt;P&gt; BasicProperty&lt;P&gt; of(Bean bean, MetaProperty&lt;P&gt; metaProperty) {
-<span class="fc" id="L49">        return new BasicProperty&lt;&gt;(bean, metaProperty);</span>
+<span class="fc" id="L48">        return new BasicProperty&lt;&gt;(bean, metaProperty);</span>
     }
 
     /**
@@ -55,50 +54,50 @@ public final class BasicProperty&lt;P&gt; implements Property&lt;P&gt; {
      * @param bean  the bean that the property is bound to, not null
      * @param metaProperty  the meta property, not null
      */
-<span class="fc" id="L58">    private BasicProperty(Bean bean, MetaProperty&lt;P&gt; metaProperty) {</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (bean == null) {</span>
-<span class="nc" id="L60">            throw new NullPointerException(&quot;Bean must not be null&quot;);</span>
+<span class="fc" id="L57">    private BasicProperty(Bean bean, MetaProperty&lt;P&gt; metaProperty) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (bean == null) {</span>
+<span class="nc" id="L59">            throw new NullPointerException(&quot;Bean must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (metaProperty == null) {</span>
-<span class="nc" id="L63">            throw new NullPointerException(&quot;MetaProperty must not be null&quot;);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (metaProperty == null) {</span>
+<span class="nc" id="L62">            throw new NullPointerException(&quot;MetaProperty must not be null&quot;);</span>
         }
-<span class="fc" id="L65">        this.bean = bean;</span>
-<span class="fc" id="L66">        this.metaProperty = metaProperty;</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L64">        this.bean = bean;</span>
+<span class="fc" id="L65">        this.metaProperty = metaProperty;</span>
+<span class="fc" id="L66">    }</span>
 
     //-----------------------------------------------------------------------
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;B extends Bean&gt; B bean() {
-<span class="fc" id="L73">        return (B) bean;</span>
+<span class="fc" id="L72">        return (B) bean;</span>
     }
 
     @Override
     public MetaProperty&lt;P&gt; metaProperty() {
-<span class="fc" id="L78">        return metaProperty;</span>
+<span class="fc" id="L77">        return metaProperty;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public boolean equals(Object obj) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (obj == this) {</span>
-<span class="nc" id="L85">            return true;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L84">            return true;</span>
         }
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (obj instanceof Property) {</span>
-<span class="fc" id="L88">            Property&lt;?&gt; other = (Property&lt;?&gt;) obj;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (metaProperty.equals(other.metaProperty())) {</span>
-<span class="fc" id="L90">                Object a = get();</span>
-<span class="fc" id="L91">                Object b = other.get();</span>
-<span class="pc bpc" id="L92" title="3 of 4 branches missed.">                return a == null ? b == null : a.equals(b);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (obj instanceof Property) {</span>
+<span class="fc" id="L87">            Property&lt;?&gt; other = (Property&lt;?&gt;) obj;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            if (metaProperty.equals(other.metaProperty())) {</span>
+<span class="fc" id="L89">                Object a = get();</span>
+<span class="fc" id="L90">                Object b = other.get();</span>
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">                return a == null ? b == null : a.equals(b);</span>
             }
         }
-<span class="nc" id="L95">        return false;</span>
+<span class="nc" id="L94">        return false;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L100">        P value = get();</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        return metaProperty.hashCode() ^ (value == null ? 0 : value.hashCode());</span>
+<span class="fc" id="L99">        P value = get();</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        return metaProperty.hashCode() ^ (value == null ? 0 : value.hashCode());</span>
     }
 
     /**
@@ -108,7 +107,7 @@ public final class BasicProperty&lt;P&gt; implements Property&lt;P&gt; {
      */
     @Override
     public String toString() {
-<span class="fc" id="L111">        return metaProperty + &quot;=&quot; + get();</span>
+<span class="fc" id="L110">        return metaProperty + &quot;=&quot; + get();</span>
     }
 
 }

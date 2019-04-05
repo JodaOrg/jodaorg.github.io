@@ -22,7 +22,6 @@ package org.joda.beans;
  * Alternate implementations may perform any logic to obtain the value.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 public interface Property&lt;P&gt; {
 
@@ -53,7 +52,7 @@ public interface Property&lt;P&gt; {
      * @return the name of the property, not empty
      */
     public default String name() {
-<span class="fc" id="L56">        return metaProperty().name();</span>
+<span class="fc" id="L55">        return metaProperty().name();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -67,7 +66,7 @@ public interface Property&lt;P&gt; {
      * @throws UnsupportedOperationException if the property is write-only
      */
     public default P get() {
-<span class="fc" id="L70">        return metaProperty().get(bean());</span>
+<span class="fc" id="L69">        return metaProperty().get(bean());</span>
     }
 
     /**
@@ -84,8 +83,8 @@ public interface Property&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void set(Object value) {
-<span class="fc" id="L87">        metaProperty().set(bean(), value);</span>
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L86">        metaProperty().set(bean(), value);</span>
+<span class="fc" id="L87">    }</span>
 
     /**
      * Sets the value of the property on the associated bean and returns the previous value.
@@ -100,7 +99,7 @@ public interface Property&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default P put(Object value) {
-<span class="fc" id="L103">        return metaProperty().put(bean(), value);</span>
+<span class="fc" id="L102">        return metaProperty().put(bean(), value);</span>
     }
 
     //-----------------------------------------------------------------------

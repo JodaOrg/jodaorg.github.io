@@ -25,7 +25,6 @@ import org.joda.beans.test.JodaBeanTests;
  * &lt;p&gt;
  * This implementation is intended to have fields generated in the subclass.
  * 
- * @author Stephen Colebourne
  * @param &lt;T&gt; the bean type
  */
 public abstract class DirectPrivateBeanBuilder&lt;T extends Bean&gt;
@@ -34,32 +33,32 @@ public abstract class DirectPrivateBeanBuilder&lt;T extends Bean&gt;
     /**
      * Constructs the builder.
      */
-<span class="nc" id="L37">    protected DirectPrivateBeanBuilder() {</span>
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L36">    protected DirectPrivateBeanBuilder() {</span>
+<span class="fc" id="L37">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public Object get(String propertyName) {
-<span class="nc" id="L43">        throw new UnsupportedOperationException();</span>
+<span class="nc" id="L42">        throw new UnsupportedOperationException();</span>
     }
 
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
-<span class="nc" id="L49">        return (P) get(metaProperty.name());</span>
+<span class="nc" id="L48">        return (P) get(metaProperty.name());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
         try {
-<span class="nc" id="L56">            set(metaProperty.name(), value);</span>
-<span class="nc" id="L57">            return this;</span>
-<span class="nc" id="L58">        } catch (RuntimeException ex) {</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (value == JodaBeanTests.TEST_COVERAGE_STRING) {</span>
-<span class="nc" id="L60">                return this;</span>
+<span class="fc" id="L55">            set(metaProperty.name(), value);</span>
+<span class="fc" id="L56">            return this;</span>
+<span class="nc" id="L57">        } catch (RuntimeException ex) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (value == JodaBeanTests.TEST_COVERAGE_STRING) {</span>
+<span class="nc" id="L59">                return this;</span>
             }
-<span class="nc" id="L62">            throw ex;</span>
+<span class="nc" id="L61">            throw ex;</span>
         }
     }
 
@@ -71,7 +70,7 @@ public abstract class DirectPrivateBeanBuilder&lt;T extends Bean&gt;
      */
     @Override
     public String toString() {
-<span class="nc" id="L74">        return &quot;BeanBuilder&quot;;</span>
+<span class="nc" id="L73">        return &quot;BeanBuilder&quot;;</span>
     }
 
 }

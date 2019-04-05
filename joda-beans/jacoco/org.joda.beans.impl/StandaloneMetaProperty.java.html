@@ -30,7 +30,6 @@ import org.joda.beans.PropertyStyle;
  * One use case for this is to handle renamed properties in {@code SerDeserializer}.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
 
@@ -58,7 +57,7 @@ public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;
      * @return the meta-property, not null
      */
     public static &lt;R&gt; StandaloneMetaProperty&lt;R&gt; of(String propertyName, MetaBean metaBean, Class&lt;R&gt; clazz) {
-<span class="fc" id="L61">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, clazz);</span>
+<span class="fc" id="L60">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, clazz);</span>
     }
 
     /**
@@ -72,7 +71,7 @@ public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;
      * @return the meta-property, not null
      */
     public static &lt;R&gt; StandaloneMetaProperty&lt;R&gt; of(String propertyName, MetaBean metaBean, Class&lt;R&gt; clazz, Type type) {
-<span class="nc" id="L75">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, type);</span>
+<span class="nc" id="L74">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, type);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -85,63 +84,63 @@ public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;
      * @param type  the type of the property, not null
      */
     private StandaloneMetaProperty(String propertyName, MetaBean metaBean, Class&lt;P&gt; clazz, Type type) {
-<span class="fc" id="L88">        super(propertyName);</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
-<span class="nc" id="L90">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
+<span class="fc" id="L87">        super(propertyName);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L89">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (clazz == null) {</span>
-<span class="nc" id="L93">            throw new NullPointerException(&quot;Class must not be null&quot;);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (clazz == null) {</span>
+<span class="nc" id="L92">            throw new NullPointerException(&quot;Class must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (type == null) {</span>
-<span class="nc" id="L96">            throw new NullPointerException(&quot;Type must not be null&quot;);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (type == null) {</span>
+<span class="nc" id="L95">            throw new NullPointerException(&quot;Type must not be null&quot;);</span>
         }
-<span class="fc" id="L98">        this.metaBean = metaBean;</span>
-<span class="fc" id="L99">        this.clazz = clazz;</span>
-<span class="fc" id="L100">        this.type = type;</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L97">        this.metaBean = metaBean;</span>
+<span class="fc" id="L98">        this.clazz = clazz;</span>
+<span class="fc" id="L99">        this.type = type;</span>
+<span class="fc" id="L100">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public MetaBean metaBean() {
-<span class="fc" id="L106">        return metaBean;</span>
+<span class="fc" id="L105">        return metaBean;</span>
     }
 
     @Override
     public Class&lt;?&gt; declaringType() {
-<span class="nc" id="L111">        return metaBean().beanType();</span>
+<span class="nc" id="L110">        return metaBean().beanType();</span>
     }
 
     @Override
     public Class&lt;P&gt; propertyType() {
-<span class="fc" id="L116">        return clazz;</span>
+<span class="fc" id="L115">        return clazz;</span>
     }
 
     @Override
     public Type propertyGenericType() {
-<span class="nc" id="L121">        return type;</span>
+<span class="nc" id="L120">        return type;</span>
     }
 
     @Override
     public PropertyStyle style() {
-<span class="fc" id="L126">        return PropertyStyle.READ_WRITE;</span>
+<span class="fc" id="L125">        return PropertyStyle.READ_WRITE;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public List&lt;Annotation&gt; annotations() {
-<span class="nc" id="L132">        return Collections.emptyList();</span>
+<span class="nc" id="L131">        return Collections.emptyList();</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public P get(Bean bean) {
-<span class="nc" id="L138">        return clazz.cast(metaBean().metaProperty(name()).get(bean));</span>
+<span class="nc" id="L137">        return clazz.cast(metaBean().metaProperty(name()).get(bean));</span>
     }
 
     @Override
     public void set(Bean bean, Object value) {
-<span class="fc" id="L143">        metaBean().metaProperty(name()).set(bean, value);</span>
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L142">        metaBean().metaProperty(name()).set(bean, value);</span>
+<span class="fc" id="L143">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

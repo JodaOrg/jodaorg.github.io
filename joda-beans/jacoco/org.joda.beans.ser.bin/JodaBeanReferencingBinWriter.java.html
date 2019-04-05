@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JodaBeanReferencingBinWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.bin</a> &gt; <span class="el_source">JodaBeanReferencingBinWriter.java</span></div><h1>JodaBeanReferencingBinWriter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.bin;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
+import org.joda.beans.Bean;
+import org.joda.beans.ImmutableBean;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.ser.JodaBeanSer;
+import org.joda.beans.ser.SerIterator;
+import org.joda.beans.ser.SerOptional;
+import org.joda.beans.ser.SerTypeMapper;
+import org.joda.beans.ser.bin.BeanReferences.ClassInfo;
+import org.joda.beans.ser.bin.BeanReferences.Ref;
+
+/**
+ * Provides the ability for a Joda-Bean to written to the referencing binary format.
+ */
+class JodaBeanReferencingBinWriter extends AbstractBinWriter {
+
+    private BeanReferences references;
+
+    // creates an instance
+    JodaBeanReferencingBinWriter(JodaBeanSer settings, OutputStream output) {
+<span class="fc" id="L41">        super(settings, output);</span>
+<span class="fc" id="L42">    }</span>
+
+    //-----------------------------------------------------------------------
+    // writes the bean
+    void write(ImmutableBean bean) throws IOException {
+        // sets up the map of beans - classes &amp; classSerializationCount
+<span class="fc" id="L48">        references = BeanReferences.find(bean, settings);</span>
+
+        // write array of 4 items - Version, Ref Count, Class Info, Root Bean
+<span class="fc" id="L51">        output.writeArrayHeader(4);</span>
+<span class="fc" id="L52">        output.writeInt(2);</span>
+<span class="fc" id="L53">        writeClassDescriptions(references);</span>
+<span class="fc" id="L54">        writeRootBean(bean, true);</span>
+<span class="fc" id="L55">    }</span>
+
+    // determines what beans occur more than once and setup references
+    private void writeClassDescriptions(BeanReferences references) throws IOException {
+        // write out ref count first, which is the number of instances that are referenced
+<span class="fc" id="L60">        output.writeInt(references.getReferences().size());</span>
+
+        // write map of class name to a list of metatype names (which is empty if not a bean)
+<span class="fc" id="L63">        List&lt;ClassInfo&gt; classInfos = references.getClassInfoList();</span>
+<span class="fc" id="L64">        output.writeMapHeader(classInfos.size());</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (ClassInfo classInfo : classInfos) {</span>
+            // known types parameter is null as we never serialize the class names again
+<span class="fc" id="L67">            String className = SerTypeMapper.encodeType(classInfo.type, settings, null, null);</span>
+<span class="fc" id="L68">            output.writeString(className);</span>
+
+<span class="fc" id="L70">            output.writeArrayHeader(classInfo.metaProperties.length);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            for (MetaProperty&lt;?&gt; property : classInfo.metaProperties) {</span>
+<span class="fc" id="L72">                output.writeString(property.name());</span>
+            }
+<span class="fc" id="L74">        }</span>
+<span class="fc" id="L75">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    void writeBean(Bean bean, Class&lt;?&gt; declaredType, RootType rootTypeFlag) throws IOException {
+<span class="fc" id="L80">        Ref ref = references.getReferences().get(bean);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (ref != null) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (ref.hasBeenSerialized) {</span>
+<span class="fc" id="L83">                output.writePositiveExtensionInt(MsgPack.JODA_TYPE_REF, ref.position);</span>
+<span class="fc" id="L84">                return;</span>
+            }
+<span class="fc" id="L86">            output.writeMapHeader(1);</span>
+<span class="fc" id="L87">            output.writePositiveExtensionInt(MsgPack.JODA_TYPE_REF_KEY, ref.position);</span>
+        }
+
+<span class="fc" id="L90">        ClassInfo classInfo = references.getClassInfo(bean.getClass());</span>
+<span class="fc" id="L91">        MetaProperty&lt;?&gt;[] props = classInfo.metaProperties;</span>
+<span class="fc" id="L92">        int count = props.length;</span>
+<span class="fc" id="L93">        Object[] values = new Object[count];</span>
+<span class="fc" id="L94">        int size = 0;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : props) {</span>
+<span class="fc" id="L96">            Object value = SerOptional.extractValue(prop, bean);</span>
+<span class="fc" id="L97">            values[size++] = value;</span>
+        }
+
+<span class="pc bpc" id="L100" title="1 of 6 branches missed.">        if (rootTypeFlag == RootType.ROOT_WITH_TYPE || (rootTypeFlag == RootType.NOT_ROOT &amp;&amp; bean.getClass() != declaredType)) {</span>
+<span class="fc" id="L101">            output.writeArrayHeader(size + 1);</span>
+<span class="fc" id="L102">            output.writePositiveExtensionInt(MsgPack.JODA_TYPE_BEAN, classInfo.position);</span>
+        } else {
+<span class="fc" id="L104">            output.writeArrayHeader(size);</span>
+        }
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L108">            MetaProperty&lt;?&gt; prop = props[i];</span>
+<span class="fc" id="L109">            Object value = values[i];</span>
+
+<span class="fc" id="L111">            Class&lt;?&gt; propType = SerOptional.extractType(prop, bean.getClass());</span>
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            if (value == null) {</span>
+<span class="fc" id="L114">                output.writeNil();</span>
+<span class="fc" id="L115">                continue;</span>
+            }
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (value instanceof Bean) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if (settings.getConverter().isConvertible(value.getClass())) {</span>
+<span class="fc" id="L120">                    writeSimple(propType, value);</span>
+                } else {
+<span class="fc" id="L122">                    writeBean((Bean) value, propType, RootType.NOT_ROOT);</span>
+                }
+            } else {
+<span class="fc" id="L125">                SerIterator itemIterator = settings.getIteratorFactory().create(value, prop, bean.getClass());</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">                if (itemIterator != null) {</span>
+<span class="fc" id="L127">                    writeElements(itemIterator);</span>
+                } else {
+<span class="fc" id="L129">                    writeSimple(propType, value);</span>
+                }
+            }
+        }
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (ref != null) {</span>
+<span class="fc" id="L134">            ref.sent();</span>
+        }
+<span class="fc" id="L136">    }</span>
+
+    @Override
+    void writeMetaPropertyReference(String metaTypeName) throws IOException {
+<span class="fc" id="L140">        Ref ref = references.getReferences().get(metaTypeName);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (ref != null) {</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (ref.hasBeenSerialized) {</span>
+<span class="fc" id="L143">                output.writePositiveExtensionInt(MsgPack.JODA_TYPE_META, ref.position);</span>
+            } else {
+<span class="fc" id="L145">                output.writeMapHeader(1);</span>
+<span class="fc" id="L146">                output.writePositiveExtensionInt(MsgPack.JODA_TYPE_REF_KEY, ref.position);</span>
+<span class="fc" id="L147">                output.writeExtensionString(MsgPack.JODA_TYPE_META, metaTypeName);</span>
+<span class="fc" id="L148">                ref.sent();</span>
+            }
+        } else {
+<span class="fc" id="L151">            output.writeExtensionString(MsgPack.JODA_TYPE_META, metaTypeName);</span>
+        }
+<span class="fc" id="L153">    }</span>
+
+    @Override
+    Class&lt;?&gt; getAndSerializeEffectiveTypeIfRequired(Object value, Class&lt;?&gt; declaredType) throws IOException {
+<span class="fc" id="L157">        Ref ref = references.getReferences().get(value);</span>
+<span class="fc bfc" id="L158" title="All 4 branches covered.">        if (ref != null &amp;&amp; ref.hasBeenSerialized) {</span>
+            // Don't need to change types if using a reference
+<span class="fc" id="L160">            return declaredType;</span>
+        }
+<span class="fc" id="L162">        Class&lt;?&gt; realType = value.getClass();</span>
+<span class="fc" id="L163">        Class&lt;?&gt; effectiveType = declaredType;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (declaredType == Object.class) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">            if (realType != String.class) {</span>
+<span class="fc" id="L166">                effectiveType = settings.getConverter().findTypedConverter(realType).getEffectiveType();</span>
+<span class="fc" id="L167">                ClassInfo classInfo = references.getClassInfo(effectiveType);</span>
+<span class="fc" id="L168">                output.writeMapHeader(1);</span>
+<span class="fc" id="L169">                output.writePositiveExtensionInt(MsgPack.JODA_TYPE_DATA, classInfo.position);</span>
+<span class="fc" id="L170">            } else {</span>
+<span class="fc" id="L171">                effectiveType = realType;</span>
+            }
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        } else if (!settings.getConverter().isConvertible(declaredType)) {</span>
+<span class="fc" id="L174">            effectiveType = settings.getConverter().findTypedConverter(realType).getEffectiveType();</span>
+<span class="fc" id="L175">            ClassInfo classInfo = references.getClassInfo(effectiveType);</span>
+<span class="fc" id="L176">            output.writeMapHeader(1);</span>
+<span class="fc" id="L177">            output.writePositiveExtensionInt(MsgPack.JODA_TYPE_DATA, classInfo.position);</span>
+        }
+<span class="fc" id="L179">        return effectiveType;</span>
+    }
+
+    @Override
+    void writeObjectAsString(Object value, Class&lt;?&gt; effectiveType) throws IOException {
+<span class="fc" id="L184">        Ref ref = references.getReferences().get(value);</span>
+<span class="fc bfc" id="L185" title="All 4 branches covered.">        if (ref != null &amp;&amp; ref.hasBeenSerialized) {</span>
+<span class="fc" id="L186">            output.writePositiveExtensionInt(MsgPack.JODA_TYPE_REF, ref.position);</span>
+        } else {
+<span class="fc" id="L188">            String converted = settings.getConverter().convertToString(effectiveType, value);</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">            if (converted == null) {</span>
+<span class="nc" id="L190">                throw new IllegalArgumentException(&quot;Unable to write because converter returned a null string: &quot; + value);</span>
+            }
+<span class="fc bfc" id="L192" title="All 2 branches covered.">            if (ref != null) {</span>
+<span class="fc" id="L193">                output.writeMapHeader(1);</span>
+<span class="fc" id="L194">                output.writePositiveExtensionInt(MsgPack.JODA_TYPE_REF_KEY, ref.position);</span>
+<span class="fc" id="L195">                output.writeString(converted);</span>
+<span class="fc" id="L196">                ref.sent();</span>
+            } else {
+<span class="fc" id="L198">                output.writeString(converted);</span>
+            }
+        }
+<span class="fc" id="L201">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -28,10 +28,8 @@ import org.joda.collect.grid.ImmutableGrid;
 
 /**
  * Factory used to create wrappers around collection-like objects.
- *
- * @author Stephen Colebourne
  */
-<span class="fc" id="L34">public class CollectSerIteratorFactory extends GuavaSerIteratorFactory {</span>
+<span class="fc" id="L32">public class CollectSerIteratorFactory extends GuavaSerIteratorFactory {</span>
 
     /**
      * Creates an iterator wrapper for a meta-property value.
@@ -43,13 +41,13 @@ import org.joda.collect.grid.ImmutableGrid;
      */
     @Override
     public SerIterator create(final Object value, final MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
-<span class="fc" id="L46">        Class&lt;?&gt; declaredType = prop.propertyType();</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (value instanceof Grid) {</span>
-<span class="fc" id="L48">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.collectionType(prop, beanClass));</span>
-<span class="fc" id="L49">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L50">            return grid((Grid&lt;?&gt;) value, declaredType, valueType, valueTypeTypes);</span>
+<span class="fc" id="L44">        Class&lt;?&gt; declaredType = prop.propertyType();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (value instanceof Grid) {</span>
+<span class="fc" id="L46">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.collectionType(prop, beanClass));</span>
+<span class="fc" id="L47">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L48">            return grid((Grid&lt;?&gt;) value, declaredType, valueType, valueTypeTypes);</span>
         }
-<span class="fc" id="L52">        return super.create(value, prop, beanClass);</span>
+<span class="fc" id="L50">        return super.create(value, prop, beanClass);</span>
     }
 
     /**
@@ -64,15 +62,15 @@ import org.joda.collect.grid.ImmutableGrid;
      */
     @Override
     public SerIterator createChild(final Object value, final SerIterator parent) {
-<span class="fc" id="L67">        Class&lt;?&gt; declaredType = parent.valueType();</span>
-<span class="fc" id="L68">        List&lt;Class&lt;?&gt;&gt; childGenericTypes = parent.valueTypeTypes();</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (value instanceof Grid) {</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (childGenericTypes.size() == 1) {</span>
-<span class="nc" id="L71">                return grid((Grid&lt;?&gt;) value, declaredType, childGenericTypes.get(0), EMPTY_VALUE_TYPES);</span>
+<span class="fc" id="L65">        Class&lt;?&gt; declaredType = parent.valueType();</span>
+<span class="fc" id="L66">        List&lt;Class&lt;?&gt;&gt; childGenericTypes = parent.valueTypeTypes();</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (value instanceof Grid) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            if (childGenericTypes.size() == 1) {</span>
+<span class="nc" id="L69">                return grid((Grid&lt;?&gt;) value, declaredType, childGenericTypes.get(0), EMPTY_VALUE_TYPES);</span>
             }
-<span class="nc" id="L73">            return grid((Grid&lt;?&gt;) value, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="nc" id="L71">            return grid((Grid&lt;?&gt;) value, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="fc" id="L75">        return super.createChild(value, parent);</span>
+<span class="fc" id="L73">        return super.createChild(value, parent);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -86,10 +84,10 @@ import org.joda.collect.grid.ImmutableGrid;
      */
     @Override
     public SerIterable createIterable(final String metaTypeDescription, final JodaBeanSer settings, final Map&lt;String, Class&lt;?&gt;&gt; knownTypes) {
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (metaTypeDescription.equals(&quot;Grid&quot;)) {</span>
-<span class="nc" id="L90">            return grid(Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (metaTypeDescription.equals(&quot;Grid&quot;)) {</span>
+<span class="nc" id="L88">            return grid(Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="fc" id="L92">        return super.createIterable(metaTypeDescription, settings, knownTypes);</span>
+<span class="fc" id="L90">        return super.createIterable(metaTypeDescription, settings, knownTypes);</span>
     }
 
     /**
@@ -101,12 +99,12 @@ import org.joda.collect.grid.ImmutableGrid;
      */
     @Override
     public SerIterable createIterable(final MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (Grid.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="fc" id="L105">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
-<span class="fc" id="L106">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L107">            return grid(valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (Grid.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L103">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L104">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L105">            return grid(valueType, valueTypeTypes);</span>
         }
-<span class="fc" id="L109">        return super.createIterable(prop, beanClass);</span>
+<span class="fc" id="L107">        return super.createIterable(prop, beanClass);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -118,50 +116,50 @@ import org.joda.collect.grid.ImmutableGrid;
      * @return the iterable, not null
      */
     public static final SerIterable grid(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L121">        return new SerIterable() {</span>
-<span class="fc" id="L122">            private final List&lt;Grid.Cell&lt;?&gt;&gt; cells = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L119">        return new SerIterable() {</span>
+<span class="fc" id="L120">            private final List&lt;Grid.Cell&lt;?&gt;&gt; cells = new ArrayList&lt;&gt;();</span>
             private int[] dimensions;
             @Override
             public SerIterator iterator() {
-<span class="nc" id="L126">                return grid(build(), Object.class, valueType, valueTypeTypes);</span>
+<span class="nc" id="L124">                return grid(build(), Object.class, valueType, valueTypeTypes);</span>
             }
             @Override
             public void dimensions(int[] dimensions) {
-<span class="fc" id="L130">                this.dimensions = dimensions;</span>
-<span class="fc" id="L131">            }</span>
+<span class="fc" id="L128">                this.dimensions = dimensions;</span>
+<span class="fc" id="L129">            }</span>
             @Override
             public void add(Object key, Object column, Object value, int count) {
-<span class="fc bfc" id="L134" title="All 2 branches covered.">                if (value != null) {</span>
-<span class="fc" id="L135">                    cells.add(ImmutableCell.of((Integer) key, (Integer) column, value));</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                if (value != null) {</span>
+<span class="fc" id="L133">                    cells.add(ImmutableCell.of((Integer) key, (Integer) column, value));</span>
                 }
-<span class="fc" id="L137">            }</span>
+<span class="fc" id="L135">            }</span>
             @Override
             @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
             public Grid&lt;?&gt; build() {
-<span class="pc bpc" id="L141" title="2 of 4 branches missed.">                if (dimensions == null || dimensions.length != 2) {</span>
-<span class="nc" id="L142">                    throw new IllegalArgumentException(&quot;Expected 2 dimensions, rowCount and columnCount&quot;);</span>
+<span class="pc bpc" id="L139" title="2 of 4 branches missed.">                if (dimensions == null || dimensions.length != 2) {</span>
+<span class="nc" id="L140">                    throw new IllegalArgumentException(&quot;Expected 2 dimensions, rowCount and columnCount&quot;);</span>
                 }
-<span class="fc" id="L144">                return ImmutableGrid.copyOf(dimensions[0], dimensions[1], (Iterable) cells);</span>
+<span class="fc" id="L142">                return ImmutableGrid.copyOf(dimensions[0], dimensions[1], (Iterable) cells);</span>
             }
             @Override
             public SerCategory category() {
-<span class="fc" id="L148">                return SerCategory.GRID;</span>
+<span class="fc" id="L146">                return SerCategory.GRID;</span>
             }
             @Override
             public Class&lt;?&gt; keyType() {
-<span class="fc" id="L152">                return Integer.class;</span>
+<span class="fc" id="L150">                return Integer.class;</span>
             }
             @Override
             public Class&lt;?&gt; columnType() {
-<span class="fc" id="L156">                return Integer.class;</span>
+<span class="fc" id="L154">                return Integer.class;</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L160">                return valueType;</span>
+<span class="fc" id="L158">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="nc" id="L164">                return valueTypeTypes;</span>
+<span class="nc" id="L162">                return valueTypeTypes;</span>
             }
         };
     }
@@ -179,69 +177,69 @@ import org.joda.collect.grid.ImmutableGrid;
     public static final SerIterator grid(
             final Grid&lt;?&gt; grid, final Class&lt;?&gt; declaredType,
             final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L182">        return new SerIterator() {</span>
-<span class="fc" id="L183">            private final Iterator it = grid.cells().iterator();</span>
+<span class="fc" id="L180">        return new SerIterator() {</span>
+<span class="fc" id="L181">            private final Iterator it = grid.cells().iterator();</span>
             private Grid.Cell current;
 
             @Override
             public String metaTypeName() {
-<span class="nc" id="L188">                return &quot;Grid&quot;;</span>
+<span class="nc" id="L186">                return &quot;Grid&quot;;</span>
             }
             @Override
             public boolean metaTypeRequired() {
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">                return Grid.class.isAssignableFrom(declaredType) == false;</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">                return Grid.class.isAssignableFrom(declaredType) == false;</span>
             }
             @Override
             public SerCategory category() {
-<span class="fc" id="L196">                return SerCategory.GRID;</span>
+<span class="fc" id="L194">                return SerCategory.GRID;</span>
             }
             @Override
             public int dimensionSize(int dimension) {
-<span class="fc bfc" id="L200" title="All 2 branches covered.">                return (dimension == 0 ? grid.rowCount() : grid.columnCount());</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                return (dimension == 0 ? grid.rowCount() : grid.columnCount());</span>
             }
             @Override
             public int size() {
-<span class="fc" id="L204">                return grid.size();</span>
+<span class="fc" id="L202">                return grid.size();</span>
             }
             @Override
             public boolean hasNext() {
-<span class="fc" id="L208">                return it.hasNext();</span>
+<span class="fc" id="L206">                return it.hasNext();</span>
             }
             @Override
             public void next() {
-<span class="fc" id="L212">                current = (Grid.Cell) it.next();</span>
-<span class="fc" id="L213">            }</span>
+<span class="fc" id="L210">                current = (Grid.Cell) it.next();</span>
+<span class="fc" id="L211">            }</span>
             @Override
             public Class&lt;?&gt; keyType() {
-<span class="fc" id="L216">                return Integer.class;</span>
+<span class="fc" id="L214">                return Integer.class;</span>
             }
             @Override
             public Object key() {
-<span class="fc" id="L220">                return current.getRow();</span>
+<span class="fc" id="L218">                return current.getRow();</span>
             }
             @Override
             public Class&lt;?&gt; columnType() {
-<span class="fc" id="L224">                return Integer.class;</span>
+<span class="fc" id="L222">                return Integer.class;</span>
             }
             @Override
             public Object column() {
-<span class="fc" id="L228">                return current.getColumn();</span>
+<span class="fc" id="L226">                return current.getColumn();</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L232">                return valueType;</span>
+<span class="fc" id="L230">                return valueType;</span>
             }
             @Override
             public Object value() {
-<span class="fc" id="L236">                return current.getValue();</span>
+<span class="fc" id="L234">                return current.getValue();</span>
             }
             @Override
             public Object value(int row, int column) {
-<span class="fc" id="L240">                return grid.get(row, column);</span>
+<span class="fc" id="L238">                return grid.get(row, column);</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="nc" id="L244">                return valueTypeTypes;</span>
+<span class="nc" id="L242">                return valueTypeTypes;</span>
             }
         };
     }

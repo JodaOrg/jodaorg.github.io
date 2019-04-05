@@ -24,7 +24,6 @@ import org.joda.beans.MetaProperty;
 /**
  * Implementation of {@code BeanBuilder} that builds light beans.
  * 
- * @author Stephen Colebourne
  * @param &lt;B&gt;  the bean type
  */
 class LightBeanBuilder&lt;B extends Bean&gt;
@@ -41,67 +40,67 @@ class LightBeanBuilder&lt;B extends Bean&gt;
      * 
      * @param metaBean  the target meta-bean, not null
      */
-<span class="fc" id="L44">    LightBeanBuilder(LightMetaBean&lt;B&gt; metaBean, Object[] data) {</span>
-<span class="fc" id="L45">        this.metaBean = metaBean;</span>
-<span class="fc" id="L46">        this.data = data;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L43">    LightBeanBuilder(LightMetaBean&lt;B&gt; metaBean, Object[] data) {</span>
+<span class="fc" id="L44">        this.metaBean = metaBean;</span>
+<span class="fc" id="L45">        this.data = data;</span>
+<span class="fc" id="L46">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public Object get(String propertyName) {
-<span class="nc" id="L52">        return get(metaBean.metaProperty(propertyName));</span>
+<span class="nc" id="L51">        return get(metaBean.metaProperty(propertyName));</span>
     }
 
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
-<span class="nc" id="L58">        return (P) data[index(metaProperty)];</span>
+<span class="nc" id="L57">        return (P) data[index(metaProperty)];</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public BeanBuilder&lt;B&gt; set(String propertyName, Object value) {
-<span class="fc" id="L64">        return set(metaBean.metaProperty(propertyName), value);</span>
+<span class="fc" id="L63">        return set(metaBean.metaProperty(propertyName), value);</span>
     }
 
     @Override
     public BeanBuilder&lt;B&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
-<span class="fc" id="L69">        data[index(metaProperty)] = value;</span>
-<span class="fc" id="L70">        return this;</span>
+<span class="fc" id="L68">        data[index(metaProperty)] = value;</span>
+<span class="fc" id="L69">        return this;</span>
     }
 
     @SuppressWarnings(&quot;deprecation&quot;)
     private int index(MetaProperty&lt;?&gt; metaProperty) {
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (metaProperty instanceof LightMetaProperty) {</span>
-<span class="fc" id="L76">            int index = ((LightMetaProperty&lt;?&gt;) metaProperty).getConstructorIndex();</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (index &lt; 0) {</span>
-<span class="fc" id="L78">                throw new NoSuchElementException(&quot;Derived property cannot be set: &quot; + metaProperty.name());</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (metaProperty instanceof LightMetaProperty) {</span>
+<span class="fc" id="L75">            int index = ((LightMetaProperty&lt;?&gt;) metaProperty).getConstructorIndex();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (index &lt; 0) {</span>
+<span class="fc" id="L77">                throw new NoSuchElementException(&quot;Derived property cannot be set: &quot; + metaProperty.name());</span>
             }
-<span class="fc" id="L80">            return index;</span>
+<span class="fc" id="L79">            return index;</span>
         }
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (metaProperty instanceof AbstractLightMetaProperty) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (metaProperty instanceof AbstractLightMetaProperty) {</span>
             try {
-<span class="fc" id="L84">                int index = ((AbstractLightMetaProperty&lt;?&gt;) metaProperty).getConstructorIndex();</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">                if (index &lt; 0) {</span>
-<span class="nc" id="L86">                    throw new NoSuchElementException(&quot;Derived property cannot be set: &quot; + metaProperty.name());</span>
+<span class="fc" id="L83">                int index = ((AbstractLightMetaProperty&lt;?&gt;) metaProperty).getConstructorIndex();</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">                if (index &lt; 0) {</span>
+<span class="nc" id="L85">                    throw new NoSuchElementException(&quot;Derived property cannot be set: &quot; + metaProperty.name());</span>
                 }
-<span class="fc" id="L88">                return index;</span>
-<span class="nc" id="L89">            } catch (ClassCastException ex) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">                for (MetaProperty&lt;?&gt; mp : metaBean.metaPropertyIterable()) {</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">                    if (mp.equals(metaProperty)) {</span>
-<span class="nc" id="L92">                        return ((LightMetaProperty&lt;?&gt;) mp).getConstructorIndex();</span>
+<span class="fc" id="L87">                return index;</span>
+<span class="nc" id="L88">            } catch (ClassCastException ex) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                for (MetaProperty&lt;?&gt; mp : metaBean.metaPropertyIterable()) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                    if (mp.equals(metaProperty)) {</span>
+<span class="nc" id="L91">                        return ((LightMetaProperty&lt;?&gt;) mp).getConstructorIndex();</span>
                     }
-<span class="nc" id="L94">                }</span>
-<span class="nc" id="L95">                throw new NoSuchElementException(&quot;Unknown property: &quot; + metaProperty.name());</span>
+<span class="nc" id="L93">                }</span>
+<span class="nc" id="L94">                throw new NoSuchElementException(&quot;Unknown property: &quot; + metaProperty.name());</span>
             }
         }
-<span class="fc" id="L98">        return index(metaBean.metaProperty(metaProperty.name()));</span>
+<span class="fc" id="L97">        return index(metaBean.metaProperty(metaProperty.name()));</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public B build() {
-<span class="fc" id="L104">        return metaBean.build(data);</span>
+<span class="fc" id="L103">        return metaBean.build(data);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -112,7 +111,7 @@ class LightBeanBuilder&lt;B extends Bean&gt;
      */
     @Override
     public String toString() {
-<span class="nc" id="L115">        return &quot;BeanBuilder for &quot; + metaBean.beanName();</span>
+<span class="nc" id="L114">        return &quot;BeanBuilder for &quot; + metaBean.beanName();</span>
     }
 
 }

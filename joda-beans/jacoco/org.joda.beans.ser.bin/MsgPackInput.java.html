@@ -22,8 +22,6 @@ import java.io.InputStream;
 
 /**
  * Receives and processes MsgPack data.
- *
- * @author Stephen Colebourne
  */
 abstract class MsgPackInput extends MsgPack {
 
@@ -38,8 +36,8 @@ abstract class MsgPackInput extends MsgPack {
      * @param bytes  the bytes to read, not null
      */
     MsgPackInput(byte[] bytes) {
-<span class="nc" id="L41">        this(new ByteArrayInputStream(bytes));</span>
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L39">        this(new ByteArrayInputStream(bytes));</span>
+<span class="nc" id="L40">    }</span>
 
     /**
      * Creates an instance.
@@ -47,298 +45,298 @@ abstract class MsgPackInput extends MsgPack {
      * @param stream  the stream to read from, not null
      */
     MsgPackInput(InputStream stream) {
-<span class="nc" id="L50">        this(new DataInputStream(stream));</span>
-<span class="nc" id="L51">    }</span>
+<span class="nc" id="L48">        this(new DataInputStream(stream));</span>
+<span class="nc" id="L49">    }</span>
 
     /**
      * Creates an instance.
      * 
      * @param stream  the stream to read from, not null
      */
-<span class="fc" id="L58">    MsgPackInput(DataInputStream stream) {</span>
-<span class="fc" id="L59">        this.input = stream;</span>
-<span class="fc" id="L60">    }</span>
+<span class="fc" id="L56">    MsgPackInput(DataInputStream stream) {</span>
+<span class="fc" id="L57">        this.input = stream;</span>
+<span class="fc" id="L58">    }</span>
 
     //-----------------------------------------------------------------------
     /**
      * Reads all the data in the stream, closing the stream.
      */
-    protected void readAll() {
+    void readAll() {
         try {
             try {
-<span class="nc" id="L69">                int b = input.read();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">                while (b &gt;= 0) {</span>
-<span class="nc" id="L71">                    readObject(b);</span>
-<span class="nc" id="L72">                    b = input.read();</span>
+<span class="nc" id="L67">                int b = input.read();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                while (b &gt;= 0) {</span>
+<span class="nc" id="L69">                    readObject(b);</span>
+<span class="nc" id="L70">                    b = input.read();</span>
                 }
             } finally {
-<span class="nc" id="L75">                input.close();</span>
+<span class="nc" id="L73">                input.close();</span>
             }
-<span class="nc" id="L77">        } catch (IOException ex) {</span>
-<span class="nc" id="L78">            throw new IllegalStateException(ex);</span>
-<span class="nc" id="L79">        }</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L75">        } catch (IOException ex) {</span>
+<span class="nc" id="L76">            throw new IllegalStateException(ex);</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">    }</span>
 
     //-----------------------------------------------------------------------
-    protected void readObject(int unsigned) throws IOException {
-<span class="fc" id="L84">        handleObjectStart();</span>
-<span class="fc" id="L85">        byte b = (byte) unsigned;</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (b &gt;= MIN_FIX_INT) {  // no need to check for b &lt;= MAX_FIX_INT</span>
-<span class="fc" id="L87">            handleInt(b);</span>
+    void readObject(int unsigned) throws IOException {
+<span class="fc" id="L82">        handleObjectStart();</span>
+<span class="fc" id="L83">        byte b = (byte) unsigned;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (b &gt;= MIN_FIX_INT) {  // no need to check for b &lt;= MAX_FIX_INT</span>
+<span class="fc" id="L85">            handleInt(b);</span>
             
-<span class="nc bnc" id="L89" title="All 4 branches missed.">        } else if (b &gt;= MIN_FIX_STR &amp;&amp; b &lt;= MAX_FIX_STR) {</span>
-<span class="nc" id="L90">            string(b - MIN_FIX_STR);</span>
+<span class="nc bnc" id="L87" title="All 4 branches missed.">        } else if (b &gt;= MIN_FIX_STR &amp;&amp; b &lt;= MAX_FIX_STR) {</span>
+<span class="nc" id="L88">            string(b - MIN_FIX_STR);</span>
             
-<span class="nc bnc" id="L92" title="All 4 branches missed.">        } else if (b &gt;= MIN_FIX_ARRAY &amp;&amp; b &lt;= MAX_FIX_ARRAY) {</span>
-<span class="nc" id="L93">            array(b - MIN_FIX_ARRAY);</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">        } else if (b &gt;= MIN_FIX_ARRAY &amp;&amp; b &lt;= MAX_FIX_ARRAY) {</span>
+<span class="nc" id="L91">            array(b - MIN_FIX_ARRAY);</span>
             
-<span class="nc bnc" id="L95" title="All 4 branches missed.">        } else if (b &gt;= MIN_FIX_MAP &amp;&amp; b &lt;= MAX_FIX_MAP) {</span>
-<span class="nc" id="L96">            map(b - MIN_FIX_MAP);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">        } else if (b &gt;= MIN_FIX_MAP &amp;&amp; b &lt;= MAX_FIX_MAP) {</span>
+<span class="nc" id="L94">            map(b - MIN_FIX_MAP);</span>
             
         } else {
-<span class="nc bnc" id="L99" title="All 32 branches missed.">            switch ((int) b) {</span>
+<span class="nc bnc" id="L97" title="All 32 branches missed.">            switch ((int) b) {</span>
                 case NIL:
-<span class="nc" id="L101">                    handleNil();</span>
-<span class="nc" id="L102">                    break;</span>
+<span class="nc" id="L99">                    handleNil();</span>
+<span class="nc" id="L100">                    break;</span>
                 case FALSE:
-<span class="nc" id="L104">                    handleBoolean(false);</span>
-<span class="nc" id="L105">                    break;</span>
+<span class="nc" id="L102">                    handleBoolean(false);</span>
+<span class="nc" id="L103">                    break;</span>
                 case TRUE:
-<span class="nc" id="L107">                    handleBoolean(true);</span>
-<span class="nc" id="L108">                    break;</span>
+<span class="nc" id="L105">                    handleBoolean(true);</span>
+<span class="nc" id="L106">                    break;</span>
                 case BIN_8: {
-<span class="nc" id="L110">                    binary(input.readUnsignedByte());</span>
-<span class="nc" id="L111">                    break;</span>
+<span class="nc" id="L108">                    binary(input.readUnsignedByte());</span>
+<span class="nc" id="L109">                    break;</span>
                 }
                 case BIN_16: {
-<span class="nc" id="L114">                    binary(input.readUnsignedShort());</span>
-<span class="nc" id="L115">                    break;</span>
+<span class="nc" id="L112">                    binary(input.readUnsignedShort());</span>
+<span class="nc" id="L113">                    break;</span>
                 }
                 case BIN_32: {
-<span class="nc" id="L118">                    binary(input.readInt());</span>
-<span class="nc" id="L119">                    break;</span>
+<span class="nc" id="L116">                    binary(input.readInt());</span>
+<span class="nc" id="L117">                    break;</span>
                 }
                 case EXT_8: {
-<span class="nc" id="L122">                    extension(input.readUnsignedByte());</span>
-<span class="nc" id="L123">                    break;</span>
+<span class="nc" id="L120">                    extension(input.readUnsignedByte(), false);</span>
+<span class="nc" id="L121">                    break;</span>
                 }
                 case EXT_16: {
-<span class="nc" id="L126">                    extension(input.readUnsignedShort());</span>
-<span class="nc" id="L127">                    break;</span>
+<span class="nc" id="L124">                    extension(input.readUnsignedShort(), false);</span>
+<span class="nc" id="L125">                    break;</span>
                 }
                 case EXT_32: {
-<span class="nc" id="L130">                    extension(input.readInt());</span>
-<span class="nc" id="L131">                    break;</span>
+<span class="nc" id="L128">                    extension(input.readInt(), false);</span>
+<span class="nc" id="L129">                    break;</span>
                 }
                 case FLOAT_32: {
-<span class="nc" id="L134">                    float value = input.readFloat();</span>
-<span class="nc" id="L135">                    handleFloat(value);</span>
-<span class="nc" id="L136">                    break;</span>
+<span class="nc" id="L132">                    float value = input.readFloat();</span>
+<span class="nc" id="L133">                    handleFloat(value);</span>
+<span class="nc" id="L134">                    break;</span>
                 }
                 case FLOAT_64: {
-<span class="nc" id="L139">                    double value = input.readDouble();</span>
-<span class="nc" id="L140">                    handleDouble(value);</span>
-<span class="nc" id="L141">                    break;</span>
+<span class="nc" id="L137">                    double value = input.readDouble();</span>
+<span class="nc" id="L138">                    handleDouble(value);</span>
+<span class="nc" id="L139">                    break;</span>
                 }
                 case UINT_8: {
-<span class="nc" id="L144">                    int value = input.readUnsignedByte();</span>
-<span class="nc" id="L145">                    handleInt(value);</span>
-<span class="nc" id="L146">                    break;</span>
+<span class="nc" id="L142">                    int value = input.readUnsignedByte();</span>
+<span class="nc" id="L143">                    handleInt(value);</span>
+<span class="nc" id="L144">                    break;</span>
                 }
                 case UINT_16: {
-<span class="nc" id="L149">                    int value = input.readUnsignedShort();</span>
-<span class="nc" id="L150">                    handleInt(value);</span>
-<span class="nc" id="L151">                    break;</span>
+<span class="nc" id="L147">                    int value = input.readUnsignedShort();</span>
+<span class="nc" id="L148">                    handleInt(value);</span>
+<span class="nc" id="L149">                    break;</span>
                 }
                 case UINT_32: {
-<span class="nc" id="L154">                    int val = input.readInt();</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">                    if (val &gt;= 0) {</span>
-<span class="nc" id="L156">                        handleInt(val);</span>
+<span class="nc" id="L152">                    int val = input.readInt();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">                    if (val &gt;= 0) {</span>
+<span class="nc" id="L154">                        handleInt(val);</span>
                     } else {
-<span class="nc" id="L158">                        long value = ((long) val) &amp; 0xFFFFFFFFL;</span>
-<span class="nc" id="L159">                        handleUnsignedLong(value);</span>
+<span class="nc" id="L156">                        long value = ((long) val) &amp; 0xFFFFFFFFL;</span>
+<span class="nc" id="L157">                        handleUnsignedLong(value);</span>
                     }
-<span class="nc" id="L161">                    break;</span>
+<span class="nc" id="L159">                    break;</span>
                 }
                 case UINT_64: {
-<span class="nc" id="L164">                    long value = input.readLong();</span>
-<span class="nc" id="L165">                    handleUnsignedLong(value);</span>
-<span class="nc" id="L166">                    break;</span>
+<span class="nc" id="L162">                    long value = input.readLong();</span>
+<span class="nc" id="L163">                    handleUnsignedLong(value);</span>
+<span class="nc" id="L164">                    break;</span>
                 }
                 case SINT_8: {
-<span class="nc" id="L169">                    int value = input.readByte();</span>
-<span class="nc" id="L170">                    handleInt(value);</span>
-<span class="nc" id="L171">                    break;</span>
+<span class="nc" id="L167">                    int value = input.readByte();</span>
+<span class="nc" id="L168">                    handleInt(value);</span>
+<span class="nc" id="L169">                    break;</span>
                 }
                 case SINT_16: {
-<span class="nc" id="L174">                    int value = input.readShort();</span>
-<span class="nc" id="L175">                    handleInt(value);</span>
-<span class="nc" id="L176">                    break;</span>
+<span class="nc" id="L172">                    int value = input.readShort();</span>
+<span class="nc" id="L173">                    handleInt(value);</span>
+<span class="nc" id="L174">                    break;</span>
                 }
                 case SINT_32: {
-<span class="nc" id="L179">                    int value = input.readInt();</span>
-<span class="nc" id="L180">                    handleInt(value);</span>
-<span class="nc" id="L181">                    break;</span>
+<span class="nc" id="L177">                    int value = input.readInt();</span>
+<span class="nc" id="L178">                    handleInt(value);</span>
+<span class="nc" id="L179">                    break;</span>
                 }
                 case SINT_64: {
-<span class="nc" id="L184">                    long value = input.readLong();</span>
-<span class="nc" id="L185">                    handleSignedLong(value);</span>
-<span class="nc" id="L186">                    break;</span>
+<span class="nc" id="L182">                    long value = input.readLong();</span>
+<span class="nc" id="L183">                    handleSignedLong(value);</span>
+<span class="nc" id="L184">                    break;</span>
                 }
                 case FIX_EXT_1: {
-<span class="nc" id="L189">                    extension(1);</span>
-<span class="nc" id="L190">                    break;</span>
+<span class="nc" id="L187">                    extension(1, true);</span>
+<span class="nc" id="L188">                    break;</span>
                 }
                 case FIX_EXT_2: {
-<span class="nc" id="L193">                    extension(2);</span>
-<span class="nc" id="L194">                    break;</span>
+<span class="nc" id="L191">                    extension(2, true);</span>
+<span class="nc" id="L192">                    break;</span>
                 }
                 case FIX_EXT_4: {
-<span class="nc" id="L197">                    extension(4);</span>
-<span class="nc" id="L198">                    break;</span>
+<span class="nc" id="L195">                    extension(4, true);</span>
+<span class="nc" id="L196">                    break;</span>
                 }
                 case FIX_EXT_8: {
-<span class="nc" id="L201">                    extension(8);</span>
-<span class="nc" id="L202">                    break;</span>
+<span class="nc" id="L199">                    extension(8, true);</span>
+<span class="nc" id="L200">                    break;</span>
                 }
                 case FIX_EXT_16: {
-<span class="nc" id="L205">                    extension(16);</span>
-<span class="nc" id="L206">                    break;</span>
+<span class="nc" id="L203">                    extension(16, true);</span>
+<span class="nc" id="L204">                    break;</span>
                 }
                 case STR_8: {
-<span class="nc" id="L209">                    string(input.readUnsignedByte());</span>
-<span class="nc" id="L210">                    break;</span>
+<span class="nc" id="L207">                    string(input.readUnsignedByte());</span>
+<span class="nc" id="L208">                    break;</span>
                 }
                 case STR_16: {
-<span class="nc" id="L213">                    string(input.readUnsignedShort());</span>
-<span class="nc" id="L214">                    break;</span>
+<span class="nc" id="L211">                    string(input.readUnsignedShort());</span>
+<span class="nc" id="L212">                    break;</span>
                 }
                 case STR_32: {
-<span class="nc" id="L217">                    string(input.readInt());</span>
-<span class="nc" id="L218">                    break;</span>
+<span class="nc" id="L215">                    string(input.readInt());</span>
+<span class="nc" id="L216">                    break;</span>
                 }
                 case ARRAY_16: {
-<span class="nc" id="L221">                    array(input.readUnsignedShort());</span>
-<span class="nc" id="L222">                    break;</span>
+<span class="nc" id="L219">                    array(input.readUnsignedShort());</span>
+<span class="nc" id="L220">                    break;</span>
                 }
                 case ARRAY_32: {
-<span class="nc" id="L225">                    array(input.readInt());</span>
-<span class="nc" id="L226">                    break;</span>
+<span class="nc" id="L223">                    array(input.readInt());</span>
+<span class="nc" id="L224">                    break;</span>
                 }
                 case MAP_16: {
-<span class="nc" id="L229">                    map(input.readUnsignedShort());</span>
-<span class="nc" id="L230">                    break;</span>
+<span class="nc" id="L227">                    map(input.readUnsignedShort());</span>
+<span class="nc" id="L228">                    break;</span>
                 }
                 case MAP_32: {
-<span class="nc" id="L233">                    map(input.readInt());</span>
-<span class="nc" id="L234">                    break;</span>
+<span class="nc" id="L231">                    map(input.readInt());</span>
+<span class="nc" id="L232">                    break;</span>
                 }
                 default:
-<span class="nc" id="L237">                    handleUnknown(b);</span>
+<span class="nc" id="L235">                    handleUnknown(b);</span>
             }
         }
-<span class="fc" id="L240">    }</span>
+<span class="fc" id="L238">    }</span>
 
     private void string(int size) throws IOException {
-<span class="nc bnc" id="L243" title="All 2 branches missed.">        if (size &lt; 0) {</span>
-<span class="nc" id="L244">            throw new IllegalStateException(&quot;String too large&quot;);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (size &lt; 0) {</span>
+<span class="nc" id="L242">            throw new IllegalStateException(&quot;String too large&quot;);</span>
         }
-<span class="nc" id="L246">        byte[] bytes = new byte[size];</span>
-<span class="nc" id="L247">        input.readFully(bytes);</span>
-<span class="nc" id="L248">        String str = new String(bytes, UTF_8);</span>
-<span class="nc" id="L249">        handleString(str);</span>
-<span class="nc" id="L250">    }</span>
+<span class="nc" id="L244">        byte[] bytes = new byte[size];</span>
+<span class="nc" id="L245">        input.readFully(bytes);</span>
+<span class="nc" id="L246">        String str = new String(bytes, UTF_8);</span>
+<span class="nc" id="L247">        handleString(str);</span>
+<span class="nc" id="L248">    }</span>
 
     private void array(int size) throws IOException {
-<span class="nc" id="L253">        handleArrayHeader(size);</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc" id="L255">            readArrayItem();</span>
+<span class="nc" id="L251">        handleArrayHeader(size);</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L253">            readArrayItem();</span>
         }
-<span class="nc" id="L257">    }</span>
+<span class="nc" id="L255">    }</span>
 
-    protected void readArrayItem() throws IOException {
-<span class="nc" id="L260">        int next = input.readUnsignedByte();</span>
-<span class="nc" id="L261">        readObject(next);</span>
-<span class="nc" id="L262">    }</span>
+    void readArrayItem() throws IOException {
+<span class="nc" id="L258">        int next = input.readUnsignedByte();</span>
+<span class="nc" id="L259">        readObject(next);</span>
+<span class="nc" id="L260">    }</span>
 
     private void map(int size) throws IOException {
-<span class="nc" id="L265">        handleMapHeader(size);</span>
-<span class="nc bnc" id="L266" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc" id="L267">            readMapKey();</span>
-<span class="nc" id="L268">            readMapValue();</span>
+<span class="nc" id="L263">        handleMapHeader(size);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L265">            readMapKey();</span>
+<span class="nc" id="L266">            readMapValue();</span>
         }
-<span class="nc" id="L270">    }</span>
+<span class="nc" id="L268">    }</span>
 
-    protected void readMapKey() throws IOException {
-<span class="nc" id="L273">        int next = input.readUnsignedByte();</span>
-<span class="nc" id="L274">        readObject(next);</span>
-<span class="nc" id="L275">    }</span>
+    void readMapKey() throws IOException {
+<span class="nc" id="L271">        int next = input.readUnsignedByte();</span>
+<span class="nc" id="L272">        readObject(next);</span>
+<span class="nc" id="L273">    }</span>
 
-    protected void readMapValue() throws IOException {
-<span class="nc" id="L278">        int next = input.readUnsignedByte();</span>
-<span class="nc" id="L279">        readObject(next);</span>
-<span class="nc" id="L280">    }</span>
+    void readMapValue() throws IOException {
+<span class="nc" id="L276">        int next = input.readUnsignedByte();</span>
+<span class="nc" id="L277">        readObject(next);</span>
+<span class="nc" id="L278">    }</span>
 
     private void binary(int size) throws IOException {
-<span class="nc bnc" id="L283" title="All 2 branches missed.">        if (size &lt; 0) {</span>
-<span class="nc" id="L284">            throw new IllegalStateException(&quot;Binary too large&quot;);</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">        if (size &lt; 0) {</span>
+<span class="nc" id="L282">            throw new IllegalStateException(&quot;Binary too large&quot;);</span>
         }
-<span class="nc" id="L286">        byte[] bytes = new byte[size];</span>
-<span class="nc" id="L287">        input.readFully(bytes);</span>
-<span class="nc" id="L288">        handleBinary(bytes);</span>
-<span class="nc" id="L289">    }</span>
+<span class="nc" id="L284">        byte[] bytes = new byte[size];</span>
+<span class="nc" id="L285">        input.readFully(bytes);</span>
+<span class="nc" id="L286">        handleBinary(bytes);</span>
+<span class="nc" id="L287">    }</span>
 
-    private void extension(int size) throws IOException {
-<span class="nc" id="L292">        int type = input.readByte();</span>
-<span class="nc bnc" id="L293" title="All 2 branches missed.">        if (size &lt; 0) {</span>
-<span class="nc" id="L294">            throw new IllegalStateException(&quot;Extension too large&quot;);</span>
+    private void extension(int size, boolean numeric) throws IOException {
+<span class="nc" id="L290">        int type = input.readByte();</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">        if (size &lt; 0) {</span>
+<span class="nc" id="L292">            throw new IllegalStateException(&quot;Extension too large&quot;);</span>
         }
-<span class="nc" id="L296">        byte[] bytes = new byte[size];</span>
-<span class="nc" id="L297">        input.readFully(bytes);</span>
-<span class="nc" id="L298">        handleExtension(type, bytes);</span>
-<span class="nc" id="L299">    }</span>
+<span class="nc" id="L294">        byte[] bytes = new byte[size];</span>
+<span class="nc" id="L295">        input.readFully(bytes);</span>
+<span class="nc" id="L296">        handleExtension(type, numeric, bytes);</span>
+<span class="nc" id="L297">    }</span>
 
-    protected void handleObjectStart() {
-<span class="fc" id="L302">    }</span>
+    void handleObjectStart() {
+<span class="fc" id="L300">    }</span>
 
-    protected void handleBoolean(boolean bool) {
-<span class="nc" id="L305">    }</span>
+    void handleBoolean(boolean bool) {
+<span class="nc" id="L303">    }</span>
 
-    protected void handleNil() {
-<span class="nc" id="L308">    }</span>
+    void handleNil() {
+<span class="nc" id="L306">    }</span>
 
-    protected void handleInt(int value) {
-<span class="fc" id="L311">    }</span>
+    void handleInt(int value) {
+<span class="fc" id="L309">    }</span>
 
-    protected void handleUnsignedLong(long value) {
-<span class="nc" id="L314">    }</span>
+    void handleUnsignedLong(long value) {
+<span class="nc" id="L312">    }</span>
 
-    protected void handleSignedLong(long value) {
-<span class="nc" id="L317">    }</span>
+    void handleSignedLong(long value) {
+<span class="nc" id="L315">    }</span>
 
-    protected void handleFloat(float value) {
-<span class="nc" id="L320">    }</span>
+    void handleFloat(float value) {
+<span class="nc" id="L318">    }</span>
 
-    protected void handleDouble(double value) {
-<span class="nc" id="L323">    }</span>
+    void handleDouble(double value) {
+<span class="nc" id="L321">    }</span>
 
-    protected void handleUnknown(byte b) {
-<span class="nc" id="L326">    }</span>
+    void handleUnknown(byte b) {
+<span class="nc" id="L324">    }</span>
 
-    protected void handleString(String str) {
-<span class="nc" id="L329">    }</span>
+    void handleString(String str) {
+<span class="nc" id="L327">    }</span>
 
-    protected void handleArrayHeader(int size) {
-<span class="nc" id="L332">    }</span>
+    void handleArrayHeader(int size) {
+<span class="nc" id="L330">    }</span>
 
-    protected void handleMapHeader(int size) {
-<span class="nc" id="L335">    }</span>
+    void handleMapHeader(int size) {
+<span class="nc" id="L333">    }</span>
 
-    protected void handleBinary(byte[] bytes) throws IOException {
-<span class="nc" id="L338">    }</span>
+    void handleBinary(byte[] bytes) throws IOException {
+<span class="nc" id="L336">    }</span>
 
-    protected void handleExtension(int type, byte[] bytes) throws IOException {
-<span class="nc" id="L341">    }</span>
+    void handleExtension(int type, boolean numeric, byte[] bytes) throws IOException {
+<span class="nc" id="L339">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -348,16 +346,16 @@ abstract class MsgPackInput extends MsgPack {
      * @throws IOException if an error occurs
      */
     public static void skipObject(DataInputStream input) throws IOException {
-<span class="fc" id="L351">        new Skipper(input).skip(input.readByte());</span>
-<span class="fc" id="L352">    }</span>
+<span class="fc" id="L349">        new Skipper(input).skip(input.readByte());</span>
+<span class="fc" id="L350">    }</span>
 
     private static class Skipper extends MsgPackInput {
         Skipper(DataInputStream input) {
-<span class="fc" id="L356">            super(input);</span>
-<span class="fc" id="L357">        }</span>
+<span class="fc" id="L354">            super(input);</span>
+<span class="fc" id="L355">        }</span>
         void skip(int typeByte) throws IOException {
-<span class="fc" id="L359">            readObject(typeByte);</span>
-<span class="fc" id="L360">        }</span>
+<span class="fc" id="L357">            readObject(typeByte);</span>
+<span class="fc" id="L358">        }</span>
     }
 
 }

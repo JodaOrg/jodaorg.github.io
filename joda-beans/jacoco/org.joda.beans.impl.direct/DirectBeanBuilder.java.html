@@ -23,7 +23,6 @@ import org.joda.beans.impl.BasicBeanBuilder;
  * &lt;p&gt;
  * This implementation adds validation on top of basic builder functionality.
  * 
- * @author Stephen Colebourne
  * @param &lt;T&gt; the bean type
  */
 public class DirectBeanBuilder&lt;T extends Bean&gt; extends BasicBeanBuilder&lt;T&gt; {
@@ -34,14 +33,14 @@ public class DirectBeanBuilder&lt;T extends Bean&gt; extends BasicBeanBuilder&lt
      * @param bean  the target bean, not null
      */
     public DirectBeanBuilder(T bean) {
-<span class="fc" id="L37">        super(bean);</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L36">        super(bean);</span>
+<span class="fc" id="L37">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     protected void validate(T bean) {
-<span class="fc" id="L43">        ((DirectMetaBean) bean.metaBean()).validate(bean);</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L42">        ((DirectMetaBean) bean.metaBean()).validate(bean);</span>
+<span class="fc" id="L43">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

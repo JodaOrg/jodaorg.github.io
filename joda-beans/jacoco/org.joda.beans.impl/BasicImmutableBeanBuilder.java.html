@@ -28,7 +28,6 @@ import org.joda.beans.impl.direct.DirectFieldsBeanBuilder;
  * This class has effectively been replaced by {@link DirectFieldsBeanBuilder}.
  * It is retained for situations where the builder is being implemented manually.
  * 
- * @author Stephen Colebourne
  * @param &lt;T&gt;  the bean type
  */
 public abstract class BasicImmutableBeanBuilder&lt;T extends Bean&gt;
@@ -44,27 +43,27 @@ public abstract class BasicImmutableBeanBuilder&lt;T extends Bean&gt;
      * 
      * @param meta  the meta-bean, not null
      */
-<span class="nc" id="L47">    public BasicImmutableBeanBuilder(MetaBean meta) {</span>
-<span class="nc" id="L48">        this.meta = meta;</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L46">    public BasicImmutableBeanBuilder(MetaBean meta) {</span>
+<span class="nc" id="L47">        this.meta = meta;</span>
+<span class="nc" id="L48">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public Object get(String propertyName) {
-<span class="nc" id="L54">        return get(meta.metaProperty(propertyName));</span>
+<span class="nc" id="L53">        return get(meta.metaProperty(propertyName));</span>
     }
 
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
-<span class="nc" id="L60">        return (P) get(metaProperty.name());</span>
+<span class="nc" id="L59">        return (P) get(metaProperty.name());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
-<span class="nc" id="L66">        set(metaProperty.name(), value);</span>
-<span class="nc" id="L67">        return this;</span>
+<span class="nc" id="L65">        set(metaProperty.name(), value);</span>
+<span class="nc" id="L66">        return this;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -75,7 +74,7 @@ public abstract class BasicImmutableBeanBuilder&lt;T extends Bean&gt;
      */
     @Override
     public String toString() {
-<span class="nc" id="L78">        return &quot;BeanBuilder&quot;;</span>
+<span class="nc" id="L77">        return &quot;BeanBuilder&quot;;</span>
     }
 
 }

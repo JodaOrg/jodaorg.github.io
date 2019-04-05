@@ -24,8 +24,6 @@ import java.util.Set;
  * The implementation may be any class, but is typically a standard JavaBean
  * with get/set methods. Alternate implementations might store the properties
  * in another data structure such as a map.
- * 
- * @author Stephen Colebourne
  */
 public interface Bean {
 
@@ -54,7 +52,7 @@ public interface Bean {
      * @throws NoSuchElementException if the property name is invalid
      */
     public default &lt;R&gt; Property&lt;R&gt; property(String propertyName) {
-<span class="fc" id="L57">        return metaBean().&lt;R&gt;metaProperty(propertyName).createProperty(this);</span>
+<span class="fc" id="L55">        return metaBean().&lt;R&gt;metaProperty(propertyName).createProperty(this);</span>
     }
 
     /**
@@ -66,7 +64,7 @@ public interface Bean {
      * @return the unmodifiable set of property names, not null
      */
     public default Set&lt;String&gt; propertyNames() {
-<span class="fc" id="L69">        return metaBean().metaPropertyMap().keySet();</span>
+<span class="fc" id="L67">        return metaBean().metaPropertyMap().keySet();</span>
     }
 
 }

@@ -152,10 +152,10 @@ import org.joda.beans.MetaProperty;
 <span class="fc" id="L152">        Object[] helpers = OPTIONALS.get(metaProp.propertyType());</span>
 <span class="fc bfc" id="L153" title="All 2 branches covered.">        if (helpers != null) {</span>
             try {
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                if (value != null) {</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">                if (value != null) {</span>
 <span class="fc" id="L156">                    value = ((Method) helpers[0]).invoke(null, value);</span>
                 } else {
-<span class="nc" id="L158">                    value = helpers[1];</span>
+<span class="fc" id="L158">                    value = helpers[1];</span>
                 }
 <span class="nc" id="L160">            } catch (Exception ex) {</span>
 <span class="nc" id="L161">                throw new RuntimeException(ex);</span>

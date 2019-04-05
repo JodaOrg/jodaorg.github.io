@@ -25,10 +25,8 @@ import org.joda.beans.test.JodaBeanTests;
 
 /**
  * A meta-bean implementation designed for use by the code generator.
- * 
- * @author Stephen Colebourne
  */
-<span class="fc" id="L31">public abstract class DirectMetaBean implements MetaBean {</span>
+<span class="fc" id="L29">public abstract class DirectMetaBean implements MetaBean {</span>
     // overriding other methods has negligible effect considering DirectMetaPropertyMap
 
     /**
@@ -38,26 +36,26 @@ import org.joda.beans.test.JodaBeanTests;
 
     @Override
     public boolean isBuildable() {
-<span class="fc" id="L41">        return true;</span>
+<span class="fc" id="L39">        return true;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; MetaProperty&lt;R&gt; metaProperty(String propertyName) {
-<span class="fc" id="L47">        MetaProperty&lt;?&gt; mp = metaPropertyGet(propertyName);</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (mp == null) {</span>
-<span class="fc" id="L49">            return metaPropertyNotFound(propertyName);</span>
+<span class="fc" id="L45">        MetaProperty&lt;?&gt; mp = metaPropertyGet(propertyName);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (mp == null) {</span>
+<span class="fc" id="L47">            return metaPropertyNotFound(propertyName);</span>
         }
-<span class="fc" id="L51">        return (MetaProperty&lt;R&gt;) mp;</span>
+<span class="fc" id="L49">        return (MetaProperty&lt;R&gt;) mp;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     private &lt;R&gt; MetaProperty&lt;R&gt; metaPropertyNotFound(String propertyName) {
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (propertyName == JodaBeanTests.TEST_COVERAGE_PROPERTY) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (propertyName == JodaBeanTests.TEST_COVERAGE_PROPERTY) {</span>
             // cast is unsafe unless R is String, but code only used in test coverage scenarios
-<span class="fc" id="L58">            return (MetaProperty&lt;R&gt;) StandaloneMetaProperty.of(propertyName, this, String.class);</span>
+<span class="fc" id="L56">            return (MetaProperty&lt;R&gt;) StandaloneMetaProperty.of(propertyName, this, String.class);</span>
         }
-<span class="fc" id="L60">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+<span class="fc" id="L58">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
     }
 
     /**
@@ -69,7 +67,7 @@ import org.joda.beans.test.JodaBeanTests;
      * @return the meta-property, null if not found
      */
     protected MetaProperty&lt;?&gt; metaPropertyGet(String propertyName) {
-<span class="fc" id="L72">        return null;</span>
+<span class="fc" id="L70">        return null;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -84,10 +82,10 @@ import org.joda.beans.test.JodaBeanTests;
      */
     protected Object propertyGet(Bean bean, String propertyName, boolean quiet) {
         // used to enable 100% test coverage in beans
-<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (quiet) {</span>
-<span class="fc" id="L88">            return null;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (quiet) {</span>
+<span class="fc" id="L86">            return null;</span>
         }
-<span class="fc" id="L90">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+<span class="fc" id="L88">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
     }
 
     /**
@@ -101,10 +99,10 @@ import org.joda.beans.test.JodaBeanTests;
      */
     protected void propertySet(Bean bean, String propertyName, Object value, boolean quiet) {
         // used to enable 100% test coverage in beans
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (quiet) {</span>
-<span class="nc" id="L105">            return;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (quiet) {</span>
+<span class="nc" id="L103">            return;</span>
         }
-<span class="fc" id="L107">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+<span class="fc" id="L105">        throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
     }
 
     /**
@@ -114,7 +112,7 @@ import org.joda.beans.test.JodaBeanTests;
      * @throws RuntimeException if a property is invalid
      */
     protected void validate(Bean bean) {
-<span class="fc" id="L117">    }</span>
+<span class="fc" id="L115">    }</span>
 
     /**
      * Returns a string that summarises the meta-bean.
@@ -123,7 +121,7 @@ import org.joda.beans.test.JodaBeanTests;
      */
     @Override
     public String toString() {
-<span class="fc" id="L126">        return &quot;MetaBean:&quot; + beanType().getSimpleName();</span>
+<span class="fc" id="L124">        return &quot;MetaBean:&quot; + beanType().getSimpleName();</span>
     }
 
 }

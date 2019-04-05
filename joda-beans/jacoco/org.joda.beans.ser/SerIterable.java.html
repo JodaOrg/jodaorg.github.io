@@ -21,10 +21,8 @@ import java.util.List;
  * An abstraction over collections, lists, sets and maps.
  * &lt;p&gt;
  * This is a plugin point that can handle Guava collections.
- *
- * @author Stephen Colebourne
  */
-<span class="fc" id="L27">public abstract class SerIterable {</span>
+<span class="fc" id="L25">public abstract class SerIterable {</span>
 
     /**
      * Obtains an iterator over the data.
@@ -39,7 +37,7 @@ import java.util.List;
      * @param dimensions  the dimension, 0 for row, 1 for column
      */
     public void dimensions(int[] dimensions) {
-<span class="nc" id="L42">        throw new IllegalArgumentException(&quot;Iterable does not support dimensinos&quot;);</span>
+<span class="nc" id="L40">        throw new IllegalArgumentException(&quot;Iterable does not support dimensinos&quot;);</span>
     }
 
     /**
@@ -65,7 +63,7 @@ import java.util.List;
      * @return the category, not null
      */
     public SerCategory category() {
-<span class="fc" id="L68">        return SerCategory.COLLECTION;</span>
+<span class="fc" id="L66">        return SerCategory.COLLECTION;</span>
     }
 
     /**
@@ -74,7 +72,7 @@ import java.util.List;
      * @return the key type, null if no key
      */
     public Class&lt;?&gt; keyType() {
-<span class="nc" id="L77">        return null;</span>
+<span class="nc" id="L75">        return null;</span>
     }
 
     /**
@@ -83,7 +81,7 @@ import java.util.List;
      * @return the column type, null if no column
      */
     public Class&lt;?&gt; columnType() {
-<span class="nc" id="L86">        return null;</span>
+<span class="nc" id="L84">        return null;</span>
     }
 
     /**

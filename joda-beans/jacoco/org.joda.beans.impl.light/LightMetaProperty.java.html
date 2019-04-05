@@ -36,7 +36,6 @@ import org.joda.beans.impl.BasicMetaProperty;
  * An immutable meta-property based on a getter interface.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 final class LightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
 
@@ -77,28 +76,28 @@ final class LightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
         
         MethodHandle getter;
         try {
-<span class="fc" id="L80">            getter = lookup.findGetter(field.getDeclaringClass(), field.getName(), field.getType());</span>
-<span class="nc" id="L81">        } catch (IllegalArgumentException | NoSuchFieldException | IllegalAccessException ex) {</span>
-<span class="nc" id="L82">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="fc" id="L83">        }</span>
-<span class="fc" id="L84">        MethodHandle setter = null;</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (!Modifier.isFinal(field.getModifiers())) {</span>
+<span class="fc" id="L79">            getter = lookup.findGetter(field.getDeclaringClass(), field.getName(), field.getType());</span>
+<span class="nc" id="L80">        } catch (IllegalArgumentException | NoSuchFieldException | IllegalAccessException ex) {</span>
+<span class="nc" id="L81">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="fc" id="L82">        }</span>
+<span class="fc" id="L83">        MethodHandle setter = null;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (!Modifier.isFinal(field.getModifiers())) {</span>
             try {
-<span class="fc" id="L87">                setter = lookup.findSetter(field.getDeclaringClass(), field.getName(), field.getType());</span>
-<span class="nc" id="L88">            } catch (IllegalArgumentException | NoSuchFieldException | IllegalAccessException ex) {</span>
-<span class="nc" id="L89">                throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="fc" id="L90">            }</span>
+<span class="fc" id="L86">                setter = lookup.findSetter(field.getDeclaringClass(), field.getName(), field.getType());</span>
+<span class="nc" id="L87">            } catch (IllegalArgumentException | NoSuchFieldException | IllegalAccessException ex) {</span>
+<span class="nc" id="L88">                throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="fc" id="L89">            }</span>
         }
-<span class="fc" id="L92">        return new LightMetaProperty&lt;&gt;(</span>
+<span class="fc" id="L91">        return new LightMetaProperty&lt;&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="fc" id="L95">                (Class&lt;P&gt;) field.getType(), </span>
-<span class="fc" id="L96">                field.getGenericType(), </span>
-<span class="fc" id="L97">                Arrays.asList(field.getAnnotations()), </span>
+<span class="fc" id="L94">                (Class&lt;P&gt;) field.getType(), </span>
+<span class="fc" id="L95">                field.getGenericType(), </span>
+<span class="fc" id="L96">                Arrays.asList(field.getAnnotations()), </span>
                 getter,
                 setter,
                 constructorIndex,
-<span class="fc" id="L101">                calculateStyle(metaBean, setter));</span>
+<span class="fc" id="L100">                calculateStyle(metaBean, setter));</span>
     }
 
     /**
@@ -123,37 +122,37 @@ final class LightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
         
         MethodHandle getter;
         try {
-<span class="fc" id="L126">            MethodType type = MethodType.methodType(getMethod.getReturnType(), getMethod.getParameterTypes());</span>
-<span class="fc" id="L127">            getter = lookup.findVirtual(field.getDeclaringClass(), getMethod.getName(), type);</span>
-<span class="nc" id="L128">        } catch (IllegalArgumentException | NoSuchMethodException | IllegalAccessException ex) {</span>
-<span class="nc" id="L129">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="fc" id="L130">        }</span>
-<span class="fc" id="L131">        MethodHandle setter = null;</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (setMethod != null) {</span>
+<span class="fc" id="L125">            MethodType type = MethodType.methodType(getMethod.getReturnType(), getMethod.getParameterTypes());</span>
+<span class="fc" id="L126">            getter = lookup.findVirtual(field.getDeclaringClass(), getMethod.getName(), type);</span>
+<span class="nc" id="L127">        } catch (IllegalArgumentException | NoSuchMethodException | IllegalAccessException ex) {</span>
+<span class="nc" id="L128">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="fc" id="L129">        }</span>
+<span class="fc" id="L130">        MethodHandle setter = null;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (setMethod != null) {</span>
             try {
-<span class="fc" id="L134">                MethodType type = MethodType.methodType(void.class, setMethod.getParameterTypes());</span>
-<span class="fc" id="L135">                setter = lookup.findVirtual(field.getDeclaringClass(), setMethod.getName(), type);</span>
-<span class="nc" id="L136">            } catch (IllegalArgumentException | NoSuchMethodException | IllegalAccessException ex) {</span>
-<span class="nc" id="L137">                throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + propertyName, ex);</span>
-<span class="fc" id="L138">            }</span>
+<span class="fc" id="L133">                MethodType type = MethodType.methodType(void.class, setMethod.getParameterTypes());</span>
+<span class="fc" id="L134">                setter = lookup.findVirtual(field.getDeclaringClass(), setMethod.getName(), type);</span>
+<span class="nc" id="L135">            } catch (IllegalArgumentException | NoSuchMethodException | IllegalAccessException ex) {</span>
+<span class="nc" id="L136">                throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + propertyName, ex);</span>
+<span class="fc" id="L137">            }</span>
         }
-<span class="fc" id="L140">        return new LightMetaProperty&lt;&gt;(</span>
+<span class="fc" id="L139">        return new LightMetaProperty&lt;&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="fc" id="L143">                (Class&lt;P&gt;) field.getType(), </span>
-<span class="fc" id="L144">                field.getGenericType(), </span>
-<span class="fc" id="L145">                Arrays.asList(field.getAnnotations()), </span>
+<span class="fc" id="L142">                (Class&lt;P&gt;) field.getType(), </span>
+<span class="fc" id="L143">                field.getGenericType(), </span>
+<span class="fc" id="L144">                Arrays.asList(field.getAnnotations()), </span>
                 getter,
                 setter,
                 constructorIndex,
-<span class="fc" id="L149">                calculateStyle(metaBean, setter));</span>
+<span class="fc" id="L148">                calculateStyle(metaBean, setter));</span>
     }
 
     private static PropertyStyle calculateStyle(MetaBean metaBean, MethodHandle setter) {
-<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (ImmutableBean.class.isAssignableFrom(metaBean.beanType())) {</span>
-<span class="fc" id="L154">            return PropertyStyle.IMMUTABLE;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (ImmutableBean.class.isAssignableFrom(metaBean.beanType())) {</span>
+<span class="fc" id="L153">            return PropertyStyle.IMMUTABLE;</span>
         }
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        return setter != null ? PropertyStyle.READ_WRITE : PropertyStyle.READ_ONLY;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        return setter != null ? PropertyStyle.READ_WRITE : PropertyStyle.READ_ONLY;</span>
     }
 
     /**
@@ -175,16 +174,16 @@ final class LightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
         
         MethodHandle getter;
         try {
-<span class="fc" id="L178">            getter = lookup.unreflect(getMethod);</span>
-<span class="nc" id="L179">        } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L180">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="fc" id="L181">        }</span>
-<span class="fc" id="L182">        return new LightMetaProperty&lt;&gt;(</span>
+<span class="fc" id="L177">            getter = lookup.unreflect(getMethod);</span>
+<span class="nc" id="L178">        } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L179">            throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="fc" id="L180">        }</span>
+<span class="fc" id="L181">        return new LightMetaProperty&lt;&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="fc" id="L185">                (Class&lt;P&gt;) getMethod.getReturnType(), </span>
-<span class="fc" id="L186">                getMethod.getGenericReturnType(), </span>
-<span class="fc" id="L187">                Arrays.asList(getMethod.getAnnotations()), </span>
+<span class="fc" id="L184">                (Class&lt;P&gt;) getMethod.getReturnType(), </span>
+<span class="fc" id="L185">                getMethod.getGenericReturnType(), </span>
+<span class="fc" id="L186">                Arrays.asList(getMethod.getAnnotations()), </span>
                 getter,
                 null,
                 constructorIndex,
@@ -214,76 +213,76 @@ final class LightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
             int constructorIndex,
             PropertyStyle style) {
         
-<span class="fc" id="L217">        super(propertyName);</span>
-<span class="fc" id="L218">        this.metaBean = metaBean;</span>
-<span class="fc" id="L219">        this.propertyType = propertyType;</span>
-<span class="fc" id="L220">        this.propertyGenericType = propertyGenericType;</span>
-<span class="fc" id="L221">        this.annotations = annotations;</span>
-<span class="fc" id="L222">        this.getter = getter.asType(MethodType.methodType(Object.class, Bean.class));</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        this.setter = setter != null ? setter.asType(MethodType.methodType(void.class, Bean.class, Object.class)) : null;</span>
-<span class="fc" id="L224">        this.constructorIndex = constructorIndex;</span>
-<span class="fc" id="L225">        this.style = style;</span>
-<span class="fc" id="L226">    }</span>
+<span class="fc" id="L216">        super(propertyName);</span>
+<span class="fc" id="L217">        this.metaBean = metaBean;</span>
+<span class="fc" id="L218">        this.propertyType = propertyType;</span>
+<span class="fc" id="L219">        this.propertyGenericType = propertyGenericType;</span>
+<span class="fc" id="L220">        this.annotations = annotations;</span>
+<span class="fc" id="L221">        this.getter = getter.asType(MethodType.methodType(Object.class, Bean.class));</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        this.setter = setter != null ? setter.asType(MethodType.methodType(void.class, Bean.class, Object.class)) : null;</span>
+<span class="fc" id="L223">        this.constructorIndex = constructorIndex;</span>
+<span class="fc" id="L224">        this.style = style;</span>
+<span class="fc" id="L225">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public MetaBean metaBean() {
-<span class="nc" id="L231">        return metaBean;</span>
+<span class="nc" id="L230">        return metaBean;</span>
     }
 
     @Override
     public Class&lt;?&gt; declaringType() {
-<span class="fc" id="L236">        return metaBean.beanType();</span>
+<span class="fc" id="L235">        return metaBean.beanType();</span>
     }
 
     @Override
     public Class&lt;P&gt; propertyType() {
-<span class="fc" id="L241">        return propertyType;</span>
+<span class="fc" id="L240">        return propertyType;</span>
     }
 
     @Override
     public Type propertyGenericType() {
-<span class="fc" id="L246">        return propertyGenericType;</span>
+<span class="fc" id="L245">        return propertyGenericType;</span>
     }
 
     @Override
     public PropertyStyle style() {
-<span class="fc" id="L251">        return style;</span>
+<span class="fc" id="L250">        return style;</span>
     }
 
     @Override
     public List&lt;Annotation&gt; annotations() {
-<span class="nc" id="L256">        return annotations;</span>
+<span class="nc" id="L255">        return annotations;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public P get(Bean bean) {
         try {
-<span class="fc" id="L263">            return (P) getter.invokeExact(bean);</span>
-<span class="nc" id="L264">        } catch (RuntimeException | Error ex) {</span>
-<span class="nc" id="L265">            throw ex;</span>
-<span class="nc" id="L266">        } catch (Throwable ex) {</span>
-<span class="nc" id="L267">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L262">            return (P) getter.invokeExact(bean);</span>
+<span class="nc" id="L263">        } catch (RuntimeException | Error ex) {</span>
+<span class="nc" id="L264">            throw ex;</span>
+<span class="nc" id="L265">        } catch (Throwable ex) {</span>
+<span class="nc" id="L266">            throw new RuntimeException(ex);</span>
         }
     }
 
     @Override
     public void set(Bean bean, Object value) {
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (setter == null) {</span>
-<span class="nc" id="L274">            throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if (setter == null) {</span>
+<span class="nc" id="L273">            throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
         }
         try {
-<span class="fc" id="L277">            setter.invokeExact(bean, value);</span>
-<span class="nc" id="L278">        } catch (RuntimeException | Error ex) {</span>
-<span class="nc" id="L279">            throw ex;</span>
-<span class="nc" id="L280">        } catch (Throwable ex) {</span>
-<span class="nc" id="L281">            throw new RuntimeException(ex);</span>
-<span class="fc" id="L282">        }</span>
-<span class="fc" id="L283">    }</span>
+<span class="fc" id="L276">            setter.invokeExact(bean, value);</span>
+<span class="nc" id="L277">        } catch (RuntimeException | Error ex) {</span>
+<span class="nc" id="L278">            throw ex;</span>
+<span class="nc" id="L279">        } catch (Throwable ex) {</span>
+<span class="nc" id="L280">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L281">        }</span>
+<span class="fc" id="L282">    }</span>
 
     int getConstructorIndex() {
-<span class="fc" id="L286">        return constructorIndex;</span>
+<span class="fc" id="L285">        return constructorIndex;</span>
     }
 
 }

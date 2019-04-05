@@ -29,7 +29,6 @@ import org.joda.beans.impl.BasicProperty;
  * An immutable meta-property based on a getter interface.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  * @deprecated Replaced by method handles
  */
 @Deprecated
@@ -65,48 +64,48 @@ abstract class AbstractLightMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P
             List&lt;Annotation&gt; annotations,
             int constructorIndex) {
         
-<span class="fc" id="L68">        super(propertyName);</span>
-<span class="fc" id="L69">        this.metaBean = metaBean;</span>
-<span class="fc" id="L70">        this.propertyType = propertyType;</span>
-<span class="fc" id="L71">        this.propertyGenericType = propertyGenericType;</span>
-<span class="fc" id="L72">        this.annotations = annotations;</span>
-<span class="fc" id="L73">        this.constructorIndex = constructorIndex;</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L67">        super(propertyName);</span>
+<span class="fc" id="L68">        this.metaBean = metaBean;</span>
+<span class="fc" id="L69">        this.propertyType = propertyType;</span>
+<span class="fc" id="L70">        this.propertyGenericType = propertyGenericType;</span>
+<span class="fc" id="L71">        this.annotations = annotations;</span>
+<span class="fc" id="L72">        this.constructorIndex = constructorIndex;</span>
+<span class="fc" id="L73">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public Property&lt;P&gt; createProperty(Bean bean) {
-<span class="nc" id="L79">        return BasicProperty.of(bean, this);</span>
+<span class="nc" id="L78">        return BasicProperty.of(bean, this);</span>
     }
 
     @Override
     public MetaBean metaBean() {
-<span class="nc" id="L84">        return metaBean;</span>
+<span class="nc" id="L83">        return metaBean;</span>
     }
 
     @Override
     public Class&lt;?&gt; declaringType() {
-<span class="nc" id="L89">        return metaBean.beanType();</span>
+<span class="nc" id="L88">        return metaBean.beanType();</span>
     }
 
     @Override
     public Class&lt;P&gt; propertyType() {
-<span class="nc" id="L94">        return propertyType;</span>
+<span class="nc" id="L93">        return propertyType;</span>
     }
 
     @Override
     public Type propertyGenericType() {
-<span class="nc" id="L99">        return propertyGenericType;</span>
+<span class="nc" id="L98">        return propertyGenericType;</span>
     }
 
     @Override
     public List&lt;Annotation&gt; annotations() {
-<span class="nc" id="L104">        return annotations;</span>
+<span class="nc" id="L103">        return annotations;</span>
     }
 
     //-----------------------------------------------------------------------
     int getConstructorIndex() {
-<span class="fc" id="L109">        return constructorIndex;</span>
+<span class="fc" id="L108">        return constructorIndex;</span>
     }
 
 }

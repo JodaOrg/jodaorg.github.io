@@ -17,31 +17,17 @@ package org.joda.beans.ser.bin;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.joda.beans.Bean;
-import org.joda.beans.BeanBuilder;
-import org.joda.beans.MetaBean;
-import org.joda.beans.MetaProperty;
 import org.joda.beans.ser.JodaBeanSer;
-import org.joda.beans.ser.SerCategory;
-import org.joda.beans.ser.SerDeserializer;
-import org.joda.beans.ser.SerIterable;
-import org.joda.beans.ser.SerOptional;
-import org.joda.beans.ser.SerTypeMapper;
 
 /**
- * Provides the ability for a Joda-Bean to read from a binary format.
+ * Provides the ability for a Joda-Bean to read from binary formats.
  * &lt;p&gt;
- * The binary format is defined by {@link JodaBeanBinWriter}.
+ * This class is immutable and may be used from multiple threads.
  * &lt;p&gt;
- * This class contains mutable state and cannot be used from multiple threads.
- * A new instance must be created for each message.
- *
- * @author Stephen Colebourne
+ * The binary formats are defined by {@link JodaBeanBinWriter}.
  */
 public class JodaBeanBinReader extends MsgPack {
 
@@ -49,28 +35,16 @@ public class JodaBeanBinReader extends MsgPack {
      * Settings.
      */
     private final JodaBeanSer settings;
-    /**
-     * The reader.
-     */
-    private DataInputStream input;
-    /**
-     * The base package including the trailing dot.
-     */
-    private String basePackage;
-    /**
-     * The known types.
-     */
-<span class="fc" id="L63">    private Map&lt;String, Class&lt;?&gt;&gt; knownTypes = new HashMap&lt;&gt;();</span>
 
     //-----------------------------------------------------------------------
     /**
-     * Visualizes the binary data, writing to system out.
+     * Visualizes the binary data.
      * 
      * @param input  the input bytes, not null
      * @return the visualization
      */
     public static String visualize(byte[] input) {
-<span class="nc" id="L73">        return new MsgPackVisualizer(input).visualizeData();</span>
+<span class="nc" id="L47">        return new MsgPackVisualizer(input).visualizeData();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -79,9 +53,12 @@ public class JodaBeanBinReader extends MsgPack {
      * 
      * @param settings  the settings, not null
      */
-<span class="fc" id="L82">    public JodaBeanBinReader(final JodaBeanSer settings) {</span>
-<span class="fc" id="L83">        this.settings = settings;</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L56">    public JodaBeanBinReader(JodaBeanSer settings) {</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (settings == null) {</span>
+<span class="nc" id="L58">            throw new NullPointerException(&quot;settings&quot;);</span>
+        }
+<span class="fc" id="L60">        this.settings = settings;</span>
+<span class="fc" id="L61">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -90,8 +67,8 @@ public class JodaBeanBinReader extends MsgPack {
      * @param input  the input bytes, not null
      * @return the bean, not null
      */
-    public Bean read(final byte[] input) {
-<span class="fc" id="L94">        return read(input, Bean.class);</span>
+    public Bean read(byte[] input) {
+<span class="fc" id="L71">        return read(input, Bean.class);</span>
     }
 
     /**
@@ -102,8 +79,11 @@ public class JodaBeanBinReader extends MsgPack {
      * @param rootType  the root type, not null
      * @return the bean, not null
      */
-    public &lt;T&gt; T read(final byte[] input, Class&lt;T&gt; rootType) {
-<span class="fc" id="L106">        return read(new ByteArrayInputStream(input), rootType);</span>
+    public &lt;T&gt; T read(byte[] input, Class&lt;T&gt; rootType) {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (input == null) {</span>
+<span class="nc" id="L84">            throw new NullPointerException(&quot;input&quot;);</span>
+        }
+<span class="fc" id="L86">        return read(new ByteArrayInputStream(input), rootType);</span>
     }
 
     /**
@@ -112,8 +92,8 @@ public class JodaBeanBinReader extends MsgPack {
      * @param input  the input reader, not null
      * @return the bean, not null
      */
-    public Bean read(final InputStream input) {
-<span class="nc" id="L116">        return read(input, Bean.class);</span>
+    public Bean read(InputStream input) {
+<span class="nc" id="L96">        return read(input, Bean.class);</span>
     }
 
     /**
@@ -124,459 +104,55 @@ public class JodaBeanBinReader extends MsgPack {
      * @param rootType  the root type, not null
      * @return the bean, not null
      */
-    public &lt;T&gt; T read(final InputStream input, Class&lt;T&gt; rootType) {
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (input instanceof DataInputStream) {</span>
-<span class="nc" id="L129">            this.input = (DataInputStream) input;</span>
+    public &lt;T&gt; T read(InputStream input, Class&lt;T&gt; rootType) {
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (input == null) {</span>
+<span class="nc" id="L109">            throw new NullPointerException(&quot;input&quot;);</span>
+        }
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (rootType == null) {</span>
+<span class="nc" id="L112">            throw new NullPointerException(&quot;rootType&quot;);</span>
+        }
+        DataInputStream dataInput;
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (input instanceof DataInputStream) {</span>
+<span class="nc" id="L116">            dataInput = (DataInputStream) input;</span>
         } else {
-<span class="fc" id="L131">            this.input = new DataInputStream(input);</span>
+<span class="fc" id="L118">            dataInput = new DataInputStream(input);</span>
         }
         try {
             try {
-<span class="fc" id="L135">                return parseRoot(rootType);</span>
+<span class="fc" id="L122">                return parseVersion(dataInput, rootType);</span>
             } finally {
-<span class="fc" id="L137">                input.close();</span>
+<span class="fc" id="L124">                input.close();</span>
             }
-<span class="fc" id="L139">        } catch (RuntimeException ex) {</span>
-<span class="fc" id="L140">            throw ex;</span>
-<span class="nc" id="L141">        } catch (Exception ex) {</span>
-<span class="nc" id="L142">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L126">        } catch (RuntimeException ex) {</span>
+<span class="fc" id="L127">            throw ex;</span>
+<span class="nc" id="L128">        } catch (Exception ex) {</span>
+<span class="nc" id="L129">            throw new RuntimeException(ex);</span>
         }
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Parses the root bean.
-     * 
-     * @param declaredType  the declared type, not null
-     * @return the bean, not null
-     * @throws Exception if an error occurs
-     */
-    private &lt;T&gt; T parseRoot(final Class&lt;T&gt; declaredType) throws Exception {
+    // parses the version
+    private &lt;T&gt; T parseVersion(DataInputStream input, Class&lt;T&gt; declaredType) throws Exception {
         // root array
-<span class="fc" id="L156">        int typeByte = input.readByte();</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (typeByte != MIN_FIX_ARRAY + 2) {</span>
-<span class="fc" id="L158">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected array, but was: 0x&quot; + toHex(typeByte));</span>
-        }
-        // version
-<span class="fc" id="L161">        typeByte = input.readByte();</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (typeByte != 1) {</span>
-<span class="fc" id="L163">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected version 1, but was: 0x&quot; + toHex(typeByte));</span>
-        }
-        // parse
-<span class="fc" id="L166">        Object parsed = parseObject(declaredType, null, null, null, true);</span>
-<span class="fc" id="L167">        return declaredType.cast(parsed);</span>
-    }
-
-    private Object parseBean(int propertyCount, Class&lt;?&gt; beanType) throws Exception {
-<span class="fc" id="L171">        String propName = &quot;&quot;;</span>
-        try {
-<span class="fc" id="L173">            SerDeserializer deser = settings.getDeserializers().findDeserializer(beanType);</span>
-<span class="fc" id="L174">            MetaBean metaBean = deser.findMetaBean(beanType);</span>
-<span class="fc" id="L175">            BeanBuilder&lt;?&gt; builder = deser.createBuilder(beanType, metaBean);</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">            for (int i = 0; i &lt; propertyCount; i++) {</span>
-                // property name
-<span class="fc" id="L178">                propName = acceptString(input.readByte());</span>
-<span class="fc" id="L179">                MetaProperty&lt;?&gt; metaProp = deser.findMetaProperty(beanType, metaBean, propName);</span>
-<span class="pc bpc" id="L180" title="1 of 4 branches missed.">                if (metaProp == null || metaProp.style().isDerived()) {</span>
-<span class="fc" id="L181">                    MsgPackInput.skipObject(input);</span>
-                } else {
-<span class="fc" id="L183">                    Object value = parseObject(SerOptional.extractType(metaProp, beanType), metaProp, beanType, null, false);</span>
-<span class="fc" id="L184">                    deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, beanType, value));</span>
+<span class="fc" id="L137">        int arrayByte = input.readByte();</span>
+<span class="fc" id="L138">        int versionByte = input.readByte();</span>
+<span class="fc bfc" id="L139" title="All 3 branches covered.">        switch (versionByte) {</span>
+            case 1:
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                if (arrayByte != MIN_FIX_ARRAY + 2) {</span>
+<span class="fc" id="L142">                    throw new IllegalArgumentException(</span>
+<span class="fc" id="L143">                            &quot;Invalid binary data: Expected array with 2 elements, but was: 0x&quot; + toHex(arrayByte));</span>
                 }
-<span class="fc" id="L186">                propName = &quot;&quot;;</span>
-            }
-<span class="fc" id="L188">            return deser.build(beanType, builder);</span>
-<span class="fc" id="L189">        } catch (Exception ex) {</span>
-<span class="fc" id="L190">            throw new RuntimeException(&quot;Error parsing bean: &quot; + beanType.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
-        }
-    }
-
-    private Object parseObject(Class&lt;?&gt; declaredType, MetaProperty&lt;?&gt; metaProp, Class&lt;?&gt; beanType, SerIterable parentIterable, boolean rootType) throws Exception {
-        // establish type
-<span class="fc" id="L196">        Class&lt;?&gt; effectiveType = declaredType;</span>
-<span class="fc" id="L197">        String metaType = null;</span>
-<span class="fc" id="L198">        int typeByte = input.readByte();</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (isMap(typeByte)) {</span>
-<span class="fc" id="L200">            input.mark(8);</span>
-<span class="fc" id="L201">            int mapSize = acceptMap(typeByte);</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">            if (mapSize &gt; 0) {</span>
-<span class="fc" id="L203">                int typeByteTemp = input.readByte();</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">                if (typeByteTemp == EXT_8) {</span>
-<span class="fc" id="L205">                    int size = input.readUnsignedByte();</span>
-<span class="fc" id="L206">                    typeByteTemp = input.readByte();</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">                    if (typeByteTemp == JODA_TYPE_BEAN) {</span>
-<span class="fc" id="L208">                        String typeStr = acceptStringBytes(size);</span>
-<span class="fc" id="L209">                        effectiveType = SerTypeMapper.decodeType(typeStr, settings, basePackage, knownTypes);</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">                        if (rootType) {</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">                            if (Bean.class.isAssignableFrom(effectiveType) == false) {</span>
-<span class="fc" id="L212">                                throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + effectiveType.getName());</span>
-                            }
-<span class="fc" id="L214">                            basePackage = effectiveType.getPackage().getName() + &quot;.&quot;;</span>
-                        }
-<span class="fc bfc" id="L216" title="All 2 branches covered.">                        if (declaredType.isAssignableFrom(effectiveType) == false) {</span>
-<span class="fc" id="L217">                            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + effectiveType.getName());</span>
-                        }
-<span class="fc bfc" id="L219" title="All 2 branches covered.">                        if (input.readByte() != NIL) {</span>
-<span class="fc" id="L220">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected null after bean type&quot;);</span>
-                        }
-<span class="fc" id="L222">                        return parseBean(mapSize - 1, effectiveType);</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">                    } else if (typeByteTemp == JODA_TYPE_DATA) {</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
-<span class="nc" id="L225">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
-                        }
-<span class="fc" id="L227">                        String typeStr = acceptStringBytes(size);</span>
-<span class="fc" id="L228">                        effectiveType = settings.getDeserializers().decodeType(typeStr, settings, basePackage, knownTypes, declaredType);</span>
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">                        if (declaredType.isAssignableFrom(effectiveType) == false) {</span>
-<span class="nc" id="L230">                            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + effectiveType.getName());</span>
-                        }
-<span class="fc" id="L232">                        typeByte = input.readByte();</span>
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">                    } else if (typeByteTemp == JODA_TYPE_META) {</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
-<span class="nc" id="L235">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
-                        }
-<span class="fc" id="L237">                        metaType = acceptStringBytes(size);</span>
-<span class="fc" id="L238">                        typeByte = input.readByte();</span>
-                    } else {
-<span class="nc" id="L240">                        input.reset();</span>
-                    }
-<span class="fc" id="L242">                } else {</span>
-<span class="fc" id="L243">                    input.reset();</span>
+<span class="fc" id="L145">                return new JodaBeanStandardBinReader(settings, input).read(declaredType);</span>
+            case 2:
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                if (arrayByte != MIN_FIX_ARRAY + 4) {</span>
+<span class="fc" id="L148">                    throw new IllegalArgumentException(</span>
+<span class="fc" id="L149">                            &quot;Invalid binary data: Expected array with 4 elements, but was: 0x&quot; + toHex(arrayByte));</span>
                 }
-<span class="fc" id="L245">            } else {</span>
-<span class="fc" id="L246">                input.reset();</span>
-            }
+<span class="fc" id="L151">                return new JodaBeanReferencingBinReader(settings, input).read(declaredType);</span>
+            default:
+<span class="fc" id="L153">                throw new IllegalArgumentException(</span>
+<span class="fc" id="L154">                        &quot;Invalid binary data: Expected version 1 or 2, but was: 0x&quot; + toHex(versionByte));</span>
         }
-        // parse based on type
-<span class="fc bfc" id="L250" title="All 2 branches covered.">        if (typeByte == NIL) {</span>
-<span class="fc" id="L251">            return null;</span>
-        }
-<span class="fc bfc" id="L253" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(effectiveType)) {</span>
-<span class="fc bfc" id="L254" title="All 2 branches covered.">            if (isMap(typeByte)) {</span>
-<span class="fc" id="L255">                int mapSize = acceptMap(typeByte);</span>
-<span class="fc" id="L256">                return parseBean(mapSize, effectiveType);</span>
-            } else {
-<span class="fc" id="L258">                return parseSimple(typeByte, effectiveType);</span>
-            }
-        } else {
-<span class="fc bfc" id="L261" title="All 4 branches covered.">            if (isMap(typeByte) || isArray(typeByte)) {</span>
-<span class="fc" id="L262">                SerIterable childIterable = null;</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">                if (metaType != null) {</span>
-<span class="fc" id="L264">                    childIterable = settings.getIteratorFactory().createIterable(metaType, settings, knownTypes);</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">                } else if (metaProp != null) {</span>
-<span class="fc" id="L266">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">                } else if (parentIterable != null) {</span>
-<span class="fc" id="L268">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
-                }
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">                if (childIterable == null) {</span>
-<span class="nc" id="L271">                    throw new IllegalArgumentException(&quot;Invalid binary data: Invalid metaType: &quot; + metaType);</span>
-                }
-<span class="fc" id="L273">                return parseIterable(typeByte, childIterable);</span>
-            } else {
-<span class="fc" id="L275">                return parseSimple(typeByte, effectiveType);</span>
-            }
-        }
-    }
-
-    private Object parseIterable(int typeByte, SerIterable iterable) throws Exception {
-<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (iterable.category() == SerCategory.MAP) {</span>
-<span class="fc" id="L282">            return parseIterableMap(typeByte, iterable);</span>
-<span class="fc bfc" id="L283" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.COUNTED) {</span>
-<span class="fc" id="L284">            return parseIterableCounted(typeByte, iterable);</span>
-<span class="fc bfc" id="L285" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.TABLE) {</span>
-<span class="fc" id="L286">            return parseIterableTable(typeByte, iterable);</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">        } else if (iterable.category() == SerCategory.GRID) {</span>
-<span class="fc" id="L288">            return parseIterableGrid(typeByte, iterable);</span>
-        } else {
-<span class="fc" id="L290">            return parseIterableArray(typeByte, iterable);</span>
-        }
-    }
-
-    private Object parseIterableMap(int typeByte, SerIterable iterable) throws Exception {
-<span class="fc" id="L295">        int size = acceptMap(typeByte);</span>
-<span class="fc bfc" id="L296" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L297">            Object key = parseObject(iterable.keyType(), null, null, null, false);</span>
-<span class="fc" id="L298">            Object value = parseObject(iterable.valueType(), null, null, iterable, false);</span>
-<span class="fc" id="L299">            iterable.add(key, null, value, 1);</span>
-        }
-<span class="fc" id="L301">        return iterable.build();</span>
-    }
-
-    private Object parseIterableTable(int typeByte, SerIterable iterable) throws Exception {
-<span class="fc" id="L305">        int size = acceptArray(typeByte);</span>
-<span class="fc bfc" id="L306" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">            if (acceptArray(input.readByte()) != 3) {</span>
-<span class="nc" id="L308">                throw new IllegalArgumentException(&quot;Table must have cell array size 3&quot;);</span>
-            }
-<span class="fc" id="L310">            Object key = parseObject(iterable.keyType(), null, null, null, false);</span>
-<span class="fc" id="L311">            Object column = parseObject(iterable.columnType(), null, null, null, false);</span>
-<span class="fc" id="L312">            Object value = parseObject(iterable.valueType(), null, null, iterable, false);</span>
-<span class="fc" id="L313">            iterable.add(key, column, value, 1);</span>
-        }
-<span class="fc" id="L315">        return iterable.build();</span>
-    }
-
-    private Object parseIterableGrid(int typeByte, SerIterable iterable) throws Exception {
-<span class="fc" id="L319">        int size = acceptArray(typeByte);</span>
-<span class="fc" id="L320">        int rows = acceptInteger(input.readByte());</span>
-<span class="fc" id="L321">        int columns = acceptInteger(input.readByte());</span>
-<span class="fc" id="L322">        iterable.dimensions(new int[] {rows, columns});</span>
-<span class="fc bfc" id="L323" title="All 2 branches covered.">        if ((rows * columns) != (size - 2)) {</span>
-            // sparse
-<span class="fc bfc" id="L325" title="All 2 branches covered.">            for (int i = 0; i &lt; (size - 2); i++) {</span>
-<span class="pc bpc" id="L326" title="1 of 2 branches missed.">                if (acceptArray(input.readByte()) != 3) {</span>
-<span class="nc" id="L327">                    throw new IllegalArgumentException(&quot;Grid must have cell array size 3&quot;);</span>
-                }
-<span class="fc" id="L329">                int row = acceptInteger(input.readByte());</span>
-<span class="fc" id="L330">                int column = acceptInteger(input.readByte());</span>
-<span class="fc" id="L331">                Object value = parseObject(iterable.valueType(), null, null, iterable, false);</span>
-<span class="fc" id="L332">                iterable.add(row, column, value, 1);</span>
-            }
-        } else {
-            // dense
-<span class="fc bfc" id="L336" title="All 2 branches covered.">            for (int row = 0; row &lt; rows; row++) {</span>
-<span class="fc bfc" id="L337" title="All 2 branches covered.">                for (int column = 0; column &lt; columns; column++) {</span>
-<span class="fc" id="L338">                    Object value = parseObject(iterable.valueType(), null, null, iterable, false);</span>
-<span class="fc" id="L339">                    iterable.add(row, column, value, 1);</span>
-                }
-            }
-        }
-<span class="fc" id="L343">        return iterable.build();</span>
-    }
-
-    private Object parseIterableCounted(int typeByte, SerIterable iterable) throws Exception {
-<span class="fc" id="L347">        int size = acceptMap(typeByte);</span>
-<span class="fc bfc" id="L348" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L349">            Object value = parseObject(iterable.valueType(), null, null, iterable, false);</span>
-<span class="fc" id="L350">            int count = acceptInteger(input.readByte());</span>
-<span class="fc" id="L351">            iterable.add(null, null, value, count);</span>
-        }
-<span class="fc" id="L353">        return iterable.build();</span>
-    }
-
-    private Object parseIterableArray(int typeByte, SerIterable iterable) throws Exception {
-<span class="fc" id="L357">        int size = acceptArray(typeByte);</span>
-<span class="fc bfc" id="L358" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L359">            iterable.add(null, null, parseObject(iterable.valueType(), null, null, iterable, false), 1);</span>
-        }
-<span class="fc" id="L361">        return iterable.build();</span>
-    }
-
-    private Object parseSimple(int typeByte, Class&lt;?&gt; type) throws Exception {
-<span class="fc bfc" id="L365" title="All 2 branches covered.">        if (isString(typeByte)) {</span>
-<span class="fc" id="L366">            String text = acceptString(typeByte);</span>
-<span class="fc bfc" id="L367" title="All 4 branches covered.">            if (type == String.class || type == Object.class) {</span>
-<span class="fc" id="L368">                return text;</span>
-            }
-<span class="fc" id="L370">            return settings.getConverter().convertFromString(type, text);</span>
-        }
-<span class="fc bfc" id="L372" title="All 2 branches covered.">        if (isIntegral(typeByte)) {</span>
-<span class="fc" id="L373">            long value = acceptLong(typeByte);</span>
-<span class="fc bfc" id="L374" title="All 4 branches covered.">            if (type == Long.class || type == long.class) {</span>
-<span class="fc" id="L375">                return Long.valueOf(value);</span>
-                
-<span class="fc bfc" id="L377" title="All 4 branches covered.">            } else if (type == Short.class || type == short.class) {</span>
-<span class="pc bpc" id="L378" title="2 of 4 branches missed.">                if (value &lt; Short.MIN_VALUE || value &gt; Short.MAX_VALUE) {</span>
-<span class="nc" id="L379">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected byte, but was &quot; + value);</span>
-                }
-<span class="fc" id="L381">                return Short.valueOf((short) value);</span>
-                
-<span class="fc bfc" id="L383" title="All 4 branches covered.">            } else if (type == Byte.class || type == byte.class) {</span>
-<span class="pc bpc" id="L384" title="2 of 4 branches missed.">                if (value &lt; Byte.MIN_VALUE || value &gt; Byte.MAX_VALUE) {</span>
-<span class="nc" id="L385">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected byte, but was &quot; + value);</span>
-                }
-<span class="fc" id="L387">                return Byte.valueOf((byte) value);</span>
-                
-<span class="pc bpc" id="L389" title="1 of 4 branches missed.">            } else if (type == Double.class || type == double.class) {</span>
-                // handle case where property type has changed from integral to double
-<span class="fc" id="L391">                return Double.valueOf((double) value);</span>
-                
-<span class="pc bpc" id="L393" title="2 of 4 branches missed.">            } else if (type == Float.class || type == float.class) {</span>
-                // handle case where property type has changed from integral to float
-<span class="nc" id="L395">                return Float.valueOf((float) value);</span>
-                
-            } else {
-<span class="pc bpc" id="L398" title="2 of 4 branches missed.">                if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L399">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was &quot; + value);</span>
-                }
-<span class="fc" id="L401">                return Integer.valueOf((int) value);</span>
-            }
-        }
-<span class="pc bpc" id="L404" title="1 of 6 branches missed.">        switch (typeByte) {</span>
-            case TRUE:
-<span class="fc" id="L406">                return Boolean.TRUE;</span>
-            case FALSE:
-<span class="fc" id="L408">                return Boolean.FALSE;</span>
-            case FLOAT_32:
-<span class="fc" id="L410">                return Float.valueOf(input.readFloat());</span>
-            case FLOAT_64:
-<span class="fc" id="L412">                return Double.valueOf(input.readDouble());</span>
-            case BIN_8:
-            case BIN_16:
-            case BIN_32:
-<span class="fc" id="L416">                return acceptBinary(typeByte);</span>
-        }
-<span class="nc" id="L418">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected &quot; + type.getName() + &quot;, but was: 0x&quot; + toHex(typeByte));</span>
-    }
-
-    //-----------------------------------------------------------------------
-    private int acceptMap(int typeByte) throws IOException {
-        int size;
-<span class="pc bpc" id="L424" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_MAP &amp;&amp; typeByte &lt;= MAX_FIX_MAP) {</span>
-<span class="fc" id="L425">            size = (typeByte - MIN_FIX_MAP);</span>
-<span class="pc bpc" id="L426" title="1 of 2 branches missed.">        } else if (typeByte == MAP_16) {</span>
-<span class="fc" id="L427">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L428" title="All 2 branches missed.">        } else if (typeByte == MAP_32) {</span>
-<span class="nc" id="L429">            size = input.readInt();</span>
-<span class="nc bnc" id="L430" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L431">                throw new IllegalArgumentException(&quot;Invalid binary data: Map too large&quot;);</span>
-            }
-        } else {
-<span class="nc" id="L434">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map, but was: 0x&quot; + toHex(typeByte));</span>
-        }
-<span class="fc" id="L436">        return size;</span>
-    }
-
-    private int acceptArray(int typeByte) throws IOException {
-        int size;
-<span class="pc bpc" id="L441" title="2 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_ARRAY &amp;&amp; typeByte &lt;= MAX_FIX_ARRAY) {</span>
-<span class="fc" id="L442">            size = (typeByte - MIN_FIX_ARRAY);</span>
-<span class="nc bnc" id="L443" title="All 2 branches missed.">        } else if (typeByte == ARRAY_16) {</span>
-<span class="nc" id="L444">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L445" title="All 2 branches missed.">        } else if (typeByte == ARRAY_32) {</span>
-<span class="nc" id="L446">            size = input.readInt();</span>
-<span class="nc bnc" id="L447" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L448">                throw new IllegalArgumentException(&quot;Invalid binary data: Array too large&quot;);</span>
-            }
-        } else {
-<span class="nc" id="L451">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected array, but was: 0x&quot; + toHex(typeByte));</span>
-        }
-<span class="fc" id="L453">        return size;</span>
-    }
-
-    private String acceptString(int typeByte) throws IOException {
-        int size;
-<span class="pc bpc" id="L458" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_STR &amp;&amp; typeByte &lt;= MAX_FIX_STR) {</span>
-<span class="fc" id="L459">            size = (typeByte - MIN_FIX_STR);</span>
-<span class="pc bpc" id="L460" title="1 of 2 branches missed.">        } else if (typeByte == STR_8) {</span>
-<span class="fc" id="L461">            size = input.readUnsignedByte();</span>
-<span class="nc bnc" id="L462" title="All 2 branches missed.">        } else if (typeByte == STR_16) {</span>
-<span class="nc" id="L463">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L464" title="All 2 branches missed.">        } else if (typeByte == STR_32) {</span>
-<span class="nc" id="L465">            size = input.readInt();</span>
-<span class="nc bnc" id="L466" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L467">                throw new IllegalArgumentException(&quot;Invalid binary data: String too large&quot;);</span>
-            }
-        } else {
-<span class="nc" id="L470">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected string, but was: 0x&quot; + toHex(typeByte));</span>
-        }
-<span class="fc" id="L472">        return acceptStringBytes(size);</span>
-    }
-
-    private String acceptStringBytes(int size) throws IOException {
-<span class="fc" id="L476">        byte[] bytes = new byte[size];</span>
-<span class="fc" id="L477">        input.readFully(bytes);</span>
-        // inline common ASCII case for much better performance
-<span class="fc" id="L479">        char[] chars = new char[size];</span>
-<span class="fc bfc" id="L480" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L481">            byte b = bytes[i];</span>
-<span class="pc bpc" id="L482" title="1 of 2 branches missed.">            if (b &gt;= 0) {</span>
-<span class="fc" id="L483">                chars[i] = (char) b;</span>
-            } else {
-<span class="nc" id="L485">                return new String(bytes, UTF_8);</span>
-            }
-        }
-<span class="fc" id="L488">        return new String(chars);</span>
-    }
-
-    private byte[] acceptBinary(int typeByte) throws IOException {
-        int size;
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">        if (typeByte == BIN_8) {</span>
-<span class="fc" id="L494">            size = input.readUnsignedByte();</span>
-<span class="nc bnc" id="L495" title="All 2 branches missed.">        } else if (typeByte == BIN_16) {</span>
-<span class="nc" id="L496">            size = input.readUnsignedShort();</span>
-<span class="nc bnc" id="L497" title="All 2 branches missed.">        } else if (typeByte == BIN_32) {</span>
-<span class="nc" id="L498">            size = input.readInt();</span>
-<span class="nc bnc" id="L499" title="All 2 branches missed.">            if (size &lt; 0) {</span>
-<span class="nc" id="L500">                throw new IllegalArgumentException(&quot;Invalid binary data: Binary too large&quot;);</span>
-            }
-        } else {
-<span class="nc" id="L503">            throw new IllegalArgumentException(&quot;Invalid binary data: Expected binary, but was: 0x&quot; + toHex(typeByte));</span>
-        }
-<span class="fc" id="L505">        byte[] bytes = new byte[size];</span>
-<span class="fc" id="L506">        input.readFully(bytes);</span>
-<span class="fc" id="L507">        return bytes;</span>
-    }
-
-    private int acceptInteger(int typeByte) throws IOException {
-<span class="pc bpc" id="L511" title="2 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) {</span>
-<span class="fc" id="L512">            return typeByte;</span>
-        }
-<span class="nc bnc" id="L514" title="All 9 branches missed.">        switch (typeByte) {</span>
-            case UINT_8:
-<span class="nc" id="L516">                return input.readUnsignedByte();</span>
-            case UINT_16:
-<span class="nc" id="L518">                return input.readUnsignedShort();</span>
-            case UINT_32: {
-<span class="nc" id="L520">                int val = input.readInt();</span>
-<span class="nc bnc" id="L521" title="All 2 branches missed.">                if (val &lt; 0) {</span>
-<span class="nc" id="L522">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large unsigned int&quot;);</span>
-                }
-<span class="nc" id="L524">                return val;</span>
-            }
-            case UINT_64: {
-<span class="nc" id="L527">                long val = input.readLong();</span>
-<span class="nc bnc" id="L528" title="All 4 branches missed.">                if (val &lt; 0 || val &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L529">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large unsigned int&quot;);</span>
-                }
-<span class="nc" id="L531">                return (int) val;</span>
-            }
-            case SINT_8:
-<span class="nc" id="L534">                return input.readByte();</span>
-            case SINT_16:
-<span class="nc" id="L536">                return input.readShort();</span>
-            case SINT_32:
-<span class="nc" id="L538">                return input.readInt();</span>
-            case SINT_64: {
-<span class="nc" id="L540">                long val = input.readLong();</span>
-<span class="nc bnc" id="L541" title="All 4 branches missed.">                if (val &lt; Integer.MIN_VALUE || val &gt; Integer.MAX_VALUE) {</span>
-<span class="nc" id="L542">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was large signed int&quot;);</span>
-                }
-<span class="nc" id="L544">                return (int) val;</span>
-            }
-        }
-<span class="nc" id="L547">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected int, but was: 0x&quot; + toHex(typeByte));</span>
-    }
-
-    private long acceptLong(int typeByte) throws IOException {
-<span class="pc bpc" id="L551" title="1 of 4 branches missed.">        if (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) {</span>
-<span class="fc" id="L552">            return typeByte;</span>
-        }
-<span class="pc bpc" id="L554" title="7 of 9 branches missed.">        switch (typeByte) {</span>
-            case UINT_8:
-<span class="fc" id="L556">                return input.readUnsignedByte();</span>
-            case UINT_16:
-<span class="fc" id="L558">                return input.readUnsignedShort();</span>
-            case UINT_32: {
-<span class="nc" id="L560">                return ((long) input.readInt()) &amp; 0xFFFFFFFFL;</span>
-            }
-            case UINT_64: {
-<span class="nc" id="L563">                long val = input.readLong();</span>
-<span class="nc bnc" id="L564" title="All 2 branches missed.">                if (val &lt; 0) {</span>
-<span class="nc" id="L565">                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected long, but was large unsigned int&quot;);</span>
-                }
-<span class="nc" id="L567">                return val;</span>
-            }
-            case SINT_8:
-<span class="nc" id="L570">                return input.readByte();</span>
-            case SINT_16:
-<span class="nc" id="L572">                return input.readShort();</span>
-            case SINT_32:
-<span class="nc" id="L574">                return input.readInt();</span>
-            case SINT_64: {
-<span class="nc" id="L576">                return input.readLong();</span>
-            }
-        }
-<span class="nc" id="L579">        throw new IllegalArgumentException(&quot;Invalid binary data: Expected long, but was: 0x&quot; + toHex(typeByte));</span>
     }
 
 }

@@ -30,7 +30,6 @@ import org.joda.beans.MetaProperty;
  * This is useful for cases where the builder data might be manipulated before
  * the final build. The buffer can be directly mutated.
  * 
- * @author Stephen Colebourne
  * @param &lt;T&gt;  the bean type
  */
 public class BufferingBeanBuilder&lt;T extends Bean&gt;
@@ -43,7 +42,7 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
     /**
      * The buffered data.
      */
-<span class="fc" id="L46">    private final ConcurrentMap&lt;MetaProperty&lt;?&gt;, Object&gt; buffer = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L45">    private final ConcurrentMap&lt;MetaProperty&lt;?&gt;, Object&gt; buffer = new ConcurrentHashMap&lt;&gt;();</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -53,7 +52,7 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
      * @return a new untyped builder, not null
      */
     public static BufferingBeanBuilder&lt;?&gt; of(MetaBean metaBean) {
-<span class="fc" id="L56">        return new BufferingBeanBuilder&lt;&gt;(metaBean);</span>
+<span class="fc" id="L55">        return new BufferingBeanBuilder&lt;&gt;(metaBean);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -62,12 +61,12 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
      * 
      * @param metaBean  the target meta-bean, not null
      */
-<span class="fc" id="L65">    public BufferingBeanBuilder(MetaBean metaBean) {</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
-<span class="nc" id="L67">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
+<span class="fc" id="L64">    public BufferingBeanBuilder(MetaBean metaBean) {</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L66">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
         }
-<span class="fc" id="L69">        this.metaBean = metaBean;</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L68">        this.metaBean = metaBean;</span>
+<span class="fc" id="L69">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -76,7 +75,7 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
      * @return the meta-bean, not null
      */
     public MetaBean getMetaBean() {
-<span class="fc" id="L79">        return metaBean;</span>
+<span class="fc" id="L78">        return metaBean;</span>
     }
 
     /**
@@ -87,7 +86,7 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
      * @return the mutable buffer, not null
      */
     public ConcurrentMap&lt;MetaProperty&lt;?&gt;, Object&gt; getBuffer() {
-<span class="fc" id="L90">        return buffer;</span>
+<span class="fc" id="L89">        return buffer;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -99,7 +98,7 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
      */
     @Override
     public Object get(String propertyName) {
-<span class="nc" id="L102">        return get(getMetaBean().metaProperty(propertyName));</span>
+<span class="nc" id="L101">        return get(getMetaBean().metaProperty(propertyName));</span>
     }
 
     /**
@@ -111,29 +110,29 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
-<span class="nc" id="L114">        return (P) getBuffer().get(metaProperty);</span>
+<span class="nc" id="L113">        return (P) getBuffer().get(metaProperty);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public BeanBuilder&lt;T&gt; set(String propertyName, Object value) {
-<span class="nc" id="L120">        return set(getMetaBean().metaProperty(propertyName), value);</span>
+<span class="nc" id="L119">        return set(getMetaBean().metaProperty(propertyName), value);</span>
     }
 
     @Override
     public BeanBuilder&lt;T&gt; set(MetaProperty&lt;?&gt; metaProperty, Object value) {
-<span class="fc" id="L125">        getBuffer().put(metaProperty, value);</span>
-<span class="fc" id="L126">        return this;</span>
+<span class="fc" id="L124">        getBuffer().put(metaProperty, value);</span>
+<span class="fc" id="L125">        return this;</span>
     }
 
     @Override
     public T build() {
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L132">        BeanBuilder&lt;T&gt; builder = (BeanBuilder&lt;T&gt;) getMetaBean().builder();</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (Entry&lt;MetaProperty&lt;?&gt;, Object&gt; entry : getBuffer().entrySet()) {</span>
-<span class="fc" id="L134">            builder.set(entry.getKey(), entry.getValue());</span>
-<span class="fc" id="L135">        }</span>
-<span class="fc" id="L136">        return builder.build();</span>
+<span class="fc" id="L131">        BeanBuilder&lt;T&gt; builder = (BeanBuilder&lt;T&gt;) getMetaBean().builder();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        for (Entry&lt;MetaProperty&lt;?&gt;, Object&gt; entry : getBuffer().entrySet()) {</span>
+<span class="fc" id="L133">            builder.set(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L134">        }</span>
+<span class="fc" id="L135">        return builder.build();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -144,7 +143,7 @@ public class BufferingBeanBuilder&lt;T extends Bean&gt;
      */
     @Override
     public String toString() {
-<span class="nc" id="L147">        return &quot;BeanBuilder for &quot; + metaBean.beanName();</span>
+<span class="nc" id="L146">        return &quot;BeanBuilder for &quot; + metaBean.beanName();</span>
     }
 
 }

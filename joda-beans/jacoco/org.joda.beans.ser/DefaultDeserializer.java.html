@@ -23,52 +23,50 @@ import org.joda.beans.MetaProperty;
  * Default deserializer that expects the input to match the current classpath beans.
  * &lt;p&gt;
  * This uses the standard {@code MetaBean}, {@code MetaProperty} and  {@code BeanBuilder}.
- *
- * @author Stephen Colebourne
  */
 public class DefaultDeserializer implements SerDeserializer {
 
     /**
      * Singleton.
      */
-<span class="fc" id="L34">    public static final SerDeserializer INSTANCE = new DefaultDeserializer();</span>
+<span class="fc" id="L32">    public static final SerDeserializer INSTANCE = new DefaultDeserializer();</span>
 
     /**
      * Creates an instance.
      */
-<span class="fc" id="L39">    protected DefaultDeserializer() {</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L37">    protected DefaultDeserializer() {</span>
+<span class="fc" id="L38">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public MetaBean findMetaBean(Class&lt;?&gt; beanType) {
-<span class="fc" id="L45">        return MetaBean.of(beanType);</span>
+<span class="fc" id="L43">        return MetaBean.of(beanType);</span>
     }
 
     @Override
     public BeanBuilder&lt;?&gt; createBuilder(Class&lt;?&gt; beanType, MetaBean metaBean) {
-<span class="fc" id="L50">        return metaBean.builder();</span>
+<span class="fc" id="L48">        return metaBean.builder();</span>
     }
 
     @Override
     public MetaProperty&lt;?&gt; findMetaProperty(Class&lt;?&gt; beanType, MetaBean metaBean, String propertyName) {
-<span class="fc" id="L55">        return metaBean.metaProperty(propertyName);</span>
+<span class="fc" id="L53">        return metaBean.metaProperty(propertyName);</span>
     }
 
     @Override
     public void setValue(BeanBuilder&lt;?&gt; builder, MetaProperty&lt;?&gt; metaProp, Object value) {
-<span class="fc" id="L60">        builder.set(metaProp, value);</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L58">        builder.set(metaProp, value);</span>
+<span class="fc" id="L59">    }</span>
 
     @Override
     public Object build(Class&lt;?&gt; beanType, BeanBuilder&lt;?&gt; builder) {
-<span class="fc" id="L65">        return builder.build();</span>
+<span class="fc" id="L63">        return builder.build();</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L71">        return getClass().getSimpleName();</span>
+<span class="nc" id="L69">        return getClass().getSimpleName();</span>
     }
 
 }

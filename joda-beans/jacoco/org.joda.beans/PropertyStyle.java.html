@@ -22,37 +22,35 @@ package org.joda.beans;
  * This enumeration models those options.
  * &lt;p&gt;
  * It is strongly recommended to use the methods, not compare against the enum values.
- * 
- * @author Stephen Colebourne
  */
-<span class="fc" id="L28">public enum PropertyStyle {</span>
+<span class="fc" id="L26">public enum PropertyStyle {</span>
 
     /**
      * The property can be read and written.
      */
-<span class="fc" id="L33">    READ_WRITE,</span>
+<span class="fc" id="L31">    READ_WRITE,</span>
     /**
      * The property is read-only.
      */
-<span class="fc" id="L37">    READ_ONLY,</span>
+<span class="fc" id="L35">    READ_ONLY,</span>
     /**
      * The property is write-only.
      */
-<span class="fc" id="L41">    WRITE_ONLY,</span>
+<span class="fc" id="L39">    WRITE_ONLY,</span>
     /**
      * The property is read-only but can be written via the builder.
      */
-<span class="fc" id="L45">    READ_ONLY_BUILDABLE,</span>
+<span class="fc" id="L43">    READ_ONLY_BUILDABLE,</span>
     /**
      * The property is derived.
      * It is read-only.
      */
-<span class="fc" id="L50">    DERIVED,</span>
+<span class="fc" id="L48">    DERIVED,</span>
     /**
      * The property is immutable.
      * It can be read and written via the builder.
      */
-<span class="fc" id="L55">    IMMUTABLE;</span>
+<span class="fc" id="L53">    IMMUTABLE;</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -63,7 +61,7 @@ package org.joda.beans;
      * @return true if the property can be read
      */
     public boolean isReadable() {
-<span class="pc bpc" id="L66" title="1 of 10 branches missed.">        return this == READ_WRITE || this == READ_ONLY || this == READ_ONLY_BUILDABLE || this == DERIVED || this == IMMUTABLE;</span>
+<span class="pc bpc" id="L64" title="1 of 10 branches missed.">        return this == READ_WRITE || this == READ_ONLY || this == READ_ONLY_BUILDABLE || this == DERIVED || this == IMMUTABLE;</span>
     }
 
     /**
@@ -74,7 +72,7 @@ package org.joda.beans;
      * @return true if the property can be written
      */
     public boolean isWritable() {
-<span class="fc bfc" id="L77" title="All 4 branches covered.">        return this == READ_WRITE || this == WRITE_ONLY;</span>
+<span class="fc bfc" id="L75" title="All 4 branches covered.">        return this == READ_WRITE || this == WRITE_ONLY;</span>
     }
 
     /**
@@ -87,7 +85,7 @@ package org.joda.beans;
      * @return true if the property is derived
      */
     public boolean isReadOnly() {
-<span class="pc bpc" id="L90" title="1 of 8 branches missed.">        return this == READ_ONLY || this == READ_ONLY_BUILDABLE || this == DERIVED || this == IMMUTABLE;</span>
+<span class="pc bpc" id="L88" title="1 of 8 branches missed.">        return this == READ_ONLY || this == READ_ONLY_BUILDABLE || this == DERIVED || this == IMMUTABLE;</span>
     }
 
     /**
@@ -98,7 +96,7 @@ package org.joda.beans;
      * @return true if the property can be used in the builder
      */
     public boolean isBuildable() {
-<span class="pc bpc" id="L101" title="1 of 8 branches missed.">        return this == READ_WRITE || this == WRITE_ONLY || this == READ_ONLY_BUILDABLE || this == IMMUTABLE;</span>
+<span class="pc bpc" id="L99" title="1 of 8 branches missed.">        return this == READ_WRITE || this == WRITE_ONLY || this == READ_ONLY_BUILDABLE || this == IMMUTABLE;</span>
     }
 
     /**
@@ -109,7 +107,7 @@ package org.joda.beans;
      * @return true if the property is derived
      */
     public boolean isDerived() {
-<span class="fc bfc" id="L112" title="All 2 branches covered.">        return this == DERIVED;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        return this == DERIVED;</span>
     }
 
     /**
@@ -120,7 +118,7 @@ package org.joda.beans;
      * @return true if the property is serializable
      */
     public boolean isSerializable() {
-<span class="pc bpc" id="L123" title="1 of 6 branches missed.">        return this == READ_WRITE || this == READ_ONLY_BUILDABLE || this == IMMUTABLE;</span>
+<span class="pc bpc" id="L121" title="1 of 6 branches missed.">        return this == READ_WRITE || this == READ_ONLY_BUILDABLE || this == IMMUTABLE;</span>
     }
 
 }

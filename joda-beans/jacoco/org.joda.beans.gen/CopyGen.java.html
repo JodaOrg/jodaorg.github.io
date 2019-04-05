@@ -21,14 +21,12 @@ import java.util.List;
 
 /**
  * A generator of copy code.
- * 
- * @author Stephen Colebourne
  */
-<span class="nc" id="L27">abstract class CopyGen {</span>
+<span class="nc" id="L25">abstract class CopyGen {</span>
 
-<span class="nc" id="L29">    static final CopyGen ASSIGN = new PatternCopyGen(&quot;$field = $value;&quot;);</span>
-<span class="nc" id="L30">    static final CopyGen CLONE = new PatternCopyGen(&quot;$value.clone()&quot;);</span>
-<span class="nc" id="L31">    static final CopyGen CLONE_CAST = new PatternCopyGen(&quot;($type) $value.clone()&quot;);</span>
+<span class="nc" id="L27">    static final CopyGen ASSIGN = new PatternCopyGen(&quot;$field = $value;&quot;);</span>
+<span class="nc" id="L28">    static final CopyGen CLONE = new PatternCopyGen(&quot;$value.clone()&quot;);</span>
+<span class="nc" id="L29">    static final CopyGen CLONE_CAST = new PatternCopyGen(&quot;($type) $value.clone()&quot;);</span>
 
     /**
      * Generates the copy to immutable lines.
@@ -54,81 +52,81 @@ import java.util.List;
     static class PatternCopyGen extends CopyGen {
         private final String immutablePattern;
         private final String mutablePattern;
-<span class="nc" id="L57">        PatternCopyGen(String pattern) {</span>
-<span class="nc" id="L58">            this.immutablePattern = pattern;</span>
-<span class="nc" id="L59">            this.mutablePattern = pattern;</span>
-<span class="nc" id="L60">        }</span>
-<span class="nc" id="L61">        PatternCopyGen(String immutablePattern, String mutablePattern) {</span>
-<span class="nc" id="L62">            this.immutablePattern = immutablePattern;</span>
-<span class="nc" id="L63">            this.mutablePattern = mutablePattern;</span>
-<span class="nc" id="L64">        }</span>
+<span class="nc" id="L55">        PatternCopyGen(String pattern) {</span>
+<span class="nc" id="L56">            this.immutablePattern = pattern;</span>
+<span class="nc" id="L57">            this.mutablePattern = pattern;</span>
+<span class="nc" id="L58">        }</span>
+<span class="nc" id="L59">        PatternCopyGen(String immutablePattern, String mutablePattern) {</span>
+<span class="nc" id="L60">            this.immutablePattern = immutablePattern;</span>
+<span class="nc" id="L61">            this.mutablePattern = mutablePattern;</span>
+<span class="nc" id="L62">        }</span>
         @Override
         List&lt;String&gt; generateCopyToImmutable(String indent, String fromBean, PropertyData prop) {
-<span class="nc" id="L67">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L68">            final String[] split = immutablePattern.split(&quot;\n&quot;);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">            for (String line : split) {</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">                if (split.length == 1) {</span>
-<span class="nc bnc" id="L71" title="All 4 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">                        if (prop.isNotNull()) {</span>
-<span class="nc" id="L73">                            line = &quot;$field = &quot; + line + &quot;;&quot;;</span>
+<span class="nc" id="L65">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L66">            final String[] split = immutablePattern.split(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            for (String line : split) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                if (split.length == 1) {</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                        if (prop.isNotNull()) {</span>
+<span class="nc" id="L71">                            line = &quot;$field = &quot; + line + &quot;;&quot;;</span>
                         } else {
-<span class="nc" id="L75">                            line = &quot;$field = ($value != null ? &quot; + line + &quot; : null);&quot;;</span>
+<span class="nc" id="L73">                            line = &quot;$field = ($value != null ? &quot; + line + &quot; : null);&quot;;</span>
                         }
                     }
-<span class="nc bnc" id="L78" title="All 2 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false) {</span>
-<span class="nc" id="L79">                        line = &quot;$field = &quot; + line;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false) {</span>
+<span class="nc" id="L77">                        line = &quot;$field = &quot; + line;</span>
                     }
                 }
-<span class="nc" id="L82">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">                line = line.replace(&quot;$value&quot;, fromBean + (fromBean.isEmpty() ? prop.getPropertyName() : prop.getFieldName()));</span>
-<span class="nc" id="L84">                line = line.replace(&quot;$type&quot;, prop.getFieldType());</span>
-<span class="nc" id="L85">                line = line.replace(&quot;$typeRaw&quot;, prop.getTypeRaw());</span>
-<span class="nc" id="L86">                line = line.replace(&quot;$generics&quot;, prop.getTypeGenerics());</span>
-<span class="nc" id="L87">                list.add(indent + line);</span>
+<span class="nc" id="L80">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                line = line.replace(&quot;$value&quot;, fromBean + (fromBean.isEmpty() ? prop.getPropertyName() : prop.getFieldName()));</span>
+<span class="nc" id="L82">                line = line.replace(&quot;$type&quot;, prop.getFieldType());</span>
+<span class="nc" id="L83">                line = line.replace(&quot;$typeRaw&quot;, prop.getTypeRaw());</span>
+<span class="nc" id="L84">                line = line.replace(&quot;$generics&quot;, prop.getTypeGenerics());</span>
+<span class="nc" id="L85">                list.add(indent + line);</span>
             }
-<span class="nc" id="L89">            return list;</span>
+<span class="nc" id="L87">            return list;</span>
         }
         @Override
         List&lt;String&gt; generateCopyToMutable(String indent, PropertyData prop, String beanToCopyFrom) {
-<span class="nc" id="L93">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L94">            final String[] split = mutablePattern.split(&quot;\n&quot;);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">            for (String line : split) {</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">                if (split.length == 1) {</span>
-<span class="nc bnc" id="L97" title="All 4 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">                        if (prop.isNotNull()) {</span>
-<span class="nc" id="L99">                            line = &quot;$field = &quot; + line + &quot;;&quot;;</span>
+<span class="nc" id="L91">            List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L92">            final String[] split = mutablePattern.split(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            for (String line : split) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                if (split.length == 1) {</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false &amp;&amp; line.endsWith(&quot;;&quot;) == false) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                        if (prop.isNotNull()) {</span>
+<span class="nc" id="L97">                            line = &quot;$field = &quot; + line + &quot;;&quot;;</span>
                         } else {
-<span class="nc bnc" id="L101" title="All 2 branches missed.">                            if (line.equals(&quot;$value&quot;)) {</span>
-<span class="nc" id="L102">                                line = &quot;$field = $value;&quot;;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                            if (line.equals(&quot;$value&quot;)) {</span>
+<span class="nc" id="L100">                                line = &quot;$field = $value;&quot;;</span>
                             } else {
-<span class="nc" id="L104">                                line = &quot;$field = ($value != null ? &quot; + line + &quot; : null);&quot;;</span>
+<span class="nc" id="L102">                                line = &quot;$field = ($value != null ? &quot; + line + &quot; : null);&quot;;</span>
                             }
                         }
                     }
-<span class="nc bnc" id="L108" title="All 2 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false) {</span>
-<span class="nc" id="L109">                        line = &quot;$field = &quot; + line;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                    if (line.startsWith(&quot;$field = &quot;) == false) {</span>
+<span class="nc" id="L107">                        line = &quot;$field = &quot; + line;</span>
                     }
                 }
-<span class="nc" id="L112">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
-<span class="nc" id="L113">                line = line.replace(&quot;$value&quot;, beanToCopyFrom + &quot;.&quot; + prop.getGetterGen().generateGetInvoke(prop));</span>
-<span class="nc" id="L114">                line = line.replace(&quot;$type&quot;, prop.getFieldType());</span>
-<span class="nc" id="L115">                line = line.replace(&quot;$typeRaw&quot;, prop.getTypeRaw());</span>
-<span class="nc" id="L116">                line = line.replace(&quot;$generics&quot;, prop.getTypeGenerics());</span>
-<span class="nc" id="L117">                list.add(indent + line);</span>
+<span class="nc" id="L110">                line = line.replace(&quot;$field&quot;, &quot;this.&quot; + prop.getFieldName());</span>
+<span class="nc" id="L111">                line = line.replace(&quot;$value&quot;, beanToCopyFrom + &quot;.&quot; + prop.getGetterGen().generateGetInvoke(prop));</span>
+<span class="nc" id="L112">                line = line.replace(&quot;$type&quot;, prop.getFieldType());</span>
+<span class="nc" id="L113">                line = line.replace(&quot;$typeRaw&quot;, prop.getTypeRaw());</span>
+<span class="nc" id="L114">                line = line.replace(&quot;$generics&quot;, prop.getTypeGenerics());</span>
+<span class="nc" id="L115">                list.add(indent + line);</span>
             }
-<span class="nc" id="L119">            return list;</span>
+<span class="nc" id="L117">            return list;</span>
         }
     }
 
-<span class="nc" id="L123">    static class NoCopyGen extends CopyGen {</span>
-<span class="nc" id="L124">        static final CopyGen INSTANCE = new NoCopyGen();</span>
+<span class="nc" id="L121">    static class NoCopyGen extends CopyGen {</span>
+<span class="nc" id="L122">        static final CopyGen INSTANCE = new NoCopyGen();</span>
         @Override
         List&lt;String&gt; generateCopyToImmutable(String indent, String fromBean, PropertyData prop) {
-<span class="nc" id="L127">            return Collections.emptyList();</span>
+<span class="nc" id="L125">            return Collections.emptyList();</span>
         }
         @Override
         List&lt;String&gt; generateCopyToMutable(String indent, PropertyData prop, String beanToCopyFrom) {
-<span class="nc" id="L131">            return Collections.emptyList();</span>
+<span class="nc" id="L129">            return Collections.emptyList();</span>
         }
     }
 

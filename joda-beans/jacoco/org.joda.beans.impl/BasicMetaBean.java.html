@@ -19,10 +19,8 @@ import org.joda.beans.MetaBean;
 
 /**
  * Basic implementation of {@code MetaBean}.
- * 
- * @author Stephen Colebourne
  */
-<span class="nc" id="L25">public abstract class BasicMetaBean implements MetaBean {</span>
+<span class="nc" id="L23">public abstract class BasicMetaBean implements MetaBean {</span>
 
     /**
      * Returns a string that summarises the meta-bean.
@@ -31,7 +29,7 @@ import org.joda.beans.MetaBean;
      */
     @Override
     public String toString() {
-<span class="nc" id="L34">        return &quot;MetaBean:&quot; + beanType().getSimpleName();</span>
+<span class="nc" id="L32">        return &quot;MetaBean:&quot; + beanType().getSimpleName();</span>
     }
 
 }

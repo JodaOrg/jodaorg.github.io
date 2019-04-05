@@ -34,7 +34,6 @@ import org.joda.beans.impl.BasicMetaProperty;
  * This meta-property uses reflection to find the {@code Field} to obtain the annotations.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  */
 public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt; {
 
@@ -61,8 +60,8 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofReadWrite(
             MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
-<span class="fc" id="L64">        Field field = findField(metaBean, propertyName);</span>
-<span class="fc" id="L65">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_WRITE, field);</span>
+<span class="fc" id="L63">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L64">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_WRITE, field);</span>
     }
 
     /**
@@ -77,8 +76,8 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofReadOnly(
             MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
-<span class="fc" id="L80">        Field field = findField(metaBean, propertyName);</span>
-<span class="fc" id="L81">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_ONLY, field);</span>
+<span class="fc" id="L79">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L80">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_ONLY, field);</span>
     }
 
     /**
@@ -93,8 +92,8 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofWriteOnly(
             MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
-<span class="fc" id="L96">        Field field = findField(metaBean, propertyName);</span>
-<span class="fc" id="L97">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.WRITE_ONLY, field);</span>
+<span class="fc" id="L95">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L96">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.WRITE_ONLY, field);</span>
     }
 
     /**
@@ -109,8 +108,8 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofReadOnlyBuildable(
             MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
-<span class="nc" id="L112">        Field field = findField(metaBean, propertyName);</span>
-<span class="nc" id="L113">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_ONLY_BUILDABLE, field);</span>
+<span class="nc" id="L111">        Field field = findField(metaBean, propertyName);</span>
+<span class="nc" id="L112">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.READ_ONLY_BUILDABLE, field);</span>
     }
 
     /**
@@ -125,8 +124,8 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofDerived(
             MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
-<span class="fc" id="L128">        Field field = findField(metaBean, propertyName);</span>
-<span class="fc" id="L129">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.DERIVED, field);</span>
+<span class="fc" id="L127">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L128">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.DERIVED, field);</span>
     }
 
     /**
@@ -141,27 +140,27 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     public static &lt;P&gt; DirectMetaProperty&lt;P&gt; ofImmutable(
             MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType, Class&lt;P&gt; propertyType) {
-<span class="fc" id="L144">        Field field = findField(metaBean, propertyName);</span>
-<span class="fc" id="L145">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.IMMUTABLE, field);</span>
+<span class="fc" id="L143">        Field field = findField(metaBean, propertyName);</span>
+<span class="fc" id="L144">        return new DirectMetaProperty&lt;&gt;(metaBean, propertyName, declaringType, propertyType, PropertyStyle.IMMUTABLE, field);</span>
     }
 
     private static Field findField(MetaBean metaBean, String propertyName) {
-<span class="fc" id="L149">        Field field = null;</span>
-<span class="fc" id="L150">        Class&lt;?&gt; cls = metaBean.beanType();</span>
-<span class="pc bpc" id="L151" title="1 of 6 branches missed.">        while (cls != DirectBean.class &amp;&amp; cls != Object.class &amp;&amp; cls != null) {</span>
+<span class="fc" id="L148">        Field field = null;</span>
+<span class="fc" id="L149">        Class&lt;?&gt; cls = metaBean.beanType();</span>
+<span class="pc bpc" id="L150" title="1 of 6 branches missed.">        while (cls != DirectBean.class &amp;&amp; cls != Object.class &amp;&amp; cls != null) {</span>
             try {
-<span class="fc" id="L153">                field = cls.getDeclaredField(propertyName);</span>
-<span class="fc" id="L154">                break;</span>
-<span class="fc" id="L155">            } catch (NoSuchFieldException ex) {</span>
+<span class="fc" id="L152">                field = cls.getDeclaredField(propertyName);</span>
+<span class="fc" id="L153">                break;</span>
+<span class="fc" id="L154">            } catch (NoSuchFieldException ex) {</span>
                 try {
-<span class="nc" id="L157">                    field = cls.getDeclaredField(&quot;_&quot; + propertyName);</span>
-<span class="nc" id="L158">                    break;</span>
-<span class="fc" id="L159">                } catch (NoSuchFieldException ex2) {</span>
-<span class="fc" id="L160">                    cls = cls.getSuperclass();</span>
+<span class="nc" id="L156">                    field = cls.getDeclaredField(&quot;_&quot; + propertyName);</span>
+<span class="nc" id="L157">                    break;</span>
+<span class="fc" id="L158">                } catch (NoSuchFieldException ex2) {</span>
+<span class="fc" id="L159">                    cls = cls.getSuperclass();</span>
                 }
-<span class="fc" id="L162">            }</span>
+<span class="fc" id="L161">            }</span>
         }
-<span class="fc" id="L164">        return field;</span>
+<span class="fc" id="L163">        return field;</span>
     }
 
     /**
@@ -176,88 +175,88 @@ public final class DirectMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;P&gt
      */
     private DirectMetaProperty(MetaBean metaBean, String propertyName, Class&lt;?&gt; declaringType,
             Class&lt;P&gt; propertyType, PropertyStyle style, Field field) {
-<span class="fc" id="L179">        super(propertyName);</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
-<span class="nc" id="L181">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
+<span class="fc" id="L178">        super(propertyName);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L180">            throw new NullPointerException(&quot;MetaBean must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (declaringType == null) {</span>
-<span class="nc" id="L184">            throw new NullPointerException(&quot;Declaring type must not be null&quot;);</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (declaringType == null) {</span>
+<span class="nc" id="L183">            throw new NullPointerException(&quot;Declaring type must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (propertyType == null) {</span>
-<span class="nc" id="L187">            throw new NullPointerException(&quot;Property type must not be null&quot;);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (propertyType == null) {</span>
+<span class="nc" id="L186">            throw new NullPointerException(&quot;Property type must not be null&quot;);</span>
         }
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (style == null) {</span>
-<span class="nc" id="L190">            throw new NullPointerException(&quot;PropertyStyle must not be null&quot;);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (style == null) {</span>
+<span class="nc" id="L189">            throw new NullPointerException(&quot;PropertyStyle must not be null&quot;);</span>
         }
-<span class="fc" id="L192">        this.metaBean = metaBean;</span>
-<span class="fc" id="L193">        this.propertyType = propertyType;</span>
-<span class="fc" id="L194">        this.declaringType = declaringType;</span>
-<span class="fc" id="L195">        this.style = style;</span>
-<span class="fc" id="L196">        this.field = field;  // may be null</span>
-<span class="fc" id="L197">    }</span>
+<span class="fc" id="L191">        this.metaBean = metaBean;</span>
+<span class="fc" id="L192">        this.propertyType = propertyType;</span>
+<span class="fc" id="L193">        this.declaringType = declaringType;</span>
+<span class="fc" id="L194">        this.style = style;</span>
+<span class="fc" id="L195">        this.field = field;  // may be null</span>
+<span class="fc" id="L196">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public MetaBean metaBean() {
-<span class="fc" id="L202">        return metaBean;</span>
+<span class="fc" id="L201">        return metaBean;</span>
     }
 
     @Override
     public Class&lt;?&gt; declaringType() {
-<span class="fc" id="L207">        return declaringType;</span>
+<span class="fc" id="L206">        return declaringType;</span>
     }
 
     @Override
     public Class&lt;P&gt; propertyType() {
-<span class="fc" id="L212">        return propertyType;</span>
+<span class="fc" id="L211">        return propertyType;</span>
     }
 
     @Override
     public Type propertyGenericType() {
-<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (field == null) {</span>
-<span class="fc" id="L218">            return propertyType;</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (field == null) {</span>
+<span class="fc" id="L217">            return propertyType;</span>
         }
-<span class="fc" id="L220">        return field.getGenericType();</span>
+<span class="fc" id="L219">        return field.getGenericType();</span>
     }
 
     @Override
     public PropertyStyle style() {
-<span class="fc" id="L225">        return style;</span>
+<span class="fc" id="L224">        return style;</span>
     }
 
     @Override
     public &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        if (field == null) {</span>
-<span class="nc" id="L231">            throw new UnsupportedOperationException(&quot;Field not found for property: &quot; + name());</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (field == null) {</span>
+<span class="nc" id="L230">            throw new UnsupportedOperationException(&quot;Field not found for property: &quot; + name());</span>
         }
-<span class="fc" id="L233">        A annotation = field.getAnnotation(annotationClass);</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">        if (annotation == null) {</span>
-<span class="nc" id="L235">            throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+<span class="fc" id="L232">        A annotation = field.getAnnotation(annotationClass);</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        if (annotation == null) {</span>
+<span class="nc" id="L234">            throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
         }
-<span class="fc" id="L237">        return annotation;</span>
+<span class="fc" id="L236">        return annotation;</span>
     }
 
     @Override
     public List&lt;Annotation&gt; annotations() {
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (field == null) {</span>
-<span class="nc" id="L243">            return Collections.emptyList();</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">        if (field == null) {</span>
+<span class="nc" id="L242">            return Collections.emptyList();</span>
         }
-<span class="fc" id="L245">        return Arrays.asList(field.getDeclaredAnnotations());</span>
+<span class="fc" id="L244">        return Arrays.asList(field.getDeclaredAnnotations());</span>
     }
 
     //-----------------------------------------------------------------------
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public P get(Bean bean) {
-<span class="fc" id="L252">        DirectMetaBean meta = (DirectMetaBean) bean.metaBean();</span>
-<span class="fc" id="L253">        return (P) meta.propertyGet(bean, name(), false);</span>
+<span class="fc" id="L251">        DirectMetaBean meta = (DirectMetaBean) bean.metaBean();</span>
+<span class="fc" id="L252">        return (P) meta.propertyGet(bean, name(), false);</span>
     }
 
     @Override
     public void set(Bean bean, Object value) {
-<span class="fc" id="L258">        DirectMetaBean meta = (DirectMetaBean) bean.metaBean();</span>
-<span class="fc" id="L259">        meta.propertySet(bean, name(), value, false);</span>
-<span class="fc" id="L260">    }</span>
+<span class="fc" id="L257">        DirectMetaBean meta = (DirectMetaBean) bean.metaBean();</span>
+<span class="fc" id="L258">        meta.propertySet(bean, name(), value, false);</span>
+<span class="fc" id="L259">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

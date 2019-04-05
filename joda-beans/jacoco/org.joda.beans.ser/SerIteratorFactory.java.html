@@ -38,58 +38,56 @@ import org.joda.beans.MetaProperty;
 
 /**
  * A factory used to create wrappers around collection-like objects.
- *
- * @author Stephen Colebourne
  */
-<span class="fc" id="L44">public class SerIteratorFactory {</span>
+<span class="fc" id="L42">public class SerIteratorFactory {</span>
 
     /**
      * Singleton instance.
      */
-<span class="fc" id="L49">    public static final SerIteratorFactory INSTANCE = getInstance();</span>
+<span class="fc" id="L47">    public static final SerIteratorFactory INSTANCE = getInstance();</span>
     private static SerIteratorFactory getInstance() {
         try {
-<span class="fc" id="L52">            Class.forName(&quot;org.joda.collect.grid.Grid&quot;);</span>
-<span class="fc" id="L53">            return new CollectSerIteratorFactory();</span>
-<span class="nc" id="L54">        } catch (Exception | LinkageError ex) {</span>
+<span class="fc" id="L50">            Class.forName(&quot;org.joda.collect.grid.Grid&quot;);</span>
+<span class="fc" id="L51">            return new CollectSerIteratorFactory();</span>
+<span class="nc" id="L52">        } catch (Exception | LinkageError ex) {</span>
             try {
-<span class="nc" id="L56">                Class.forName(&quot;com.google.common.collect.Multimap&quot;);</span>
-<span class="nc" id="L57">                return new GuavaSerIteratorFactory();</span>
-<span class="nc" id="L58">            } catch (Exception | LinkageError ex2) {</span>
-<span class="nc" id="L59">                return new SerIteratorFactory();</span>
+<span class="nc" id="L54">                Class.forName(&quot;com.google.common.collect.Multimap&quot;);</span>
+<span class="nc" id="L55">                return new GuavaSerIteratorFactory();</span>
+<span class="nc" id="L56">            } catch (Exception | LinkageError ex2) {</span>
+<span class="nc" id="L57">                return new SerIteratorFactory();</span>
             }
         }
     }
     /**
      * An empty list of classes.
      */
-<span class="fc" id="L66">    public static final List&lt;Class&lt;?&gt;&gt; EMPTY_VALUE_TYPES = Collections.emptyList();</span>
+<span class="fc" id="L64">    public static final List&lt;Class&lt;?&gt;&gt; EMPTY_VALUE_TYPES = Collections.emptyList();</span>
     /**
      * Map of array types.
      */
-<span class="fc" id="L70">    private static final Map&lt;String, Class&lt;?&gt;&gt; META_TYPE_MAP = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L68">    private static final Map&lt;String, Class&lt;?&gt;&gt; META_TYPE_MAP = new HashMap&lt;&gt;();</span>
     static {
-<span class="fc" id="L72">        META_TYPE_MAP.put(&quot;Object[]&quot;, Object.class);</span>
-<span class="fc" id="L73">        META_TYPE_MAP.put(&quot;String[]&quot;, String.class);</span>
-<span class="fc" id="L74">        META_TYPE_MAP.put(&quot;boolean[]&quot;, boolean.class);</span>
-<span class="fc" id="L75">        META_TYPE_MAP.put(&quot;char[]&quot;, char.class);</span>
-<span class="fc" id="L76">        META_TYPE_MAP.put(&quot;byte[]&quot;, byte.class);</span>
-<span class="fc" id="L77">        META_TYPE_MAP.put(&quot;short[]&quot;, short.class);</span>
-<span class="fc" id="L78">        META_TYPE_MAP.put(&quot;int[]&quot;, int.class);</span>
-<span class="fc" id="L79">        META_TYPE_MAP.put(&quot;long[]&quot;, long.class);</span>
-<span class="fc" id="L80">        META_TYPE_MAP.put(&quot;float[]&quot;, float.class);</span>
-<span class="fc" id="L81">        META_TYPE_MAP.put(&quot;double[]&quot;, double.class);</span>
-<span class="fc" id="L82">        META_TYPE_MAP.put(&quot;Object[][]&quot;, Object[].class);</span>
-<span class="fc" id="L83">        META_TYPE_MAP.put(&quot;String[][]&quot;, String[].class);</span>
-<span class="fc" id="L84">        META_TYPE_MAP.put(&quot;boolean[][]&quot;, boolean[].class);</span>
-<span class="fc" id="L85">        META_TYPE_MAP.put(&quot;char[][]&quot;, char[].class);</span>
-<span class="fc" id="L86">        META_TYPE_MAP.put(&quot;byte[][]&quot;, byte[].class);</span>
-<span class="fc" id="L87">        META_TYPE_MAP.put(&quot;short[][]&quot;, short[].class);</span>
-<span class="fc" id="L88">        META_TYPE_MAP.put(&quot;int[][]&quot;, int[].class);</span>
-<span class="fc" id="L89">        META_TYPE_MAP.put(&quot;long[][]&quot;, long[].class);</span>
-<span class="fc" id="L90">        META_TYPE_MAP.put(&quot;float[][]&quot;, float[].class);</span>
-<span class="fc" id="L91">        META_TYPE_MAP.put(&quot;double[][]&quot;, double[].class);</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L70">        META_TYPE_MAP.put(&quot;Object[]&quot;, Object.class);</span>
+<span class="fc" id="L71">        META_TYPE_MAP.put(&quot;String[]&quot;, String.class);</span>
+<span class="fc" id="L72">        META_TYPE_MAP.put(&quot;boolean[]&quot;, boolean.class);</span>
+<span class="fc" id="L73">        META_TYPE_MAP.put(&quot;char[]&quot;, char.class);</span>
+<span class="fc" id="L74">        META_TYPE_MAP.put(&quot;byte[]&quot;, byte.class);</span>
+<span class="fc" id="L75">        META_TYPE_MAP.put(&quot;short[]&quot;, short.class);</span>
+<span class="fc" id="L76">        META_TYPE_MAP.put(&quot;int[]&quot;, int.class);</span>
+<span class="fc" id="L77">        META_TYPE_MAP.put(&quot;long[]&quot;, long.class);</span>
+<span class="fc" id="L78">        META_TYPE_MAP.put(&quot;float[]&quot;, float.class);</span>
+<span class="fc" id="L79">        META_TYPE_MAP.put(&quot;double[]&quot;, double.class);</span>
+<span class="fc" id="L80">        META_TYPE_MAP.put(&quot;Object[][]&quot;, Object[].class);</span>
+<span class="fc" id="L81">        META_TYPE_MAP.put(&quot;String[][]&quot;, String[].class);</span>
+<span class="fc" id="L82">        META_TYPE_MAP.put(&quot;boolean[][]&quot;, boolean[].class);</span>
+<span class="fc" id="L83">        META_TYPE_MAP.put(&quot;char[][]&quot;, char[].class);</span>
+<span class="fc" id="L84">        META_TYPE_MAP.put(&quot;byte[][]&quot;, byte[].class);</span>
+<span class="fc" id="L85">        META_TYPE_MAP.put(&quot;short[][]&quot;, short[].class);</span>
+<span class="fc" id="L86">        META_TYPE_MAP.put(&quot;int[][]&quot;, int[].class);</span>
+<span class="fc" id="L87">        META_TYPE_MAP.put(&quot;long[][]&quot;, long[].class);</span>
+<span class="fc" id="L88">        META_TYPE_MAP.put(&quot;float[][]&quot;, float[].class);</span>
+<span class="fc" id="L89">        META_TYPE_MAP.put(&quot;double[][]&quot;, double[].class);</span>
+<span class="fc" id="L90">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -102,13 +100,13 @@ import org.joda.beans.MetaProperty;
      * @return the iterator, null if not a collection-like type
      */
     public SerIterator create(Object value, MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass, boolean allowPrimitiveArrays) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (allowPrimitiveArrays &amp;&amp;</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">                value.getClass().isArray() &amp;&amp;</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">                value.getClass().getComponentType().isPrimitive() &amp;&amp;</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">                value.getClass().getComponentType() != byte.class) {</span>
-<span class="fc" id="L109">            return arrayPrimitive(value, prop.propertyType(), value.getClass().getComponentType());</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (allowPrimitiveArrays &amp;&amp;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                value.getClass().isArray() &amp;&amp;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                value.getClass().getComponentType().isPrimitive() &amp;&amp;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                value.getClass().getComponentType() != byte.class) {</span>
+<span class="fc" id="L107">            return arrayPrimitive(value, prop.propertyType(), value.getClass().getComponentType());</span>
         }
-<span class="fc" id="L111">        return create(value, prop, beanClass);</span>
+<span class="fc" id="L109">        return create(value, prop, beanClass);</span>
     }
 
     /**
@@ -120,23 +118,23 @@ import org.joda.beans.MetaProperty;
      * @return the iterator, null if not a collection-like type
      */
     public SerIterator create(Object value, MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
-<span class="fc" id="L123">        Class&lt;?&gt; declaredType = prop.propertyType();</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (value instanceof Collection) {</span>
-<span class="fc" id="L125">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.collectionType(prop, beanClass));</span>
-<span class="fc" id="L126">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L127">            return collection((Collection&lt;?&gt;) value, declaredType, valueType, valueTypeTypes);</span>
+<span class="fc" id="L121">        Class&lt;?&gt; declaredType = prop.propertyType();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (value instanceof Collection) {</span>
+<span class="fc" id="L123">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.collectionType(prop, beanClass));</span>
+<span class="fc" id="L124">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L125">            return collection((Collection&lt;?&gt;) value, declaredType, valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (value instanceof Map) {</span>
-<span class="fc" id="L130">            Class&lt;?&gt; keyType = defaultToObjectClass(JodaBeanUtils.mapKeyType(prop, beanClass));</span>
-<span class="fc" id="L131">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.mapValueType(prop, beanClass));</span>
-<span class="fc" id="L132">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L133">            return map((Map&lt;?, ?&gt;) value, declaredType, keyType, valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (value instanceof Map) {</span>
+<span class="fc" id="L128">            Class&lt;?&gt; keyType = defaultToObjectClass(JodaBeanUtils.mapKeyType(prop, beanClass));</span>
+<span class="fc" id="L129">            Class&lt;?&gt; valueType = defaultToObjectClass(JodaBeanUtils.mapValueType(prop, beanClass));</span>
+<span class="fc" id="L130">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L131">            return map((Map&lt;?, ?&gt;) value, declaredType, keyType, valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L135" title="All 4 branches covered.">        if (value.getClass().isArray() &amp;&amp; value.getClass().getComponentType().isPrimitive() == false) {</span>
-<span class="fc" id="L136">            Object[] array = (Object[]) value;</span>
-<span class="fc" id="L137">            return array(array, declaredType, array.getClass().getComponentType());</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">        if (value.getClass().isArray() &amp;&amp; value.getClass().getComponentType().isPrimitive() == false) {</span>
+<span class="fc" id="L134">            Object[] array = (Object[]) value;</span>
+<span class="fc" id="L135">            return array(array, declaredType, array.getClass().getComponentType());</span>
         }
-<span class="fc" id="L139">        return null;</span>
+<span class="fc" id="L137">        return null;</span>
     }
 
     /**
@@ -150,25 +148,25 @@ import org.joda.beans.MetaProperty;
      * @return the iterator, null if not a collection-like type
      */
     public SerIterator createChild(Object value, SerIterator parent) {
-<span class="fc" id="L153">        Class&lt;?&gt; declaredType = parent.valueType();</span>
-<span class="fc" id="L154">        List&lt;Class&lt;?&gt;&gt; childGenericTypes = parent.valueTypeTypes();</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (value instanceof Collection) {</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">            if (childGenericTypes.size() == 1) {</span>
-<span class="fc" id="L157">                return collection((Collection&lt;?&gt;) value, declaredType, childGenericTypes.get(0), EMPTY_VALUE_TYPES);</span>
+<span class="fc" id="L151">        Class&lt;?&gt; declaredType = parent.valueType();</span>
+<span class="fc" id="L152">        List&lt;Class&lt;?&gt;&gt; childGenericTypes = parent.valueTypeTypes();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (value instanceof Collection) {</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if (childGenericTypes.size() == 1) {</span>
+<span class="fc" id="L155">                return collection((Collection&lt;?&gt;) value, declaredType, childGenericTypes.get(0), EMPTY_VALUE_TYPES);</span>
             }
-<span class="fc" id="L159">            return collection((Collection&lt;?&gt;) value, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="fc" id="L157">            return collection((Collection&lt;?&gt;) value, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (value instanceof Map) {</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">            if (childGenericTypes.size() == 2) {</span>
-<span class="nc" id="L163">                return map((Map&lt;?, ?&gt;) value, declaredType, childGenericTypes.get(0), childGenericTypes.get(1), EMPTY_VALUE_TYPES);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (value instanceof Map) {</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            if (childGenericTypes.size() == 2) {</span>
+<span class="nc" id="L161">                return map((Map&lt;?, ?&gt;) value, declaredType, childGenericTypes.get(0), childGenericTypes.get(1), EMPTY_VALUE_TYPES);</span>
             }
-<span class="fc" id="L165">            return map((Map&lt;?, ?&gt;) value, Object.class, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="fc" id="L163">            return map((Map&lt;?, ?&gt;) value, Object.class, Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="fc bfc" id="L167" title="All 4 branches covered.">        if (value.getClass().isArray() &amp;&amp; value.getClass().getComponentType().isPrimitive() == false) {</span>
-<span class="fc" id="L168">            Object[] array = (Object[]) value;</span>
-<span class="fc" id="L169">            return array(array, Object.class, value.getClass().getComponentType());</span>
+<span class="fc bfc" id="L165" title="All 4 branches covered.">        if (value.getClass().isArray() &amp;&amp; value.getClass().getComponentType().isPrimitive() == false) {</span>
+<span class="fc" id="L166">            Object[] array = (Object[]) value;</span>
+<span class="fc" id="L167">            return array(array, Object.class, value.getClass().getComponentType());</span>
         }
-<span class="fc" id="L171">        return null;</span>
+<span class="fc" id="L169">        return null;</span>
     }
 
     /**
@@ -178,7 +176,7 @@ import org.joda.beans.MetaProperty;
      * @return the type, not null
      */
     protected Class&lt;?&gt; defaultToObjectClass(Class&lt;?&gt; type) {
-<span class="fc bfc" id="L181" title="All 2 branches covered.">        return (type != null ? type : Object.class);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        return (type != null ? type : Object.class);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -191,48 +189,48 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, null if not a collection-like type
      */
     public SerIterable createIterable(String metaTypeDescription, JodaBeanSer settings, Map&lt;String, Class&lt;?&gt;&gt; knownTypes) {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;Set&quot;)) {</span>
-<span class="fc" id="L195">            return set(Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;Set&quot;)) {</span>
+<span class="fc" id="L193">            return set(Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;List&quot;)) {</span>
-<span class="fc" id="L198">            return list(Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;List&quot;)) {</span>
+<span class="fc" id="L196">            return list(Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (metaTypeDescription.equals(&quot;Collection&quot;)) {</span>
-<span class="nc" id="L201">            return list(Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (metaTypeDescription.equals(&quot;Collection&quot;)) {</span>
+<span class="nc" id="L199">            return list(Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;Map&quot;)) {</span>
-<span class="fc" id="L204">            return map(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        if (metaTypeDescription.equals(&quot;Map&quot;)) {</span>
+<span class="fc" id="L202">            return map(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
         }
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">        if (metaTypeDescription.endsWith(&quot;[][][]&quot;)) {</span>
-<span class="nc" id="L207">            throw new IllegalArgumentException(&quot;Three-dimensional arrays cannot be parsed&quot;);</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (metaTypeDescription.endsWith(&quot;[][][]&quot;)) {</span>
+<span class="nc" id="L205">            throw new IllegalArgumentException(&quot;Three-dimensional arrays cannot be parsed&quot;);</span>
         }
-<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (metaTypeDescription.endsWith(&quot;[][]&quot;)) {</span>
-<span class="fc" id="L210">            Class&lt;?&gt; type = META_TYPE_MAP.get(metaTypeDescription);</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">            if (type != null) {</span>
-<span class="fc" id="L212">                return array(type);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (metaTypeDescription.endsWith(&quot;[][]&quot;)) {</span>
+<span class="fc" id="L208">            Class&lt;?&gt; type = META_TYPE_MAP.get(metaTypeDescription);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">            if (type != null) {</span>
+<span class="fc" id="L210">                return array(type);</span>
             }
-<span class="nc" id="L214">            String clsStr = metaTypeDescription.substring(0, metaTypeDescription.length() - 4);</span>
+<span class="nc" id="L212">            String clsStr = metaTypeDescription.substring(0, metaTypeDescription.length() - 4);</span>
             try {
-<span class="nc" id="L216">                Class&lt;?&gt; cls = SerTypeMapper.decodeType(clsStr, settings, null, knownTypes);</span>
-<span class="nc" id="L217">                String compound = &quot;[L&quot; + cls.getName() + &quot;;&quot;;</span>
-<span class="nc" id="L218">                return array(Class.forName(compound));  // needs to be Class.forName</span>
-<span class="nc" id="L219">            } catch (ClassNotFoundException ex) {</span>
-<span class="nc" id="L220">                throw new RuntimeException(ex);</span>
+<span class="nc" id="L214">                Class&lt;?&gt; cls = SerTypeMapper.decodeType(clsStr, settings, null, knownTypes);</span>
+<span class="nc" id="L215">                String compound = &quot;[L&quot; + cls.getName() + &quot;;&quot;;</span>
+<span class="nc" id="L216">                return array(Class.forName(compound));  // needs to be Class.forName</span>
+<span class="nc" id="L217">            } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L218">                throw new RuntimeException(ex);</span>
             }
         }
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        if (metaTypeDescription.endsWith(&quot;[]&quot;)) {</span>
-<span class="fc" id="L224">            Class&lt;?&gt; type = META_TYPE_MAP.get(metaTypeDescription);</span>
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">            if (type == null) {</span>
-<span class="nc" id="L226">                String clsStr = metaTypeDescription.substring(0, metaTypeDescription.length() - 2);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">        if (metaTypeDescription.endsWith(&quot;[]&quot;)) {</span>
+<span class="fc" id="L222">            Class&lt;?&gt; type = META_TYPE_MAP.get(metaTypeDescription);</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">            if (type == null) {</span>
+<span class="fc" id="L224">                String clsStr = metaTypeDescription.substring(0, metaTypeDescription.length() - 2);</span>
                 try {
-<span class="nc" id="L228">                    type = SerTypeMapper.decodeType(clsStr, settings, null, knownTypes);</span>
-<span class="nc" id="L229">                } catch (ClassNotFoundException ex) {</span>
-<span class="nc" id="L230">                    throw new RuntimeException(ex);</span>
-<span class="nc" id="L231">                }</span>
+<span class="fc" id="L226">                    type = SerTypeMapper.decodeType(clsStr, settings, null, knownTypes);</span>
+<span class="nc" id="L227">                } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L228">                    throw new RuntimeException(ex);</span>
+<span class="fc" id="L229">                }</span>
             }
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">            return type.isPrimitive() ? arrayPrimitive(type) : array(type);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            return type.isPrimitive() ? arrayPrimitive(type) : array(type);</span>
         }
-<span class="nc" id="L235">        return null;</span>
+<span class="nc" id="L233">        return null;</span>
     }
 
     /**
@@ -242,48 +240,48 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, null if not a collection-like type
      */
     public SerIterable createIterable(SerIterable iterable) {
-<span class="fc" id="L245">        List&lt;Class&lt;?&gt;&gt; valueTypeTypes = iterable.valueTypeTypes();</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (valueTypeTypes.size() &gt; 0) {</span>
-<span class="fc" id="L247">            Class&lt;?&gt; valueType = iterable.valueType();</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (NavigableSet.class.isAssignableFrom(valueType)) {</span>
-<span class="nc" id="L249">                return navigableSet(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+<span class="fc" id="L243">        List&lt;Class&lt;?&gt;&gt; valueTypeTypes = iterable.valueTypeTypes();</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (valueTypeTypes.size() &gt; 0) {</span>
+<span class="fc" id="L245">            Class&lt;?&gt; valueType = iterable.valueType();</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">            if (NavigableSet.class.isAssignableFrom(valueType)) {</span>
+<span class="nc" id="L247">                return navigableSet(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
             }
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">            if (SortedSet.class.isAssignableFrom(valueType)) {</span>
-<span class="nc" id="L252">                return sortedSet(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">            if (SortedSet.class.isAssignableFrom(valueType)) {</span>
+<span class="nc" id="L250">                return sortedSet(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
             }
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">            if (Set.class.isAssignableFrom(valueType)) {</span>
-<span class="nc" id="L255">                return set(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">            if (Set.class.isAssignableFrom(valueType)) {</span>
+<span class="nc" id="L253">                return set(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
             }
-<span class="fc bfc" id="L257" title="All 2 branches covered.">            if (Collection.class.isAssignableFrom(valueType)) {  // includes List</span>
-<span class="fc" id="L258">                return list(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">            if (Collection.class.isAssignableFrom(valueType)) {  // includes List</span>
+<span class="fc" id="L256">                return list(valueTypeTypes.get(0), EMPTY_VALUE_TYPES);</span>
             }
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">            if (NavigableMap.class.isAssignableFrom(valueType)) {</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
-<span class="nc" id="L262">                    return navigableMap(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">            if (NavigableMap.class.isAssignableFrom(valueType)) {</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
+<span class="nc" id="L260">                    return navigableMap(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
                 }
-<span class="nc" id="L264">                return navigableMap(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="nc" id="L262">                return navigableMap(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
             }
-<span class="pc bpc" id="L266" title="1 of 2 branches missed.">            if (SortedMap.class.isAssignableFrom(valueType)) {</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
-<span class="nc" id="L268">                    return sortedMap(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">            if (SortedMap.class.isAssignableFrom(valueType)) {</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
+<span class="nc" id="L266">                    return sortedMap(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
                 }
-<span class="nc" id="L270">                return sortedMap(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="nc" id="L268">                return sortedMap(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
             }
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">            if (Map.class.isAssignableFrom(valueType)) {</span>
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
-<span class="fc" id="L274">                    return map(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">            if (Map.class.isAssignableFrom(valueType)) {</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">                if (valueTypeTypes.size() == 2) {</span>
+<span class="fc" id="L272">                    return map(valueTypeTypes.get(0), valueTypeTypes.get(1), EMPTY_VALUE_TYPES);</span>
                 }
-<span class="nc" id="L276">                return map(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
+<span class="nc" id="L274">                return map(Object.class, Object.class, EMPTY_VALUE_TYPES);</span>
             }
-<span class="nc bnc" id="L278" title="All 2 branches missed.">            if (valueType.isArray()) {</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">                if (valueType.getComponentType().isPrimitive()) {</span>
-<span class="nc" id="L280">                    return arrayPrimitive(valueType.getComponentType());</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            if (valueType.isArray()) {</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                if (valueType.getComponentType().isPrimitive()) {</span>
+<span class="nc" id="L278">                    return arrayPrimitive(valueType.getComponentType());</span>
                 } else {
-<span class="nc" id="L282">                    return array(valueType.getComponentType());</span>
+<span class="nc" id="L280">                    return array(valueType.getComponentType());</span>
                 }
             }
         }
-<span class="fc" id="L286">        return null;</span>
+<span class="fc" id="L284">        return null;</span>
     }
 
     /**
@@ -295,13 +293,13 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, null if not a collection-like type
      */
     public SerIterable createIterable(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass, boolean allowPrimitiveArrays) {
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        if (allowPrimitiveArrays &amp;&amp;</span>
-<span class="fc bfc" id="L299" title="All 2 branches covered.">                prop.propertyType().isArray() &amp;&amp;</span>
-<span class="fc bfc" id="L300" title="All 2 branches covered.">                prop.propertyType().getComponentType().isPrimitive() &amp;&amp;</span>
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">                prop.propertyType().getComponentType() != byte.class) {</span>
-<span class="fc" id="L302">            return arrayPrimitive(prop.propertyType().getComponentType());</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">        if (allowPrimitiveArrays &amp;&amp;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">                prop.propertyType().isArray() &amp;&amp;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">                prop.propertyType().getComponentType().isPrimitive() &amp;&amp;</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">                prop.propertyType().getComponentType() != byte.class) {</span>
+<span class="fc" id="L300">            return arrayPrimitive(prop.propertyType().getComponentType());</span>
         }
-<span class="fc" id="L304">        return createIterable(prop, beanClass);</span>
+<span class="fc" id="L302">        return createIterable(prop, beanClass);</span>
     }
 
     /**
@@ -312,48 +310,48 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, null if not a collection-like type
      */
     public SerIterable createIterable(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; beanClass) {
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (NavigableSet.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="nc" id="L316">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
-<span class="nc" id="L317">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="nc" id="L318">            return navigableSet(valueType, valueTypeTypes);</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">        if (NavigableSet.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="nc" id="L314">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="nc" id="L315">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="nc" id="L316">            return navigableSet(valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L320" title="All 2 branches covered.">        if (SortedSet.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="fc" id="L321">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
-<span class="fc" id="L322">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L323">            return sortedSet(valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (SortedSet.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L319">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L320">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L321">            return sortedSet(valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L325" title="All 2 branches covered.">        if (Set.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="fc" id="L326">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
-<span class="fc" id="L327">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L328">            return set(valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        if (Set.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L324">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L325">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L326">            return set(valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L330" title="All 2 branches covered.">        if (Collection.class.isAssignableFrom(prop.propertyType())) {  // includes List</span>
-<span class="fc" id="L331">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
-<span class="fc" id="L332">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L333">            return list(valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">        if (Collection.class.isAssignableFrom(prop.propertyType())) {  // includes List</span>
+<span class="fc" id="L329">            Class&lt;?&gt; valueType = JodaBeanUtils.collectionType(prop, beanClass);</span>
+<span class="fc" id="L330">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.collectionTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L331">            return list(valueType, valueTypeTypes);</span>
         }
-<span class="pc bpc" id="L335" title="1 of 2 branches missed.">        if (NavigableMap.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="nc" id="L336">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
-<span class="nc" id="L337">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
-<span class="nc" id="L338">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
-<span class="nc" id="L339">            return navigableMap(keyType, valueType, valueTypeTypes);</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">        if (NavigableMap.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="nc" id="L334">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
+<span class="nc" id="L335">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
+<span class="nc" id="L336">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="nc" id="L337">            return navigableMap(keyType, valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (SortedMap.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="fc" id="L342">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
-<span class="fc" id="L343">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
-<span class="fc" id="L344">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L345">            return sortedMap(keyType, valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        if (SortedMap.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L340">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
+<span class="fc" id="L341">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
+<span class="fc" id="L342">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L343">            return sortedMap(keyType, valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L347" title="All 2 branches covered.">        if (Map.class.isAssignableFrom(prop.propertyType())) {</span>
-<span class="fc" id="L348">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
-<span class="fc" id="L349">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
-<span class="fc" id="L350">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
-<span class="fc" id="L351">            return map(keyType, valueType, valueTypeTypes);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        if (Map.class.isAssignableFrom(prop.propertyType())) {</span>
+<span class="fc" id="L346">            Class&lt;?&gt; keyType = JodaBeanUtils.mapKeyType(prop, beanClass);</span>
+<span class="fc" id="L347">            Class&lt;?&gt; valueType = JodaBeanUtils.mapValueType(prop, beanClass);</span>
+<span class="fc" id="L348">            List&lt;Class&lt;?&gt;&gt; valueTypeTypes = JodaBeanUtils.mapValueTypeTypes(prop, beanClass);</span>
+<span class="fc" id="L349">            return map(keyType, valueType, valueTypeTypes);</span>
         }
-<span class="fc bfc" id="L353" title="All 4 branches covered.">        if (prop.propertyType().isArray() &amp;&amp; prop.propertyType().getComponentType().isPrimitive() == false) {</span>
-<span class="fc" id="L354">            return array(prop.propertyType().getComponentType());</span>
+<span class="fc bfc" id="L351" title="All 4 branches covered.">        if (prop.propertyType().isArray() &amp;&amp; prop.propertyType().getComponentType().isPrimitive() == false) {</span>
+<span class="fc" id="L352">            return array(prop.propertyType().getComponentType());</span>
         }
-<span class="fc" id="L356">        return null;</span>
+<span class="fc" id="L354">        return null;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -366,32 +364,32 @@ import org.joda.beans.MetaProperty;
      */
     public static final SerIterable list(
             final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L369">        final List&lt;Object&gt; coll = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L370">        return new SerIterable() {</span>
+<span class="fc" id="L367">        final List&lt;Object&gt; coll = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L368">        return new SerIterable() {</span>
             @Override
             public SerIterator iterator() {
-<span class="nc" id="L373">                return collection(coll, Object.class, valueType, valueTypeTypes);</span>
+<span class="nc" id="L371">                return collection(coll, Object.class, valueType, valueTypeTypes);</span>
             }
             @Override
             public void add(Object key, Object column, Object value, int count) {
-<span class="pc bpc" id="L377" title="1 of 2 branches missed.">                if (key != null) {</span>
-<span class="nc" id="L378">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+<span class="pc bpc" id="L375" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L376">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
                 }
-<span class="fc bfc" id="L380" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
-<span class="fc" id="L381">                    coll.add(value);</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L379">                    coll.add(value);</span>
                 }
-<span class="fc" id="L383">            }</span>
+<span class="fc" id="L381">            }</span>
             @Override
             public Object build() {
-<span class="fc" id="L386">                return coll;</span>
+<span class="fc" id="L384">                return coll;</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L390">                return valueType;</span>
+<span class="fc" id="L388">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L394">                return valueTypeTypes;</span>
+<span class="fc" id="L392">                return valueTypeTypes;</span>
             }
         };
     }
@@ -404,8 +402,8 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable set(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L407">        final Set&lt;Object&gt; coll = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L408">        return set(valueType, valueTypeTypes, coll);</span>
+<span class="fc" id="L405">        final Set&lt;Object&gt; coll = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L406">        return set(valueType, valueTypeTypes, coll);</span>
     }
 
     /**
@@ -416,8 +414,8 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable sortedSet(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L419">        final SortedSet&lt;Object&gt; coll = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L420">        return set(valueType, valueTypeTypes, coll);</span>
+<span class="fc" id="L417">        final SortedSet&lt;Object&gt; coll = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L418">        return set(valueType, valueTypeTypes, coll);</span>
     }
 
     /**
@@ -428,37 +426,37 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable navigableSet(final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="nc" id="L431">        final NavigableSet&lt;Object&gt; coll = new TreeSet&lt;&gt;();</span>
-<span class="nc" id="L432">        return set(valueType, valueTypeTypes, coll);</span>
+<span class="nc" id="L429">        final NavigableSet&lt;Object&gt; coll = new TreeSet&lt;&gt;();</span>
+<span class="nc" id="L430">        return set(valueType, valueTypeTypes, coll);</span>
     }
 
     private static SerIterable set(
             final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes, final Set&lt;Object&gt; coll) {
-<span class="fc" id="L437">        return new SerIterable() {</span>
+<span class="fc" id="L435">        return new SerIterable() {</span>
             @Override
             public SerIterator iterator() {
-<span class="nc" id="L440">                return collection(coll, Object.class, valueType, valueTypeTypes);</span>
+<span class="nc" id="L438">                return collection(coll, Object.class, valueType, valueTypeTypes);</span>
             }
             @Override
             public void add(Object key, Object column, Object value, int count) {
-<span class="pc bpc" id="L444" title="1 of 2 branches missed.">                if (key != null) {</span>
-<span class="nc" id="L445">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L443">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
                 }
-<span class="fc bfc" id="L447" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
-<span class="fc" id="L448">                    coll.add(value);</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L446">                    coll.add(value);</span>
                 }
-<span class="fc" id="L450">            }</span>
+<span class="fc" id="L448">            }</span>
             @Override
             public Object build() {
-<span class="fc" id="L453">                return coll;</span>
+<span class="fc" id="L451">                return coll;</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L457">                return valueType;</span>
+<span class="fc" id="L455">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L461">                return valueTypeTypes;</span>
+<span class="fc" id="L459">                return valueTypeTypes;</span>
             }
         };
     }
@@ -475,53 +473,53 @@ import org.joda.beans.MetaProperty;
     @SuppressWarnings(&quot;rawtypes&quot;)
     public static final SerIterator collection(
             final Collection&lt;?&gt; coll, final Class&lt;?&gt; declaredType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L478">        return new SerIterator() {</span>
-<span class="fc" id="L479">            private final Iterator it = coll.iterator();</span>
+<span class="fc" id="L476">        return new SerIterator() {</span>
+<span class="fc" id="L477">            private final Iterator it = coll.iterator();</span>
             private Object current;
 
             @Override
             public String metaTypeName() {
-<span class="fc bfc" id="L484" title="All 2 branches covered.">                if (coll instanceof Set) {</span>
-<span class="fc" id="L485">                    return &quot;Set&quot;;</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">                if (coll instanceof Set) {</span>
+<span class="fc" id="L483">                    return &quot;Set&quot;;</span>
                 }
-<span class="pc bpc" id="L487" title="1 of 2 branches missed.">                if (coll instanceof List) {</span>
-<span class="fc" id="L488">                    return &quot;List&quot;;</span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">                if (coll instanceof List) {</span>
+<span class="fc" id="L486">                    return &quot;List&quot;;</span>
                 }
-<span class="nc" id="L490">                return &quot;Collection&quot;;</span>
+<span class="nc" id="L488">                return &quot;Collection&quot;;</span>
             }
             @Override
             public boolean metaTypeRequired() {
-<span class="fc bfc" id="L494" title="All 2 branches covered.">                if (coll instanceof Set) {</span>
-<span class="fc bfc" id="L495" title="All 2 branches covered.">                    return Set.class.isAssignableFrom(declaredType) == false;</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">                if (coll instanceof Set) {</span>
+<span class="fc bfc" id="L493" title="All 2 branches covered.">                    return Set.class.isAssignableFrom(declaredType) == false;</span>
                 }
-<span class="pc bpc" id="L497" title="1 of 2 branches missed.">                if (coll instanceof List) {</span>
-<span class="fc bfc" id="L498" title="All 2 branches covered.">                    return List.class.isAssignableFrom(declaredType) == false;</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">                if (coll instanceof List) {</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">                    return List.class.isAssignableFrom(declaredType) == false;</span>
                 }
-<span class="nc bnc" id="L500" title="All 2 branches missed.">                return Collection.class.isAssignableFrom(declaredType) == false;</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">                return Collection.class.isAssignableFrom(declaredType) == false;</span>
             }
             @Override
             public int size() {
-<span class="fc" id="L504">                return coll.size();</span>
+<span class="fc" id="L502">                return coll.size();</span>
             }
             @Override
             public boolean hasNext() {
-<span class="fc" id="L508">                return it.hasNext();</span>
+<span class="fc" id="L506">                return it.hasNext();</span>
             }
             @Override
             public void next() {
-<span class="fc" id="L512">                current = it.next();</span>
-<span class="fc" id="L513">            }</span>
+<span class="fc" id="L510">                current = it.next();</span>
+<span class="fc" id="L511">            }</span>
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L516">                return valueType;</span>
+<span class="fc" id="L514">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L520">                return valueTypeTypes;</span>
+<span class="fc" id="L518">                return valueTypeTypes;</span>
             }
             @Override
             public Object value() {
-<span class="fc" id="L524">                return current;</span>
+<span class="fc" id="L522">                return current;</span>
             }
         };
     }
@@ -536,8 +534,8 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable map(final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L539">        final Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L540">        return map(keyType, valueType, valueTypeTypes, map);</span>
+<span class="fc" id="L537">        final Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L538">        return map(keyType, valueType, valueTypeTypes, map);</span>
     }
 
     /**
@@ -549,8 +547,8 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable sortedMap(final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L552">        final SortedMap&lt;Object, Object&gt; map = new TreeMap&lt;&gt;();</span>
-<span class="fc" id="L553">        return map(keyType, valueType, valueTypeTypes, map);</span>
+<span class="fc" id="L550">        final SortedMap&lt;Object, Object&gt; map = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L551">        return map(keyType, valueType, valueTypeTypes, map);</span>
     }
 
     /**
@@ -562,47 +560,47 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable navigableMap(final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="nc" id="L565">        final NavigableMap&lt;Object, Object&gt; map = new TreeMap&lt;&gt;();</span>
-<span class="nc" id="L566">        return map(keyType, valueType, valueTypeTypes, map);</span>
+<span class="nc" id="L563">        final NavigableMap&lt;Object, Object&gt; map = new TreeMap&lt;&gt;();</span>
+<span class="nc" id="L564">        return map(keyType, valueType, valueTypeTypes, map);</span>
     }
 
     static SerIterable map(
             final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType,
             final List&lt;Class&lt;?&gt;&gt; valueTypeTypes, final Map&lt;Object, Object&gt; map) {
-<span class="fc" id="L572">        return new SerIterable() {</span>
+<span class="fc" id="L570">        return new SerIterable() {</span>
             @Override
             public SerIterator iterator() {
-<span class="nc" id="L575">                return map(map, Object.class, keyType, valueType, valueTypeTypes);</span>
+<span class="nc" id="L573">                return map(map, Object.class, keyType, valueType, valueTypeTypes);</span>
             }
             @Override
             public void add(Object key, Object column, Object value, int count) {
-<span class="pc bpc" id="L579" title="1 of 2 branches missed.">                if (key == null) {</span>
-<span class="nc" id="L580">                    throw new IllegalArgumentException(&quot;Missing key&quot;);</span>
+<span class="pc bpc" id="L577" title="1 of 2 branches missed.">                if (key == null) {</span>
+<span class="nc" id="L578">                    throw new IllegalArgumentException(&quot;Missing key&quot;);</span>
                 }
-<span class="pc bpc" id="L582" title="1 of 2 branches missed.">                if (count != 1) {</span>
-<span class="nc" id="L583">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
+<span class="pc bpc" id="L580" title="1 of 2 branches missed.">                if (count != 1) {</span>
+<span class="nc" id="L581">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
                 }
-<span class="fc" id="L585">                map.put(key, value);</span>
-<span class="fc" id="L586">            }</span>
+<span class="fc" id="L583">                map.put(key, value);</span>
+<span class="fc" id="L584">            }</span>
             @Override
             public Object build() {
-<span class="fc" id="L589">                return map;</span>
+<span class="fc" id="L587">                return map;</span>
             }
             @Override
             public SerCategory category() {
-<span class="fc" id="L593">                return SerCategory.MAP;</span>
+<span class="fc" id="L591">                return SerCategory.MAP;</span>
             }
             @Override
             public Class&lt;?&gt; keyType() {
-<span class="fc" id="L597">                return keyType;</span>
+<span class="fc" id="L595">                return keyType;</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L601">                return valueType;</span>
+<span class="fc" id="L599">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L605">                return valueTypeTypes;</span>
+<span class="fc" id="L603">                return valueTypeTypes;</span>
             }
         };
     }
@@ -621,53 +619,53 @@ import org.joda.beans.MetaProperty;
     public static final SerIterator map(
             final Map&lt;?, ?&gt; map, final Class&lt;?&gt; declaredType,
             final Class&lt;?&gt; keyType, final Class&lt;?&gt; valueType, final List&lt;Class&lt;?&gt;&gt; valueTypeTypes) {
-<span class="fc" id="L624">        return new SerIterator() {</span>
-<span class="fc" id="L625">            private final Iterator it = map.entrySet().iterator();</span>
+<span class="fc" id="L622">        return new SerIterator() {</span>
+<span class="fc" id="L623">            private final Iterator it = map.entrySet().iterator();</span>
             private Entry current;
 
             @Override
             public String metaTypeName() {
-<span class="fc" id="L630">                return &quot;Map&quot;;</span>
+<span class="fc" id="L628">                return &quot;Map&quot;;</span>
             }
             @Override
             public boolean metaTypeRequired() {
-<span class="fc bfc" id="L634" title="All 2 branches covered.">                return Map.class.isAssignableFrom(declaredType) == false;</span>
+<span class="fc bfc" id="L632" title="All 2 branches covered.">                return Map.class.isAssignableFrom(declaredType) == false;</span>
             }
             @Override
             public SerCategory category() {
-<span class="fc" id="L638">                return SerCategory.MAP;</span>
+<span class="fc" id="L636">                return SerCategory.MAP;</span>
             }
             @Override
             public int size() {
-<span class="fc" id="L642">                return map.size();</span>
+<span class="fc" id="L640">                return map.size();</span>
             }
             @Override
             public boolean hasNext() {
-<span class="fc" id="L646">                return it.hasNext();</span>
+<span class="fc" id="L644">                return it.hasNext();</span>
             }
             @Override
             public void next() {
-<span class="fc" id="L650">                current = (Entry) it.next();</span>
-<span class="fc" id="L651">            }</span>
+<span class="fc" id="L648">                current = (Entry) it.next();</span>
+<span class="fc" id="L649">            }</span>
             @Override
             public Class&lt;?&gt; keyType() {
-<span class="fc" id="L654">                return keyType;</span>
+<span class="fc" id="L652">                return keyType;</span>
             }
             @Override
             public Object key() {
-<span class="fc" id="L658">                return current.getKey();</span>
+<span class="fc" id="L656">                return current.getKey();</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L662">                return valueType;</span>
+<span class="fc" id="L660">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L666">                return valueTypeTypes;</span>
+<span class="fc" id="L664">                return valueTypeTypes;</span>
             }
             @Override
             public Object value() {
-<span class="fc" id="L670">                return current.getValue();</span>
+<span class="fc" id="L668">                return current.getValue();</span>
             }
         };
     }
@@ -680,36 +678,36 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     public static final SerIterable array(final Class&lt;?&gt; valueType) {
-<span class="fc" id="L683">        final List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L684">        return new SerIterable() {</span>
+<span class="fc" id="L681">        final List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L682">        return new SerIterable() {</span>
             @Override
             public SerIterator iterator() {
-<span class="nc" id="L687">                return array(build(), Object.class, valueType);</span>
+<span class="nc" id="L685">                return array(build(), Object.class, valueType);</span>
             }
             @Override
             public void add(Object key, Object column, Object value, int count) {
-<span class="pc bpc" id="L691" title="1 of 2 branches missed.">                if (key != null) {</span>
-<span class="nc" id="L692">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L690">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
                 }
-<span class="pc bpc" id="L694" title="1 of 2 branches missed.">                if (count != 1) {</span>
-<span class="nc" id="L695">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
+<span class="pc bpc" id="L692" title="1 of 2 branches missed.">                if (count != 1) {</span>
+<span class="nc" id="L693">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
                 }
-<span class="fc bfc" id="L697" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
-<span class="fc" id="L698">                    list.add(value);</span>
+<span class="fc bfc" id="L695" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L696">                    list.add(value);</span>
                 }
-<span class="fc" id="L700">            }</span>
+<span class="fc" id="L698">            }</span>
             @Override
             public Object[] build() {
-<span class="fc" id="L703">                Object[] array = (Object[]) Array.newInstance(valueType, list.size());</span>
-<span class="fc" id="L704">                return list.toArray(array);</span>
+<span class="fc" id="L701">                Object[] array = (Object[]) Array.newInstance(valueType, list.size());</span>
+<span class="fc" id="L702">                return list.toArray(array);</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L708">                return valueType;</span>
+<span class="fc" id="L706">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L712">                return EMPTY_VALUE_TYPES;</span>
+<span class="fc" id="L710">                return EMPTY_VALUE_TYPES;</span>
             }
         };
     }
@@ -721,39 +719,39 @@ import org.joda.beans.MetaProperty;
      * @return the iterable, not null
      */
     static final SerIterable arrayPrimitive(final Class&lt;?&gt; valueType) {
-<span class="fc" id="L724">        final List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L725">        return new SerIterable() {</span>
+<span class="fc" id="L722">        final List&lt;Object&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L723">        return new SerIterable() {</span>
             @Override
             public SerIterator iterator() {
-<span class="nc" id="L728">                return arrayPrimitive(build(), Object.class, valueType);</span>
+<span class="nc" id="L726">                return arrayPrimitive(build(), Object.class, valueType);</span>
             }
             @Override
             public void add(Object key, Object column, Object value, int count) {
-<span class="pc bpc" id="L732" title="1 of 2 branches missed.">                if (key != null) {</span>
-<span class="nc" id="L733">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
+<span class="pc bpc" id="L730" title="1 of 2 branches missed.">                if (key != null) {</span>
+<span class="nc" id="L731">                    throw new IllegalArgumentException(&quot;Unexpected key&quot;);</span>
                 }
-<span class="pc bpc" id="L735" title="1 of 2 branches missed.">                if (count != 1) {</span>
-<span class="nc" id="L736">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">                if (count != 1) {</span>
+<span class="nc" id="L734">                    throw new IllegalArgumentException(&quot;Unexpected count&quot;);</span>
                 }
-<span class="fc bfc" id="L738" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
-<span class="fc" id="L739">                    list.add(value);</span>
+<span class="fc bfc" id="L736" title="All 2 branches covered.">                for (int i = 0; i &lt; count; i++) {</span>
+<span class="fc" id="L737">                    list.add(value);</span>
                 }
-<span class="fc" id="L741">            }</span>
+<span class="fc" id="L739">            }</span>
             @Override
             public Object build() {
-<span class="fc" id="L744">                Object array = Array.newInstance(valueType, list.size());</span>
-<span class="fc bfc" id="L745" title="All 2 branches covered.">                for (int i = 0; i &lt; list.size(); i++) {</span>
-<span class="fc" id="L746">                    Array.set(array, i, list.get(i));</span>
+<span class="fc" id="L742">                Object array = Array.newInstance(valueType, list.size());</span>
+<span class="fc bfc" id="L743" title="All 2 branches covered.">                for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L744">                    Array.set(array, i, list.get(i));</span>
                 }
-<span class="fc" id="L748">                return array;</span>
+<span class="fc" id="L746">                return array;</span>
             }
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L752">                return valueType;</span>
+<span class="fc" id="L750">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="nc" id="L756">                return EMPTY_VALUE_TYPES;</span>
+<span class="nc" id="L754">                return EMPTY_VALUE_TYPES;</span>
             }
         };
     }
@@ -768,58 +766,58 @@ import org.joda.beans.MetaProperty;
      */
     public static final SerIterator array(
             final Object[] array, final Class&lt;?&gt; declaredType, final Class&lt;?&gt; valueType) {
-<span class="fc" id="L771">        return new SerIterator() {</span>
-<span class="fc" id="L772">            private int index = -1;</span>
+<span class="fc" id="L769">        return new SerIterator() {</span>
+<span class="fc" id="L770">            private int index = -1;</span>
 
             @Override
             public String metaTypeName() {
-<span class="fc" id="L776">                return metaTypeNameBase(valueType);</span>
+<span class="fc" id="L774">                return metaTypeNameBase(valueType);</span>
             }
             private String metaTypeNameBase(Class&lt;?&gt; arrayType) {
-<span class="fc bfc" id="L779" title="All 2 branches covered.">                if (arrayType.isArray()) {</span>
-<span class="fc" id="L780">                    return metaTypeNameBase(arrayType.getComponentType()) + &quot;[]&quot;;</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">                if (arrayType.isArray()) {</span>
+<span class="fc" id="L778">                    return metaTypeNameBase(arrayType.getComponentType()) + &quot;[]&quot;;</span>
                 }
-<span class="pc bpc" id="L782" title="1 of 2 branches missed.">                if (arrayType == Object.class) {</span>
-<span class="nc" id="L783">                    return &quot;Object[]&quot;;</span>
+<span class="pc bpc" id="L780" title="1 of 2 branches missed.">                if (arrayType == Object.class) {</span>
+<span class="nc" id="L781">                    return &quot;Object[]&quot;;</span>
                 }
-<span class="fc bfc" id="L785" title="All 2 branches covered.">                if (arrayType == String.class) {</span>
-<span class="fc" id="L786">                    return &quot;String[]&quot;;</span>
+<span class="fc bfc" id="L783" title="All 2 branches covered.">                if (arrayType == String.class) {</span>
+<span class="fc" id="L784">                    return &quot;String[]&quot;;</span>
                 }
-<span class="fc" id="L788">                return arrayType.getName() + &quot;[]&quot;;</span>
+<span class="fc" id="L786">                return arrayType.getName() + &quot;[]&quot;;</span>
             }
             @Override
             public boolean metaTypeRequired() {
-<span class="pc bpc" id="L792" title="1 of 2 branches missed.">                if (valueType == Object.class) {</span>
-<span class="nc bnc" id="L793" title="All 2 branches missed.">                    return Object[].class.isAssignableFrom(declaredType) == false;</span>
+<span class="pc bpc" id="L790" title="1 of 2 branches missed.">                if (valueType == Object.class) {</span>
+<span class="nc bnc" id="L791" title="All 2 branches missed.">                    return Object[].class.isAssignableFrom(declaredType) == false;</span>
                 }
-<span class="fc bfc" id="L795" title="All 2 branches covered.">                if (valueType == String.class) {</span>
-<span class="fc bfc" id="L796" title="All 2 branches covered.">                    return String[].class.isAssignableFrom(declaredType) == false;</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">                if (valueType == String.class) {</span>
+<span class="fc bfc" id="L794" title="All 2 branches covered.">                    return String[].class.isAssignableFrom(declaredType) == false;</span>
                 }
-<span class="fc" id="L798">                return true;</span>
+<span class="fc" id="L796">                return true;</span>
             }
             @Override
             public int size() {
-<span class="fc" id="L802">                return array.length;</span>
+<span class="fc" id="L800">                return array.length;</span>
             }
             @Override
             public boolean hasNext() {
-<span class="fc bfc" id="L806" title="All 2 branches covered.">                return (index + 1) &lt; array.length;</span>
+<span class="fc bfc" id="L804" title="All 2 branches covered.">                return (index + 1) &lt; array.length;</span>
             }
             @Override
             public void next() {
-<span class="fc" id="L810">                index++;</span>
-<span class="fc" id="L811">            }</span>
+<span class="fc" id="L808">                index++;</span>
+<span class="fc" id="L809">            }</span>
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L814">                return valueType;</span>
+<span class="fc" id="L812">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="fc" id="L818">                return Collections.emptyList();</span>
+<span class="fc" id="L816">                return Collections.emptyList();</span>
             }
             @Override
             public Object value() {
-<span class="fc" id="L822">                return array[index];</span>
+<span class="fc" id="L820">                return array[index];</span>
             }
         };
     }
@@ -834,59 +832,59 @@ import org.joda.beans.MetaProperty;
      */
     static final SerIterator arrayPrimitive(
             final Object array, final Class&lt;?&gt; declaredType, final Class&lt;?&gt; valueType) {
-<span class="fc" id="L837">        final int arrayLength = Array.getLength(array);</span>
-<span class="fc" id="L838">        return new SerIterator() {</span>
-<span class="fc" id="L839">            private int index = -1;</span>
+<span class="fc" id="L835">        final int arrayLength = Array.getLength(array);</span>
+<span class="fc" id="L836">        return new SerIterator() {</span>
+<span class="fc" id="L837">            private int index = -1;</span>
 
             @Override
             public String metaTypeName() {
-<span class="nc" id="L843">                return metaTypeNameBase(valueType);</span>
+<span class="nc" id="L841">                return metaTypeNameBase(valueType);</span>
             }
             private String metaTypeNameBase(Class&lt;?&gt; arrayType) {
-<span class="nc bnc" id="L846" title="All 2 branches missed.">                if (arrayType.isArray()) {</span>
-<span class="nc" id="L847">                    return metaTypeNameBase(arrayType.getComponentType()) + &quot;[]&quot;;</span>
+<span class="nc bnc" id="L844" title="All 2 branches missed.">                if (arrayType.isArray()) {</span>
+<span class="nc" id="L845">                    return metaTypeNameBase(arrayType.getComponentType()) + &quot;[]&quot;;</span>
                 }
-<span class="nc bnc" id="L849" title="All 2 branches missed.">                if (arrayType == Object.class) {</span>
-<span class="nc" id="L850">                    return &quot;Object[]&quot;;</span>
+<span class="nc bnc" id="L847" title="All 2 branches missed.">                if (arrayType == Object.class) {</span>
+<span class="nc" id="L848">                    return &quot;Object[]&quot;;</span>
                 }
-<span class="nc bnc" id="L852" title="All 2 branches missed.">                if (arrayType == String.class) {</span>
-<span class="nc" id="L853">                    return &quot;String[]&quot;;</span>
+<span class="nc bnc" id="L850" title="All 2 branches missed.">                if (arrayType == String.class) {</span>
+<span class="nc" id="L851">                    return &quot;String[]&quot;;</span>
                 }
-<span class="nc" id="L855">                return arrayType.getName() + &quot;[]&quot;;</span>
+<span class="nc" id="L853">                return arrayType.getName() + &quot;[]&quot;;</span>
             }
             @Override
             public boolean metaTypeRequired() {
-<span class="nc bnc" id="L859" title="All 2 branches missed.">                if (valueType == Object.class) {</span>
-<span class="nc bnc" id="L860" title="All 2 branches missed.">                    return Object[].class.isAssignableFrom(declaredType) == false;</span>
+<span class="nc bnc" id="L857" title="All 2 branches missed.">                if (valueType == Object.class) {</span>
+<span class="nc bnc" id="L858" title="All 2 branches missed.">                    return Object[].class.isAssignableFrom(declaredType) == false;</span>
                 }
-<span class="nc bnc" id="L862" title="All 2 branches missed.">                if (valueType == String.class) {</span>
-<span class="nc bnc" id="L863" title="All 2 branches missed.">                    return String[].class.isAssignableFrom(declaredType) == false;</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">                if (valueType == String.class) {</span>
+<span class="nc bnc" id="L861" title="All 2 branches missed.">                    return String[].class.isAssignableFrom(declaredType) == false;</span>
                 }
-<span class="nc" id="L865">                return true;</span>
+<span class="nc" id="L863">                return true;</span>
             }
             @Override
             public int size() {
-<span class="nc" id="L869">                return arrayLength;</span>
+<span class="nc" id="L867">                return arrayLength;</span>
             }
             @Override
             public boolean hasNext() {
-<span class="fc bfc" id="L873" title="All 2 branches covered.">                return (index + 1) &lt; arrayLength;</span>
+<span class="fc bfc" id="L871" title="All 2 branches covered.">                return (index + 1) &lt; arrayLength;</span>
             }
             @Override
             public void next() {
-<span class="fc" id="L877">                index++;</span>
-<span class="fc" id="L878">            }</span>
+<span class="fc" id="L875">                index++;</span>
+<span class="fc" id="L876">            }</span>
             @Override
             public Class&lt;?&gt; valueType() {
-<span class="fc" id="L881">                return valueType;</span>
+<span class="fc" id="L879">                return valueType;</span>
             }
             @Override
             public List&lt;Class&lt;?&gt;&gt; valueTypeTypes() {
-<span class="nc" id="L885">                return Collections.emptyList();</span>
+<span class="nc" id="L883">                return Collections.emptyList();</span>
             }
             @Override
             public Object value() {
-<span class="fc" id="L889">                return Array.get(array, index);</span>
+<span class="fc" id="L887">                return Array.get(array, index);</span>
             }
         };
     }

@@ -20,8 +20,6 @@ import org.joda.beans.MetaProperty;
 
 /**
  * Implementation of a meta-bean for {@code FlexiBean}.
- * 
- * @author Stephen Colebourne
  */
 class FlexiBeanBuilder implements BeanBuilder&lt;FlexiBean&gt; {
 
@@ -35,47 +33,47 @@ class FlexiBeanBuilder implements BeanBuilder&lt;FlexiBean&gt; {
      * 
      * @param bean  the underlying bean, not null
      */
-<span class="fc" id="L38">    FlexiBeanBuilder(FlexiBean bean) {</span>
-<span class="fc" id="L39">        this.bean = bean;</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L36">    FlexiBeanBuilder(FlexiBean bean) {</span>
+<span class="fc" id="L37">        this.bean = bean;</span>
+<span class="fc" id="L38">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public Object get(String propertyName) {
         // lenient getter
-<span class="nc" id="L46">        return bean.get(propertyName);</span>
+<span class="nc" id="L44">        return bean.get(propertyName);</span>
     }
 
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public &lt;P&gt; P get(MetaProperty&lt;P&gt; metaProperty) {
         // this approach allows meta-property from one bean to be used with another
-<span class="nc" id="L53">        return (P) bean.get(metaProperty.name());</span>
+<span class="nc" id="L51">        return (P) bean.get(metaProperty.name());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public FlexiBeanBuilder set(String propertyName, Object value) {
-<span class="nc" id="L59">        bean.put(propertyName, value);</span>
-<span class="nc" id="L60">        return this;</span>
+<span class="nc" id="L57">        bean.put(propertyName, value);</span>
+<span class="nc" id="L58">        return this;</span>
     }
 
     @Override
     public FlexiBeanBuilder set(MetaProperty&lt;?&gt; metaProperty, Object value) {
         // this approach allows meta-property from one bean to be used with another
-<span class="fc" id="L66">        bean.put(metaProperty.name(), value);</span>
-<span class="fc" id="L67">        return this;</span>
+<span class="fc" id="L64">        bean.put(metaProperty.name(), value);</span>
+<span class="fc" id="L65">        return this;</span>
     }
 
     @Override
     public FlexiBean build() {
-<span class="fc" id="L72">        return bean;</span>
+<span class="fc" id="L70">        return bean;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L78">        return &quot;FlexiBeanBuilder&quot;;</span>
+<span class="nc" id="L76">        return &quot;FlexiBeanBuilder&quot;;</span>
     }
 
 }

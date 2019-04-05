@@ -22,15 +22,13 @@ import java.nio.charset.Charset;
  * Constants used in MsgPack binary serialization.
  * &lt;p&gt;
  * This uses the v2.0 specification of MsgPack as of 2014-01-29.
- *
- * @author Stephen Colebourne
  */
-<span class="fc" id="L28">abstract class MsgPack {</span>
+<span class="fc" id="L26">abstract class MsgPack {</span>
 
     /**
      * UTF-8 encoding.
      */
-<span class="fc" id="L33">    static final Charset UTF_8 = Charset.forName(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L31">    static final Charset UTF_8 = Charset.forName(&quot;UTF-8&quot;);</span>
 
     /**
      * Maximum fixed int.
@@ -201,6 +199,14 @@ import java.nio.charset.Charset;
      * Extension type code for a Joda-Bean meta-type.
      */
     static final int JODA_TYPE_META = 34;
+    /**
+     * Extension type code for a Joda-Bean serialized reference.
+     */
+    static final int JODA_TYPE_REF_KEY = 35;
+    /**
+     * Extension type code for a reference to a previously serialized Joda-Bean.
+     */
+    static final int JODA_TYPE_REF = 36;
 
     //-----------------------------------------------------------------------
     /**
@@ -209,24 +215,24 @@ import java.nio.charset.Charset;
      * @param b  the byte
      * @return the two character hex equivalent, not null
      */
-    protected static String toHex(int b) {
-<span class="fc" id="L213">        return String.format(&quot;%02X&quot;, (byte) b);</span>
+    static String toHex(int b) {
+<span class="fc" id="L219">        return String.format(&quot;%02X&quot;, (byte) b);</span>
     }
 
-    protected static boolean isMap(int typeByte) throws IOException {
-<span class="pc bpc" id="L217" title="2 of 8 branches missed.">        return (typeByte &gt;= MIN_FIX_MAP &amp;&amp; typeByte &lt;= MAX_FIX_MAP) || typeByte == MAP_16 || typeByte == MAP_32;</span>
+    static boolean isMap(int typeByte) throws IOException {
+<span class="pc bpc" id="L223" title="2 of 8 branches missed.">        return (typeByte &gt;= MIN_FIX_MAP &amp;&amp; typeByte &lt;= MAX_FIX_MAP) || typeByte == MAP_16 || typeByte == MAP_32;</span>
     }
 
-    protected static boolean isArray(int typeByte) throws IOException {
-<span class="pc bpc" id="L221" title="3 of 8 branches missed.">        return (typeByte &gt;= MIN_FIX_ARRAY &amp;&amp; typeByte &lt;= MAX_FIX_ARRAY) || typeByte == ARRAY_16 || typeByte == ARRAY_32;</span>
+    static boolean isArray(int typeByte) throws IOException {
+<span class="pc bpc" id="L227" title="1 of 8 branches missed.">        return (typeByte &gt;= MIN_FIX_ARRAY &amp;&amp; typeByte &lt;= MAX_FIX_ARRAY) || typeByte == ARRAY_16 || typeByte == ARRAY_32;</span>
     }
 
-    protected static boolean isString(int typeByte) throws IOException {
-<span class="pc bpc" id="L225" title="3 of 10 branches missed.">        return (typeByte &gt;= MIN_FIX_STR &amp;&amp; typeByte &lt;= MAX_FIX_STR) || typeByte == STR_8 || typeByte == STR_16 || typeByte == STR_32;</span>
+    static boolean isString(int typeByte) throws IOException {
+<span class="pc bpc" id="L231" title="3 of 10 branches missed.">        return (typeByte &gt;= MIN_FIX_STR &amp;&amp; typeByte &lt;= MAX_FIX_STR) || typeByte == STR_8 || typeByte == STR_16 || typeByte == STR_32;</span>
     }
 
-    protected static boolean isIntegral(int typeByte) throws IOException {
-<span class="pc bpc" id="L229" title="7 of 20 branches missed.">        return (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) ||</span>
+    static boolean isIntegral(int typeByte) throws IOException {
+<span class="pc bpc" id="L235" title="7 of 20 branches missed.">        return (typeByte &gt;= MIN_FIX_INT &amp;&amp; typeByte &lt;= MAX_FIX_INT) ||</span>
                 typeByte == UINT_8 || typeByte == UINT_16 || typeByte == UINT_32 || typeByte == UINT_64 ||
                 typeByte == SINT_8 || typeByte == SINT_16 || typeByte == SINT_32 || typeByte == SINT_64;
     }

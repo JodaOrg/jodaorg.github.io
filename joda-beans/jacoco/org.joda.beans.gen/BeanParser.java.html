@@ -29,8 +29,6 @@ import java.util.regex.Pattern;
 
 /**
  * Parse bean information from source file.
- * 
- * @author Stephen Colebourne
  */
 class BeanParser {
 
@@ -45,7 +43,7 @@ class BeanParser {
     // handle generic parameter extends clause
     // handle extends clause with further level of generic parameters
     // handle extends clause union types without generic parameters
-<span class="nc" id="L48">    private static final Pattern BEAN_TYPE = Pattern.compile(&quot;.*class +(&quot; +</span>
+<span class="nc" id="L46">    private static final Pattern BEAN_TYPE = Pattern.compile(&quot;.*class +(&quot; +</span>
             &quot;([A-Z][A-Za-z0-9_]+)&quot; +
                 &quot;(?:&lt;&quot; +
                     &quot;([A-Z])( +extends +[A-Za-z0-9_]+(?:[&lt;][A-Za-z0-9_, ?]+[&gt;])?(?:[ ]+[&amp;][ ]+[A-Za-z0-9]+)*)?&quot; +
@@ -58,7 +56,7 @@ class BeanParser {
                 &quot;&gt;)?&quot; +
             &quot;).*&quot;);
     /** Pattern to find super type. */
-<span class="nc" id="L61">    private static final Pattern SUPER_TYPE = Pattern.compile(&quot;.*extends +(&quot; +</span>
+<span class="nc" id="L59">    private static final Pattern SUPER_TYPE = Pattern.compile(&quot;.*extends +(&quot; +</span>
             &quot;([A-Z][A-Za-z0-9_]+)&quot; +
                 &quot;(?:&lt;&quot; +
                     &quot;([A-Z][A-Za-z0-9_&lt;&gt; ]*)&quot; +
@@ -71,32 +69,32 @@ class BeanParser {
                 &quot;&gt;)?&quot; +
             &quot;).*&quot;);
     /** Pattern to find root type. */
-<span class="nc" id="L74">    private static final Pattern SUPER_IMPL_TYPE = Pattern.compile(&quot;.*implements.*[ ,]((Immutable)?Bean)([ ,{]|$).*&quot;);</span>
+<span class="nc" id="L72">    private static final Pattern SUPER_IMPL_TYPE = Pattern.compile(&quot;.*implements.*[ ,]((Immutable)?Bean)([ ,{]|$).*&quot;);</span>
     /** Pattern to find serializable interface. */
-<span class="nc" id="L76">    private static final Pattern SERIALIZABLE_TYPE = Pattern.compile(&quot;.*implements.*[ ,]Serializable([ ,{]|$).*&quot;);</span>
+<span class="nc" id="L74">    private static final Pattern SERIALIZABLE_TYPE = Pattern.compile(&quot;.*implements.*[ ,]Serializable([ ,{]|$).*&quot;);</span>
     /** The style pattern. */
-<span class="nc" id="L78">    private static final Pattern STYLE_PATTERN = Pattern.compile(&quot;.*[ ,(]style[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L76">    private static final Pattern STYLE_PATTERN = Pattern.compile(&quot;.*[ ,(]style[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The metaScope pattern. */
-<span class="nc" id="L80">    private static final Pattern META_SCOPE_PATTERN = Pattern.compile(&quot;.*[ ,(]metaScope[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L78">    private static final Pattern META_SCOPE_PATTERN = Pattern.compile(&quot;.*[ ,(]metaScope[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The builderScope pattern. */
-<span class="nc" id="L82">    private static final Pattern BUILDER_SCOPE_PATTERN = Pattern.compile(&quot;.*[ ,(]builderScope[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L80">    private static final Pattern BUILDER_SCOPE_PATTERN = Pattern.compile(&quot;.*[ ,(]builderScope[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The constructorScope pattern. */
-<span class="nc" id="L84">    private static final Pattern CONSTRUCTOR_SCOPE_PATTERN = Pattern.compile(&quot;.*[ ,(]constructorScope[ ]*[=][ ]*[\&quot;]([a-zA-Z@]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L82">    private static final Pattern CONSTRUCTOR_SCOPE_PATTERN = Pattern.compile(&quot;.*[ ,(]constructorScope[ ]*[=][ ]*[\&quot;]([a-zA-Z@]*)[\&quot;].*&quot;);</span>
     /** The factoryName pattern. */
-<span class="nc" id="L86">    private static final Pattern FACTORY_NAME_PATTERN = Pattern.compile(&quot;.*[ ,(]factoryName[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L84">    private static final Pattern FACTORY_NAME_PATTERN = Pattern.compile(&quot;.*[ ,(]factoryName[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The hierarchy pattern. */
-<span class="nc" id="L88">    private static final Pattern HIERARCHY_PATTERN = Pattern.compile(&quot;.*[ ,(]hierarchy[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L86">    private static final Pattern HIERARCHY_PATTERN = Pattern.compile(&quot;.*[ ,(]hierarchy[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
     /** The cacheHashCode pattern. */
-<span class="nc" id="L90">    private static final Pattern CACHE_HASH_CODE_PATTERN = Pattern.compile(&quot;.*[ ,(]cacheHashCode[ ]*[=][ ]*(true|false).*&quot;);</span>
+<span class="nc" id="L88">    private static final Pattern CACHE_HASH_CODE_PATTERN = Pattern.compile(&quot;.*[ ,(]cacheHashCode[ ]*[=][ ]*(true|false).*&quot;);</span>
     /** The cloneStyle pattern. */
-<span class="nc" id="L92">    private static final Pattern CLONE_STYLE_PATTERN = Pattern.compile(&quot;.*[ ,(]cloneStyle[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
+<span class="nc" id="L90">    private static final Pattern CLONE_STYLE_PATTERN = Pattern.compile(&quot;.*[ ,(]cloneStyle[ ]*[=][ ]*[\&quot;]([a-zA-Z]*)[\&quot;].*&quot;);</span>
 
     /** The validator pattern. */
-<span class="nc" id="L95">    private static final Pattern VALIDATOR_PATTERN = Pattern.compile(</span>
+<span class="nc" id="L93">    private static final Pattern VALIDATOR_PATTERN = Pattern.compile(</span>
             &quot;.*private[ ]+void[ ]+&quot; +
             &quot;([a-zA-Z][a-zA-Z0-9]*)[(][ ]*[)].*&quot;);
     /** The defaults pattern. */
-<span class="nc" id="L99">    private static final Pattern DEFAULTS_PATTERN = Pattern.compile(</span>
+<span class="nc" id="L97">    private static final Pattern DEFAULTS_PATTERN = Pattern.compile(</span>
             &quot;.*private[ ]+static[ ]+void[ ]+&quot; +
             &quot;([a-zA-Z][a-zA-Z0-9]*)[(][ ]*Builder[ ]+[a-zA-Z][a-zA-Z0-9]*[ ]*[)].*&quot;);
 
@@ -120,520 +118,520 @@ class BeanParser {
      * @param file  the file to process, not null
      * @param content  the content to process, not null
      */
-<span class="nc" id="L123">    BeanParser(File file, List&lt;String&gt; content, BeanGenConfig config) {</span>
-<span class="nc" id="L124">        this.file = file;</span>
-<span class="nc" id="L125">        this.content = content;</span>
-<span class="nc" id="L126">        this.config = config;</span>
-<span class="nc" id="L127">    }</span>
+<span class="nc" id="L121">    BeanParser(File file, List&lt;String&gt; content, BeanGenConfig config) {</span>
+<span class="nc" id="L122">        this.file = file;</span>
+<span class="nc" id="L123">        this.content = content;</span>
+<span class="nc" id="L124">        this.config = config;</span>
+<span class="nc" id="L125">    }</span>
 
     //-----------------------------------------------------------------------
     File getFile() {
-<span class="nc" id="L131">        return file;</span>
+<span class="nc" id="L129">        return file;</span>
     }
 
     String getFieldPrefix() {
-<span class="nc" id="L135">        return config.getPrefix();</span>
+<span class="nc" id="L133">        return config.getPrefix();</span>
     }
 
     BeanGenConfig getConfig() {
-<span class="nc" id="L139">        return config;</span>
+<span class="nc" id="L137">        return config;</span>
     }
 
     //-----------------------------------------------------------------------
     BeanGen parse() {
-<span class="nc" id="L144">        BeanData data = new BeanData();</span>
-<span class="nc" id="L145">        beanDefIndex = parseBeanDefinition();</span>
-<span class="nc" id="L146">        data.getCurrentImports().addAll(parseImports(beanDefIndex));</span>
-<span class="nc" id="L147">        data.setImportInsertLocation(parseImportLocation(beanDefIndex));</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (beanDefIndex &lt; 0) {</span>
-<span class="nc" id="L149">            return new BeanGen(file, content, config, data);</span>
+<span class="nc" id="L142">        BeanData data = new BeanData();</span>
+<span class="nc" id="L143">        beanDefIndex = parseBeanDefinition();</span>
+<span class="nc" id="L144">        data.getCurrentImports().addAll(parseImports(beanDefIndex));</span>
+<span class="nc" id="L145">        data.setImportInsertLocation(parseImportLocation(beanDefIndex));</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (beanDefIndex &lt; 0) {</span>
+<span class="nc" id="L147">            return new BeanGen(file, content, config, data);</span>
         }
-<span class="nc" id="L151">        data.setBeanStyle(parseBeanStyle(beanDefIndex));</span>
-<span class="nc" id="L152">        data.resolveBeanStyle(config.getDefaultStyle());</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (data.isBeanStyleValid() == false) {</span>
-<span class="nc" id="L154">            throw new BeanCodeGenException(&quot;Invalid bean style: &quot; + data.getBeanStyle(), file, beanDefIndex);</span>
+<span class="nc" id="L149">        data.setBeanStyle(parseBeanStyle(beanDefIndex));</span>
+<span class="nc" id="L150">        data.resolveBeanStyle(config.getDefaultStyle());</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        if (data.isBeanStyleValid() == false) {</span>
+<span class="nc" id="L152">            throw new BeanCodeGenException(&quot;Invalid bean style: &quot; + data.getBeanStyle(), file, beanDefIndex);</span>
         }
-<span class="nc" id="L156">        data.setConstructorScope(parseConstrucorScope(beanDefIndex));</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (data.isConstructorScopeValid() == false) {</span>
-<span class="nc" id="L158">            throw new BeanCodeGenException(&quot;Invalid constructor scope: &quot; + data.getConstructorScope(), file, beanDefIndex);</span>
+<span class="nc" id="L154">        data.setConstructorScope(parseConstrucorScope(beanDefIndex));</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (data.isConstructorScopeValid() == false) {</span>
+<span class="nc" id="L156">            throw new BeanCodeGenException(&quot;Invalid constructor scope: &quot; + data.getConstructorScope(), file, beanDefIndex);</span>
         }
-<span class="nc" id="L160">        data.setBeanMetaScope(parseBeanMetaScope(beanDefIndex));</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (data.isBeanMetaScopeValid() == false) {</span>
-<span class="nc" id="L162">            throw new BeanCodeGenException(&quot;Invalid meta-bean scope: &quot; + data.getBeanMetaScope(), file, beanDefIndex);</span>
+<span class="nc" id="L158">        data.setBeanMetaScope(parseBeanMetaScope(beanDefIndex));</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (data.isBeanMetaScopeValid() == false) {</span>
+<span class="nc" id="L160">            throw new BeanCodeGenException(&quot;Invalid meta-bean scope: &quot; + data.getBeanMetaScope(), file, beanDefIndex);</span>
         }
-<span class="nc" id="L164">        data.setBeanBuilderScope(parseBeanBuilderScope(beanDefIndex));</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (data.isBeanBuilderScopeValid() == false) {</span>
-<span class="nc" id="L166">            throw new BeanCodeGenException(&quot;Invalid bean builder scope: &quot; + data.getBeanBuilderScope(), file, beanDefIndex);</span>
+<span class="nc" id="L162">        data.setBeanBuilderScope(parseBeanBuilderScope(beanDefIndex));</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (data.isBeanBuilderScopeValid() == false) {</span>
+<span class="nc" id="L164">            throw new BeanCodeGenException(&quot;Invalid bean builder scope: &quot; + data.getBeanBuilderScope(), file, beanDefIndex);</span>
         }
-<span class="nc" id="L168">        data.setFactoryName(parseFactoryName(beanDefIndex));</span>
-<span class="nc" id="L169">        data.setCacheHashCode(parseCacheHashCode(beanDefIndex));</span>
-<span class="nc" id="L170">        data.setCloneStyle(parseCloneStyle(beanDefIndex));</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (data.isCloneStyleValid() == false) {</span>
-<span class="nc" id="L172">            throw new BeanCodeGenException(&quot;Invalid clone style: &quot; + data.getCloneStyle(), file, beanDefIndex);</span>
+<span class="nc" id="L166">        data.setFactoryName(parseFactoryName(beanDefIndex));</span>
+<span class="nc" id="L167">        data.setCacheHashCode(parseCacheHashCode(beanDefIndex));</span>
+<span class="nc" id="L168">        data.setCloneStyle(parseCloneStyle(beanDefIndex));</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (data.isCloneStyleValid() == false) {</span>
+<span class="nc" id="L170">            throw new BeanCodeGenException(&quot;Invalid clone style: &quot; + data.getCloneStyle(), file, beanDefIndex);</span>
         }
-<span class="nc" id="L174">        data.setImmutableConstructor(parseImmutableConstructor(beanDefIndex));</span>
-<span class="nc" id="L175">        data.setConstructable(parseConstructable(beanDefIndex));</span>
-<span class="nc" id="L176">        data.setTypeParts(parseBeanType(beanDefIndex));</span>
-<span class="nc" id="L177">        String classHeaderAfterType = classHeaderAfterType(beanDefIndex, data.getType());</span>
-<span class="nc" id="L178">        data.setSuperTypeParts(parseBeanSuperType(classHeaderAfterType));</span>
-<span class="nc" id="L179">        data.setSerializable(parseSerializable(classHeaderAfterType));</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (parseBeanHierarchy(beanDefIndex).equals(&quot;immutable&quot;)) {</span>
-<span class="nc" id="L181">            data.setImmutable(true);</span>
-<span class="nc" id="L182">            data.setConstructorStyle(CONSTRUCTOR_BY_BUILDER);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">        } else if (data.getImmutableConstructor() == CONSTRUCTOR_NONE) {</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (data.isImmutable()) {</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">                if (data.isTypeFinal()) {</span>
-<span class="nc" id="L186">                    data.setConstructorStyle(CONSTRUCTOR_BY_ARGS);</span>
+<span class="nc" id="L172">        data.setImmutableConstructor(parseImmutableConstructor(beanDefIndex));</span>
+<span class="nc" id="L173">        data.setConstructable(parseConstructable(beanDefIndex));</span>
+<span class="nc" id="L174">        data.setTypeParts(parseBeanType(beanDefIndex));</span>
+<span class="nc" id="L175">        String classHeaderAfterType = classHeaderAfterType(beanDefIndex, data.getType());</span>
+<span class="nc" id="L176">        data.setSuperTypeParts(parseBeanSuperType(classHeaderAfterType));</span>
+<span class="nc" id="L177">        data.setSerializable(parseSerializable(classHeaderAfterType));</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (parseBeanHierarchy(beanDefIndex).equals(&quot;immutable&quot;)) {</span>
+<span class="nc" id="L179">            data.setImmutable(true);</span>
+<span class="nc" id="L180">            data.setConstructorStyle(CONSTRUCTOR_BY_BUILDER);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        } else if (data.getImmutableConstructor() == CONSTRUCTOR_NONE) {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            if (data.isImmutable()) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">                if (data.isTypeFinal()) {</span>
+<span class="nc" id="L184">                    data.setConstructorStyle(CONSTRUCTOR_BY_ARGS);</span>
                 } else {
-<span class="nc" id="L188">                    data.setConstructorStyle(CONSTRUCTOR_BY_BUILDER);</span>
+<span class="nc" id="L186">                    data.setConstructorStyle(CONSTRUCTOR_BY_BUILDER);</span>
                 }
             } else {
-<span class="nc bnc" id="L191" title="All 2 branches missed.">                if (data.isBeanStyleLight()) {</span>
-<span class="nc" id="L192">                    data.setConstructorStyle(CONSTRUCTOR_BY_ARGS);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                if (data.isBeanStyleLight()) {</span>
+<span class="nc" id="L190">                    data.setConstructorStyle(CONSTRUCTOR_BY_ARGS);</span>
                 } else {
-<span class="nc" id="L194">                    data.setConstructorStyle(CONSTRUCTOR_BY_BUILDER);</span>
+<span class="nc" id="L192">                    data.setConstructorStyle(CONSTRUCTOR_BY_BUILDER);</span>
                 }
             }
         } else {
-<span class="nc" id="L198">            data.setConstructorStyle(data.getImmutableConstructor());</span>
+<span class="nc" id="L196">            data.setConstructorStyle(data.getImmutableConstructor());</span>
         }
-<span class="nc bnc" id="L200" title="All 2 branches missed.">        if (data.isImmutable()) {</span>
-<span class="nc" id="L201">            data.setImmutableValidator(parseImmutableValidator(beanDefIndex));</span>
-<span class="nc" id="L202">            data.setImmutableDefaults(parseImmutableDefaults(beanDefIndex));</span>
-<span class="nc" id="L203">            data.setImmutablePreBuild(parseImmutablePreBuild(beanDefIndex));</span>
-<span class="nc bnc" id="L204" title="All 4 branches missed.">            if (data.isBeanStyleLight() &amp;&amp; !data.isTypeFinal()) {</span>
-<span class="nc" id="L205">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        if (data.isImmutable()) {</span>
+<span class="nc" id="L199">            data.setImmutableValidator(parseImmutableValidator(beanDefIndex));</span>
+<span class="nc" id="L200">            data.setImmutableDefaults(parseImmutableDefaults(beanDefIndex));</span>
+<span class="nc" id="L201">            data.setImmutablePreBuild(parseImmutablePreBuild(beanDefIndex));</span>
+<span class="nc bnc" id="L202" title="All 4 branches missed.">            if (data.isBeanStyleLight() &amp;&amp; !data.isTypeFinal()) {</span>
+<span class="nc" id="L203">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Light beans must be declared final&quot;, file, beanDefIndex);
             }
-<span class="nc bnc" id="L208" title="All 4 branches missed.">            if (data.isBeanStyleMinimal() &amp;&amp; !data.isTypeFinal()) {</span>
-<span class="nc" id="L209">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L206" title="All 4 branches missed.">            if (data.isBeanStyleMinimal() &amp;&amp; !data.isTypeFinal()) {</span>
+<span class="nc" id="L207">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Minimal beans must be declared final&quot;, file, beanDefIndex);
             }
-<span class="nc bnc" id="L212" title="All 4 branches missed.">            if (data.isFactoryRequired() &amp;&amp; !data.isRootClass()) {</span>
-<span class="nc" id="L213">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L210" title="All 4 branches missed.">            if (data.isFactoryRequired() &amp;&amp; !data.isRootClass()) {</span>
+<span class="nc" id="L211">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Factory method only allowed when bean has no bean superclass&quot;, file, beanDefIndex);
             }
-<span class="nc bnc" id="L216" title="All 4 branches missed.">            if (data.isFactoryRequired() &amp;&amp; !data.isTypeFinal()) {</span>
-<span class="nc" id="L217">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L214" title="All 4 branches missed.">            if (data.isFactoryRequired() &amp;&amp; !data.isTypeFinal()) {</span>
+<span class="nc" id="L215">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Factory method only allowed when bean is final&quot;, file, beanDefIndex);
             }
         } else {
-<span class="nc bnc" id="L221" title="All 4 branches missed.">            if (data.isBeanStyleLight() &amp;&amp; !data.isTypeFinal()) {</span>
-<span class="nc" id="L222">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L219" title="All 4 branches missed.">            if (data.isBeanStyleLight() &amp;&amp; !data.isTypeFinal()) {</span>
+<span class="nc" id="L220">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Light beans must be declared final&quot;, file, beanDefIndex);
             }
-<span class="nc bnc" id="L225" title="All 4 branches missed.">            if (data.isBeanStyleMinimal() &amp;&amp; !data.isTypeFinal()) {</span>
-<span class="nc" id="L226">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L223" title="All 4 branches missed.">            if (data.isBeanStyleMinimal() &amp;&amp; !data.isTypeFinal()) {</span>
+<span class="nc" id="L224">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Minimal beans must be declared final&quot;, file, beanDefIndex);
             }
-<span class="nc bnc" id="L229" title="All 2 branches missed.">            if (data.isFactoryRequired()) {</span>
-<span class="nc" id="L230">                throw new BeanCodeGenException(</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            if (data.isFactoryRequired()) {</span>
+<span class="nc" id="L228">                throw new BeanCodeGenException(</span>
                         &quot;Invalid bean style: Factory method only allowed when bean is immutable&quot;, file, beanDefIndex);
             }
         }
-<span class="nc" id="L234">        properties = parseProperties(data);</span>
-<span class="nc" id="L235">        autoStartIndex = parseStartAutogen();</span>
-<span class="nc" id="L236">        autoEndIndex = parseEndAutogen();</span>
-<span class="nc" id="L237">        data.setManualSerializationId(parseManualSerializationId(beanDefIndex));</span>
-<span class="nc" id="L238">        data.setManualClone(parseManualClone(beanDefIndex));</span>
-<span class="nc" id="L239">        data.setManualEqualsHashCode(parseManualEqualsHashCode(beanDefIndex));</span>
-<span class="nc" id="L240">        data.setManualToStringCode(parseManualToStringCode(beanDefIndex));</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (data.isImmutable()) {</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">            for (PropertyGen prop : properties) {</span>
-<span class="nc bnc" id="L243" title="All 4 branches missed.">                if (prop.getData().isDerived() == false &amp;&amp; prop.getData().isFinal() == false) {</span>
-<span class="nc" id="L244">                    throw new BeanCodeGenException(&quot;ImmutableBean must have final properties: &quot; +</span>
-<span class="nc" id="L245">                            data.getTypeRaw() + &quot;.&quot; + prop.getData().getFieldName(),</span>
-<span class="nc" id="L246">                            file, prop.getData().getLineIndex());</span>
+<span class="nc" id="L232">        properties = parseProperties(data);</span>
+<span class="nc" id="L233">        autoStartIndex = parseStartAutogen();</span>
+<span class="nc" id="L234">        autoEndIndex = parseEndAutogen();</span>
+<span class="nc" id="L235">        data.setManualSerializationId(parseManualSerializationId(beanDefIndex));</span>
+<span class="nc" id="L236">        data.setManualClone(parseManualClone(beanDefIndex));</span>
+<span class="nc" id="L237">        data.setManualEqualsHashCode(parseManualEqualsHashCode(beanDefIndex));</span>
+<span class="nc" id="L238">        data.setManualToStringCode(parseManualToStringCode(beanDefIndex));</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">        if (data.isImmutable()) {</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">            for (PropertyGen prop : properties) {</span>
+<span class="nc bnc" id="L241" title="All 4 branches missed.">                if (prop.getData().isDerived() == false &amp;&amp; prop.getData().isFinal() == false) {</span>
+<span class="nc" id="L242">                    throw new BeanCodeGenException(&quot;ImmutableBean must have final properties: &quot; +</span>
+<span class="nc" id="L243">                            data.getTypeRaw() + &quot;.&quot; + prop.getData().getFieldName(),</span>
+<span class="nc" id="L244">                            file, prop.getData().getLineIndex());</span>
                 }
-<span class="nc" id="L248">            }</span>
+<span class="nc" id="L246">            }</span>
         } else {
-<span class="nc bnc" id="L250" title="All 2 branches missed.">            if (data.getImmutableConstructor() &gt; CONSTRUCTOR_NONE) {</span>
-<span class="nc" id="L251">                throw new BeanCodeGenException(&quot;Mutable beans must not specify @ImmutableConstructor: &quot; +</span>
-<span class="nc" id="L252">                        data.getTypeRaw(), file, beanDefIndex);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">            if (data.getImmutableConstructor() &gt; CONSTRUCTOR_NONE) {</span>
+<span class="nc" id="L249">                throw new BeanCodeGenException(&quot;Mutable beans must not specify @ImmutableConstructor: &quot; +</span>
+<span class="nc" id="L250">                        data.getTypeRaw(), file, beanDefIndex);</span>
             }
-<span class="nc bnc" id="L254" title="All 4 branches missed.">            if (!&quot;smart&quot;.equals(data.getConstructorScope()) &amp;&amp; !data.isBeanStyleLight()) {</span>
-<span class="nc" id="L255">                throw new BeanCodeGenException(&quot;Mutable beans must not specify @BeanDefinition(constructorScope): &quot; +</span>
-<span class="nc" id="L256">                                data.getTypeRaw(), file, beanDefIndex);</span>
+<span class="nc bnc" id="L252" title="All 4 branches missed.">            if (!&quot;smart&quot;.equals(data.getConstructorScope()) &amp;&amp; !data.isBeanStyleLight()) {</span>
+<span class="nc" id="L253">                throw new BeanCodeGenException(&quot;Mutable beans must not specify @BeanDefinition(constructorScope): &quot; +</span>
+<span class="nc" id="L254">                                data.getTypeRaw(), file, beanDefIndex);</span>
             }
         }
-<span class="nc bnc" id="L259" title="All 2 branches missed.">        if (data.isCacheHashCode()) {</span>
-<span class="nc bnc" id="L260" title="All 4 branches missed.">            data.setCacheHashCode(data.isImmutable() &amp;&amp; data.isManualEqualsHashCode() == false);</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        if (data.isCacheHashCode()) {</span>
+<span class="nc bnc" id="L258" title="All 4 branches missed.">            data.setCacheHashCode(data.isImmutable() &amp;&amp; data.isManualEqualsHashCode() == false);</span>
         }
-<span class="nc" id="L262">        return new BeanGen(file, content, config, data, properties, autoStartIndex, autoEndIndex);</span>
+<span class="nc" id="L260">        return new BeanGen(file, content, config, data, properties, autoStartIndex, autoEndIndex);</span>
     }
 
     private String classHeaderAfterType(int defLine, String fullType) {
-<span class="nc" id="L266">        StringBuilder buf = new StringBuilder(128);</span>
-<span class="nc" id="L267">        boolean matchedType = false;</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L269">            String line = content.get(index);</span>
-<span class="nc bnc" id="L270" title="All 2 branches missed.">            if (matchedType == false) {</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">                if (line.contains(fullType) == false) {</span>
-<span class="nc" id="L272">                    continue;</span>
+<span class="nc" id="L264">        StringBuilder buf = new StringBuilder(128);</span>
+<span class="nc" id="L265">        boolean matchedType = false;</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L267">            String line = content.get(index);</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">            if (matchedType == false) {</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">                if (line.contains(fullType) == false) {</span>
+<span class="nc" id="L270">                    continue;</span>
                 }
-<span class="nc" id="L274">                matchedType = true;</span>
-<span class="nc" id="L275">                line = line.substring(line.indexOf(fullType) + fullType.length());</span>
+<span class="nc" id="L272">                matchedType = true;</span>
+<span class="nc" id="L273">                line = line.substring(line.indexOf(fullType) + fullType.length());</span>
             }
-<span class="nc" id="L277">            buf.append(line).append(' ');</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">            if (line.trim().endsWith(&quot;{&quot;)) {</span>
-<span class="nc" id="L279">                break;</span>
+<span class="nc" id="L275">            buf.append(line).append(' ');</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            if (line.trim().endsWith(&quot;{&quot;)) {</span>
+<span class="nc" id="L277">                break;</span>
             }
         }
-<span class="nc" id="L282">        return buf.toString().trim();</span>
+<span class="nc" id="L280">        return buf.toString().trim();</span>
     }
 
     //-----------------------------------------------------------------------
     private int parseBeanDefinition() {
-<span class="nc bnc" id="L287" title="All 2 branches missed.">        for (int index = 0; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L288">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L289" title="All 2 branches missed.">            if (line.startsWith(&quot;@BeanDefinition&quot;)) {</span>
-<span class="nc" id="L290">                return index;</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">        for (int index = 0; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L286">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">            if (line.startsWith(&quot;@BeanDefinition&quot;)) {</span>
+<span class="nc" id="L288">                return index;</span>
             }
         }
-<span class="nc" id="L293">        return -1;</span>
+<span class="nc" id="L291">        return -1;</span>
     }
 
     private Set&lt;String&gt; parseImports(int defLine) {
-<span class="nc bnc" id="L297" title="All 2 branches missed.">        int end = defLine &lt; 0 ? content.size() : defLine;</span>
-<span class="nc" id="L298">        Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L299" title="All 2 branches missed.">        for (int index = 0; index &lt; end; index++) {</span>
-<span class="nc bnc" id="L300" title="All 2 branches missed.">            if (content.get(index).startsWith(&quot;import &quot;)) {</span>
-<span class="nc" id="L301">                String imp = content.get(index).substring(7).trim();</span>
-<span class="nc" id="L302">                imp = imp.substring(0, imp.indexOf(';'));</span>
-<span class="nc bnc" id="L303" title="All 2 branches missed.">                if (imp.endsWith(&quot;.*&quot;) == false) {</span>
-<span class="nc" id="L304">                    imports.add(imp);</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">        int end = defLine &lt; 0 ? content.size() : defLine;</span>
+<span class="nc" id="L296">        Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">        for (int index = 0; index &lt; end; index++) {</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">            if (content.get(index).startsWith(&quot;import &quot;)) {</span>
+<span class="nc" id="L299">                String imp = content.get(index).substring(7).trim();</span>
+<span class="nc" id="L300">                imp = imp.substring(0, imp.indexOf(';'));</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">                if (imp.endsWith(&quot;.*&quot;) == false) {</span>
+<span class="nc" id="L302">                    imports.add(imp);</span>
                 }
             }
         }
-<span class="nc" id="L308">        return imports;</span>
+<span class="nc" id="L306">        return imports;</span>
     }
 
     private int parseImportLocation(int defLine) {
-<span class="nc bnc" id="L312" title="All 2 branches missed.">        int end = defLine &lt; 0 ? content.size() : defLine;</span>
-<span class="nc" id="L313">        int location = 0;</span>
-<span class="nc bnc" id="L314" title="All 2 branches missed.">        for (int index = 0; index &lt; end; index++) {</span>
-<span class="nc bnc" id="L315" title="All 4 branches missed.">            if (content.get(index).startsWith(&quot;import &quot;) || content.get(index).startsWith(&quot;package &quot;)) {</span>
-<span class="nc" id="L316">                location = index;</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">        int end = defLine &lt; 0 ? content.size() : defLine;</span>
+<span class="nc" id="L311">        int location = 0;</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">        for (int index = 0; index &lt; end; index++) {</span>
+<span class="nc bnc" id="L313" title="All 4 branches missed.">            if (content.get(index).startsWith(&quot;import &quot;) || content.get(index).startsWith(&quot;package &quot;)) {</span>
+<span class="nc" id="L314">                location = index;</span>
             }
         }
-<span class="nc" id="L319">        return location;</span>
+<span class="nc" id="L317">        return location;</span>
     }
 
     private String parseBeanStyle(int defLine) {
-<span class="nc" id="L323">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L324">        Matcher matcher = STYLE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L325" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L326">            return matcher.group(1);</span>
+<span class="nc" id="L321">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L322">        Matcher matcher = STYLE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L324">            return matcher.group(1);</span>
         }
-<span class="nc" id="L328">        return &quot;smart&quot;;</span>
+<span class="nc" id="L326">        return &quot;smart&quot;;</span>
     }
 
     private String parseConstrucorScope(int defLine) {
-<span class="nc" id="L332">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L333">        Matcher matcher = CONSTRUCTOR_SCOPE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L334" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L335">            return matcher.group(1);</span>
+<span class="nc" id="L330">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L331">        Matcher matcher = CONSTRUCTOR_SCOPE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L333">            return matcher.group(1);</span>
         }
-<span class="nc" id="L337">        return &quot;smart&quot;;</span>
+<span class="nc" id="L335">        return &quot;smart&quot;;</span>
     }
 
     private String parseBeanMetaScope(int defLine) {
-<span class="nc" id="L341">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L342">        Matcher matcher = META_SCOPE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L343" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L344">            return matcher.group(1);</span>
+<span class="nc" id="L339">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L340">        Matcher matcher = META_SCOPE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L342">            return matcher.group(1);</span>
         }
-<span class="nc" id="L346">        return &quot;smart&quot;;</span>
+<span class="nc" id="L344">        return &quot;smart&quot;;</span>
     }
 
     private String parseBeanBuilderScope(int defLine) {
-<span class="nc" id="L350">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L351">        Matcher matcher = BUILDER_SCOPE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L352" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L353">            return matcher.group(1);</span>
+<span class="nc" id="L348">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L349">        Matcher matcher = BUILDER_SCOPE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L351">            return matcher.group(1);</span>
         }
-<span class="nc" id="L355">        return &quot;smart&quot;;</span>
+<span class="nc" id="L353">        return &quot;smart&quot;;</span>
     }
 
     private String parseFactoryName(int defLine) {
-<span class="nc" id="L359">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L360">        Matcher matcher = FACTORY_NAME_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L362">            return matcher.group(1);</span>
+<span class="nc" id="L357">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L358">        Matcher matcher = FACTORY_NAME_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L360">            return matcher.group(1);</span>
         }
-<span class="nc" id="L364">        return &quot;&quot;;</span>
+<span class="nc" id="L362">        return &quot;&quot;;</span>
     }
 
     private String parseBeanHierarchy(int defLine) {
-<span class="nc" id="L368">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L369">        Matcher matcher = HIERARCHY_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L371">            return matcher.group(1);</span>
+<span class="nc" id="L366">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L367">        Matcher matcher = HIERARCHY_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L369">            return matcher.group(1);</span>
         }
-<span class="nc" id="L373">        return &quot;&quot;;</span>
+<span class="nc" id="L371">        return &quot;&quot;;</span>
     }
 
     private boolean parseCacheHashCode(int defLine) {
-<span class="nc" id="L377">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L378">        Matcher matcher = CACHE_HASH_CODE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L379" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L380">            return Boolean.valueOf(matcher.group(1));</span>
+<span class="nc" id="L375">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L376">        Matcher matcher = CACHE_HASH_CODE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L378">            return Boolean.valueOf(matcher.group(1));</span>
         }
-<span class="nc" id="L382">        return false;</span>
+<span class="nc" id="L380">        return false;</span>
     }
 
     private String parseCloneStyle(int defLine) {
-<span class="nc" id="L386">        String line = content.get(defLine).trim();</span>
-<span class="nc" id="L387">        Matcher matcher = CLONE_STYLE_PATTERN.matcher(line);</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">        if (matcher.matches()) {</span>
-<span class="nc" id="L389">            return matcher.group(1);</span>
+<span class="nc" id="L384">        String line = content.get(defLine).trim();</span>
+<span class="nc" id="L385">        Matcher matcher = CLONE_STYLE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">        if (matcher.matches()) {</span>
+<span class="nc" id="L387">            return matcher.group(1);</span>
         }
-<span class="nc" id="L391">        return &quot;smart&quot;;</span>
+<span class="nc" id="L389">        return &quot;smart&quot;;</span>
     }
 
     private boolean parseConstructable(int defLine) {
-<span class="nc bnc" id="L395" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">            if (content.get(index).contains(&quot; abstract class &quot;)) {</span>
-<span class="nc" id="L397">                return false;</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">            if (content.get(index).contains(&quot; abstract class &quot;)) {</span>
+<span class="nc" id="L395">                return false;</span>
             }
         }
-<span class="nc" id="L400">        return true;</span>
+<span class="nc" id="L398">        return true;</span>
     }
 
     private String[] parseBeanType(int defLine) {
-<span class="nc" id="L404">        Matcher matcher = BEAN_TYPE.matcher(&quot;&quot;);</span>
-<span class="nc bnc" id="L405" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L406">            String line = content.get(index);</span>
-<span class="nc" id="L407">            matcher.reset(line);</span>
-<span class="nc bnc" id="L408" title="All 2 branches missed.">            if (matcher.matches()) {</span>
-<span class="nc" id="L409">                String startStr = line.substring(0, matcher.start(1));</span>
-<span class="nc bnc" id="L410" title="All 4 branches missed.">                String fnl = startStr.contains(&quot; final &quot;) || startStr.startsWith(&quot;final &quot;) ? &quot;final&quot; : null;</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">                String scope = startStr.contains(&quot;public &quot;) ? &quot;public&quot; : &quot;package&quot;;</span>
-<span class="nc bnc" id="L412" title="All 2 branches missed.">                scope = startStr.contains(&quot;protected &quot;) ? &quot;protected&quot; : scope;</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">                scope = startStr.contains(&quot;private &quot;) ? &quot;private&quot; : scope;</span>
-<span class="nc" id="L414">                return new String[] {fnl, scope, matcher.group(1), matcher.group(2), matcher.group(3),</span>
-<span class="nc" id="L415">                        matcher.group(4), matcher.group(5), matcher.group(6), matcher.group(7), matcher.group(8)};</span>
+<span class="nc" id="L402">        Matcher matcher = BEAN_TYPE.matcher(&quot;&quot;);</span>
+<span class="nc bnc" id="L403" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L404">            String line = content.get(index);</span>
+<span class="nc" id="L405">            matcher.reset(line);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">            if (matcher.matches()) {</span>
+<span class="nc" id="L407">                String startStr = line.substring(0, matcher.start(1));</span>
+<span class="nc bnc" id="L408" title="All 4 branches missed.">                String fnl = startStr.contains(&quot; final &quot;) || startStr.startsWith(&quot;final &quot;) ? &quot;final&quot; : null;</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">                String scope = startStr.contains(&quot;public &quot;) ? &quot;public&quot; : &quot;package&quot;;</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">                scope = startStr.contains(&quot;protected &quot;) ? &quot;protected&quot; : scope;</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">                scope = startStr.contains(&quot;private &quot;) ? &quot;private&quot; : scope;</span>
+<span class="nc" id="L412">                return new String[] {fnl, scope, matcher.group(1), matcher.group(2), matcher.group(3),</span>
+<span class="nc" id="L413">                        matcher.group(4), matcher.group(5), matcher.group(6), matcher.group(7), matcher.group(8)};</span>
             }
-<span class="nc bnc" id="L417" title="All 2 branches missed.">            if (line.contains(AUTOGENERATED_START_TEXT)) {</span>
-<span class="nc" id="L418">                break;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">            if (line.contains(AUTOGENERATED_START_TEXT)) {</span>
+<span class="nc" id="L416">                break;</span>
             }
         }
-<span class="nc" id="L421">        throw new BeanCodeGenException(&quot;Unable to locate bean class name&quot;, file, beanDefIndex);</span>
+<span class="nc" id="L419">        throw new BeanCodeGenException(&quot;Unable to locate bean class name&quot;, file, beanDefIndex);</span>
     }
 
     private String[] parseBeanSuperType(String classHeaderAfterType) {
         // this uses classHeaderAfterType as extends has two meanings in class headers
         // search for implements
-<span class="nc" id="L427">        Matcher matcherImplements = SUPER_IMPL_TYPE.matcher(classHeaderAfterType);</span>
-<span class="nc bnc" id="L428" title="All 2 branches missed.">        if (matcherImplements.matches()) {</span>
-<span class="nc" id="L429">            return new String[] {matcherImplements.group(1)};</span>
+<span class="nc" id="L425">        Matcher matcherImplements = SUPER_IMPL_TYPE.matcher(classHeaderAfterType);</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">        if (matcherImplements.matches()) {</span>
+<span class="nc" id="L427">            return new String[] {matcherImplements.group(1)};</span>
         }
         // search for extends
-<span class="nc" id="L432">        Matcher matcherExtends = SUPER_TYPE.matcher(classHeaderAfterType);</span>
-<span class="nc bnc" id="L433" title="All 2 branches missed.">        if (matcherExtends.matches()) {</span>
-<span class="nc" id="L434">            return new String[] {matcherExtends.group(1), matcherExtends.group(2), matcherExtends.group(3),</span>
-<span class="nc" id="L435">                    matcherExtends.group(4), matcherExtends.group(5)};</span>
+<span class="nc" id="L430">        Matcher matcherExtends = SUPER_TYPE.matcher(classHeaderAfterType);</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">        if (matcherExtends.matches()) {</span>
+<span class="nc" id="L432">            return new String[] {matcherExtends.group(1), matcherExtends.group(2), matcherExtends.group(3),</span>
+<span class="nc" id="L433">                    matcherExtends.group(4), matcherExtends.group(5)};</span>
         }
-<span class="nc" id="L437">        throw new BeanCodeGenException(&quot;Unable to locate bean superclass&quot;, file, beanDefIndex);</span>
+<span class="nc" id="L435">        throw new BeanCodeGenException(&quot;Unable to locate bean superclass&quot;, file, beanDefIndex);</span>
     }
 
     private boolean parseSerializable(String classHeaderAfterType) {
-<span class="nc" id="L441">        return SERIALIZABLE_TYPE.matcher(classHeaderAfterType).matches();</span>
+<span class="nc" id="L439">        return SERIALIZABLE_TYPE.matcher(classHeaderAfterType).matches();</span>
     }
 
     private boolean parseManualSerializationId(int defLine) {
-<span class="nc bnc" id="L445" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
-<span class="nc bnc" id="L446" title="All 2 branches missed.">            if (content.get(index).trim().startsWith(&quot;private static final long serialVersionUID&quot;)) {</span>
-<span class="nc" id="L447">                return true;</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">            if (content.get(index).trim().startsWith(&quot;private static final long serialVersionUID&quot;)) {</span>
+<span class="nc" id="L445">                return true;</span>
             }
         }
-<span class="nc" id="L450">        return false;</span>
+<span class="nc" id="L448">        return false;</span>
     }
 
     private int parseImmutableConstructor(int defLine) {
-<span class="nc" id="L454">        int found = CONSTRUCTOR_NONE;</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc bnc" id="L456" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutableConstructor&quot;)) {</span>
-<span class="nc bnc" id="L457" title="All 2 branches missed.">                if (found &gt; 0) {</span>
-<span class="nc" id="L458">                    throw new BeanCodeGenException(&quot;Only one @ImmutableConstructor may be specified&quot;, file, index);</span>
+<span class="nc" id="L452">        int found = CONSTRUCTOR_NONE;</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutableConstructor&quot;)) {</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">                if (found &gt; 0) {</span>
+<span class="nc" id="L456">                    throw new BeanCodeGenException(&quot;Only one @ImmutableConstructor may be specified&quot;, file, index);</span>
                 }
-<span class="nc" id="L460">                found = CONSTRUCTOR_BY_ARGS;</span>
-<span class="nc bnc" id="L461" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
-<span class="nc" id="L462">                    String nextLine = content.get(index + 1);</span>
-<span class="nc bnc" id="L463" title="All 4 branches missed.">                    if (nextLine.contains(&quot;Builder &quot;) || nextLine.contains(&quot;Builder&lt;&quot;)) {</span>
-<span class="nc" id="L464">                        found = CONSTRUCTOR_BY_BUILDER;</span>
+<span class="nc" id="L458">                found = CONSTRUCTOR_BY_ARGS;</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
+<span class="nc" id="L460">                    String nextLine = content.get(index + 1);</span>
+<span class="nc bnc" id="L461" title="All 4 branches missed.">                    if (nextLine.contains(&quot;Builder &quot;) || nextLine.contains(&quot;Builder&lt;&quot;)) {</span>
+<span class="nc" id="L462">                        found = CONSTRUCTOR_BY_BUILDER;</span>
                     }
                 }
             }
         }
-<span class="nc" id="L469">        return found;</span>
+<span class="nc" id="L467">        return found;</span>
     }
 
     private String parseImmutableValidator(int defLine) {
-<span class="nc" id="L473">        boolean found = false;</span>
-<span class="nc bnc" id="L474" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutableValidator&quot;)) {</span>
-<span class="nc bnc" id="L476" title="All 2 branches missed.">                if (found) {</span>
-<span class="nc" id="L477">                    throw new BeanCodeGenException(&quot;Only one @ImmutableValidator may be specified&quot;, file, index);</span>
+<span class="nc" id="L471">        boolean found = false;</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutableValidator&quot;)) {</span>
+<span class="nc bnc" id="L474" title="All 2 branches missed.">                if (found) {</span>
+<span class="nc" id="L475">                    throw new BeanCodeGenException(&quot;Only one @ImmutableValidator may be specified&quot;, file, index);</span>
                 }
-<span class="nc" id="L479">                found = true;</span>
-<span class="nc bnc" id="L480" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
-<span class="nc" id="L481">                    String nextLine = content.get(index + 1);</span>
-<span class="nc" id="L482">                    Matcher matcher = VALIDATOR_PATTERN.matcher(nextLine);</span>
-<span class="nc bnc" id="L483" title="All 2 branches missed.">                    if (matcher.matches()) {</span>
-<span class="nc" id="L484">                        return matcher.group(1);</span>
+<span class="nc" id="L477">                found = true;</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
+<span class="nc" id="L479">                    String nextLine = content.get(index + 1);</span>
+<span class="nc" id="L480">                    Matcher matcher = VALIDATOR_PATTERN.matcher(nextLine);</span>
+<span class="nc bnc" id="L481" title="All 2 branches missed.">                    if (matcher.matches()) {</span>
+<span class="nc" id="L482">                        return matcher.group(1);</span>
                     }
-<span class="nc" id="L486">                    throw new BeanCodeGenException(</span>
+<span class="nc" id="L484">                    throw new BeanCodeGenException(</span>
                         &quot;@ImmutableValidator method must be private void and no-args&quot;, file, index + 1);
                 }
             }
         }
-<span class="nc" id="L491">        return null;</span>
+<span class="nc" id="L489">        return null;</span>
     }
 
     private String parseImmutableDefaults(int defLine) {
-<span class="nc" id="L495">        boolean found = false;</span>
-<span class="nc bnc" id="L496" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc bnc" id="L497" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutableDefaults&quot;)) {</span>
-<span class="nc bnc" id="L498" title="All 2 branches missed.">                if (found) {</span>
-<span class="nc" id="L499">                    throw new BeanCodeGenException(&quot;Only one @ImmutableDefaults may be specified&quot;, file, index);</span>
+<span class="nc" id="L493">        boolean found = false;</span>
+<span class="nc bnc" id="L494" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutableDefaults&quot;)) {</span>
+<span class="nc bnc" id="L496" title="All 2 branches missed.">                if (found) {</span>
+<span class="nc" id="L497">                    throw new BeanCodeGenException(&quot;Only one @ImmutableDefaults may be specified&quot;, file, index);</span>
                 }
-<span class="nc" id="L501">                found = true;</span>
-<span class="nc bnc" id="L502" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
-<span class="nc" id="L503">                    String nextLine = content.get(index + 1);</span>
-<span class="nc" id="L504">                    Matcher matcher = DEFAULTS_PATTERN.matcher(nextLine);</span>
-<span class="nc bnc" id="L505" title="All 2 branches missed.">                    if (matcher.matches()) {</span>
-<span class="nc" id="L506">                        return matcher.group(1);</span>
+<span class="nc" id="L499">                found = true;</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
+<span class="nc" id="L501">                    String nextLine = content.get(index + 1);</span>
+<span class="nc" id="L502">                    Matcher matcher = DEFAULTS_PATTERN.matcher(nextLine);</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">                    if (matcher.matches()) {</span>
+<span class="nc" id="L504">                        return matcher.group(1);</span>
                     }
-<span class="nc" id="L508">                    throw new BeanCodeGenException(</span>
+<span class="nc" id="L506">                    throw new BeanCodeGenException(</span>
                         &quot;@ImmutableDefaults method must be private static void and have one argument of type 'Builder'&quot;,
                         file, index + 1);
                 }
             }
         }
-<span class="nc" id="L514">        return null;</span>
+<span class="nc" id="L512">        return null;</span>
     }
 
     private String parseImmutablePreBuild(int defLine) {
-<span class="nc" id="L518">        boolean found = false;</span>
-<span class="nc bnc" id="L519" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
-<span class="nc bnc" id="L520" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutablePreBuild&quot;)) {</span>
-<span class="nc bnc" id="L521" title="All 2 branches missed.">                if (found) {</span>
-<span class="nc" id="L522">                    throw new BeanCodeGenException(&quot;Only one @ImmutablePreBuild may be specified&quot;, file, index);</span>
+<span class="nc" id="L516">        boolean found = false;</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">        for (int index = defLine; index &lt; content.size(); index++) {</span>
+<span class="nc bnc" id="L518" title="All 2 branches missed.">            if (content.get(index).trim().equals(&quot;@ImmutablePreBuild&quot;)) {</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">                if (found) {</span>
+<span class="nc" id="L520">                    throw new BeanCodeGenException(&quot;Only one @ImmutablePreBuild may be specified&quot;, file, index);</span>
                 }
-<span class="nc" id="L524">                found = true;</span>
-<span class="nc bnc" id="L525" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
-<span class="nc" id="L526">                    String nextLine = content.get(index + 1);</span>
-<span class="nc" id="L527">                    Matcher matcher = DEFAULTS_PATTERN.matcher(nextLine);</span>
-<span class="nc bnc" id="L528" title="All 2 branches missed.">                    if (matcher.matches()) {</span>
-<span class="nc" id="L529">                        return matcher.group(1);</span>
+<span class="nc" id="L522">                found = true;</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">                if (index + 1 &lt; content.size()) {</span>
+<span class="nc" id="L524">                    String nextLine = content.get(index + 1);</span>
+<span class="nc" id="L525">                    Matcher matcher = DEFAULTS_PATTERN.matcher(nextLine);</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">                    if (matcher.matches()) {</span>
+<span class="nc" id="L527">                        return matcher.group(1);</span>
                     }
-<span class="nc" id="L531">                    throw new BeanCodeGenException(</span>
+<span class="nc" id="L529">                    throw new BeanCodeGenException(</span>
                         &quot;@ImmutablePreBuild method must be private static void and have one argument of type 'Builder'&quot;,
                         file, index + 1);
                 }
             }
         }
-<span class="nc" id="L537">        return null;</span>
+<span class="nc" id="L535">        return null;</span>
     }
 
     private List&lt;PropertyGen&gt; parseProperties(BeanData data) {
-<span class="nc" id="L541">        List&lt;PropertyGen&gt; props = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L542" title="All 2 branches missed.">        for (int index = 0; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L543">            String line = content.get(index).trim();</span>
-<span class="nc" id="L544">            PropertyParser parser = new PropertyParser(this);</span>
-<span class="nc bnc" id="L545" title="All 2 branches missed.">            if (line.startsWith(&quot;@PropertyDefinition&quot;)) {</span>
-<span class="nc" id="L546">                PropertyGen prop = parser.parse(data, content, index);</span>
-<span class="nc" id="L547">                props.add(prop);</span>
-<span class="nc" id="L548">                data.getProperties().add(prop.getData());</span>
-<span class="nc bnc" id="L549" title="All 2 branches missed.">            } else if (line.startsWith(&quot;@DerivedProperty&quot;)) {</span>
-<span class="nc" id="L550">                PropertyGen prop = parser.parseDerived(data, content, index);</span>
-<span class="nc" id="L551">                props.add(prop);</span>
-<span class="nc" id="L552">                data.getProperties().add(prop.getData());</span>
+<span class="nc" id="L539">        List&lt;PropertyGen&gt; props = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">        for (int index = 0; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L541">            String line = content.get(index).trim();</span>
+<span class="nc" id="L542">            PropertyParser parser = new PropertyParser(this);</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">            if (line.startsWith(&quot;@PropertyDefinition&quot;)) {</span>
+<span class="nc" id="L544">                PropertyGen prop = parser.parse(data, content, index);</span>
+<span class="nc" id="L545">                props.add(prop);</span>
+<span class="nc" id="L546">                data.getProperties().add(prop.getData());</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">            } else if (line.startsWith(&quot;@DerivedProperty&quot;)) {</span>
+<span class="nc" id="L548">                PropertyGen prop = parser.parseDerived(data, content, index);</span>
+<span class="nc" id="L549">                props.add(prop);</span>
+<span class="nc" id="L550">                data.getProperties().add(prop.getData());</span>
             }
         }
-<span class="nc" id="L555">        return props;</span>
+<span class="nc" id="L553">        return props;</span>
     }
 
     private int parseStartAutogen() {
-<span class="nc bnc" id="L559" title="All 2 branches missed.">        for (int index = 0; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L560">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L561" title="All 2 branches missed.">            if (line.contains(&quot; AUTOGENERATED START &quot;)) {</span>
-<span class="nc" id="L562">                content.set(index, AUTOGENERATED_START);</span>
-<span class="nc" id="L563">                return index;</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">        for (int index = 0; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L558">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">            if (line.contains(&quot; AUTOGENERATED START &quot;)) {</span>
+<span class="nc" id="L560">                content.set(index, AUTOGENERATED_START);</span>
+<span class="nc" id="L561">                return index;</span>
             }
         }
-<span class="nc bnc" id="L566" title="All 2 branches missed.">        for (int index = content.size() - 1; index &gt;= 0; index--) {</span>
-<span class="nc" id="L567">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L568" title="All 2 branches missed.">            if (line.equals(&quot;}&quot;)) {</span>
-<span class="nc" id="L569">                content.add(index, AUTOGENERATED_START);</span>
-<span class="nc" id="L570">                return index;</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">        for (int index = content.size() - 1; index &gt;= 0; index--) {</span>
+<span class="nc" id="L565">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">            if (line.equals(&quot;}&quot;)) {</span>
+<span class="nc" id="L567">                content.add(index, AUTOGENERATED_START);</span>
+<span class="nc" id="L568">                return index;</span>
             }
-<span class="nc bnc" id="L572" title="All 2 branches missed.">            if (line.length() &gt; 0) {</span>
-<span class="nc" id="L573">                break;</span>
+<span class="nc bnc" id="L570" title="All 2 branches missed.">            if (line.length() &gt; 0) {</span>
+<span class="nc" id="L571">                break;</span>
             }
         }
-<span class="nc" id="L576">        throw new BeanCodeGenException(&quot;Unable to locate start autogeneration point&quot;, file, beanDefIndex);</span>
+<span class="nc" id="L574">        throw new BeanCodeGenException(&quot;Unable to locate start autogeneration point&quot;, file, beanDefIndex);</span>
     }
 
     private int parseEndAutogen() {
-<span class="nc bnc" id="L580" title="All 2 branches missed.">        for (int index = autoStartIndex; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L581">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L582" title="All 2 branches missed.">            if (line.contains(&quot; AUTOGENERATED END &quot;)) {</span>
-<span class="nc" id="L583">                content.set(index, AUTOGENERATED_END);</span>
-<span class="nc" id="L584">                return index;</span>
+<span class="nc bnc" id="L578" title="All 2 branches missed.">        for (int index = autoStartIndex; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L579">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L580" title="All 2 branches missed.">            if (line.contains(&quot; AUTOGENERATED END &quot;)) {</span>
+<span class="nc" id="L581">                content.set(index, AUTOGENERATED_END);</span>
+<span class="nc" id="L582">                return index;</span>
             }
         }
-<span class="nc" id="L587">        content.add(autoStartIndex + 1, AUTOGENERATED_END);</span>
-<span class="nc" id="L588">        return autoStartIndex + 1;</span>
+<span class="nc" id="L585">        content.add(autoStartIndex + 1, AUTOGENERATED_END);</span>
+<span class="nc" id="L586">        return autoStartIndex + 1;</span>
     }
 
     private boolean parseManualClone(int defLine) {
-<span class="nc bnc" id="L592" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
-<span class="nc" id="L593">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L594" title="All 4 branches missed.">            if (line.startsWith(&quot;public &quot;) &amp;&amp; line.endsWith(&quot; clone() {&quot;)) {</span>
-<span class="nc" id="L595">                return true;</span>
+<span class="nc bnc" id="L590" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
+<span class="nc" id="L591">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L592" title="All 4 branches missed.">            if (line.startsWith(&quot;public &quot;) &amp;&amp; line.endsWith(&quot; clone() {&quot;)) {</span>
+<span class="nc" id="L593">                return true;</span>
             }
         }
-<span class="nc bnc" id="L598" title="All 2 branches missed.">        for (int index = autoEndIndex; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L599">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L600" title="All 4 branches missed.">            if (line.startsWith(&quot;public &quot;) &amp;&amp; line.endsWith(&quot; clone() {&quot;)) {</span>
-<span class="nc" id="L601">                return true;</span>
+<span class="nc bnc" id="L596" title="All 2 branches missed.">        for (int index = autoEndIndex; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L597">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L598" title="All 4 branches missed.">            if (line.startsWith(&quot;public &quot;) &amp;&amp; line.endsWith(&quot; clone() {&quot;)) {</span>
+<span class="nc" id="L599">                return true;</span>
             }
         }
-<span class="nc" id="L604">        return false;</span>
+<span class="nc" id="L602">        return false;</span>
     }
 
     private boolean parseManualEqualsHashCode(int defLine) {
-<span class="nc bnc" id="L608" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
-<span class="nc" id="L609">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L610" title="All 6 branches missed.">            if (line.equals(&quot;public int hashCode() {&quot;) || (line.startsWith(&quot;public boolean equals(&quot;) &amp;&amp; line.endsWith(&quot;) {&quot;))) {</span>
-<span class="nc" id="L611">                return true;</span>
+<span class="nc bnc" id="L606" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
+<span class="nc" id="L607">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L608" title="All 6 branches missed.">            if (line.equals(&quot;public int hashCode() {&quot;) || (line.startsWith(&quot;public boolean equals(&quot;) &amp;&amp; line.endsWith(&quot;) {&quot;))) {</span>
+<span class="nc" id="L609">                return true;</span>
             }
         }
-<span class="nc bnc" id="L614" title="All 2 branches missed.">        for (int index = autoEndIndex; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L615">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L616" title="All 6 branches missed.">            if (line.equals(&quot;public int hashCode() {&quot;) || (line.startsWith(&quot;public boolean equals(&quot;) &amp;&amp; line.endsWith(&quot;) {&quot;))) {</span>
-<span class="nc" id="L617">                return true;</span>
+<span class="nc bnc" id="L612" title="All 2 branches missed.">        for (int index = autoEndIndex; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L613">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L614" title="All 6 branches missed.">            if (line.equals(&quot;public int hashCode() {&quot;) || (line.startsWith(&quot;public boolean equals(&quot;) &amp;&amp; line.endsWith(&quot;) {&quot;))) {</span>
+<span class="nc" id="L615">                return true;</span>
             }
         }
-<span class="nc" id="L620">        return false;</span>
+<span class="nc" id="L618">        return false;</span>
     }
 
     private boolean parseManualToStringCode(int defLine) {
-<span class="nc bnc" id="L624" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
-<span class="nc" id="L625">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L626" title="All 2 branches missed.">            if (line.equals(&quot;public String toString() {&quot;)) {</span>
-<span class="nc" id="L627">                return true;</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">        for (int index = defLine; index &lt; autoStartIndex; index++) {</span>
+<span class="nc" id="L623">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L624" title="All 2 branches missed.">            if (line.equals(&quot;public String toString() {&quot;)) {</span>
+<span class="nc" id="L625">                return true;</span>
             }
         }
-<span class="nc bnc" id="L630" title="All 2 branches missed.">        for (int index = autoEndIndex; index &lt; content.size(); index++) {</span>
-<span class="nc" id="L631">            String line = content.get(index).trim();</span>
-<span class="nc bnc" id="L632" title="All 2 branches missed.">            if (line.equals(&quot;public String toString() {&quot;)) {</span>
-<span class="nc" id="L633">                return true;</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">        for (int index = autoEndIndex; index &lt; content.size(); index++) {</span>
+<span class="nc" id="L629">            String line = content.get(index).trim();</span>
+<span class="nc bnc" id="L630" title="All 2 branches missed.">            if (line.equals(&quot;public String toString() {&quot;)) {</span>
+<span class="nc" id="L631">                return true;</span>
             }
         }
-<span class="nc" id="L636">        return false;</span>
+<span class="nc" id="L634">        return false;</span>
     }
 
 }

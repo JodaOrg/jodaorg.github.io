@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanReferences.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser.bin</a> &gt; <span class="el_source">BeanReferences.java</span></div><h1>BeanReferences.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser.bin;
+
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.toList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.StreamSupport;
+
+import org.joda.beans.Bean;
+import org.joda.beans.ImmutableBean;
+import org.joda.beans.MetaBean;
+import org.joda.beans.MetaProperty;
+import org.joda.beans.ser.JodaBeanSer;
+import org.joda.beans.ser.SerCategory;
+import org.joda.beans.ser.SerDeserializer;
+import org.joda.beans.ser.SerIterator;
+import org.joda.beans.ser.SerOptional;
+
+/**
+ * Stores information on the references in a bean.
+ */
+final class BeanReferences {
+
+    /**
+     * The settings.
+     */
+    private final JodaBeanSer settings;
+    /**
+     * The classes that are being serialized.
+     */
+<span class="fc" id="L52">    private final Map&lt;Class&lt;?&gt;, ClassInfo&gt; classes = new HashMap&lt;&gt;();</span>
+    /**
+     * The amount of time each class needs to have its type serialized, linked for stability.
+     */
+<span class="fc" id="L56">    private final Map&lt;Class&lt;?&gt;, Integer&gt; classSerializationCount = new LinkedHashMap&lt;&gt;();</span>
+    /**
+     * The sorted class infos.
+     */
+<span class="fc" id="L60">    private final List&lt;ClassInfo&gt; classInfoList = new ArrayList&lt;&gt;();</span>
+    /**
+     * The serialized objects that are repeated and require references.
+     */
+<span class="fc" id="L64">    private final Map&lt;Object, Ref&gt; refs = new HashMap&lt;&gt;();</span>
+
+    // finds 
+    static BeanReferences find(ImmutableBean root, JodaBeanSer settings) {
+<span class="fc" id="L68">        BeanReferences references = new BeanReferences(settings);</span>
+<span class="fc" id="L69">        references.findReferences(root);</span>
+<span class="fc" id="L70">        return references;</span>
+    }
+
+    // creates an instance
+<span class="fc" id="L74">    private BeanReferences(JodaBeanSer settings) {</span>
+<span class="fc" id="L75">        this.settings = settings;</span>
+<span class="fc" id="L76">    }</span>
+
+    //-----------------------------------------------------------------------
+    // finds classes and references within the bean
+    private void findReferences(ImmutableBean root) {
+        // handle root bean
+<span class="fc" id="L82">        classes.put(root.getClass(), classInfoFromMetaBean(root.metaBean(), root.getClass()));</span>
+<span class="fc" id="L83">        classSerializationCount.put(root.getClass(), 1);</span>
+
+        // recursively check object graph
+<span class="fc" id="L86">        Map&lt;Object, Integer&gt; objects = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L87">        findReferencesBean(root, root.getClass(), objects, null);</span>
+
+        // build up the list of references, but only for those instances that are repeated
+<span class="fc" id="L90">        List&lt;Map.Entry&lt;Object, Integer&gt;&gt; refEntries = objects.entrySet().stream()</span>
+<span class="fc" id="L91">                .sorted(reverseOrder(comparingInt(Map.Entry::getValue)))</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                .filter(entry -&gt; entry.getValue() &gt; 1)</span>
+<span class="fc" id="L93">                .collect(toList());</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (Map.Entry&lt;Object, Integer&gt; entry : refEntries) {</span>
+<span class="fc" id="L95">            Object value = entry.getKey();</span>
+<span class="fc" id="L96">            Class&lt;?&gt; realType = value.getClass();</span>
+
+            // simple types do not need references
+<span class="pc bpc" id="L99" title="8 of 16 branches missed.">            if (realType != Integer.class &amp;&amp;</span>
+                    realType != Double.class &amp;&amp;
+                    realType != Float.class &amp;&amp;
+                    realType != Boolean.class &amp;&amp;
+                    realType != Long.class &amp;&amp;
+                    realType != Short.class &amp;&amp;
+                    realType != Byte.class &amp;&amp;
+                    realType != byte[].class) {
+
+<span class="fc" id="L108">                refs.put(value, new Ref(false, refs.size()));</span>
+            }
+<span class="fc" id="L110">        }</span>
+        
+        // reorder classes so the most repeated serialized names have the lowest number (hence the shortest extension)
+<span class="fc" id="L113">        this.classInfoList.addAll(classSerializationCount.entrySet().stream()</span>
+<span class="fc" id="L114">                .sorted(reverseOrder(comparingInt(Map.Entry::getValue)))</span>
+<span class="fc" id="L115">                .map(entry -&gt; classes.get(entry.getKey()))</span>
+<span class="fc" id="L116">                .collect(toList()));</span>
+
+        // adjust the position in the ClassInfo instance
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        for (int position = 0; position &lt; classInfoList.size(); position++) {</span>
+<span class="fc" id="L120">            ClassInfo classInfo = classInfoList.get(position);</span>
+<span class="fc" id="L121">            classInfo.position = position;</span>
+        }
+<span class="fc" id="L123">    }</span>
+
+    // recursively find the references
+    private void findReferencesBean(
+            Object base,
+            Class&lt;?&gt; declaredClass,
+            Map&lt;Object, Integer&gt; objects,
+            SerIterator parentIterator) {
+
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (base == null) {</span>
+<span class="nc" id="L133">            return;</span>
+        }
+
+        // has this object been seen before, if so no need to check it again
+<span class="fc" id="L137">        int result = objects.compute(base, BeanReferences::incrementOrOne);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (result &gt; 1) {</span>
+<span class="fc" id="L139">            return;</span>
+        }
+
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (base instanceof Bean) {</span>
+<span class="fc" id="L143">            addClassInfo(base, declaredClass);</span>
+<span class="fc" id="L144">            Bean bean = (Bean) base;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            if (settings.getConverter().isConvertible(bean.getClass())) {</span>
+<span class="fc" id="L146">                return;</span>
+            }
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">            for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">                if (settings.isSerialized(prop)) {</span>
+<span class="fc" id="L151">                    Object value = prop.get(bean);</span>
+<span class="fc" id="L152">                    Class&lt;?&gt; type = SerOptional.extractType(prop, base.getClass());</span>
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                    if (value != null) {</span>
+<span class="fc" id="L155">                        SerIterator itemIterator = settings.getIteratorFactory().create(value, prop, bean.getClass());</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">                        if (itemIterator != null) {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">                            if (itemIterator.metaTypeRequired()) {</span>
+<span class="fc" id="L158">                                objects.compute(itemIterator.metaTypeName(), BeanReferences::incrementOrOne);</span>
+                            }
+<span class="fc" id="L160">                            findReferencesIterable(itemIterator, objects);</span>
+                        } else {
+<span class="fc" id="L162">                            findReferencesBean(value, type, objects, null);</span>
+                        }
+<span class="fc" id="L164">                    } else {</span>
+                        // In case it's a null value or optional field
+<span class="fc" id="L166">                        addClassInfo(type, type);</span>
+                    }
+                }
+<span class="fc" id="L169">            }</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        } else if (parentIterator != null) {</span>
+<span class="fc" id="L171">            SerIterator childIterator = settings.getIteratorFactory().createChild(base, parentIterator);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            if (childIterator != null) {</span>
+<span class="fc" id="L173">                findReferencesIterable(childIterator, objects);</span>
+            } else {
+<span class="fc" id="L175">                addClassInfo(base, declaredClass);</span>
+            }
+<span class="fc" id="L177">        } else {</span>
+<span class="fc" id="L178">            addClassInfo(base, declaredClass);</span>
+        }
+<span class="fc" id="L180">    }</span>
+
+    // recursively find the references in an iterable
+    private void findReferencesIterable(SerIterator itemIterator, Map&lt;Object, Integer&gt; objects) {
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (itemIterator.category() == SerCategory.MAP) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L186">                itemIterator.next();</span>
+<span class="fc" id="L187">                findReferencesBean(itemIterator.key(), itemIterator.keyType(), objects, null);</span>
+<span class="fc" id="L188">                findReferencesBean(itemIterator.value(), itemIterator.valueType(), objects, itemIterator);</span>
+            }
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        } else if (itemIterator.category() == SerCategory.COUNTED) {</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">            while (itemIterator.hasNext()) {</span>
+<span class="nc" id="L192">                itemIterator.next();</span>
+<span class="nc" id="L193">                findReferencesBean(itemIterator.value(), itemIterator.valueType(), objects, itemIterator);</span>
+            }
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        } else if (itemIterator.category() == SerCategory.TABLE) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            while (itemIterator.hasNext()) {</span>
+<span class="nc" id="L197">                itemIterator.next();</span>
+<span class="nc" id="L198">                findReferencesBean(itemIterator.key(), itemIterator.keyType(), objects, null);</span>
+<span class="nc" id="L199">                findReferencesBean(itemIterator.column(), itemIterator.columnType(), objects, null);</span>
+<span class="nc" id="L200">                findReferencesBean(itemIterator.value(), itemIterator.valueType(), objects, itemIterator);</span>
+            }
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">        } else if (itemIterator.category() == SerCategory.GRID) {</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">            while (itemIterator.hasNext()) {</span>
+<span class="nc" id="L204">                itemIterator.next();</span>
+<span class="nc" id="L205">                findReferencesBean(itemIterator.value(), itemIterator.valueType(), objects, itemIterator);</span>
+            }
+        } else {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            while (itemIterator.hasNext()) {</span>
+<span class="fc" id="L209">                itemIterator.next();</span>
+<span class="fc" id="L210">                findReferencesBean(itemIterator.value(), itemIterator.valueType(), objects, itemIterator);</span>
+            }
+        }
+<span class="fc" id="L213">    }</span>
+
+    // add to list of known classes
+    private void addClassInfo(Object value, Class&lt;?&gt; declaredClass) {
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">        if (value instanceof Bean &amp;&amp; !(value instanceof ImmutableBean)) {</span>
+<span class="nc" id="L218">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L219">                    &quot;Can only serialize immutable beans in referencing binary format: &quot; + value.getClass().getName());</span>
+        }
+
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (value instanceof ImmutableBean) {</span>
+<span class="fc" id="L223">            boolean isConvertible = settings.getConverter().isConvertible(value.getClass());</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">            boolean noNeedToSerializeTypeName = declaredClass.equals(value.getClass()) &amp;&amp;</span>
+<span class="fc bfc" id="L225" title="All 4 branches covered.">                    (classes.containsKey(value.getClass()) || isConvertible);</span>
+
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (noNeedToSerializeTypeName) {</span>
+<span class="fc" id="L228">                return;</span>
+            }
+
+<span class="fc" id="L231">            ImmutableBean bean = (ImmutableBean) value;</span>
+            // Don't need metaproperty info if it's a convertible type
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            ClassInfo classInfo = isConvertible ?</span>
+<span class="fc" id="L234">                    new ClassInfo(value.getClass(), new MetaProperty&lt;?&gt;[0]) :</span>
+<span class="fc" id="L235">                    classInfoFromMetaBean(bean.metaBean(), bean.getClass());</span>
+
+<span class="fc" id="L237">            addClassInfoAndIncrementCount(bean.getClass(), classInfo);</span>
+            
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        } else if (value instanceof Class&lt;?&gt;) {</span>
+<span class="fc" id="L240">            Class&lt;?&gt; type = (Class&lt;?&gt;) value;</span>
+<span class="pc bpc" id="L241" title="3 of 4 branches missed.">            if (type.equals(declaredClass) || settings.getConverter().isConvertible(type)) {</span>
+<span class="fc" id="L242">                return;</span>
+            }
+<span class="nc bnc" id="L244" title="All 4 branches missed.">            if (Bean.class.isAssignableFrom(type) &amp;&amp; !ImmutableBean.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L245">                throw new IllegalArgumentException(</span>
+<span class="nc" id="L246">                        &quot;Can only serialize immutable beans in referencing binary format: &quot; + type.getName());</span>
+            }
+<span class="nc bnc" id="L248" title="All 2 branches missed.">            if (ImmutableBean.class.isAssignableFrom(type)) {</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">                if (classes.containsKey(type)) {</span>
+<span class="nc" id="L250">                    classSerializationCount.compute(type, BeanReferences::incrementOrOne);</span>
+<span class="nc" id="L251">                    return;</span>
+                }
+                ClassInfo classInfo;
+<span class="nc bnc" id="L254" title="All 2 branches missed.">                if (settings.getConverter().isConvertible(type)) {</span>
+                    // Don't need metaproperty info if it's a convertible type
+<span class="nc" id="L256">                    classInfo = new ClassInfo(type, new MetaProperty&lt;?&gt;[0]);</span>
+                } else {
+<span class="nc" id="L258">                    SerDeserializer deser = settings.getDeserializers().findDeserializer(type);</span>
+<span class="nc" id="L259">                    MetaBean metaBean = deser.findMetaBean(type);</span>
+<span class="nc" id="L260">                    classInfo = classInfoFromMetaBean(metaBean, type);</span>
+                }
+<span class="nc" id="L262">                addClassInfoAndIncrementCount(type, classInfo);</span>
+            }
+            
+<span class="pc bpc" id="L265" title="1 of 4 branches missed.">        } else if (declaredClass == Object.class &amp;&amp; !value.getClass().equals(String.class)) {</span>
+<span class="nc" id="L266">            Class&lt;?&gt; effectiveType = settings.getConverter().findTypedConverter(value.getClass()).getEffectiveType();</span>
+<span class="nc" id="L267">            ClassInfo classInfo = new ClassInfo(value.getClass(), new MetaProperty&lt;?&gt;[0]);</span>
+<span class="nc" id="L268">            addClassInfoAndIncrementCount(effectiveType, classInfo);</span>
+            
+<span class="pc bfc" id="L270" title="All 2 branches covered.">        } else if (!settings.getConverter().isConvertible(declaredClass)) {</span>
+<span class="fc" id="L271">            ClassInfo classInfo = new ClassInfo(value.getClass(), new MetaProperty&lt;?&gt;[0]);</span>
+<span class="fc" id="L272">            addClassInfoAndIncrementCount(value.getClass(), classInfo);</span>
+        }
+<span class="fc" id="L274">    }</span>
+
+    // adds the class, incrementing the number of times it is used
+    private void addClassInfoAndIncrementCount(Class&lt;?&gt; type, ClassInfo classInfo) {
+<span class="fc" id="L278">        classes.putIfAbsent(type, classInfo);</span>
+<span class="fc" id="L279">        classSerializationCount.compute(type, BeanReferences::incrementOrOne);</span>
+<span class="fc" id="L280">    }</span>
+
+    // converts a meta-bean to a ClassInfo
+    private ClassInfo classInfoFromMetaBean(MetaBean metaBean, Class&lt;?&gt; aClass) {
+<span class="fc" id="L284">        MetaProperty&lt;?&gt;[] metaProperties = StreamSupport.stream(metaBean.metaPropertyIterable().spliterator(), false)</span>
+<span class="fc" id="L285">            .filter(metaProp -&gt; settings.isSerialized(metaProp))</span>
+<span class="fc" id="L286">            .toArray(MetaProperty&lt;?&gt;[]::new);</span>
+
+        // Positions get recreated when all classes have been recorded
+<span class="fc" id="L289">        return new ClassInfo(aClass, metaProperties);</span>
+    }
+
+    // Used in Map#compute so we can initialise all the values to one and then increment
+    private static int incrementOrOne(@SuppressWarnings(&quot;unused&quot;) Object k, Integer i) {
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        return i == null ? 1 : Math.addExact(i, 1);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // gets the map of references
+    Map&lt;Object, Ref&gt; getReferences() {
+<span class="fc" id="L300">        return refs;</span>
+    }
+    
+    List&lt;ClassInfo&gt; getClassInfoList() {
+<span class="fc" id="L304">        return classInfoList;</span>
+    }
+
+    // lookup the class info by type
+    ClassInfo getClassInfo(Class&lt;?&gt; effectiveType) {
+<span class="fc" id="L309">        ClassInfo classInfo = classes.get(effectiveType);</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">        if (classInfo == null) {</span>
+<span class="nc" id="L311">            throw new IllegalStateException(</span>
+<span class="nc" id="L312">                    &quot;Tried to serialise class that wasn't present in bean on first pass: &quot; + effectiveType.getName());</span>
+        }
+<span class="fc" id="L314">        return classInfo;</span>
+    }
+
+    // CSOFF
+    //-----------------------------------------------------------------------
+    // The info needed serialize instances of a class with a reference to the initially serialized class definition
+    static final class ClassInfo {
+
+        // The class itself - not necessary for serialization but here for easier inspection
+        final Class&lt;?&gt; type;
+
+        // The metaproperties (empty if not a bean) in the order in which they need to be serialized
+        final MetaProperty&lt;?&gt;[] metaProperties;
+
+        // The position in the initial class definition list, lower means serialized more often
+        int position;
+
+<span class="fc" id="L331">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
+<span class="fc" id="L332">            this.type = type;</span>
+<span class="fc" id="L333">            this.metaProperties = metaProperties;</span>
+<span class="fc" id="L334">            this.position = -1;</span>
+<span class="fc" id="L335">        }</span>
+
+        @Override
+        public String toString() {
+<span class="nc" id="L339">            return &quot;ClassInfo{&quot; +</span>
+                    &quot;position=&quot; + position +
+                    &quot;, type=&quot; + type +
+<span class="nc" id="L342">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
+                    '}';
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    // The reference itself (position) plus whether it has previously been serialized
+    static final class Ref {
+        boolean hasBeenSerialized;
+        final int position;
+
+<span class="fc" id="L353">        private Ref(boolean hasBeenSerialized, int position) {</span>
+<span class="fc" id="L354">            this.hasBeenSerialized = hasBeenSerialized;</span>
+<span class="fc" id="L355">            this.position = position;</span>
+<span class="fc" id="L356">        }</span>
+
+        void sent() {
+<span class="fc" id="L359">            hasBeenSerialized = true;</span>
+<span class="fc" id="L360">        }</span>
+
+        @Override
+        public String toString() {
+<span class="nc" id="L364">            return &quot;Ref{&quot; +</span>
+                    &quot;hasBeenSerialized=&quot; + hasBeenSerialized +
+                    &quot;, position=&quot; + position +
+                    '}';
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

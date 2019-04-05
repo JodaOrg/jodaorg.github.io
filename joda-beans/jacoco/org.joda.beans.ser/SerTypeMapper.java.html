@@ -30,8 +30,6 @@ import org.joda.convert.RenameHandler;
 
 /**
  * Type mapper for Joda-Bean serialization, used by serialization implementations.
- *
- * @author Stephen Colebourne
  */
 public final class SerTypeMapper {
 
@@ -44,34 +42,34 @@ public final class SerTypeMapper {
      */
     private static final Map&lt;String, Class&lt;?&gt;&gt; BASIC_TYPES_REVERSED;
     static {
-<span class="fc" id="L47">        Map&lt;Class&lt;?&gt;, String&gt; map = new HashMap&lt;&gt;();</span>
-        
-<span class="fc" id="L49">        map.put(String.class, &quot;String&quot;);</span>
-<span class="fc" id="L50">        map.put(Long.class, &quot;Long&quot;);</span>
-<span class="fc" id="L51">        map.put(Integer.class, &quot;Integer&quot;);</span>
-<span class="fc" id="L52">        map.put(Short.class, &quot;Short&quot;);</span>
-<span class="fc" id="L53">        map.put(Byte.class, &quot;Byte&quot;);</span>
-<span class="fc" id="L54">        map.put(Character.class, &quot;Character&quot;);</span>
-<span class="fc" id="L55">        map.put(Boolean.class, &quot;Boolean&quot;);</span>
-<span class="fc" id="L56">        map.put(Double.class, &quot;Double&quot;);</span>
-<span class="fc" id="L57">        map.put(Float.class, &quot;Float&quot;);</span>
-<span class="fc" id="L58">        map.put(BigInteger.class, &quot;BigInteger&quot;);</span>
-<span class="fc" id="L59">        map.put(BigDecimal.class, &quot;BigDecimal&quot;);</span>
-<span class="fc" id="L60">        map.put(Locale.class, &quot;Locale&quot;);</span>
-<span class="fc" id="L61">        map.put(Class.class, &quot;Class&quot;);</span>
-<span class="fc" id="L62">        map.put(UUID.class, &quot;UUID&quot;);</span>
-<span class="fc" id="L63">        map.put(URI.class, &quot;URI&quot;);</span>
-<span class="fc" id="L64">        map.put(File.class, &quot;File&quot;);</span>
+<span class="fc" id="L45">        Map&lt;Class&lt;?&gt;, String&gt; map = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L47">        map.put(String.class, &quot;String&quot;);</span>
+<span class="fc" id="L48">        map.put(Long.class, &quot;Long&quot;);</span>
+<span class="fc" id="L49">        map.put(Integer.class, &quot;Integer&quot;);</span>
+<span class="fc" id="L50">        map.put(Short.class, &quot;Short&quot;);</span>
+<span class="fc" id="L51">        map.put(Byte.class, &quot;Byte&quot;);</span>
+<span class="fc" id="L52">        map.put(Character.class, &quot;Character&quot;);</span>
+<span class="fc" id="L53">        map.put(Boolean.class, &quot;Boolean&quot;);</span>
+<span class="fc" id="L54">        map.put(Double.class, &quot;Double&quot;);</span>
+<span class="fc" id="L55">        map.put(Float.class, &quot;Float&quot;);</span>
+<span class="fc" id="L56">        map.put(BigInteger.class, &quot;BigInteger&quot;);</span>
+<span class="fc" id="L57">        map.put(BigDecimal.class, &quot;BigDecimal&quot;);</span>
+<span class="fc" id="L58">        map.put(Locale.class, &quot;Locale&quot;);</span>
+<span class="fc" id="L59">        map.put(Class.class, &quot;Class&quot;);</span>
+<span class="fc" id="L60">        map.put(UUID.class, &quot;UUID&quot;);</span>
+<span class="fc" id="L61">        map.put(URI.class, &quot;URI&quot;);</span>
+<span class="fc" id="L62">        map.put(File.class, &quot;File&quot;);</span>
         // selection of types are the most common types suitable for reduction
         // and suitable for simple interpretation on non-Java systems
-        
-<span class="fc" id="L68">        Map&lt;String, Class&lt;?&gt;&gt; reversed = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Entry&lt;Class&lt;?&gt;, String&gt; entry : map.entrySet()) {</span>
-<span class="fc" id="L70">            reversed.put(entry.getValue(), entry.getKey());</span>
-<span class="fc" id="L71">        }</span>
-<span class="fc" id="L72">        BASIC_TYPES = Collections.unmodifiableMap(map);</span>
-<span class="fc" id="L73">        BASIC_TYPES_REVERSED = Collections.unmodifiableMap(reversed);</span>
-<span class="fc" id="L74">    }</span>
+
+<span class="fc" id="L66">        Map&lt;String, Class&lt;?&gt;&gt; reversed = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (Entry&lt;Class&lt;?&gt;, String&gt; entry : map.entrySet()) {</span>
+<span class="fc" id="L68">            reversed.put(entry.getValue(), entry.getKey());</span>
+<span class="fc" id="L69">        }</span>
+<span class="fc" id="L70">        BASIC_TYPES = Collections.unmodifiableMap(map);</span>
+<span class="fc" id="L71">        BASIC_TYPES_REVERSED = Collections.unmodifiableMap(reversed);</span>
+<span class="fc" id="L72">    }</span>
 
     /**
      * Creates an instance.
@@ -94,53 +92,53 @@ public final class SerTypeMapper {
      */
     public static String encodeType(Class&lt;?&gt; cls, final JodaBeanSer settings, final String basePackage, final Map&lt;Class&lt;?&gt;, String&gt; knownTypes) {
         // basic type
-<span class="fc" id="L97">        String result = BASIC_TYPES.get(cls);</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (result != null) {</span>
-<span class="fc" id="L99">            return result;</span>
+<span class="fc" id="L95">        String result = BASIC_TYPES.get(cls);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (result != null) {</span>
+<span class="fc" id="L97">            return result;</span>
         }
         // handle enum subclasses
-<span class="fc" id="L102">        Class&lt;?&gt; supr1 = cls.getSuperclass();</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (supr1 != null) {</span>
-<span class="fc" id="L104">            Class&lt;?&gt; supr2 = supr1.getSuperclass();</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (supr2 == Enum.class) {</span>
-<span class="nc" id="L106">                cls = supr1;</span>
+<span class="fc" id="L100">        Class&lt;?&gt; supr1 = cls.getSuperclass();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (supr1 != null) {</span>
+<span class="fc" id="L102">            Class&lt;?&gt; supr2 = supr1.getSuperclass();</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if (supr2 == Enum.class) {</span>
+<span class="nc" id="L104">                cls = supr1;</span>
             }
         }
         // calculate
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (settings.isShortTypes()) {</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (knownTypes != null) {</span>
-<span class="fc" id="L112">                result = knownTypes.get(cls);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">                if (result != null) {</span>
-<span class="fc" id="L114">                    return result;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (settings.isShortTypes()) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (knownTypes != null) {</span>
+<span class="fc" id="L110">                result = knownTypes.get(cls);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                if (result != null) {</span>
+<span class="fc" id="L112">                    return result;</span>
                 }
             }
-<span class="fc" id="L117">            result = cls.getName();</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (basePackage != null &amp;&amp;</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">                    result.startsWith(basePackage) &amp;&amp;</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">                    Character.isUpperCase(result.charAt(basePackage.length())) &amp;&amp;</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">                    BASIC_TYPES_REVERSED.containsKey(result.substring(basePackage.length())) == false) {</span>
+<span class="fc" id="L115">            result = cls.getName();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if (basePackage != null &amp;&amp;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">                    result.startsWith(basePackage) &amp;&amp;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">                    Character.isUpperCase(result.charAt(basePackage.length())) &amp;&amp;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                    BASIC_TYPES_REVERSED.containsKey(result.substring(basePackage.length())) == false) {</span>
                 // use short format
-<span class="fc" id="L123">                result = result.substring(basePackage.length());</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">                if (knownTypes != null) {</span>
-<span class="fc" id="L125">                    knownTypes.put(cls, result);</span>
+<span class="fc" id="L121">                result = result.substring(basePackage.length());</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                if (knownTypes != null) {</span>
+<span class="fc" id="L123">                    knownTypes.put(cls, result);</span>
                 }
             } else {
                 // use long format, short next time if possible
-<span class="fc bfc" id="L129" title="All 2 branches covered.">                if (knownTypes != null) {</span>
-<span class="fc" id="L130">                    String simpleName = cls.getSimpleName();</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">                    if (Character.isUpperCase(simpleName.charAt(0)) &amp;&amp;</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">                            BASIC_TYPES_REVERSED.containsKey(simpleName) == false &amp;&amp;</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">                            knownTypes.containsValue(simpleName) == false) {</span>
-<span class="fc" id="L134">                        knownTypes.put(cls, simpleName);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                if (knownTypes != null) {</span>
+<span class="fc" id="L128">                    String simpleName = cls.getSimpleName();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                    if (Character.isUpperCase(simpleName.charAt(0)) &amp;&amp;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                            BASIC_TYPES_REVERSED.containsKey(simpleName) == false &amp;&amp;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">                            knownTypes.containsValue(simpleName) == false) {</span>
+<span class="fc" id="L132">                        knownTypes.put(cls, simpleName);</span>
                     } else {
-<span class="fc" id="L136">                        knownTypes.put(cls, result);</span>
+<span class="fc" id="L134">                        knownTypes.put(cls, result);</span>
                     }
-<span class="fc" id="L138">                }</span>
+<span class="fc" id="L136">                }</span>
             }
         } else {
-<span class="fc" id="L141">            result = cls.getName();</span>
+<span class="fc" id="L139">            result = cls.getName();</span>
         }
-<span class="fc" id="L143">        return result;</span>
+<span class="fc" id="L141">        return result;</span>
     }
 
     /**
@@ -160,10 +158,10 @@ public final class SerTypeMapper {
     public static Class&lt;?&gt; decodeType(
             String className,
             JodaBeanSer settings,
-            String basePackage, 
+            String basePackage,
             Map&lt;String, Class&lt;?&gt;&gt; knownTypes) throws ClassNotFoundException {
-        
-<span class="fc" id="L166">        return decodeType0(className, settings, basePackage, knownTypes, null);</span>
+
+<span class="fc" id="L164">        return decodeType0(className, settings, basePackage, knownTypes, null);</span>
     }
 
     /**
@@ -184,88 +182,88 @@ public final class SerTypeMapper {
     public static Class&lt;?&gt; decodeType(
             String className,
             JodaBeanSer settings,
-            String basePackage, 
+            String basePackage,
             Map&lt;String, Class&lt;?&gt;&gt; knownTypes,
             Class&lt;?&gt; defaultType) throws ClassNotFoundException {
 
-<span class="fc" id="L191">        return decodeType0(className, settings, basePackage, knownTypes, defaultType);</span>
+<span class="fc" id="L189">        return decodeType0(className, settings, basePackage, knownTypes, defaultType);</span>
     }
 
     // internal type decode
     private static Class&lt;?&gt; decodeType0(
             String className,
             JodaBeanSer settings,
-            String basePackage, 
+            String basePackage,
             Map&lt;String, Class&lt;?&gt;&gt; knownTypes,
             Class&lt;?&gt; defaultType) throws ClassNotFoundException {
 
         // basic type
-<span class="fc" id="L203">        Class&lt;?&gt; result = BASIC_TYPES_REVERSED.get(className);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">        if (result != null) {</span>
-<span class="fc" id="L205">            return result;</span>
+<span class="fc" id="L201">        Class&lt;?&gt; result = BASIC_TYPES_REVERSED.get(className);</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if (result != null) {</span>
+<span class="fc" id="L203">            return result;</span>
         }
         // check cache
-<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (knownTypes != null) {</span>
-<span class="fc" id="L209">            result = knownTypes.get(className);</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">            if (result != null) {</span>
-<span class="fc" id="L211">                return result;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (knownTypes != null) {</span>
+<span class="fc" id="L207">            result = knownTypes.get(className);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            if (result != null) {</span>
+<span class="fc" id="L209">                return result;</span>
             }
         }
         // calculate
-<span class="fc" id="L215">        String fullName = className;</span>
-<span class="fc" id="L216">        boolean expanded = false;</span>
-<span class="fc bfc" id="L217" title="All 6 branches covered.">        if (basePackage != null &amp;&amp; className.length() &gt; 0 &amp;&amp; Character.isUpperCase(className.charAt(0))) {</span>
-<span class="fc" id="L218">            fullName = basePackage + className;</span>
-<span class="fc" id="L219">            expanded = true;</span>
+<span class="fc" id="L213">        String fullName = className;</span>
+<span class="fc" id="L214">        boolean expanded = false;</span>
+<span class="fc bfc" id="L215" title="All 6 branches covered.">        if (basePackage != null &amp;&amp; className.length() &gt; 0 &amp;&amp; Character.isUpperCase(className.charAt(0))) {</span>
+<span class="fc" id="L216">            fullName = basePackage + className;</span>
+<span class="fc" id="L217">            expanded = true;</span>
         }
         try {
-<span class="fc" id="L222">            result = RenameHandler.INSTANCE.lookupType(fullName);</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">            if (knownTypes != null) {</span>
+<span class="fc" id="L220">            result = RenameHandler.INSTANCE.lookupType(fullName);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">            if (knownTypes != null) {</span>
                 // cache full name
-<span class="fc" id="L225">                knownTypes.put(fullName, result);</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">                if (expanded) {</span>
+<span class="fc" id="L223">                knownTypes.put(fullName, result);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                if (expanded) {</span>
                     // cache short name
-<span class="fc" id="L228">                    knownTypes.put(className, result);</span>
+<span class="fc" id="L226">                    knownTypes.put(className, result);</span>
                 } else {
                     // derive and cache short name
-<span class="fc" id="L231">                    String simpleName = result.getSimpleName();</span>
+<span class="fc" id="L229">                    String simpleName = result.getSimpleName();</span>
                     // handle renames
-<span class="fc bfc" id="L233" title="All 2 branches covered.">                    if (fullName.equals(result.getName()) == false &amp;&amp;</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">                            RenameHandler.INSTANCE.getTypeRenames().containsKey(fullName) &amp;&amp;</span>
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">                            result.getEnclosingClass() == null) {</span>
-<span class="fc" id="L236">                        simpleName = fullName.substring(fullName.lastIndexOf(&quot;.&quot;) + 1);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">                    if (fullName.equals(result.getName()) == false &amp;&amp;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">                            RenameHandler.INSTANCE.getTypeRenames().containsKey(fullName) &amp;&amp;</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">                            result.getEnclosingClass() == null) {</span>
+<span class="fc" id="L234">                        simpleName = fullName.substring(fullName.lastIndexOf(&quot;.&quot;) + 1);</span>
                     }
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">                    if (Character.isUpperCase(simpleName.charAt(0)) &amp;&amp;</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">                            BASIC_TYPES_REVERSED.containsKey(simpleName) == false &amp;&amp;</span>
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">                            knownTypes.containsKey(simpleName) == false) {</span>
-<span class="fc" id="L241">                        knownTypes.put(simpleName, result);</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">                    if (Character.isUpperCase(simpleName.charAt(0)) &amp;&amp;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">                            BASIC_TYPES_REVERSED.containsKey(simpleName) == false &amp;&amp;</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">                            knownTypes.containsKey(simpleName) == false) {</span>
+<span class="fc" id="L239">                        knownTypes.put(simpleName, result);</span>
                     }
                 }
             }
-<span class="fc" id="L245">            return result;</span>
-<span class="fc" id="L246">        } catch (ClassNotFoundException ex) {</span>
+<span class="fc" id="L243">            return result;</span>
+<span class="fc" id="L244">        } catch (ClassNotFoundException ex) {</span>
             // handle pathological case of package name starting with upper case
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">            if (fullName.equals(className) == false) {</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">            if (fullName.equals(className) == false) {</span>
                 try {
-<span class="nc" id="L250">                    result = RenameHandler.INSTANCE.lookupType(className);</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">                    if (knownTypes != null) {</span>
-<span class="nc" id="L252">                        knownTypes.put(className, result);</span>
+<span class="nc" id="L248">                    result = RenameHandler.INSTANCE.lookupType(className);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">                    if (knownTypes != null) {</span>
+<span class="nc" id="L250">                        knownTypes.put(className, result);</span>
                     }
-<span class="nc" id="L254">                    return result;</span>
-<span class="nc" id="L255">                } catch (ClassNotFoundException ignored) {</span>
+<span class="nc" id="L252">                    return result;</span>
+<span class="nc" id="L253">                } catch (ClassNotFoundException ignored) {</span>
                 }
             }
-<span class="fc bfc" id="L258" title="All 2 branches covered.">            if (defaultType == null) {</span>
-<span class="fc" id="L259">                throw ex;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">            if (defaultType == null) {</span>
+<span class="fc" id="L257">                throw ex;</span>
             }
-<span class="fc" id="L261">            return defaultType;</span>
+<span class="fc" id="L259">            return defaultType;</span>
         }
     }
 
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L268">        return getClass().getSimpleName();</span>
+<span class="nc" id="L266">        return getClass().getSimpleName();</span>
     }
 
 }

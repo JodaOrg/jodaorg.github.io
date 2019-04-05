@@ -31,7 +31,6 @@ import org.joda.beans.PropertyStyle;
  * An immutable meta-property based on a getter interface.
  * 
  * @param &lt;P&gt;  the type of the property content
- * @author Stephen Colebourne
  * @deprecated Replaced by method handles
  */
 @Deprecated
@@ -59,22 +58,22 @@ final class ImmutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaPropert
             final String propertyName,
             int constructorIndex) {
         
-<span class="fc" id="L62">        PropertyGetter getter = new PropertyGetter() {</span>
+<span class="fc" id="L61">        PropertyGetter getter = new PropertyGetter() {</span>
             @Override
             public Object get(Bean bean) {
                 try {
-<span class="nc" id="L66">                    return field.get(bean);</span>
-<span class="nc" id="L67">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L68">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L65">                    return field.get(bean);</span>
+<span class="nc" id="L66">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L67">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
                 }
             }
         };
-<span class="fc" id="L72">        return new ImmutableLightMetaProperty&lt;&gt;(</span>
+<span class="fc" id="L71">        return new ImmutableLightMetaProperty&lt;&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="fc" id="L75">                (Class&lt;P&gt;) field.getType(), </span>
-<span class="fc" id="L76">                field.getGenericType(), </span>
-<span class="fc" id="L77">                Arrays.asList(field.getAnnotations()), </span>
+<span class="fc" id="L74">                (Class&lt;P&gt;) field.getType(), </span>
+<span class="fc" id="L75">                field.getGenericType(), </span>
+<span class="fc" id="L76">                Arrays.asList(field.getAnnotations()), </span>
                 getter,
                 constructorIndex,
                 PropertyStyle.IMMUTABLE);
@@ -97,27 +96,27 @@ final class ImmutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaPropert
             final String propertyName,
             int constructorIndex) {
         
-<span class="fc" id="L100">        PropertyGetter getter = new PropertyGetter() {</span>
+<span class="fc" id="L99">        PropertyGetter getter = new PropertyGetter() {</span>
             @Override
             public Object get(Bean bean) {
                 try {
-<span class="nc" id="L104">                    return method.invoke(bean);</span>
-<span class="nc" id="L105">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L106">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="nc" id="L107">                } catch (InvocationTargetException ex) {</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
-<span class="nc" id="L109">                        throw (RuntimeException) ex.getCause();</span>
+<span class="nc" id="L103">                    return method.invoke(bean);</span>
+<span class="nc" id="L104">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L105">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L106">                } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L108">                        throw (RuntimeException) ex.getCause();</span>
                     }
-<span class="nc" id="L111">                    throw new RuntimeException(ex);</span>
+<span class="nc" id="L110">                    throw new RuntimeException(ex);</span>
                 }
             }
         };
-<span class="fc" id="L115">        return new ImmutableLightMetaProperty&lt;&gt;(</span>
+<span class="fc" id="L114">        return new ImmutableLightMetaProperty&lt;&gt;(</span>
                 metaBean,
                 propertyName,
-<span class="fc" id="L118">                (Class&lt;P&gt;) field.getType(),</span>
-<span class="fc" id="L119">                field.getGenericType(),</span>
-<span class="fc" id="L120">                Arrays.asList(field.getAnnotations()),</span>
+<span class="fc" id="L117">                (Class&lt;P&gt;) field.getType(),</span>
+<span class="fc" id="L118">                field.getGenericType(),</span>
+<span class="fc" id="L119">                Arrays.asList(field.getAnnotations()),</span>
                 getter,
                 constructorIndex,
                 PropertyStyle.IMMUTABLE);
@@ -139,27 +138,27 @@ final class ImmutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaPropert
             final String propertyName,
             int constructorIndex) {
 
-<span class="fc" id="L142">        PropertyGetter getter = new PropertyGetter() {</span>
+<span class="fc" id="L141">        PropertyGetter getter = new PropertyGetter() {</span>
             @Override
             public Object get(Bean bean) {
                 try {
-<span class="nc" id="L146">                    return method.invoke(bean);</span>
-<span class="nc" id="L147">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
-<span class="nc" id="L148">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
-<span class="nc" id="L149">                } catch (InvocationTargetException ex) {</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
-<span class="nc" id="L151">                        throw (RuntimeException) ex.getCause();</span>
+<span class="nc" id="L145">                    return method.invoke(bean);</span>
+<span class="nc" id="L146">                } catch (IllegalArgumentException | IllegalAccessException ex) {</span>
+<span class="nc" id="L147">                    throw new UnsupportedOperationException(&quot;Property cannot be read: &quot; + propertyName, ex);</span>
+<span class="nc" id="L148">                } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">                    if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L150">                        throw (RuntimeException) ex.getCause();</span>
                     }
-<span class="nc" id="L153">                    throw new RuntimeException(ex);</span>
+<span class="nc" id="L152">                    throw new RuntimeException(ex);</span>
                 }
             }
         };
-<span class="fc" id="L157">        return new ImmutableLightMetaProperty&lt;P&gt;(</span>
+<span class="fc" id="L156">        return new ImmutableLightMetaProperty&lt;P&gt;(</span>
                 metaBean, 
                 propertyName, 
-<span class="fc" id="L160">                (Class&lt;P&gt;) method.getReturnType(),</span>
-<span class="fc" id="L161">                method.getGenericReturnType(),</span>
-<span class="fc" id="L162">                Arrays.asList(method.getAnnotations()),</span>
+<span class="fc" id="L159">                (Class&lt;P&gt;) method.getReturnType(),</span>
+<span class="fc" id="L160">                method.getGenericReturnType(),</span>
+<span class="fc" id="L161">                Arrays.asList(method.getAnnotations()),</span>
                 getter,
                 constructorIndex,
                 PropertyStyle.DERIVED);
@@ -187,27 +186,27 @@ final class ImmutableLightMetaProperty&lt;P&gt; extends AbstractLightMetaPropert
             int constructorIndex,
             PropertyStyle style) {
         
-<span class="fc" id="L190">        super(metaBean, propertyName, propertyType, propertyGenericType, annotations, constructorIndex);</span>
-<span class="fc" id="L191">        this.getter = getter;</span>
-<span class="fc" id="L192">        this.style = style;</span>
-<span class="fc" id="L193">    }</span>
+<span class="fc" id="L189">        super(metaBean, propertyName, propertyType, propertyGenericType, annotations, constructorIndex);</span>
+<span class="fc" id="L190">        this.getter = getter;</span>
+<span class="fc" id="L191">        this.style = style;</span>
+<span class="fc" id="L192">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public PropertyStyle style() {
-<span class="nc" id="L198">        return style;</span>
+<span class="nc" id="L197">        return style;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public P get(Bean bean) {
-<span class="nc" id="L205">        return (P) getter.get(bean);</span>
+<span class="nc" id="L204">        return (P) getter.get(bean);</span>
     }
 
     @Override
     public void set(Bean bean, Object value) {
-<span class="nc" id="L210">        throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
+<span class="nc" id="L209">        throw new UnsupportedOperationException(&quot;Property cannot be written: &quot; + name());</span>
     }
 
 }

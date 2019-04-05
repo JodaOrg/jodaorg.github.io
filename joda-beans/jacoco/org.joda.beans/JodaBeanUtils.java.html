@@ -69,15 +69,13 @@ import com.google.common.collect.TreeMultiset;
 
 /**
  * A set of utilities to assist when working with beans and properties.
- * 
- * @author Stephen Colebourne
  */
 public final class JodaBeanUtils {
 
     /**
      * The cache of meta-beans.
      */
-<span class="fc" id="L80">    private static final StringConvert converter = new StringConvert();</span>
+<span class="fc" id="L78">    private static final StringConvert converter = new StringConvert();</span>
 
     /**
      * Restricted constructor.
@@ -100,7 +98,7 @@ public final class JodaBeanUtils {
      */
     @Deprecated
     public static MetaBean metaBean(Class&lt;?&gt; cls) {
-<span class="nc" id="L103">        return MetaBean.of(cls);</span>
+<span class="nc" id="L101">        return MetaBean.of(cls);</span>
     }
 
     /**
@@ -115,8 +113,8 @@ public final class JodaBeanUtils {
      */
     @Deprecated
     public static void registerMetaBean(MetaBean metaBean) {
-<span class="nc" id="L118">        MetaBean.register(metaBean);</span>
-<span class="nc" id="L119">    }</span>
+<span class="nc" id="L116">        MetaBean.register(metaBean);</span>
+<span class="nc" id="L117">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -128,7 +126,7 @@ public final class JodaBeanUtils {
      * @return the standard string converter, not null
      */
     public static StringConvert stringConverter() {
-<span class="fc" id="L131">        return converter;</span>
+<span class="fc" id="L129">        return converter;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -140,43 +138,43 @@ public final class JodaBeanUtils {
      * @return true if equal
      */
     public static boolean equal(Object obj1, Object obj2) {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (obj1 == obj2) {</span>
-<span class="fc" id="L144">            return true;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (obj1 == obj2) {</span>
+<span class="fc" id="L142">            return true;</span>
         }
-<span class="fc bfc" id="L146" title="All 4 branches covered.">        if (obj1 == null || obj2 == null) {</span>
-<span class="fc" id="L147">            return false;</span>
+<span class="fc bfc" id="L144" title="All 4 branches covered.">        if (obj1 == null || obj2 == null) {</span>
+<span class="fc" id="L145">            return false;</span>
         }
-<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (obj1.getClass().isArray()) {</span>
-<span class="fc" id="L150">            return equalsArray(obj1, obj2);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (obj1.getClass().isArray()) {</span>
+<span class="fc" id="L148">            return equalsArray(obj1, obj2);</span>
         }
         // this does not handle arrays embedded in objects, such as in lists/maps
         // but you shouldn't use arrays like that, should you?
-<span class="fc" id="L154">        return obj1.equals(obj2);</span>
+<span class="fc" id="L152">        return obj1.equals(obj2);</span>
     }
 
     // extracted from equal(Object,Object) to aid hotspot inlining
     private static boolean equalsArray(Object obj1, Object obj2) {
-<span class="fc bfc" id="L159" title="All 6 branches covered.">        if (obj1 instanceof Object[] &amp;&amp; obj2 instanceof Object[] &amp;&amp; obj1.getClass() == obj2.getClass()) {</span>
-<span class="fc" id="L160">            return Arrays.deepEquals((Object[]) obj1, (Object[]) obj2);</span>
-<span class="fc bfc" id="L161" title="All 4 branches covered.">        } else if (obj1 instanceof int[] &amp;&amp; obj2 instanceof int[]) {</span>
-<span class="fc" id="L162">            return Arrays.equals((int[]) obj1, (int[]) obj2);</span>
-<span class="fc bfc" id="L163" title="All 4 branches covered.">        } else if (obj1 instanceof long[] &amp;&amp; obj2 instanceof long[]) {</span>
-<span class="fc" id="L164">            return Arrays.equals((long[]) obj1, (long[]) obj2);</span>
-<span class="fc bfc" id="L165" title="All 4 branches covered.">        } else if (obj1 instanceof byte[] &amp;&amp; obj2 instanceof byte[]) {</span>
-<span class="fc" id="L166">            return Arrays.equals((byte[]) obj1, (byte[]) obj2);</span>
-<span class="fc bfc" id="L167" title="All 4 branches covered.">        } else if (obj1 instanceof double[] &amp;&amp; obj2 instanceof double[]) {</span>
-<span class="fc" id="L168">            return Arrays.equals((double[]) obj1, (double[]) obj2);</span>
-<span class="fc bfc" id="L169" title="All 4 branches covered.">        } else if (obj1 instanceof float[] &amp;&amp; obj2 instanceof float[]) {</span>
-<span class="fc" id="L170">            return Arrays.equals((float[]) obj1, (float[]) obj2);</span>
-<span class="fc bfc" id="L171" title="All 4 branches covered.">        } else if (obj1 instanceof char[] &amp;&amp; obj2 instanceof char[]) {</span>
-<span class="fc" id="L172">            return Arrays.equals((char[]) obj1, (char[]) obj2);</span>
-<span class="fc bfc" id="L173" title="All 4 branches covered.">        } else if (obj1 instanceof short[] &amp;&amp; obj2 instanceof short[]) {</span>
-<span class="fc" id="L174">            return Arrays.equals((short[]) obj1, (short[]) obj2);</span>
-<span class="fc bfc" id="L175" title="All 4 branches covered.">        } else if (obj1 instanceof boolean[] &amp;&amp; obj2 instanceof boolean[]) {</span>
-<span class="fc" id="L176">            return Arrays.equals((boolean[]) obj1, (boolean[]) obj2);</span>
+<span class="fc bfc" id="L157" title="All 6 branches covered.">        if (obj1 instanceof Object[] &amp;&amp; obj2 instanceof Object[] &amp;&amp; obj1.getClass() == obj2.getClass()) {</span>
+<span class="fc" id="L158">            return Arrays.deepEquals((Object[]) obj1, (Object[]) obj2);</span>
+<span class="fc bfc" id="L159" title="All 4 branches covered.">        } else if (obj1 instanceof int[] &amp;&amp; obj2 instanceof int[]) {</span>
+<span class="fc" id="L160">            return Arrays.equals((int[]) obj1, (int[]) obj2);</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">        } else if (obj1 instanceof long[] &amp;&amp; obj2 instanceof long[]) {</span>
+<span class="fc" id="L162">            return Arrays.equals((long[]) obj1, (long[]) obj2);</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">        } else if (obj1 instanceof byte[] &amp;&amp; obj2 instanceof byte[]) {</span>
+<span class="fc" id="L164">            return Arrays.equals((byte[]) obj1, (byte[]) obj2);</span>
+<span class="fc bfc" id="L165" title="All 4 branches covered.">        } else if (obj1 instanceof double[] &amp;&amp; obj2 instanceof double[]) {</span>
+<span class="fc" id="L166">            return Arrays.equals((double[]) obj1, (double[]) obj2);</span>
+<span class="fc bfc" id="L167" title="All 4 branches covered.">        } else if (obj1 instanceof float[] &amp;&amp; obj2 instanceof float[]) {</span>
+<span class="fc" id="L168">            return Arrays.equals((float[]) obj1, (float[]) obj2);</span>
+<span class="fc bfc" id="L169" title="All 4 branches covered.">        } else if (obj1 instanceof char[] &amp;&amp; obj2 instanceof char[]) {</span>
+<span class="fc" id="L170">            return Arrays.equals((char[]) obj1, (char[]) obj2);</span>
+<span class="fc bfc" id="L171" title="All 4 branches covered.">        } else if (obj1 instanceof short[] &amp;&amp; obj2 instanceof short[]) {</span>
+<span class="fc" id="L172">            return Arrays.equals((short[]) obj1, (short[]) obj2);</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">        } else if (obj1 instanceof boolean[] &amp;&amp; obj2 instanceof boolean[]) {</span>
+<span class="fc" id="L174">            return Arrays.equals((boolean[]) obj1, (boolean[]) obj2);</span>
         }
         // reachable if obj1 is an array and obj2 is not
-<span class="fc" id="L179">        return false;</span>
+<span class="fc" id="L177">        return false;</span>
     }
 
     /**
@@ -189,7 +187,7 @@ public final class JodaBeanUtils {
      * @return true if equal
      */
     public static boolean equal(float val1, float val2) {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        return Float.floatToIntBits(val1) == Float.floatToIntBits(val2);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        return Float.floatToIntBits(val1) == Float.floatToIntBits(val2);</span>
     }
 
     /**
@@ -204,7 +202,7 @@ public final class JodaBeanUtils {
      * @return true if equal
      */
     public static boolean equalWithTolerance(float val1, float val2, double tolerance) {
-<span class="fc bfc" id="L207" title="All 4 branches covered.">        return (Float.floatToIntBits(val1) == Float.floatToIntBits(val2)) || Math.abs(val1 - val2) &lt;= tolerance;</span>
+<span class="fc bfc" id="L205" title="All 4 branches covered.">        return (Float.floatToIntBits(val1) == Float.floatToIntBits(val2)) || Math.abs(val1 - val2) &lt;= tolerance;</span>
     }
 
     /**
@@ -217,7 +215,7 @@ public final class JodaBeanUtils {
      * @return true if equal
      */
     public static boolean equal(double val1, double val2) {
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        return Double.doubleToLongBits(val1) == Double.doubleToLongBits(val2);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        return Double.doubleToLongBits(val1) == Double.doubleToLongBits(val2);</span>
     }
 
     /**
@@ -233,7 +231,7 @@ public final class JodaBeanUtils {
      * @return true if equal
      */
     public static boolean equalWithTolerance(double val1, double val2, double tolerance) {
-<span class="fc bfc" id="L236" title="All 4 branches covered.">        return (Double.doubleToLongBits(val1) == Double.doubleToLongBits(val2)) || Math.abs(val1 - val2) &lt;= tolerance;</span>
+<span class="fc bfc" id="L234" title="All 4 branches covered.">        return (Double.doubleToLongBits(val1) == Double.doubleToLongBits(val2)) || Math.abs(val1 - val2) &lt;= tolerance;</span>
     }
 
     /**
@@ -243,38 +241,38 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int hashCode(Object obj) {
-<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L247">            return 0;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L245">            return 0;</span>
         }
-<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (obj.getClass().isArray()) {</span>
-<span class="fc" id="L250">            return hashCodeArray(obj);</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (obj.getClass().isArray()) {</span>
+<span class="fc" id="L248">            return hashCodeArray(obj);</span>
         }
-<span class="fc" id="L252">        return obj.hashCode();</span>
+<span class="fc" id="L250">        return obj.hashCode();</span>
     }
 
     // extracted from hashCode(Object) to aid hotspot inlining
     private static int hashCodeArray(Object obj) {
-<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (obj instanceof Object[]) {</span>
-<span class="fc" id="L258">            return Arrays.deepHashCode((Object[]) obj);</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">        } else if (obj instanceof int[]) {</span>
-<span class="fc" id="L260">            return Arrays.hashCode((int[]) obj);</span>
-<span class="fc bfc" id="L261" title="All 2 branches covered.">        } else if (obj instanceof long[]) {</span>
-<span class="fc" id="L262">            return Arrays.hashCode((long[]) obj);</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        } else if (obj instanceof byte[]) {</span>
-<span class="fc" id="L264">            return Arrays.hashCode((byte[]) obj);</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">        } else if (obj instanceof double[]) {</span>
-<span class="fc" id="L266">            return Arrays.hashCode((double[]) obj);</span>
-<span class="fc bfc" id="L267" title="All 2 branches covered.">        } else if (obj instanceof float[]) {</span>
-<span class="fc" id="L268">            return Arrays.hashCode((float[]) obj);</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">        } else if (obj instanceof char[]) {</span>
-<span class="fc" id="L270">            return Arrays.hashCode((char[]) obj);</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">        } else if (obj instanceof short[]) {</span>
-<span class="fc" id="L272">            return Arrays.hashCode((short[]) obj);</span>
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        } else if (obj instanceof boolean[]) {</span>
-<span class="fc" id="L274">            return Arrays.hashCode((boolean[]) obj);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (obj instanceof Object[]) {</span>
+<span class="fc" id="L256">            return Arrays.deepHashCode((Object[]) obj);</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        } else if (obj instanceof int[]) {</span>
+<span class="fc" id="L258">            return Arrays.hashCode((int[]) obj);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        } else if (obj instanceof long[]) {</span>
+<span class="fc" id="L260">            return Arrays.hashCode((long[]) obj);</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        } else if (obj instanceof byte[]) {</span>
+<span class="fc" id="L262">            return Arrays.hashCode((byte[]) obj);</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        } else if (obj instanceof double[]) {</span>
+<span class="fc" id="L264">            return Arrays.hashCode((double[]) obj);</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">        } else if (obj instanceof float[]) {</span>
+<span class="fc" id="L266">            return Arrays.hashCode((float[]) obj);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        } else if (obj instanceof char[]) {</span>
+<span class="fc" id="L268">            return Arrays.hashCode((char[]) obj);</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        } else if (obj instanceof short[]) {</span>
+<span class="fc" id="L270">            return Arrays.hashCode((short[]) obj);</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        } else if (obj instanceof boolean[]) {</span>
+<span class="fc" id="L272">            return Arrays.hashCode((boolean[]) obj);</span>
         }
         // unreachable?
-<span class="nc" id="L277">        return obj.hashCode();</span>
+<span class="nc" id="L275">        return obj.hashCode();</span>
     }
 
     /**
@@ -284,7 +282,7 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int hashCode(boolean value) {
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        return value ? 1231 : 1237;</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">        return value ? 1231 : 1237;</span>
     }
 
     /**
@@ -294,7 +292,7 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int hashCode(int value) {
-<span class="fc" id="L297">        return value;</span>
+<span class="fc" id="L295">        return value;</span>
     }
 
     /**
@@ -304,7 +302,7 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int hashCode(long value) {
-<span class="fc" id="L307">        return (int) (value ^ value &gt;&gt;&gt; 32);</span>
+<span class="fc" id="L305">        return (int) (value ^ value &gt;&gt;&gt; 32);</span>
     }
 
     /**
@@ -314,7 +312,7 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int hashCode(float value) {
-<span class="fc" id="L317">        return Float.floatToIntBits(value);</span>
+<span class="fc" id="L315">        return Float.floatToIntBits(value);</span>
     }
 
     /**
@@ -324,7 +322,7 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int hashCode(double value) {
-<span class="fc" id="L327">        return hashCode(Double.doubleToLongBits(value));</span>
+<span class="fc" id="L325">        return hashCode(Double.doubleToLongBits(value));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -335,38 +333,38 @@ public final class JodaBeanUtils {
      * @return the string, not null
      */
     public static String toString(Object obj) {
-<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L339">            return &quot;null&quot;;</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L337">            return &quot;null&quot;;</span>
         }
-<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (obj.getClass().isArray()) {</span>
-<span class="fc" id="L342">            return toStringArray(obj);</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        if (obj.getClass().isArray()) {</span>
+<span class="fc" id="L340">            return toStringArray(obj);</span>
         }
-<span class="fc" id="L344">        return obj.toString();</span>
+<span class="fc" id="L342">        return obj.toString();</span>
     }
 
     // extracted from toString(Object) to aid hotspot inlining
     private static String toStringArray(Object obj) {
-<span class="pc bpc" id="L349" title="1 of 2 branches missed.">        if (obj instanceof Object[]) {</span>
-<span class="fc" id="L350">            return Arrays.deepToString((Object[]) obj);</span>
-<span class="nc bnc" id="L351" title="All 2 branches missed.">        } else if (obj instanceof int[]) {</span>
-<span class="nc" id="L352">            return Arrays.toString((int[]) obj);</span>
-<span class="nc bnc" id="L353" title="All 2 branches missed.">        } else if (obj instanceof long[]) {</span>
-<span class="nc" id="L354">            return Arrays.toString((long[]) obj);</span>
-<span class="nc bnc" id="L355" title="All 2 branches missed.">        } else if (obj instanceof byte[]) {</span>
-<span class="nc" id="L356">            return Arrays.toString((byte[]) obj);</span>
-<span class="nc bnc" id="L357" title="All 2 branches missed.">        } else if (obj instanceof double[]) {</span>
-<span class="nc" id="L358">            return Arrays.toString((double[]) obj);</span>
-<span class="nc bnc" id="L359" title="All 2 branches missed.">        } else if (obj instanceof float[]) {</span>
-<span class="nc" id="L360">            return Arrays.toString((float[]) obj);</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">        } else if (obj instanceof char[]) {</span>
-<span class="nc" id="L362">            return Arrays.toString((char[]) obj);</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">        } else if (obj instanceof short[]) {</span>
-<span class="nc" id="L364">            return Arrays.toString((short[]) obj);</span>
-<span class="nc bnc" id="L365" title="All 2 branches missed.">        } else if (obj instanceof boolean[]) {</span>
-<span class="nc" id="L366">            return Arrays.toString((boolean[]) obj);</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">        if (obj instanceof Object[]) {</span>
+<span class="fc" id="L348">            return Arrays.deepToString((Object[]) obj);</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">        } else if (obj instanceof int[]) {</span>
+<span class="nc" id="L350">            return Arrays.toString((int[]) obj);</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">        } else if (obj instanceof long[]) {</span>
+<span class="nc" id="L352">            return Arrays.toString((long[]) obj);</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">        } else if (obj instanceof byte[]) {</span>
+<span class="nc" id="L354">            return Arrays.toString((byte[]) obj);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        } else if (obj instanceof double[]) {</span>
+<span class="nc" id="L356">            return Arrays.toString((double[]) obj);</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        } else if (obj instanceof float[]) {</span>
+<span class="nc" id="L358">            return Arrays.toString((float[]) obj);</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        } else if (obj instanceof char[]) {</span>
+<span class="nc" id="L360">            return Arrays.toString((char[]) obj);</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        } else if (obj instanceof short[]) {</span>
+<span class="nc" id="L362">            return Arrays.toString((short[]) obj);</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">        } else if (obj instanceof boolean[]) {</span>
+<span class="nc" id="L364">            return Arrays.toString((boolean[]) obj);</span>
         }
         // unreachable?
-<span class="nc" id="L369">        return obj.toString();</span>
+<span class="nc" id="L367">        return obj.toString();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -387,18 +385,18 @@ public final class JodaBeanUtils {
      * @return true if equal
      */
     public static boolean propertiesEqual(Bean bean1, Bean bean2) {
-<span class="fc" id="L390">        Set&lt;String&gt; names = bean1.propertyNames();</span>
-<span class="fc bfc" id="L391" title="All 2 branches covered.">        if (names.equals(bean2.propertyNames()) == false) {</span>
-<span class="fc" id="L392">            return false;</span>
+<span class="fc" id="L388">        Set&lt;String&gt; names = bean1.propertyNames();</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">        if (names.equals(bean2.propertyNames()) == false) {</span>
+<span class="fc" id="L390">            return false;</span>
         }
-<span class="fc bfc" id="L394" title="All 2 branches covered.">        for (String name : names) {</span>
-<span class="fc" id="L395">            Object value1 = bean1.property(name).get();</span>
-<span class="fc" id="L396">            Object value2 = bean2.property(name).get();</span>
-<span class="fc bfc" id="L397" title="All 2 branches covered.">            if (equal(value1, value2) == false) {</span>
-<span class="fc" id="L398">                return false;</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        for (String name : names) {</span>
+<span class="fc" id="L393">            Object value1 = bean1.property(name).get();</span>
+<span class="fc" id="L394">            Object value2 = bean2.property(name).get();</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">            if (equal(value1, value2) == false) {</span>
+<span class="fc" id="L396">                return false;</span>
             }
-<span class="fc" id="L400">        }</span>
-<span class="fc" id="L401">        return true;</span>
+<span class="fc" id="L398">        }</span>
+<span class="fc" id="L399">        return true;</span>
     }
 
     /**
@@ -412,13 +410,13 @@ public final class JodaBeanUtils {
      * @return the hash code
      */
     public static int propertiesHashCode(Bean bean) {
-<span class="fc" id="L415">        int hash = 7;</span>
-<span class="fc" id="L416">        Set&lt;String&gt; names = bean.propertyNames();</span>
-<span class="fc bfc" id="L417" title="All 2 branches covered.">        for (String name : names) {</span>
-<span class="fc" id="L418">            Object value = bean.property(name).get();</span>
-<span class="fc" id="L419">            hash += hashCode(value);</span>
-<span class="fc" id="L420">        }</span>
-<span class="fc" id="L421">        return hash;</span>
+<span class="fc" id="L413">        int hash = 7;</span>
+<span class="fc" id="L414">        Set&lt;String&gt; names = bean.propertyNames();</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">        for (String name : names) {</span>
+<span class="fc" id="L416">            Object value = bean.property(name).get();</span>
+<span class="fc" id="L417">            hash += hashCode(value);</span>
+<span class="fc" id="L418">        }</span>
+<span class="fc" id="L419">        return hash;</span>
     }
 
     /**
@@ -432,23 +430,23 @@ public final class JodaBeanUtils {
      * @return the string form of the bean, not null
      */
     public static String propertiesToString(Bean bean, String prefix) {
-<span class="nc" id="L435">        Set&lt;String&gt; names = bean.propertyNames();</span>
+<span class="nc" id="L433">        Set&lt;String&gt; names = bean.propertyNames();</span>
         StringBuilder buf;
-<span class="nc bnc" id="L437" title="All 2 branches missed.">        if (prefix != null) {</span>
-<span class="nc" id="L438">            buf = new StringBuilder((names.size()) * 32 + prefix.length()).append(prefix);</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">        if (prefix != null) {</span>
+<span class="nc" id="L436">            buf = new StringBuilder((names.size()) * 32 + prefix.length()).append(prefix);</span>
         } else {
-<span class="nc" id="L440">            buf = new StringBuilder((names.size()) * 32);</span>
+<span class="nc" id="L438">            buf = new StringBuilder((names.size()) * 32);</span>
         }
-<span class="nc" id="L442">        buf.append('{');</span>
-<span class="nc bnc" id="L443" title="All 2 branches missed.">        if (names.size() &gt; 0) {</span>
-<span class="nc bnc" id="L444" title="All 2 branches missed.">            for (String name : names) {</span>
-<span class="nc" id="L445">                Object value = bean.property(name).get();</span>
-<span class="nc" id="L446">                buf.append(name).append('=').append(value).append(',').append(' ');</span>
-<span class="nc" id="L447">            }</span>
-<span class="nc" id="L448">            buf.setLength(buf.length() - 2);</span>
+<span class="nc" id="L440">        buf.append('{');</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">        if (names.size() &gt; 0) {</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">            for (String name : names) {</span>
+<span class="nc" id="L443">                Object value = bean.property(name).get();</span>
+<span class="nc" id="L444">                buf.append(name).append('=').append(value).append(',').append(' ');</span>
+<span class="nc" id="L445">            }</span>
+<span class="nc" id="L446">            buf.setLength(buf.length() - 2);</span>
         }
-<span class="nc" id="L450">        buf.append('}');</span>
-<span class="nc" id="L451">        return buf.toString();</span>
+<span class="nc" id="L448">        buf.append('}');</span>
+<span class="nc" id="L449">        return buf.toString();</span>
     }
 
     /**
@@ -460,12 +458,12 @@ public final class JodaBeanUtils {
      * @return the bean as a map, not null
      */
     public static Map&lt;String, Object&gt; flatten(Bean bean) {
-<span class="nc" id="L463">        Map&lt;String, MetaProperty&lt;?&gt;&gt; propertyMap = bean.metaBean().metaPropertyMap();</span>
-<span class="nc" id="L464">        Map&lt;String, Object&gt; map = new LinkedHashMap&lt;&gt;(propertyMap.size());</span>
-<span class="nc bnc" id="L465" title="All 2 branches missed.">        for (Entry&lt;String, MetaProperty&lt;?&gt;&gt; entry : propertyMap.entrySet()) {</span>
-<span class="nc" id="L466">            map.put(entry.getKey(), entry.getValue().get(bean));</span>
-<span class="nc" id="L467">        }</span>
-<span class="nc" id="L468">        return Collections.unmodifiableMap(map);</span>
+<span class="nc" id="L461">        Map&lt;String, MetaProperty&lt;?&gt;&gt; propertyMap = bean.metaBean().metaPropertyMap();</span>
+<span class="nc" id="L462">        Map&lt;String, Object&gt; map = new LinkedHashMap&lt;&gt;(propertyMap.size());</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">        for (Entry&lt;String, MetaProperty&lt;?&gt;&gt; entry : propertyMap.entrySet()) {</span>
+<span class="nc" id="L464">            map.put(entry.getKey(), entry.getValue().get(bean));</span>
+<span class="nc" id="L465">        }</span>
+<span class="nc" id="L466">        return Collections.unmodifiableMap(map);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -480,10 +478,10 @@ public final class JodaBeanUtils {
      * @return the cloned bean, null if null input
      */
     public static &lt;T extends Bean&gt; T clone(T original) {
-<span class="pc bpc" id="L483" title="2 of 4 branches missed.">        if (original == null || original instanceof ImmutableBean) {</span>
-<span class="nc" id="L484">            return original;</span>
+<span class="pc bpc" id="L481" title="2 of 4 branches missed.">        if (original == null || original instanceof ImmutableBean) {</span>
+<span class="nc" id="L482">            return original;</span>
         }
-<span class="fc" id="L486">        return cloneAlways(original);</span>
+<span class="fc" id="L484">        return cloneAlways(original);</span>
     }
 
     /**
@@ -499,14 +497,14 @@ public final class JodaBeanUtils {
      */
     public static &lt;T extends Bean&gt; T cloneAlways(T original) {
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L502">        BeanBuilder&lt;T&gt; builder = (BeanBuilder&lt;T&gt;) original.metaBean().builder();</span>
-<span class="fc bfc" id="L503" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; mp : original.metaBean().metaPropertyIterable()) {</span>
-<span class="pc bpc" id="L504" title="1 of 2 branches missed.">            if (mp.style().isBuildable()) {</span>
-<span class="fc" id="L505">                Object value = mp.get(original);</span>
-<span class="fc" id="L506">                builder.set(mp.name(), Cloner.INSTANCE.clone(value));</span>
+<span class="fc" id="L500">        BeanBuilder&lt;T&gt; builder = (BeanBuilder&lt;T&gt;) original.metaBean().builder();</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; mp : original.metaBean().metaPropertyIterable()) {</span>
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">            if (mp.style().isBuildable()) {</span>
+<span class="fc" id="L503">                Object value = mp.get(original);</span>
+<span class="fc" id="L504">                builder.set(mp.name(), Cloner.INSTANCE.clone(value));</span>
             }
-<span class="fc" id="L508">        }</span>
-<span class="fc" id="L509">        return builder.build();</span>
+<span class="fc" id="L506">        }</span>
+<span class="fc" id="L507">        return builder.build();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -518,14 +516,14 @@ public final class JodaBeanUtils {
      * @throws IllegalArgumentException if the value is null
      */
     public static void notNull(Object value, String propertyName) {
-<span class="fc bfc" id="L521" title="All 2 branches covered.">        if (value == null) {</span>
-<span class="fc" id="L522">            throw new IllegalArgumentException(notNullMsg(propertyName));</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L520">            throw new IllegalArgumentException(notNullMsg(propertyName));</span>
         }
-<span class="fc" id="L524">    }</span>
+<span class="fc" id="L522">    }</span>
 
     // extracted from notNull(Object,String) to aid hotspot inlining
     private static String notNullMsg(String propertyName) {
-<span class="fc" id="L528">        return &quot;Argument '&quot; + propertyName + &quot;' must not be null&quot;;</span>
+<span class="fc" id="L526">        return &quot;Argument '&quot; + propertyName + &quot;' must not be null&quot;;</span>
     }
 
     /**
@@ -538,26 +536,26 @@ public final class JodaBeanUtils {
      * @throws IllegalArgumentException if the value is null or empty
      */
     public static void notBlank(String value, String propertyName) {
-<span class="fc bfc" id="L541" title="All 2 branches covered.">        if (isBlank(value)) {</span>
-<span class="fc" id="L542">            throw new IllegalArgumentException(notBlank(propertyName));</span>
+<span class="fc bfc" id="L539" title="All 2 branches covered.">        if (isBlank(value)) {</span>
+<span class="fc" id="L540">            throw new IllegalArgumentException(notBlank(propertyName));</span>
         }
-<span class="fc" id="L544">    }</span>
+<span class="fc" id="L542">    }</span>
 
     @SuppressWarnings(&quot;null&quot;)
     private static boolean isBlank(String str) {
-<span class="fc bfc" id="L548" title="All 2 branches covered.">        int strLen = (str != null ? str.length() : 0);</span>
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (strLen != 0) {</span>
-<span class="fc bfc" id="L550" title="All 2 branches covered.">            for (int i = 0; i &lt; strLen; i++) {</span>
-<span class="fc bfc" id="L551" title="All 2 branches covered.">                if (!Character.isWhitespace(str.charAt(i))) {</span>
-<span class="fc" id="L552">                    return false;</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        int strLen = (str != null ? str.length() : 0);</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">        if (strLen != 0) {</span>
+<span class="fc bfc" id="L548" title="All 2 branches covered.">            for (int i = 0; i &lt; strLen; i++) {</span>
+<span class="fc bfc" id="L549" title="All 2 branches covered.">                if (!Character.isWhitespace(str.charAt(i))) {</span>
+<span class="fc" id="L550">                    return false;</span>
                 }
             }
         }
-<span class="fc" id="L556">        return true;</span>
+<span class="fc" id="L554">        return true;</span>
     }
 
     private static String notBlank(String propertyName) {
-<span class="fc" id="L560">        return &quot;Argument '&quot; + propertyName + &quot;' must not be empty&quot;;</span>
+<span class="fc" id="L558">        return &quot;Argument '&quot; + propertyName + &quot;' must not be empty&quot;;</span>
     }
 
     /**
@@ -568,14 +566,14 @@ public final class JodaBeanUtils {
      * @throws IllegalArgumentException if the value is null or empty
      */
     public static void notEmpty(String value, String propertyName) {
-<span class="fc bfc" id="L571" title="All 4 branches covered.">        if (value == null || value.length() == 0) {</span>
-<span class="fc" id="L572">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
+<span class="fc bfc" id="L569" title="All 4 branches covered.">        if (value == null || value.length() == 0) {</span>
+<span class="fc" id="L570">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
         }
-<span class="fc" id="L574">    }</span>
+<span class="fc" id="L572">    }</span>
 
     // extracted from notEmpty(?,String) to aid hotspot inlining
     private static String notEmpty(String propertyName) {
-<span class="fc" id="L578">        return &quot;Argument '&quot; + propertyName + &quot;' must not be empty&quot;;</span>
+<span class="fc" id="L576">        return &quot;Argument '&quot; + propertyName + &quot;' must not be empty&quot;;</span>
     }
 
     /**
@@ -586,10 +584,10 @@ public final class JodaBeanUtils {
      * @throws IllegalArgumentException if the value is null or empty
      */
     public static void notEmpty(Collection&lt;?&gt; value, String propertyName) {
-<span class="fc bfc" id="L589" title="All 4 branches covered.">        if (value == null || value.isEmpty()) {</span>
-<span class="fc" id="L590">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
+<span class="fc bfc" id="L587" title="All 4 branches covered.">        if (value == null || value.isEmpty()) {</span>
+<span class="fc" id="L588">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
         }
-<span class="fc" id="L592">    }</span>
+<span class="fc" id="L590">    }</span>
 
     /**
      * Checks if the map value is not empty, throwing an exception if it is.
@@ -599,10 +597,10 @@ public final class JodaBeanUtils {
      * @throws IllegalArgumentException if the value is null or empty
      */
     public static void notEmpty(Map&lt;?, ?&gt; value, String propertyName) {
-<span class="fc bfc" id="L602" title="All 4 branches covered.">        if (value == null || value.isEmpty()) {</span>
-<span class="fc" id="L603">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
+<span class="fc bfc" id="L600" title="All 4 branches covered.">        if (value == null || value.isEmpty()) {</span>
+<span class="fc" id="L601">            throw new IllegalArgumentException(notEmpty(propertyName));</span>
         }
-<span class="fc" id="L605">    }</span>
+<span class="fc" id="L603">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -614,7 +612,7 @@ public final class JodaBeanUtils {
      * @return the collection content type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; collectionType(Property&lt;?&gt; prop) {
-<span class="fc" id="L617">        return collectionType(prop.metaProperty(), prop.bean().getClass());</span>
+<span class="fc" id="L615">        return collectionType(prop.metaProperty(), prop.bean().getClass());</span>
     }
 
     /**
@@ -627,7 +625,7 @@ public final class JodaBeanUtils {
      * @return the collection content type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; collectionType(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
-<span class="fc" id="L630">        return extractTypeClass(prop, targetClass, 1, 0);</span>
+<span class="fc" id="L628">        return extractTypeClass(prop, targetClass, 1, 0);</span>
     }
 
     /**
@@ -642,8 +640,8 @@ public final class JodaBeanUtils {
      * @return the collection content type generic parameters, empty if unable to determine, no nulls
      */
     public static List&lt;Class&lt;?&gt;&gt; collectionTypeTypes(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
-<span class="fc" id="L645">        Type type = extractType(targetClass, prop, 1, 0);</span>
-<span class="fc" id="L646">        return extractTypeClasses(targetClass, type);</span>
+<span class="fc" id="L643">        Type type = extractType(targetClass, prop, 1, 0);</span>
+<span class="fc" id="L644">        return extractTypeClasses(targetClass, type);</span>
     }
 
     /**
@@ -653,7 +651,7 @@ public final class JodaBeanUtils {
      * @return the map key type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; mapKeyType(Property&lt;?&gt; prop) {
-<span class="nc" id="L656">        return mapKeyType(prop.metaProperty(), prop.bean().getClass());</span>
+<span class="nc" id="L654">        return mapKeyType(prop.metaProperty(), prop.bean().getClass());</span>
     }
 
     /**
@@ -666,7 +664,7 @@ public final class JodaBeanUtils {
      * @return the map key type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; mapKeyType(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
-<span class="fc" id="L669">        return extractTypeClass(prop, targetClass, 2, 0);</span>
+<span class="fc" id="L667">        return extractTypeClass(prop, targetClass, 2, 0);</span>
     }
 
     /**
@@ -676,7 +674,7 @@ public final class JodaBeanUtils {
      * @return the map value type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; mapValueType(Property&lt;?&gt; prop) {
-<span class="nc" id="L679">        return mapValueType(prop.metaProperty(), prop.bean().getClass());</span>
+<span class="nc" id="L677">        return mapValueType(prop.metaProperty(), prop.bean().getClass());</span>
     }
 
     /**
@@ -689,7 +687,7 @@ public final class JodaBeanUtils {
      * @return the map value type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; mapValueType(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
-<span class="fc" id="L692">        return extractTypeClass(prop, targetClass, 2, 1);</span>
+<span class="fc" id="L690">        return extractTypeClass(prop, targetClass, 2, 1);</span>
     }
 
     /**
@@ -704,8 +702,8 @@ public final class JodaBeanUtils {
      * @return the map value type generic parameters, empty if unable to determine, no nulls
      */
     public static List&lt;Class&lt;?&gt;&gt; mapValueTypeTypes(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass) {
-<span class="fc" id="L707">        Type type = extractType(targetClass, prop, 2, 1);</span>
-<span class="fc" id="L708">        return extractTypeClasses(targetClass, type);</span>
+<span class="fc" id="L705">        Type type = extractType(targetClass, prop, 2, 1);</span>
+<span class="fc" id="L706">        return extractTypeClasses(targetClass, type);</span>
     }
 
     /**
@@ -718,100 +716,100 @@ public final class JodaBeanUtils {
      * @return the type, null if unable to determine or type has no generic parameters
      */
     public static Class&lt;?&gt; extractTypeClass(MetaProperty&lt;?&gt; prop, Class&lt;?&gt; targetClass, int size, int index) {
-<span class="fc" id="L721">        return eraseToClass(extractType(targetClass, prop, size, index));</span>
+<span class="fc" id="L719">        return eraseToClass(extractType(targetClass, prop, size, index));</span>
     }
 
     private static Type extractType(Class&lt;?&gt; targetClass, MetaProperty&lt;?&gt; prop, int size, int index) {
-<span class="fc" id="L725">        Type genType = prop.propertyGenericType();</span>
-<span class="fc bfc" id="L726" title="All 2 branches covered.">        if (genType instanceof ParameterizedType) {</span>
-<span class="fc" id="L727">            ParameterizedType pt = (ParameterizedType) genType;</span>
-<span class="fc" id="L728">            Type[] types = pt.getActualTypeArguments();</span>
-<span class="fc bfc" id="L729" title="All 2 branches covered.">            if (types.length == size) {</span>
-<span class="fc" id="L730">                Type type = types[index];</span>
-<span class="fc bfc" id="L731" title="All 2 branches covered.">                if (type instanceof WildcardType) {</span>
-<span class="fc" id="L732">                    WildcardType wtype = (WildcardType) type;</span>
-<span class="pc bpc" id="L733" title="2 of 4 branches missed.">                    if (wtype.getLowerBounds().length == 0 &amp;&amp; wtype.getUpperBounds().length &gt; 0) {</span>
-<span class="fc" id="L734">                        type = wtype.getUpperBounds()[0];</span>
+<span class="fc" id="L723">        Type genType = prop.propertyGenericType();</span>
+<span class="fc bfc" id="L724" title="All 2 branches covered.">        if (genType instanceof ParameterizedType) {</span>
+<span class="fc" id="L725">            ParameterizedType pt = (ParameterizedType) genType;</span>
+<span class="fc" id="L726">            Type[] types = pt.getActualTypeArguments();</span>
+<span class="fc bfc" id="L727" title="All 2 branches covered.">            if (types.length == size) {</span>
+<span class="fc" id="L728">                Type type = types[index];</span>
+<span class="fc bfc" id="L729" title="All 2 branches covered.">                if (type instanceof WildcardType) {</span>
+<span class="fc" id="L730">                    WildcardType wtype = (WildcardType) type;</span>
+<span class="pc bpc" id="L731" title="2 of 4 branches missed.">                    if (wtype.getLowerBounds().length == 0 &amp;&amp; wtype.getUpperBounds().length &gt; 0) {</span>
+<span class="fc" id="L732">                        type = wtype.getUpperBounds()[0];</span>
                     }
                 }
-<span class="fc bfc" id="L737" title="All 2 branches covered.">                if (type instanceof TypeVariable) {</span>
-<span class="fc" id="L738">                    type = resolveGenerics(targetClass, (TypeVariable&lt;?&gt;) type);</span>
+<span class="fc bfc" id="L735" title="All 2 branches covered.">                if (type instanceof TypeVariable) {</span>
+<span class="fc" id="L736">                    type = resolveGenerics(targetClass, (TypeVariable&lt;?&gt;) type);</span>
                 }
-<span class="fc" id="L740">                return type;</span>
+<span class="fc" id="L738">                return type;</span>
             }
         }
-<span class="fc" id="L743">        return null;</span>
+<span class="fc" id="L741">        return null;</span>
     }
 
     private static List&lt;Class&lt;?&gt;&gt; extractTypeClasses(Class&lt;?&gt; targetClass, Type type) {
-<span class="fc" id="L747">        List&lt;Class&lt;?&gt;&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L748" title="All 2 branches covered.">        if (type != null) {</span>
-<span class="fc bfc" id="L749" title="All 2 branches covered.">            if (type instanceof ParameterizedType) {</span>
-<span class="fc" id="L750">                ParameterizedType pt = (ParameterizedType) type;</span>
-<span class="fc" id="L751">                Type[] actualTypes = pt.getActualTypeArguments();</span>
-<span class="fc bfc" id="L752" title="All 2 branches covered.">                for (Type actualType : actualTypes) {</span>
-<span class="pc bpc" id="L753" title="1 of 2 branches missed.">                    if (actualType instanceof TypeVariable) {</span>
-<span class="nc" id="L754">                        actualType = resolveGenerics(targetClass, (TypeVariable&lt;?&gt;) actualType);</span>
+<span class="fc" id="L745">        List&lt;Class&lt;?&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L746" title="All 2 branches covered.">        if (type != null) {</span>
+<span class="fc bfc" id="L747" title="All 2 branches covered.">            if (type instanceof ParameterizedType) {</span>
+<span class="fc" id="L748">                ParameterizedType pt = (ParameterizedType) type;</span>
+<span class="fc" id="L749">                Type[] actualTypes = pt.getActualTypeArguments();</span>
+<span class="fc bfc" id="L750" title="All 2 branches covered.">                for (Type actualType : actualTypes) {</span>
+<span class="pc bpc" id="L751" title="1 of 2 branches missed.">                    if (actualType instanceof TypeVariable) {</span>
+<span class="nc" id="L752">                        actualType = resolveGenerics(targetClass, (TypeVariable&lt;?&gt;) actualType);</span>
                     }
-<span class="fc" id="L756">                    Class&lt;?&gt; cls = eraseToClass(actualType);</span>
-<span class="fc bfc" id="L757" title="All 2 branches covered.">                    result.add(cls != null ? cls : Object.class);</span>
+<span class="fc" id="L754">                    Class&lt;?&gt; cls = eraseToClass(actualType);</span>
+<span class="fc bfc" id="L755" title="All 2 branches covered.">                    result.add(cls != null ? cls : Object.class);</span>
                 }
             }
         }
-<span class="fc" id="L761">        return result;</span>
+<span class="fc" id="L759">        return result;</span>
     }
 
     private static Type resolveGenerics(Class&lt;?&gt; targetClass, TypeVariable&lt;?&gt; typevar) {
         // looks up meaning of type variables like T
-<span class="fc" id="L766">        Map&lt;Type, Type&gt; resolved = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L767">        Type type = targetClass;</span>
-<span class="fc bfc" id="L768" title="All 2 branches covered.">        while (type != null) {</span>
-<span class="fc bfc" id="L769" title="All 2 branches covered.">            if (type instanceof Class) {</span>
-<span class="fc" id="L770">                type = ((Class&lt;?&gt;) type).getGenericSuperclass();</span>
-<span class="pc bpc" id="L771" title="1 of 2 branches missed.">            } else if (type instanceof ParameterizedType) {</span>
+<span class="fc" id="L764">        Map&lt;Type, Type&gt; resolved = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L765">        Type type = targetClass;</span>
+<span class="fc bfc" id="L766" title="All 2 branches covered.">        while (type != null) {</span>
+<span class="fc bfc" id="L767" title="All 2 branches covered.">            if (type instanceof Class) {</span>
+<span class="fc" id="L768">                type = ((Class&lt;?&gt;) type).getGenericSuperclass();</span>
+<span class="pc bpc" id="L769" title="1 of 2 branches missed.">            } else if (type instanceof ParameterizedType) {</span>
                 // find actual types captured by subclass
-<span class="fc" id="L773">                ParameterizedType pt = (ParameterizedType) type;</span>
-<span class="fc" id="L774">                Type[] actualTypeArguments = pt.getActualTypeArguments();</span>
+<span class="fc" id="L771">                ParameterizedType pt = (ParameterizedType) type;</span>
+<span class="fc" id="L772">                Type[] actualTypeArguments = pt.getActualTypeArguments();</span>
                 // find type variables declared in source code
-<span class="fc" id="L776">                Class&lt;?&gt; rawType = eraseToClass(pt.getRawType());</span>
-<span class="pc bpc" id="L777" title="1 of 2 branches missed.">                if (rawType == null) {</span>
-<span class="nc" id="L778">                    return null;</span>
+<span class="fc" id="L774">                Class&lt;?&gt; rawType = eraseToClass(pt.getRawType());</span>
+<span class="pc bpc" id="L775" title="1 of 2 branches missed.">                if (rawType == null) {</span>
+<span class="nc" id="L776">                    return null;</span>
                 }
-<span class="fc" id="L780">                TypeVariable&lt;?&gt;[] typeParameters = rawType.getTypeParameters();</span>
-<span class="fc bfc" id="L781" title="All 2 branches covered.">                for (int i = 0; i &lt; actualTypeArguments.length; i++) {</span>
-<span class="fc" id="L782">                    resolved.put(typeParameters[i], actualTypeArguments[i]);</span>
+<span class="fc" id="L778">                TypeVariable&lt;?&gt;[] typeParameters = rawType.getTypeParameters();</span>
+<span class="fc bfc" id="L779" title="All 2 branches covered.">                for (int i = 0; i &lt; actualTypeArguments.length; i++) {</span>
+<span class="fc" id="L780">                    resolved.put(typeParameters[i], actualTypeArguments[i]);</span>
                 }
-<span class="fc" id="L784">                type = rawType.getGenericSuperclass();</span>
-<span class="fc" id="L785">            }</span>
+<span class="fc" id="L782">                type = rawType.getGenericSuperclass();</span>
+<span class="fc" id="L783">            }</span>
         }
         // resolve type variable to a meaningful type
-<span class="fc" id="L788">        Type result = typevar;</span>
-<span class="fc bfc" id="L789" title="All 2 branches covered.">        while (resolved.containsKey(result)) {</span>
-<span class="fc" id="L790">            result = resolved.get(result);</span>
+<span class="fc" id="L786">        Type result = typevar;</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">        while (resolved.containsKey(result)) {</span>
+<span class="fc" id="L788">            result = resolved.get(result);</span>
         }
-<span class="fc" id="L792">        return result;</span>
+<span class="fc" id="L790">        return result;</span>
     }
 
     private static Class&lt;?&gt; eraseToClass(Type type) {
-<span class="fc bfc" id="L796" title="All 2 branches covered.">        if (type instanceof Class) {</span>
-<span class="fc" id="L797">            return (Class&lt;?&gt;) type;</span>
-<span class="fc bfc" id="L798" title="All 2 branches covered.">        } else if (type instanceof ParameterizedType) {</span>
-<span class="fc" id="L799">            return eraseToClass(((ParameterizedType) type).getRawType());</span>
-<span class="pc bpc" id="L800" title="1 of 2 branches missed.">        } else if (type instanceof GenericArrayType) {</span>
-<span class="nc" id="L801">            Type componentType = ((GenericArrayType) type).getGenericComponentType();</span>
-<span class="nc" id="L802">            Class&lt;?&gt; componentClass = eraseToClass(componentType);</span>
-<span class="nc bnc" id="L803" title="All 2 branches missed.">            if (componentClass != null) {</span>
-<span class="nc" id="L804">                return Array.newInstance(componentClass, 0).getClass();</span>
+<span class="fc bfc" id="L794" title="All 2 branches covered.">        if (type instanceof Class) {</span>
+<span class="fc" id="L795">            return (Class&lt;?&gt;) type;</span>
+<span class="fc bfc" id="L796" title="All 2 branches covered.">        } else if (type instanceof ParameterizedType) {</span>
+<span class="fc" id="L797">            return eraseToClass(((ParameterizedType) type).getRawType());</span>
+<span class="pc bpc" id="L798" title="1 of 2 branches missed.">        } else if (type instanceof GenericArrayType) {</span>
+<span class="nc" id="L799">            Type componentType = ((GenericArrayType) type).getGenericComponentType();</span>
+<span class="nc" id="L800">            Class&lt;?&gt; componentClass = eraseToClass(componentType);</span>
+<span class="nc bnc" id="L801" title="All 2 branches missed.">            if (componentClass != null) {</span>
+<span class="nc" id="L802">                return Array.newInstance(componentClass, 0).getClass();</span>
             }
-<span class="pc bfc" id="L806" title="All 2 branches covered.">        } else if (type instanceof TypeVariable) {</span>
-<span class="fc" id="L807">            Type[] bounds = ((TypeVariable&lt;?&gt;) type).getBounds();</span>
-<span class="pc bpc" id="L808" title="1 of 2 branches missed.">            if (bounds.length == 0) {</span>
-<span class="nc" id="L809">                return Object.class;</span>
+<span class="pc bfc" id="L804" title="All 2 branches covered.">        } else if (type instanceof TypeVariable) {</span>
+<span class="fc" id="L805">            Type[] bounds = ((TypeVariable&lt;?&gt;) type).getBounds();</span>
+<span class="pc bpc" id="L806" title="1 of 2 branches missed.">            if (bounds.length == 0) {</span>
+<span class="nc" id="L807">                return Object.class;</span>
             } else {
-<span class="fc" id="L811">                return eraseToClass(bounds[0]);</span>
+<span class="fc" id="L809">                return eraseToClass(bounds[0]);</span>
             }
         }
-<span class="fc" id="L814">        return null;</span>
+<span class="fc" id="L812">        return null;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -829,36 +827,36 @@ public final class JodaBeanUtils {
      * @throws IllegalArgumentException if inputs are null
      */
     public static boolean equalIgnoring(Bean bean1, Bean bean2, MetaProperty&lt;?&gt;... properties) {
-<span class="fc" id="L832">        JodaBeanUtils.notNull(bean1, &quot;bean1&quot;);</span>
-<span class="fc" id="L833">        JodaBeanUtils.notNull(bean2, &quot;bean2&quot;);</span>
-<span class="fc" id="L834">        JodaBeanUtils.notNull(properties, &quot;properties&quot;);</span>
-<span class="fc bfc" id="L835" title="All 2 branches covered.">        if (bean1 == bean2) {</span>
-<span class="fc" id="L836">            return true;</span>
+<span class="fc" id="L830">        JodaBeanUtils.notNull(bean1, &quot;bean1&quot;);</span>
+<span class="fc" id="L831">        JodaBeanUtils.notNull(bean2, &quot;bean2&quot;);</span>
+<span class="fc" id="L832">        JodaBeanUtils.notNull(properties, &quot;properties&quot;);</span>
+<span class="fc bfc" id="L833" title="All 2 branches covered.">        if (bean1 == bean2) {</span>
+<span class="fc" id="L834">            return true;</span>
         }
-<span class="pc bpc" id="L838" title="1 of 2 branches missed.">        if (bean1.getClass() != bean2.getClass()) {</span>
-<span class="nc" id="L839">            return false;</span>
+<span class="pc bpc" id="L836" title="1 of 2 branches missed.">        if (bean1.getClass() != bean2.getClass()) {</span>
+<span class="nc" id="L837">            return false;</span>
         }
-<span class="fc bfc" id="L841" title="All 3 branches covered.">        switch (properties.length) {</span>
+<span class="fc bfc" id="L839" title="All 3 branches covered.">        switch (properties.length) {</span>
             case 0:
-<span class="fc" id="L843">                return bean1.equals(bean2);</span>
+<span class="fc" id="L841">                return bean1.equals(bean2);</span>
             case 1: {
-<span class="fc" id="L845">                MetaProperty&lt;?&gt; ignored = properties[0];</span>
-<span class="fc bfc" id="L846" title="All 2 branches covered.">                for (MetaProperty&lt;?&gt; mp : bean1.metaBean().metaPropertyIterable()) {</span>
-<span class="fc bfc" id="L847" title="All 4 branches covered.">                    if (ignored.equals(mp) == false &amp;&amp; JodaBeanUtils.equal(mp.get(bean1), mp.get(bean2)) == false) {</span>
-<span class="fc" id="L848">                        return false;</span>
+<span class="fc" id="L843">                MetaProperty&lt;?&gt; ignored = properties[0];</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">                for (MetaProperty&lt;?&gt; mp : bean1.metaBean().metaPropertyIterable()) {</span>
+<span class="fc bfc" id="L845" title="All 4 branches covered.">                    if (ignored.equals(mp) == false &amp;&amp; JodaBeanUtils.equal(mp.get(bean1), mp.get(bean2)) == false) {</span>
+<span class="fc" id="L846">                        return false;</span>
                     }
-<span class="fc" id="L850">                }</span>
-<span class="fc" id="L851">                return true;</span>
+<span class="fc" id="L848">                }</span>
+<span class="fc" id="L849">                return true;</span>
             }
             default:
-<span class="fc" id="L854">                Set&lt;MetaProperty&lt;?&gt;&gt; ignored = new HashSet&lt;&gt;(Arrays.asList(properties));</span>
-<span class="fc bfc" id="L855" title="All 2 branches covered.">                for (MetaProperty&lt;?&gt; mp : bean1.metaBean().metaPropertyIterable()) {</span>
-<span class="fc bfc" id="L856" title="All 2 branches covered.">                    if (ignored.contains(mp) == false</span>
-<span class="fc bfc" id="L857" title="All 2 branches covered.">                            &amp;&amp; JodaBeanUtils.equal(mp.get(bean1), mp.get(bean2)) == false) {</span>
-<span class="fc" id="L858">                        return false;</span>
+<span class="fc" id="L852">                Set&lt;MetaProperty&lt;?&gt;&gt; ignored = new HashSet&lt;&gt;(Arrays.asList(properties));</span>
+<span class="fc bfc" id="L853" title="All 2 branches covered.">                for (MetaProperty&lt;?&gt; mp : bean1.metaBean().metaPropertyIterable()) {</span>
+<span class="fc bfc" id="L854" title="All 2 branches covered.">                    if (ignored.contains(mp) == false</span>
+<span class="fc bfc" id="L855" title="All 2 branches covered.">                            &amp;&amp; JodaBeanUtils.equal(mp.get(bean1), mp.get(bean2)) == false) {</span>
+<span class="fc" id="L856">                        return false;</span>
                     }
-<span class="fc" id="L860">                }</span>
-<span class="fc" id="L861">                return true;</span>
+<span class="fc" id="L858">                }</span>
+<span class="fc" id="L859">                return true;</span>
         }
     }
 
@@ -876,7 +874,7 @@ public final class JodaBeanUtils {
      * @return the iterator, not null
      */
     public static Iterator&lt;Bean&gt; beanIterator(Bean bean) {
-<span class="fc" id="L879">        return new BeanIterator(bean);</span>
+<span class="fc" id="L877">        return new BeanIterator(bean);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -893,11 +891,11 @@ public final class JodaBeanUtils {
      * @return the chain function, not null
      */
     public static &lt;P&gt; Function&lt;Bean, P&gt; chain(MetaProperty&lt;? extends Bean&gt; mp1, MetaProperty&lt;P&gt; mp2) {
-<span class="fc" id="L896">        notNull(mp1, &quot;MetaProperty 1&quot;);</span>
-<span class="fc" id="L897">        notNull(mp1, &quot;MetaProperty 2&quot;);</span>
-<span class="fc" id="L898">        return b -&gt; {</span>
-<span class="fc" id="L899">            Bean first = mp1.get(b);</span>
-<span class="pc bpc" id="L900" title="1 of 2 branches missed.">            return first != null ? mp2.get(first) : null;</span>
+<span class="fc" id="L894">        notNull(mp1, &quot;MetaProperty 1&quot;);</span>
+<span class="fc" id="L895">        notNull(mp1, &quot;MetaProperty 2&quot;);</span>
+<span class="fc" id="L896">        return b -&gt; {</span>
+<span class="fc" id="L897">            Bean first = mp1.get(b);</span>
+<span class="pc bpc" id="L898" title="1 of 2 branches missed.">            return first != null ? mp2.get(first) : null;</span>
         };
     }
 
@@ -914,11 +912,11 @@ public final class JodaBeanUtils {
      * @return the chain function, not null
      */
     public static &lt;P&gt; Function&lt;Bean, P&gt; chain(Function&lt;Bean, ? extends Bean&gt; fn1, MetaProperty&lt;P&gt; mp2) {
-<span class="nc" id="L917">        notNull(fn1, &quot;Function 1&quot;);</span>
-<span class="nc" id="L918">        notNull(fn1, &quot;MetaProperty 2&quot;);</span>
-<span class="nc" id="L919">        return b -&gt; {</span>
-<span class="nc" id="L920">            Bean first = fn1.apply(b);</span>
-<span class="nc bnc" id="L921" title="All 2 branches missed.">            return first != null ? mp2.get(first) : null;</span>
+<span class="nc" id="L915">        notNull(fn1, &quot;Function 1&quot;);</span>
+<span class="nc" id="L916">        notNull(fn1, &quot;MetaProperty 2&quot;);</span>
+<span class="nc" id="L917">        return b -&gt; {</span>
+<span class="nc" id="L918">            Bean first = fn1.apply(b);</span>
+<span class="nc bnc" id="L919" title="All 2 branches missed.">            return first != null ? mp2.get(first) : null;</span>
         };
     }
 
@@ -936,7 +934,7 @@ public final class JodaBeanUtils {
      * @return the comparator, not null
      */
     public static Comparator&lt;Bean&gt; comparator(Function&lt;Bean, ?&gt; query, boolean ascending) {
-<span class="fc bfc" id="L939" title="All 2 branches covered.">        return (ascending ? comparatorAscending(query) : comparatorDescending(query));</span>
+<span class="fc bfc" id="L937" title="All 2 branches covered.">        return (ascending ? comparatorAscending(query) : comparatorDescending(query));</span>
     }
 
     /**
@@ -948,10 +946,10 @@ public final class JodaBeanUtils {
      * @return the comparator, not null
      */
     public static Comparator&lt;Bean&gt; comparatorAscending(Function&lt;Bean, ?&gt; query) {
-<span class="fc bfc" id="L951" title="All 2 branches covered.">        if (query == null) {</span>
-<span class="fc" id="L952">            throw new NullPointerException(&quot;Function must not be null&quot;);</span>
+<span class="fc bfc" id="L949" title="All 2 branches covered.">        if (query == null) {</span>
+<span class="fc" id="L950">            throw new NullPointerException(&quot;Function must not be null&quot;);</span>
         }
-<span class="fc" id="L954">        return new Comp(query);</span>
+<span class="fc" id="L952">        return new Comp(query);</span>
     }
 
     /**
@@ -963,10 +961,10 @@ public final class JodaBeanUtils {
      * @return the comparator, not null
      */
     public static Comparator&lt;Bean&gt; comparatorDescending(Function&lt;Bean, ?&gt; query) {
-<span class="fc bfc" id="L966" title="All 2 branches covered.">        if (query == null) {</span>
-<span class="fc" id="L967">            throw new NullPointerException(&quot;Function must not be null&quot;);</span>
+<span class="fc bfc" id="L964" title="All 2 branches covered.">        if (query == null) {</span>
+<span class="fc" id="L965">            throw new NullPointerException(&quot;Function must not be null&quot;);</span>
         }
-<span class="fc" id="L969">        return Collections.reverseOrder(new Comp(query));</span>
+<span class="fc" id="L967">        return Collections.reverseOrder(new Comp(query));</span>
     }
 
     //-------------------------------------------------------------------------
@@ -976,16 +974,16 @@ public final class JodaBeanUtils {
     private static final class Comp implements Comparator&lt;Bean&gt; {
         private final Function&lt;Bean, ?&gt; query;
 
-<span class="fc" id="L979">        private Comp(Function&lt;Bean, ?&gt; query) {</span>
-<span class="fc" id="L980">            this.query = query;</span>
-<span class="fc" id="L981">        }</span>
+<span class="fc" id="L977">        private Comp(Function&lt;Bean, ?&gt; query) {</span>
+<span class="fc" id="L978">            this.query = query;</span>
+<span class="fc" id="L979">        }</span>
 
         @Override
         public int compare(Bean bean1, Bean bean2) {
             @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L986">            Comparable&lt;Object&gt; value1 = (Comparable&lt;Object&gt;) query.apply(bean1);</span>
-<span class="fc" id="L987">            Object value2 = query.apply(bean2);</span>
-<span class="fc" id="L988">            return value1.compareTo(value2);</span>
+<span class="fc" id="L984">            Comparable&lt;Object&gt; value1 = (Comparable&lt;Object&gt;) query.apply(bean1);</span>
+<span class="fc" id="L985">            Object value2 = query.apply(bean2);</span>
+<span class="fc" id="L986">            return value1.compareTo(value2);</span>
         }
     }
 
@@ -995,72 +993,72 @@ public final class JodaBeanUtils {
      */
     @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
     private static class Cloner {
-<span class="fc" id="L998">        public static final Cloner INSTANCE = getInstance();</span>
+<span class="fc" id="L996">        public static final Cloner INSTANCE = getInstance();</span>
         private static Cloner getInstance() {
             try {
-<span class="fc" id="L1001">                Class.forName(&quot;org.joda.collect.grid.Grid&quot;);</span>
-<span class="fc" id="L1002">                return new CollectCloner();</span>
-<span class="nc" id="L1003">            } catch (Exception | LinkageError ex) {</span>
+<span class="fc" id="L999">                Class.forName(&quot;org.joda.collect.grid.Grid&quot;);</span>
+<span class="fc" id="L1000">                return new CollectCloner();</span>
+<span class="nc" id="L1001">            } catch (Exception | LinkageError ex) {</span>
                 try {
-<span class="nc" id="L1005">                    Class.forName(&quot;com.google.common.collect.Multimap&quot;);</span>
-<span class="nc" id="L1006">                    return new GuavaCloner();</span>
-<span class="nc" id="L1007">                } catch (Exception | LinkageError ex2) {</span>
-<span class="nc" id="L1008">                    return new Cloner();</span>
+<span class="nc" id="L1003">                    Class.forName(&quot;com.google.common.collect.Multimap&quot;);</span>
+<span class="nc" id="L1004">                    return new GuavaCloner();</span>
+<span class="nc" id="L1005">                } catch (Exception | LinkageError ex2) {</span>
+<span class="nc" id="L1006">                    return new Cloner();</span>
                 }
             }
         }
 
-<span class="fc" id="L1013">        Cloner() {</span>
-<span class="fc" id="L1014">        }</span>
+<span class="fc" id="L1011">        Cloner() {</span>
+<span class="fc" id="L1012">        }</span>
 
         Object clone(Object value) {
-<span class="pc bpc" id="L1017" title="1 of 2 branches missed.">            if (value == null) {</span>
-<span class="nc" id="L1018">                return value;</span>
-<span class="fc bfc" id="L1019" title="All 2 branches covered.">            } else if (value instanceof Bean) {</span>
-<span class="fc" id="L1020">                return cloneAlways((Bean) value);</span>
-<span class="pc bpc" id="L1021" title="1 of 2 branches missed.">            } else if (value instanceof SortedSet) {</span>
-<span class="nc" id="L1022">                SortedSet set = (SortedSet) value;</span>
-<span class="nc" id="L1023">                return cloneIterable(set, new TreeSet(set.comparator()));</span>
-<span class="pc bpc" id="L1024" title="1 of 2 branches missed.">            } else if (value instanceof Set) {</span>
-<span class="nc" id="L1025">                return cloneIterable((Set) value, new LinkedHashSet());</span>
-<span class="fc bfc" id="L1026" title="All 2 branches covered.">            } else if (value instanceof Iterable) {</span>
-<span class="fc" id="L1027">                return cloneIterable((Iterable) value, new ArrayList());</span>
-<span class="pc bpc" id="L1028" title="1 of 2 branches missed.">            } else if (value instanceof SortedMap) {</span>
-<span class="nc" id="L1029">                SortedMap map = (SortedMap) value;</span>
-<span class="nc" id="L1030">                return cloneMap(map, new TreeMap(map.comparator()));</span>
-<span class="fc bfc" id="L1031" title="All 2 branches covered.">            } else if (value instanceof Map) {</span>
-<span class="fc" id="L1032">                return cloneMap((Map) value, new LinkedHashMap());</span>
-<span class="fc bfc" id="L1033" title="All 2 branches covered.">            } else if (value.getClass().isArray()) {</span>
-<span class="fc" id="L1034">                return cloneArray(value);</span>
-<span class="fc bfc" id="L1035" title="All 2 branches covered.">            } else if (value instanceof java.util.Date) {</span>
-<span class="fc" id="L1036">                return ((java.util.Date) value).clone();</span>
+<span class="pc bpc" id="L1015" title="1 of 2 branches missed.">            if (value == null) {</span>
+<span class="nc" id="L1016">                return value;</span>
+<span class="fc bfc" id="L1017" title="All 2 branches covered.">            } else if (value instanceof Bean) {</span>
+<span class="fc" id="L1018">                return cloneAlways((Bean) value);</span>
+<span class="pc bpc" id="L1019" title="1 of 2 branches missed.">            } else if (value instanceof SortedSet) {</span>
+<span class="nc" id="L1020">                SortedSet set = (SortedSet) value;</span>
+<span class="nc" id="L1021">                return cloneIterable(set, new TreeSet(set.comparator()));</span>
+<span class="pc bpc" id="L1022" title="1 of 2 branches missed.">            } else if (value instanceof Set) {</span>
+<span class="nc" id="L1023">                return cloneIterable((Set) value, new LinkedHashSet());</span>
+<span class="fc bfc" id="L1024" title="All 2 branches covered.">            } else if (value instanceof Iterable) {</span>
+<span class="fc" id="L1025">                return cloneIterable((Iterable) value, new ArrayList());</span>
+<span class="pc bpc" id="L1026" title="1 of 2 branches missed.">            } else if (value instanceof SortedMap) {</span>
+<span class="nc" id="L1027">                SortedMap map = (SortedMap) value;</span>
+<span class="nc" id="L1028">                return cloneMap(map, new TreeMap(map.comparator()));</span>
+<span class="fc bfc" id="L1029" title="All 2 branches covered.">            } else if (value instanceof Map) {</span>
+<span class="fc" id="L1030">                return cloneMap((Map) value, new LinkedHashMap());</span>
+<span class="fc bfc" id="L1031" title="All 2 branches covered.">            } else if (value.getClass().isArray()) {</span>
+<span class="fc" id="L1032">                return cloneArray(value);</span>
+<span class="fc bfc" id="L1033" title="All 2 branches covered.">            } else if (value instanceof java.util.Date) {</span>
+<span class="fc" id="L1034">                return ((java.util.Date) value).clone();</span>
             }
-<span class="fc" id="L1038">            return value;</span>
+<span class="fc" id="L1036">            return value;</span>
         }
 
         Object cloneIterable(Iterable original, Collection cloned) {
-<span class="fc bfc" id="L1042" title="All 2 branches covered.">            for (Object item : original) {</span>
-<span class="fc" id="L1043">                cloned.add(clone(item));</span>
-<span class="fc" id="L1044">            }</span>
-<span class="fc" id="L1045">            return cloned;</span>
+<span class="fc bfc" id="L1040" title="All 2 branches covered.">            for (Object item : original) {</span>
+<span class="fc" id="L1041">                cloned.add(clone(item));</span>
+<span class="fc" id="L1042">            }</span>
+<span class="fc" id="L1043">            return cloned;</span>
         }
 
         Object cloneMap(Map original, Map cloned) {
-<span class="fc bfc" id="L1049" title="All 2 branches covered.">            for (Object item : original.entrySet()) {</span>
-<span class="fc" id="L1050">                Entry entry = (Entry) item;</span>
-<span class="fc" id="L1051">                cloned.put(clone(entry.getKey()), clone(entry.getValue()));</span>
-<span class="fc" id="L1052">            }</span>
-<span class="fc" id="L1053">            return cloned;</span>
+<span class="fc bfc" id="L1047" title="All 2 branches covered.">            for (Object item : original.entrySet()) {</span>
+<span class="fc" id="L1048">                Entry entry = (Entry) item;</span>
+<span class="fc" id="L1049">                cloned.put(clone(entry.getKey()), clone(entry.getValue()));</span>
+<span class="fc" id="L1050">            }</span>
+<span class="fc" id="L1051">            return cloned;</span>
         }
 
         Object cloneArray(Object original) {
-<span class="fc" id="L1057">            int len = Array.getLength(original);</span>
-<span class="fc" id="L1058">            Class&lt;?&gt; arrayType = original.getClass().getComponentType();</span>
-<span class="fc" id="L1059">            Object copy = Array.newInstance(arrayType, len);</span>
-<span class="fc bfc" id="L1060" title="All 2 branches covered.">            for (int i = 0; i &lt; len; i++) {</span>
-<span class="fc" id="L1061">                Array.set(copy, i, clone(Array.get(original, i)));</span>
+<span class="fc" id="L1055">            int len = Array.getLength(original);</span>
+<span class="fc" id="L1056">            Class&lt;?&gt; arrayType = original.getClass().getComponentType();</span>
+<span class="fc" id="L1057">            Object copy = Array.newInstance(arrayType, len);</span>
+<span class="fc bfc" id="L1058" title="All 2 branches covered.">            for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L1059">                Array.set(copy, i, clone(Array.get(original, i)));</span>
             }
-<span class="fc" id="L1063">            return copy;</span>
+<span class="fc" id="L1061">            return copy;</span>
         }
     }
 
@@ -1070,51 +1068,51 @@ public final class JodaBeanUtils {
      */
     @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
     private static class GuavaCloner extends Cloner {
-<span class="fc" id="L1073">        GuavaCloner() {</span>
-<span class="fc" id="L1074">        }</span>
+<span class="fc" id="L1071">        GuavaCloner() {</span>
+<span class="fc" id="L1072">        }</span>
 
         @Override
         Object clone(Object value) {
-<span class="pc bpc" id="L1078" title="1 of 2 branches missed.">            if (value == null) {</span>
-<span class="nc" id="L1079">                return value;</span>
-<span class="pc bpc" id="L1080" title="4 of 8 branches missed.">            } else if (value instanceof ImmutableMap ||</span>
+<span class="pc bpc" id="L1076" title="1 of 2 branches missed.">            if (value == null) {</span>
+<span class="nc" id="L1077">                return value;</span>
+<span class="pc bpc" id="L1078" title="4 of 8 branches missed.">            } else if (value instanceof ImmutableMap ||</span>
                     value instanceof ImmutableCollection ||
                     value instanceof ImmutableMultimap ||
                     value instanceof ImmutableTable) {
-<span class="nc" id="L1084">                return value;</span>
-<span class="pc bpc" id="L1085" title="1 of 2 branches missed.">            } else if (value instanceof SortedMultiset) {</span>
-<span class="nc" id="L1086">                SortedMultiset set = (SortedMultiset) value;</span>
-<span class="nc" id="L1087">                return cloneIterable(set, TreeMultiset.create(set.comparator()));</span>
-<span class="pc bpc" id="L1088" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
-<span class="nc" id="L1089">                return cloneIterable((Multiset) value, LinkedHashMultiset.create());</span>
-<span class="pc bpc" id="L1090" title="1 of 2 branches missed.">            } else if (value instanceof SetMultimap) {</span>
-<span class="nc" id="L1091">                return cloneMultimap((Multimap) value, LinkedHashMultimap.create());</span>
-<span class="pc bpc" id="L1092" title="2 of 4 branches missed.">            } else if (value instanceof ListMultimap || value instanceof Multimap) {</span>
-<span class="nc" id="L1093">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
-<span class="pc bpc" id="L1094" title="1 of 2 branches missed.">            } else if (value instanceof BiMap) {</span>
-<span class="nc" id="L1095">                return cloneMap((BiMap) value, HashBiMap.create());</span>
-<span class="pc bpc" id="L1096" title="1 of 2 branches missed.">            } else if (value instanceof Table) {</span>
-<span class="nc" id="L1097">                return cloneTable((Table) value, HashBasedTable.create());</span>
+<span class="nc" id="L1082">                return value;</span>
+<span class="pc bpc" id="L1083" title="1 of 2 branches missed.">            } else if (value instanceof SortedMultiset) {</span>
+<span class="nc" id="L1084">                SortedMultiset set = (SortedMultiset) value;</span>
+<span class="nc" id="L1085">                return cloneIterable(set, TreeMultiset.create(set.comparator()));</span>
+<span class="pc bpc" id="L1086" title="1 of 2 branches missed.">            } else if (value instanceof Multiset) {</span>
+<span class="nc" id="L1087">                return cloneIterable((Multiset) value, LinkedHashMultiset.create());</span>
+<span class="pc bpc" id="L1088" title="1 of 2 branches missed.">            } else if (value instanceof SetMultimap) {</span>
+<span class="nc" id="L1089">                return cloneMultimap((Multimap) value, LinkedHashMultimap.create());</span>
+<span class="pc bpc" id="L1090" title="2 of 4 branches missed.">            } else if (value instanceof ListMultimap || value instanceof Multimap) {</span>
+<span class="nc" id="L1091">                return cloneMultimap((Multimap) value, ArrayListMultimap.create());</span>
+<span class="pc bpc" id="L1092" title="1 of 2 branches missed.">            } else if (value instanceof BiMap) {</span>
+<span class="nc" id="L1093">                return cloneMap((BiMap) value, HashBiMap.create());</span>
+<span class="pc bpc" id="L1094" title="1 of 2 branches missed.">            } else if (value instanceof Table) {</span>
+<span class="nc" id="L1095">                return cloneTable((Table) value, HashBasedTable.create());</span>
             }
-<span class="fc" id="L1099">            return super.clone(value);</span>
+<span class="fc" id="L1097">            return super.clone(value);</span>
         }
 
         Object cloneMultimap(Multimap original, Multimap cloned) {
-<span class="nc bnc" id="L1103" title="All 2 branches missed.">            for (Object key : original.keySet()) {</span>
-<span class="nc" id="L1104">                Collection values = original.get(key);</span>
-<span class="nc bnc" id="L1105" title="All 2 branches missed.">                for (Object value : values) {</span>
-<span class="nc" id="L1106">                    cloned.put(clone(key), clone(value));</span>
-<span class="nc" id="L1107">                }</span>
-<span class="nc" id="L1108">            }</span>
-<span class="nc" id="L1109">            return cloned;</span>
+<span class="nc bnc" id="L1101" title="All 2 branches missed.">            for (Object key : original.keySet()) {</span>
+<span class="nc" id="L1102">                Collection values = original.get(key);</span>
+<span class="nc bnc" id="L1103" title="All 2 branches missed.">                for (Object value : values) {</span>
+<span class="nc" id="L1104">                    cloned.put(clone(key), clone(value));</span>
+<span class="nc" id="L1105">                }</span>
+<span class="nc" id="L1106">            }</span>
+<span class="nc" id="L1107">            return cloned;</span>
         }
 
         Object cloneTable(Table original, Table cloned) {
-<span class="nc bnc" id="L1113" title="All 2 branches missed.">            for (Object item : original.cellSet()) {</span>
-<span class="nc" id="L1114">                Table.Cell cell = (Table.Cell) item;</span>
-<span class="nc" id="L1115">                cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));</span>
-<span class="nc" id="L1116">            }</span>
-<span class="nc" id="L1117">            return cloned;</span>
+<span class="nc bnc" id="L1111" title="All 2 branches missed.">            for (Object item : original.cellSet()) {</span>
+<span class="nc" id="L1112">                Table.Cell cell = (Table.Cell) item;</span>
+<span class="nc" id="L1113">                cloned.put(clone(cell.getRowKey()), clone(cell.getColumnKey()), clone(cell.getValue()));</span>
+<span class="nc" id="L1114">            }</span>
+<span class="nc" id="L1115">            return cloned;</span>
         }
     }
 
@@ -1124,31 +1122,31 @@ public final class JodaBeanUtils {
      */
     @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
     private static class CollectCloner extends GuavaCloner {
-<span class="fc" id="L1127">        CollectCloner() {</span>
-<span class="fc" id="L1128">        }</span>
+<span class="fc" id="L1125">        CollectCloner() {</span>
+<span class="fc" id="L1126">        }</span>
 
         @Override
         Object clone(Object value) {
-<span class="fc bfc" id="L1132" title="All 2 branches covered.">            if (value == null) {</span>
-<span class="fc" id="L1133">                return value;</span>
-<span class="pc bpc" id="L1134" title="1 of 2 branches missed.">            } else if (value instanceof ImmutableGrid) {</span>
-<span class="nc" id="L1135">                return value;</span>
-<span class="pc bpc" id="L1136" title="1 of 2 branches missed.">            } else if (value instanceof DenseGrid) {</span>
-<span class="nc" id="L1137">                Grid grid = (Grid) value;</span>
-<span class="nc" id="L1138">                return cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));</span>
-<span class="pc bpc" id="L1139" title="1 of 2 branches missed.">            } else if (value instanceof Grid) {</span>
-<span class="nc" id="L1140">                Grid grid = (Grid) value;</span>
-<span class="nc" id="L1141">                return cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));</span>
+<span class="fc bfc" id="L1130" title="All 2 branches covered.">            if (value == null) {</span>
+<span class="fc" id="L1131">                return value;</span>
+<span class="pc bpc" id="L1132" title="1 of 2 branches missed.">            } else if (value instanceof ImmutableGrid) {</span>
+<span class="nc" id="L1133">                return value;</span>
+<span class="pc bpc" id="L1134" title="1 of 2 branches missed.">            } else if (value instanceof DenseGrid) {</span>
+<span class="nc" id="L1135">                Grid grid = (Grid) value;</span>
+<span class="nc" id="L1136">                return cloneGrid(grid, DenseGrid.create(grid.rowCount(), grid.columnCount()));</span>
+<span class="pc bpc" id="L1137" title="1 of 2 branches missed.">            } else if (value instanceof Grid) {</span>
+<span class="nc" id="L1138">                Grid grid = (Grid) value;</span>
+<span class="nc" id="L1139">                return cloneGrid(grid, SparseGrid.create(grid.rowCount(), grid.columnCount()));</span>
             }
-<span class="fc" id="L1143">            return super.clone(value);</span>
+<span class="fc" id="L1141">            return super.clone(value);</span>
         }
 
         Object cloneGrid(Grid original, Grid cloned) {
-<span class="nc bnc" id="L1147" title="All 2 branches missed.">            for (Object item : original.cells()) {</span>
-<span class="nc" id="L1148">                Grid.Cell cell = (Grid.Cell) item;</span>
-<span class="nc" id="L1149">                cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));</span>
-<span class="nc" id="L1150">            }</span>
-<span class="nc" id="L1151">            return cloned;</span>
+<span class="nc bnc" id="L1145" title="All 2 branches missed.">            for (Object item : original.cells()) {</span>
+<span class="nc" id="L1146">                Grid.Cell cell = (Grid.Cell) item;</span>
+<span class="nc" id="L1147">                cloned.put(cell.getRow(), cell.getColumn(), clone(cell.getValue()));</span>
+<span class="nc" id="L1148">            }</span>
+<span class="nc" id="L1149">            return cloned;</span>
         }
     }
 

@@ -26,8 +26,6 @@ import org.joda.beans.impl.BasicMetaProperty;
 
 /**
  * A meta-property using a {@code FlexiBean} for storage.
- * 
- * @author Stephen Colebourne
  */
 final class FlexiMetaProperty extends BasicMetaProperty&lt;Object&gt; {
 
@@ -41,7 +39,7 @@ final class FlexiMetaProperty extends BasicMetaProperty&lt;Object&gt; {
      * @param propertyName  the property name, not empty
      */
     static FlexiMetaProperty of(MetaBean metaBean, String propertyName) {
-<span class="fc" id="L44">        return new FlexiMetaProperty(metaBean, propertyName);</span>
+<span class="fc" id="L42">        return new FlexiMetaProperty(metaBean, propertyName);</span>
     }
 
     /**
@@ -51,51 +49,51 @@ final class FlexiMetaProperty extends BasicMetaProperty&lt;Object&gt; {
      * @param propertyName  the property name, not empty
      */
     private FlexiMetaProperty(MetaBean metaBean, String propertyName) {
-<span class="fc" id="L54">        super(propertyName);</span>
-<span class="fc" id="L55">        this.metaBean = metaBean;</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L52">        super(propertyName);</span>
+<span class="fc" id="L53">        this.metaBean = metaBean;</span>
+<span class="fc" id="L54">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public MetaBean metaBean() {
-<span class="nc" id="L61">        return metaBean;</span>
+<span class="nc" id="L59">        return metaBean;</span>
     }
 
     @Override
     public Class&lt;?&gt; declaringType() {
-<span class="fc" id="L66">        return FlexiBean.class;</span>
+<span class="fc" id="L64">        return FlexiBean.class;</span>
     }
 
     @Override
     public Class&lt;Object&gt; propertyType() {
-<span class="fc" id="L71">        return Object.class;</span>
+<span class="fc" id="L69">        return Object.class;</span>
     }
 
     @Override
     public Class&lt;Object&gt; propertyGenericType() {
-<span class="fc" id="L76">        return Object.class;</span>
+<span class="fc" id="L74">        return Object.class;</span>
     }
 
     @Override
     public PropertyStyle style() {
-<span class="fc" id="L81">        return PropertyStyle.READ_WRITE;</span>
+<span class="fc" id="L79">        return PropertyStyle.READ_WRITE;</span>
     }
 
     @Override
     public List&lt;Annotation&gt; annotations() {
-<span class="nc" id="L86">        return Collections.emptyList();</span>
+<span class="nc" id="L84">        return Collections.emptyList();</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public Object get(Bean bean) {
-<span class="fc" id="L92">        return ((FlexiBean) bean).propertyGet(name());</span>
+<span class="fc" id="L90">        return ((FlexiBean) bean).propertyGet(name());</span>
     }
 
     @Override
     public void set(Bean bean, Object value) {
-<span class="nc" id="L97">        ((FlexiBean) bean).propertySet(name(), value);</span>
-<span class="nc" id="L98">    }</span>
+<span class="nc" id="L95">        ((FlexiBean) bean).propertySet(name(), value);</span>
+<span class="nc" id="L96">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

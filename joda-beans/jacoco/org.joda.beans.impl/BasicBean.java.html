@@ -23,10 +23,8 @@ import org.joda.beans.JodaBeanUtils;
  * &lt;p&gt;
  * The subclass must to provide an implementation for {@link Bean#metaBean()}.
  * This returns the complete definition of the bean at the meta level.
- * 
- * @author Stephen Colebourne
  */
-<span class="nc" id="L29">public abstract class BasicBean implements Bean {</span>
+<span class="nc" id="L27">public abstract class BasicBean implements Bean {</span>
 
     /**
      * Clones this bean, returning an independent copy.
@@ -35,7 +33,7 @@ import org.joda.beans.JodaBeanUtils;
      */
     @Override
     public BasicBean clone() {
-<span class="nc" id="L38">        return JodaBeanUtils.clone(this);</span>
+<span class="nc" id="L36">        return JodaBeanUtils.clone(this);</span>
     }
 
     /**
@@ -48,14 +46,14 @@ import org.joda.beans.JodaBeanUtils;
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (obj == this) {</span>
-<span class="nc" id="L52">            return true;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L50">            return true;</span>
         }
-<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (obj != null &amp;&amp; getClass() == obj.getClass()) {</span>
-<span class="nc" id="L55">            Bean other = (Bean) obj;</span>
-<span class="nc" id="L56">            return JodaBeanUtils.propertiesEqual(this, other);</span>
+<span class="nc bnc" id="L52" title="All 4 branches missed.">        if (obj != null &amp;&amp; getClass() == obj.getClass()) {</span>
+<span class="nc" id="L53">            Bean other = (Bean) obj;</span>
+<span class="nc" id="L54">            return JodaBeanUtils.propertiesEqual(this, other);</span>
         }
-<span class="nc" id="L58">        return false;</span>
+<span class="nc" id="L56">        return false;</span>
     }
 
     /**
@@ -67,7 +65,7 @@ import org.joda.beans.JodaBeanUtils;
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L70">        return getClass().hashCode() ^ JodaBeanUtils.propertiesHashCode(this);</span>
+<span class="nc" id="L68">        return getClass().hashCode() ^ JodaBeanUtils.propertiesHashCode(this);</span>
     }
 
     /**
@@ -79,7 +77,7 @@ import org.joda.beans.JodaBeanUtils;
      */
     @Override
     public String toString() {
-<span class="nc" id="L82">        return JodaBeanUtils.propertiesToString(this, metaBean().beanType().getSimpleName());</span>
+<span class="nc" id="L80">        return JodaBeanUtils.propertiesToString(this, metaBean().beanType().getSimpleName());</span>
     }
 
 }

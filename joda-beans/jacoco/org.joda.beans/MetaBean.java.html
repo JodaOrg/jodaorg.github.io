@@ -28,8 +28,6 @@ import java.util.NoSuchElementException;
  * &lt;p&gt;
  * This interface can be thought of as the equivalent of {@link Class} but for beans.
  * In most cases the meta-bean will be code generated and the concrete class will have additional methods.
- * 
- * @author Stephen Colebourne
  */
 public interface MetaBean {
 
@@ -45,7 +43,7 @@ public interface MetaBean {
      * @throws IllegalArgumentException if unable to obtain the meta-bean
      */
     public static MetaBean of(Class&lt;?&gt; cls) {
-<span class="fc" id="L48">        return MetaBeans.lookup(cls);</span>
+<span class="fc" id="L46">        return MetaBeans.lookup(cls);</span>
     }
 
     /**
@@ -58,8 +56,8 @@ public interface MetaBean {
      * @throws IllegalArgumentException if unable to register
      */
     public static void register(MetaBean metaBean) {
-<span class="fc" id="L61">        MetaBeans.register(metaBean);</span>
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L59">        MetaBeans.register(metaBean);</span>
+<span class="fc" id="L60">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -97,7 +95,7 @@ public interface MetaBean {
      * @return the name of the bean, not empty
      */
     public default String beanName() {
-<span class="fc" id="L100">        return beanType().getName();</span>
+<span class="fc" id="L98">        return beanType().getName();</span>
     }
 
     /**
@@ -120,7 +118,7 @@ public interface MetaBean {
      * @return the number of properties
      */
     public default int metaPropertyCount() {
-<span class="fc" id="L123">        return metaPropertyMap().size();</span>
+<span class="fc" id="L121">        return metaPropertyMap().size();</span>
     }
 
     /**
@@ -133,7 +131,7 @@ public interface MetaBean {
      * @return true if the property exists
      */
     public default boolean metaPropertyExists(String propertyName) {
-<span class="fc" id="L136">        return metaPropertyMap().containsKey(propertyName);</span>
+<span class="fc" id="L134">        return metaPropertyMap().containsKey(propertyName);</span>
     }
 
     /**
@@ -152,11 +150,11 @@ public interface MetaBean {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public default &lt;R&gt; MetaProperty&lt;R&gt; metaProperty(String propertyName) {
-<span class="fc" id="L155">        MetaProperty&lt;?&gt; mp = metaPropertyMap().get(propertyName);</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (mp == null) {</span>
-<span class="nc" id="L157">            throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
+<span class="fc" id="L153">        MetaProperty&lt;?&gt; mp = metaPropertyMap().get(propertyName);</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (mp == null) {</span>
+<span class="nc" id="L155">            throw new NoSuchElementException(&quot;Unknown property: &quot; + propertyName);</span>
         }
-<span class="fc" id="L159">        return (MetaProperty&lt;R&gt;) mp;</span>
+<span class="fc" id="L157">        return (MetaProperty&lt;R&gt;) mp;</span>
     }
 
     /**
@@ -169,7 +167,7 @@ public interface MetaBean {
      * @return the unmodifiable map of meta property objects, not null
      */
     public default Iterable&lt;MetaProperty&lt;?&gt;&gt; metaPropertyIterable() {
-<span class="fc" id="L172">        return metaPropertyMap().values();</span>
+<span class="fc" id="L170">        return metaPropertyMap().values();</span>
     }
 
     /**
@@ -197,7 +195,7 @@ public interface MetaBean {
      * @return the annotations, unmodifiable, not null
      */
     public default List&lt;Annotation&gt; annotations() {
-<span class="fc" id="L200">        return Collections.unmodifiableList(Arrays.asList(beanType().getAnnotations()));</span>
+<span class="fc" id="L198">        return Collections.unmodifiableList(Arrays.asList(beanType().getAnnotations()));</span>
     }
 
     /**
@@ -214,13 +212,13 @@ public interface MetaBean {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public default &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
-<span class="fc" id="L217">        List&lt;Annotation&gt; annotations = annotations();</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        for (Annotation annotation : annotations) {</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
-<span class="fc" id="L220">                return (A) annotation;</span>
+<span class="fc" id="L215">        List&lt;Annotation&gt; annotations = annotations();</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        for (Annotation annotation : annotations) {</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
+<span class="fc" id="L218">                return (A) annotation;</span>
             }
-<span class="nc" id="L222">        }</span>
-<span class="nc" id="L223">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+<span class="nc" id="L220">        }</span>
+<span class="nc" id="L221">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
     }
 
 }
