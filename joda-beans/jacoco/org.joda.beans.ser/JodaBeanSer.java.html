@@ -266,6 +266,20 @@ public final class JodaBeanSer {
 
     //-----------------------------------------------------------------------
     /**
+     * Creates a reader that determines the file format and parses it.
+     * &lt;p&gt;
+     * This parser can handle XML, JSON, simple JSON, binary and binary referencing formats.
+     * &lt;p&gt;
+     * It is recommended, though not necessary, to create a new instance of the reader for each message.
+     * 
+     * @return the smart reader, not null
+     */
+    public JodaBeanSmartReader smartReader() {
+<span class="fc" id="L278">        return new JodaBeanSmartReader(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
      * Creates a binary writer using the standard format.
      * &lt;p&gt;
      * It is recommended, though not necessary, to create a new instance of the writer for each message.
@@ -273,7 +287,7 @@ public final class JodaBeanSer {
      * @return the binary writer, not null
      */
     public JodaBeanBinWriter binWriter() {
-<span class="fc" id="L276">        return new JodaBeanBinWriter(this, false);</span>
+<span class="fc" id="L290">        return new JodaBeanBinWriter(this, false);</span>
     }
 
     /**
@@ -293,7 +307,7 @@ public final class JodaBeanSer {
      * @return the referencing binary writer, not null
      */
     public JodaBeanBinWriter binWriterReferencing() {
-<span class="fc" id="L296">        return new JodaBeanBinWriter(this, true);</span>
+<span class="fc" id="L310">        return new JodaBeanBinWriter(this, true);</span>
     }
 
     /**
@@ -304,7 +318,7 @@ public final class JodaBeanSer {
      * @return the binary reader, not null
      */
     public JodaBeanBinReader binReader() {
-<span class="fc" id="L307">        return new JodaBeanBinReader(this);</span>
+<span class="fc" id="L321">        return new JodaBeanBinReader(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -316,7 +330,7 @@ public final class JodaBeanSer {
      * @return the XML writer, not null
      */
     public JodaBeanXmlWriter xmlWriter() {
-<span class="fc" id="L319">        return new JodaBeanXmlWriter(this);</span>
+<span class="fc" id="L333">        return new JodaBeanXmlWriter(this);</span>
     }
 
     /**
@@ -327,7 +341,7 @@ public final class JodaBeanSer {
      * @return the XML reader, not null
      */
     public JodaBeanXmlReader xmlReader() {
-<span class="fc" id="L330">        return new JodaBeanXmlReader(this);</span>
+<span class="fc" id="L344">        return new JodaBeanXmlReader(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -339,7 +353,7 @@ public final class JodaBeanSer {
      * @return the JSON writer, not null
      */
     public JodaBeanJsonWriter jsonWriter() {
-<span class="fc" id="L342">        return new JodaBeanJsonWriter(this);</span>
+<span class="fc" id="L356">        return new JodaBeanJsonWriter(this);</span>
     }
 
     /**
@@ -350,7 +364,7 @@ public final class JodaBeanSer {
      * @return the JSON reader, not null
      */
     public JodaBeanJsonReader jsonReader() {
-<span class="fc" id="L353">        return new JodaBeanJsonReader(this);</span>
+<span class="fc" id="L367">        return new JodaBeanJsonReader(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -371,7 +385,7 @@ public final class JodaBeanSer {
      * @return the simple JSON writer, not null
      */
     public JodaBeanSimpleJsonWriter simpleJsonWriter() {
-<span class="fc" id="L374">        return new JodaBeanSimpleJsonWriter(this);</span>
+<span class="fc" id="L388">        return new JodaBeanSimpleJsonWriter(this);</span>
     }
 
     /**
@@ -384,7 +398,7 @@ public final class JodaBeanSer {
      * @return the simple JSON reader, not null
      */
     public JodaBeanSimpleJsonReader simpleJsonReader() {
-<span class="fc" id="L387">        return new JodaBeanSimpleJsonReader(this);</span>
+<span class="fc" id="L401">        return new JodaBeanSimpleJsonReader(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -396,7 +410,7 @@ public final class JodaBeanSer {
      * @return the simple map writer, not null
      */
     public JodaBeanSimpleMapWriter simpleMapWriter() {
-<span class="fc" id="L399">        return new JodaBeanSimpleMapWriter(this);</span>
+<span class="fc" id="L413">        return new JodaBeanSimpleMapWriter(this);</span>
     }
 
     /**
@@ -407,13 +421,13 @@ public final class JodaBeanSer {
      * @return the simple map reader, not null
      */
     public JodaBeanSimpleMapReader simpleMapReader() {
-<span class="fc" id="L410">        return new JodaBeanSimpleMapReader(this);</span>
+<span class="fc" id="L424">        return new JodaBeanSimpleMapReader(this);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L416">        return getClass().getSimpleName();</span>
+<span class="nc" id="L430">        return getClass().getSimpleName();</span>
     }
 
 }

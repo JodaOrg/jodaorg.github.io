@@ -63,6 +63,20 @@ import org.joda.beans.ser.SerTypeMapper;
  */
 public class JodaBeanXmlReader {
 
+    // if you get a message like
+    // &quot;Message: JAXP00010001: The parser has encountered more than &quot;64000&quot; entity 
+    // expansions in this document; this is the limit imposed by the JDK.&quot;
+    // then you need to update your JDK to 8u20 or later, see JDK-8028111
+    private static final XMLInputFactory XML_FACTORY;
+    static {
+<span class="fc" id="L72">        XMLInputFactory factory = XMLInputFactory.newInstance();</span>
+<span class="fc" id="L73">        factory.setProperty(XMLInputFactory.IS_COALESCING, true);</span>
+<span class="fc" id="L74">        factory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, true);</span>
+<span class="fc" id="L75">        factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);</span>
+<span class="fc" id="L76">        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);</span>
+<span class="fc" id="L77">        XML_FACTORY = factory;</span>
+<span class="fc" id="L78">    }</span>
+
     /**
      * Settings.
      */
@@ -78,16 +92,16 @@ public class JodaBeanXmlReader {
     /**
      * The known types.
      */
-<span class="fc" id="L81">    private Map&lt;String, Class&lt;?&gt;&gt; knownTypes = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L95">    private Map&lt;String, Class&lt;?&gt;&gt; knownTypes = new HashMap&lt;&gt;();</span>
 
     /**
      * Creates an instance.
      * 
      * @param settings  the settings, not null
      */
-<span class="fc" id="L88">    public JodaBeanXmlReader(final JodaBeanSer settings) {</span>
-<span class="fc" id="L89">        this.settings = settings;</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L102">    public JodaBeanXmlReader(final JodaBeanSer settings) {</span>
+<span class="fc" id="L103">        this.settings = settings;</span>
+<span class="fc" id="L104">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -97,7 +111,7 @@ public class JodaBeanXmlReader {
      * @return the bean, not null
      */
     public Bean read(final String input) {
-<span class="fc" id="L100">        return read(input, Bean.class);</span>
+<span class="fc" id="L114">        return read(input, Bean.class);</span>
     }
 
     /**
@@ -109,7 +123,7 @@ public class JodaBeanXmlReader {
      * @return the bean, not null
      */
     public &lt;T&gt; T read(final String input, Class&lt;T&gt; rootType) {
-<span class="fc" id="L112">        return read(new StringReader(input), rootType);</span>
+<span class="fc" id="L126">        return read(new StringReader(input), rootType);</span>
     }
 
     /**
@@ -119,7 +133,7 @@ public class JodaBeanXmlReader {
      * @return the bean, not null
      */
     public Bean read(final InputStream input) {
-<span class="nc" id="L122">        return read(input, Bean.class);</span>
+<span class="nc" id="L136">        return read(input, Bean.class);</span>
     }
 
     /**
@@ -133,17 +147,17 @@ public class JodaBeanXmlReader {
     public &lt;T&gt; T read(final InputStream input, Class&lt;T&gt; rootType) {
         try {
             try {
-<span class="nc" id="L136">                reader = factory().createXMLEventReader(input);</span>
-<span class="nc" id="L137">                return read(rootType);</span>
+<span class="nc" id="L150">                reader = XML_FACTORY.createXMLEventReader(input);</span>
+<span class="nc" id="L151">                return read(rootType);</span>
             } finally {
-<span class="nc bnc" id="L139" title="All 2 branches missed.">                if (reader != null) {</span>
-<span class="nc" id="L140">                    reader.close();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">                if (reader != null) {</span>
+<span class="nc" id="L154">                    reader.close();</span>
                 }
             }
-<span class="nc" id="L143">        } catch (RuntimeException ex) {</span>
-<span class="nc" id="L144">            throw ex;</span>
-<span class="nc" id="L145">        } catch (Exception ex) {</span>
-<span class="nc" id="L146">            throw new RuntimeException(ex);</span>
+<span class="nc" id="L157">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L158">            throw ex;</span>
+<span class="nc" id="L159">        } catch (Exception ex) {</span>
+<span class="nc" id="L160">            throw new RuntimeException(ex);</span>
         }
     }
 
@@ -154,7 +168,7 @@ public class JodaBeanXmlReader {
      * @return the bean, not null
      */
     public Bean read(final Reader input) {
-<span class="nc" id="L157">        return read(input, Bean.class);</span>
+<span class="nc" id="L171">        return read(input, Bean.class);</span>
     }
 
     /**
@@ -168,32 +182,18 @@ public class JodaBeanXmlReader {
     public &lt;T&gt; T read(final Reader input, Class&lt;T&gt; rootType) {
         try {
             try {
-<span class="fc" id="L171">                reader = factory().createXMLEventReader(input);</span>
-<span class="fc" id="L172">                return read(rootType);</span>
+<span class="fc" id="L185">                reader = XML_FACTORY.createXMLEventReader(input);</span>
+<span class="fc" id="L186">                return read(rootType);</span>
             } finally {
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">                if (reader != null) {</span>
-<span class="fc" id="L175">                    reader.close();</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">                if (reader != null) {</span>
+<span class="fc" id="L189">                    reader.close();</span>
                 }
             }
-<span class="fc" id="L178">        } catch (RuntimeException ex) {</span>
-<span class="fc" id="L179">            throw ex;</span>
-<span class="fc" id="L180">        } catch (Exception ex) {</span>
-<span class="fc" id="L181">            throw new RuntimeException(ex);</span>
+<span class="fc" id="L192">        } catch (RuntimeException ex) {</span>
+<span class="fc" id="L193">            throw ex;</span>
+<span class="fc" id="L194">        } catch (Exception ex) {</span>
+<span class="fc" id="L195">            throw new RuntimeException(ex);</span>
         }
-    }
-
-    /**
-     * Creates the factory.
-     * &lt;p&gt;
-     * Recreated each time to avoid JDK-8028111.
-     * 
-     * @return the factory, not null
-     */
-    private XMLInputFactory factory() {
-<span class="fc" id="L193">        XMLInputFactory factory = XMLInputFactory.newInstance();</span>
-<span class="fc" id="L194">        factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);</span>
-<span class="fc" id="L195">        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);</span>
-<span class="fc" id="L196">        return factory;</span>
     }
 
     //-----------------------------------------------------------------------

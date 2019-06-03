@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JodaBeanSmartReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans.ser</a> &gt; <span class="el_source">JodaBeanSmartReader.java</span></div><h1>JodaBeanSmartReader.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans.ser;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import org.joda.beans.Bean;
+import org.joda.beans.JodaBeanUtils;
+
+/**
+ * Determines the correct file format and parses it appropriately.
+ */
+public class JodaBeanSmartReader {
+
+    /**
+     * The settings.
+     */
+    private final JodaBeanSer settings;
+
+    /**
+     * Creates an instance.
+     * 
+     * @param settings  the settings, not null
+     */
+<span class="fc" id="L44">    JodaBeanSmartReader(JodaBeanSer settings) {</span>
+<span class="fc" id="L45">        this.settings = settings;</span>
+<span class="fc" id="L46">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the input is a serialized Joda-Bean.
+     * &lt;p&gt;
+     * XML and JSON files may be prefixed by the UTF-8 Unicode BOM.
+     * &lt;p&gt;
+     * Callers may pass in part of the file, rather than the whole file.
+     * Up to 128 bytes are needed to determine the format (XML requires the most, others far less).
+     * 
+     * @param input  the input bytes to check, which need only consist of the first 128 bytes of the file, not null
+     * @return true if it is a known format
+     */
+    public boolean isKnownFormat(byte[] input) {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return determineFormat(input) != JodaBeanSerFormat.UNKNOWN;</span>
+    }
+
+    /**
+     * Checks if the input is a serialized Joda-Bean.
+     * &lt;p&gt;
+     * XML and JSON files may be prefixed by the UTF-8 Unicode BOM.
+     * &lt;p&gt;
+     * The input stream will be marked and reset, thus these operations must be supported.
+     * As such, the same stream can then be for parsing.
+     * 
+     * @param input  the input stream to check, where only the first few bytes are read, not null
+     * @return true if it is a known format
+     * @throws UncheckedIOException if unable to read the stream
+     * @throws IllegalArgumentException if the input stream does not support mark/reset
+     */
+    public boolean isKnownFormat(InputStream input) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        return determineFormat(input) != JodaBeanSerFormat.UNKNOWN;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    // determines the format of a serialized Joda-Bean
+    private JodaBeanSerFormat determineFormat(byte[] input) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (input.length &lt; 2) {</span>
+<span class="fc" id="L85">            return JodaBeanSerFormat.UNKNOWN;</span>
+        }
+        // parse each known format. including possible UTF BOM prefix
+<span class="fc bfc" id="L88" title="All 8 branches covered.">        if (input.length &gt;= 4 &amp;&amp; input[0] == (byte) 0xef &amp;&amp; input[1] == (byte) 0xbb &amp;&amp; input[2] == (byte) 0xbf) {</span>
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">            if (input[3] == '&lt;' &amp;&amp; isXml(input, 3)) {</span>
+<span class="fc" id="L90">                return JodaBeanSerFormat.XML_UTF8;</span>
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">            } else if (input[3] == '{' &amp;&amp; isJson(input, 3)) {</span>
+<span class="fc" id="L92">                return JodaBeanSerFormat.JSON_UTF8;</span>
+            } else {
+<span class="fc" id="L94">                return JodaBeanSerFormat.UNKNOWN;</span>
+            }
+<span class="fc bfc" id="L96" title="All 4 branches covered.">        } else if (input[0] == '&lt;' &amp;&amp; isXml(input, 0)) {</span>
+<span class="fc" id="L97">            return JodaBeanSerFormat.XML;</span>
+<span class="fc bfc" id="L98" title="All 4 branches covered.">        } else if (input[0] == '{' &amp;&amp; isJson(input, 0)) {</span>
+<span class="fc" id="L99">            return JodaBeanSerFormat.JSON;</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">        } else if (input[0] == (byte) 0x94 &amp;&amp; input[1] == (byte) 0x02) {</span>
+<span class="fc" id="L101">            return JodaBeanSerFormat.BIN;</span>
+<span class="fc bfc" id="L102" title="All 4 branches covered.">        } else if (input[0] == (byte) 0x92 &amp;&amp; input[1] == (byte) 0x01) {</span>
+<span class="fc" id="L103">            return JodaBeanSerFormat.BIN;</span>
+        } else {
+<span class="fc" id="L105">            return JodaBeanSerFormat.UNKNOWN;</span>
+        }
+    }
+
+    private boolean isXml(byte[] bytes, int pos) {
+<span class="fc" id="L110">        String str = new String(bytes, pos, bytes.length - pos, StandardCharsets.UTF_8);</span>
+<span class="fc bfc" id="L111" title="All 4 branches covered.">        return str.contains(&quot;&lt;bean &quot;) || str.contains(&quot;&lt;bean&gt;&quot;);</span>
+    }
+
+    private boolean isJson(byte[] bytes, int pos) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (int i = pos + 1; i &lt; bytes.length; i++) {</span>
+<span class="fc" id="L116">            byte b = bytes[i];</span>
+<span class="fc bfc" id="L117" title="All 4 branches covered.">            if (b == '}' || b == '&quot;') {</span>
+<span class="fc" id="L118">                return true;</span>
+<span class="fc bfc" id="L119" title="All 8 branches covered.">            } else if (!(b == ' ' || b == '\t' || b == '\r' || b == '\n')) {</span>
+<span class="fc" id="L120">                return false;</span>
+            }
+        }
+<span class="fc" id="L123">        return false;</span>
+    }
+
+    // determines the format of a serialized Joda-Bean
+    private JodaBeanSerFormat determineFormat(InputStream input) {
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (!input.markSupported()) {</span>
+<span class="nc" id="L129">            throw new IllegalArgumentException(&quot;Input stream does not support mark/reset&quot;);</span>
+        }
+<span class="fc" id="L131">        byte[] buf = new byte[128];</span>
+        try {
+<span class="fc" id="L133">            input.mark(128);</span>
+<span class="fc" id="L134">            int readCount = read(input, buf, 128);</span>
+<span class="fc" id="L135">            buf = Arrays.copyOf(buf, readCount);</span>
+<span class="fc" id="L136">            input.reset();</span>
+<span class="nc" id="L137">        } catch (IOException ex) {</span>
+<span class="nc" id="L138">            throw new UncheckedIOException(ex);</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">        return determineFormat(buf);</span>
+    }
+
+    // fully reads the stream
+    private static int read(InputStream in, byte[] buf, int len) throws IOException {
+<span class="fc" id="L145">        int pos = 0;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        while (pos &lt; len) {</span>
+<span class="fc" id="L147">            int result = in.read(buf, pos, len - pos);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            if (result == -1) {</span>
+<span class="fc" id="L149">                break;</span>
+            }
+<span class="fc" id="L151">            pos += result;</span>
+<span class="fc" id="L152">        }</span>
+<span class="fc" id="L153">        return pos;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Reads and parses to a bean.
+     * &lt;p&gt;
+     * XML and JSON files may be prefixed by the UTF-8 Unicode BOM.
+     * 
+     * @param input  the input bytes to parse, not null
+     * @return the bean, not null
+     * @throws IllegalArgumentException if the file format is not recognized
+     * @throws RuntimeException if unable to parse
+     */
+    public Bean read(byte[] input) {
+<span class="fc" id="L168">        return read(input, Bean.class);</span>
+    }
+
+    /**
+     * Reads and parses to a bean.
+     * &lt;p&gt;
+     * XML and JSON files may be prefixed by the UTF-8 Unicode BOM.
+     * 
+     * @param &lt;T&gt;  the root type
+     * @param input  the input bytes to parse, not null
+     * @param rootType  the root type, not null
+     * @return the bean, not null
+     * @throws IllegalArgumentException if the file format is not recognized
+     * @throws RuntimeException if unable to parse
+     */
+    public &lt;T&gt; T read(byte[] input, Class&lt;T&gt; rootType) {
+<span class="fc" id="L184">        JodaBeanUtils.notNull(input, &quot;input&quot;);</span>
+<span class="fc" id="L185">        return read(new ByteArrayInputStream(input), rootType);</span>
+    }
+
+    /**
+     * Reads and parses to a bean.
+     * &lt;p&gt;
+     * XML and JSON files may be prefixed by the UTF-8 Unicode BOM.
+     * 
+     * @param input  the input stream, not null
+     * @return the bean, not null
+     * @throws UncheckedIOException if unable to read the stream
+     * @throws IllegalArgumentException if the file format is not recognized
+     * @throws RuntimeException if unable to parse
+     */
+    public Bean read(InputStream input) {
+<span class="nc" id="L200">        return read(input, Bean.class);</span>
+    }
+
+    /**
+     * Reads and parses to a bean.
+     * &lt;p&gt;
+     * XML and JSON files may be prefixed by the UTF-8 Unicode BOM.
+     * 
+     * @param &lt;T&gt;  the root type
+     * @param input  the input stream, not null
+     * @param rootType  the root type, not null
+     * @return the bean, not null
+     * @throws UncheckedIOException if unable to read the stream
+     * @throws IllegalArgumentException if the file format is not recognized
+     * @throws RuntimeException if unable to parse
+     */
+    public &lt;T&gt; T read(InputStream input, Class&lt;T&gt; rootType) {
+<span class="fc" id="L217">        JodaBeanUtils.notNull(input, &quot;input&quot;);</span>
+<span class="fc" id="L218">        JodaBeanUtils.notNull(rootType, &quot;rootType&quot;);</span>
+<span class="fc" id="L219">        BufferedInputStream buffered = buffer(input);</span>
+<span class="fc" id="L220">        JodaBeanSerFormat format = determineFormat(buffered);</span>
+<span class="fc" id="L221">        return format.read(buffered, rootType, settings);</span>
+    }
+
+    // buffer the input stream
+    private BufferedInputStream buffer(InputStream input) {
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">        if (input.getClass() == BufferedInputStream.class) {</span>
+<span class="nc" id="L227">            return (BufferedInputStream) input;</span>
+        }
+<span class="fc" id="L229">        return new BufferedInputStream(input);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

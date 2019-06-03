@@ -108,7 +108,7 @@ public class JodaBeanSimpleJsonWriter {
 <span class="fc" id="L108">        output.writeObjectStart();</span>
         // property information
 <span class="fc bfc" id="L110" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; prop : bean.metaBean().metaPropertyIterable()) {</span>
-<span class="pc bpc" id="L111" title="2 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
+<span class="pc bpc" id="L111" title="1 of 6 branches missed.">            if (prop.style().isSerializable() || (prop.style().isDerived() &amp;&amp; settings.isIncludeDerived())) {</span>
 <span class="fc" id="L112">                Object value = SerOptional.extractValue(prop, bean);</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">                if (value != null) {</span>
 <span class="fc" id="L114">                    output.writeObjectKey(prop.name());</span>

@@ -167,38 +167,43 @@ final class MsgPackVisualizer extends MsgPackInput {
 <span class="nc bnc" id="L167" title="All 2 branches missed.">        if (numeric) {</span>
 <span class="nc" id="L168">            int value = 0;</span>
 <span class="nc bnc" id="L169" title="All 2 branches missed.">            for (byte b : bytes) {</span>
-<span class="nc" id="L170">                value = (value &lt;&lt; 8) | b;</span>
+<span class="nc" id="L170">                value = (value &lt;&lt; 8) | (0xFF &amp; b);</span>
             }
-<span class="nc" id="L172">            str = Integer.toString(value);</span>
-<span class="nc" id="L173">        } else {</span>
-<span class="nc" id="L174">            str = new String(bytes, UTF_8);            </span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (bytes.length == 1) {</span>
+<span class="nc" id="L173">                value = Byte.toUnsignedInt((byte) value);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            } else if (bytes.length == 2) {</span>
+<span class="nc" id="L175">                value = Short.toUnsignedInt((short) value);</span>
+            }
+<span class="nc" id="L177">            str = Integer.toString(value);</span>
+<span class="nc" id="L178">        } else {</span>
+<span class="nc" id="L179">            str = new String(bytes, UTF_8);            </span>
         }
-<span class="nc" id="L176">        buf.append(&quot;ext type=&quot;)</span>
-<span class="nc" id="L177">            .append(type)</span>
-<span class="nc" id="L178">            .append(&quot; '&quot;)</span>
-<span class="nc" id="L179">            .append(str)</span>
-<span class="nc" id="L180">            .append(&quot;'&quot;);</span>
-<span class="nc bnc" id="L181" title="All 6 branches missed.">        switch (type) {</span>
+<span class="nc" id="L181">        buf.append(&quot;ext type=&quot;)</span>
+<span class="nc" id="L182">            .append(type)</span>
+<span class="nc" id="L183">            .append(&quot; '&quot;)</span>
+<span class="nc" id="L184">            .append(str)</span>
+<span class="nc" id="L185">            .append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L186" title="All 6 branches missed.">        switch (type) {</span>
             case JODA_TYPE_BEAN:
-<span class="nc" id="L183">                buf.append(&quot; (bean)&quot;);</span>
-<span class="nc" id="L184">                break;</span>
+<span class="nc" id="L188">                buf.append(&quot; (bean)&quot;);</span>
+<span class="nc" id="L189">                break;</span>
             case JODA_TYPE_DATA:
-<span class="nc" id="L186">                buf.append(&quot; (data)&quot;);</span>
-<span class="nc" id="L187">                break;</span>
+<span class="nc" id="L191">                buf.append(&quot; (data)&quot;);</span>
+<span class="nc" id="L192">                break;</span>
             case JODA_TYPE_META:
-<span class="nc" id="L189">                buf.append(&quot; (meta)&quot;);</span>
-<span class="nc" id="L190">                break;</span>
+<span class="nc" id="L194">                buf.append(&quot; (meta)&quot;);</span>
+<span class="nc" id="L195">                break;</span>
             case JODA_TYPE_REF_KEY:
-<span class="nc" id="L192">                buf.append(&quot; (refkey)&quot;);</span>
-<span class="nc" id="L193">                break;</span>
+<span class="nc" id="L197">                buf.append(&quot; (refkey)&quot;);</span>
+<span class="nc" id="L198">                break;</span>
             case JODA_TYPE_REF:
-<span class="nc" id="L195">                buf.append(&quot; (ref)&quot;);</span>
-<span class="nc" id="L196">                break;</span>
+<span class="nc" id="L200">                buf.append(&quot; (ref)&quot;);</span>
+<span class="nc" id="L201">                break;</span>
             default:
                 break;
         }
-<span class="nc" id="L200">        buf.append(System.lineSeparator());</span>
-<span class="nc" id="L201">    }</span>
+<span class="nc" id="L205">        buf.append(System.lineSeparator());</span>
+<span class="nc" id="L206">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

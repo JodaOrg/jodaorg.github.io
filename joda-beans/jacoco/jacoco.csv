@@ -1,6 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Joda-Beans,org.joda.beans.ser,JodaBeanSer,84,194,1,5,9,34,6,26,5,24
+Joda-Beans,org.joda.beans.ser,JodaBeanSer,84,199,1,5,9,35,6,27,5,25
 Joda-Beans,org.joda.beans.ser,SerIteratorFactory,212,698,26,76,42,148,24,53,2,24
+Joda-Beans,org.joda.beans.ser,JodaBeanSerFormat,6,154,0,8,2,24,0,9,0,3
 Joda-Beans,org.joda.beans.ser,SerDeserializers.new SerDeserializer() {...},0,40,0,0,0,9,0,6,0,6
 Joda-Beans,org.joda.beans.ser,SerOptional,30,397,2,14,13,63,3,10,1,4
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterator() {...},36,71,6,8,9,13,10,9,5,7
@@ -34,6 +35,7 @@ Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},21
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},21,42,2,2,3,10,3,7,1,7
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},14,37,1,3,2,8,2,6,1,5
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},14,37,1,3,2,8,2,6,1,5
+Joda-Beans,org.joda.beans.ser,JodaBeanSmartReader,29,273,6,58,6,56,7,38,2,11
 Joda-Beans,org.joda.beans.ser,SerDeserializers,110,348,6,28,22,80,8,28,2,17
 Joda-Beans,org.joda.beans.ser,CollectSerIteratorFactory,25,92,4,6,4,20,3,9,0,7
 Joda-Beans,org.joda.beans.impl.light,LightBeanBuilder,73,75,5,7,10,18,6,8,3,5
@@ -69,11 +71,11 @@ Joda-Beans,org.joda.beans.ser.json,AbstractJsonReader,20,1193,6,127,2,225,6,80,0
 Joda-Beans,org.joda.beans.ser.json,JodaBeanJsonWriter,70,776,8,88,12,197,9,55,1,15
 Joda-Beans,org.joda.beans.ser.json,JsonOutput,0,428,0,34,0,94,0,34,0,17
 Joda-Beans,org.joda.beans.ser.json,JodaBeanSimpleJsonReader,6,50,0,2,2,14,0,6,0,5
-Joda-Beans,org.joda.beans.ser.json,JodaBeanSimpleJsonWriter,240,452,19,61,57,119,19,35,2,12
+Joda-Beans,org.joda.beans.ser.json,JodaBeanSimpleJsonWriter,240,452,18,62,57,119,18,36,2,12
 Joda-Beans,org.joda.beans.ser.json,JsonInput,0,669,0,103,0,165,0,87,0,25
 Joda-Beans,org.joda.beans.ser.json,JodaBeanJsonWriter.RootType,0,34,0,0,0,4,0,1,0,1
 Joda-Beans,org.joda.beans.ser.xml,JodaBeanXmlWriter,223,986,26,86,38,178,25,58,1,21
-Joda-Beans,org.joda.beans.ser.xml,JodaBeanXmlReader,151,826,26,104,28,184,27,55,3,14
+Joda-Beans,org.joda.beans.ser.xml,JodaBeanXmlReader,150,836,26,104,28,187,27,55,3,14
 Joda-Beans,org.joda.beans.ser.xml,JodaBeanXml,0,73,0,0,0,12,0,1,0,1
 Joda-Beans,org.joda.beans.ser.map,JodaBeanSimpleMapWriter,216,347,17,57,38,80,17,33,2,11
 Joda-Beans,org.joda.beans.ser.map,JodaBeanSimpleMapReader,471,463,73,75,80,104,52,36,2,12
@@ -84,14 +86,14 @@ Joda-Beans,org.joda.beans.gen,GetterGen.CloneNNGetterGen,62,0,6,0,11,0,7,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.ObservableSetterGen,245,0,10,0,28,0,9,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.SetSetterGen,227,0,16,0,32,0,13,0,5,0
 Joda-Beans,org.joda.beans.gen,GetterGen.Optional8GetterGen,251,0,14,0,34,0,11,0,4,0
-Joda-Beans,org.joda.beans.gen,BeanParser,1811,0,240,0,320,0,153,0,33,0
+Joda-Beans,org.joda.beans.gen,BeanParser,1840,0,242,0,327,0,155,0,34,0
 Joda-Beans,org.joda.beans.gen,GetterGen.CloneGetterGen,69,0,6,0,11,0,7,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.NoSetterGen,12,0,0,0,4,0,4,0,4,0
 Joda-Beans,org.joda.beans.gen,GetterGen.CloneCastNNGetterGen,69,0,6,0,11,0,7,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.PatternSetterGen,294,0,18,0,34,0,13,0,4,0
-Joda-Beans,org.joda.beans.gen,BeanCodeGen,740,0,102,0,166,0,60,0,9,0
+Joda-Beans,org.joda.beans.gen,BeanCodeGen,770,0,106,0,173,0,62,0,9,0
 Joda-Beans,org.joda.beans.gen,GetterGen.IsGetterGen,67,0,6,0,12,0,8,0,5,0
-Joda-Beans,org.joda.beans.gen,BeanGenConfig,754,0,86,0,170,0,59,0,16,0
+Joda-Beans,org.joda.beans.gen,BeanGenConfig,761,0,86,0,173,0,61,0,18,0
 Joda-Beans,org.joda.beans.gen,CopyGen.NoCopyGen,12,0,0,0,4,0,4,0,4,0
 Joda-Beans,org.joda.beans.gen,BuilderGen,64,0,16,0,19,0,11,0,3,0
 Joda-Beans,org.joda.beans.gen,CopyGen.PatternCopyGen,301,0,28,0,44,0,18,0,4,0
@@ -102,12 +104,12 @@ Joda-Beans,org.joda.beans.gen,BuilderGen.SimpleBuilderGen,43,0,0,0,8,0,5,0,5,0
 Joda-Beans,org.joda.beans.gen,GetterGen.ManualGetterGen,10,0,0,0,3,0,3,0,3,0
 Joda-Beans,org.joda.beans.gen,BuilderGen.NoBuilderGen,15,0,0,0,5,0,5,0,5,0
 Joda-Beans,org.joda.beans.gen,GetterGen.NoGetterGen,13,0,0,0,4,0,4,0,4,0
-Joda-Beans,org.joda.beans.gen,BeanGen,6021,0,520,0,1029,0,330,0,70,0
+Joda-Beans,org.joda.beans.gen,BeanGen,6049,0,522,0,1039,0,332,0,71,0
 Joda-Beans,org.joda.beans.gen,PropertyParser,1474,0,144,0,273,0,101,0,29,0
 Joda-Beans,org.joda.beans.gen,CopyGen,19,0,0,0,4,0,2,0,2,0
 Joda-Beans,org.joda.beans.gen,PropertyData,1749,0,268,0,352,0,223,0,89,0
 Joda-Beans,org.joda.beans.gen,BeanCodeGenException,28,25,0,0,6,4,3,1,3,1
-Joda-Beans,org.joda.beans.gen,BeanData,1434,0,216,0,235,0,206,0,98,0
+Joda-Beans,org.joda.beans.gen,BeanData,1478,0,224,0,241,0,215,0,103,0
 Joda-Beans,org.joda.beans.gen,PropertyGen,1630,0,105,0,214,0,84,0,29,0
 Joda-Beans,org.joda.beans.gen,SetterGen.FieldSetterGen,24,0,0,0,5,0,5,0,5,0
 Joda-Beans,org.joda.beans.impl.map,MapBean,17,42,0,2,2,13,2,9,2,8
@@ -156,10 +158,10 @@ Joda-Beans,org.joda.beans.ser.bin,BeanReferences.ClassInfo,23,12,0,0,2,5,1,1,1,1
 Joda-Beans,org.joda.beans.ser.bin,AbstractBinWriter,40,697,3,83,5,166,3,54,0,14
 Joda-Beans,org.joda.beans.ser.bin,BeanReferences.Ref,17,13,0,0,1,6,1,2,1,2
 Joda-Beans,org.joda.beans.ser.bin,BeanReferences,83,537,18,70,15,107,16,44,0,16
-Joda-Beans,org.joda.beans.ser.bin,MsgPackVisualizer,428,0,12,0,77,0,29,0,21,0
+Joda-Beans,org.joda.beans.ser.bin,MsgPackVisualizer,447,0,16,0,81,0,31,0,21,0
 Joda-Beans,org.joda.beans.ser.bin,JodaBeanStandardBinReader,0,5,0,0,0,2,0,1,0,1
 Joda-Beans,org.joda.beans.ser.bin,AbstractBinWriter.RootType,0,34,0,0,0,4,0,1,0,1
-Joda-Beans,org.joda.beans.ser.bin,JodaBeanReferencingBinReader,335,714,33,85,36,170,30,40,0,11
+Joda-Beans,org.joda.beans.ser.bin,JodaBeanReferencingBinReader,335,718,33,87,36,172,30,41,0,11
 Joda-Beans,org.joda.beans.ser.bin,AbstractBinReader,403,978,78,128,68,194,61,72,0,21
 Joda-Beans,org.joda.beans.ser.bin,MsgPackInput.Skipper,0,8,0,0,0,4,0,2,0,2
 Joda-Beans,org.joda.beans.ser.bin,JodaBeanBinReader,42,119,5,12,9,28,7,9,2,5

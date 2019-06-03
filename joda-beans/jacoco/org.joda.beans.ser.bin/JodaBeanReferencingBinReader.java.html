@@ -150,13 +150,18 @@ class JodaBeanReferencingBinReader extends AbstractBinReader {
                 } else {
 <span class="fc" id="L151">                    propName = metaProp.name();</span>
 <span class="fc" id="L152">                    Object value = parseObject(SerOptional.extractType(metaProp, classInfo.type), metaProp, classInfo.type, null, false);</span>
-<span class="fc" id="L153">                    deser.setValue(builder, metaProp, SerOptional.wrapValue(metaProp, classInfo.type, value));</span>
+<span class="fc" id="L153">                    Object wrappedValue = SerOptional.wrapValue(metaProp, classInfo.type, value);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                    if (wrappedValue != null) {</span>
+                        // null is the same as a value not being set
+                        // in the case of defaults we want those to take precedence
+<span class="fc" id="L157">                        deser.setValue(builder, metaProp, wrappedValue);</span>
+                    }
                 }
-<span class="fc" id="L155">                propName = &quot;&quot;;</span>
+<span class="fc" id="L160">                propName = &quot;&quot;;</span>
             }
-<span class="fc" id="L157">            return deser.build(classInfo.type, builder);</span>
-<span class="nc" id="L158">        } catch (Exception ex) {</span>
-<span class="nc" id="L159">            throw new RuntimeException(&quot;Error parsing bean: &quot; + classInfo.type.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
+<span class="fc" id="L162">            return deser.build(classInfo.type, builder);</span>
+<span class="nc" id="L163">        } catch (Exception ex) {</span>
+<span class="nc" id="L164">            throw new RuntimeException(&quot;Error parsing bean: &quot; + classInfo.type.getName() + &quot;::&quot; + propName + &quot;, &quot; + ex.getMessage(), ex);</span>
         }
     }
 
@@ -170,171 +175,171 @@ class JodaBeanReferencingBinReader extends AbstractBinReader {
             boolean rootType) throws Exception {
 
         // establish type
-<span class="fc" id="L173">        Class&lt;?&gt; effectiveType = declaredType;</span>
-<span class="fc" id="L174">        ClassInfo classInfo = null;</span>
-<span class="fc" id="L175">        String metaType = null;</span>
-<span class="fc" id="L176">        Integer ref = null;</span>
-<span class="fc" id="L177">        int typeByte = input.readByte();</span>
+<span class="fc" id="L178">        Class&lt;?&gt; effectiveType = declaredType;</span>
+<span class="fc" id="L179">        ClassInfo classInfo = null;</span>
+<span class="fc" id="L180">        String metaType = null;</span>
+<span class="fc" id="L181">        Integer ref = null;</span>
+<span class="fc" id="L182">        int typeByte = input.readByte();</span>
 
         // Unwrap nested references and meta data
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        while (isMap(typeByte)) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        while (isMap(typeByte)) {</span>
 
-<span class="fc" id="L182">            input.mark(18);</span>
-<span class="fc" id="L183">            int mapSize = acceptMap(typeByte);</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">            if (mapSize &gt; 0) {</span>
-<span class="fc" id="L185">                int typeByteTemp = input.readByte();</span>
+<span class="fc" id="L187">            input.mark(18);</span>
+<span class="fc" id="L188">            int mapSize = acceptMap(typeByte);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">            if (mapSize &gt; 0) {</span>
+<span class="fc" id="L190">                int typeByteTemp = input.readByte();</span>
 
-<span class="fc bfc" id="L187" title="All 2 branches covered.">                if (isIntExtension(typeByteTemp)) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                if (isIntExtension(typeByteTemp)) {</span>
 
-<span class="fc" id="L189">                    int nestedTypeByteTemp = typeByteTemp;</span>
-<span class="fc" id="L190">                    typeByteTemp = input.readByte();</span>
-<span class="fc" id="L191">                    int reference = acceptIntExtension(nestedTypeByteTemp);</span>
+<span class="fc" id="L194">                    int nestedTypeByteTemp = typeByteTemp;</span>
+<span class="fc" id="L195">                    typeByteTemp = input.readByte();</span>
+<span class="fc" id="L196">                    int reference = acceptIntExtension(nestedTypeByteTemp);</span>
 
-<span class="fc bfc" id="L193" title="All 2 branches covered.">                    if (typeByteTemp == JODA_TYPE_DATA) {</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
-<span class="nc" id="L195">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                    if (typeByteTemp == JODA_TYPE_DATA) {</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
+<span class="nc" id="L200">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
                         }
-<span class="fc" id="L197">                        classInfo = classes[reference];</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">                        if (!declaredType.isAssignableFrom(classInfo.type)) {</span>
-<span class="nc" id="L199">                            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + classInfo.type.getName());</span>
+<span class="fc" id="L202">                        classInfo = classes[reference];</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">                        if (!declaredType.isAssignableFrom(classInfo.type)) {</span>
+<span class="nc" id="L204">                            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + classInfo.type.getName());</span>
                         }
-<span class="fc" id="L201">                        typeByte = input.readByte();</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">                    } else if (typeByteTemp == JODA_TYPE_META) {</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
-<span class="nc" id="L204">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
+<span class="fc" id="L206">                        typeByte = input.readByte();</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">                    } else if (typeByteTemp == JODA_TYPE_META) {</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
+<span class="nc" id="L209">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
                         }
-<span class="fc" id="L206">                        Object value = refs[reference];</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">                        if (!(value instanceof String)) {</span>
-<span class="nc" id="L208">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to meta type name, but was: &quot; + reference + &quot;, &quot; + value);</span>
+<span class="fc" id="L211">                        Object value = refs[reference];</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">                        if (!(value instanceof String)) {</span>
+<span class="nc" id="L213">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to meta type name, but was: &quot; + reference + &quot;, &quot; + value);</span>
                         }
-<span class="fc" id="L210">                        metaType = (String) value;</span>
-<span class="fc" id="L211">                        typeByte = input.readByte();</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">                    } else if (typeByteTemp == JODA_TYPE_REF_KEY) {</span>
-<span class="pc bpc" id="L213" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
-<span class="nc" id="L214">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
+<span class="fc" id="L215">                        metaType = (String) value;</span>
+<span class="fc" id="L216">                        typeByte = input.readByte();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                    } else if (typeByteTemp == JODA_TYPE_REF_KEY) {</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                        if (mapSize != 1) {</span>
+<span class="nc" id="L219">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
                         }
                         // Regular object that is re-referenced
                         // ref is the key, so the rest of the object needs to be placed in refs[ref]
-<span class="fc" id="L218">                        ref = reference;</span>
-<span class="pc bpc" id="L219" title="2 of 4 branches missed.">                        if (ref &lt; 0 || ref &gt; refs.length) {</span>
-<span class="nc" id="L220">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to position less than &quot; + refs.length + &quot;, but was: &quot; + ref);</span>
+<span class="fc" id="L223">                        ref = reference;</span>
+<span class="pc bpc" id="L224" title="2 of 4 branches missed.">                        if (ref &lt; 0 || ref &gt; refs.length) {</span>
+<span class="nc" id="L225">                            throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to position less than &quot; + refs.length + &quot;, but was: &quot; + ref);</span>
                         }
-<span class="fc" id="L222">                        typeByte = input.readByte();</span>
+<span class="fc" id="L227">                        typeByte = input.readByte();</span>
                     } else {
-<span class="fc" id="L224">                        input.reset();</span>
-<span class="fc" id="L225">                        break;</span>
+<span class="fc" id="L229">                        input.reset();</span>
+<span class="fc" id="L230">                        break;</span>
                     }
-<span class="fc bfc" id="L227" title="All 2 branches covered.">                } else if (typeByteTemp == EXT_8) {</span>
-<span class="fc" id="L228">                    int size = input.readUnsignedByte();</span>
-<span class="fc" id="L229">                    typeByteTemp = input.readByte();</span>
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">                    if (typeByteTemp != JODA_TYPE_META) {</span>
-<span class="nc" id="L231">                        throw new IllegalArgumentException(&quot;Invalid binary data: Expected meta information, but was: 0x&quot; + toHex(typeByteTemp));</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">                } else if (typeByteTemp == EXT_8) {</span>
+<span class="fc" id="L233">                    int size = input.readUnsignedByte();</span>
+<span class="fc" id="L234">                    typeByteTemp = input.readByte();</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">                    if (typeByteTemp != JODA_TYPE_META) {</span>
+<span class="nc" id="L236">                        throw new IllegalArgumentException(&quot;Invalid binary data: Expected meta information, but was: 0x&quot; + toHex(typeByteTemp));</span>
                     }
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">                    if (mapSize != 1) {</span>
-<span class="nc" id="L234">                        throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">                    if (mapSize != 1) {</span>
+<span class="nc" id="L239">                        throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
                     }
-<span class="fc" id="L236">                    metaType = acceptStringBytes(size);</span>
-<span class="fc" id="L237">                    typeByte = input.readByte();</span>
-<span class="fc bfc" id="L238" title="All 2 branches covered.">                } else if (isMap(typeByteTemp)) {</span>
-<span class="fc" id="L239">                    mapSize = acceptMap(typeByteTemp);</span>
-<span class="fc" id="L240">                    typeByteTemp = input.readByte();</span>
+<span class="fc" id="L241">                    metaType = acceptStringBytes(size);</span>
+<span class="fc" id="L242">                    typeByte = input.readByte();</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">                } else if (isMap(typeByteTemp)) {</span>
+<span class="fc" id="L244">                    mapSize = acceptMap(typeByteTemp);</span>
+<span class="fc" id="L245">                    typeByteTemp = input.readByte();</span>
                     // Check for nested JODA_TYPE_META with a reference as the key
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">                    if (isIntExtension(typeByteTemp)) {</span>
-<span class="fc" id="L243">                        int nestedTypeByteTemp = typeByteTemp;</span>
-<span class="fc" id="L244">                        typeByteTemp = input.readByte();</span>
-<span class="fc" id="L245">                        int reference = acceptIntExtension(nestedTypeByteTemp);</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">                        if (typeByteTemp == JODA_TYPE_REF_KEY) {</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">                            if (mapSize != 1) {</span>
-<span class="nc" id="L248">                                throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">                    if (isIntExtension(typeByteTemp)) {</span>
+<span class="fc" id="L248">                        int nestedTypeByteTemp = typeByteTemp;</span>
+<span class="fc" id="L249">                        typeByteTemp = input.readByte();</span>
+<span class="fc" id="L250">                        int reference = acceptIntExtension(nestedTypeByteTemp);</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">                        if (typeByteTemp == JODA_TYPE_REF_KEY) {</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">                            if (mapSize != 1) {</span>
+<span class="nc" id="L253">                                throw new IllegalArgumentException(&quot;Invalid binary data: Expected map size 1, but was: &quot; + mapSize);</span>
                             }
-<span class="fc" id="L250">                            typeByteTemp = input.readByte();</span>
+<span class="fc" id="L255">                            typeByteTemp = input.readByte();</span>
 
                             // Check for nested JODA_TYPE_META
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">                            if (typeByteTemp == EXT_8) {</span>
-<span class="fc" id="L254">                                int size = input.readUnsignedByte();</span>
-<span class="fc" id="L255">                                typeByteTemp = input.readByte();</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">                            if (typeByteTemp == EXT_8) {</span>
+<span class="fc" id="L259">                                int size = input.readUnsignedByte();</span>
+<span class="fc" id="L260">                                typeByteTemp = input.readByte();</span>
                                 // Meta is the only type serialized using EXT_8
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">                                if (typeByteTemp != JODA_TYPE_META) {</span>
-<span class="nc" id="L258">                                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected previous metatype, but was: 0x&quot; + toHex(typeByteTemp));</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">                                if (typeByteTemp != JODA_TYPE_META) {</span>
+<span class="nc" id="L263">                                    throw new IllegalArgumentException(&quot;Invalid binary data: Expected previous metatype, but was: 0x&quot; + toHex(typeByteTemp));</span>
                                 }
-<span class="fc" id="L260">                                metaType = acceptStringBytes(size);</span>
-<span class="fc" id="L261">                                refs[reference] = metaType;</span>
-<span class="fc" id="L262">                                typeByte = input.readByte();</span>
-<span class="fc" id="L263">                            } else {</span>
-<span class="nc" id="L264">                                input.reset();</span>
-<span class="nc" id="L265">                                break;</span>
+<span class="fc" id="L265">                                metaType = acceptStringBytes(size);</span>
+<span class="fc" id="L266">                                refs[reference] = metaType;</span>
+<span class="fc" id="L267">                                typeByte = input.readByte();</span>
+<span class="fc" id="L268">                            } else {</span>
+<span class="nc" id="L269">                                input.reset();</span>
+<span class="nc" id="L270">                                break;</span>
                             }
                         } else {
-<span class="fc" id="L268">                            input.reset();</span>
-<span class="fc" id="L269">                            break;</span>
+<span class="fc" id="L273">                            input.reset();</span>
+<span class="fc" id="L274">                            break;</span>
                         }
-<span class="fc" id="L271">                    } else {</span>
-<span class="nc" id="L272">                        input.reset();</span>
-<span class="nc" id="L273">                        break;</span>
+<span class="fc" id="L276">                    } else {</span>
+<span class="nc" id="L277">                        input.reset();</span>
+<span class="nc" id="L278">                        break;</span>
                     }
                 } else {
-<span class="fc" id="L276">                    input.reset();</span>
-<span class="fc" id="L277">                    break;</span>
+<span class="fc" id="L281">                    input.reset();</span>
+<span class="fc" id="L282">                    break;</span>
                 }
-<span class="fc" id="L279">            } else {</span>
-<span class="fc" id="L280">                input.reset();</span>
-<span class="fc" id="L281">                break;</span>
+<span class="fc" id="L284">            } else {</span>
+<span class="fc" id="L285">                input.reset();</span>
+<span class="fc" id="L286">                break;</span>
             }
-<span class="fc" id="L283">        }</span>
+<span class="fc" id="L288">        }</span>
 
-<span class="fc bfc" id="L285" title="All 2 branches covered.">        if (isArray(typeByte)) {</span>
-<span class="fc" id="L286">            input.mark(11);</span>
-<span class="fc" id="L287">            int arraySize = acceptArray(typeByte);</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">            if (arraySize &gt; 0) {</span>
-<span class="fc" id="L289">                int typeByteTemp = input.readByte();</span>
-<span class="fc bfc" id="L290" title="All 2 branches covered.">                if (isIntExtension(typeByteTemp)) {</span>
-<span class="fc" id="L291">                    int nestedTypeByteTemp = typeByteTemp;</span>
-<span class="fc" id="L292">                    typeByteTemp = input.readByte();</span>
-<span class="fc" id="L293">                    int reference = acceptIntExtension(nestedTypeByteTemp);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        if (isArray(typeByte)) {</span>
+<span class="fc" id="L291">            input.mark(11);</span>
+<span class="fc" id="L292">            int arraySize = acceptArray(typeByte);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">            if (arraySize &gt; 0) {</span>
+<span class="fc" id="L294">                int typeByteTemp = input.readByte();</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">                if (isIntExtension(typeByteTemp)) {</span>
+<span class="fc" id="L296">                    int nestedTypeByteTemp = typeByteTemp;</span>
+<span class="fc" id="L297">                    typeByteTemp = input.readByte();</span>
+<span class="fc" id="L298">                    int reference = acceptIntExtension(nestedTypeByteTemp);</span>
 
-<span class="fc bfc" id="L295" title="All 2 branches covered.">                    if (typeByteTemp == JODA_TYPE_BEAN) {</span>
-<span class="fc" id="L296">                        classInfo = classes[reference];</span>
-<span class="fc" id="L297">                        Object bean = parseBean(declaredType, rootType, classInfo, arraySize);</span>
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">                        if (ref != null) {</span>
-<span class="nc" id="L299">                            refs[ref] = bean;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">                    if (typeByteTemp == JODA_TYPE_BEAN) {</span>
+<span class="fc" id="L301">                        classInfo = classes[reference];</span>
+<span class="fc" id="L302">                        Object bean = parseBean(declaredType, rootType, classInfo, arraySize);</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">                        if (ref != null) {</span>
+<span class="nc" id="L304">                            refs[ref] = bean;</span>
                         }
-<span class="fc" id="L301">                        return bean;</span>
+<span class="fc" id="L306">                        return bean;</span>
                     } else {
-<span class="fc" id="L303">                        input.reset();</span>
+<span class="fc" id="L308">                        input.reset();</span>
                     }
-<span class="fc" id="L305">                } else {</span>
-<span class="fc" id="L306">                    input.reset();</span>
+<span class="fc" id="L310">                } else {</span>
+<span class="fc" id="L311">                    input.reset();</span>
                 }
-<span class="fc" id="L308">            } else {</span>
-<span class="fc" id="L309">                input.reset();</span>
+<span class="fc" id="L313">            } else {</span>
+<span class="fc" id="L314">                input.reset();</span>
             }
         }
 
-<span class="fc bfc" id="L313" title="All 2 branches covered.">        if (isIntExtension(typeByte)) {</span>
-<span class="fc" id="L314">            input.mark(5);</span>
-<span class="fc" id="L315">            int typeByteTemp = input.readByte();</span>
-<span class="fc" id="L316">            int reference = acceptIntExtension(typeByte);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (isIntExtension(typeByte)) {</span>
+<span class="fc" id="L319">            input.mark(5);</span>
+<span class="fc" id="L320">            int typeByteTemp = input.readByte();</span>
+<span class="fc" id="L321">            int reference = acceptIntExtension(typeByte);</span>
             // JODA_TYPE_REF is the only thing serialized in isolation, others are serialized as map keys or the start of an array
-<span class="pc bpc" id="L318" title="1 of 2 branches missed.">            if (typeByteTemp != JODA_TYPE_REF) {</span>
-<span class="nc" id="L319">                throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to previous object, but was: 0x&quot; + toHex(typeByteTemp));</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">            if (typeByteTemp != JODA_TYPE_REF) {</span>
+<span class="nc" id="L324">                throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to previous object, but was: 0x&quot; + toHex(typeByteTemp));</span>
             }
-<span class="fc" id="L321">            Object value = refs[reference];</span>
-<span class="pc bpc" id="L322" title="1 of 2 branches missed.">            if (value == null) {</span>
-<span class="nc" id="L323">                throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to previous object, but was null: &quot; + reference);</span>
+<span class="fc" id="L326">            Object value = refs[reference];</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">            if (value == null) {</span>
+<span class="nc" id="L328">                throw new IllegalArgumentException(&quot;Invalid binary data: Expected reference to previous object, but was null: &quot; + reference);</span>
             }
-<span class="fc" id="L325">            return value;</span>
+<span class="fc" id="L330">            return value;</span>
         }
 
-<span class="fc bfc" id="L328" title="All 2 branches covered.">        if (classInfo != null) {</span>
-<span class="fc" id="L329">            effectiveType = classInfo.type;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        if (classInfo != null) {</span>
+<span class="fc" id="L334">            effectiveType = classInfo.type;</span>
         }
-<span class="fc" id="L331">        Object value = parseObject(metaProp, beanType, parentIterable, effectiveType, metaType, typeByte);</span>
+<span class="fc" id="L336">        Object value = parseObject(metaProp, beanType, parentIterable, effectiveType, metaType, typeByte);</span>
 
-<span class="fc bfc" id="L333" title="All 2 branches covered.">        if (ref != null) {</span>
-<span class="fc" id="L334">            refs[ref] = value; // This object was keyed and is repeated</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (ref != null) {</span>
+<span class="fc" id="L339">            refs[ref] = value; // This object was keyed and is repeated</span>
         }
 
-<span class="fc" id="L337">        return value;</span>
+<span class="fc" id="L342">        return value;</span>
     }
 
     private Object parseObject(
@@ -346,66 +351,66 @@ class JodaBeanReferencingBinReader extends AbstractBinReader {
             int typeByte) throws Exception {
 
         // parse based on type
-<span class="fc bfc" id="L349" title="All 2 branches covered.">        if (typeByte == NIL) {</span>
-<span class="fc" id="L350">            return null;</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (typeByte == NIL) {</span>
+<span class="fc" id="L355">            return null;</span>
         }
-<span class="fc bfc" id="L352" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(effectiveType)) {</span>
-<span class="fc bfc" id="L353" title="All 2 branches covered.">            if (isArray(typeByte)) {</span>
-<span class="fc" id="L354">                int arraySize = acceptArray(typeByte);</span>
-<span class="fc" id="L355">                return parseBean(arraySize, classMap.get(effectiveType));</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(effectiveType)) {</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">            if (isArray(typeByte)) {</span>
+<span class="fc" id="L359">                int arraySize = acceptArray(typeByte);</span>
+<span class="fc" id="L360">                return parseBean(arraySize, classMap.get(effectiveType));</span>
             } else {
-<span class="fc" id="L357">                return parseSimple(typeByte, effectiveType);</span>
+<span class="fc" id="L362">                return parseSimple(typeByte, effectiveType);</span>
             }
         } else {
-<span class="fc bfc" id="L360" title="All 4 branches covered.">            if (isMap(typeByte) || isArray(typeByte)) {</span>
-<span class="fc" id="L361">                SerIterable childIterable = null;</span>
-<span class="fc bfc" id="L362" title="All 2 branches covered.">                if (metaType != null) {</span>
-<span class="fc" id="L363">                    childIterable = settings.getIteratorFactory().createIterable(metaType, settings, null);</span>
-<span class="pc bpc" id="L364" title="1 of 2 branches missed.">                } else if (metaProp != null) {</span>
-<span class="fc" id="L365">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">                } else if (parentIterable != null) {</span>
-<span class="nc" id="L367">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
+<span class="fc bfc" id="L365" title="All 4 branches covered.">            if (isMap(typeByte) || isArray(typeByte)) {</span>
+<span class="fc" id="L366">                SerIterable childIterable = null;</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">                if (metaType != null) {</span>
+<span class="fc" id="L368">                    childIterable = settings.getIteratorFactory().createIterable(metaType, settings, null);</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">                } else if (metaProp != null) {</span>
+<span class="fc" id="L370">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">                } else if (parentIterable != null) {</span>
+<span class="nc" id="L372">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
                 }
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">                if (childIterable == null) {</span>
-<span class="nc" id="L370">                    throw new IllegalArgumentException(&quot;Invalid binary data: Invalid metaType: &quot; + metaType);</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">                if (childIterable == null) {</span>
+<span class="nc" id="L375">                    throw new IllegalArgumentException(&quot;Invalid binary data: Invalid metaType: &quot; + metaType);</span>
                 }
-<span class="fc" id="L372">                return parseIterable(typeByte, childIterable);</span>
+<span class="fc" id="L377">                return parseIterable(typeByte, childIterable);</span>
             } else {
-<span class="fc" id="L374">                return parseSimple(typeByte, effectiveType);</span>
+<span class="fc" id="L379">                return parseSimple(typeByte, effectiveType);</span>
             }
         }
     }
 
     private Object parseBean(Class&lt;?&gt; declaredType, boolean rootType, ClassInfo classInfo, int arraySize) {
-<span class="fc bfc" id="L380" title="All 2 branches covered.">        if (rootType) {</span>
-<span class="pc bpc" id="L381" title="1 of 2 branches missed.">            if (Bean.class.isAssignableFrom(classInfo.type) == false) {</span>
-<span class="nc" id="L382">                throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + classInfo.type.getName());</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">        if (rootType) {</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">            if (Bean.class.isAssignableFrom(classInfo.type) == false) {</span>
+<span class="nc" id="L387">                throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + classInfo.type.getName());</span>
             }
-<span class="fc" id="L384">            overrideBasePackage = classInfo.type.getPackage().getName() + &quot;.&quot;;</span>
+<span class="fc" id="L389">            overrideBasePackage = classInfo.type.getPackage().getName() + &quot;.&quot;;</span>
         }
-<span class="pc bpc" id="L386" title="1 of 2 branches missed.">        if (declaredType.isAssignableFrom(classInfo.type) == false) {</span>
-<span class="nc" id="L387">            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + classInfo.type.getName());</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">        if (declaredType.isAssignableFrom(classInfo.type) == false) {</span>
+<span class="nc" id="L392">            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + classInfo.type.getName());</span>
         }
-<span class="fc" id="L389">        return parseBean(arraySize - 1, classInfo);</span>
+<span class="fc" id="L394">        return parseBean(arraySize - 1, classInfo);</span>
     }
 
     //-----------------------------------------------------------------------
     private boolean isIntExtension(int typeByte) {
-<span class="pc bpc" id="L394" title="2 of 6 branches missed.">        return typeByte == MsgPack.FIX_EXT_1 || typeByte == MsgPack.FIX_EXT_2 || typeByte == MsgPack.FIX_EXT_4;</span>
+<span class="pc bpc" id="L399" title="2 of 6 branches missed.">        return typeByte == MsgPack.FIX_EXT_1 || typeByte == MsgPack.FIX_EXT_2 || typeByte == MsgPack.FIX_EXT_4;</span>
     }
 
     private int acceptIntExtension(int typeByte) throws IOException {
-<span class="pc bpc" id="L398" title="1 of 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_1) {</span>
-<span class="fc" id="L399">            return input.readUnsignedByte();</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_1) {</span>
+<span class="fc" id="L404">            return input.readUnsignedByte();</span>
         }
-<span class="nc bnc" id="L401" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_2) {</span>
-<span class="nc" id="L402">            return input.readUnsignedShort();</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_2) {</span>
+<span class="nc" id="L407">            return input.readUnsignedShort();</span>
         }
-<span class="nc bnc" id="L404" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_4) {</span>
-<span class="nc" id="L405">            return input.readInt();</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_4) {</span>
+<span class="nc" id="L410">            return input.readInt();</span>
         }
-<span class="nc" id="L407">        throw new IllegalArgumentException(</span>
-<span class="nc" id="L408">                &quot;Invalid binary data: Expected int extension type, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L412">        throw new IllegalArgumentException(</span>
+<span class="nc" id="L413">                &quot;Invalid binary data: Expected int extension type, but was: 0x&quot; + toHex(typeByte));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -418,16 +423,16 @@ class JodaBeanReferencingBinReader extends AbstractBinReader {
         // The metaproperties (empty if not a bean) in the order in which they need to be serialized
         private final MetaProperty&lt;?&gt;[] metaProperties;
 
-<span class="fc" id="L421">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
-<span class="fc" id="L422">            this.type = type;</span>
-<span class="fc" id="L423">            this.metaProperties = metaProperties;</span>
-<span class="fc" id="L424">        }</span>
+<span class="fc" id="L426">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
+<span class="fc" id="L427">            this.type = type;</span>
+<span class="fc" id="L428">            this.metaProperties = metaProperties;</span>
+<span class="fc" id="L429">        }</span>
 
         @Override
         public String toString() {
-<span class="nc" id="L428">            return &quot;ClassInfo{&quot; +</span>
+<span class="nc" id="L433">            return &quot;ClassInfo{&quot; +</span>
                     &quot;type=&quot; + type +
-<span class="nc" id="L430">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
+<span class="nc" id="L435">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
                     '}';
         }
     }
