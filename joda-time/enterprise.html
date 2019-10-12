@@ -8,10 +8,9 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Joda-Time &#x2013; Java date and time API - Buddhist calendar system</title>
+		<title>Joda-Time &#x2013; Joda-Time for Enterprise</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
-		<meta name="author" content="Stephen Colebourne" />
 		<meta http-equiv="content-language" content="en" />
 
 		<link href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/cosmo/bootstrap.min.css" rel="stylesheet" />
@@ -49,7 +48,7 @@
 		</script>
 		</head>
 
-	<body class="page-cal_buddhist project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-enterprise project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -62,7 +61,7 @@
 					<a class="brand" href="index.html">Joda-Time</a>
 					<div class="nav-collapse collapse" id="top-nav-collapse">
 						<ul class="nav pull-right">
-							<li class="dropdown active">
+							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li ><a href="index.html" title="Home">Home</a></li>
@@ -85,7 +84,7 @@
 										<a href="cal.html" title="Chronologies">Chronologies</a>
 										<ul class="dropdown-menu">
 											<li ><a href="cal_iso.html" title="ISO8601">ISO8601</a></li>
-											<li class="active"><a href="" title="Buddhist">Buddhist</a></li>
+											<li ><a href="cal_buddhist.html" title="Buddhist">Buddhist</a></li>
 											<li ><a href="cal_coptic.html" title="Coptic">Coptic</a></li>
 											<li ><a href="cal_ethiopic.html" title="Ethiopic">Ethiopic</a></li>
 											<li ><a href="cal_gregorian.html" title="Gregorian">Gregorian</a></li>
@@ -134,10 +133,10 @@
 									<li ><a href="../joda-money/" title="Money">Money</a></li>
 								</ul>
 							</li>
-							<li class="dropdown">
+							<li class="dropdown active">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">For Enterprise <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li ><a href="enterprise.html" title="Tidelift">Tidelift</a></li>
+									<li class="active"><a href="" title="Tidelift">Tidelift</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -159,28 +158,27 @@
 		<div class="span12">
 			<div class="body-content">
 <div class="section"> 
- <h2 id="Buddhist_calendar_system">Buddhist calendar system</h2> 
- <p> The Buddhist calendar system implemented in Joda-Time is based on that supplied in the private Sun packages of a typical JDK. It differs from the <a href="cal_gj.html">GregorianJulian</a> calendar only in the year and era. The Buddhist calendar has one era (the current era), and has a year offset by 543 from the current Gregorian year. </p> 
- <p> It appears that Sun developed the Buddhist Calendar system to meet the needs of Thailand. However, the calendar is only accurate from 1941-01-01 (ISO). Before that date Thailand used three other calendar systems. The BuddhistChronology follows the design of the BuddhistCalendar. It is hoped that in the future an accurate Thai chronology can be developed. </p> 
- <p> References </p> 
- <ul> 
-  <li><a class="externalLink" href="https://en.wikipedia.org/wiki/Thai_solar_calendar">Wikipedia - Thai Solar Calendar</a></li> 
-  <li><a class="externalLink" href="https://en.wikipedia.org/wiki/Thai_lunar_calendar">Wikipedia - Thai Lunar Calendar</a></li> 
-  <li><a class="externalLink" href="http://www.faqs.org/faqs/thai/culture/section-5.html">Thai Calendar FAQs</a></li> 
- </ul> 
-</div> 
-<div class="section"> 
- <h2 id="Using_Buddhist_chronology_in_Joda-Time">Using Buddhist chronology in Joda-Time</h2> 
- <p> Within Joda-Time the Buddhist calendar system can be used by obtaining an instance of <a href="apidocs/org/joda/time/chrono/BuddhistChronology.html">BuddhistChronology</a>. This is normally created using the factory method <a href="apidocs/org/joda/time/chrono/BuddhistChronology.html#getInstance">BuddhistChronology.getInstance()</a>. This is then passed into the constructors of the main date and time classes. </p> 
- <div class="source"> 
-  <pre>
-// setup date object for midday on May Day 2004 (ISO year 2004)
-DateTime dtISO = new DateTime(2004, 5, 1, 12, 0, 0, 0);
-
-// find out what the same instant is using the Buddhist Chronology
-DateTime dtBudd = dtISO.withChronology(BuddhistChronology.getInstance());
-</pre>
+ <h2 id="Joda-Time_for_Enterprise">Joda-Time for Enterprise</h2> 
+ <div class="section"> 
+  <h3 id="Available_as_part_of_the_Tidelift_Subscription">Available as part of the Tidelift Subscription</h3> 
+  <p><b>Tidelift</b> is working with the maintainers of <b>Joda-Time</b> and thousands of other open source projects to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use.</p> 
+  <p><button class="btn-learnmore" type="button"><a class="externalLink" href="https://tidelift.com/subscription/pkg/maven-joda-time-joda-time?utm_source=maven-joda-time-joda-time&amp;utm_medium=referral&amp;utm_campaign=enterprise">LEARN MORE</a></button> <button class="btn-requestdemo" type="button"><a class="externalLink" href="https://tidelift.com/subscription/pkg/maven-joda-time-joda-time?utm_source=maven-joda-time-joda-time&amp;utm_medium=referral&amp;utm_campaign=enterprise">REQUEST A DEMO</a></button></p>
  </div> 
+ <div class="section"> 
+  <h3 id="Enterprise-ready_open_source_software_-_managed_for_you">Enterprise-ready open source software - managed for you</h3> 
+  <p>The Tidelift Subscription is a managed open source subscription for application dependencies covering millions of open source projects across JavaScript, Python, Java, PHP, Ruby, .NET, and more.</p> 
+  <p>Your subscription includes:</p> 
+  <ul> 
+   <li> <p><b>Security updates</b><br /> Tidelift’s security response team coordinates patches for new breaking security vulnerabilities and alerts immediately through a private channel, so your software supply chain is always secure.</p> </li> 
+   <li> <p><b>Licensing verification and indemnification</b><br /> Tidelift verifies license information to enable easy policy enforcement and adds intellectual property indemnification to cover creators and users in case something goes wrong. You always have a 100% up-to-date bill of materials for your dependencies to share with your legal team, customers, or partners.</p> </li> 
+   <li> <p><b>Maintenance and code improvement</b><br /> Tidelift ensures the software you rely on keeps working as long as you need it to work. Your managed dependencies are actively maintained and we recruit additional maintainers where required.</p> </li> 
+   <li> <p><b>Package selection and version guidance</b><br /> We help you choose the best open source packages from the start—and then guide you through updates to stay on the best releases as new issues arise.</p> </li> 
+   <li> <p><b>Roadmap input</b><br /> Take a seat at the table with the creators behind the software you use. Tidelift’s participating maintainers earn more income as their software is used by more subscribers, so they’re interested in knowing what you need.</p> </li> 
+   <li> <p><b>Tooling and cloud integration</b><br /> Tidelift works with GitHub, GitLab, BitBucket, and more. We support every cloud platform (and other deployment targets, too).</p> </li> 
+  </ul> 
+  <p>The end result? All of the capabilities you expect from commercial-grade software, for the full breadth of open source you use. That means less time grappling with esoteric open source trivia, and more time building your own applications—and your business.</p> 
+  <p><button class="btn-learnmore" type="button"><a class="externalLink" href="https://tidelift.com/subscription/pkg/maven-joda-time-joda-time?utm_source=maven-joda-time-joda-time&amp;utm_medium=referral&amp;utm_campaign=enterprise">LEARN MORE</a></button> <button class="btn-requestdemo" type="button"><a class="externalLink" href="https://tidelift.com/subscription/pkg/maven-joda-time-joda-time?utm_source=maven-joda-time-joda-time&amp;utm_medium=referral&amp;utm_campaign=enterprise">REQUEST A DEMO</a></button></p>
+ </div>
 </div>
 			</div>
 		</div>
