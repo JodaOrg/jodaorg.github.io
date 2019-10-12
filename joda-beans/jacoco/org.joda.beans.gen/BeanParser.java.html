@@ -276,7 +276,7 @@ class BeanParser {
 <span class="nc" id="L276">                line = line.substring(line.indexOf(fullType) + fullType.length());</span>
             }
 <span class="nc" id="L278">            buf.append(line).append(' ');</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">            if (line.trim().endsWith(&quot;{&quot;)) {</span>
+<span class="nc bnc" id="L279" title="All 4 branches missed.">            if (line.trim().endsWith(&quot;{&quot;) &amp;&amp; !line.trim().startsWith(&quot;@&quot;)) {</span>
 <span class="nc" id="L280">                break;</span>
             }
         }

@@ -913,7 +913,7 @@ class BeanGen {
 <span class="nc" id="L913">                    String getter = toStringFieldAccessor(prop);</span>
 <span class="nc" id="L914">                    addLine(2, &quot;buf.append(\&quot;&quot; + prop.getData().getPropertyName() + &quot;\&quot;).append('=')&quot; + </span>
 <span class="nc" id="L915">                            join(i, props,</span>
-                                    &quot;.append(&quot; + getter + &quot;).append(',').append(' ');&quot;,
+                                    &quot;.append(JodaBeanUtils.toString(&quot; + getter + &quot;)).append(',').append(' ');&quot;,
                                     &quot;.append(JodaBeanUtils.toString(&quot; + getter + &quot;));&quot;));
                 }
             }
@@ -1330,221 +1330,231 @@ class BeanGen {
             }
 <span class="nc" id="L1331">            addLine(3, &quot;}&quot;);</span>
         } else {
-<span class="nc" id="L1333">            data.ensureImport(NoSuchElementException.class);</span>
-<span class="nc" id="L1334">            addLine(3, &quot;throw new NoSuchElementException(\&quot;Unknown property: \&quot; + propertyName);&quot;);</span>
+<span class="nc bnc" id="L1333" title="All 2 branches missed.">            if (!data.isRootClass()) {</span>
+<span class="nc" id="L1334">                addLine(3, &quot;super.get(propertyName);&quot;);</span>
+<span class="nc" id="L1335">                addLine(3, &quot;return this;&quot;);</span>
+            } else {
+<span class="nc" id="L1337">                data.ensureImport(NoSuchElementException.class);</span>
+<span class="nc" id="L1338">                addLine(3, &quot;throw new NoSuchElementException(\&quot;Unknown property: \&quot; + propertyName);&quot;);</span>
+            }
         }
-<span class="nc" id="L1336">        addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1337">        addBlankLine();</span>
-<span class="nc" id="L1338">    }</span>
+<span class="nc" id="L1341">        addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1342">        addBlankLine();</span>
+<span class="nc" id="L1343">    }</span>
 
     private void generateBuilderSet() {
-<span class="nc" id="L1341">        List&lt;PropertyGen&gt; nonDerived = nonDerivedProperties();</span>
-<span class="nc" id="L1342">        boolean generics = data.getProperties().stream()</span>
-<span class="nc bnc" id="L1343" title="All 4 branches missed.">                .filter(p -&gt; p.isGeneric() &amp;&amp; p.isGenericWildcardParamType() == false)</span>
-<span class="nc" id="L1344">                .findAny()</span>
-<span class="nc" id="L1345">                .isPresent();</span>
-<span class="nc bnc" id="L1346" title="All 2 branches missed.">        if (generics) {</span>
-<span class="nc" id="L1347">            addLine(2, &quot;@SuppressWarnings(\&quot;unchecked\&quot;)&quot;);</span>
+<span class="nc" id="L1346">        List&lt;PropertyGen&gt; nonDerived = nonDerivedProperties();</span>
+<span class="nc" id="L1347">        boolean generics = data.getProperties().stream()</span>
+<span class="nc bnc" id="L1348" title="All 4 branches missed.">                .filter(p -&gt; p.isGeneric() &amp;&amp; p.isGenericWildcardParamType() == false)</span>
+<span class="nc" id="L1349">                .findAny()</span>
+<span class="nc" id="L1350">                .isPresent();</span>
+<span class="nc bnc" id="L1351" title="All 2 branches missed.">        if (generics) {</span>
+<span class="nc" id="L1352">            addLine(2, &quot;@SuppressWarnings(\&quot;unchecked\&quot;)&quot;);</span>
         }
-<span class="nc" id="L1349">        addLine(2, &quot;@Override&quot;);</span>
-<span class="nc" id="L1350">        addLine(2, &quot;public Builder&quot; + data.getTypeGenericName(true) + &quot; set(String propertyName, Object newValue) {&quot;);</span>
-<span class="nc bnc" id="L1351" title="All 2 branches missed.">        if (nonDerived.size() &gt; 0) {</span>
-<span class="nc" id="L1352">            addLine(3, &quot;switch (propertyName.hashCode()) {&quot;);</span>
-<span class="nc bnc" id="L1353" title="All 2 branches missed.">            for (PropertyGen prop : nonDerived) {</span>
-<span class="nc" id="L1354">                addLines(prop.generateBuilderFieldSet());</span>
-<span class="nc" id="L1355">            }</span>
-<span class="nc" id="L1356">            addLine(4, &quot;default:&quot;);</span>
-<span class="nc bnc" id="L1357" title="All 2 branches missed.">            if (data.isRootClass()) {</span>
-<span class="nc" id="L1358">                data.ensureImport(NoSuchElementException.class);</span>
-<span class="nc" id="L1359">                addLine(5, &quot;throw new NoSuchElementException(\&quot;Unknown property: \&quot; + propertyName);&quot;);</span>
+<span class="nc" id="L1354">        addLine(2, &quot;@Override&quot;);</span>
+<span class="nc" id="L1355">        addLine(2, &quot;public Builder&quot; + data.getTypeGenericName(true) + &quot; set(String propertyName, Object newValue) {&quot;);</span>
+<span class="nc bnc" id="L1356" title="All 2 branches missed.">        if (nonDerived.size() &gt; 0) {</span>
+<span class="nc" id="L1357">            addLine(3, &quot;switch (propertyName.hashCode()) {&quot;);</span>
+<span class="nc bnc" id="L1358" title="All 2 branches missed.">            for (PropertyGen prop : nonDerived) {</span>
+<span class="nc" id="L1359">                addLines(prop.generateBuilderFieldSet());</span>
+<span class="nc" id="L1360">            }</span>
+<span class="nc" id="L1361">            addLine(4, &quot;default:&quot;);</span>
+<span class="nc bnc" id="L1362" title="All 2 branches missed.">            if (data.isRootClass()) {</span>
+<span class="nc" id="L1363">                data.ensureImport(NoSuchElementException.class);</span>
+<span class="nc" id="L1364">                addLine(5, &quot;throw new NoSuchElementException(\&quot;Unknown property: \&quot; + propertyName);&quot;);</span>
             } else {
-<span class="nc" id="L1361">                addLine(5, &quot;super.set(propertyName, newValue);&quot;);</span>
-<span class="nc" id="L1362">                addLine(5, &quot;break;&quot;);</span>
+<span class="nc" id="L1366">                addLine(5, &quot;super.set(propertyName, newValue);&quot;);</span>
+<span class="nc" id="L1367">                addLine(5, &quot;break;&quot;);</span>
             }
-<span class="nc" id="L1364">            addLine(3, &quot;}&quot;);</span>
-<span class="nc" id="L1365">            addLine(3, &quot;return this;&quot;);</span>
+<span class="nc" id="L1369">            addLine(3, &quot;}&quot;);</span>
+<span class="nc" id="L1370">            addLine(3, &quot;return this;&quot;);</span>
         } else {
-<span class="nc" id="L1367">            data.ensureImport(NoSuchElementException.class);</span>
-<span class="nc" id="L1368">            addLine(3, &quot;throw new NoSuchElementException(\&quot;Unknown property: \&quot; + propertyName);&quot;);</span>
+<span class="nc bnc" id="L1372" title="All 2 branches missed.">            if (!data.isRootClass()) {</span>
+<span class="nc" id="L1373">                addLine(3, &quot;super.set(propertyName, newValue);&quot;);</span>
+<span class="nc" id="L1374">                addLine(3, &quot;return this;&quot;);</span>
+            } else {
+<span class="nc" id="L1376">                data.ensureImport(NoSuchElementException.class);</span>
+<span class="nc" id="L1377">                addLine(3, &quot;throw new NoSuchElementException(\&quot;Unknown property: \&quot; + propertyName);&quot;);</span>
+            }
         }
-<span class="nc" id="L1370">        addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1371">        addBlankLine();</span>
-<span class="nc" id="L1372">    }</span>
+<span class="nc" id="L1380">        addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1381">        addBlankLine();</span>
+<span class="nc" id="L1382">    }</span>
 
     private void generateBuilderOtherSets() {
-<span class="nc bnc" id="L1375" title="All 2 branches missed.">        if (data.isEffectiveBuilderScopeVisible()) {</span>
-<span class="nc" id="L1376">            addLine(2, &quot;@Override&quot;);</span>
-<span class="nc" id="L1377">            addLine(2, &quot;public Builder&quot; + data.getTypeGenericName(true) + &quot; set(MetaProperty&lt;?&gt; property, Object value) {&quot;);</span>
-<span class="nc" id="L1378">            addLine(3, &quot;super.set(property, value);&quot;);</span>
-<span class="nc" id="L1379">            addLine(3, &quot;return this;&quot;);</span>
-<span class="nc" id="L1380">            addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1381">            addBlankLine();</span>
+<span class="nc bnc" id="L1385" title="All 2 branches missed.">        if (data.isEffectiveBuilderScopeVisible()) {</span>
+<span class="nc" id="L1386">            addLine(2, &quot;@Override&quot;);</span>
+<span class="nc" id="L1387">            addLine(2, &quot;public Builder&quot; + data.getTypeGenericName(true) + &quot; set(MetaProperty&lt;?&gt; property, Object value) {&quot;);</span>
+<span class="nc" id="L1388">            addLine(3, &quot;super.set(property, value);&quot;);</span>
+<span class="nc" id="L1389">            addLine(3, &quot;return this;&quot;);</span>
+<span class="nc" id="L1390">            addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1391">            addBlankLine();</span>
         }
-<span class="nc" id="L1383">    }</span>
+<span class="nc" id="L1393">    }</span>
 
     private void generateBuilderBuild() {
-<span class="nc" id="L1386">        List&lt;PropertyGen&gt; nonDerived = nonDerivedProperties();</span>
-<span class="nc" id="L1387">        addLine(2, &quot;@Override&quot;);</span>
-<span class="nc" id="L1388">        addLine(2, &quot;public &quot; + data.getTypeRaw() + data.getTypeGenericName(true) + &quot; build() {&quot;);</span>
-<span class="nc bnc" id="L1389" title="All 2 branches missed.">        if (data.getImmutablePreBuild() != null) {</span>
-<span class="nc" id="L1390">            addLine(3, data.getImmutablePreBuild() + &quot;(this);&quot;);</span>
+<span class="nc" id="L1396">        List&lt;PropertyGen&gt; nonDerived = nonDerivedProperties();</span>
+<span class="nc" id="L1397">        addLine(2, &quot;@Override&quot;);</span>
+<span class="nc" id="L1398">        addLine(2, &quot;public &quot; + data.getTypeRaw() + data.getTypeGenericName(true) + &quot; build() {&quot;);</span>
+<span class="nc bnc" id="L1399" title="All 2 branches missed.">        if (data.getImmutablePreBuild() != null) {</span>
+<span class="nc" id="L1400">            addLine(3, data.getImmutablePreBuild() + &quot;(this);&quot;);</span>
         }
-<span class="nc bnc" id="L1392" title="All 2 branches missed.">        if (data.getConstructorStyle() == CONSTRUCTOR_BY_ARGS) {</span>
-<span class="nc bnc" id="L1393" title="All 2 branches missed.">            if (nonDerived.size() == 0) {</span>
-<span class="nc" id="L1394">                addLine(3, &quot;return new &quot; + data.getTypeWithDiamond() + &quot;();&quot;);</span>
+<span class="nc bnc" id="L1402" title="All 2 branches missed.">        if (data.getConstructorStyle() == CONSTRUCTOR_BY_ARGS) {</span>
+<span class="nc bnc" id="L1403" title="All 2 branches missed.">            if (nonDerived.size() == 0) {</span>
+<span class="nc" id="L1404">                addLine(3, &quot;return new &quot; + data.getTypeWithDiamond() + &quot;();&quot;);</span>
             } else {
-<span class="nc" id="L1396">                addLine(3, &quot;return new &quot; + data.getTypeWithDiamond() + &quot;(&quot;);</span>
-<span class="nc bnc" id="L1397" title="All 2 branches missed.">                for (int i = 0; i &lt; nonDerived.size(); i++) {</span>
-<span class="nc" id="L1398">                    addLine(5, nonDerived.get(i).generateBuilderFieldName() + joinComma(i, nonDerived, &quot;);&quot;));</span>
+<span class="nc" id="L1406">                addLine(3, &quot;return new &quot; + data.getTypeWithDiamond() + &quot;(&quot;);</span>
+<span class="nc bnc" id="L1407" title="All 2 branches missed.">                for (int i = 0; i &lt; nonDerived.size(); i++) {</span>
+<span class="nc" id="L1408">                    addLine(5, nonDerived.get(i).generateBuilderFieldName() + joinComma(i, nonDerived, &quot;);&quot;));</span>
                 }
             }
-<span class="nc bnc" id="L1401" title="All 2 branches missed.">        } else if (data.getConstructorStyle() == CONSTRUCTOR_BY_BUILDER) {</span>
-<span class="nc" id="L1402">            addLine(3, &quot;return new &quot; + data.getTypeWithDiamond() + &quot;(this);&quot;);</span>
+<span class="nc bnc" id="L1411" title="All 2 branches missed.">        } else if (data.getConstructorStyle() == CONSTRUCTOR_BY_BUILDER) {</span>
+<span class="nc" id="L1412">            addLine(3, &quot;return new &quot; + data.getTypeWithDiamond() + &quot;(this);&quot;);</span>
         }
-<span class="nc" id="L1404">        addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1405">        addBlankLine();</span>
-<span class="nc" id="L1406">    }</span>
+<span class="nc" id="L1414">        addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1415">        addBlankLine();</span>
+<span class="nc" id="L1416">    }</span>
 
     private void generateBuilderPropertySetMethods() {
-<span class="nc bnc" id="L1409" title="All 2 branches missed.">        if (data.isEffectiveBuilderScopeVisible()) {</span>
-<span class="nc bnc" id="L1410" title="All 2 branches missed.">            for (PropertyGen prop : nonDerivedProperties()) {</span>
-<span class="nc" id="L1411">                addLines(prop.generateBuilderSetMethod());</span>
-<span class="nc" id="L1412">            }</span>
+<span class="nc bnc" id="L1419" title="All 2 branches missed.">        if (data.isEffectiveBuilderScopeVisible()) {</span>
+<span class="nc bnc" id="L1420" title="All 2 branches missed.">            for (PropertyGen prop : nonDerivedProperties()) {</span>
+<span class="nc" id="L1421">                addLines(prop.generateBuilderSetMethod());</span>
+<span class="nc" id="L1422">            }</span>
         }
-<span class="nc" id="L1414">    }</span>
+<span class="nc" id="L1424">    }</span>
 
     private void generateBuilderToString() {
-<span class="nc" id="L1417">        List&lt;PropertyGen&gt; nonDerived = toStringProperties();</span>
-<span class="nc bnc" id="L1418" title="All 4 branches missed.">        if (data.isImmutable() &amp;&amp; data.isTypeFinal()) {</span>
-<span class="nc" id="L1419">            addLine(2, &quot;@Override&quot;);</span>
-<span class="nc" id="L1420">            addLine(2, &quot;public String toString() {&quot;);</span>
-<span class="nc bnc" id="L1421" title="All 2 branches missed.">            if (nonDerived.size() == 0) {</span>
-<span class="nc" id="L1422">                addLine(3, &quot;return \&quot;&quot; + data.getEffectiveBeanBuilderName() + &quot;{}\&quot;;&quot;);</span>
+<span class="nc" id="L1427">        List&lt;PropertyGen&gt; nonDerived = toStringProperties();</span>
+<span class="nc bnc" id="L1428" title="All 4 branches missed.">        if (data.isImmutable() &amp;&amp; data.isTypeFinal()) {</span>
+<span class="nc" id="L1429">            addLine(2, &quot;@Override&quot;);</span>
+<span class="nc" id="L1430">            addLine(2, &quot;public String toString() {&quot;);</span>
+<span class="nc bnc" id="L1431" title="All 2 branches missed.">            if (nonDerived.size() == 0) {</span>
+<span class="nc" id="L1432">                addLine(3, &quot;return \&quot;&quot; + data.getEffectiveBeanBuilderName() + &quot;{}\&quot;;&quot;);</span>
             } else {
-<span class="nc" id="L1424">                addLine(3, &quot;StringBuilder buf = new StringBuilder(&quot; + (nonDerived.size() * 32 + 32) + &quot;);&quot;);</span>
-<span class="nc" id="L1425">                addLine(3, &quot;buf.append(\&quot;&quot; + data.getEffectiveBeanBuilderName() + &quot;{\&quot;);&quot;);</span>
-<span class="nc bnc" id="L1426" title="All 2 branches missed.">                for (int i = 0; i &lt; nonDerived.size(); i++) {</span>
-<span class="nc" id="L1427">                    PropertyGen prop = nonDerived.get(i);</span>
-<span class="nc" id="L1428">                    String getter = nonDerived.get(i).generateBuilderFieldName();</span>
-<span class="nc" id="L1429">                    data.ensureImport(JodaBeanUtils.class);</span>
-<span class="nc" id="L1430">                    String base = &quot;\t\t\tbuf.append(\&quot;&quot; + prop.getData().getPropertyName() +</span>
+<span class="nc" id="L1434">                addLine(3, &quot;StringBuilder buf = new StringBuilder(&quot; + (nonDerived.size() * 32 + 32) + &quot;);&quot;);</span>
+<span class="nc" id="L1435">                addLine(3, &quot;buf.append(\&quot;&quot; + data.getEffectiveBeanBuilderName() + &quot;{\&quot;);&quot;);</span>
+<span class="nc bnc" id="L1436" title="All 2 branches missed.">                for (int i = 0; i &lt; nonDerived.size(); i++) {</span>
+<span class="nc" id="L1437">                    PropertyGen prop = nonDerived.get(i);</span>
+<span class="nc" id="L1438">                    String getter = nonDerived.get(i).generateBuilderFieldName();</span>
+<span class="nc" id="L1439">                    data.ensureImport(JodaBeanUtils.class);</span>
+<span class="nc" id="L1440">                    String base = &quot;\t\t\tbuf.append(\&quot;&quot; + prop.getData().getPropertyName() +</span>
                             &quot;\&quot;).append('=').append(JodaBeanUtils.toString(&quot; + getter + &quot;))&quot;;
-<span class="nc" id="L1432">                    addLine(0, base + join(i, nonDerived, &quot;.append(',').append(' ');&quot;, &quot;;&quot;));</span>
+<span class="nc" id="L1442">                    addLine(0, base + join(i, nonDerived, &quot;.append(',').append(' ');&quot;, &quot;;&quot;));</span>
                 }
-<span class="nc" id="L1434">                addLine(3, &quot;buf.append('}');&quot;);</span>
-<span class="nc" id="L1435">                addLine(3, &quot;return buf.toString();&quot;);</span>
+<span class="nc" id="L1444">                addLine(3, &quot;buf.append('}');&quot;);</span>
+<span class="nc" id="L1445">                addLine(3, &quot;return buf.toString();&quot;);</span>
             }
-<span class="nc" id="L1437">            addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1438">            addBlankLine();</span>
-<span class="nc" id="L1439">            return;</span>
+<span class="nc" id="L1447">            addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1448">            addBlankLine();</span>
+<span class="nc" id="L1449">            return;</span>
         }
         
-<span class="nc" id="L1442">        addLine(2, &quot;@Override&quot;);</span>
-<span class="nc" id="L1443">        addLine(2, &quot;public String toString() {&quot;);</span>
-<span class="nc" id="L1444">        addLine(3, &quot;StringBuilder buf = new StringBuilder(&quot; + (nonDerived.size() * 32 + 32) + &quot;);&quot;);</span>
-<span class="nc" id="L1445">        addLine(3, &quot;buf.append(\&quot;&quot; + data.getEffectiveBeanBuilderName() + &quot;{\&quot;);&quot;);</span>
-<span class="nc" id="L1446">        addLine(3, &quot;int len = buf.length();&quot;);</span>
-<span class="nc" id="L1447">        addLine(3, &quot;toString(buf);&quot;);</span>
-<span class="nc" id="L1448">        addLine(3, &quot;if (buf.length() &gt; len) {&quot;);</span>
-<span class="nc" id="L1449">        addLine(4, &quot;buf.setLength(buf.length() - 2);&quot;);</span>
-<span class="nc" id="L1450">        addLine(3, &quot;}&quot;);</span>
-<span class="nc" id="L1451">        addLine(3, &quot;buf.append('}');&quot;);</span>
-<span class="nc" id="L1452">        addLine(3, &quot;return buf.toString();&quot;);</span>
-<span class="nc" id="L1453">        addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1454">        addBlankLine();</span>
+<span class="nc" id="L1452">        addLine(2, &quot;@Override&quot;);</span>
+<span class="nc" id="L1453">        addLine(2, &quot;public String toString() {&quot;);</span>
+<span class="nc" id="L1454">        addLine(3, &quot;StringBuilder buf = new StringBuilder(&quot; + (nonDerived.size() * 32 + 32) + &quot;);&quot;);</span>
+<span class="nc" id="L1455">        addLine(3, &quot;buf.append(\&quot;&quot; + data.getEffectiveBeanBuilderName() + &quot;{\&quot;);&quot;);</span>
+<span class="nc" id="L1456">        addLine(3, &quot;int len = buf.length();&quot;);</span>
+<span class="nc" id="L1457">        addLine(3, &quot;toString(buf);&quot;);</span>
+<span class="nc" id="L1458">        addLine(3, &quot;if (buf.length() &gt; len) {&quot;);</span>
+<span class="nc" id="L1459">        addLine(4, &quot;buf.setLength(buf.length() - 2);&quot;);</span>
+<span class="nc" id="L1460">        addLine(3, &quot;}&quot;);</span>
+<span class="nc" id="L1461">        addLine(3, &quot;buf.append('}');&quot;);</span>
+<span class="nc" id="L1462">        addLine(3, &quot;return buf.toString();&quot;);</span>
+<span class="nc" id="L1463">        addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1464">        addBlankLine();</span>
         
-<span class="nc bnc" id="L1456" title="All 2 branches missed.">        if (data.isSubClass()) {</span>
-<span class="nc" id="L1457">            addLine(2, &quot;@Override&quot;);</span>
+<span class="nc bnc" id="L1466" title="All 2 branches missed.">        if (data.isSubClass()) {</span>
+<span class="nc" id="L1467">            addLine(2, &quot;@Override&quot;);</span>
         }
-<span class="nc" id="L1459">        addLine(2, &quot;protected void toString(StringBuilder buf) {&quot;);</span>
-<span class="nc bnc" id="L1460" title="All 2 branches missed.">        if (data.isSubClass()) {</span>
-<span class="nc" id="L1461">            addLine(3, &quot;super.toString(buf);&quot;);</span>
+<span class="nc" id="L1469">        addLine(2, &quot;protected void toString(StringBuilder buf) {&quot;);</span>
+<span class="nc bnc" id="L1470" title="All 2 branches missed.">        if (data.isSubClass()) {</span>
+<span class="nc" id="L1471">            addLine(3, &quot;super.toString(buf);&quot;);</span>
         }
-<span class="nc bnc" id="L1463" title="All 2 branches missed.">        for (int i = 0; i &lt; nonDerived.size(); i++) {</span>
-<span class="nc" id="L1464">            PropertyGen prop = nonDerived.get(i);</span>
-<span class="nc" id="L1465">            String getter = nonDerived.get(i).generateBuilderFieldName();</span>
-<span class="nc" id="L1466">            data.ensureImport(JodaBeanUtils.class);</span>
-<span class="nc" id="L1467">            addLine(3, &quot;buf.append(\&quot;&quot; + prop.getData().getPropertyName() +</span>
+<span class="nc bnc" id="L1473" title="All 2 branches missed.">        for (int i = 0; i &lt; nonDerived.size(); i++) {</span>
+<span class="nc" id="L1474">            PropertyGen prop = nonDerived.get(i);</span>
+<span class="nc" id="L1475">            String getter = nonDerived.get(i).generateBuilderFieldName();</span>
+<span class="nc" id="L1476">            data.ensureImport(JodaBeanUtils.class);</span>
+<span class="nc" id="L1477">            addLine(3, &quot;buf.append(\&quot;&quot; + prop.getData().getPropertyName() +</span>
                     &quot;\&quot;).append('=').append(JodaBeanUtils.toString(&quot; + getter + &quot;)).append(',').append(' ');&quot;);
         }
-<span class="nc" id="L1470">        addLine(2, &quot;}&quot;);</span>
-<span class="nc" id="L1471">        addBlankLine();</span>
-<span class="nc" id="L1472">    }</span>
+<span class="nc" id="L1480">        addLine(2, &quot;}&quot;);</span>
+<span class="nc" id="L1481">        addBlankLine();</span>
+<span class="nc" id="L1482">    }</span>
 
     //-----------------------------------------------------------------------
     private void addLines(List&lt;String&gt; lines) {
-<span class="nc" id="L1476">        insertRegion.addAll(lines);</span>
-<span class="nc" id="L1477">    }</span>
+<span class="nc" id="L1486">        insertRegion.addAll(lines);</span>
+<span class="nc" id="L1487">    }</span>
 
     private void addLine(int tabCount, String line) {
-<span class="nc" id="L1480">        StringBuilder buf = new StringBuilder(line.length() + tabCount);</span>
-<span class="nc bnc" id="L1481" title="All 2 branches missed.">        for (int i = 0; i &lt; tabCount; i++) {</span>
-<span class="nc" id="L1482">            buf.append('\t');</span>
+<span class="nc" id="L1490">        StringBuilder buf = new StringBuilder(line.length() + tabCount);</span>
+<span class="nc bnc" id="L1491" title="All 2 branches missed.">        for (int i = 0; i &lt; tabCount; i++) {</span>
+<span class="nc" id="L1492">            buf.append('\t');</span>
         }
-<span class="nc" id="L1484">        buf.append(line);</span>
-<span class="nc" id="L1485">        insertRegion.add(buf.toString());</span>
-<span class="nc" id="L1486">    }</span>
+<span class="nc" id="L1494">        buf.append(line);</span>
+<span class="nc" id="L1495">        insertRegion.add(buf.toString());</span>
+<span class="nc" id="L1496">    }</span>
 
     private void addBlankLine() {
-<span class="nc" id="L1489">        insertRegion.add(&quot;&quot;);</span>
-<span class="nc" id="L1490">    }</span>
+<span class="nc" id="L1499">        insertRegion.add(&quot;&quot;);</span>
+<span class="nc" id="L1500">    }</span>
 
     private static String join(int i, List&lt;?&gt; list, String join, String end) {
-<span class="nc bnc" id="L1493" title="All 2 branches missed.">        return (i &lt; list.size() - 1 ? join : end);</span>
+<span class="nc bnc" id="L1503" title="All 2 branches missed.">        return (i &lt; list.size() - 1 ? join : end);</span>
     }
 
     private static String joinComma(int i, List&lt;?&gt; list, String end) {
-<span class="nc" id="L1497">        return join(i, list, &quot;,&quot;, end);</span>
+<span class="nc" id="L1507">        return join(i, list, &quot;,&quot;, end);</span>
     }
 
     boolean isBean() {
-<span class="nc bnc" id="L1501" title="All 2 branches missed.">        return properties != null;</span>
+<span class="nc bnc" id="L1511" title="All 2 branches missed.">        return properties != null;</span>
     }
 
     BeanData getData() {
-<span class="nc" id="L1505">        return data;</span>
+<span class="nc" id="L1515">        return data;</span>
     }
 
     BeanGenConfig getConfig() {
-<span class="nc" id="L1509">        return config;</span>
+<span class="nc" id="L1519">        return config;</span>
     }
 
     File getFile() {
-<span class="nc" id="L1513">        return file;</span>
+<span class="nc" id="L1523">        return file;</span>
     }
 
     String getFieldPrefix() {
-<span class="nc" id="L1517">        return config.getPrefix();</span>
+<span class="nc" id="L1527">        return config.getPrefix();</span>
     }
 
     private List&lt;PropertyGen&gt; nonDerivedProperties() {
-<span class="nc" id="L1521">        List&lt;PropertyGen&gt; nonDerived = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L1522" title="All 2 branches missed.">        for (PropertyGen prop : properties) {</span>
-<span class="nc bnc" id="L1523" title="All 2 branches missed.">            if (prop.getData().isDerived() == false) {</span>
-<span class="nc" id="L1524">                nonDerived.add(prop);</span>
-            }
-<span class="nc" id="L1526">        }</span>
-<span class="nc" id="L1527">        return nonDerived;</span>
-    }
-
-    private List&lt;PropertyGen&gt; nonDerivedEqualsHashCodeProperties() {
 <span class="nc" id="L1531">        List&lt;PropertyGen&gt; nonDerived = new ArrayList&lt;&gt;();</span>
 <span class="nc bnc" id="L1532" title="All 2 branches missed.">        for (PropertyGen prop : properties) {</span>
-<span class="nc bnc" id="L1533" title="All 4 branches missed.">            if (!prop.getData().isDerived() &amp;&amp; !prop.getData().getEqualsHashCodeStyle().equals(&quot;omit&quot;)) {</span>
+<span class="nc bnc" id="L1533" title="All 2 branches missed.">            if (prop.getData().isDerived() == false) {</span>
 <span class="nc" id="L1534">                nonDerived.add(prop);</span>
             }
 <span class="nc" id="L1536">        }</span>
 <span class="nc" id="L1537">        return nonDerived;</span>
     }
 
-    private List&lt;PropertyGen&gt; toStringProperties() {
-<span class="nc" id="L1541">        List&lt;PropertyGen&gt; props = new ArrayList&lt;&gt;();</span>
+    private List&lt;PropertyGen&gt; nonDerivedEqualsHashCodeProperties() {
+<span class="nc" id="L1541">        List&lt;PropertyGen&gt; nonDerived = new ArrayList&lt;&gt;();</span>
 <span class="nc bnc" id="L1542" title="All 2 branches missed.">        for (PropertyGen prop : properties) {</span>
-<span class="nc bnc" id="L1543" title="All 4 branches missed.">            if (!prop.getData().isDerived() &amp;&amp; !&quot;omit&quot;.equals(prop.getData().getToStringStyle())) {</span>
-<span class="nc" id="L1544">                props.add(prop);</span>
+<span class="nc bnc" id="L1543" title="All 4 branches missed.">            if (!prop.getData().isDerived() &amp;&amp; !prop.getData().getEqualsHashCodeStyle().equals(&quot;omit&quot;)) {</span>
+<span class="nc" id="L1544">                nonDerived.add(prop);</span>
             }
 <span class="nc" id="L1546">        }</span>
-<span class="nc" id="L1547">        return props;</span>
+<span class="nc" id="L1547">        return nonDerived;</span>
+    }
+
+    private List&lt;PropertyGen&gt; toStringProperties() {
+<span class="nc" id="L1551">        List&lt;PropertyGen&gt; props = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L1552" title="All 2 branches missed.">        for (PropertyGen prop : properties) {</span>
+<span class="nc bnc" id="L1553" title="All 4 branches missed.">            if (!prop.getData().isDerived() &amp;&amp; !&quot;omit&quot;.equals(prop.getData().getToStringStyle())) {</span>
+<span class="nc" id="L1554">                props.add(prop);</span>
+            }
+<span class="nc" id="L1556">        }</span>
+<span class="nc" id="L1557">        return props;</span>
     }
 
 }

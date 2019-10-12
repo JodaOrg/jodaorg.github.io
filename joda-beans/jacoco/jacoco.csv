@@ -8,8 +8,8 @@ Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterator() {...},36
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},28,50,3,3,4,12,4,8,1,8
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},42,20,4,0,10,3,7,3,5,3
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},42,20,4,0,10,3,7,3,5,3
-Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory,111,615,15,45,17,123,12,39,0,21
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},14,32,1,1,2,8,2,6,1,6
+Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory,111,615,15,45,17,123,12,39,0,21
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterator() {...},4,60,1,1,1,12,2,10,1,10
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterable() {...},14,37,1,3,2,8,2,6,1,5
 Joda-Beans,org.joda.beans.ser,GuavaSerIteratorFactory.new SerIterator() {...},4,75,1,1,1,15,2,13,1,13
@@ -56,9 +56,9 @@ Joda-Beans,org.joda.beans.impl.reflection,ReflectiveMetaBean,69,71,4,4,14,14,7,6
 Joda-Beans,org.joda.beans,JodaBeanUtils.Comp,0,21,0,0,0,6,0,2,0,2
 Joda-Beans,org.joda.beans,JodaBeanUtils.CollectCloner,52,20,5,5,10,8,5,3,1,2
 Joda-Beans,org.joda.beans,Property,0,24,0,0,0,5,0,4,0,4
-Joda-Beans,org.joda.beans,JodaBeanUtils,246,950,43,184,56,213,37,133,8,48
+Joda-Beans,org.joda.beans,JodaBeanUtils,246,1005,43,192,56,226,37,139,8,50
 Joda-Beans,org.joda.beans,PropertyStyle,0,145,4,34,0,13,4,22,0,7
-Joda-Beans,org.joda.beans,MetaProperty,48,29,4,0,10,7,5,4,3,4
+Joda-Beans,org.joda.beans,MetaProperty,33,44,4,0,6,11,3,6,1,6
 Joda-Beans,org.joda.beans,MetaBeans,42,89,1,11,5,20,1,9,0,4
 Joda-Beans,org.joda.beans,MetaBean,26,58,3,3,3,15,3,9,0,9
 Joda-Beans,org.joda.beans,BeanIterator,10,115,1,13,2,24,2,10,1,4
@@ -86,7 +86,7 @@ Joda-Beans,org.joda.beans.gen,GetterGen.CloneNNGetterGen,62,0,6,0,11,0,7,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.ObservableSetterGen,245,0,10,0,28,0,9,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.SetSetterGen,227,0,16,0,32,0,13,0,5,0
 Joda-Beans,org.joda.beans.gen,GetterGen.Optional8GetterGen,251,0,14,0,34,0,11,0,4,0
-Joda-Beans,org.joda.beans.gen,BeanParser,1840,0,242,0,327,0,155,0,34,0
+Joda-Beans,org.joda.beans.gen,BeanParser,1845,0,244,0,327,0,156,0,34,0
 Joda-Beans,org.joda.beans.gen,GetterGen.CloneGetterGen,69,0,6,0,11,0,7,0,4,0
 Joda-Beans,org.joda.beans.gen,SetterGen.NoSetterGen,12,0,0,0,4,0,4,0,4,0
 Joda-Beans,org.joda.beans.gen,GetterGen.CloneCastNNGetterGen,69,0,6,0,11,0,7,0,4,0
@@ -104,7 +104,7 @@ Joda-Beans,org.joda.beans.gen,BuilderGen.SimpleBuilderGen,43,0,0,0,8,0,5,0,5,0
 Joda-Beans,org.joda.beans.gen,GetterGen.ManualGetterGen,10,0,0,0,3,0,3,0,3,0
 Joda-Beans,org.joda.beans.gen,BuilderGen.NoBuilderGen,15,0,0,0,5,0,5,0,5,0
 Joda-Beans,org.joda.beans.gen,GetterGen.NoGetterGen,13,0,0,0,4,0,4,0,4,0
-Joda-Beans,org.joda.beans.gen,BeanGen,6067,0,524,0,1041,0,333,0,71,0
+Joda-Beans,org.joda.beans.gen,BeanGen,6093,0,528,0,1047,0,335,0,71,0
 Joda-Beans,org.joda.beans.gen,PropertyParser,1474,0,144,0,273,0,101,0,29,0
 Joda-Beans,org.joda.beans.gen,CopyGen,19,0,0,0,4,0,2,0,2,0
 Joda-Beans,org.joda.beans.gen,PropertyData,1749,0,268,0,352,0,223,0,89,0
@@ -136,7 +136,7 @@ Joda-Beans,org.joda.beans.impl.direct,DirectMetaPropertyMap.Values,0,15,0,0,0,5,
 Joda-Beans,org.joda.beans.impl.direct,DirectBeanBuilder,0,10,0,0,0,4,0,2,0,2
 Joda-Beans,org.joda.beans.impl.direct,DirectMetaBean,1,81,1,7,1,17,1,12,0,9
 Joda-Beans,org.joda.beans.impl.direct,DirectPrivateBeanBuilder,19,11,2,0,7,4,4,2,3,2
-Joda-Beans,org.joda.beans.impl.direct,DirectFieldsBeanBuilder,14,16,2,0,6,5,3,3,2,3
+Joda-Beans,org.joda.beans.impl.direct,DirectFieldsBeanBuilder,6,24,0,2,2,9,2,4,2,3
 Joda-Beans,org.joda.beans.impl.direct,DirectMetaPropertyMap.Keys.new Iterator() {...},4,31,0,2,1,3,1,4,1,3
 Joda-Beans,org.joda.beans.impl.direct,MinimalMetaProperty,47,105,2,4,15,30,4,10,2,9
 Joda-Beans,org.joda.beans.impl,StandaloneMetaProperty,43,44,3,3,8,14,8,6,5,6
@@ -169,5 +169,5 @@ Joda-Beans,org.joda.beans.ser.bin,MsgPackInput,418,29,59,1,146,12,68,5,23,5
 Joda-Beans,org.joda.beans.ser.bin,MsgPackOutput,273,272,34,26,63,76,25,21,2,14
 Joda-Beans,org.joda.beans.ser.bin,JodaBeanReferencingBinReader.ClassInfo,18,9,0,0,2,4,1,1,1,1
 Joda-Beans,org.joda.beans.test,BeanAssert,314,538,39,75,42,95,35,33,4,7
-Joda-Beans,org.joda.beans.test,JodaBeanTests,675,1407,50,32,101,208,63,39,30,31
+Joda-Beans,org.joda.beans.test,JodaBeanTests,431,1651,31,51,55,254,49,53,23,38
 Joda-Beans,org.joda.beans.test,BeanComparisonError,6,10,0,0,2,4,2,1,2,1

@@ -54,11 +54,11 @@ public abstract class DirectFieldsBeanBuilder&lt;T extends Bean&gt;
         try {
 <span class="fc" id="L55">            set(metaProperty.name(), value);</span>
 <span class="fc" id="L56">            return this;</span>
-<span class="nc" id="L57">        } catch (RuntimeException ex) {</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (value == JodaBeanTests.TEST_COVERAGE_STRING) {</span>
-<span class="nc" id="L59">                return this;</span>
+<span class="fc" id="L57">        } catch (RuntimeException ex) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (value == JodaBeanTests.TEST_COVERAGE_STRING) {</span>
+<span class="fc" id="L59">                return this;</span>
             }
-<span class="nc" id="L61">            throw ex;</span>
+<span class="fc" id="L61">            throw ex;</span>
         }
     }
 

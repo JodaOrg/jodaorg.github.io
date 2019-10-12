@@ -114,51 +114,51 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
      */
     @SuppressWarnings(&quot;unlikely-arg-type&quot;)
     public static void coverBeanEquals(Bean bean1, Bean bean2) {
-<span class="nc" id="L117">        assertNotNull(bean1, &quot;coverBeanEquals() called with null bean&quot;);</span>
-<span class="nc" id="L118">        assertNotNull(bean2, &quot;coverBeanEquals() called with null bean&quot;);</span>
-<span class="nc" id="L119">        assertFalse(bean1.equals(null));</span>
-<span class="nc" id="L120">        assertFalse(bean1.equals(&quot;NonBean&quot;));</span>
-<span class="nc" id="L121">        assertTrue(bean1.equals(bean1));</span>
-<span class="nc" id="L122">        assertTrue(bean2.equals(bean2));</span>
-<span class="nc" id="L123">        ignoreThrows(() -&gt; assertEquals(bean1, JodaBeanUtils.cloneAlways(bean1)));</span>
-<span class="nc" id="L124">        ignoreThrows(() -&gt; assertEquals(bean2, JodaBeanUtils.cloneAlways(bean2)));</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">        assertTrue(bean1.hashCode() == bean1.hashCode());</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">        assertTrue(bean2.hashCode() == bean2.hashCode());</span>
-<span class="nc bnc" id="L127" title="All 4 branches missed.">        if (bean1.equals(bean2) || bean1.getClass() != bean2.getClass()) {</span>
+<span class="fc" id="L117">        assertNotNull(bean1, &quot;coverBeanEquals() called with null bean&quot;);</span>
+<span class="fc" id="L118">        assertNotNull(bean2, &quot;coverBeanEquals() called with null bean&quot;);</span>
+<span class="fc" id="L119">        assertFalse(bean1.equals(null));</span>
+<span class="fc" id="L120">        assertFalse(bean1.equals(&quot;NonBean&quot;));</span>
+<span class="fc" id="L121">        assertTrue(bean1.equals(bean1));</span>
+<span class="fc" id="L122">        assertTrue(bean2.equals(bean2));</span>
+<span class="fc" id="L123">        ignoreThrows(() -&gt; assertEquals(bean1, JodaBeanUtils.cloneAlways(bean1)));</span>
+<span class="fc" id="L124">        ignoreThrows(() -&gt; assertEquals(bean2, JodaBeanUtils.cloneAlways(bean2)));</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        assertTrue(bean1.hashCode() == bean1.hashCode());</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        assertTrue(bean2.hashCode() == bean2.hashCode());</span>
+<span class="pc bpc" id="L127" title="2 of 4 branches missed.">        if (bean1.equals(bean2) || bean1.getClass() != bean2.getClass()) {</span>
 <span class="nc" id="L128">            return;</span>
         }
-<span class="nc" id="L130">        MetaBean metaBean = bean1.metaBean();</span>
-<span class="nc" id="L131">        List&lt;MetaProperty&lt;?&gt;&gt; buildableProps = metaBean.metaPropertyMap().values().stream()</span>
-<span class="nc" id="L132">                .filter(mp -&gt; mp.style().isBuildable())</span>
-<span class="nc" id="L133">                .collect(Collectors.toList());</span>
-<span class="nc" id="L134">        Set&lt;Bean&gt; builtBeansSet = new HashSet&lt;&gt;();</span>
-<span class="nc" id="L135">        builtBeansSet.add(bean1);</span>
-<span class="nc" id="L136">        builtBeansSet.add(bean2);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">            for (int j = 0; j &lt; 2; j++) {</span>
+<span class="fc" id="L130">        MetaBean metaBean = bean1.metaBean();</span>
+<span class="fc" id="L131">        List&lt;MetaProperty&lt;?&gt;&gt; buildableProps = metaBean.metaPropertyMap().values().stream()</span>
+<span class="fc" id="L132">                .filter(mp -&gt; mp.style().isBuildable())</span>
+<span class="fc" id="L133">                .collect(Collectors.toList());</span>
+<span class="fc" id="L134">        Set&lt;Bean&gt; builtBeansSet = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L135">        builtBeansSet.add(bean1);</span>
+<span class="fc" id="L136">        builtBeansSet.add(bean2);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            for (int j = 0; j &lt; 2; j++) {</span>
                 try {
-<span class="nc" id="L140">                    BeanBuilder&lt;? extends Bean&gt; bld = metaBean.builder();</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">                    for (int k = 0; k &lt; buildableProps.size(); k++) {</span>
-<span class="nc" id="L142">                        MetaProperty&lt;?&gt; mp = buildableProps.get(k);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">                        if (j == 0) {</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">                            bld.set(mp, mp.get(k &lt; i ? bean1 : bean2));</span>
+<span class="fc" id="L140">                    BeanBuilder&lt;? extends Bean&gt; bld = metaBean.builder();</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                    for (int k = 0; k &lt; buildableProps.size(); k++) {</span>
+<span class="fc" id="L142">                        MetaProperty&lt;?&gt; mp = buildableProps.get(k);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">                        if (j == 0) {</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">                            bld.set(mp, mp.get(k &lt; i ? bean1 : bean2));</span>
                         } else {
-<span class="nc bnc" id="L146" title="All 2 branches missed.">                            bld.set(mp, mp.get(i &lt;= k ? bean1 : bean2));</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">                            bld.set(mp, mp.get(i &lt;= k ? bean1 : bean2));</span>
                         }
                     }
-<span class="nc" id="L149">                    builtBeansSet.add(bld.build());</span>
+<span class="fc" id="L149">                    builtBeansSet.add(bld.build());</span>
 <span class="nc" id="L150">                } catch (RuntimeException ex) {</span>
                     // ignore
-<span class="nc" id="L152">                }</span>
+<span class="fc" id="L152">                }</span>
             }
         }
-<span class="nc" id="L155">        List&lt;Bean&gt; builtBeansList = new ArrayList&lt;&gt;(builtBeansSet);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">        for (int i = 0; i &lt; builtBeansList.size() - 1; i++) {</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">            for (int j = i + 1; j &lt; builtBeansList.size(); j++) {</span>
-<span class="nc" id="L158">                builtBeansList.get(i).equals(builtBeansList.get(j));</span>
+<span class="fc" id="L155">        List&lt;Bean&gt; builtBeansList = new ArrayList&lt;&gt;(builtBeansSet);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for (int i = 0; i &lt; builtBeansList.size() - 1; i++) {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            for (int j = i + 1; j &lt; builtBeansList.size(); j++) {</span>
+<span class="fc" id="L158">                builtBeansList.get(i).equals(builtBeansList.get(j));</span>
             }
         }
-<span class="nc" id="L161">    }</span>
+<span class="fc" id="L161">    }</span>
 
     // provide test coverage to all beans
     private static void coverBean(Bean bean) {
@@ -219,7 +219,7 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
 <span class="fc" id="L219">            m.invoke(metaBean, bean, &quot;Not a real property name&quot;, true);</span>
 <span class="fc" id="L220">        });</span>
 <span class="fc" id="L221">        MetaProperty&lt;String&gt; fakeMetaProp = StandaloneMetaProperty.of(&quot;fake&quot;, metaBean, String.class);</span>
-<span class="pc" id="L222">        ignoreThrows(() -&gt; metaBean.builder().set(fakeMetaProp, JodaBeanTests.TEST_COVERAGE_STRING));</span>
+<span class="fc" id="L222">        ignoreThrows(() -&gt; metaBean.builder().set(fakeMetaProp, JodaBeanTests.TEST_COVERAGE_STRING));</span>
 <span class="pc" id="L223">        ignoreThrows(() -&gt; metaBean.builder().set(JodaBeanTests.TEST_COVERAGE_PROPERTY, JodaBeanTests.TEST_COVERAGE_STRING));</span>
 <span class="fc" id="L224">        ignoreThrows(() -&gt; bean.property(JodaBeanTests.TEST_COVERAGE_PROPERTY));</span>
 <span class="fc" id="L225">    }</span>
@@ -275,15 +275,15 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
 <span class="nc" id="L275">        });</span>
 
 <span class="fc" id="L277">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L278">            Method m = bean.getClass().getDeclaredMethod(&quot;builder&quot;);</span>
-<span class="nc" id="L279">            m.setAccessible(true);</span>
-<span class="nc" id="L280">            m.invoke(null);</span>
-<span class="nc" id="L281">        });</span>
+<span class="fc" id="L278">            Method m = bean.getClass().getDeclaredMethod(&quot;builder&quot;);</span>
+<span class="fc" id="L279">            m.setAccessible(true);</span>
+<span class="fc" id="L280">            m.invoke(null);</span>
+<span class="fc" id="L281">        });</span>
 <span class="fc" id="L282">        ignoreThrows(() -&gt; {</span>
-<span class="nc" id="L283">            Method m = bean.getClass().getDeclaredMethod(&quot;toBuilder&quot;);</span>
-<span class="nc" id="L284">            m.setAccessible(true);</span>
-<span class="nc" id="L285">            m.invoke(bean);</span>
-<span class="nc" id="L286">        });</span>
+<span class="fc" id="L283">            Method m = bean.getClass().getDeclaredMethod(&quot;toBuilder&quot;);</span>
+<span class="fc" id="L284">            m.setAccessible(true);</span>
+<span class="fc" id="L285">            m.invoke(bean);</span>
+<span class="fc" id="L286">        });</span>
 
 <span class="fc" id="L288">        assertNotNull(bean.toString());</span>
 <span class="fc" id="L289">        assertNotNull(metaBean.toString());</span>
@@ -301,7 +301,7 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
 <span class="fc bfc" id="L301" title="All 2 branches covered.">        for (int i = 0; i &lt; buildableProps.size(); i++) {</span>
             try {
 <span class="fc" id="L303">                BeanBuilder&lt;? extends Bean&gt; bld = bean.metaBean().builder();</span>
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">                for (int j = 0; j &lt; buildableProps.size(); j++) {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">                for (int j = 0; j &lt; buildableProps.size(); j++) {</span>
 <span class="fc" id="L305">                    MetaProperty&lt;?&gt; mp = buildableProps.get(j);</span>
 <span class="fc bfc" id="L306" title="All 2 branches covered.">                    if (j &lt; i) {</span>
 <span class="fc" id="L307">                        bld.set(mp, mp.get(bean));</span>
@@ -310,13 +310,13 @@ import org.joda.beans.impl.direct.DirectMetaProperty;
 <span class="fc" id="L310">                        bld.set(mp, samples.get(0));</span>
                     }
                 }
-<span class="nc" id="L313">                Bean built = bld.build();</span>
-<span class="nc" id="L314">                coverBeanEquals(bean, built);</span>
-<span class="nc" id="L315">                assertEquals(built, built);</span>
-<span class="nc" id="L316">                assertEquals(built.hashCode(), built.hashCode());</span>
+<span class="fc" id="L313">                Bean built = bld.build();</span>
+<span class="fc" id="L314">                coverBeanEquals(bean, built);</span>
+<span class="fc" id="L315">                assertEquals(built, built);</span>
+<span class="fc" id="L316">                assertEquals(built.hashCode(), built.hashCode());</span>
 <span class="fc" id="L317">            } catch (RuntimeException ex) {</span>
                 // ignore
-<span class="nc" id="L319">            }</span>
+<span class="fc" id="L319">            }</span>
         }
         // cover the remaining equals edge cases
 <span class="fc" id="L322">        assertFalse(bean.equals(null));</span>

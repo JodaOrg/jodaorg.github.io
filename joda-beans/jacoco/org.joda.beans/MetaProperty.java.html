@@ -244,8 +244,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void setString(Bean bean, String value) {
-<span class="nc" id="L247">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
-<span class="nc" id="L248">    }</span>
+<span class="fc" id="L247">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
+<span class="fc" id="L248">    }</span>
 
     /**
      * Sets the value of the property on the specified bean from a string by conversion.
@@ -262,8 +262,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void setString(Bean bean, String value, StringConvert stringConvert) {
-<span class="nc" id="L265">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
-<span class="nc" id="L266">    }</span>
+<span class="fc" id="L265">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
+<span class="fc" id="L266">    }</span>
 
     //-----------------------------------------------------------------------
     /**
