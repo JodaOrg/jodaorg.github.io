@@ -408,7 +408,7 @@ import org.joda.convert.ToString;
 <span class="fc" id="L408">        MoneyUtils.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
 <span class="fc" id="L409">        CurrencyUnit currency = currenciesByCountry.get(locale.getCountry());</span>
 <span class="fc bfc" id="L410" title="All 2 branches covered.">        if (currency == null) {</span>
-<span class="fc" id="L411">            throw new IllegalCurrencyException(&quot;Unknown currency for locale '&quot; + locale + '\'');</span>
+<span class="fc" id="L411">            throw new IllegalCurrencyException(&quot;No currency found for locale '&quot; + locale + '\'');</span>
         }
 <span class="fc" id="L413">        return currency;</span>
     }
@@ -427,7 +427,7 @@ import org.joda.convert.ToString;
 <span class="fc" id="L427">        MoneyUtils.checkNotNull(countryCode, &quot;Country code must not be null&quot;);</span>
 <span class="fc" id="L428">        CurrencyUnit currency = currenciesByCountry.get(countryCode);</span>
 <span class="fc bfc" id="L429" title="All 2 branches covered.">        if (currency == null) {</span>
-<span class="fc" id="L430">            throw new IllegalCurrencyException(&quot;Unknown currency for country '&quot; + countryCode + '\'');</span>
+<span class="fc" id="L430">            throw new IllegalCurrencyException(&quot;No currency found for country '&quot; + countryCode + '\'');</span>
         }
 <span class="fc" id="L432">        return currency;</span>
     }
