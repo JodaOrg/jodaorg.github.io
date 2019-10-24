@@ -21,6 +21,15 @@ Each project aims to be focussed on a specific area and to have minimal dependen
 Commercial support is available via the
 [Tidelift subscription](https://tidelift.com/subscription/pkg/maven-joda-time-joda-time?utm_source=maven-joda-time-joda-time&utm_medium=referral&utm_campaign=home). To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure.
 
+#### For Enterprise
+
+Enterprise versions of each project are available via the [Tidelift Subscription](https://tidelift.com/subscription/pkg/maven-joda-time-joda-time?utm_source=maven-joda-time-joda-time&utm_medium=referral&utm_campaign=enterprise).
+
+#### For Security
+
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure.
+
 #### Pronunciation
  The 'J' in 'Joda' is pronounced the same as the 'J' in [Java](https://www.dictionary.com/browse/java).
  The project is not capable of wielding a [light saber](https://en.wikipedia.org/wiki/Yoda) and is thus pronounced differently.
