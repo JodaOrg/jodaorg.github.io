@@ -43,7 +43,7 @@ They are curated and managed by Stephen Colebourne, aka jodastephen.
 - [Blog](https://blog.joda.org)
 - [Twitter](https://twitter.com/jodastephen)
 - [Stack Overflow](https://stackoverflow.com/users/38896/jodastephen)
-- [Ohloh](https://www.ohloh.net/accounts/scolebourne)
+- [OpenHub](https://www.openhub.net/accounts/scolebourne)
 - [LinkedIn](https://www.linkedin.com/in/stephencolebourne)
 - Email - scolebourne at the domain name of this page
 
