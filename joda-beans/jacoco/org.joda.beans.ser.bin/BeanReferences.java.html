@@ -224,64 +224,67 @@ final class BeanReferences {
 <span class="fc" id="L224">                return;</span>
             }
 
-<span class="fc" id="L227">            ImmutableBean bean = (ImmutableBean) value;</span>
             // Don't need metaproperty info if it's a convertible type
-<span class="fc bfc" id="L229" title="All 2 branches covered.">            ClassInfo classInfo = isConvertible ?</span>
-<span class="fc" id="L230">                    new ClassInfo(value.getClass(), new MetaProperty&lt;?&gt;[0]) :</span>
-<span class="fc" id="L231">                    classInfoFromMetaBean(bean.metaBean());</span>
-
-<span class="fc" id="L233">            addClassInfoAndIncrementCount(bean.getClass(), classInfo);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">            if (isConvertible) {</span>
+<span class="fc" id="L229">                addClassInfoForEffectiveType(value);</span>
+            } else {
+<span class="fc" id="L231">                ClassInfo classInfo = classInfoFromMetaBean(((ImmutableBean) value).metaBean());</span>
+<span class="fc" id="L232">                addClassInfoAndIncrementCount(value.getClass(), classInfo);</span>
+            }
             
 <span class="fc bfc" id="L235" title="All 4 branches covered.">        } else if (declaredClass == Object.class &amp;&amp; !value.getClass().equals(String.class)) {</span>
-<span class="fc" id="L236">            Class&lt;?&gt; effectiveType = settings.getConverter().findTypedConverter(value.getClass()).getEffectiveType();</span>
-<span class="fc" id="L237">            ClassInfo classInfo = new ClassInfo(effectiveType, new MetaProperty&lt;?&gt;[0]);</span>
-<span class="fc" id="L238">            addClassInfoAndIncrementCount(effectiveType, classInfo);</span>
+<span class="fc" id="L236">            addClassInfoForEffectiveType(value);</span>
             
-<span class="fc bfc" id="L240" title="All 2 branches covered.">        } else if (!settings.getConverter().isConvertible(declaredClass)) {</span>
-<span class="fc" id="L241">            ClassInfo classInfo = new ClassInfo(value.getClass(), new MetaProperty&lt;?&gt;[0]);</span>
-<span class="fc" id="L242">            addClassInfoAndIncrementCount(value.getClass(), classInfo);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        } else if (!settings.getConverter().isConvertible(declaredClass)) {</span>
+<span class="fc" id="L239">            addClassInfoForEffectiveType(value);</span>
         }
-<span class="fc" id="L244">    }</span>
+<span class="fc" id="L241">    }</span>
+
+    private void addClassInfoForEffectiveType(Object value) {
+<span class="fc" id="L244">        Class&lt;?&gt; effectiveType = settings.getConverter().findTypedConverter(value.getClass()).getEffectiveType();</span>
+<span class="fc" id="L245">        ClassInfo classInfo = new ClassInfo(effectiveType, new MetaProperty&lt;?&gt;[0]);</span>
+<span class="fc" id="L246">        addClassInfoAndIncrementCount(effectiveType, classInfo);</span>
+<span class="fc" id="L247">    }</span>
 
     // adds the class, incrementing the number of times it is used
     private void addClassInfoAndIncrementCount(Class&lt;?&gt; type, ClassInfo classInfo) {
-<span class="fc" id="L248">        classes.putIfAbsent(type, classInfo);</span>
-<span class="fc" id="L249">        classSerializationCount.compute(type, BeanReferences::incrementOrOne);</span>
-<span class="fc" id="L250">    }</span>
+<span class="fc" id="L251">        classes.putIfAbsent(type, classInfo);</span>
+<span class="fc" id="L252">        classSerializationCount.compute(type, BeanReferences::incrementOrOne);</span>
+<span class="fc" id="L253">    }</span>
 
     // converts a meta-bean to a ClassInfo
     private ClassInfo classInfoFromMetaBean(MetaBean metaBean) {
-<span class="fc" id="L254">        MetaProperty&lt;?&gt;[] metaProperties = StreamSupport.stream(metaBean.metaPropertyIterable().spliterator(), false)</span>
-<span class="fc" id="L255">            .filter(metaProp -&gt; settings.isSerialized(metaProp))</span>
-<span class="fc" id="L256">            .toArray(MetaProperty&lt;?&gt;[]::new);</span>
+<span class="fc" id="L257">        MetaProperty&lt;?&gt;[] metaProperties = StreamSupport.stream(metaBean.metaPropertyIterable().spliterator(), false)</span>
+<span class="fc" id="L258">            .filter(metaProp -&gt; settings.isSerialized(metaProp))</span>
+<span class="fc" id="L259">            .toArray(MetaProperty&lt;?&gt;[]::new);</span>
 
         // Positions get recreated when all classes have been recorded
-<span class="fc" id="L259">        return new ClassInfo(metaBean.beanType(), metaProperties);</span>
+<span class="fc" id="L262">        return new ClassInfo(metaBean.beanType(), metaProperties);</span>
     }
 
     // Used in Map#compute so we can initialise all the values to one and then increment
     private static int incrementOrOne(@SuppressWarnings(&quot;unused&quot;) Object k, Integer i) {
-<span class="fc bfc" id="L264" title="All 2 branches covered.">        return i == null ? 1 : Math.addExact(i, 1);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        return i == null ? 1 : Math.addExact(i, 1);</span>
     }
 
     //-----------------------------------------------------------------------
     // gets the map of references
     Map&lt;Object, Ref&gt; getReferences() {
-<span class="fc" id="L270">        return refs;</span>
+<span class="fc" id="L273">        return refs;</span>
     }
     
     List&lt;ClassInfo&gt; getClassInfoList() {
-<span class="fc" id="L274">        return classInfoList;</span>
+<span class="fc" id="L277">        return classInfoList;</span>
     }
 
     // lookup the class info by type
     ClassInfo getClassInfo(Class&lt;?&gt; effectiveType) {
-<span class="fc" id="L279">        ClassInfo classInfo = classes.get(effectiveType);</span>
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        if (classInfo == null) {</span>
-<span class="nc" id="L281">            throw new IllegalStateException(</span>
-<span class="nc" id="L282">                    &quot;Tried to serialise class that wasn't present in bean on first pass: &quot; + effectiveType.getName());</span>
+<span class="fc" id="L282">        ClassInfo classInfo = classes.get(effectiveType);</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">        if (classInfo == null) {</span>
+<span class="nc" id="L284">            throw new IllegalStateException(</span>
+<span class="nc" id="L285">                    &quot;Tried to serialise class that wasn't present in bean on first pass: &quot; + effectiveType.getName());</span>
         }
-<span class="fc" id="L284">        return classInfo;</span>
+<span class="fc" id="L287">        return classInfo;</span>
     }
 
     // CSOFF
@@ -298,18 +301,18 @@ final class BeanReferences {
         // The position in the initial class definition list, lower means serialized more often
         int position;
 
-<span class="fc" id="L301">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
-<span class="fc" id="L302">            this.type = type;</span>
-<span class="fc" id="L303">            this.metaProperties = metaProperties;</span>
-<span class="fc" id="L304">            this.position = -1;</span>
-<span class="fc" id="L305">        }</span>
+<span class="fc" id="L304">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
+<span class="fc" id="L305">            this.type = type;</span>
+<span class="fc" id="L306">            this.metaProperties = metaProperties;</span>
+<span class="fc" id="L307">            this.position = -1;</span>
+<span class="fc" id="L308">        }</span>
 
         @Override
         public String toString() {
-<span class="nc" id="L309">            return &quot;ClassInfo{&quot; +</span>
+<span class="nc" id="L312">            return &quot;ClassInfo{&quot; +</span>
                     &quot;position=&quot; + position +
                     &quot;, type=&quot; + type +
-<span class="nc" id="L312">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
+<span class="nc" id="L315">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
                     '}';
         }
     }
@@ -320,18 +323,18 @@ final class BeanReferences {
         boolean hasBeenSerialized;
         final int position;
 
-<span class="fc" id="L323">        private Ref(boolean hasBeenSerialized, int position) {</span>
-<span class="fc" id="L324">            this.hasBeenSerialized = hasBeenSerialized;</span>
-<span class="fc" id="L325">            this.position = position;</span>
-<span class="fc" id="L326">        }</span>
+<span class="fc" id="L326">        private Ref(boolean hasBeenSerialized, int position) {</span>
+<span class="fc" id="L327">            this.hasBeenSerialized = hasBeenSerialized;</span>
+<span class="fc" id="L328">            this.position = position;</span>
+<span class="fc" id="L329">        }</span>
 
         void sent() {
-<span class="fc" id="L329">            hasBeenSerialized = true;</span>
-<span class="fc" id="L330">        }</span>
+<span class="fc" id="L332">            hasBeenSerialized = true;</span>
+<span class="fc" id="L333">        }</span>
 
         @Override
         public String toString() {
-<span class="nc" id="L334">            return &quot;Ref{&quot; +</span>
+<span class="nc" id="L337">            return &quot;Ref{&quot; +</span>
                     &quot;hasBeenSerialized=&quot; + hasBeenSerialized +
                     &quot;, position=&quot; + position +
                     '}';
