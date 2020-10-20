@@ -71,9 +71,13 @@ public final class BeanGenConfig {
      */
 <span class="nc" id="L72">    private String prefix = &quot;&quot;;</span>
     /**
+     * The end of line separator
+     */
+<span class="nc" id="L76">    private String eol = System.lineSeparator();</span>
+    /**
      * The default style to use.
      */
-<span class="nc" id="L76">    private String defaultStyle = &quot;smart&quot;;</span>
+<span class="nc" id="L80">    private String defaultStyle = &quot;smart&quot;;</span>
     /**
      * Whether to add the generated annotation.
      */
@@ -89,183 +93,183 @@ public final class BeanGenConfig {
      */
     public static BeanGenConfig parse(String resourceLocator) {
         String fullFile;
-<span class="nc bnc" id="L92" title="All 4 branches missed.">        if (resourceLocator.contains(&quot;/&quot;) || resourceLocator.endsWith(&quot;.ini&quot;)) {</span>
-<span class="nc" id="L93">            fullFile = resourceLocator;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        } else if (resourceLocator.equals(&quot;jdk6&quot;)) {  // compatibility</span>
-<span class="nc" id="L95">            fullFile = &quot;org/joda/beans/gen/jdk.ini&quot;;</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">        if (resourceLocator.contains(&quot;/&quot;) || resourceLocator.endsWith(&quot;.ini&quot;)) {</span>
+<span class="nc" id="L97">            fullFile = resourceLocator;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        } else if (resourceLocator.equals(&quot;jdk6&quot;)) {  // compatibility</span>
+<span class="nc" id="L99">            fullFile = &quot;org/joda/beans/gen/jdk.ini&quot;;</span>
         } else {
-<span class="nc" id="L97">            fullFile = &quot;org/joda/beans/gen/&quot; + resourceLocator + &quot;.ini&quot;;</span>
+<span class="nc" id="L101">            fullFile = &quot;org/joda/beans/gen/&quot; + resourceLocator + &quot;.ini&quot;;</span>
         }
-<span class="nc" id="L99">        ClassLoader loader = BeanGenConfig.class.getClassLoader();</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (loader == null) {</span>
-<span class="nc" id="L101">            throw new IllegalArgumentException(&quot;ClassLoader was null: &quot; + fullFile);</span>
+<span class="nc" id="L103">        ClassLoader loader = BeanGenConfig.class.getClassLoader();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (loader == null) {</span>
+<span class="nc" id="L105">            throw new IllegalArgumentException(&quot;ClassLoader was null: &quot; + fullFile);</span>
         }
-<span class="nc" id="L103">        URL url = loader.getResource(fullFile);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (url == null) {</span>
-<span class="nc" id="L105">            throw new IllegalArgumentException(&quot;Configuration file not found: &quot; + fullFile);</span>
+<span class="nc" id="L107">        URL url = loader.getResource(fullFile);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (url == null) {</span>
+<span class="nc" id="L109">            throw new IllegalArgumentException(&quot;Configuration file not found: &quot; + fullFile);</span>
         }
-<span class="nc" id="L107">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L108">        BufferedReader in = null;</span>
+<span class="nc" id="L111">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L112">        BufferedReader in = null;</span>
         try {
-<span class="nc" id="L110">            in = new BufferedReader(new InputStreamReader(url.openStream(), UTF8));</span>
-<span class="nc" id="L111">            String line = in.readLine();</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">            while (line != null) {</span>
-<span class="nc bnc" id="L113" title="All 4 branches missed.">                if (line.trim().startsWith(&quot;#&quot;) == false &amp;&amp; line.trim().length() &gt; 0) {</span>
-<span class="nc" id="L114">                    lines.add(line);</span>
+<span class="nc" id="L114">            in = new BufferedReader(new InputStreamReader(url.openStream(), UTF8));</span>
+<span class="nc" id="L115">            String line = in.readLine();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            while (line != null) {</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">                if (line.trim().startsWith(&quot;#&quot;) == false &amp;&amp; line.trim().length() &gt; 0) {</span>
+<span class="nc" id="L118">                    lines.add(line);</span>
                 }
-<span class="nc" id="L116">                line = in.readLine();</span>
+<span class="nc" id="L120">                line = in.readLine();</span>
             }
-<span class="nc" id="L118">            return parse(lines);</span>
-<span class="nc" id="L119">        } catch (IOException ex) {</span>
-<span class="nc" id="L120">            throw new RuntimeException(ex.getMessage(), ex);</span>
+<span class="nc" id="L122">            return parse(lines);</span>
+<span class="nc" id="L123">        } catch (IOException ex) {</span>
+<span class="nc" id="L124">            throw new RuntimeException(ex.getMessage(), ex);</span>
         } finally {
-<span class="nc bnc" id="L122" title="All 2 branches missed.">            if (in != null) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            if (in != null) {</span>
                 try {
-<span class="nc" id="L124">                    in.close();</span>
-<span class="nc" id="L125">                } catch (IOException ex1) {</span>
+<span class="nc" id="L128">                    in.close();</span>
+<span class="nc" id="L129">                } catch (IOException ex1) {</span>
                     // ignore
-<span class="nc" id="L127">                }</span>
+<span class="nc" id="L131">                }</span>
             }
         }
     }
 
     private static BeanGenConfig parse(List&lt;String&gt; lines) {
-<span class="nc" id="L133">        Map&lt;String, String&gt; immutableCopiers = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L134">        Map&lt;String, String&gt; mutableCopiers = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L135">        Map&lt;String, String&gt; immutableGetClones = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L136">        Map&lt;String, String&gt; immutableVarArgs = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L137">        Map&lt;String, String&gt; builderInits = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L138">        Map&lt;String, String&gt; builderTypes = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L139">        Set&lt;String&gt; invalidImmutableTypes = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">        for (ListIterator&lt;String&gt; iterator = lines.listIterator(); iterator.hasNext(); ) {</span>
-<span class="nc" id="L141">            String line = iterator.next().trim();</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">            if (line.equals(&quot;[immutable.builder.to.immutable]&quot;)) {</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L144">                    line = iterator.next().trim();</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
-<span class="nc" id="L146">                        iterator.previous();</span>
-<span class="nc" id="L147">                        break;</span>
+<span class="nc" id="L137">        Map&lt;String, String&gt; immutableCopiers = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L138">        Map&lt;String, String&gt; mutableCopiers = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L139">        Map&lt;String, String&gt; immutableGetClones = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L140">        Map&lt;String, String&gt; immutableVarArgs = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L141">        Map&lt;String, String&gt; builderInits = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L142">        Map&lt;String, String&gt; builderTypes = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L143">        Set&lt;String&gt; invalidImmutableTypes = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        for (ListIterator&lt;String&gt; iterator = lines.listIterator(); iterator.hasNext(); ) {</span>
+<span class="nc" id="L145">            String line = iterator.next().trim();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (line.equals(&quot;[immutable.builder.to.immutable]&quot;)) {</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L148">                    line = iterator.next().trim();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L150">                        iterator.previous();</span>
+<span class="nc" id="L151">                        break;</span>
                     }
-<span class="nc" id="L149">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L151">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L153">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L155">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L153">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L154">                    String value = line.substring(pos + 1).trim();</span>
-<span class="nc" id="L155">                    immutableCopiers.put(key, value);</span>
-<span class="nc" id="L156">                }</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.to.mutable]&quot;)) {</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L159">                    line = iterator.next().trim();</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
-<span class="nc" id="L161">                        iterator.previous();</span>
-<span class="nc" id="L162">                        break;</span>
+<span class="nc" id="L157">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L158">                    String value = line.substring(pos + 1).trim();</span>
+<span class="nc" id="L159">                    immutableCopiers.put(key, value);</span>
+<span class="nc" id="L160">                }</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.to.mutable]&quot;)) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L163">                    line = iterator.next().trim();</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L165">                        iterator.previous();</span>
+<span class="nc" id="L166">                        break;</span>
                     }
-<span class="nc" id="L164">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L166">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L168">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L170">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L168">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L169">                    String value = line.substring(pos + 1).trim();</span>
-<span class="nc" id="L170">                    mutableCopiers.put(key, value);</span>
-<span class="nc" id="L171">                }</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.invalid.type]&quot;)) {</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L174">                    line = iterator.next().trim();</span>
-<span class="nc" id="L175">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L177">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L172">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L173">                    String value = line.substring(pos + 1).trim();</span>
+<span class="nc" id="L174">                    mutableCopiers.put(key, value);</span>
+<span class="nc" id="L175">                }</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.invalid.type]&quot;)) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L178">                    line = iterator.next().trim();</span>
+<span class="nc" id="L179">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L181">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L179">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L180">                    invalidImmutableTypes.add(key);</span>
-<span class="nc" id="L181">                }</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.get.clone]&quot;)) {</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L184">                    line = iterator.next().trim();</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
-<span class="nc" id="L186">                        iterator.previous();</span>
-<span class="nc" id="L187">                        break;</span>
+<span class="nc" id="L183">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L184">                    invalidImmutableTypes.add(key);</span>
+<span class="nc" id="L185">                }</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.get.clone]&quot;)) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L188">                    line = iterator.next().trim();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L190">                        iterator.previous();</span>
+<span class="nc" id="L191">                        break;</span>
                     }
-<span class="nc" id="L189">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L191">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L193">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L195">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L193">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L194">                    String value = line.substring(pos + 1).trim();</span>
-<span class="nc bnc" id="L195" title="All 4 branches missed.">                    if (value.equals(&quot;clone&quot;) == false &amp;&amp; value.equals(&quot;cloneCast&quot;) == false) {</span>
-<span class="nc" id="L196">                        throw new IllegalArgumentException(&quot;Value for [immutable.get.clone] must be 'clone' or 'cloneCast'&quot;);</span>
+<span class="nc" id="L197">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L198">                    String value = line.substring(pos + 1).trim();</span>
+<span class="nc bnc" id="L199" title="All 4 branches missed.">                    if (value.equals(&quot;clone&quot;) == false &amp;&amp; value.equals(&quot;cloneCast&quot;) == false) {</span>
+<span class="nc" id="L200">                        throw new IllegalArgumentException(&quot;Value for [immutable.get.clone] must be 'clone' or 'cloneCast'&quot;);</span>
                     }
-<span class="nc" id="L198">                    immutableGetClones.put(key, value);</span>
-<span class="nc" id="L199">                }</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.varargs]&quot;)) {</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L202">                    line = iterator.next().trim();</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
-<span class="nc" id="L204">                        iterator.previous();</span>
-<span class="nc" id="L205">                        break;</span>
+<span class="nc" id="L202">                    immutableGetClones.put(key, value);</span>
+<span class="nc" id="L203">                }</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.varargs]&quot;)) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L206">                    line = iterator.next().trim();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L208">                        iterator.previous();</span>
+<span class="nc" id="L209">                        break;</span>
                     }
-<span class="nc" id="L207">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L209">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L211">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L213">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L211">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L212">                    String value = line.substring(pos + 1).trim();</span>
-<span class="nc" id="L213">                    immutableVarArgs.put(key, value);</span>
-<span class="nc" id="L214">                }</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.type]&quot;)) {</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L217">                    line = iterator.next().trim();</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
-<span class="nc" id="L219">                        iterator.previous();</span>
-<span class="nc" id="L220">                        break;</span>
+<span class="nc" id="L215">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L216">                    String value = line.substring(pos + 1).trim();</span>
+<span class="nc" id="L217">                    immutableVarArgs.put(key, value);</span>
+<span class="nc" id="L218">                }</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.type]&quot;)) {</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L221">                    line = iterator.next().trim();</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L223">                        iterator.previous();</span>
+<span class="nc" id="L224">                        break;</span>
                     }
-<span class="nc" id="L222">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L224">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L226">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L228">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L226">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L227">                    String value = line.substring(pos + 1).trim();</span>
-<span class="nc" id="L228">                    builderTypes.put(key, value);</span>
-<span class="nc" id="L229">                }</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.init]&quot;)) {</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
-<span class="nc" id="L232">                    line = iterator.next().trim();</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
-<span class="nc" id="L234">                        iterator.previous();</span>
-<span class="nc" id="L235">                        break;</span>
+<span class="nc" id="L230">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L231">                    String value = line.substring(pos + 1).trim();</span>
+<span class="nc" id="L232">                    builderTypes.put(key, value);</span>
+<span class="nc" id="L233">                }</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            } else if (line.equals(&quot;[immutable.builder.init]&quot;)) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L236">                    line = iterator.next().trim();</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">                    if (line.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L238">                        iterator.previous();</span>
+<span class="nc" id="L239">                        break;</span>
                     }
-<span class="nc" id="L237">                    int pos = line.indexOf('=');</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
-<span class="nc" id="L239">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
+<span class="nc" id="L241">                    int pos = line.indexOf('=');</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">                    if (pos &lt;= 0) {</span>
+<span class="nc" id="L243">                        throw new IllegalArgumentException(&quot;Invalid ini file line: &quot; + line);</span>
                     }
-<span class="nc" id="L241">                    String key = line.substring(0, pos).trim();</span>
-<span class="nc" id="L242">                    String value = line.substring(pos + 1).trim();</span>
-<span class="nc" id="L243">                    builderInits.put(key, value);</span>
-<span class="nc" id="L244">                }</span>
+<span class="nc" id="L245">                    String key = line.substring(0, pos).trim();</span>
+<span class="nc" id="L246">                    String value = line.substring(pos + 1).trim();</span>
+<span class="nc" id="L247">                    builderInits.put(key, value);</span>
+<span class="nc" id="L248">                }</span>
             } else {
-<span class="nc" id="L246">                throw new IllegalArgumentException(&quot;Invalid ini file section: &quot; + line);</span>
+<span class="nc" id="L250">                throw new IllegalArgumentException(&quot;Invalid ini file section: &quot; + line);</span>
             }
-<span class="nc" id="L248">        }</span>
+<span class="nc" id="L252">        }</span>
         // adjust to results
-<span class="nc" id="L250">        Map&lt;String, BuilderGen&gt; builderGenerators = new HashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">        for (Entry&lt;String, String&gt; entry : builderInits.entrySet()) {</span>
-<span class="nc" id="L252">            String type = builderTypes.get(entry.getKey());</span>
-<span class="nc bnc" id="L253" title="All 2 branches missed.">            if (type == null) {</span>
-<span class="nc" id="L254">                type = entry.getKey() + &quot;&lt;&gt;&quot;;</span>
+<span class="nc" id="L254">        Map&lt;String, BuilderGen&gt; builderGenerators = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">        for (Entry&lt;String, String&gt; entry : builderInits.entrySet()) {</span>
+<span class="nc" id="L256">            String type = builderTypes.get(entry.getKey());</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">            if (type == null) {</span>
+<span class="nc" id="L258">                type = entry.getKey() + &quot;&lt;&gt;&quot;;</span>
             }
-<span class="nc" id="L256">            builderGenerators.put(entry.getKey(), new BuilderGen.PatternBuilderGen(type, entry.getValue()));</span>
-<span class="nc" id="L257">        }</span>
-<span class="nc" id="L258">        Map&lt;String, CopyGen&gt; copyGenerators = new HashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L259" title="All 2 branches missed.">        for (Entry&lt;String, String&gt; entry : immutableCopiers.entrySet()) {</span>
-<span class="nc" id="L260">            String fieldType = entry.getKey();</span>
-<span class="nc" id="L261">            String immutableCopier = entry.getValue();</span>
-<span class="nc" id="L262">            String mutableCopier = mutableCopiers.get(fieldType);</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">            if (mutableCopier == null) {</span>
-<span class="nc" id="L264">                throw new IllegalArgumentException(&quot;[immutable.builder.to.immutable] and [immutable.builder.to.mutable] entries must match: &quot; + fieldType);</span>
+<span class="nc" id="L260">            builderGenerators.put(entry.getKey(), new BuilderGen.PatternBuilderGen(type, entry.getValue()));</span>
+<span class="nc" id="L261">        }</span>
+<span class="nc" id="L262">        Map&lt;String, CopyGen&gt; copyGenerators = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">        for (Entry&lt;String, String&gt; entry : immutableCopiers.entrySet()) {</span>
+<span class="nc" id="L264">            String fieldType = entry.getKey();</span>
+<span class="nc" id="L265">            String immutableCopier = entry.getValue();</span>
+<span class="nc" id="L266">            String mutableCopier = mutableCopiers.get(fieldType);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">            if (mutableCopier == null) {</span>
+<span class="nc" id="L268">                throw new IllegalArgumentException(&quot;[immutable.builder.to.immutable] and [immutable.builder.to.mutable] entries must match: &quot; + fieldType);</span>
             }
-<span class="nc" id="L266">            copyGenerators.put(fieldType, new CopyGen.PatternCopyGen(immutableCopier, mutableCopier));</span>
-<span class="nc" id="L267">        }</span>
-<span class="nc" id="L268">        return new BeanGenConfig(copyGenerators, builderGenerators, builderTypes, invalidImmutableTypes, immutableVarArgs, immutableGetClones);</span>
+<span class="nc" id="L270">            copyGenerators.put(fieldType, new CopyGen.PatternCopyGen(immutableCopier, mutableCopier));</span>
+<span class="nc" id="L271">        }</span>
+<span class="nc" id="L272">        return new BeanGenConfig(copyGenerators, builderGenerators, builderTypes, invalidImmutableTypes, immutableVarArgs, immutableGetClones);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -285,14 +289,14 @@ public final class BeanGenConfig {
             Map&lt;String, String&gt; builderTypes,
             Set&lt;String&gt; invalidImmutableTypes,
             Map&lt;String, String&gt; immutableVarArgs,
-<span class="nc" id="L288">            Map&lt;String, String&gt; immutableGetClones) {</span>
-<span class="nc" id="L289">        this.copyGenerators = copyGenerators;</span>
-<span class="nc" id="L290">        this.builderGenerators = builderGenerators;</span>
-<span class="nc" id="L291">        this.builderTypes = builderTypes;</span>
-<span class="nc" id="L292">        this.invalidImmutableTypes = invalidImmutableTypes;</span>
-<span class="nc" id="L293">        this.immutableVarArgs = immutableVarArgs;</span>
-<span class="nc" id="L294">        this.immutableGetClones = immutableGetClones;</span>
-<span class="nc" id="L295">    }</span>
+<span class="nc" id="L292">            Map&lt;String, String&gt; immutableGetClones) {</span>
+<span class="nc" id="L293">        this.copyGenerators = copyGenerators;</span>
+<span class="nc" id="L294">        this.builderGenerators = builderGenerators;</span>
+<span class="nc" id="L295">        this.builderTypes = builderTypes;</span>
+<span class="nc" id="L296">        this.invalidImmutableTypes = invalidImmutableTypes;</span>
+<span class="nc" id="L297">        this.immutableVarArgs = immutableVarArgs;</span>
+<span class="nc" id="L298">        this.immutableGetClones = immutableGetClones;</span>
+<span class="nc" id="L299">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -301,7 +305,7 @@ public final class BeanGenConfig {
      * @return the generators, not null
      */
     public Map&lt;String, CopyGen&gt; getCopyGenerators() {
-<span class="nc" id="L304">        return copyGenerators;</span>
+<span class="nc" id="L308">        return copyGenerators;</span>
     }
 
     /**
@@ -310,7 +314,7 @@ public final class BeanGenConfig {
      * @return the generators, not null
      */
     public Map&lt;String, BuilderGen&gt; getBuilderGenerators() {
-<span class="nc" id="L313">        return builderGenerators;</span>
+<span class="nc" id="L317">        return builderGenerators;</span>
     }
 
     /**
@@ -319,7 +323,7 @@ public final class BeanGenConfig {
      * @return the types, not null
      */
     public Map&lt;String, String&gt; getBuilderTypes() {
-<span class="nc" id="L322">        return builderTypes;</span>
+<span class="nc" id="L326">        return builderTypes;</span>
     }
 
     /**
@@ -328,7 +332,7 @@ public final class BeanGenConfig {
      * @return the invalid immutable types, not null
      */
     public Set&lt;String&gt; getInvalidImmutableTypes() {
-<span class="nc" id="L331">        return invalidImmutableTypes;</span>
+<span class="nc" id="L335">        return invalidImmutableTypes;</span>
     }
 
     /**
@@ -337,7 +341,7 @@ public final class BeanGenConfig {
      * @return the varargs, not null
      */
     public Map&lt;String, String&gt; getImmutableVarArgs() {
-<span class="nc" id="L340">        return immutableVarArgs;</span>
+<span class="nc" id="L344">        return immutableVarArgs;</span>
     }
 
     /**
@@ -346,7 +350,7 @@ public final class BeanGenConfig {
      * @return the types, not null
      */
     public Map&lt;String, String&gt; getImmutableGetClones() {
-<span class="nc" id="L349">        return immutableGetClones;</span>
+<span class="nc" id="L353">        return immutableGetClones;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -356,7 +360,7 @@ public final class BeanGenConfig {
      * @return the indent, not null
      */
     public String getIndent() {
-<span class="nc" id="L359">        return indent;</span>
+<span class="nc" id="L363">        return indent;</span>
     }
 
     /**
@@ -365,8 +369,8 @@ public final class BeanGenConfig {
      * @param indent  the indent to use, not null
      */
     public void setIndent(String indent) {
-<span class="nc" id="L368">        this.indent = indent;</span>
-<span class="nc" id="L369">    }</span>
+<span class="nc" id="L372">        this.indent = indent;</span>
+<span class="nc" id="L373">    }</span>
 
     /**
      * Gets the prefix to use.
@@ -374,7 +378,7 @@ public final class BeanGenConfig {
      * @return the prefix, not null
      */
     public String getPrefix() {
-<span class="nc" id="L377">        return prefix;</span>
+<span class="nc" id="L381">        return prefix;</span>
     }
 
     /**
@@ -383,8 +387,26 @@ public final class BeanGenConfig {
      * @param prefix  the prefix to use, not null
      */
     public void setPrefix(String prefix) {
-<span class="nc" id="L386">        this.prefix = prefix;</span>
-<span class="nc" id="L387">    }</span>
+<span class="nc" id="L390">        this.prefix = prefix;</span>
+<span class="nc" id="L391">    }</span>
+
+    /**
+     * Gets the end of line separator to use.
+     * 
+     * @return the end of line, not null
+     */
+    public String getEol() {
+<span class="nc" id="L399">        return eol;</span>
+    }
+
+    /**
+     * Sets the end of line separator to use.
+     * 
+     * @param eol  the end of line separator to use, not null
+     */
+    public void setEol(String eol) {
+<span class="nc" id="L408">        this.eol = eol;</span>
+<span class="nc" id="L409">    }</span>
 
     /**
      * Gets the default style to use.
@@ -392,7 +414,7 @@ public final class BeanGenConfig {
      * @return the default style, not null
      */
     public String getDefaultStyle() {
-<span class="nc" id="L395">        return defaultStyle;</span>
+<span class="nc" id="L417">        return defaultStyle;</span>
     }
 
     /**
@@ -401,8 +423,8 @@ public final class BeanGenConfig {
      * @param defaultStyle  the default style to use, not null
      */
     public void setDefaultStyle(String defaultStyle) {
-<span class="nc" id="L404">        this.defaultStyle = defaultStyle;</span>
-<span class="nc" id="L405">    }</span>
+<span class="nc" id="L426">        this.defaultStyle = defaultStyle;</span>
+<span class="nc" id="L427">    }</span>
 
     /**
      * Gets whether to add the generated annotation.
@@ -410,7 +432,7 @@ public final class BeanGenConfig {
      * @return whether to add the generated annotation, not null
      */
     public boolean isGeneratedAnno() {
-<span class="nc" id="L413">        return generatedAnno;</span>
+<span class="nc" id="L435">        return generatedAnno;</span>
     }
 
     /**
@@ -419,8 +441,8 @@ public final class BeanGenConfig {
      * @param generatedAnno  whether to add the generated annotation
      */
     public void setGeneratedAnno(boolean generatedAnno) {
-<span class="nc" id="L422">        this.generatedAnno = generatedAnno;</span>
-<span class="nc" id="L423">    }</span>
+<span class="nc" id="L444">        this.generatedAnno = generatedAnno;</span>
+<span class="nc" id="L445">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
