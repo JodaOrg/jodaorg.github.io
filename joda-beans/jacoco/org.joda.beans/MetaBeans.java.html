@@ -139,7 +139,7 @@ final class MetaBeans {
             }
         }
 <span class="fc" id="L141">        Class&lt;?&gt; superclass = cls.getSuperclass();</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (superclass.equals(Object.class)) {</span>
+<span class="fc bfc" id="L142" title="All 4 branches covered.">        if (superclass == null || superclass.equals(Object.class)) {</span>
 <span class="fc" id="L143">            return null;</span>
         }
 <span class="fc" id="L145">        return findProviderAnnotation(superclass);</span>
