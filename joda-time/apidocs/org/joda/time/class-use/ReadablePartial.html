@@ -209,6 +209,18 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></code></td>
+<td class="colLast"><span class="typeNameLabel">YearMonth.Property.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.Property.html#getReadablePartial--">getReadablePartial</a></span>()</code>
+<div class="block">Gets the partial that this property belongs to.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></code></td>
+<td class="colLast"><span class="typeNameLabel">MonthDay.Property.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.Property.html#getReadablePartial--">getReadablePartial</a></span>()</code>
+<div class="block">Gets the partial that this property belongs to.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></code></td>
 <td class="colLast"><span class="typeNameLabel">YearMonthDay.Property.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonthDay.Property.html#getReadablePartial--">getReadablePartial</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Gets the partial that this property belongs to.</div>
@@ -223,19 +235,7 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></code></td>
-<td class="colLast"><span class="typeNameLabel">YearMonth.Property.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.Property.html#getReadablePartial--">getReadablePartial</a></span>()</code>
-<div class="block">Gets the partial that this property belongs to.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Partial.Property.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Partial.Property.html#getReadablePartial--">getReadablePartial</a></span>()</code>
-<div class="block">Gets the partial that this property belongs to.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a></code></td>
-<td class="colLast"><span class="typeNameLabel">MonthDay.Property.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.Property.html#getReadablePartial--">getReadablePartial</a></span>()</code>
 <div class="block">Gets the partial that this property belongs to.</div>
 </td>
 </tr>
@@ -280,7 +280,7 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Compares this partial with another returning an integer
  indicating the order.</div>
 </td>
@@ -294,7 +294,7 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
+<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Compares this partial with another returning an integer
  indicating the order.</div>
 </td>
@@ -323,32 +323,32 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>abstract <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
               int&nbsp;fieldValue,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>abstract <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>abstract <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTimeField.html#getAsText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
          int&nbsp;fieldValue,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>abstract <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTimeField.html#getAsText-org.joda.time.ReadablePartial-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from a partial instant.</div>
 </td>
 </tr>
@@ -438,8 +438,8 @@ Provides printing and parsing support for instants and durations.</div>
 <td class="colLast"><span class="typeNameLabel">DateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-java.lang.String-java.util.Locale-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Sets a value in the milliseconds supplied from a human-readable, text value.</div>
 </td>
 </tr>
@@ -473,13 +473,20 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
-<div class="block">Returns a copy of this time with the partial set of fields replacing
- those from this instance.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
+<div class="block">Returns a copy of this datetime with the partial set of fields
+ replacing those from this instance.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
+<div class="block">Returns a copy of this date with the partial set of fields replacing
+ those from this instance.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
@@ -487,18 +494,11 @@ Provides printing and parsing support for instants and durations.</div>
  from this instance.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
-<div class="block">Returns a copy of this date with the partial set of fields replacing
- those from this instance.</div>
-</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
-<div class="block">Returns a copy of this datetime with the partial set of fields
- replacing those from this instance.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#withFields-org.joda.time.ReadablePartial-">withFields</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
+<div class="block">Returns a copy of this time with the partial set of fields replacing
+ those from this instance.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -679,24 +679,24 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">PartialConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/PartialConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="typeNameLabel">AbstractConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/AbstractConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
+                <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
                 <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono)</code>
 <div class="block">Extracts the values of the partial from an object of this converter's type.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/AbstractConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="typeNameLabel">PartialConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/PartialConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
+                <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
                 <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono)</code>
 <div class="block">Extracts the values of the partial from an object of this converter's type.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">PartialConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/PartialConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-org.joda.time.format.DateTimeFormatter-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="typeNameLabel">AbstractConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/AbstractConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-org.joda.time.format.DateTimeFormatter-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
+                <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
                 <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono,
                 <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;parser)</code>
 <div class="block">Extracts the values of the partial from an object of this converter's type.</div>
@@ -704,8 +704,8 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/AbstractConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-org.joda.time.format.DateTimeFormatter-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
-                <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="typeNameLabel">PartialConverter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/convert/PartialConverter.html#getPartialValues-org.joda.time.ReadablePartial-java.lang.Object-org.joda.time.Chronology-org.joda.time.format.DateTimeFormatter-">getPartialValues</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;fieldSource,
+                <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
                 <a href="../../../../org/joda/time/Chronology.html" title="class in org.joda.time">Chronology</a>&nbsp;chrono,
                 <a href="../../../../org/joda/time/format/DateTimeFormatter.html" title="class in org.joda.time.format">DateTimeFormatter</a>&nbsp;parser)</code>
 <div class="block">Extracts the values of the partial from an object of this converter's type.</div>
@@ -749,6 +749,15 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#add-org.joda.time.ReadablePartial-int-int:A-int-">add</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+   int&nbsp;fieldIndex,
+   int[]&nbsp;values,
+   int&nbsp;valueToAdd)</code>
+<div class="block">Always throws UnsupportedOperationException</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int[]</code></td>
 <td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#add-org.joda.time.ReadablePartial-int-int:A-int-">add</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
@@ -757,18 +766,25 @@ Provides printing and parsing support for instants and durations.</div>
  throwing an exception if the maximum size of the instant is reached.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int[]</code></td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#addWrapField-org.joda.time.ReadablePartial-int-int:A-int-">addWrapField</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+            int&nbsp;fieldIndex,
+            int[]&nbsp;values,
+            int&nbsp;valueToAdd)</code>&nbsp;</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#add-org.joda.time.ReadablePartial-int-int:A-int-">add</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-   int&nbsp;fieldIndex,
-   int[]&nbsp;values,
-   int&nbsp;valueToAdd)</code>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#addWrapField-org.joda.time.ReadablePartial-int-int:A-int-">addWrapField</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+            int&nbsp;fieldIndex,
+            int[]&nbsp;values,
+            int&nbsp;valueToAdd)</code>
 <div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#addWrapField-org.joda.time.ReadablePartial-int-int:A-int-">addWrapField</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#addWrapField-org.joda.time.ReadablePartial-int-int:A-int-">addWrapField</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
             int&nbsp;fieldIndex,
             int[]&nbsp;values,
             int&nbsp;valueToAdd)</code>&nbsp;</td>
@@ -785,28 +801,21 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#addWrapField-org.joda.time.ReadablePartial-int-int:A-int-">addWrapField</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-            int&nbsp;fieldIndex,
-            int[]&nbsp;values,
-            int&nbsp;valueToAdd)</code>
-<div class="block">Always throws UnsupportedOperationException</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#addWrapField-org.joda.time.ReadablePartial-int-int:A-int-">addWrapField</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-            int&nbsp;fieldIndex,
-            int[]&nbsp;values,
-            int&nbsp;valueToAdd)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int[]</code></td>
 <td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#addWrapPartial-org.joda.time.ReadablePartial-int-int:A-int-">addWrapPartial</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
               int&nbsp;fieldIndex,
               int[]&nbsp;values,
               int&nbsp;valueToAdd)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>int[]</code></td>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#addWrapPartial-org.joda.time.ReadablePartial-int-int:A-int-">addWrapPartial</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+              int&nbsp;fieldIndex,
+              int[]&nbsp;values,
+              int&nbsp;valueToAdd)</code>
+<div class="block">Always throws UnsupportedOperationException</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
 <td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#addWrapPartial-org.joda.time.ReadablePartial-int-int:A-int-">addWrapPartial</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
               int&nbsp;fieldIndex,
@@ -816,112 +825,116 @@ Provides printing and parsing support for instants and durations.</div>
  wrapping the whole partial if the maximum size of the partial is reached.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#addWrapPartial-org.joda.time.ReadablePartial-int-int:A-int-">addWrapPartial</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-              int&nbsp;fieldIndex,
-              int[]&nbsp;values,
-              int&nbsp;valueToAdd)</code>
-<div class="block">Always throws UnsupportedOperationException</div>
-</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
-<div class="block">Compare this field to the same field on another partial instant.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Compare this field to the same field on another partial instant.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#compareTo-org.joda.time.ReadablePartial-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
+<div class="block">Compare this field to the same field on another partial instant.</div>
+</td>
+</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
               int&nbsp;fieldValue,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-              int&nbsp;fieldValue,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
-<div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
               int&nbsp;fieldValue,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+              int&nbsp;fieldValue,
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsShortText-org.joda.time.ReadablePartial-java.util.Locale-">getAsShortText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+              <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<div class="block">Get the human-readable, short text value of this field from a partial instant.</div>
+</td>
+</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getAsText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
          int&nbsp;fieldValue,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-         int&nbsp;fieldValue,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
-<div class="block">Get the human-readable, text value of this field from a partial instant.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getAsText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
          int&nbsp;fieldValue,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getAsText-org.joda.time.ReadablePartial-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsText-org.joda.time.ReadablePartial-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsText-org.joda.time.ReadablePartial-int-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+         int&nbsp;fieldValue,
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Get the human-readable, text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getAsText-org.joda.time.ReadablePartial-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getAsText-org.joda.time.ReadablePartial-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-         <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Always throws UnsupportedOperationException</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getAsText-org.joda.time.ReadablePartial-java.util.Locale-">getAsText</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+         <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<div class="block">Get the human-readable, text value of this field from a partial instant.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
+<div class="block">Always throws UnsupportedOperationException</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
+<div class="block">Get the maximum value for the field, which is one more than the wrapped
+ field's maximum value.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -931,21 +944,23 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
-<div class="block">Always throws UnsupportedOperationException</div>
-</td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-int:A-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+               int[]&nbsp;values)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
-<div class="block">Get the maximum value for the field, which is one more than the wrapped
- field's maximum value.</div>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-int:A-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+               int[]&nbsp;values)</code>
+<div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-int:A-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-               int[]&nbsp;values)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-int:A-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+               int[]&nbsp;values)</code>
+<div class="block">Get the maximum value for the field, which is one more than the wrapped
+ field's maximum value.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -957,22 +972,19 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-int:A-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-               int[]&nbsp;values)</code>
-<div class="block">Always throws UnsupportedOperationException</div>
-</td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMaximumValue-org.joda.time.ReadablePartial-int:A-">getMaximumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-               int[]&nbsp;values)</code>
-<div class="block">Get the maximum value for the field, which is one more than the wrapped
- field's maximum value.</div>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
+<div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
+<div class="block">Always returns 1.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -982,20 +994,22 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
-<div class="block">Always throws UnsupportedOperationException</div>
-</td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-int:A-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+               int[]&nbsp;values)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant)</code>
-<div class="block">Always returns 1.</div>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-int:A-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+               int[]&nbsp;values)</code>
+<div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-int:A-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-               int[]&nbsp;values)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-int:A-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+               int[]&nbsp;values)</code>
+<div class="block">Always returns 1.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -1003,20 +1017,6 @@ Provides printing and parsing support for instants and durations.</div>
                int[]&nbsp;values)</code>
 <div class="block">Get the minimum value for this field using the partial instant and
  the specified values.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-int:A-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-               int[]&nbsp;values)</code>
-<div class="block">Always throws UnsupportedOperationException</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getMinimumValue-org.joda.time.ReadablePartial-int:A-">getMinimumValue</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-               int[]&nbsp;values)</code>
-<div class="block">Always returns 1.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -1028,15 +1028,6 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-int-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-   int&nbsp;fieldIndex,
-   int[]&nbsp;values,
-   int&nbsp;newValue)</code>
-<div class="block">Sets a value using the specified partial instant.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>int[]</code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-int-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
@@ -1044,32 +1035,41 @@ Provides printing and parsing support for instants and durations.</div>
 <div class="block">Always throws UnsupportedOperationException</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>int[]</code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-int-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
+   int&nbsp;fieldIndex,
+   int[]&nbsp;values,
+   int&nbsp;newValue)</code>
+<div class="block">Sets a value using the specified partial instant.</div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
 <td class="colLast"><span class="typeNameLabel">DelegatedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-java.lang.String-java.util.Locale-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>int[]</code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-java.lang.String-java.util.Locale-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
-   int&nbsp;fieldIndex,
-   int[]&nbsp;values,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
-<div class="block">Sets a value in the milliseconds supplied from a human-readable, text value.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>int[]</code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-java.lang.String-java.util.Locale-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
    int&nbsp;fieldIndex,
    int[]&nbsp;values,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Always throws UnsupportedOperationException</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int[]</code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#set-org.joda.time.ReadablePartial-int-int:A-java.lang.String-java.util.Locale-">set</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;instant,
+   int&nbsp;fieldIndex,
+   int[]&nbsp;values,
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
+   <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<div class="block">Sets a value in the milliseconds supplied from a human-readable, text value.</div>
 </td>
 </tr>
 </tbody>
@@ -1087,52 +1087,52 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#print-org.joda.time.ReadablePartial-">print</a></span>(<a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Prints a ReadablePartial to a new String.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.Appendable-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.Appendable-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
        <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Prints a ReadablePartial.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Prints a ReadablePartial.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimePrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePartial-java.util.Locale-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">DateTimePrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePartial-java.util.Locale-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+       <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Prints a ReadablePartial.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuilder-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuilder-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Prints a ReadablePartial.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.io.Writer-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.io.Writer-org.joda.time.ReadablePartial-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
        <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial)</code>
 <div class="block">Prints a ReadablePartial.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimePrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo-java.io.Writer-org.joda.time.ReadablePartial-java.util.Locale-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
+<td class="colLast"><span class="typeNameLabel">DateTimePrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimePrinter.html#printTo-java.io.Writer-org.joda.time.ReadablePartial-java.util.Locale-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
        <a href="../../../../org/joda/time/ReadablePartial.html" title="interface in org.joda.time">ReadablePartial</a>&nbsp;partial,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+       <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Prints a ReadablePartial.</div>
 </td>
 </tr>

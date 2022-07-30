@@ -257,13 +257,13 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Period.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Period.html#parse-java.lang.String-">parse</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</code>
+<td class="colLast"><span class="typeNameLabel">Period.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Period.html#parse-java.lang.String-">parse</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</code>
 <div class="block">Parses a <code>Period</code> from the specified string.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Period.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Period.html#parse-java.lang.String-org.joda.time.format.PeriodFormatter-">parse</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
+<td class="colLast"><span class="typeNameLabel">Period.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Period.html#parse-java.lang.String-org.joda.time.format.PeriodFormatter-">parse</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
      <a href="../../../../org/joda/time/format/PeriodFormatter.html" title="class in org.joda.time.format">PeriodFormatter</a>&nbsp;formatter)</code>
 <div class="block">Parses a <code>Period</code> from the specified string using a formatter.</div>
 </td>
@@ -337,22 +337,22 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#toPeriod--">toPeriod</a></span>()</code>
-<div class="block">Converts the duration of the interval to a period using the
- standard period type.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
 <td class="colLast"><span class="typeNameLabel">ReadableDuration.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableDuration.html#toPeriod--">toPeriod</a></span>()</code>
 <div class="block">Converts this duration to a Period instance using the standard period type
  and the ISO chronology.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
 <td class="colLast"><span class="typeNameLabel">ReadablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadablePeriod.html#toPeriod--">toPeriod</a></span>()</code>
 <div class="block">Get this period as an immutable <code>Period</code> object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
+<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#toPeriod--">toPeriod</a></span>()</code>
+<div class="block">Converts the duration of the interval to a period using the
+ standard period type.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -466,7 +466,7 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractPeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/base/AbstractPeriod.html#toPeriod--">toPeriod</a></span>()</code>
+<td class="colLast"><span class="typeNameLabel">BaseSingleFieldPeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/base/BaseSingleFieldPeriod.html#toPeriod--">toPeriod</a></span>()</code>
 <div class="block">Get this period as an immutable <code>Period</code> object.</div>
 </td>
 </tr>
@@ -479,15 +479,15 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseSingleFieldPeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/base/BaseSingleFieldPeriod.html#toPeriod--">toPeriod</a></span>()</code>
-<div class="block">Get this period as an immutable <code>Period</code> object.</div>
+<td class="colLast"><span class="typeNameLabel">AbstractDuration.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/base/AbstractDuration.html#toPeriod--">toPeriod</a></span>()</code>
+<div class="block">Converts this duration to a Period instance using the standard period type
+ and the ISO chronology.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractDuration.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/base/AbstractDuration.html#toPeriod--">toPeriod</a></span>()</code>
-<div class="block">Converts this duration to a Period instance using the standard period type
- and the ISO chronology.</div>
+<td class="colLast"><span class="typeNameLabel">AbstractPeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/base/AbstractPeriod.html#toPeriod--">toPeriod</a></span>()</code>
+<div class="block">Get this period as an immutable <code>Period</code> object.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -567,7 +567,7 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
-<td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#parsePeriod-java.lang.String-">parsePeriod</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
+<td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#parsePeriod-java.lang.String-">parsePeriod</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
 <div class="block">Parses a period from the given text, returning a new Period.</div>
 </td>
 </tr>

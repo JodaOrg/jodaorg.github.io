@@ -207,7 +207,7 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutablePeriod.html#add-org.joda.time.ReadablePeriod-">add</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<td class="colLast"><span class="typeNameLabel">ReadWritablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritablePeriod.html#add-org.joda.time.ReadablePeriod-">add</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Adds a period to this one by adding each field in turn.</div>
 </td>
 </tr>
@@ -219,14 +219,14 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritablePeriod.html#add-org.joda.time.ReadablePeriod-">add</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Adds a period to this one by adding each field in turn.</div>
+<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#add-org.joda.time.ReadablePeriod-">add</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Adds a period to this instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#add-org.joda.time.ReadablePeriod-">add</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Adds a period to this instant.</div>
+<td class="colLast"><span class="typeNameLabel">MutablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutablePeriod.html#add-org.joda.time.ReadablePeriod-">add</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Adds a period to this one by adding each field in turn.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -273,42 +273,54 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/YearMonth.html" title="class in org.joda.time">YearMonth</a></code></td>
+<td class="colLast"><span class="typeNameLabel">YearMonth.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this year-month with the specified period taken away.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTime.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this datetime with the specified period taken away.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/MonthDay.html" title="class in org.joda.time">MonthDay</a></code></td>
+<td class="colLast"><span class="typeNameLabel">MonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this month-day with the specified period taken away.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Period.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Period.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Returns a new period with the specified period subtracted.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this datetime with the specified period taken away.</div>
+</td>
+</tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this date with the specified period taken away.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/YearMonthDay.html" title="class in org.joda.time">YearMonthDay</a></code></td>
 <td class="colLast"><span class="typeNameLabel">YearMonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonthDay.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Returns a copy of this date with the specified period taken away.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a></code></td>
 <td class="colLast"><span class="typeNameLabel">TimeOfDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/TimeOfDay.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Returns a copy of this time with the specified period taken away,
  wrapping to what would be a new day if required.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/YearMonth.html" title="class in org.joda.time">YearMonth</a></code></td>
-<td class="colLast"><span class="typeNameLabel">YearMonth.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this year-month with the specified period taken away.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTime.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this datetime with the specified period taken away.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this time with the specified period taken away.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -319,66 +331,66 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this date with the specified period taken away.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Partial.html" title="class in org.joda.time">Partial</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Partial.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Partial.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Gets a copy of this instance with the specified period take away.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this time with the specified period taken away.</div>
+</td>
+</tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/MonthDay.html" title="class in org.joda.time">MonthDay</a></code></td>
-<td class="colLast"><span class="typeNameLabel">MonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this month-day with the specified period taken away.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/YearMonth.html" title="class in org.joda.time">YearMonth</a></code></td>
+<td class="colLast"><span class="typeNameLabel">YearMonth.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this year-month with the specified period added.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#minus-org.joda.time.ReadablePeriod-">minus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this datetime with the specified period taken away.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTime.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this datetime with the specified period added.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/MonthDay.html" title="class in org.joda.time">MonthDay</a></code></td>
+<td class="colLast"><span class="typeNameLabel">MonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this month-day with the specified period added.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Period.html" title="class in org.joda.time">Period</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Period.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Period.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Returns a new period with the specified period added.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this datetime with the specified period added.</div>
+</td>
+</tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this date with the specified period added.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/YearMonthDay.html" title="class in org.joda.time">YearMonthDay</a></code></td>
 <td class="colLast"><span class="typeNameLabel">YearMonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonthDay.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Returns a copy of this date with the specified period added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a></code></td>
 <td class="colLast"><span class="typeNameLabel">TimeOfDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/TimeOfDay.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Returns a copy of this time with the specified period added,
  wrapping to what would be a new day if required.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/YearMonth.html" title="class in org.joda.time">YearMonth</a></code></td>
-<td class="colLast"><span class="typeNameLabel">YearMonth.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this year-month with the specified period added.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DateTime.html" title="class in org.joda.time">DateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateTime.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this datetime with the specified period added.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this time with the specified period added.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -389,38 +401,26 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this date with the specified period added.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/Partial.html" title="class in org.joda.time">Partial</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Partial.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Partial.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Gets a copy of this instance with the specified period added.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/MonthDay.html" title="class in org.joda.time">MonthDay</a></code></td>
-<td class="colLast"><span class="typeNameLabel">MonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this month-day with the specified period added.</div>
-</td>
-</tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
-<div class="block">Returns a copy of this datetime with the specified period added.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#plus-org.joda.time.ReadablePeriod-">plus</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<div class="block">Returns a copy of this time with the specified period added.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutablePeriod.html#setPeriod-org.joda.time.ReadablePeriod-">setPeriod</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<td class="colLast"><span class="typeNameLabel">ReadWritablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritablePeriod.html#setPeriod-org.joda.time.ReadablePeriod-">setPeriod</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Sets all the fields in one go from another ReadablePeriod.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritablePeriod.html#setPeriod-org.joda.time.ReadablePeriod-">setPeriod</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
+<td class="colLast"><span class="typeNameLabel">MutablePeriod.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutablePeriod.html#setPeriod-org.joda.time.ReadablePeriod-">setPeriod</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Sets all the fields in one go from another ReadablePeriod.</div>
 </td>
 </tr>
@@ -493,23 +493,6 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/YearMonthDay.html" title="class in org.joda.time">YearMonthDay</a></code></td>
-<td class="colLast"><span class="typeNameLabel">YearMonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonthDay.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-               int&nbsp;scalar)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Returns a copy of this date with the specified period added.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a></code></td>
-<td class="colLast"><span class="typeNameLabel">TimeOfDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/TimeOfDay.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-               int&nbsp;scalar)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Returns a copy of this time with the specified period added,
- wrapping to what would be a new day if required.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/YearMonth.html" title="class in org.joda.time">YearMonth</a></code></td>
 <td class="colLast"><span class="typeNameLabel">YearMonth.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonth.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
                int&nbsp;scalar)</code>
@@ -524,35 +507,6 @@ Provides printing and parsing support for instants and durations.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-               int&nbsp;scalar)</code>
-<div class="block">Returns a copy of this time with the specified period added.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-               int&nbsp;scalar)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Returns a copy of this date with the specified period added.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-               int&nbsp;scalar)</code>
-<div class="block">Returns a copy of this date with the specified period added.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/Partial.html" title="class in org.joda.time">Partial</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Partial.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Partial.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-               int&nbsp;scalar)</code>
-<div class="block">Gets a copy of this Partial with the specified period added.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/MonthDay.html" title="class in org.joda.time">MonthDay</a></code></td>
 <td class="colLast"><span class="typeNameLabel">MonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MonthDay.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
                int&nbsp;scalar)</code>
@@ -564,6 +518,52 @@ Provides printing and parsing support for instants and durations.</div>
 <td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
                int&nbsp;scalar)</code>
 <div class="block">Returns a copy of this datetime with the specified period added.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDate.html" title="class in org.joda.time">LocalDate</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDate.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDate.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+               int&nbsp;scalar)</code>
+<div class="block">Returns a copy of this date with the specified period added.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/YearMonthDay.html" title="class in org.joda.time">YearMonthDay</a></code></td>
+<td class="colLast"><span class="typeNameLabel">YearMonthDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/YearMonthDay.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+               int&nbsp;scalar)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Returns a copy of this date with the specified period added.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/TimeOfDay.html" title="class in org.joda.time">TimeOfDay</a></code></td>
+<td class="colLast"><span class="typeNameLabel">TimeOfDay.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/TimeOfDay.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+               int&nbsp;scalar)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Returns a copy of this time with the specified period added,
+ wrapping to what would be a new day if required.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+               int&nbsp;scalar)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Returns a copy of this date with the specified period added.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/Partial.html" title="class in org.joda.time">Partial</a></code></td>
+<td class="colLast"><span class="typeNameLabel">Partial.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/Partial.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+               int&nbsp;scalar)</code>
+<div class="block">Gets a copy of this Partial with the specified period added.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalTime.html" title="class in org.joda.time">LocalTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalTime.html#withPeriodAdded-org.joda.time.ReadablePeriod-int-">withPeriodAdded</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
+               int&nbsp;scalar)</code>
+<div class="block">Returns a copy of this time with the specified period added.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -775,7 +775,7 @@ Provides printing and parsing support for instants and durations.</div>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="typeNameLabel">PeriodPrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodPrinter.html#calculatePrintedLength-org.joda.time.ReadablePeriod-java.util.Locale-">calculatePrintedLength</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-                      <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+                      <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Returns the exact number of characters produced for the given period.</div>
 </td>
 </tr>
@@ -783,44 +783,44 @@ Provides printing and parsing support for instants and durations.</div>
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="typeNameLabel">PeriodPrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodPrinter.html#countFieldsToPrint-org.joda.time.ReadablePeriod-int-java.util.Locale-">countFieldsToPrint</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
                   int&nbsp;stopAt,
-                  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+                  <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Returns the amount of fields from the given period that this printer
  will print.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#print-org.joda.time.ReadablePeriod-">print</a></span>(<a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Prints a ReadablePeriod to a new String.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePeriod-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePeriod-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Prints a ReadablePeriod to a StringBuffer.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">PeriodPrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodPrinter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePeriod-java.util.Locale-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">PeriodPrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodPrinter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadablePeriod-java.util.Locale-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+       <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Prints a ReadablePeriod to a StringBuffer.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#printTo-java.io.Writer-org.joda.time.ReadablePeriod-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
+<td class="colLast"><span class="typeNameLabel">PeriodFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodFormatter.html#printTo-java.io.Writer-org.joda.time.ReadablePeriod-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
        <a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period)</code>
 <div class="block">Prints a ReadablePeriod to a Writer.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">PeriodPrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodPrinter.html#printTo-java.io.Writer-org.joda.time.ReadablePeriod-java.util.Locale-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
+<td class="colLast"><span class="typeNameLabel">PeriodPrinter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/PeriodPrinter.html#printTo-java.io.Writer-org.joda.time.ReadablePeriod-java.util.Locale-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
        <a href="../../../../org/joda/time/ReadablePeriod.html" title="interface in org.joda.time">ReadablePeriod</a>&nbsp;period,
-       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+       <a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Prints a ReadablePeriod to a Writer.</div>
 </td>
 </tr>

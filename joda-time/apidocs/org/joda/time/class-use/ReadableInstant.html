@@ -250,28 +250,28 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isAfter-org.joda.time.ReadableInstant-">isAfter</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
-<div class="block">Is this time interval after the specified instant.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">ReadableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInstant.html#isAfter-org.joda.time.ReadableInstant-">isAfter</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Is this instant after the instant passed in
  comparing solely by millisecond.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isBefore-org.joda.time.ReadableInstant-">isBefore</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
-<div class="block">Is this time interval before the specified instant.</div>
+<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isAfter-org.joda.time.ReadableInstant-">isAfter</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<div class="block">Is this time interval after the specified instant.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">ReadableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInstant.html#isBefore-org.joda.time.ReadableInstant-">isBefore</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Is this instant before the instant passed in
  comparing solely by millisecond.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isBefore-org.joda.time.ReadableInstant-">isBefore</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<div class="block">Is this time interval before the specified instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -839,13 +839,13 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Compare this field to the same field on another instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Compare this field to the same field on another instant.</div>
 </td>
 </tr>
@@ -878,35 +878,35 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#print-org.joda.time.ReadableInstant-">print</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Prints a ReadableInstant to a String.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.Appendable-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.Appendable-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
        <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Prints a ReadableInstant, using the chronology supplied by the instant.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuffer-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuffer.html?is-external=true" title="class or interface in java.lang">StringBuffer</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Prints a ReadableInstant, using the chronology supplied by the instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuilder-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;buf,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.lang.StringBuilder-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;buf,
        <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Prints a ReadableInstant, using the chronology supplied by the instant.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.io.Writer-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
+<td class="colLast"><span class="typeNameLabel">DateTimeFormatter.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/format/DateTimeFormatter.html#printTo-java.io.Writer-org.joda.time.ReadableInstant-">printTo</a></span>(<a href="https://docs.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</a>&nbsp;out,
        <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Prints a ReadableInstant, using the chronology supplied by the instant.</div>
 </td>
