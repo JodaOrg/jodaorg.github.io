@@ -71,7 +71,7 @@ public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;
      * @return the meta-property, not null
      */
     public static &lt;R&gt; StandaloneMetaProperty&lt;R&gt; of(String propertyName, MetaBean metaBean, Class&lt;R&gt; clazz, Type type) {
-<span class="nc" id="L74">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, type);</span>
+<span class="fc" id="L74">        return new StandaloneMetaProperty&lt;&gt;(propertyName, metaBean, clazz, type);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -107,7 +107,7 @@ public final class StandaloneMetaProperty&lt;P&gt; extends BasicMetaProperty&lt;
 
     @Override
     public Class&lt;?&gt; declaringType() {
-<span class="nc" id="L110">        return metaBean().beanType();</span>
+<span class="fc" id="L110">        return metaBean().beanType();</span>
     }
 
     @Override

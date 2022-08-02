@@ -357,60 +357,77 @@ class JodaBeanReferencingBinReader extends AbstractBinReader {
 <span class="fc bfc" id="L357" title="All 2 branches covered.">        if (Bean.class.isAssignableFrom(effectiveType)) {</span>
 <span class="fc bfc" id="L358" title="All 2 branches covered.">            if (isArray(typeByte)) {</span>
 <span class="fc" id="L359">                int arraySize = acceptArray(typeByte);</span>
-<span class="fc" id="L360">                return parseBean(arraySize, classMap.get(effectiveType));</span>
+<span class="fc" id="L360">                ClassInfo classInfo = classMap.computeIfAbsent(effectiveType, this::lookupClassInfo);</span>
+<span class="fc" id="L361">                return parseBean(arraySize, classInfo);</span>
             } else {
-<span class="fc" id="L362">                return parseSimple(typeByte, effectiveType);</span>
+<span class="fc" id="L363">                return parseSimple(typeByte, effectiveType);</span>
             }
         } else {
-<span class="fc bfc" id="L365" title="All 4 branches covered.">            if (isMap(typeByte) || isArray(typeByte)) {</span>
-<span class="fc" id="L366">                SerIterable childIterable = null;</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">                if (metaType != null) {</span>
-<span class="fc" id="L368">                    childIterable = settings.getIteratorFactory().createIterable(metaType, settings, null);</span>
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">                } else if (metaProp != null) {</span>
-<span class="fc" id="L370">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">                } else if (parentIterable != null) {</span>
-<span class="nc" id="L372">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
+<span class="fc bfc" id="L366" title="All 4 branches covered.">            if (isMap(typeByte) || isArray(typeByte)) {</span>
+<span class="fc" id="L367">                SerIterable childIterable = null;</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">                if (metaType != null) {</span>
+<span class="fc" id="L369">                    childIterable = settings.getIteratorFactory().createIterable(metaType, settings, null);</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">                } else if (metaProp != null) {</span>
+<span class="fc" id="L371">                    childIterable = settings.getIteratorFactory().createIterable(metaProp, beanType);</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">                } else if (parentIterable != null) {</span>
+<span class="nc" id="L373">                    childIterable = settings.getIteratorFactory().createIterable(parentIterable);</span>
                 }
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">                if (childIterable == null) {</span>
-<span class="nc" id="L375">                    throw new IllegalArgumentException(&quot;Invalid binary data: Invalid metaType: &quot; + metaType);</span>
+<span class="pc bpc" id="L375" title="1 of 2 branches missed.">                if (childIterable == null) {</span>
+<span class="nc" id="L376">                    throw new IllegalArgumentException(&quot;Invalid binary data: Invalid metaType: &quot; + metaType);</span>
                 }
-<span class="fc" id="L377">                return parseIterable(typeByte, childIterable);</span>
+<span class="fc" id="L378">                return parseIterable(typeByte, childIterable);</span>
             } else {
-<span class="fc" id="L379">                return parseSimple(typeByte, effectiveType);</span>
+<span class="fc" id="L380">                return parseSimple(typeByte, effectiveType);</span>
             }
         }
     }
 
+    // looks up information of classes that are not known upfront, e.g. are used by custom de-serializers
+    private ClassInfo lookupClassInfo(Class&lt;?&gt; type) {
+<span class="fc" id="L387">        SerDeserializer deser = settings.getDeserializers().findDeserializer(type);</span>
+<span class="fc" id="L388">        MetaBean metaBean = deser.findMetaBean(type);</span>
+<span class="pc bpc" id="L389" title="1 of 2 branches missed.">        if (metaBean == null) {</span>
+<span class="nc" id="L390">            throw new RuntimeException(&quot;Could not find type: &quot; + type.getName());</span>
+        }
+<span class="fc" id="L392">        int propertyCount = metaBean.metaPropertyCount();</span>
+<span class="fc" id="L393">        MetaProperty&lt;?&gt;[] metaProperties = new MetaProperty[propertyCount];</span>
+<span class="fc" id="L394">        int i = 0;</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">        for (MetaProperty&lt;?&gt; metaProperty : metaBean.metaPropertyIterable()) {</span>
+<span class="fc" id="L396">            metaProperties[i++] = metaProperty;</span>
+<span class="fc" id="L397">        }</span>
+<span class="fc" id="L398">        return new ClassInfo(type, metaProperties);</span>
+    }
+
     private Object parseBean(Class&lt;?&gt; declaredType, boolean rootType, ClassInfo classInfo, int arraySize) {
-<span class="fc bfc" id="L385" title="All 2 branches covered.">        if (rootType) {</span>
-<span class="pc bpc" id="L386" title="1 of 2 branches missed.">            if (Bean.class.isAssignableFrom(classInfo.type) == false) {</span>
-<span class="nc" id="L387">                throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + classInfo.type.getName());</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">        if (rootType) {</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">            if (Bean.class.isAssignableFrom(classInfo.type) == false) {</span>
+<span class="nc" id="L404">                throw new IllegalArgumentException(&quot;Root type is not a Joda-Bean: &quot; + classInfo.type.getName());</span>
             }
-<span class="fc" id="L389">            overrideBasePackage = classInfo.type.getPackage().getName() + &quot;.&quot;;</span>
+<span class="fc" id="L406">            overrideBasePackage = classInfo.type.getPackage().getName() + &quot;.&quot;;</span>
         }
-<span class="pc bpc" id="L391" title="1 of 2 branches missed.">        if (declaredType.isAssignableFrom(classInfo.type) == false) {</span>
-<span class="nc" id="L392">            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + classInfo.type.getName());</span>
+<span class="pc bpc" id="L408" title="1 of 2 branches missed.">        if (declaredType.isAssignableFrom(classInfo.type) == false) {</span>
+<span class="nc" id="L409">            throw new IllegalArgumentException(&quot;Specified type is incompatible with declared type: &quot; + declaredType.getName() + &quot; and &quot; + classInfo.type.getName());</span>
         }
-<span class="fc" id="L394">        return parseBean(arraySize - 1, classInfo);</span>
+<span class="fc" id="L411">        return parseBean(arraySize - 1, classInfo);</span>
     }
 
     //-----------------------------------------------------------------------
     private boolean isIntExtension(int typeByte) {
-<span class="pc bpc" id="L399" title="2 of 6 branches missed.">        return typeByte == MsgPack.FIX_EXT_1 || typeByte == MsgPack.FIX_EXT_2 || typeByte == MsgPack.FIX_EXT_4;</span>
+<span class="pc bpc" id="L416" title="2 of 6 branches missed.">        return typeByte == MsgPack.FIX_EXT_1 || typeByte == MsgPack.FIX_EXT_2 || typeByte == MsgPack.FIX_EXT_4;</span>
     }
 
     private int acceptIntExtension(int typeByte) throws IOException {
-<span class="pc bpc" id="L403" title="1 of 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_1) {</span>
-<span class="fc" id="L404">            return input.readUnsignedByte();</span>
+<span class="pc bpc" id="L420" title="1 of 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_1) {</span>
+<span class="fc" id="L421">            return input.readUnsignedByte();</span>
         }
-<span class="nc bnc" id="L406" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_2) {</span>
-<span class="nc" id="L407">            return input.readUnsignedShort();</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_2) {</span>
+<span class="nc" id="L424">            return input.readUnsignedShort();</span>
         }
-<span class="nc bnc" id="L409" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_4) {</span>
-<span class="nc" id="L410">            return input.readInt();</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">        if (typeByte == MsgPack.FIX_EXT_4) {</span>
+<span class="nc" id="L427">            return input.readInt();</span>
         }
-<span class="nc" id="L412">        throw new IllegalArgumentException(</span>
-<span class="nc" id="L413">                &quot;Invalid binary data: Expected int extension type, but was: 0x&quot; + toHex(typeByte));</span>
+<span class="nc" id="L429">        throw new IllegalArgumentException(</span>
+<span class="nc" id="L430">                &quot;Invalid binary data: Expected int extension type, but was: 0x&quot; + toHex(typeByte));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -423,16 +440,16 @@ class JodaBeanReferencingBinReader extends AbstractBinReader {
         // The metaproperties (empty if not a bean) in the order in which they need to be serialized
         private final MetaProperty&lt;?&gt;[] metaProperties;
 
-<span class="fc" id="L426">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
-<span class="fc" id="L427">            this.type = type;</span>
-<span class="fc" id="L428">            this.metaProperties = metaProperties;</span>
-<span class="fc" id="L429">        }</span>
+<span class="fc" id="L443">        private ClassInfo(Class&lt;?&gt; type, MetaProperty&lt;?&gt;[] metaProperties) {</span>
+<span class="fc" id="L444">            this.type = type;</span>
+<span class="fc" id="L445">            this.metaProperties = metaProperties;</span>
+<span class="fc" id="L446">        }</span>
 
         @Override
         public String toString() {
-<span class="nc" id="L433">            return &quot;ClassInfo{&quot; +</span>
+<span class="nc" id="L450">            return &quot;ClassInfo{&quot; +</span>
                     &quot;type=&quot; + type +
-<span class="nc" id="L435">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
+<span class="nc" id="L452">                    &quot;, metaProperties=&quot; + Arrays.toString(metaProperties) +</span>
                     '}';
         }
     }
