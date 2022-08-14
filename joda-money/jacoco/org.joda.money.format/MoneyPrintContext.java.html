@@ -36,8 +36,9 @@ public final class MoneyPrintContext {
      * @param locale  the locale, not null
      */
 <span class="fc" id="L38">    MoneyPrintContext(Locale locale) {</span>
-<span class="fc" id="L39">        this.locale = locale;</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L39">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L40">        this.locale = locale;</span>
+<span class="fc" id="L41">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -46,7 +47,7 @@ public final class MoneyPrintContext {
      * @return the locale, never null
      */
     public Locale getLocale() {
-<span class="fc" id="L49">        return locale;</span>
+<span class="fc" id="L50">        return locale;</span>
     }
 
     /**
@@ -55,9 +56,9 @@ public final class MoneyPrintContext {
      * @param locale  the locale, not null
      */
     public void setLocale(Locale locale) {
-<span class="nc" id="L58">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
-<span class="nc" id="L59">        this.locale = locale;</span>
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L59">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="nc" id="L60">        this.locale = locale;</span>
+<span class="nc" id="L61">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

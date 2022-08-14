@@ -31,7 +31,7 @@ import org.joda.money.Money;
  * &lt;p&gt;
  * This class is immutable and thread-safe.
  */
-<span class="pc bpc" id="L34" title="1 of 2 branches missed.">public final class MoneyFormatter implements Serializable {</span>
+public final class MoneyFormatter implements Serializable {
 
     /**
      * Serialization version.
@@ -70,13 +70,15 @@ import org.joda.money.Money;
      * @param parsers  the parsers, not null
      */
 <span class="fc" id="L72">    MoneyFormatter(Locale locale, MoneyPrinter[] printers, MoneyParser[] parsers) {</span>
-<span class="pc bpc" id="L73" title="2 of 4 branches missed.">        assert locale != null;</span>
-<span class="pc bpc" id="L74" title="2 of 4 branches missed.">        assert printers != null;</span>
-<span class="pc bpc" id="L75" title="2 of 4 branches missed.">        assert parsers != null;</span>
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">        assert printers.length == parsers.length;</span>
-<span class="fc" id="L77">        this.locale = locale;</span>
-<span class="fc" id="L78">        this.printerParser = new MultiPrinterParser(printers, parsers);</span>
-<span class="fc" id="L79">    }</span>
+<span class="fc" id="L73">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L74">        MoneyFormatter.checkNotNull(printers, &quot;Printers must not be null&quot;);</span>
+<span class="fc" id="L75">        MoneyFormatter.checkNotNull(parsers, &quot;Parsers must not be null&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (printers.length != parsers.length) {</span>
+<span class="nc" id="L77">            throw new IllegalArgumentException(&quot;Printers and parsers must match&quot;);</span>
+        }
+<span class="fc" id="L79">        this.locale = locale;</span>
+<span class="fc" id="L80">        this.printerParser = new MultiPrinterParser(printers, parsers);</span>
+<span class="fc" id="L81">    }</span>
 
     /**
      * Constructor, creating a new formatter.
@@ -84,12 +86,12 @@ import org.joda.money.Money;
      * @param locale  the locale to use, not null
      * @param printerParser  the printer/parser, not null
      */
-<span class="fc" id="L87">    private MoneyFormatter(Locale locale, MultiPrinterParser printerParser) {</span>
-<span class="pc bpc" id="L88" title="2 of 4 branches missed.">        assert locale != null;</span>
-<span class="pc bpc" id="L89" title="2 of 4 branches missed.">        assert printerParser != null;</span>
-<span class="fc" id="L90">        this.locale = locale;</span>
-<span class="fc" id="L91">        this.printerParser = printerParser;</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L89">    private MoneyFormatter(Locale locale, MultiPrinterParser printerParser) {</span>
+<span class="fc" id="L90">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L91">        MoneyFormatter.checkNotNull(printerParser, &quot;PrinterParser must not be null&quot;);</span>
+<span class="fc" id="L92">        this.locale = locale;</span>
+<span class="fc" id="L93">        this.printerParser = printerParser;</span>
+<span class="fc" id="L94">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -98,7 +100,7 @@ import org.joda.money.Money;
      * @return the printer/parser, never null
      */
     MultiPrinterParser getPrinterParser() {
-<span class="fc" id="L101">        return printerParser;</span>
+<span class="fc" id="L103">        return printerParser;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -108,7 +110,7 @@ import org.joda.money.Money;
      * @return the locale, never null
      */
     public Locale getLocale() {
-<span class="fc" id="L111">        return locale;</span>
+<span class="fc" id="L113">        return locale;</span>
     }
 
     /**
@@ -121,8 +123,8 @@ import org.joda.money.Money;
      * @return the new instance, never null
      */
     public MoneyFormatter withLocale(Locale locale) {
-<span class="fc" id="L124">        checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
-<span class="fc" id="L125">        return new MoneyFormatter(locale, printerParser);</span>
+<span class="fc" id="L126">        checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L127">        return new MoneyFormatter(locale, printerParser);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -135,19 +137,19 @@ import org.joda.money.Money;
      * @return true if the formatter can print
      */
     public boolean isPrinter() {
-<span class="fc" id="L138">        return printerParser.isPrinter();</span>
+<span class="fc" id="L140">        return printerParser.isPrinter();</span>
     }
 
     /**
      * Checks whether this formatter can parse.
      * &lt;p&gt;
      * If the formatter cannot parse, an UnsupportedOperationException will
-     * be thrown from the print methods.
+     * be thrown from the parse methods.
      * 
      * @return true if the formatter can parse
      */
     public boolean isParser() {
-<span class="fc" id="L150">        return printerParser.isParser();</span>
+<span class="fc" id="L152">        return printerParser.isParser();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -160,9 +162,9 @@ import org.joda.money.Money;
      * @throws MoneyFormatException if there is a problem while printing
      */
     public String print(BigMoneyProvider moneyProvider) {
-<span class="fc" id="L163">        StringBuilder buf = new StringBuilder();</span>
-<span class="fc" id="L164">        print(buf, moneyProvider);</span>
-<span class="fc" id="L165">        return buf.toString();</span>
+<span class="fc" id="L165">        StringBuilder buf = new StringBuilder();</span>
+<span class="fc" id="L166">        print(buf, moneyProvider);</span>
+<span class="fc" id="L167">        return buf.toString();</span>
     }
 
     /**
@@ -180,11 +182,11 @@ import org.joda.money.Money;
      */
     public void print(Appendable appendable, BigMoneyProvider moneyProvider) {
         try {
-<span class="fc" id="L183">            printIO(appendable, moneyProvider);</span>
-<span class="fc" id="L184">        } catch (IOException ex) {</span>
-<span class="fc" id="L185">            throw new MoneyFormatException(ex.getMessage(), ex);</span>
-<span class="fc" id="L186">        }</span>
-<span class="fc" id="L187">    }</span>
+<span class="fc" id="L185">            printIO(appendable, moneyProvider);</span>
+<span class="fc" id="L186">        } catch (IOException ex) {</span>
+<span class="fc" id="L187">            throw new MoneyFormatException(ex.getMessage(), ex);</span>
+<span class="fc" id="L188">        }</span>
+<span class="fc" id="L189">    }</span>
 
     /**
      * Prints a monetary value to an {@code Appendable} potentially
@@ -201,15 +203,15 @@ import org.joda.money.Money;
      * @throws IOException if an IO error occurs
      */
     public void printIO(Appendable appendable, BigMoneyProvider moneyProvider) throws IOException {
-<span class="fc" id="L204">        checkNotNull(moneyProvider, &quot;BigMoneyProvider must not be null&quot;);</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (isPrinter() == false) {</span>
-<span class="fc" id="L206">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to print&quot;);</span>
+<span class="fc" id="L206">        checkNotNull(moneyProvider, &quot;BigMoneyProvider must not be null&quot;);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (isPrinter() == false) {</span>
+<span class="fc" id="L208">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to print&quot;);</span>
         }
         
-<span class="fc" id="L209">        BigMoney money = BigMoney.of(moneyProvider);</span>
-<span class="fc" id="L210">        MoneyPrintContext context = new MoneyPrintContext(locale);</span>
-<span class="fc" id="L211">        printerParser.print(context, appendable, money);</span>
-<span class="fc" id="L212">    }</span>
+<span class="fc" id="L211">        BigMoney money = BigMoney.of(moneyProvider);</span>
+<span class="fc" id="L212">        MoneyPrintContext context = new MoneyPrintContext(locale);</span>
+<span class="fc" id="L213">        printerParser.print(context, appendable, money);</span>
+<span class="fc" id="L214">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -225,19 +227,19 @@ import org.joda.money.Money;
      * @throws MoneyFormatException if there is a problem while parsing
      */
     public BigMoney parseBigMoney(CharSequence text) {
-<span class="fc" id="L228">        checkNotNull(text, &quot;Text must not be null&quot;);</span>
-<span class="fc" id="L229">        MoneyParseContext result = parse(text, 0);</span>
-<span class="fc bfc" id="L230" title="All 6 branches covered.">        if (result.isError() || result.isFullyParsed() == false || result.isComplete() == false) {</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">            String str = (text.length() &gt; 64 ? text.subSequence(0, 64).toString() + &quot;...&quot; : text.toString());</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">            if (result.isError()) {</span>
-<span class="fc" id="L233">                throw new MoneyFormatException(&quot;Text could not be parsed at index &quot; + result.getErrorIndex() + &quot;: &quot; + str);</span>
-<span class="fc bfc" id="L234" title="All 2 branches covered.">            } else if (result.isFullyParsed() == false) {</span>
-<span class="fc" id="L235">                throw new MoneyFormatException(&quot;Unparsed text found at index &quot; + result.getIndex() + &quot;: &quot; + str);</span>
+<span class="fc" id="L230">        checkNotNull(text, &quot;Text must not be null&quot;);</span>
+<span class="fc" id="L231">        MoneyParseContext result = parse(text, 0);</span>
+<span class="fc bfc" id="L232" title="All 6 branches covered.">        if (result.isError() || result.isFullyParsed() == false || result.isComplete() == false) {</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            String str = (text.length() &gt; 64 ? text.subSequence(0, 64).toString() + &quot;...&quot; : text.toString());</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">            if (result.isError()) {</span>
+<span class="fc" id="L235">                throw new MoneyFormatException(&quot;Text could not be parsed at index &quot; + result.getErrorIndex() + &quot;: &quot; + str);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">            } else if (result.isFullyParsed() == false) {</span>
+<span class="fc" id="L237">                throw new MoneyFormatException(&quot;Unparsed text found at index &quot; + result.getIndex() + &quot;: &quot; + str);</span>
             } else {
-<span class="fc" id="L237">                throw new MoneyFormatException(&quot;Parsing did not find both currency and amount: &quot; + str);</span>
+<span class="fc" id="L239">                throw new MoneyFormatException(&quot;Parsing did not find both currency and amount: &quot; + str);</span>
             }
         }
-<span class="fc" id="L240">        return result.toBigMoney();</span>
+<span class="fc" id="L242">        return result.toBigMoney();</span>
     }
 
     /**
@@ -255,7 +257,7 @@ import org.joda.money.Money;
      * @throws ArithmeticException if the scale of the parsed money exceeds the scale of the currency
      */
     public Money parseMoney(CharSequence text) {
-<span class="fc" id="L258">        return parseBigMoney(text).toMoney();</span>
+<span class="fc" id="L260">        return parseBigMoney(text).toMoney();</span>
     }
 
     /**
@@ -273,16 +275,16 @@ import org.joda.money.Money;
      * @throws UnsupportedOperationException if this formatter cannot parse
      */
     public MoneyParseContext parse(CharSequence text, int startIndex) {
-<span class="fc" id="L276">        checkNotNull(text, &quot;Text must not be null&quot;);</span>
-<span class="fc bfc" id="L277" title="All 4 branches covered.">        if (startIndex &lt; 0 || startIndex &gt; text.length()) {</span>
-<span class="fc" id="L278">            throw new StringIndexOutOfBoundsException(&quot;Invalid start index: &quot; + startIndex);</span>
+<span class="fc" id="L278">        checkNotNull(text, &quot;Text must not be null&quot;);</span>
+<span class="fc bfc" id="L279" title="All 4 branches covered.">        if (startIndex &lt; 0 || startIndex &gt; text.length()) {</span>
+<span class="fc" id="L280">            throw new StringIndexOutOfBoundsException(&quot;Invalid start index: &quot; + startIndex);</span>
         }
-<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (isParser() == false) {</span>
-<span class="fc" id="L281">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to parse&quot;);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        if (isParser() == false) {</span>
+<span class="fc" id="L283">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to parse&quot;);</span>
         }
-<span class="fc" id="L283">        MoneyParseContext context = new MoneyParseContext(locale, text, startIndex);</span>
-<span class="fc" id="L284">        printerParser.parse(context);</span>
-<span class="fc" id="L285">        return context;</span>
+<span class="fc" id="L285">        MoneyParseContext context = new MoneyParseContext(locale, text, startIndex);</span>
+<span class="fc" id="L286">        printerParser.parse(context);</span>
+<span class="fc" id="L287">        return context;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -293,7 +295,7 @@ import org.joda.money.Money;
      */
     @Override
     public String toString() {
-<span class="fc" id="L296">        return printerParser.toString();</span>
+<span class="fc" id="L298">        return printerParser.toString();</span>
     }
 
 }
