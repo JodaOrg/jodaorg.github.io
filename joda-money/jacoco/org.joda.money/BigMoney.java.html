@@ -42,7 +42,7 @@ import org.joda.convert.ToString;
  * &lt;p&gt;
  * This class is immutable and thread-safe.
  */
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyProvider&gt;, Serializable {</span>
+public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyProvider&gt;, Serializable {
 
     /**
      * The serialisation version.
@@ -401,8 +401,8 @@ import org.joda.convert.ToString;
      * @param amount  the amount of money, not null
      */
 <span class="fc" id="L403">    BigMoney(CurrencyUnit currency, BigDecimal amount) {</span>
-<span class="pc bpc" id="L404" title="1 of 4 branches missed.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
-<span class="pc bpc" id="L405" title="1 of 4 branches missed.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
 <span class="fc" id="L406">        this.currency = currency;</span>
 <span class="fc bfc" id="L407" title="All 2 branches covered.">        this.amount = (amount.scale() &lt; 0 ? amount.setScale(0) : amount);</span>
 <span class="fc" id="L408">    }</span>
@@ -1706,4 +1706,4 @@ import org.joda.convert.ToString;
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

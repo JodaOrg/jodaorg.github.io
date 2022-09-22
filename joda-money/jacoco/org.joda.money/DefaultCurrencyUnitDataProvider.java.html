@@ -65,57 +65,59 @@ import java.util.regex.Pattern;
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if (in == null) {</span>
 <span class="nc" id="L66">                throw new FileNotFoundException(&quot;Data file &quot; + fileName + &quot; not found&quot;);</span>
             }
-<span class="fc" id="L68">            BufferedReader reader = new BufferedReader(new InputStreamReader(in, &quot;UTF-8&quot;));</span>
-            String line;
-<span class="fc" id="L70">            List&lt;String&gt; content = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">            while ((line = reader.readLine()) != null) {</span>
-<span class="fc" id="L72">                content.add(line);</span>
+<span class="fc" id="L68">            try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, &quot;UTF-8&quot;))) {</span>
+                String line;
+<span class="fc" id="L70">                List&lt;String&gt; content = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L72">                    content.add(line);</span>
+                }
+<span class="fc" id="L74">                return content;</span>
             }
-<span class="fc" id="L74">            return content;</span>
         }
     }
 
     // loads a file
     private List&lt;String&gt; loadFromFiles(String fileName) throws Exception {
-<span class="fc" id="L80">        List&lt;String&gt; content = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L81">        Enumeration&lt;URL&gt; en = getClass().getClassLoader().getResources(fileName);</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        while (en.hasMoreElements()) {</span>
-<span class="fc" id="L83">            URL url = (URL) en.nextElement();</span>
-<span class="fc" id="L84">            try (InputStream in = url.openStream()) {</span>
-<span class="fc" id="L85">                BufferedReader reader = new BufferedReader(new InputStreamReader(in, &quot;UTF-8&quot;));</span>
-                String line;
-<span class="fc bfc" id="L87" title="All 2 branches covered.">                while ((line = reader.readLine()) != null) {</span>
-<span class="fc" id="L88">                    content.add(line);</span>
+<span class="fc" id="L81">        List&lt;String&gt; content = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L82">        Enumeration&lt;URL&gt; en = getClass().getClassLoader().getResources(fileName);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        while (en.hasMoreElements()) {</span>
+<span class="fc" id="L84">            URL url = (URL) en.nextElement();</span>
+<span class="fc" id="L85">            try (InputStream in = url.openStream()) {</span>
+<span class="fc" id="L86">                try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, &quot;UTF-8&quot;))) {</span>
+                    String line;
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                    while ((line = reader.readLine()) != null) {</span>
+<span class="fc" id="L89">                        content.add(line);</span>
+                    }
                 }
             }
-<span class="fc" id="L91">        }</span>
-<span class="fc" id="L92">        return content;</span>
+<span class="fc" id="L93">        }</span>
+<span class="fc" id="L94">        return content;</span>
     }
 
     // parse the currencies
     private void parseCurrencies(List&lt;String&gt; content) throws Exception {
-<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (String line : content) {</span>
-<span class="fc" id="L98">            Matcher matcher = CURRENCY_REGEX_LINE.matcher(line);</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">            if (matcher.matches()) {</span>
-<span class="fc" id="L100">                String currencyCode = matcher.group(1);</span>
-<span class="fc" id="L101">                int numericCode = Integer.parseInt(matcher.group(2));</span>
-<span class="fc" id="L102">                int digits = Integer.parseInt(matcher.group(3));</span>
-<span class="fc" id="L103">                registerCurrency(currencyCode, numericCode, digits);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (String line : content) {</span>
+<span class="fc" id="L100">            Matcher matcher = CURRENCY_REGEX_LINE.matcher(line);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L102">                String currencyCode = matcher.group(1);</span>
+<span class="fc" id="L103">                int numericCode = Integer.parseInt(matcher.group(2));</span>
+<span class="fc" id="L104">                int digits = Integer.parseInt(matcher.group(3));</span>
+<span class="fc" id="L105">                registerCurrency(currencyCode, numericCode, digits);</span>
             }
-<span class="fc" id="L105">        }</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L107">        }</span>
+<span class="fc" id="L108">    }</span>
 
     // parse the countries
     private void parseCountries(List&lt;String&gt; content) throws Exception {
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (String line : content) {</span>
-<span class="fc" id="L111">            Matcher matcher = COUNTRY_REGEX_LINE.matcher(line);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">            if (matcher.matches()) {</span>
-<span class="fc" id="L113">                String countryCode = matcher.group(1);</span>
-<span class="fc" id="L114">                String currencyCode = matcher.group(2);</span>
-<span class="fc" id="L115">                registerCountry(countryCode, currencyCode);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        for (String line : content) {</span>
+<span class="fc" id="L113">            Matcher matcher = COUNTRY_REGEX_LINE.matcher(line);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L115">                String countryCode = matcher.group(1);</span>
+<span class="fc" id="L116">                String currencyCode = matcher.group(2);</span>
+<span class="fc" id="L117">                registerCountry(countryCode, currencyCode);</span>
             }
-<span class="fc" id="L117">        }</span>
-<span class="fc" id="L118">    }</span>
+<span class="fc" id="L119">        }</span>
+<span class="fc" id="L120">    }</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

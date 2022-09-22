@@ -47,7 +47,7 @@ import org.joda.convert.ToString;
  * &lt;p&gt;
  * This class is immutable and thread-safe.
  */
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">public final class CurrencyUnit implements Comparable&lt;CurrencyUnit&gt;, Serializable {</span>
+public final class CurrencyUnit implements Comparable&lt;CurrencyUnit&gt;, Serializable {
 
     /**
      * The serialisation version.
@@ -441,7 +441,7 @@ import org.joda.convert.ToString;
      * @param decimalPlaces  the decimal places, not null
      */
 <span class="fc" id="L443">    CurrencyUnit(String code, short numericCode, short decimalPlaces) {</span>
-<span class="pc bpc" id="L444" title="1 of 4 branches missed.">        assert code != null : &quot;Joda-Money bug: Currency code must not be null&quot;;</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">        assert code != null : &quot;Joda-Money bug: Currency code must not be null&quot;;</span>
 <span class="fc" id="L445">        this.code = code;</span>
 <span class="fc" id="L446">        this.numericCode = numericCode;</span>
 <span class="fc" id="L447">        this.decimalPlaces = decimalPlaces;</span>
@@ -659,4 +659,4 @@ import org.joda.convert.ToString;
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
