@@ -94,8 +94,8 @@ import org.joda.convert.ToString;
 <span class="fc" id="L94">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
 <span class="fc" id="L95">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
 <span class="fc" id="L96">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc" id="L97">        amount = amount.setScale(currency.getDecimalPlaces(), roundingMode);</span>
-<span class="fc" id="L98">        return new Money(BigMoney.of(currency, amount));</span>
+<span class="fc" id="L97">        BigDecimal scaledAmount = amount.setScale(currency.getDecimalPlaces(), roundingMode);</span>
+<span class="fc" id="L98">        return new Money(BigMoney.of(currency, scaledAmount));</span>
     }
 
     //-----------------------------------------------------------------------

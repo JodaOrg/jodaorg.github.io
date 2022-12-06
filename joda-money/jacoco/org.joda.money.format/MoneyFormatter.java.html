@@ -207,7 +207,7 @@ public final class MoneyFormatter implements Serializable {
 <span class="fc bfc" id="L207" title="All 2 branches covered.">        if (isPrinter() == false) {</span>
 <span class="fc" id="L208">            throw new UnsupportedOperationException(&quot;MoneyFomatter has not been configured to be able to print&quot;);</span>
         }
-        
+
 <span class="fc" id="L211">        BigMoney money = BigMoney.of(moneyProvider);</span>
 <span class="fc" id="L212">        MoneyPrintContext context = new MoneyPrintContext(locale);</span>
 <span class="fc" id="L213">        printerParser.print(context, appendable, money);</span>

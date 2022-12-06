@@ -78,17 +78,18 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
     public static BigMoney of(CurrencyUnit currency, BigDecimal amount) {
 <span class="fc" id="L79">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
 <span class="fc" id="L80">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (amount.getClass() != BigDecimal.class) {</span>
-<span class="fc" id="L82">            BigInteger value = amount.unscaledValue();</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (value == null) {</span>
-<span class="fc" id="L84">                throw new IllegalArgumentException(&quot;Illegal BigDecimal subclass&quot;);</span>
+<span class="fc" id="L81">        BigDecimal checkedAmount = amount;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (amount.getClass() != BigDecimal.class) {</span>
+<span class="fc" id="L83">            BigInteger value = amount.unscaledValue();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">            if (value == null) {</span>
+<span class="fc" id="L85">                throw new IllegalArgumentException(&quot;Illegal BigDecimal subclass&quot;);</span>
             }
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">            if (value.getClass() != BigInteger.class) {</span>
-<span class="fc" id="L87">                value = new BigInteger(value.toString());</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            if (value.getClass() != BigInteger.class) {</span>
+<span class="fc" id="L88">                value = new BigInteger(value.toString());</span>
             }
-<span class="fc" id="L89">            amount = new BigDecimal(value, amount.scale());</span>
+<span class="fc" id="L90">            checkedAmount = new BigDecimal(value, amount.scale());</span>
         }
-<span class="fc" id="L91">        return new BigMoney(currency, amount);</span>
+<span class="fc" id="L92">        return new BigMoney(currency, checkedAmount);</span>
     }
 
     /**
@@ -109,8 +110,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance, never null
      */
     public static BigMoney of(CurrencyUnit currency, double amount) {
-<span class="fc" id="L112">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
-<span class="fc" id="L113">        return BigMoney.of(currency, BigDecimal.valueOf(amount).stripTrailingZeros());</span>
+<span class="fc" id="L113">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
+<span class="fc" id="L114">        return BigMoney.of(currency, BigDecimal.valueOf(amount).stripTrailingZeros());</span>
     }
 
     //-----------------------------------------------------------------------
@@ -129,7 +130,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the scale exceeds the currency scale
      */
     public static BigMoney ofScale(CurrencyUnit currency, BigDecimal amount, int scale) {
-<span class="fc" id="L132">        return BigMoney.ofScale(currency, amount, scale, RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L133">        return BigMoney.ofScale(currency, amount, scale, RoundingMode.UNNECESSARY);</span>
     }
 
     /**
@@ -149,11 +150,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public static BigMoney ofScale(CurrencyUnit currency, BigDecimal amount, int scale, RoundingMode roundingMode) {
-<span class="fc" id="L152">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc" id="L153">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
-<span class="fc" id="L154">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc" id="L155">        amount = amount.setScale(scale, roundingMode);</span>
-<span class="fc" id="L156">        return BigMoney.of(currency, amount);</span>
+<span class="fc" id="L153">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L154">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
+<span class="fc" id="L155">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc" id="L156">        BigDecimal scaledAmount = amount.setScale(scale, roundingMode);</span>
+<span class="fc" id="L157">        return BigMoney.of(currency, scaledAmount);</span>
     }
 
     /**
@@ -171,8 +172,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance, never null
      */
     public static BigMoney ofScale(CurrencyUnit currency, long unscaledAmount, int scale) {
-<span class="fc" id="L174">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
-<span class="fc" id="L175">        return BigMoney.of(currency, BigDecimal.valueOf(unscaledAmount, scale));</span>
+<span class="fc" id="L175">        MoneyUtils.checkNotNull(currency, &quot;Currency must not be null&quot;);</span>
+<span class="fc" id="L176">        return BigMoney.of(currency, BigDecimal.valueOf(unscaledAmount, scale));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -191,8 +192,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance, never null
      */
     public static BigMoney ofMajor(CurrencyUnit currency, long amountMajor) {
-<span class="fc" id="L194">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc" id="L195">        return BigMoney.of(currency, BigDecimal.valueOf(amountMajor));</span>
+<span class="fc" id="L195">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L196">        return BigMoney.of(currency, BigDecimal.valueOf(amountMajor));</span>
     }
 
     /**
@@ -211,8 +212,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance, never null
      */
     public static BigMoney ofMinor(CurrencyUnit currency, long amountMinor) {
-<span class="fc" id="L214">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc" id="L215">        return BigMoney.of(currency, BigDecimal.valueOf(amountMinor, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L215">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L216">        return BigMoney.of(currency, BigDecimal.valueOf(amountMinor, currency.getDecimalPlaces()));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -226,7 +227,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the instance representing zero, never null
      */
     public static BigMoney zero(CurrencyUnit currency) {
-<span class="fc" id="L229">        return BigMoney.of(currency, BigDecimal.ZERO);</span>
+<span class="fc" id="L230">        return BigMoney.of(currency, BigDecimal.ZERO);</span>
     }
 
     /**
@@ -240,7 +241,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws IllegalArgumentException if the scale is negative
      */
     public static BigMoney zero(CurrencyUnit currency, int scale) {
-<span class="fc" id="L243">        return BigMoney.of(currency, BigDecimal.valueOf(0, scale));</span>
+<span class="fc" id="L244">        return BigMoney.of(currency, BigDecimal.valueOf(0, scale));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -255,10 +256,10 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance, never null
      */
     public static BigMoney of(BigMoneyProvider moneyProvider) {
-<span class="fc" id="L258">        MoneyUtils.checkNotNull(moneyProvider, &quot;BigMoneyProvider must not be null&quot;);</span>
-<span class="fc" id="L259">        BigMoney money = moneyProvider.toBigMoney();</span>
-<span class="fc" id="L260">        MoneyUtils.checkNotNull(money, &quot;BigMoneyProvider must not return null&quot;);</span>
-<span class="fc" id="L261">        return money;</span>
+<span class="fc" id="L259">        MoneyUtils.checkNotNull(moneyProvider, &quot;BigMoneyProvider must not be null&quot;);</span>
+<span class="fc" id="L260">        BigMoney money = moneyProvider.toBigMoney();</span>
+<span class="fc" id="L261">        MoneyUtils.checkNotNull(money, &quot;BigMoneyProvider must not return null&quot;);</span>
+<span class="fc" id="L262">        return money;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -275,16 +276,16 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public static BigMoney total(BigMoneyProvider... monies) {
-<span class="fc" id="L278">        MoneyUtils.checkNotNull(monies, &quot;Money array must not be null&quot;);</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">        if (monies.length == 0) {</span>
-<span class="fc" id="L280">            throw new IllegalArgumentException(&quot;Money array must not be empty&quot;);</span>
+<span class="fc" id="L279">        MoneyUtils.checkNotNull(monies, &quot;Money array must not be null&quot;);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (monies.length == 0) {</span>
+<span class="fc" id="L281">            throw new IllegalArgumentException(&quot;Money array must not be empty&quot;);</span>
         }
-<span class="fc" id="L282">        BigMoney total = of(monies[0]);</span>
-<span class="fc" id="L283">        MoneyUtils.checkNotNull(total, &quot;Money array must not contain null entries&quot;);</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">        for (int i = 1; i &lt; monies.length; i++) {</span>
-<span class="fc" id="L285">            total = total.plus(of(monies[i]));</span>
+<span class="fc" id="L283">        BigMoney total = of(monies[0]);</span>
+<span class="fc" id="L284">        MoneyUtils.checkNotNull(total, &quot;Money array must not contain null entries&quot;);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        for (int i = 1; i &lt; monies.length; i++) {</span>
+<span class="fc" id="L286">            total = total.plus(of(monies[i]));</span>
         }
-<span class="fc" id="L287">        return total;</span>
+<span class="fc" id="L288">        return total;</span>
     }
 
     /**
@@ -300,17 +301,17 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public static BigMoney total(Iterable&lt;? extends BigMoneyProvider&gt; monies) {
-<span class="fc" id="L303">        MoneyUtils.checkNotNull(monies, &quot;Money iterator must not be null&quot;);</span>
-<span class="fc" id="L304">        Iterator&lt;? extends BigMoneyProvider&gt; it = monies.iterator();</span>
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        if (it.hasNext() == false) {</span>
-<span class="fc" id="L306">            throw new IllegalArgumentException(&quot;Money iterator must not be empty&quot;);</span>
+<span class="fc" id="L304">        MoneyUtils.checkNotNull(monies, &quot;Money iterator must not be null&quot;);</span>
+<span class="fc" id="L305">        Iterator&lt;? extends BigMoneyProvider&gt; it = monies.iterator();</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        if (it.hasNext() == false) {</span>
+<span class="fc" id="L307">            throw new IllegalArgumentException(&quot;Money iterator must not be empty&quot;);</span>
         }
-<span class="fc" id="L308">        BigMoney total = of(it.next());</span>
-<span class="fc" id="L309">        MoneyUtils.checkNotNull(total, &quot;Money iterator must not contain null entries&quot;);</span>
-<span class="fc bfc" id="L310" title="All 2 branches covered.">        while (it.hasNext()) {</span>
-<span class="fc" id="L311">            total = total.plus(it.next());</span>
+<span class="fc" id="L309">        BigMoney total = of(it.next());</span>
+<span class="fc" id="L310">        MoneyUtils.checkNotNull(total, &quot;Money iterator must not contain null entries&quot;);</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">        while (it.hasNext()) {</span>
+<span class="fc" id="L312">            total = total.plus(it.next());</span>
         }
-<span class="fc" id="L313">        return total;</span>
+<span class="fc" id="L314">        return total;</span>
     }
 
     /**
@@ -327,7 +328,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public static BigMoney total(CurrencyUnit currency, BigMoneyProvider... monies) {
-<span class="fc" id="L330">        return BigMoney.zero(currency).plus(Arrays.asList(monies));</span>
+<span class="fc" id="L331">        return BigMoney.zero(currency).plus(Arrays.asList(monies));</span>
     }
 
     /**
@@ -344,7 +345,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public static BigMoney total(CurrencyUnit currency, Iterable&lt;? extends BigMoneyProvider&gt; monies) {
-<span class="fc" id="L347">        return BigMoney.zero(currency).plus(monies);</span>
+<span class="fc" id="L348">        return BigMoney.zero(currency).plus(monies);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -368,20 +369,20 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      */
     @FromString
     public static BigMoney parse(String moneyStr) {
-<span class="fc" id="L371">        MoneyUtils.checkNotNull(moneyStr, &quot;Money must not be null&quot;);</span>
-<span class="fc bfc" id="L372" title="All 2 branches covered.">        if (moneyStr.length() &lt; 4) {</span>
-<span class="fc" id="L373">            throw new IllegalArgumentException(&quot;Money '&quot; + moneyStr + &quot;' cannot be parsed&quot;);</span>
+<span class="fc" id="L372">        MoneyUtils.checkNotNull(moneyStr, &quot;Money must not be null&quot;);</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (moneyStr.length() &lt; 4) {</span>
+<span class="fc" id="L374">            throw new IllegalArgumentException(&quot;Money '&quot; + moneyStr + &quot;' cannot be parsed&quot;);</span>
         }
-<span class="fc" id="L375">        String currStr = moneyStr.substring(0, 3);</span>
-<span class="fc" id="L376">        int amountStart = 3;</span>
-<span class="fc bfc" id="L377" title="All 4 branches covered.">        while (amountStart &lt; moneyStr.length() &amp;&amp; moneyStr.charAt(amountStart) == ' ') {</span>
-<span class="fc" id="L378">            amountStart++;</span>
+<span class="fc" id="L376">        String currStr = moneyStr.substring(0, 3);</span>
+<span class="fc" id="L377">        int amountStart = 3;</span>
+<span class="fc bfc" id="L378" title="All 4 branches covered.">        while (amountStart &lt; moneyStr.length() &amp;&amp; moneyStr.charAt(amountStart) == ' ') {</span>
+<span class="fc" id="L379">            amountStart++;</span>
         }
-<span class="fc" id="L380">        String amountStr = moneyStr.substring(amountStart);</span>
-<span class="fc bfc" id="L381" title="All 2 branches covered.">        if (PARSE_REGEX.matcher(amountStr).matches() == false) {</span>
-<span class="fc" id="L382">            throw new IllegalArgumentException(&quot;Money amount '&quot; + moneyStr + &quot;' cannot be parsed&quot;);</span>
+<span class="fc" id="L381">        String amountStr = moneyStr.substring(amountStart);</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">        if (PARSE_REGEX.matcher(amountStr).matches() == false) {</span>
+<span class="fc" id="L383">            throw new IllegalArgumentException(&quot;Money amount '&quot; + moneyStr + &quot;' cannot be parsed&quot;);</span>
         }
-<span class="fc" id="L384">        return BigMoney.of(CurrencyUnit.of(currStr), new BigDecimal(amountStr));</span>
+<span class="fc" id="L385">        return BigMoney.of(CurrencyUnit.of(currStr), new BigDecimal(amountStr));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -389,10 +390,10 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * Private no-args constructor, for use as JPA Embeddable (for example).
      */
     @SuppressWarnings(&quot;unused&quot;)
-<span class="nc" id="L392">    private BigMoney() {</span>
-<span class="nc" id="L393">        this.currency = null;</span>
-<span class="nc" id="L394">        this.amount = null;</span>
-<span class="nc" id="L395">    }</span>
+<span class="nc" id="L393">    private BigMoney() {</span>
+<span class="nc" id="L394">        this.currency = null;</span>
+<span class="nc" id="L395">        this.amount = null;</span>
+<span class="nc" id="L396">    }</span>
 
     /**
      * Constructor, creating a new monetary instance.
@@ -400,12 +401,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @param currency  the currency to use, not null
      * @param amount  the amount of money, not null
      */
-<span class="fc" id="L403">    BigMoney(CurrencyUnit currency, BigDecimal amount) {</span>
-<span class="fc bfc" id="L404" title="All 2 branches covered.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
-<span class="fc bfc" id="L405" title="All 2 branches covered.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
-<span class="fc" id="L406">        this.currency = currency;</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">        this.amount = (amount.scale() &lt; 0 ? amount.setScale(0) : amount);</span>
-<span class="fc" id="L408">    }</span>
+<span class="fc" id="L404">    BigMoney(CurrencyUnit currency, BigDecimal amount) {</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        assert currency != null : &quot;Joda-Money bug: Currency must not be null&quot;;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        assert amount != null : &quot;Joda-Money bug: Amount must not be null&quot;;</span>
+<span class="fc" id="L407">        this.currency = currency;</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">        this.amount = (amount.scale() &lt; 0 ? amount.setScale(0) : amount);</span>
+<span class="fc" id="L409">    }</span>
 
     /**
      * Block malicious data streams.
@@ -414,7 +415,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws InvalidObjectException if an error occurs
      */
     private void readObject(ObjectInputStream ois) throws InvalidObjectException {
-<span class="nc" id="L417">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
+<span class="nc" id="L418">        throw new InvalidObjectException(&quot;Serialization delegate required&quot;);</span>
     }
 
     /**
@@ -423,7 +424,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the replacing object, never null
      */
     private Object writeReplace() {
-<span class="fc" id="L426">        return new Ser(Ser.BIG_MONEY, this);</span>
+<span class="fc" id="L427">        return new Ser(Ser.BIG_MONEY, this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -436,10 +437,10 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance, never null
      */
     private BigMoney with(BigDecimal newAmount) {
-<span class="fc bfc" id="L439" title="All 2 branches covered.">        if (newAmount == amount) {</span>
-<span class="fc" id="L440">            return this;</span>
+<span class="fc bfc" id="L440" title="All 2 branches covered.">        if (newAmount == amount) {</span>
+<span class="fc" id="L441">            return this;</span>
         }
-<span class="fc" id="L442">        return new BigMoney(currency, newAmount);</span>
+<span class="fc" id="L443">        return new BigMoney(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -449,7 +450,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the currency, never null
      */
     public CurrencyUnit getCurrencyUnit() {
-<span class="fc" id="L452">        return currency;</span>
+<span class="fc" id="L453">        return currency;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -465,11 +466,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input currency set, never null
      */
     public BigMoney withCurrencyUnit(CurrencyUnit currency) {
-<span class="fc" id="L468">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc bfc" id="L469" title="All 2 branches covered.">        if (this.currency == currency) {</span>
-<span class="fc" id="L470">            return this;</span>
+<span class="fc" id="L469">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">        if (this.currency == currency) {</span>
+<span class="fc" id="L471">            return this;</span>
         }
-<span class="fc" id="L472">        return new BigMoney(currency, amount);</span>
+<span class="fc" id="L473">        return new BigMoney(currency, amount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -486,7 +487,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @see #withScale
      */
     public int getScale() {
-<span class="fc" id="L489">        return amount.scale();</span>
+<span class="fc" id="L490">        return amount.scale();</span>
     }
 
     /**
@@ -498,7 +499,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if the scale equals the current default scale
      */
     public boolean isCurrencyScale() {
-<span class="fc bfc" id="L501" title="All 2 branches covered.">        return amount.scale() == currency.getDecimalPlaces();</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">        return amount.scale() == currency.getDecimalPlaces();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -519,7 +520,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withScale(int scale) {
-<span class="fc" id="L522">        return withScale(scale, RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L523">        return withScale(scale, RoundingMode.UNNECESSARY);</span>
     }
 
     /**
@@ -539,11 +540,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withScale(int scale, RoundingMode roundingMode) {
-<span class="fc" id="L542">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L543" title="All 2 branches covered.">        if (scale == amount.scale()) {</span>
-<span class="fc" id="L544">            return this;</span>
+<span class="fc" id="L543">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">        if (scale == amount.scale()) {</span>
+<span class="fc" id="L545">            return this;</span>
         }
-<span class="fc" id="L546">        return BigMoney.of(currency, amount.setScale(scale, roundingMode));</span>
+<span class="fc" id="L547">        return BigMoney.of(currency, amount.setScale(scale, roundingMode));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -562,7 +563,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withCurrencyScale() {
-<span class="fc" id="L565">        return withScale(currency.getDecimalPlaces(), RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L566">        return withScale(currency.getDecimalPlaces(), RoundingMode.UNNECESSARY);</span>
     }
 
     /**
@@ -579,7 +580,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney withCurrencyScale(RoundingMode roundingMode) {
-<span class="fc" id="L582">        return withScale(currency.getDecimalPlaces(), roundingMode);</span>
+<span class="fc" id="L583">        return withScale(currency.getDecimalPlaces(), roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -592,7 +593,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the amount, never null
      */
     public BigDecimal getAmount() {
-<span class="fc" id="L595">        return amount;</span>
+<span class="fc" id="L596">        return amount;</span>
     }
 
     /**
@@ -609,7 +610,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the major units part of the amount, never null
      */
     public BigDecimal getAmountMajor() {
-<span class="fc" id="L612">        return amount.setScale(0, RoundingMode.DOWN);</span>
+<span class="fc" id="L613">        return amount.setScale(0, RoundingMode.DOWN);</span>
     }
 
     /**
@@ -623,7 +624,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the amount is too large for a {@code long}
      */
     public long getAmountMajorLong() {
-<span class="fc" id="L626">        return getAmountMajor().longValueExact();</span>
+<span class="fc" id="L627">        return getAmountMajor().longValueExact();</span>
     }
 
     /**
@@ -637,7 +638,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the amount is too large for an {@code int}
      */
     public int getAmountMajorInt() {
-<span class="fc" id="L640">        return getAmountMajor().intValueExact();</span>
+<span class="fc" id="L641">        return getAmountMajor().intValueExact();</span>
     }
 
     /**
@@ -654,8 +655,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the minor units part of the amount, never null
      */
     public BigDecimal getAmountMinor() {
-<span class="fc" id="L657">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
-<span class="fc" id="L658">        return amount.setScale(cdp, RoundingMode.DOWN).movePointRight(cdp);</span>
+<span class="fc" id="L658">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
+<span class="fc" id="L659">        return amount.setScale(cdp, RoundingMode.DOWN).movePointRight(cdp);</span>
     }
 
     /**
@@ -669,7 +670,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the amount is too large for a {@code long}
      */
     public long getAmountMinorLong() {
-<span class="fc" id="L672">        return getAmountMinor().longValueExact();</span>
+<span class="fc" id="L673">        return getAmountMinor().longValueExact();</span>
     }
 
     /**
@@ -683,7 +684,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the amount is too large for an {@code int}
      */
     public int getAmountMinorInt() {
-<span class="fc" id="L686">        return getAmountMinor().intValueExact();</span>
+<span class="fc" id="L687">        return getAmountMinor().intValueExact();</span>
     }
 
     /**
@@ -699,10 +700,10 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the minor part of the amount, negative if the amount is negative
      */
     public int getMinorPart() {
-<span class="fc" id="L702">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
-<span class="fc" id="L703">        return amount.setScale(cdp, RoundingMode.DOWN)</span>
-<span class="fc" id="L704">                    .remainder(BigDecimal.ONE)</span>
-<span class="fc" id="L705">                    .movePointRight(cdp).intValueExact();</span>
+<span class="fc" id="L703">        int cdp = getCurrencyUnit().getDecimalPlaces();</span>
+<span class="fc" id="L704">        return amount.setScale(cdp, RoundingMode.DOWN)</span>
+<span class="fc" id="L705">            .remainder(BigDecimal.ONE)</span>
+<span class="fc" id="L706">            .movePointRight(cdp).intValueExact();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -712,7 +713,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if the amount is zero
      */
     public boolean isZero() {
-<span class="fc bfc" id="L715" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) == 0;</span>
+<span class="fc bfc" id="L716" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) == 0;</span>
     }
 
     /**
@@ -721,7 +722,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if the amount is greater than zero
      */
     public boolean isPositive() {
-<span class="fc bfc" id="L724" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt; 0;</span>
+<span class="fc bfc" id="L725" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt; 0;</span>
     }
 
     /**
@@ -730,7 +731,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if the amount is zero or greater
      */
     public boolean isPositiveOrZero() {
-<span class="fc bfc" id="L733" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt;= 0;</span>
+<span class="fc bfc" id="L734" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &gt;= 0;</span>
     }
 
     /**
@@ -739,7 +740,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if the amount is less than zero
      */
     public boolean isNegative() {
-<span class="fc bfc" id="L742" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt; 0;</span>
+<span class="fc bfc" id="L743" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt; 0;</span>
     }
 
     /**
@@ -748,7 +749,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if the amount is zero or less
      */
     public boolean isNegativeOrZero() {
-<span class="fc bfc" id="L751" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt;= 0;</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">        return amount.compareTo(BigDecimal.ZERO) &lt;= 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -764,11 +765,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount set, never null
      */
     public BigMoney withAmount(BigDecimal amount) {
-<span class="fc" id="L767">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L768" title="All 2 branches covered.">        if (this.amount.equals(amount)) {</span>
-<span class="fc" id="L769">            return this;</span>
+<span class="fc" id="L768">        MoneyUtils.checkNotNull(amount, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L769" title="All 2 branches covered.">        if (this.amount.equals(amount)) {</span>
+<span class="fc" id="L770">            return this;</span>
         }
-<span class="fc" id="L771">        return BigMoney.of(currency, amount);</span>
+<span class="fc" id="L772">        return BigMoney.of(currency, amount);</span>
     }
 
     /**
@@ -790,7 +791,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount set, never null
      */
     public BigMoney withAmount(double amount) {
-<span class="fc" id="L793">        return withAmount(BigDecimal.valueOf(amount));</span>
+<span class="fc" id="L794">        return withAmount(BigDecimal.valueOf(amount));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -801,11 +802,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     private BigMoney checkCurrencyEqual(BigMoneyProvider moneyProvider) {
-<span class="fc" id="L804">        BigMoney money = of(moneyProvider);</span>
-<span class="fc bfc" id="L805" title="All 2 branches covered.">        if (isSameCurrency(money) == false) {</span>
-<span class="fc" id="L806">            throw new CurrencyMismatchException(getCurrencyUnit(), money.getCurrencyUnit());</span>
+<span class="fc" id="L805">        BigMoney money = of(moneyProvider);</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">        if (isSameCurrency(money) == false) {</span>
+<span class="fc" id="L807">            throw new CurrencyMismatchException(getCurrencyUnit(), money.getCurrencyUnit());</span>
         }
-<span class="fc" id="L808">        return money;</span>
+<span class="fc" id="L809">        return money;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -823,12 +824,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney plus(Iterable&lt;? extends BigMoneyProvider&gt; moniesToAdd) {
-<span class="fc" id="L826">        BigDecimal total = amount;</span>
-<span class="fc bfc" id="L827" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToAdd) {</span>
-<span class="fc" id="L828">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
-<span class="fc" id="L829">            total = total.add(money.amount);</span>
-<span class="fc" id="L830">        }</span>
-<span class="fc" id="L831">        return with(total);</span>
+<span class="fc" id="L827">        BigDecimal total = amount;</span>
+<span class="fc bfc" id="L828" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToAdd) {</span>
+<span class="fc" id="L829">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
+<span class="fc" id="L830">            total = total.add(money.amount);</span>
+<span class="fc" id="L831">        }</span>
+<span class="fc" id="L832">        return with(total);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -849,8 +850,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney plus(BigMoneyProvider moneyToAdd) {
-<span class="fc" id="L852">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
-<span class="fc" id="L853">        return plus(toAdd.getAmount());</span>
+<span class="fc" id="L853">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
+<span class="fc" id="L854">        return plus(toAdd.getAmount());</span>
     }
 
     /**
@@ -868,12 +869,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plus(BigDecimal amountToAdd) {
-<span class="fc" id="L871">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L872" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L873">            return this;</span>
+<span class="fc" id="L872">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L873" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L874">            return this;</span>
         }
-<span class="fc" id="L875">        BigDecimal newAmount = amount.add(amountToAdd);</span>
-<span class="fc" id="L876">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L876">        BigDecimal newAmount = amount.add(amountToAdd);</span>
+<span class="fc" id="L877">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -897,11 +898,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plus(double amountToAdd) {
-<span class="fc bfc" id="L900" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L901">            return this;</span>
+<span class="fc bfc" id="L901" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L902">            return this;</span>
         }
-<span class="fc" id="L903">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
-<span class="fc" id="L904">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L904">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L905">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -920,11 +921,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusMajor(long amountToAdd) {
-<span class="fc bfc" id="L923" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L924">            return this;</span>
+<span class="fc bfc" id="L924" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L925">            return this;</span>
         }
-<span class="fc" id="L926">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
-<span class="fc" id="L927">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L927">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L928">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -943,11 +944,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusMinor(long amountToAdd) {
-<span class="fc bfc" id="L946" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L947">            return this;</span>
+<span class="fc bfc" id="L947" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L948">            return this;</span>
         }
-<span class="fc" id="L949">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd, currency.getDecimalPlaces()));</span>
-<span class="fc" id="L950">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L950">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L951">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -965,8 +966,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusRetainScale(BigMoneyProvider moneyToAdd, RoundingMode roundingMode) {
-<span class="fc" id="L968">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
-<span class="fc" id="L969">        return plusRetainScale(toAdd.getAmount(), roundingMode);</span>
+<span class="fc" id="L969">        BigMoney toAdd = checkCurrencyEqual(moneyToAdd);</span>
+<span class="fc" id="L970">        return plusRetainScale(toAdd.getAmount(), roundingMode);</span>
     }
 
     /**
@@ -983,13 +984,13 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusRetainScale(BigDecimal amountToAdd, RoundingMode roundingMode) {
-<span class="fc" id="L986">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L987" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L988">            return this;</span>
+<span class="fc" id="L987">        MoneyUtils.checkNotNull(amountToAdd, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L988" title="All 2 branches covered.">        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L989">            return this;</span>
         }
-<span class="fc" id="L990">        BigDecimal newAmount = amount.add(amountToAdd);</span>
-<span class="fc" id="L991">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L992">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L991">        BigDecimal newAmount = amount.add(amountToAdd);</span>
+<span class="fc" id="L992">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L993">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1012,12 +1013,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount added, never null
      */
     public BigMoney plusRetainScale(double amountToAdd, RoundingMode roundingMode) {
-<span class="fc bfc" id="L1015" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
-<span class="fc" id="L1016">            return this;</span>
+<span class="fc bfc" id="L1016" title="All 2 branches covered.">        if (amountToAdd == 0) {</span>
+<span class="fc" id="L1017">            return this;</span>
         }
-<span class="fc" id="L1018">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
-<span class="fc" id="L1019">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1020">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1019">        BigDecimal newAmount = amount.add(BigDecimal.valueOf(amountToAdd));</span>
+<span class="fc" id="L1020">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1021">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1035,12 +1036,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney minus(Iterable&lt;? extends BigMoneyProvider&gt; moniesToSubtract) {
-<span class="fc" id="L1038">        BigDecimal total = amount;</span>
-<span class="fc bfc" id="L1039" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToSubtract) {</span>
-<span class="fc" id="L1040">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
-<span class="fc" id="L1041">            total = total.subtract(money.amount);</span>
-<span class="fc" id="L1042">        }</span>
-<span class="fc" id="L1043">        return with(total);</span>
+<span class="fc" id="L1039">        BigDecimal total = amount;</span>
+<span class="fc bfc" id="L1040" title="All 2 branches covered.">        for (BigMoneyProvider moneyProvider : moniesToSubtract) {</span>
+<span class="fc" id="L1041">            BigMoney money = checkCurrencyEqual(moneyProvider);</span>
+<span class="fc" id="L1042">            total = total.subtract(money.amount);</span>
+<span class="fc" id="L1043">        }</span>
+<span class="fc" id="L1044">        return with(total);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1061,8 +1062,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public BigMoney minus(BigMoneyProvider moneyToSubtract) {
-<span class="fc" id="L1064">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
-<span class="fc" id="L1065">        return minus(toSubtract.getAmount());</span>
+<span class="fc" id="L1065">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
+<span class="fc" id="L1066">        return minus(toSubtract.getAmount());</span>
     }
 
     /**
@@ -1080,12 +1081,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minus(BigDecimal amountToSubtract) {
-<span class="fc" id="L1083">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L1084" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L1085">            return this;</span>
+<span class="fc" id="L1084">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1085" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1086">            return this;</span>
         }
-<span class="fc" id="L1087">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
-<span class="fc" id="L1088">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1088">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
+<span class="fc" id="L1089">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1109,11 +1110,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minus(double amountToSubtract) {
-<span class="fc bfc" id="L1112" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1113">            return this;</span>
+<span class="fc bfc" id="L1113" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1114">            return this;</span>
         }
-<span class="fc" id="L1115">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
-<span class="fc" id="L1116">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1116">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1117">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1132,11 +1133,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusMajor(long amountToSubtract) {
-<span class="fc bfc" id="L1135" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1136">            return this;</span>
+<span class="fc bfc" id="L1136" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1137">            return this;</span>
         }
-<span class="fc" id="L1138">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
-<span class="fc" id="L1139">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1139">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1140">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1155,11 +1156,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusMinor(long amountToSubtract) {
-<span class="fc bfc" id="L1158" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1159">            return this;</span>
+<span class="fc bfc" id="L1159" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1160">            return this;</span>
         }
-<span class="fc" id="L1161">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract, currency.getDecimalPlaces()));</span>
-<span class="fc" id="L1162">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1162">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract, currency.getDecimalPlaces()));</span>
+<span class="fc" id="L1163">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1177,8 +1178,8 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusRetainScale(BigMoneyProvider moneyToSubtract, RoundingMode roundingMode) {
-<span class="fc" id="L1180">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
-<span class="fc" id="L1181">        return minusRetainScale(toSubtract.getAmount(), roundingMode);</span>
+<span class="fc" id="L1181">        BigMoney toSubtract = checkCurrencyEqual(moneyToSubtract);</span>
+<span class="fc" id="L1182">        return minusRetainScale(toSubtract.getAmount(), roundingMode);</span>
     }
 
     /**
@@ -1195,13 +1196,13 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusRetainScale(BigDecimal amountToSubtract, RoundingMode roundingMode) {
-<span class="fc" id="L1198">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
-<span class="fc bfc" id="L1199" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L1200">            return this;</span>
+<span class="fc" id="L1199">        MoneyUtils.checkNotNull(amountToSubtract, &quot;Amount must not be null&quot;);</span>
+<span class="fc bfc" id="L1200" title="All 2 branches covered.">        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L1201">            return this;</span>
         }
-<span class="fc" id="L1202">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
-<span class="fc" id="L1203">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1204">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1203">        BigDecimal newAmount = amount.subtract(amountToSubtract);</span>
+<span class="fc" id="L1204">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1205">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1224,12 +1225,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the input amount subtracted, never null
      */
     public BigMoney minusRetainScale(double amountToSubtract, RoundingMode roundingMode) {
-<span class="fc bfc" id="L1227" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
-<span class="fc" id="L1228">            return this;</span>
+<span class="fc bfc" id="L1228" title="All 2 branches covered.">        if (amountToSubtract == 0) {</span>
+<span class="fc" id="L1229">            return this;</span>
         }
-<span class="fc" id="L1230">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
-<span class="fc" id="L1231">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1232">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1231">        BigDecimal newAmount = amount.subtract(BigDecimal.valueOf(amountToSubtract));</span>
+<span class="fc" id="L1232">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1233">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1246,12 +1247,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new multiplied instance, never null
      */
     public BigMoney multipliedBy(BigDecimal valueToMultiplyBy) {
-<span class="fc" id="L1249">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
-<span class="fc bfc" id="L1250" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1251">            return this;</span>
+<span class="fc" id="L1250">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc bfc" id="L1251" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1252">            return this;</span>
         }
-<span class="fc" id="L1253">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
-<span class="fc" id="L1254">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1254">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
+<span class="fc" id="L1255">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1273,11 +1274,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new multiplied instance, never null
      */
     public BigMoney multipliedBy(double valueToMultiplyBy) {
-<span class="fc bfc" id="L1276" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
-<span class="fc" id="L1277">            return this;</span>
+<span class="fc bfc" id="L1277" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
+<span class="fc" id="L1278">            return this;</span>
         }
-<span class="fc" id="L1279">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
-<span class="fc" id="L1280">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1280">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
+<span class="fc" id="L1281">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1293,11 +1294,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new multiplied instance, never null
      */
     public BigMoney multipliedBy(long valueToMultiplyBy) {
-<span class="fc bfc" id="L1296" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
-<span class="fc" id="L1297">            return this;</span>
+<span class="fc bfc" id="L1297" title="All 2 branches covered.">        if (valueToMultiplyBy == 1) {</span>
+<span class="fc" id="L1298">            return this;</span>
         }
-<span class="fc" id="L1299">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
-<span class="fc" id="L1300">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1300">        BigDecimal newAmount = amount.multiply(BigDecimal.valueOf(valueToMultiplyBy));</span>
+<span class="fc" id="L1301">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1317,14 +1318,14 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney multiplyRetainScale(BigDecimal valueToMultiplyBy, RoundingMode roundingMode) {
-<span class="fc" id="L1320">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
-<span class="fc" id="L1321">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1322" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1323">            return this;</span>
+<span class="fc" id="L1321">        MoneyUtils.checkNotNull(valueToMultiplyBy, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc" id="L1322">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1323" title="All 2 branches covered.">        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1324">            return this;</span>
         }
-<span class="fc" id="L1325">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
-<span class="fc" id="L1326">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
-<span class="fc" id="L1327">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1326">        BigDecimal newAmount = amount.multiply(valueToMultiplyBy);</span>
+<span class="fc" id="L1327">        newAmount = newAmount.setScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1328">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1349,7 +1350,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney multiplyRetainScale(double valueToMultiplyBy, RoundingMode roundingMode) {
-<span class="fc" id="L1352">        return multiplyRetainScale(BigDecimal.valueOf(valueToMultiplyBy), roundingMode);</span>
+<span class="fc" id="L1353">        return multiplyRetainScale(BigDecimal.valueOf(valueToMultiplyBy), roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1370,13 +1371,13 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney dividedBy(BigDecimal valueToDivideBy, RoundingMode roundingMode) {
-<span class="fc" id="L1373">        MoneyUtils.checkNotNull(valueToDivideBy, &quot;Divisor must not be null&quot;);</span>
-<span class="fc" id="L1374">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1375" title="All 2 branches covered.">        if (valueToDivideBy.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1376">            return this;</span>
+<span class="fc" id="L1374">        MoneyUtils.checkNotNull(valueToDivideBy, &quot;Divisor must not be null&quot;);</span>
+<span class="fc" id="L1375">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1376" title="All 2 branches covered.">        if (valueToDivideBy.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1377">            return this;</span>
         }
-<span class="fc" id="L1378">        BigDecimal newAmount = amount.divide(valueToDivideBy, roundingMode);</span>
-<span class="fc" id="L1379">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1379">        BigDecimal newAmount = amount.divide(valueToDivideBy, roundingMode);</span>
+<span class="fc" id="L1380">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1402,12 +1403,12 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney dividedBy(double valueToDivideBy, RoundingMode roundingMode) {
-<span class="fc" id="L1405">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1406" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
-<span class="fc" id="L1407">            return this;</span>
+<span class="fc" id="L1406">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1407" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
+<span class="fc" id="L1408">            return this;</span>
         }
-<span class="fc" id="L1409">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
-<span class="fc" id="L1410">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1410">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
+<span class="fc" id="L1411">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1426,11 +1427,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if dividing by zero
      */
     public BigMoney dividedBy(long valueToDivideBy, RoundingMode roundingMode) {
-<span class="fc bfc" id="L1429" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
-<span class="fc" id="L1430">            return this;</span>
+<span class="fc bfc" id="L1430" title="All 2 branches covered.">        if (valueToDivideBy == 1) {</span>
+<span class="fc" id="L1431">            return this;</span>
         }
-<span class="fc" id="L1432">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
-<span class="fc" id="L1433">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1433">        BigDecimal newAmount = amount.divide(BigDecimal.valueOf(valueToDivideBy), roundingMode);</span>
+<span class="fc" id="L1434">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1442,10 +1443,10 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the amount negated, never null
      */
     public BigMoney negated() {
-<span class="fc bfc" id="L1445" title="All 2 branches covered.">        if (isZero()) {</span>
-<span class="fc" id="L1446">            return this;</span>
+<span class="fc bfc" id="L1446" title="All 2 branches covered.">        if (isZero()) {</span>
+<span class="fc" id="L1447">            return this;</span>
         }
-<span class="fc" id="L1448">        return BigMoney.of(currency, amount.negate());</span>
+<span class="fc" id="L1449">        return BigMoney.of(currency, amount.negate());</span>
     }
 
     /**
@@ -1456,7 +1457,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return the new instance with the amount converted to be positive, never null
      */
     public BigMoney abs() {
-<span class="fc bfc" id="L1459" title="All 2 branches covered.">        return (isNegative() ? negated() : this);</span>
+<span class="fc bfc" id="L1460" title="All 2 branches covered.">        return (isNegative() ? negated() : this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1482,13 +1483,13 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney rounded(int scale, RoundingMode roundingMode) {
-<span class="fc" id="L1485">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
-<span class="fc bfc" id="L1486" title="All 2 branches covered.">        if (scale &gt;= getScale()) {</span>
-<span class="fc" id="L1487">            return this;</span>
+<span class="fc" id="L1486">        MoneyUtils.checkNotNull(roundingMode, &quot;RoundingMode must not be null&quot;);</span>
+<span class="fc bfc" id="L1487" title="All 2 branches covered.">        if (scale &gt;= getScale()) {</span>
+<span class="fc" id="L1488">            return this;</span>
         }
-<span class="fc" id="L1489">        int currentScale = amount.scale();</span>
-<span class="fc" id="L1490">        BigDecimal newAmount = amount.setScale(scale, roundingMode).setScale(currentScale);</span>
-<span class="fc" id="L1491">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1490">        int currentScale = amount.scale();</span>
+<span class="fc" id="L1491">        BigDecimal newAmount = amount.setScale(scale, roundingMode).setScale(currentScale);</span>
+<span class="fc" id="L1492">        return BigMoney.of(currency, newAmount);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1509,19 +1510,19 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      *  conversion is not one; or if the conversion multiplier is negative
      */
     public BigMoney convertedTo(CurrencyUnit currency, BigDecimal conversionMultipler) {
-<span class="fc" id="L1512">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
-<span class="fc" id="L1513">        MoneyUtils.checkNotNull(conversionMultipler, &quot;Multiplier must not be null&quot;);</span>
-<span class="fc bfc" id="L1514" title="All 2 branches covered.">        if (this.currency == currency) {</span>
-<span class="fc bfc" id="L1515" title="All 2 branches covered.">            if (conversionMultipler.compareTo(BigDecimal.ONE) == 0) {</span>
-<span class="fc" id="L1516">                return this;</span>
+<span class="fc" id="L1513">        MoneyUtils.checkNotNull(currency, &quot;CurrencyUnit must not be null&quot;);</span>
+<span class="fc" id="L1514">        MoneyUtils.checkNotNull(conversionMultipler, &quot;Multiplier must not be null&quot;);</span>
+<span class="fc bfc" id="L1515" title="All 2 branches covered.">        if (this.currency == currency) {</span>
+<span class="fc bfc" id="L1516" title="All 2 branches covered.">            if (conversionMultipler.compareTo(BigDecimal.ONE) == 0) {</span>
+<span class="fc" id="L1517">                return this;</span>
             }
-<span class="fc" id="L1518">            throw new IllegalArgumentException(&quot;Cannot convert to the same currency&quot;);</span>
+<span class="fc" id="L1519">            throw new IllegalArgumentException(&quot;Cannot convert to the same currency&quot;);</span>
         }
-<span class="fc bfc" id="L1520" title="All 2 branches covered.">        if (conversionMultipler.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
-<span class="fc" id="L1521">            throw new IllegalArgumentException(&quot;Cannot convert using a negative conversion multiplier&quot;);</span>
+<span class="fc bfc" id="L1521" title="All 2 branches covered.">        if (conversionMultipler.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
+<span class="fc" id="L1522">            throw new IllegalArgumentException(&quot;Cannot convert using a negative conversion multiplier&quot;);</span>
         }
-<span class="fc" id="L1523">        BigDecimal newAmount = amount.multiply(conversionMultipler);</span>
-<span class="fc" id="L1524">        return BigMoney.of(currency, newAmount);</span>
+<span class="fc" id="L1524">        BigDecimal newAmount = amount.multiply(conversionMultipler);</span>
+<span class="fc" id="L1525">        return BigMoney.of(currency, newAmount);</span>
     }
 
     /**
@@ -1543,7 +1544,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public BigMoney convertRetainScale(CurrencyUnit currency, BigDecimal conversionMultipler, RoundingMode roundingMode) {
-<span class="fc" id="L1546">        return convertedTo(currency, conversionMultipler).withScale(getScale(), roundingMode);</span>
+<span class="fc" id="L1547">        return convertedTo(currency, conversionMultipler).withScale(getScale(), roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1555,7 +1556,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      */
     @Override
     public BigMoney toBigMoney() {
-<span class="fc" id="L1558">        return this;</span>
+<span class="fc" id="L1559">        return this;</span>
     }
 
     /**
@@ -1566,7 +1567,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public Money toMoney() {
-<span class="fc" id="L1569">        return Money.of(this);</span>
+<span class="fc" id="L1570">        return Money.of(this);</span>
     }
 
     /**
@@ -1577,7 +1578,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws ArithmeticException if the rounding fails
      */
     public Money toMoney(RoundingMode roundingMode) {
-<span class="fc" id="L1580">        return Money.of(this, roundingMode);</span>
+<span class="fc" id="L1581">        return Money.of(this, roundingMode);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1588,7 +1589,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @return true if they have the same currency
      */
     public boolean isSameCurrency(BigMoneyProvider money) {
-<span class="fc" id="L1591">        return (currency.equals(of(money).getCurrencyUnit()));</span>
+<span class="fc" id="L1592">        return (currency.equals(of(money).getCurrencyUnit()));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1602,11 +1603,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      */
     @Override
     public int compareTo(BigMoneyProvider other) {
-<span class="fc" id="L1605">        BigMoney otherMoney = of(other);</span>
-<span class="fc bfc" id="L1606" title="All 2 branches covered.">        if (currency.equals(otherMoney.currency) == false) {</span>
-<span class="fc" id="L1607">            throw new CurrencyMismatchException(getCurrencyUnit(), otherMoney.getCurrencyUnit());</span>
+<span class="fc" id="L1606">        BigMoney otherMoney = of(other);</span>
+<span class="fc bfc" id="L1607" title="All 2 branches covered.">        if (currency.equals(otherMoney.currency) == false) {</span>
+<span class="fc" id="L1608">            throw new CurrencyMismatchException(getCurrencyUnit(), otherMoney.getCurrencyUnit());</span>
         }
-<span class="fc" id="L1609">        return amount.compareTo(otherMoney.amount);</span>
+<span class="fc" id="L1610">        return amount.compareTo(otherMoney.amount);</span>
     }
 
     /**
@@ -1623,7 +1624,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @see #equals(Object)
      */
     public boolean isEqual(BigMoneyProvider other) {
-<span class="fc bfc" id="L1626" title="All 2 branches covered.">        return compareTo(other) == 0;</span>
+<span class="fc bfc" id="L1627" title="All 2 branches covered.">        return compareTo(other) == 0;</span>
     }
 
     /**
@@ -1635,7 +1636,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public boolean isGreaterThan(BigMoneyProvider other) {
-<span class="fc bfc" id="L1638" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L1639" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -1647,7 +1648,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      * @throws CurrencyMismatchException if the currencies differ
      */
     public boolean isLessThan(BigMoneyProvider other) {
-<span class="fc bfc" id="L1650" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L1651" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1665,15 +1666,15 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      */
     @Override
     public boolean equals(Object other) {
-<span class="fc bfc" id="L1668" title="All 2 branches covered.">        if (this == other) {</span>
-<span class="fc" id="L1669">            return true;</span>
+<span class="fc bfc" id="L1669" title="All 2 branches covered.">        if (this == other) {</span>
+<span class="fc" id="L1670">            return true;</span>
         }
-<span class="fc bfc" id="L1671" title="All 2 branches covered.">        if (other instanceof BigMoney) {</span>
-<span class="fc" id="L1672">            BigMoney otherMoney = (BigMoney) other;</span>
-<span class="fc bfc" id="L1673" title="All 2 branches covered.">            return currency.equals(otherMoney.getCurrencyUnit()) &amp;&amp;</span>
-<span class="fc bfc" id="L1674" title="All 2 branches covered.">                    amount.equals(otherMoney.amount);</span>
+<span class="fc bfc" id="L1672" title="All 2 branches covered.">        if (other instanceof BigMoney) {</span>
+<span class="fc" id="L1673">            BigMoney otherMoney = (BigMoney) other;</span>
+<span class="fc bfc" id="L1674" title="All 2 branches covered.">            return currency.equals(otherMoney.getCurrencyUnit()) &amp;&amp;</span>
+<span class="fc bfc" id="L1675" title="All 2 branches covered.">                    amount.equals(otherMoney.amount);</span>
         }
-<span class="fc" id="L1676">        return false;</span>
+<span class="fc" id="L1677">        return false;</span>
     }
 
     /**
@@ -1683,7 +1684,7 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1686">        return currency.hashCode() ^ amount.hashCode();</span>
+<span class="fc" id="L1687">        return currency.hashCode() ^ amount.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1698,11 +1699,11 @@ public final class BigMoney implements BigMoneyProvider, Comparable&lt;BigMoneyP
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1701">        return new StringBuilder()</span>
-<span class="fc" id="L1702">            .append(currency.getCode())</span>
-<span class="fc" id="L1703">            .append(' ')</span>
-<span class="fc" id="L1704">            .append(amount.toPlainString())</span>
-<span class="fc" id="L1705">            .toString();</span>
+<span class="fc" id="L1702">        return new StringBuilder()</span>
+<span class="fc" id="L1703">            .append(currency.getCode())</span>
+<span class="fc" id="L1704">            .append(' ')</span>
+<span class="fc" id="L1705">            .append(amount.toPlainString())</span>
+<span class="fc" id="L1706">            .toString();</span>
     }
 
 }

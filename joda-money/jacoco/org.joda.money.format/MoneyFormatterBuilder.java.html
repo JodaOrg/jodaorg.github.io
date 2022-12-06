@@ -213,9 +213,8 @@ public final class MoneyFormatterBuilder {
      * @param whenNegative  the formatter to use when the amount is negative
      * @return this for chaining, never null
      */
-    public MoneyFormatterBuilder appendSigned(
-            MoneyFormatter whenPositiveOrZero, MoneyFormatter whenNegative) {
-<span class="fc" id="L218">        return appendSigned(whenPositiveOrZero, whenPositiveOrZero, whenNegative);</span>
+    public MoneyFormatterBuilder appendSigned(MoneyFormatter whenPositiveOrZero, MoneyFormatter whenNegative) {
+<span class="fc" id="L217">        return appendSigned(whenPositiveOrZero, whenPositiveOrZero, whenNegative);</span>
     }
 
     /**
@@ -241,13 +240,12 @@ public final class MoneyFormatterBuilder {
      * @param whenNegative  the formatter to use when the amount is negative
      * @return this for chaining, never null
      */
-    public MoneyFormatterBuilder appendSigned(
-            MoneyFormatter whenPositive, MoneyFormatter whenZero, MoneyFormatter whenNegative) {
-<span class="fc" id="L246">        MoneyFormatter.checkNotNull(whenPositive, &quot;MoneyFormatter whenPositive must not be null&quot;);</span>
-<span class="fc" id="L247">        MoneyFormatter.checkNotNull(whenZero, &quot;MoneyFormatter whenZero must not be null&quot;);</span>
-<span class="fc" id="L248">        MoneyFormatter.checkNotNull(whenNegative, &quot;MoneyFormatter whenNegative must not be null&quot;);</span>
-<span class="fc" id="L249">        SignedPrinterParser pp = new SignedPrinterParser(whenPositive, whenZero, whenNegative);</span>
-<span class="fc" id="L250">        return appendInternal(pp, pp);</span>
+    public MoneyFormatterBuilder appendSigned(MoneyFormatter whenPositive, MoneyFormatter whenZero, MoneyFormatter whenNegative) {
+<span class="fc" id="L244">        MoneyFormatter.checkNotNull(whenPositive, &quot;MoneyFormatter whenPositive must not be null&quot;);</span>
+<span class="fc" id="L245">        MoneyFormatter.checkNotNull(whenZero, &quot;MoneyFormatter whenZero must not be null&quot;);</span>
+<span class="fc" id="L246">        MoneyFormatter.checkNotNull(whenNegative, &quot;MoneyFormatter whenNegative must not be null&quot;);</span>
+<span class="fc" id="L247">        SignedPrinterParser pp = new SignedPrinterParser(whenPositive, whenZero, whenNegative);</span>
+<span class="fc" id="L248">        return appendInternal(pp, pp);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -261,9 +259,9 @@ public final class MoneyFormatterBuilder {
      * @return this for chaining, never null
      */
     private MoneyFormatterBuilder appendInternal(MoneyPrinter printer, MoneyParser parser) {
-<span class="fc" id="L264">        printers.add(printer);</span>
-<span class="fc" id="L265">        parsers.add(parser);</span>
-<span class="fc" id="L266">        return this;</span>
+<span class="fc" id="L262">        printers.add(printer);</span>
+<span class="fc" id="L263">        parsers.add(parser);</span>
+<span class="fc" id="L264">        return this;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -280,7 +278,7 @@ public final class MoneyFormatterBuilder {
      * @return the formatter built from this builder, never null
      */
     public MoneyFormatter toFormatter() {
-<span class="fc" id="L283">        return toFormatter(Locale.getDefault());</span>
+<span class="fc" id="L281">        return toFormatter(Locale.getDefault());</span>
     }
 
     /**
@@ -298,43 +296,45 @@ public final class MoneyFormatterBuilder {
      */
     @SuppressWarnings(&quot;cast&quot;)
     public MoneyFormatter toFormatter(Locale locale) {
-<span class="fc" id="L301">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
-<span class="fc" id="L302">        MoneyPrinter[] printersCopy = (MoneyPrinter[]) printers.toArray(new MoneyPrinter[printers.size()]);</span>
-<span class="fc" id="L303">        MoneyParser[] parsersCopy = (MoneyParser[]) parsers.toArray(new MoneyParser[parsers.size()]);</span>
-<span class="fc" id="L304">        return new MoneyFormatter(locale, printersCopy, parsersCopy);</span>
+<span class="fc" id="L299">        MoneyFormatter.checkNotNull(locale, &quot;Locale must not be null&quot;);</span>
+<span class="fc" id="L300">        MoneyPrinter[] printersCopy = (MoneyPrinter[]) printers.toArray(new MoneyPrinter[printers.size()]);</span>
+<span class="fc" id="L301">        MoneyParser[] parsersCopy = (MoneyParser[]) parsers.toArray(new MoneyParser[parsers.size()]);</span>
+<span class="fc" id="L302">        return new MoneyFormatter(locale, printersCopy, parsersCopy);</span>
     }
 
     //-----------------------------------------------------------------------
     /**
      * Handles the singleton outputs.
      */
-<span class="fc" id="L311">    private static enum Singletons implements MoneyPrinter, MoneyParser {</span>
-<span class="fc" id="L312">        CODE(&quot;${code}&quot;) {</span>
+<span class="fc" id="L309">    private static enum Singletons implements MoneyPrinter, MoneyParser {</span>
+<span class="fc" id="L310">        CODE(&quot;${code}&quot;) {</span>
             @Override
             public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
-<span class="fc" id="L315">                appendable.append(money.getCurrencyUnit().getCode());</span>
-<span class="fc" id="L316">            }</span>
+<span class="fc" id="L313">                appendable.append(money.getCurrencyUnit().getCode());</span>
+<span class="fc" id="L314">            }</span>
+
             @Override
             public void parse(MoneyParseContext context) {
-<span class="fc" id="L319">                int endPos = context.getIndex() + 3;</span>
-<span class="fc bfc" id="L320" title="All 2 branches covered.">                if (endPos &gt; context.getTextLength()) {</span>
-<span class="fc" id="L321">                    context.setError();</span>
+<span class="fc" id="L318">                int endPos = context.getIndex() + 3;</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">                if (endPos &gt; context.getTextLength()) {</span>
+<span class="fc" id="L320">                    context.setError();</span>
                 } else {
-<span class="fc" id="L323">                    String code = context.getTextSubstring(context.getIndex(), endPos);</span>
+<span class="fc" id="L322">                    String code = context.getTextSubstring(context.getIndex(), endPos);</span>
                     try {
-<span class="fc" id="L325">                        context.setCurrency(CurrencyUnit.of(code));</span>
-<span class="fc" id="L326">                        context.setIndex(endPos);</span>
-<span class="fc" id="L327">                    } catch (IllegalCurrencyException ex) {</span>
-<span class="fc" id="L328">                        context.setError();</span>
-<span class="fc" id="L329">                    }</span>
+<span class="fc" id="L324">                        context.setCurrency(CurrencyUnit.of(code));</span>
+<span class="fc" id="L325">                        context.setIndex(endPos);</span>
+<span class="fc" id="L326">                    } catch (IllegalCurrencyException ex) {</span>
+<span class="fc" id="L327">                        context.setError();</span>
+<span class="fc" id="L328">                    }</span>
                 }
-<span class="fc" id="L331">            }</span>
+<span class="fc" id="L330">            }</span>
         },
-<span class="fc" id="L333">        NUMERIC_3_CODE(&quot;${numeric3Code}&quot;) {</span>
+<span class="fc" id="L332">        NUMERIC_3_CODE(&quot;${numeric3Code}&quot;) {</span>
             @Override
             public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
-<span class="fc" id="L336">                appendable.append(money.getCurrencyUnit().getNumeric3Code());</span>
-<span class="fc" id="L337">            }</span>
+<span class="fc" id="L335">                appendable.append(money.getCurrencyUnit().getNumeric3Code());</span>
+<span class="fc" id="L336">            }</span>
+
             @Override
             public void parse(MoneyParseContext context) {
 <span class="fc" id="L340">                int endPos = context.getIndex() + 3;</span>
@@ -356,32 +356,36 @@ public final class MoneyFormatterBuilder {
             public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
 <span class="fc" id="L357">                appendable.append(Integer.toString(money.getCurrencyUnit().getNumericCode()));</span>
 <span class="fc" id="L358">            }</span>
+
             @Override
             public void parse(MoneyParseContext context) {
-<span class="fc" id="L361">                int count = 0;</span>
-<span class="fc bfc" id="L362" title="All 4 branches covered.">                for ( ; count &lt; 3 &amp;&amp; context.getIndex() + count &lt; context.getTextLength(); count++) {</span>
-<span class="fc" id="L363">                    char ch = context.getText().charAt(context.getIndex() + count);</span>
-<span class="fc bfc" id="L364" title="All 4 branches covered.">                    if (ch &lt; '0' || ch &gt; '9') {</span>
-<span class="fc" id="L365">                        break;</span>
+<span class="fc" id="L362">                int count = 0;</span>
+<span class="fc bfc" id="L363" title="All 4 branches covered.">                for (; count &lt; 3 &amp;&amp; context.getIndex() + count &lt; context.getTextLength(); count++) {</span>
+<span class="fc" id="L364">                    char ch = context.getText().charAt(context.getIndex() + count);</span>
+<span class="fc bfc" id="L365" title="All 4 branches covered.">                    if (ch &lt; '0' || ch &gt; '9') {</span>
+<span class="fc" id="L366">                        break;</span>
                     }
                 }
-<span class="fc" id="L368">                int endPos = context.getIndex() + count;</span>
-<span class="fc" id="L369">                String code = context.getTextSubstring(context.getIndex(), endPos);</span>
+<span class="fc" id="L369">                int endPos = context.getIndex() + count;</span>
+<span class="fc" id="L370">                String code = context.getTextSubstring(context.getIndex(), endPos);</span>
                 try {
-<span class="fc" id="L371">                    context.setCurrency(CurrencyUnit.ofNumericCode(code));</span>
-<span class="fc" id="L372">                    context.setIndex(endPos);</span>
-<span class="fc" id="L373">                } catch (IllegalCurrencyException ex) {</span>
-<span class="fc" id="L374">                    context.setError();</span>
-<span class="fc" id="L375">                }</span>
-<span class="fc" id="L376">            }</span>
+<span class="fc" id="L372">                    context.setCurrency(CurrencyUnit.ofNumericCode(code));</span>
+<span class="fc" id="L373">                    context.setIndex(endPos);</span>
+<span class="fc" id="L374">                } catch (IllegalCurrencyException ex) {</span>
+<span class="fc" id="L375">                    context.setError();</span>
+<span class="fc" id="L376">                }</span>
+<span class="fc" id="L377">            }</span>
         };
+
         private final String toString;
-<span class="fc" id="L379">        private Singletons(String toString) {</span>
-<span class="fc" id="L380">            this.toString = toString;</span>
-<span class="fc" id="L381">        }</span>
+
+<span class="fc" id="L382">        private Singletons(String toString) {</span>
+<span class="fc" id="L383">            this.toString = toString;</span>
+<span class="fc" id="L384">        }</span>
+
         @Override
         public String toString() {
-<span class="fc" id="L384">            return toString;</span>
+<span class="fc" id="L388">            return toString;</span>
         }
     }
 
@@ -389,15 +393,17 @@ public final class MoneyFormatterBuilder {
     /**
      * Handles the singleton outputs.
      */
-<span class="fc" id="L392">    private static enum SingletonPrinters implements MoneyPrinter {</span>
-<span class="fc" id="L393">        LOCALIZED_SYMBOL;</span>
+<span class="fc" id="L396">    private static enum SingletonPrinters implements MoneyPrinter {</span>
+<span class="fc" id="L397">        LOCALIZED_SYMBOL;</span>
+
         @Override
         public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
-<span class="fc" id="L396">            appendable.append(money.getCurrencyUnit().getSymbol(context.getLocale()));</span>
-<span class="fc" id="L397">        }</span>
+<span class="fc" id="L401">            appendable.append(money.getCurrencyUnit().getSymbol(context.getLocale()));</span>
+<span class="fc" id="L402">        }</span>
+
         @Override
         public String toString() {
-<span class="fc" id="L400">            return &quot;${symbolLocalized}&quot;;</span>
+<span class="fc" id="L406">            return &quot;${symbolLocalized}&quot;;</span>
         }
     }
 
