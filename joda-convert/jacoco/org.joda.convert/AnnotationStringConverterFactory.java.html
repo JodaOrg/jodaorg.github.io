@@ -30,7 +30,7 @@ final class AnnotationStringConverterFactory implements StringConverterFactory {
     /**
      * Singleton instance.
      */
-<span class="fc" id="L33">    static final StringConverterFactory INSTANCE = new AnnotationStringConverterFactory();</span>
+<span class="fc" id="L33">    static final AnnotationStringConverterFactory INSTANCE = new AnnotationStringConverterFactory();</span>
 
     /**
      * Restricted constructor.
@@ -59,22 +59,48 @@ final class AnnotationStringConverterFactory implements StringConverterFactory {
      * @return the converter, not null
      * @throws RuntimeException if none found
      */
-    private &lt;T&gt; StringConverter&lt;T&gt; findAnnotatedConverter(final Class&lt;T&gt; cls) {
+    private &lt;T&gt; StringConverter&lt;T&gt; findAnnotatedConverter(Class&lt;T&gt; cls) {
 <span class="fc" id="L63">        Method toString = findToStringMethod(cls);  // checks superclasses</span>
 <span class="fc bfc" id="L64" title="All 2 branches covered.">        if (toString == null) {</span>
 <span class="fc" id="L65">            return null;</span>
         }
-<span class="fc" id="L67">        MethodConstructorStringConverter&lt;T&gt; con = findFromStringConstructor(cls, toString);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        MethodsStringConverter&lt;T&gt; mth = findFromStringMethod(cls, toString, con == null);  // optionally checks superclasses</span>
-<span class="fc bfc" id="L69" title="All 4 branches covered.">        if (con == null &amp;&amp; mth == null) {</span>
-<span class="fc" id="L70">            throw new IllegalStateException(&quot;Class annotated with @ToString but not with @FromString: &quot; + cls.getName());</span>
+<span class="fc" id="L67">        TypedFromStringConverter&lt;T&gt; fromString = findAnnotatedFromStringConverter(cls);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (fromString == null) {</span>
+<span class="fc" id="L69">            throw new IllegalStateException(&quot;Class annotated with @ToString but not with @FromString: &quot; + cls.getName());</span>
         }
-<span class="fc bfc" id="L72" title="All 4 branches covered.">        if (con != null &amp;&amp; mth != null) {</span>
-<span class="fc" id="L73">            throw new IllegalStateException(&quot;Both method and constructor are annotated with @FromString: &quot; + cls.getName());</span>
-        }
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        return (con != null ? con : mth);</span>
+<span class="fc" id="L71">        return new ReflectionStringConverter&lt;T&gt;(cls, toString, fromString);</span>
     }
 
+    /**
+     * Finds a from-string converter by type.
+     * 
+     * @param &lt;T&gt;  the type of the converter
+     * @param cls  the type to lookup, not null
+     * @return the converter, null if not found
+     * @throws RuntimeException (or subclass) if source code is invalid
+     */
+    &lt;T&gt; TypedFromStringConverter&lt;T&gt; findFromStringConverter(Class&lt;T&gt; cls) {
+<span class="fc" id="L83">        return findAnnotatedFromStringConverter(cls);  // capture generics</span>
+    }
+
+    /**
+     * Finds a from-string converter.
+     * 
+     * @param &lt;T&gt;  the type of the converter
+     * @param cls  the class to find a method for, not null
+     * @return the converter, null if not found
+     * @throws RuntimeException if none found
+     */
+    private &lt;T&gt; TypedFromStringConverter&lt;T&gt; findAnnotatedFromStringConverter(Class&lt;T&gt; cls) {
+<span class="fc" id="L95">        TypedFromStringConverter&lt;T&gt; con = findFromStringConstructor(cls);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        TypedFromStringConverter&lt;T&gt; mth = findFromStringMethod(cls, con == null);  // optionally checks superclasses</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">        if (con != null &amp;&amp; mth != null) {</span>
+<span class="fc" id="L98">            throw new IllegalStateException(&quot;Both method and constructor are annotated with @FromString: &quot; + cls.getName());</span>
+        }
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        return (con != null ? con : mth);</span>
+    }
+
+    //-------------------------------------------------------------------------
     /**
      * Finds the conversion method.
      * 
@@ -83,108 +109,107 @@ final class AnnotationStringConverterFactory implements StringConverterFactory {
      * @throws RuntimeException if invalid
      */
     private Method findToStringMethod(Class&lt;?&gt; cls) {
-<span class="fc" id="L86">        Method matched = null;</span>
+<span class="fc" id="L112">        Method matched = null;</span>
         // find in superclass hierarchy
-<span class="fc" id="L88">        Class&lt;?&gt; loopCls = cls;</span>
-<span class="fc bfc" id="L89" title="All 4 branches covered.">        while (loopCls != null &amp;&amp; matched == null) {</span>
-<span class="fc" id="L90">            Method[] methods = loopCls.getDeclaredMethods();</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">            for (Method method : methods) {</span>
-<span class="fc bfc" id="L92" title="All 4 branches covered.">                if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
-<span class="fc" id="L93">                    ToString toString = method.getAnnotation(ToString.class);</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">                    if (toString != null) {</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">                        if (matched != null) {</span>
-<span class="fc" id="L96">                            throw new IllegalStateException(&quot;Two methods are annotated with @ToString: &quot; + cls.getName());</span>
+<span class="fc" id="L114">        Class&lt;?&gt; loopCls = cls;</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">        while (loopCls != null &amp;&amp; matched == null) {</span>
+<span class="fc" id="L116">            Method[] methods = loopCls.getDeclaredMethods();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">            for (Method method : methods) {</span>
+<span class="fc bfc" id="L118" title="All 4 branches covered.">                if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
+<span class="fc" id="L119">                    ToString toString = method.getAnnotation(ToString.class);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                    if (toString != null) {</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                        if (matched != null) {</span>
+<span class="fc" id="L122">                            throw new IllegalStateException(&quot;Two methods are annotated with @ToString: &quot; + cls.getName());</span>
                         }
-<span class="fc" id="L98">                        matched = method;</span>
+<span class="fc" id="L124">                        matched = method;</span>
                     }
                 }
             }
-<span class="fc" id="L102">            loopCls = loopCls.getSuperclass();</span>
-<span class="fc" id="L103">        }</span>
+<span class="fc" id="L128">            loopCls = loopCls.getSuperclass();</span>
+<span class="fc" id="L129">        }</span>
         // find in immediate parent interfaces
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (matched == null) {</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">            for (Class&lt;?&gt; loopIfc : eliminateEnumSubclass(cls).getInterfaces()) {</span>
-<span class="fc" id="L107">                Method[] methods = loopIfc.getDeclaredMethods();</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">                for (Method method : methods) {</span>
-<span class="pc bpc" id="L109" title="1 of 4 branches missed.">                    if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
-<span class="fc" id="L110">                        ToString toString = method.getAnnotation(ToString.class);</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">                        if (toString != null) {</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">                            if (matched != null) {</span>
-<span class="nc" id="L113">                                throw new IllegalStateException(&quot;Two methods are annotated with @ToString on interfaces: &quot; + cls.getName());</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (matched == null) {</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            for (Class&lt;?&gt; loopIfc : eliminateEnumSubclass(cls).getInterfaces()) {</span>
+<span class="fc" id="L133">                Method[] methods = loopIfc.getDeclaredMethods();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                for (Method method : methods) {</span>
+<span class="pc bpc" id="L135" title="1 of 4 branches missed.">                    if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
+<span class="fc" id="L136">                        ToString toString = method.getAnnotation(ToString.class);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">                        if (toString != null) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                            if (matched != null) {</span>
+<span class="nc" id="L139">                                throw new IllegalStateException(&quot;Two methods are annotated with @ToString on interfaces: &quot; + cls.getName());</span>
                             }
-<span class="fc" id="L115">                            matched = method;</span>
+<span class="fc" id="L141">                            matched = method;</span>
                         }
                     }
                 }
             }
         }
-<span class="fc" id="L121">        return matched;</span>
+<span class="fc" id="L147">        return matched;</span>
     }
 
+    //-------------------------------------------------------------------------
     /**
      * Finds the conversion method.
      * 
      * @param &lt;T&gt;  the type of the converter
      * @param cls  the class to find a method for, not null
-     * @param toString  the toString method, not null
      * @return the method to call, null means none found
      * @throws RuntimeException if invalid
      */
-    private &lt;T&gt; MethodConstructorStringConverter&lt;T&gt; findFromStringConstructor(Class&lt;T&gt; cls, Method toString) {
+    private &lt;T&gt; TypedFromStringConverter&lt;T&gt; findFromStringConstructor(Class&lt;T&gt; cls) {
         Constructor&lt;T&gt; con;
         try {
-<span class="fc" id="L136">            con = cls.getDeclaredConstructor(String.class);</span>
-<span class="fc" id="L137">        } catch (NoSuchMethodException ex) {</span>
+<span class="fc" id="L162">            con = cls.getDeclaredConstructor(String.class);</span>
+<span class="fc" id="L163">        } catch (NoSuchMethodException ex) {</span>
             try {
-<span class="fc" id="L139">                con = cls.getDeclaredConstructor(CharSequence.class);</span>
-<span class="fc" id="L140">            } catch (NoSuchMethodException ex2) {</span>
-<span class="fc" id="L141">                return null;</span>
-<span class="fc" id="L142">            }</span>
-<span class="fc" id="L143">        }</span>
-<span class="fc" id="L144">        FromString fromString = con.getAnnotation(FromString.class);</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (fromString == null) {</span>
-<span class="fc" id="L146">            return null;</span>
+<span class="fc" id="L165">                con = cls.getDeclaredConstructor(CharSequence.class);</span>
+<span class="fc" id="L166">            } catch (NoSuchMethodException ex2) {</span>
+<span class="fc" id="L167">                return null;</span>
+<span class="fc" id="L168">            }</span>
+<span class="fc" id="L169">        }</span>
+<span class="fc" id="L170">        FromString fromString = con.getAnnotation(FromString.class);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (fromString == null) {</span>
+<span class="fc" id="L172">            return null;</span>
         }
-<span class="fc" id="L148">        return new MethodConstructorStringConverter&lt;T&gt;(cls, toString, con);</span>
+<span class="fc" id="L174">        return new ConstructorFromStringConverter&lt;T&gt;(cls, con);</span>
     }
 
     /**
      * Finds the conversion method.
      * 
      * @param cls  the class to find a method for, not null
-     * @param toString  the toString method, not null
      * @param searchSuperclasses  whether to search superclasses
      * @return the method to call, null means not found
      * @throws RuntimeException if invalid
      */
-    private &lt;T&gt; MethodsStringConverter&lt;T&gt; findFromStringMethod(Class&lt;T&gt; cls, Method toString, boolean searchSuperclasses) {
+    private &lt;T&gt; TypedFromStringConverter&lt;T&gt; findFromStringMethod(Class&lt;T&gt; cls, boolean searchSuperclasses) {
         // find in superclass hierarchy
-<span class="fc" id="L162">        Class&lt;?&gt; loopCls = cls;</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">        while (loopCls != null) {</span>
-<span class="fc" id="L164">            Method fromString = findFromString(loopCls);</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">            if (fromString != null) {</span>
-<span class="fc" id="L166">                return new MethodsStringConverter&lt;T&gt;(cls, toString, fromString, loopCls);</span>
+<span class="fc" id="L187">        Class&lt;?&gt; loopCls = cls;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        while (loopCls != null) {</span>
+<span class="fc" id="L189">            Method fromString = findFromString(loopCls);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (fromString != null) {</span>
+<span class="fc" id="L191">                return new MethodFromStringConverter&lt;T&gt;(cls, fromString, loopCls);</span>
             }
-<span class="fc bfc" id="L168" title="All 2 branches covered.">            if (searchSuperclasses == false) {</span>
-<span class="fc" id="L169">                break;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            if (searchSuperclasses == false) {</span>
+<span class="fc" id="L194">                break;</span>
             }
-<span class="fc" id="L171">            loopCls = loopCls.getSuperclass();</span>
-<span class="fc" id="L172">        }</span>
+<span class="fc" id="L196">            loopCls = loopCls.getSuperclass();</span>
+<span class="fc" id="L197">        }</span>
         // find in immediate parent interfaces
-<span class="fc" id="L174">        MethodsStringConverter&lt;T&gt; matched = null;</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (searchSuperclasses) {</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">            for (Class&lt;?&gt; loopIfc : eliminateEnumSubclass(cls).getInterfaces()) {</span>
-<span class="fc" id="L177">                Method fromString = findFromString(loopIfc);</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">                if (fromString != null) {</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">                    if (matched != null) {</span>
-<span class="nc" id="L180">                        throw new IllegalStateException(&quot;Two different interfaces are annotated with &quot; +</span>
-<span class="nc" id="L181">                            &quot;@FromString or @FromStringFactory: &quot; + cls.getName());</span>
+<span class="fc" id="L199">        TypedFromStringConverter&lt;T&gt; matched = null;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (searchSuperclasses) {</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            for (Class&lt;?&gt; loopIfc : eliminateEnumSubclass(cls).getInterfaces()) {</span>
+<span class="fc" id="L202">                Method fromString = findFromString(loopIfc);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">                if (fromString != null) {</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">                    if (matched != null) {</span>
+<span class="nc" id="L205">                        throw new IllegalStateException(&quot;Two different interfaces are annotated with &quot; +</span>
+<span class="nc" id="L206">                            &quot;@FromString or @FromStringFactory: &quot; + cls.getName());</span>
                     }
-<span class="fc" id="L183">                    matched = new MethodsStringConverter&lt;T&gt;(cls, toString, fromString, loopIfc);</span>
+<span class="fc" id="L208">                    matched = new MethodFromStringConverter&lt;T&gt;(cls, fromString, loopIfc);</span>
                 }
             }
         }
-<span class="fc" id="L187">        return matched;</span>
+<span class="fc" id="L212">        return matched;</span>
     }
 
     /**
@@ -197,58 +222,58 @@ final class AnnotationStringConverterFactory implements StringConverterFactory {
      */
     private Method findFromString(Class&lt;?&gt; cls) {
         // find in declared methods
-<span class="fc" id="L200">        Method[] methods = cls.getDeclaredMethods();</span>
-<span class="fc" id="L201">        Method matched = null;</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">        for (Method method : methods) {</span>
-<span class="fc bfc" id="L203" title="All 4 branches covered.">            if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
-<span class="fc" id="L204">                FromString fromString = method.getAnnotation(FromString.class);</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">                if (fromString != null) {</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">                    if (matched != null) {</span>
-<span class="fc" id="L207">                        throw new IllegalStateException(&quot;Two methods are annotated with @FromString: &quot; + cls.getName());</span>
+<span class="fc" id="L225">        Method[] methods = cls.getDeclaredMethods();</span>
+<span class="fc" id="L226">        Method matched = null;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        for (Method method : methods) {</span>
+<span class="fc bfc" id="L228" title="All 4 branches covered.">            if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
+<span class="fc" id="L229">                FromString fromString = method.getAnnotation(FromString.class);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">                if (fromString != null) {</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">                    if (matched != null) {</span>
+<span class="fc" id="L232">                        throw new IllegalStateException(&quot;Two methods are annotated with @FromString: &quot; + cls.getName());</span>
                     }
-<span class="fc" id="L209">                    matched = method;</span>
+<span class="fc" id="L234">                    matched = method;</span>
                 }
             }
         }
         // check for factory
-<span class="fc" id="L214">        FromStringFactory factory = cls.getAnnotation(FromStringFactory.class);</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">        if (factory != null) {</span>
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (matched != null) {</span>
-<span class="nc" id="L217">                throw new IllegalStateException(&quot;Class annotated with @FromString and @FromStringFactory: &quot; + cls.getName());</span>
+<span class="fc" id="L239">        FromStringFactory factory = cls.getAnnotation(FromStringFactory.class);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        if (factory != null) {</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">            if (matched != null) {</span>
+<span class="nc" id="L242">                throw new IllegalStateException(&quot;Class annotated with @FromString and @FromStringFactory: &quot; + cls.getName());</span>
             }
-<span class="fc" id="L219">            Method[] factoryMethods = factory.factory().getDeclaredMethods();</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">            for (Method method : factoryMethods) {</span>
-<span class="pc bpc" id="L221" title="1 of 4 branches missed.">                if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
+<span class="fc" id="L244">            Method[] factoryMethods = factory.factory().getDeclaredMethods();</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">            for (Method method : factoryMethods) {</span>
+<span class="pc bpc" id="L246" title="1 of 4 branches missed.">                if (!method.isBridge() &amp;&amp; !method.isSynthetic()) {</span>
                     // handle factory containing multiple FromString for different types
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">                    if (cls.isAssignableFrom(method.getReturnType())) {</span>
-<span class="fc" id="L224">                        FromString fromString = method.getAnnotation(FromString.class);</span>
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">                        if (fromString != null) {</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">                            if (matched != null) {</span>
-<span class="fc" id="L227">                                throw new IllegalStateException(&quot;Two methods are annotated with @FromString on the factory: &quot; + factory.factory().getName());</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">                    if (cls.isAssignableFrom(method.getReturnType())) {</span>
+<span class="fc" id="L249">                        FromString fromString = method.getAnnotation(FromString.class);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                        if (fromString != null) {</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">                            if (matched != null) {</span>
+<span class="fc" id="L252">                                throw new IllegalStateException(&quot;Two methods are annotated with @FromString on the factory: &quot; + factory.factory().getName());</span>
                             }
-<span class="fc" id="L229">                            matched = method;</span>
+<span class="fc" id="L254">                            matched = method;</span>
                         }
                     }
                 }
             }
         }
-<span class="fc" id="L235">        return matched;</span>
+<span class="fc" id="L260">        return matched;</span>
     }
 
     // eliminates enum subclass as they are pesky
     private Class&lt;?&gt; eliminateEnumSubclass(Class&lt;?&gt; cls) {
-<span class="fc" id="L240">        Class&lt;?&gt; sup = cls.getSuperclass();</span>
-<span class="pc bpc" id="L241" title="1 of 4 branches missed.">        if (sup != null &amp;&amp; sup.getSuperclass() == Enum.class) {</span>
-<span class="nc" id="L242">            return sup;</span>
+<span class="fc" id="L265">        Class&lt;?&gt; sup = cls.getSuperclass();</span>
+<span class="pc bpc" id="L266" title="1 of 4 branches missed.">        if (sup != null &amp;&amp; sup.getSuperclass() == Enum.class) {</span>
+<span class="nc" id="L267">            return sup;</span>
         }
-<span class="fc" id="L244">        return cls;</span>
+<span class="fc" id="L269">        return cls;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="nc" id="L250">        return getClass().getSimpleName();</span>
+<span class="nc" id="L275">        return getClass().getSimpleName();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -28,36 +28,36 @@ import java.lang.reflect.Method;
  * 
  * @param &lt;T&gt;  the type of the converter
  */
-abstract class ReflectionStringConverter&lt;T&gt; implements TypedStringConverter&lt;T&gt; {
+final class ReflectionStringConverter&lt;T&gt; implements TypedStringConverter&lt;T&gt; {
 
     /** The converted class. */
     private final Class&lt;T&gt; cls;
     /** Conversion to a string. */
     private final Method toString;
+    /** Conversion from a string, package-scoped for testing. */
+    final TypedFromStringConverter&lt;T&gt; fromString;
 
     /**
      * Creates an instance using two methods.
-     * @param cls  the class this converts for, not null
+     * 
+     * @param cls  the class this converts for, null creates a from-string converter
      * @param toString  the toString method, not null
+     * @param fromString  the fromString converter, not null
      * @throws RuntimeException (or subclass) if the method signatures are invalid
      */
-<span class="fc" id="L44">    ReflectionStringConverter(Class&lt;T&gt; cls, Method toString) {</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (toString.getParameterTypes().length != 0) {</span>
-<span class="fc" id="L46">            throw new IllegalStateException(&quot;ToString method must have no parameters: &quot; + toString);</span>
+<span class="fc" id="L48">    ReflectionStringConverter(Class&lt;T&gt; cls, Method toString, TypedFromStringConverter&lt;T&gt; fromString) {</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (toString.getParameterTypes().length != 0) {</span>
+<span class="fc" id="L50">            throw new IllegalStateException(&quot;ToString method must have no parameters: &quot; + toString);</span>
         }
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (toString.getReturnType() != String.class) {</span>
-<span class="fc" id="L49">            throw new IllegalStateException(&quot;ToString method must return a String: &quot; + toString);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (toString.getReturnType() != String.class) {</span>
+<span class="fc" id="L53">            throw new IllegalStateException(&quot;ToString method must return a String: &quot; + toString);</span>
         }
-<span class="fc" id="L51">        this.cls = cls;</span>
-<span class="fc" id="L52">        this.toString = toString;</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L55">        this.cls = cls;</span>
+<span class="fc" id="L56">        this.toString = toString;</span>
+<span class="fc" id="L57">        this.fromString = fromString;</span>
+<span class="fc" id="L58">    }</span>
 
     //-----------------------------------------------------------------------
-    /**
-     * Converts the object to a {@code String}.
-     * @param object  the object to convert, not null
-     * @return the converted string, may be null but generally not
-     */
     @Override
     public String convertToString(T object) {
         try {
@@ -72,11 +72,21 @@ abstract class ReflectionStringConverter&lt;T&gt; implements TypedStringConverte
         }
     }
 
+    @Override
+    public T convertFromString(Class&lt;? extends T&gt; cls, String str) {
+<span class="fc" id="L77">        return fromString.convertFromString(cls, str);</span>
+    }
+
+    @Override
+    public Class&lt;?&gt; getEffectiveType() {
+<span class="fc" id="L82">        return fromString.getEffectiveType();</span>
+    }
+
     //-----------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="fc" id="L78">        return &quot;RefectionStringConverter[&quot; + cls.getSimpleName() + &quot;]&quot;;</span>
+<span class="fc" id="L88">        return &quot;RefectionStringConverter[&quot; + cls.getSimpleName() + &quot;]&quot;;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

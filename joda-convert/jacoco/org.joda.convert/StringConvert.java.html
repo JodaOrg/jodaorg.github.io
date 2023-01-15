@@ -92,6 +92,10 @@ public final class StringConvert {
      * The cache of converters.
      */
 <span class="fc" id="L94">    private final ConcurrentMap&lt;Class&lt;?&gt;, TypedStringConverter&lt;?&gt;&gt; registered = new ConcurrentHashMap&lt;Class&lt;?&gt;, TypedStringConverter&lt;?&gt;&gt;();</span>
+    /**
+     * The cache of from-strings.
+     */
+<span class="fc" id="L98">    private final ConcurrentMap&lt;Class&lt;?&gt;, FromStringConverter&lt;?&gt;&gt; fromStrings = new ConcurrentHashMap&lt;Class&lt;?&gt;, FromStringConverter&lt;?&gt;&gt;();</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -117,7 +121,7 @@ public final class StringConvert {
      * @since 1.5
      */
     public static StringConvert create() {
-<span class="fc" id="L120">        return new StringConvert(true, </span>
+<span class="fc" id="L124">        return new StringConvert(true, </span>
                         NumericArrayStringConverterFactory.INSTANCE,
                         NumericObjectArrayStringConverterFactory.INSTANCE,
                         CharObjectArrayStringConverterFactory.INSTANCE,
@@ -136,8 +140,8 @@ public final class StringConvert {
      * actual conversions.
      */
     public StringConvert() {
-<span class="fc" id="L139">        this(true);</span>
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L143">        this(true);</span>
+<span class="fc" id="L144">    }</span>
 
     /**
      * Creates a new conversion manager.
@@ -152,43 +156,43 @@ public final class StringConvert {
      * @param includeJdkConverters  true to include the JDK converters
      * @param factories  optional array of factories to use, not null
      */
-<span class="fc" id="L155">    public StringConvert(boolean includeJdkConverters, StringConverterFactory... factories) {</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (factories == null) {</span>
-<span class="fc" id="L157">            throw new IllegalArgumentException(&quot;StringConverterFactory array must not be null&quot;);</span>
+<span class="fc" id="L159">    public StringConvert(boolean includeJdkConverters, StringConverterFactory... factories) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (factories == null) {</span>
+<span class="fc" id="L161">            throw new IllegalArgumentException(&quot;StringConverterFactory array must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        for (int i = 0; i &lt; factories.length; i++) {</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">            if (factories[i] == null) {</span>
-<span class="fc" id="L161">                throw new IllegalArgumentException(&quot;StringConverterFactory array must not contain a null element&quot;);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        for (int i = 0; i &lt; factories.length; i++) {</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">            if (factories[i] == null) {</span>
+<span class="fc" id="L165">                throw new IllegalArgumentException(&quot;StringConverterFactory array must not contain a null element&quot;);</span>
             }
         }
-<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (includeJdkConverters) {</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">            for (JDKStringConverter conv : JDKStringConverter.values()) {</span>
-<span class="fc" id="L166">                registered.put(conv.getType(), conv);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (includeJdkConverters) {</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            for (JDKStringConverter conv : JDKStringConverter.values()) {</span>
+<span class="fc" id="L170">                registered.put(conv.getType(), conv);</span>
             }
-<span class="fc" id="L168">            registered.put(Boolean.TYPE, JDKStringConverter.BOOLEAN);</span>
-<span class="fc" id="L169">            registered.put(Byte.TYPE, JDKStringConverter.BYTE);</span>
-<span class="fc" id="L170">            registered.put(Short.TYPE, JDKStringConverter.SHORT);</span>
-<span class="fc" id="L171">            registered.put(Integer.TYPE, JDKStringConverter.INTEGER);</span>
-<span class="fc" id="L172">            registered.put(Long.TYPE, JDKStringConverter.LONG);</span>
-<span class="fc" id="L173">            registered.put(Float.TYPE, JDKStringConverter.FLOAT);</span>
-<span class="fc" id="L174">            registered.put(Double.TYPE, JDKStringConverter.DOUBLE);</span>
-<span class="fc" id="L175">            registered.put(Character.TYPE, JDKStringConverter.CHARACTER);</span>
-<span class="fc" id="L176">            tryRegisterGuava();</span>
-<span class="fc" id="L177">            tryRegisterJava8Optionals();</span>
-<span class="fc" id="L178">            tryRegisterTimeZone();</span>
-<span class="fc" id="L179">            tryRegisterJava8();</span>
-<span class="fc" id="L180">            tryRegisterThreeTenBackport();</span>
-<span class="fc" id="L181">            tryRegisterThreeTenOld();</span>
+<span class="fc" id="L172">            registered.put(Boolean.TYPE, JDKStringConverter.BOOLEAN);</span>
+<span class="fc" id="L173">            registered.put(Byte.TYPE, JDKStringConverter.BYTE);</span>
+<span class="fc" id="L174">            registered.put(Short.TYPE, JDKStringConverter.SHORT);</span>
+<span class="fc" id="L175">            registered.put(Integer.TYPE, JDKStringConverter.INTEGER);</span>
+<span class="fc" id="L176">            registered.put(Long.TYPE, JDKStringConverter.LONG);</span>
+<span class="fc" id="L177">            registered.put(Float.TYPE, JDKStringConverter.FLOAT);</span>
+<span class="fc" id="L178">            registered.put(Double.TYPE, JDKStringConverter.DOUBLE);</span>
+<span class="fc" id="L179">            registered.put(Character.TYPE, JDKStringConverter.CHARACTER);</span>
+<span class="fc" id="L180">            tryRegisterGuava();</span>
+<span class="fc" id="L181">            tryRegisterJava8Optionals();</span>
+<span class="fc" id="L182">            tryRegisterTimeZone();</span>
+<span class="fc" id="L183">            tryRegisterJava8();</span>
+<span class="fc" id="L184">            tryRegisterThreeTenBackport();</span>
+<span class="fc" id="L185">            tryRegisterThreeTenOld();</span>
         }
-<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (factories.length &gt; 0) {</span>
-<span class="fc" id="L184">            this.factories.addAll(Arrays.asList(factories));</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (factories.length &gt; 0) {</span>
+<span class="fc" id="L188">            this.factories.addAll(Arrays.asList(factories));</span>
         }
-<span class="fc" id="L186">        this.factories.add(AnnotationStringConverterFactory.INSTANCE);</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (includeJdkConverters) {</span>
-<span class="fc" id="L188">            this.factories.add(EnumStringConverterFactory.INSTANCE);</span>
-<span class="fc" id="L189">            this.factories.add(TypeStringConverterFactory.INSTANCE);</span>
+<span class="fc" id="L190">        this.factories.add(AnnotationStringConverterFactory.INSTANCE);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (includeJdkConverters) {</span>
+<span class="fc" id="L192">            this.factories.add(EnumStringConverterFactory.INSTANCE);</span>
+<span class="fc" id="L193">            this.factories.add(TypeStringConverterFactory.INSTANCE);</span>
         }
-<span class="fc" id="L191">    }</span>
+<span class="fc" id="L195">    }</span>
 
     /**
      * Tries to register the Guava converters class.
@@ -199,66 +203,66 @@ public final class StringConvert {
             // to access Guava this module must add a read edge to the module graph
             // but since this code is written for Java 6, we have to do this by reflection
             // yuck
-<span class="fc" id="L202">            Class&lt;?&gt; moduleClass = Class.class.getMethod(&quot;getModule&quot;).getReturnType();</span>
-<span class="fc" id="L203">            Object convertModule = Class.class.getMethod(&quot;getModule&quot;).invoke(StringConvert.class);</span>
-<span class="fc" id="L204">            Object layer = convertModule.getClass().getMethod(&quot;getLayer&quot;).invoke(convertModule);</span>
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">            if (layer != null) {</span>
-<span class="fc" id="L206">                Object optGuava = layer.getClass().getMethod(&quot;findModule&quot;, String.class).invoke(layer, &quot;com.google.common&quot;);</span>
-<span class="fc" id="L207">                boolean found = (Boolean) optGuava.getClass().getMethod(&quot;isPresent&quot;).invoke(optGuava);</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">                if (found) {</span>
-<span class="nc" id="L209">                    Object guavaModule = optGuava.getClass().getMethod(&quot;get&quot;).invoke(optGuava);</span>
-<span class="nc" id="L210">                    moduleClass.getMethod(&quot;addReads&quot;, moduleClass).invoke(convertModule, guavaModule);</span>
+<span class="fc" id="L206">            Class&lt;?&gt; moduleClass = Class.class.getMethod(&quot;getModule&quot;).getReturnType();</span>
+<span class="fc" id="L207">            Object convertModule = Class.class.getMethod(&quot;getModule&quot;).invoke(StringConvert.class);</span>
+<span class="fc" id="L208">            Object layer = convertModule.getClass().getMethod(&quot;getLayer&quot;).invoke(convertModule);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">            if (layer != null) {</span>
+<span class="fc" id="L210">                Object optGuava = layer.getClass().getMethod(&quot;findModule&quot;, String.class).invoke(layer, &quot;com.google.common&quot;);</span>
+<span class="fc" id="L211">                boolean found = (Boolean) optGuava.getClass().getMethod(&quot;isPresent&quot;).invoke(optGuava);</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">                if (found) {</span>
+<span class="nc" id="L213">                    Object guavaModule = optGuava.getClass().getMethod(&quot;get&quot;).invoke(optGuava);</span>
+<span class="nc" id="L214">                    moduleClass.getMethod(&quot;addReads&quot;, moduleClass).invoke(convertModule, guavaModule);</span>
                 }
             }
 
-<span class="nc" id="L214">        } catch (Throwable ex) {</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L216">                System.err.println(&quot;tryRegisterGuava1: &quot; + ex);</span>
+<span class="nc" id="L218">        } catch (Throwable ex) {</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L220">                System.err.println(&quot;tryRegisterGuava1: &quot; + ex);</span>
             }
-<span class="fc" id="L218">        }</span>
+<span class="fc" id="L222">        }</span>
         try {
             // can now check for Guava
             // if we have created a read edge, or if we are on the classpath, this will succeed
-<span class="fc" id="L222">            loadType(&quot;com.google.common.reflect.TypeToken&quot;);</span>
+<span class="fc" id="L226">            loadType(&quot;com.google.common.reflect.TypeToken&quot;);</span>
             @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L224">            Class&lt;?&gt; cls = (Class&lt;TypedStringConverter&lt;?&gt;&gt;) loadType(&quot;org.joda.convert.TypeTokenStringConverter&quot;);</span>
-<span class="fc" id="L225">            TypedStringConverter&lt;?&gt; conv = (TypedStringConverter&lt;?&gt;) cls.getDeclaredConstructor().newInstance();</span>
-<span class="fc" id="L226">            registered.put(conv.getEffectiveType(), conv);</span>
+<span class="fc" id="L228">            Class&lt;?&gt; cls = loadType(&quot;org.joda.convert.TypeTokenStringConverter&quot;);</span>
+<span class="fc" id="L229">            TypedStringConverter&lt;?&gt; conv = (TypedStringConverter&lt;?&gt;) cls.getDeclaredConstructor().newInstance();</span>
+<span class="fc" id="L230">            registered.put(conv.getEffectiveType(), conv);</span>
 
-<span class="fc" id="L228">        } catch (Throwable ex) {</span>
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L230">                System.err.println(&quot;tryRegisterGuava2: &quot; + ex);</span>
+<span class="fc" id="L232">        } catch (Throwable ex) {</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L234">                System.err.println(&quot;tryRegisterGuava2: &quot; + ex);</span>
             }
-<span class="fc" id="L232">        }</span>
-<span class="fc" id="L233">    }</span>
+<span class="fc" id="L236">        }</span>
+<span class="fc" id="L237">    }</span>
 
     /**
      * Tries to register the Java 8 optional classes.
      */
     private void tryRegisterJava8Optionals() {
         try {
-<span class="fc" id="L240">            loadType(&quot;java.util.OptionalInt&quot;);</span>
+<span class="fc" id="L244">            loadType(&quot;java.util.OptionalInt&quot;);</span>
             @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L242">            Class&lt;?&gt; cls1 = (Class&lt;TypedStringConverter&lt;?&gt;&gt;) loadType(&quot;org.joda.convert.OptionalIntStringConverter&quot;);</span>
-<span class="fc" id="L243">            TypedStringConverter&lt;?&gt; conv1 = (TypedStringConverter&lt;?&gt;) cls1.getDeclaredConstructor().newInstance();</span>
-<span class="fc" id="L244">            registered.put(conv1.getEffectiveType(), conv1);</span>
+<span class="fc" id="L246">            Class&lt;?&gt; cls1 = loadType(&quot;org.joda.convert.OptionalIntStringConverter&quot;);</span>
+<span class="fc" id="L247">            TypedStringConverter&lt;?&gt; conv1 = (TypedStringConverter&lt;?&gt;) cls1.getDeclaredConstructor().newInstance();</span>
+<span class="fc" id="L248">            registered.put(conv1.getEffectiveType(), conv1);</span>
 
             @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L247">            Class&lt;?&gt; cls2 = (Class&lt;TypedStringConverter&lt;?&gt;&gt;) loadType(&quot;org.joda.convert.OptionalLongStringConverter&quot;);</span>
-<span class="fc" id="L248">            TypedStringConverter&lt;?&gt; conv2 = (TypedStringConverter&lt;?&gt;) cls2.getDeclaredConstructor().newInstance();</span>
-<span class="fc" id="L249">            registered.put(conv2.getEffectiveType(), conv2);</span>
+<span class="fc" id="L251">            Class&lt;?&gt; cls2 = loadType(&quot;org.joda.convert.OptionalLongStringConverter&quot;);</span>
+<span class="fc" id="L252">            TypedStringConverter&lt;?&gt; conv2 = (TypedStringConverter&lt;?&gt;) cls2.getDeclaredConstructor().newInstance();</span>
+<span class="fc" id="L253">            registered.put(conv2.getEffectiveType(), conv2);</span>
 
             @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L252">            Class&lt;?&gt; cls3 = (Class&lt;TypedStringConverter&lt;?&gt;&gt;) loadType(&quot;org.joda.convert.OptionalDoubleStringConverter&quot;);</span>
-<span class="fc" id="L253">            TypedStringConverter&lt;?&gt; conv3 = (TypedStringConverter&lt;?&gt;) cls3.getDeclaredConstructor().newInstance();</span>
-<span class="fc" id="L254">            registered.put(conv3.getEffectiveType(), conv3);</span>
+<span class="fc" id="L256">            Class&lt;?&gt; cls3 = loadType(&quot;org.joda.convert.OptionalDoubleStringConverter&quot;);</span>
+<span class="fc" id="L257">            TypedStringConverter&lt;?&gt; conv3 = (TypedStringConverter&lt;?&gt;) cls3.getDeclaredConstructor().newInstance();</span>
+<span class="fc" id="L258">            registered.put(conv3.getEffectiveType(), conv3);</span>
 
-<span class="nc" id="L256">        } catch (Throwable ex) {</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L258">                System.err.println(&quot;tryRegisterOptionals: &quot; + ex);</span>
+<span class="nc" id="L260">        } catch (Throwable ex) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L262">                System.err.println(&quot;tryRegisterOptionals: &quot; + ex);</span>
             }
-<span class="fc" id="L260">        }</span>
-<span class="fc" id="L261">    }</span>
+<span class="fc" id="L264">        }</span>
+<span class="fc" id="L265">    }</span>
 
     /**
      * Tries to register the subclasses of TimeZone.
@@ -266,117 +270,117 @@ public final class StringConvert {
      */
     private void tryRegisterTimeZone() {
         try {
-<span class="fc" id="L269">            registered.put(SimpleTimeZone.class, JDKStringConverter.TIME_ZONE);</span>
+<span class="fc" id="L273">            registered.put(SimpleTimeZone.class, JDKStringConverter.TIME_ZONE);</span>
 
-<span class="nc" id="L271">        } catch (Throwable ex) {</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L273">                System.err.println(&quot;tryRegisterTimeZone1: &quot; + ex);</span>
+<span class="nc" id="L275">        } catch (Throwable ex) {</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L277">                System.err.println(&quot;tryRegisterTimeZone1: &quot; + ex);</span>
             }
-<span class="fc" id="L275">        }</span>
+<span class="fc" id="L279">        }</span>
         try {
-<span class="fc" id="L277">            TimeZone zone = TimeZone.getDefault();</span>
-<span class="fc" id="L278">            registered.put(zone.getClass(), JDKStringConverter.TIME_ZONE);</span>
+<span class="fc" id="L281">            TimeZone zone = TimeZone.getDefault();</span>
+<span class="fc" id="L282">            registered.put(zone.getClass(), JDKStringConverter.TIME_ZONE);</span>
 
-<span class="nc" id="L280">        } catch (Throwable ex) {</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L282">                System.err.println(&quot;tryRegisterTimeZone2: &quot; + ex);</span>
+<span class="nc" id="L284">        } catch (Throwable ex) {</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L286">                System.err.println(&quot;tryRegisterTimeZone2: &quot; + ex);</span>
             }
-<span class="fc" id="L284">        }</span>
+<span class="fc" id="L288">        }</span>
         try {
-<span class="fc" id="L286">            TimeZone zone = TimeZone.getTimeZone(&quot;Europe/London&quot;);</span>
-<span class="fc" id="L287">            registered.put(zone.getClass(), JDKStringConverter.TIME_ZONE);</span>
+<span class="fc" id="L290">            TimeZone zone = TimeZone.getTimeZone(&quot;Europe/London&quot;);</span>
+<span class="fc" id="L291">            registered.put(zone.getClass(), JDKStringConverter.TIME_ZONE);</span>
 
-<span class="nc" id="L289">        } catch (Throwable ex) {</span>
-<span class="nc bnc" id="L290" title="All 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L291">                System.err.println(&quot;tryRegisterTimeZone3: &quot; + ex);</span>
+<span class="nc" id="L293">        } catch (Throwable ex) {</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L295">                System.err.println(&quot;tryRegisterTimeZone3: &quot; + ex);</span>
             }
-<span class="fc" id="L293">        }</span>
-<span class="fc" id="L294">    }</span>
+<span class="fc" id="L297">        }</span>
+<span class="fc" id="L298">    }</span>
 
     /**
      * Tries to register Java 8 classes.
      */
     private void tryRegisterJava8() {
         try {
-<span class="fc" id="L301">            tryRegister(&quot;java.time.Instant&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L302">            tryRegister(&quot;java.time.Duration&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L303">            tryRegister(&quot;java.time.LocalDate&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L304">            tryRegister(&quot;java.time.LocalTime&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L305">            tryRegister(&quot;java.time.LocalDateTime&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L306">            tryRegister(&quot;java.time.OffsetTime&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L307">            tryRegister(&quot;java.time.OffsetDateTime&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L308">            tryRegister(&quot;java.time.ZonedDateTime&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L309">            tryRegister(&quot;java.time.Year&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L310">            tryRegister(&quot;java.time.YearMonth&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L311">            tryRegister(&quot;java.time.MonthDay&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L312">            tryRegister(&quot;java.time.Period&quot;, &quot;parse&quot;);</span>
-<span class="fc" id="L313">            tryRegister(&quot;java.time.ZoneOffset&quot;, &quot;of&quot;);</span>
-<span class="fc" id="L314">            tryRegister(&quot;java.time.ZoneId&quot;, &quot;of&quot;);</span>
-<span class="fc" id="L315">            tryRegister(&quot;java.time.ZoneRegion&quot;, &quot;of&quot;);</span>
+<span class="fc" id="L305">            tryRegister(&quot;java.time.Instant&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L306">            tryRegister(&quot;java.time.Duration&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L307">            tryRegister(&quot;java.time.LocalDate&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L308">            tryRegister(&quot;java.time.LocalTime&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L309">            tryRegister(&quot;java.time.LocalDateTime&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L310">            tryRegister(&quot;java.time.OffsetTime&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L311">            tryRegister(&quot;java.time.OffsetDateTime&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L312">            tryRegister(&quot;java.time.ZonedDateTime&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L313">            tryRegister(&quot;java.time.Year&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L314">            tryRegister(&quot;java.time.YearMonth&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L315">            tryRegister(&quot;java.time.MonthDay&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L316">            tryRegister(&quot;java.time.Period&quot;, &quot;parse&quot;);</span>
+<span class="fc" id="L317">            tryRegister(&quot;java.time.ZoneOffset&quot;, &quot;of&quot;);</span>
+<span class="fc" id="L318">            tryRegister(&quot;java.time.ZoneId&quot;, &quot;of&quot;);</span>
+<span class="fc" id="L319">            tryRegister(&quot;java.time.ZoneRegion&quot;, &quot;of&quot;);</span>
 
-<span class="nc" id="L317">        } catch (Throwable ex) {</span>
-<span class="nc bnc" id="L318" title="All 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L319">                System.err.println(&quot;tryRegisterJava8: &quot; + ex);</span>
+<span class="nc" id="L321">        } catch (Throwable ex) {</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L323">                System.err.println(&quot;tryRegisterJava8: &quot; + ex);</span>
             }
-<span class="fc" id="L321">        }</span>
-<span class="fc" id="L322">    }</span>
+<span class="fc" id="L325">        }</span>
+<span class="fc" id="L326">    }</span>
 
     /**
      * Tries to register ThreeTen backport classes.
      */
     private void tryRegisterThreeTenBackport() {
         try {
-<span class="nc" id="L329">            tryRegister(&quot;org.threeten.bp.Instant&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L330">            tryRegister(&quot;org.threeten.bp.Duration&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L331">            tryRegister(&quot;org.threeten.bp.LocalDate&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L332">            tryRegister(&quot;org.threeten.bp.LocalTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L333">            tryRegister(&quot;org.threeten.bp.LocalDateTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L334">            tryRegister(&quot;org.threeten.bp.OffsetTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L335">            tryRegister(&quot;org.threeten.bp.OffsetDateTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L336">            tryRegister(&quot;org.threeten.bp.ZonedDateTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L337">            tryRegister(&quot;org.threeten.bp.Year&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L338">            tryRegister(&quot;org.threeten.bp.YearMonth&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L339">            tryRegister(&quot;org.threeten.bp.MonthDay&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L340">            tryRegister(&quot;org.threeten.bp.Period&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L341">            tryRegister(&quot;org.threeten.bp.ZoneOffset&quot;, &quot;of&quot;);</span>
-<span class="nc" id="L342">            tryRegister(&quot;org.threeten.bp.ZoneId&quot;, &quot;of&quot;);</span>
-<span class="nc" id="L343">            tryRegister(&quot;org.threeten.bp.ZoneRegion&quot;, &quot;of&quot;);</span>
+<span class="nc" id="L333">            tryRegister(&quot;org.threeten.bp.Instant&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L334">            tryRegister(&quot;org.threeten.bp.Duration&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L335">            tryRegister(&quot;org.threeten.bp.LocalDate&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L336">            tryRegister(&quot;org.threeten.bp.LocalTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L337">            tryRegister(&quot;org.threeten.bp.LocalDateTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L338">            tryRegister(&quot;org.threeten.bp.OffsetTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L339">            tryRegister(&quot;org.threeten.bp.OffsetDateTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L340">            tryRegister(&quot;org.threeten.bp.ZonedDateTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L341">            tryRegister(&quot;org.threeten.bp.Year&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L342">            tryRegister(&quot;org.threeten.bp.YearMonth&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L343">            tryRegister(&quot;org.threeten.bp.MonthDay&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L344">            tryRegister(&quot;org.threeten.bp.Period&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L345">            tryRegister(&quot;org.threeten.bp.ZoneOffset&quot;, &quot;of&quot;);</span>
+<span class="nc" id="L346">            tryRegister(&quot;org.threeten.bp.ZoneId&quot;, &quot;of&quot;);</span>
+<span class="nc" id="L347">            tryRegister(&quot;org.threeten.bp.ZoneRegion&quot;, &quot;of&quot;);</span>
 
-<span class="fc" id="L345">        } catch (Throwable ex) {</span>
-<span class="pc bpc" id="L346" title="1 of 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L347">                System.err.println(&quot;tryRegisterThreeTenBackport: &quot; + ex);</span>
+<span class="fc" id="L349">        } catch (Throwable ex) {</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L351">                System.err.println(&quot;tryRegisterThreeTenBackport: &quot; + ex);</span>
             }
-<span class="nc" id="L349">        }</span>
-<span class="fc" id="L350">    }</span>
+<span class="nc" id="L353">        }</span>
+<span class="fc" id="L354">    }</span>
 
     /**
      * Tries to register ThreeTen ThreeTen/JSR-310 classes v0.6.3 and beyond.
      */
     private void tryRegisterThreeTenOld() {
         try {
-<span class="nc" id="L357">            tryRegister(&quot;javax.time.Instant&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L358">            tryRegister(&quot;javax.time.Duration&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L359">            tryRegister(&quot;javax.time.calendar.LocalDate&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L360">            tryRegister(&quot;javax.time.calendar.LocalTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L361">            tryRegister(&quot;javax.time.calendar.LocalDateTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L362">            tryRegister(&quot;javax.time.calendar.OffsetDate&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L363">            tryRegister(&quot;javax.time.calendar.OffsetTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L364">            tryRegister(&quot;javax.time.calendar.OffsetDateTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L365">            tryRegister(&quot;javax.time.calendar.ZonedDateTime&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L366">            tryRegister(&quot;javax.time.calendar.Year&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L367">            tryRegister(&quot;javax.time.calendar.YearMonth&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L368">            tryRegister(&quot;javax.time.calendar.MonthDay&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L369">            tryRegister(&quot;javax.time.calendar.Period&quot;, &quot;parse&quot;);</span>
-<span class="nc" id="L370">            tryRegister(&quot;javax.time.calendar.ZoneOffset&quot;, &quot;of&quot;);</span>
-<span class="nc" id="L371">            tryRegister(&quot;javax.time.calendar.ZoneId&quot;, &quot;of&quot;);</span>
-<span class="nc" id="L372">            tryRegister(&quot;javax.time.calendar.TimeZone&quot;, &quot;of&quot;);</span>
+<span class="nc" id="L361">            tryRegister(&quot;javax.time.Instant&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L362">            tryRegister(&quot;javax.time.Duration&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L363">            tryRegister(&quot;javax.time.calendar.LocalDate&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L364">            tryRegister(&quot;javax.time.calendar.LocalTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L365">            tryRegister(&quot;javax.time.calendar.LocalDateTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L366">            tryRegister(&quot;javax.time.calendar.OffsetDate&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L367">            tryRegister(&quot;javax.time.calendar.OffsetTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L368">            tryRegister(&quot;javax.time.calendar.OffsetDateTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L369">            tryRegister(&quot;javax.time.calendar.ZonedDateTime&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L370">            tryRegister(&quot;javax.time.calendar.Year&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L371">            tryRegister(&quot;javax.time.calendar.YearMonth&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L372">            tryRegister(&quot;javax.time.calendar.MonthDay&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L373">            tryRegister(&quot;javax.time.calendar.Period&quot;, &quot;parse&quot;);</span>
+<span class="nc" id="L374">            tryRegister(&quot;javax.time.calendar.ZoneOffset&quot;, &quot;of&quot;);</span>
+<span class="nc" id="L375">            tryRegister(&quot;javax.time.calendar.ZoneId&quot;, &quot;of&quot;);</span>
+<span class="nc" id="L376">            tryRegister(&quot;javax.time.calendar.TimeZone&quot;, &quot;of&quot;);</span>
 
-<span class="fc" id="L374">        } catch (Throwable ex) {</span>
-<span class="pc bpc" id="L375" title="1 of 2 branches missed.">            if (LOG) {</span>
-<span class="nc" id="L376">                System.err.println(&quot;tryRegisterThreeTenOld: &quot; + ex);</span>
+<span class="fc" id="L378">        } catch (Throwable ex) {</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">            if (LOG) {</span>
+<span class="nc" id="L380">                System.err.println(&quot;tryRegisterThreeTenOld: &quot; + ex);</span>
             }
-<span class="nc" id="L378">        }</span>
-<span class="fc" id="L379">    }</span>
+<span class="nc" id="L382">        }</span>
+<span class="fc" id="L383">    }</span>
 
     /**
      * Tries to register a class using the standard toString/parse pattern.
@@ -385,9 +389,9 @@ public final class StringConvert {
      * @throws ClassNotFoundException if the class does not exist
      */
     private void tryRegister(String className, String fromStringMethodName) throws ClassNotFoundException {
-<span class="fc" id="L388">        Class&lt;?&gt; cls = loadType(className);</span>
-<span class="fc" id="L389">        registerMethods(cls, &quot;toString&quot;, fromStringMethodName);</span>
-<span class="fc" id="L390">    }</span>
+<span class="fc" id="L392">        Class&lt;?&gt; cls = loadType(className);</span>
+<span class="fc" id="L393">        registerMethods(cls, &quot;toString&quot;, fromStringMethodName);</span>
+<span class="fc" id="L394">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -400,12 +404,12 @@ public final class StringConvert {
      * @throws RuntimeException (or subclass) if unable to convert
      */
     public String convertToString(Object object) {
-<span class="fc bfc" id="L403" title="All 2 branches covered.">        if (object == null) {</span>
-<span class="fc" id="L404">            return null;</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        if (object == null) {</span>
+<span class="fc" id="L408">            return null;</span>
         }
-<span class="fc" id="L406">        Class&lt;?&gt; cls = object.getClass();</span>
-<span class="fc" id="L407">        StringConverter&lt;Object&gt; conv = findConverterNoGenerics(cls);</span>
-<span class="fc" id="L408">        return conv.convertToString(object);</span>
+<span class="fc" id="L410">        Class&lt;?&gt; cls = object.getClass();</span>
+<span class="fc" id="L411">        StringConverter&lt;Object&gt; conv = findConverterNoGenerics(cls);</span>
+<span class="fc" id="L412">        return conv.convertToString(object);</span>
     }
 
     /**
@@ -420,17 +424,17 @@ public final class StringConvert {
      * @throws RuntimeException (or subclass) if unable to convert
      */
     public String convertToString(Class&lt;?&gt; cls, Object object) {
-<span class="fc bfc" id="L423" title="All 2 branches covered.">        if (object == null) {</span>
-<span class="fc" id="L424">            return null;</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">        if (object == null) {</span>
+<span class="fc" id="L428">            return null;</span>
         }
-<span class="fc" id="L426">        StringConverter&lt;Object&gt; conv = findConverterNoGenerics(cls);</span>
-<span class="fc" id="L427">        return conv.convertToString(object);</span>
+<span class="fc" id="L430">        StringConverter&lt;Object&gt; conv = findConverterNoGenerics(cls);</span>
+<span class="fc" id="L431">        return conv.convertToString(object);</span>
     }
 
     /**
      * Converts the specified object from a {@code String}.
      * &lt;p&gt;
-     * This uses {@link #findConverter} to provide the converter.
+     * This uses {@link #findFromStringConverter} to provide the converter.
      * 
      * @param &lt;T&gt;  the type to convert to
      * @param cls  the class to convert to, not null
@@ -439,11 +443,11 @@ public final class StringConvert {
      * @throws RuntimeException (or subclass) if unable to convert
      */
     public &lt;T&gt; T convertFromString(Class&lt;T&gt; cls, String str) {
-<span class="fc bfc" id="L442" title="All 2 branches covered.">        if (str == null) {</span>
-<span class="fc" id="L443">            return null;</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">        if (str == null) {</span>
+<span class="fc" id="L447">            return null;</span>
         }
-<span class="fc" id="L445">        StringConverter&lt;T&gt; conv = findConverter(cls);</span>
-<span class="fc" id="L446">        return conv.convertFromString(cls, str);</span>
+<span class="fc" id="L449">        FromStringConverter&lt;T&gt; conv = findFromStringConverter(cls);</span>
+<span class="fc" id="L450">        return conv.convertFromString(cls, str);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -461,9 +465,9 @@ public final class StringConvert {
      */
     public boolean isConvertible(final Class&lt;?&gt; cls) {
         try {
-<span class="pc bpc" id="L464" title="1 of 4 branches missed.">            return cls != null &amp;&amp; findConverterQuiet(cls) != null;</span>
-<span class="nc" id="L465">        } catch (RuntimeException ex) {</span>
-<span class="nc" id="L466">            return false;</span>
+<span class="pc bpc" id="L468" title="1 of 4 branches missed.">            return cls != null &amp;&amp; findConverterQuiet(cls) != null;</span>
+<span class="nc" id="L469">        } catch (RuntimeException ex) {</span>
+<span class="nc" id="L470">            return false;</span>
         }
     }
 
@@ -484,7 +488,7 @@ public final class StringConvert {
      * @throws RuntimeException (or subclass) if no converter found
      */
     public &lt;T&gt; StringConverter&lt;T&gt; findConverter(final Class&lt;T&gt; cls) {
-<span class="fc" id="L487">        return findTypedConverter(cls);</span>
+<span class="fc" id="L491">        return findTypedConverter(cls);</span>
     }
 
     /**
@@ -506,7 +510,7 @@ public final class StringConvert {
      * @since 1.5
      */
     public StringConverter&lt;Object&gt; findConverterNoGenerics(final Class&lt;?&gt; cls) {
-<span class="fc" id="L509">        return findTypedConverterNoGenerics(cls);</span>
+<span class="fc" id="L513">        return findTypedConverterNoGenerics(cls);</span>
     }
 
     /**
@@ -534,11 +538,11 @@ public final class StringConvert {
      * @since 1.7
      */
     public &lt;T&gt; TypedStringConverter&lt;T&gt; findTypedConverter(final Class&lt;T&gt; cls) {
-<span class="fc" id="L537">        TypedStringConverter&lt;T&gt; conv = findConverterQuiet(cls);</span>
-<span class="fc bfc" id="L538" title="All 2 branches covered.">        if (conv == null) {</span>
-<span class="fc" id="L539">            throw new IllegalStateException(&quot;No registered converter found: &quot; + cls);</span>
+<span class="fc" id="L541">        TypedStringConverter&lt;T&gt; conv = findConverterQuiet(cls);</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">        if (conv == null) {</span>
+<span class="fc" id="L543">            throw new IllegalStateException(&quot;No registered converter found: &quot; + cls);</span>
         }
-<span class="fc" id="L541">        return conv;</span>
+<span class="fc" id="L545">        return conv;</span>
     }
 
     /**
@@ -568,48 +572,71 @@ public final class StringConvert {
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public TypedStringConverter&lt;Object&gt; findTypedConverterNoGenerics(final Class&lt;?&gt; cls) {
-<span class="fc" id="L571">        TypedStringConverter&lt;Object&gt; conv = (TypedStringConverter&lt;Object&gt;) findConverterQuiet(cls);</span>
-<span class="fc bfc" id="L572" title="All 2 branches covered.">        if (conv == null) {</span>
-<span class="fc" id="L573">            throw new IllegalStateException(&quot;No registered converter found: &quot; + cls);</span>
+<span class="fc" id="L575">        TypedStringConverter&lt;Object&gt; conv = (TypedStringConverter&lt;Object&gt;) findConverterQuiet(cls);</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">        if (conv == null) {</span>
+<span class="fc" id="L577">            throw new IllegalStateException(&quot;No registered converter found: &quot; + cls);</span>
         }
-<span class="fc" id="L575">        return conv;</span>
+<span class="fc" id="L579">        return conv;</span>
     }
 
     /**
-     * Finds a converter searching registered and annotated.
+     * Finds a suitable from-string converter for the type.
+     * &lt;p&gt;
+     * This returns an instance of {@code FromStringConverter} for the specified class.
+     * In most cases this is identical to {@link #findConverter(Class)}.
+     * However, it is permitted to have a {@code FromString} annotation without a {@code ToString} annotation,
+     * and this method catches that use case.
      * 
      * @param &lt;T&gt;  the type of the converter
-     * @param cls  the class to find a method for, not null
-     * @return the converter, null if no converter
-     * @throws RuntimeException if invalid
+     * @param cls  the class to find a converter for, not null
+     * @return the converter, not null
+     * @throws RuntimeException (or subclass) if no converter found
      */
     @SuppressWarnings(&quot;unchecked&quot;)
-    private &lt;T&gt; TypedStringConverter&lt;T&gt; findConverterQuiet(final Class&lt;T&gt; cls) {
-<span class="fc bfc" id="L588" title="All 2 branches covered.">        if (cls == null) {</span>
-<span class="fc" id="L589">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
-        }
-<span class="fc" id="L591">        TypedStringConverter&lt;T&gt; conv = (TypedStringConverter&lt;T&gt;) registered.get(cls);</span>
-<span class="fc bfc" id="L592" title="All 2 branches covered.">        if (conv == CACHED_NULL) {</span>
-<span class="fc" id="L593">            return null;</span>
-        }
-<span class="fc bfc" id="L595" title="All 2 branches covered.">        if (conv == null) {</span>
-            try {
-<span class="fc" id="L597">                conv = findAnyConverter(cls);</span>
-<span class="fc" id="L598">            } catch (RuntimeException ex) {</span>
-<span class="fc" id="L599">                registered.putIfAbsent(cls, CACHED_NULL);</span>
-<span class="fc" id="L600">                throw ex;</span>
-<span class="fc" id="L601">            }</span>
-<span class="fc bfc" id="L602" title="All 2 branches covered.">            if (conv == null) {</span>
-<span class="fc" id="L603">                registered.putIfAbsent(cls, CACHED_NULL);</span>
-<span class="fc" id="L604">                return null;</span>
+    public &lt;T&gt; FromStringConverter&lt;T&gt; findFromStringConverter(final Class&lt;T&gt; cls) {
+<span class="fc" id="L597">        TypedStringConverter&lt;T&gt; converter = findConverterQuiet(cls);</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">        if (converter == null) {</span>
+<span class="fc" id="L599">            FromStringConverter&lt;T&gt; fromStringConverter = (FromStringConverter&lt;T&gt;) fromStrings.get(cls);</span>
+<span class="fc bfc" id="L600" title="All 2 branches covered.">            if (fromStringConverter == null) {</span>
+<span class="fc" id="L601">                throw new IllegalStateException(&quot;No registered converter found: &quot; + cls);</span>
             }
-<span class="fc" id="L606">            registered.putIfAbsent(cls, conv);</span>
+<span class="fc" id="L603">            return fromStringConverter;</span>
         }
-<span class="fc" id="L608">        return conv;</span>
+<span class="fc" id="L605">        return converter;</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;T&gt; TypedStringConverter&lt;T&gt; findConverterQuiet(final Class&lt;T&gt; cls) {
+<span class="fc bfc" id="L610" title="All 2 branches covered.">        if (cls == null) {</span>
+<span class="fc" id="L611">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
+        }
+<span class="fc" id="L613">        TypedStringConverter&lt;T&gt; conv = (TypedStringConverter&lt;T&gt;) registered.get(cls);</span>
+<span class="fc bfc" id="L614" title="All 2 branches covered.">        if (conv == CACHED_NULL) {</span>
+<span class="fc" id="L615">            return null;</span>
+        }
+<span class="fc bfc" id="L617" title="All 2 branches covered.">        if (conv == null) {</span>
+            try {
+<span class="fc" id="L619">                conv = lookupConverter(cls);</span>
+<span class="fc" id="L620">            } catch (RuntimeException ex) {</span>
+<span class="fc" id="L621">                registered.putIfAbsent(cls, CACHED_NULL);</span>
+<span class="fc" id="L622">                throw ex;</span>
+<span class="fc" id="L623">            }</span>
+<span class="fc bfc" id="L624" title="All 2 branches covered.">            if (conv == null) {</span>
+<span class="fc" id="L625">                registered.putIfAbsent(cls, CACHED_NULL);</span>
+                // search for from-string only converters now, so that our cache is accurate for all kinds of converter
+<span class="fc" id="L627">                TypedFromStringConverter&lt;T&gt; fromString = AnnotationStringConverterFactory.INSTANCE.findFromStringConverter(cls);</span>
+<span class="fc bfc" id="L628" title="All 2 branches covered.">                if (fromString != null) {</span>
+<span class="fc" id="L629">                    fromStrings.put(cls, fromString);</span>
+                }
+<span class="fc" id="L631">                return null;</span>
+            }
+<span class="fc" id="L633">            registered.putIfAbsent(cls, conv);</span>
+        }
+<span class="fc" id="L635">        return conv;</span>
     }
 
     /**
-     * Finds a converter searching registered and annotated.
+     * Lookup a converter searching registered and annotated.
      * 
      * @param &lt;T&gt;  the type of the converter
      * @param cls  the class to find a method for, not null
@@ -617,15 +644,15 @@ public final class StringConvert {
      * @throws RuntimeException if invalid
      */
     @SuppressWarnings(&quot;unchecked&quot;)
-    private &lt;T&gt; TypedStringConverter&lt;T&gt; findAnyConverter(final Class&lt;T&gt; cls) {
+    private &lt;T&gt; TypedStringConverter&lt;T&gt; lookupConverter(final Class&lt;T&gt; cls) {
         // check factories
-<span class="fc bfc" id="L622" title="All 2 branches covered.">        for (StringConverterFactory factory : factories) {</span>
-<span class="fc" id="L623">            StringConverter&lt;T&gt; factoryConv = (StringConverter&lt;T&gt;) factory.findConverter(cls);</span>
-<span class="fc bfc" id="L624" title="All 2 branches covered.">            if (factoryConv != null) {</span>
-<span class="fc" id="L625">                return TypedAdapter.adapt(cls, factoryConv);</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">        for (StringConverterFactory factory : factories) {</span>
+<span class="fc" id="L650">            StringConverter&lt;T&gt; factoryConv = (StringConverter&lt;T&gt;) factory.findConverter(cls);</span>
+<span class="fc bfc" id="L651" title="All 2 branches covered.">            if (factoryConv != null) {</span>
+<span class="fc" id="L652">                return TypedAdapter.adapt(cls, factoryConv);</span>
             }
-<span class="fc" id="L627">        }</span>
-<span class="fc" id="L628">        return null;</span>
+<span class="fc" id="L654">        }</span>
+<span class="fc" id="L655">        return null;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -641,14 +668,14 @@ public final class StringConvert {
      * @since 1.5
      */
     public void registerFactory(final StringConverterFactory factory) {
-<span class="fc bfc" id="L644" title="All 2 branches covered.">        if (factory == null) {</span>
-<span class="fc" id="L645">            throw new IllegalArgumentException(&quot;Factory must not be null&quot;);</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">        if (factory == null) {</span>
+<span class="fc" id="L672">            throw new IllegalArgumentException(&quot;Factory must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L647" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
-<span class="fc" id="L648">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
+<span class="fc bfc" id="L674" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
+<span class="fc" id="L675">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
         }
-<span class="fc" id="L650">        factories.add(0, factory);</span>
-<span class="fc" id="L651">    }</span>
+<span class="fc" id="L677">        factories.add(0, factory);</span>
+<span class="fc" id="L678">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -665,17 +692,17 @@ public final class StringConvert {
      * @throws IllegalStateException if trying to alter the global singleton
      */
     public &lt;T&gt; void register(final Class&lt;T&gt; cls, StringConverter&lt;T&gt; converter) {
-<span class="fc bfc" id="L668" title="All 2 branches covered.">        if (cls == null) {</span>
-<span class="fc" id="L669">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
+<span class="fc bfc" id="L695" title="All 2 branches covered.">        if (cls == null) {</span>
+<span class="fc" id="L696">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L671" title="All 2 branches covered.">        if (converter == null) {</span>
-<span class="fc" id="L672">            throw new IllegalArgumentException(&quot;StringConverter must not be null&quot;);</span>
+<span class="fc bfc" id="L698" title="All 2 branches covered.">        if (converter == null) {</span>
+<span class="fc" id="L699">            throw new IllegalArgumentException(&quot;StringConverter must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L674" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
-<span class="fc" id="L675">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
+<span class="fc bfc" id="L701" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
+<span class="fc" id="L702">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
         }
-<span class="fc" id="L677">        registered.put(cls, TypedAdapter.adapt(cls, converter));</span>
-<span class="fc" id="L678">    }</span>
+<span class="fc" id="L704">        registered.put(cls, TypedAdapter.adapt(cls, converter));</span>
+<span class="fc" id="L705">    }</span>
 
     /**
      * Registers a converter for a specific type using two separate converters.
@@ -698,24 +725,24 @@ public final class StringConvert {
      * @since 1.3
      */
     public &lt;T&gt; void register(final Class&lt;T&gt; cls, final ToStringConverter&lt;T&gt; toString, final FromStringConverter&lt;T&gt; fromString) {
-<span class="fc bfc" id="L701" title="All 4 branches covered.">        if (fromString == null || toString == null) {</span>
-<span class="fc" id="L702">            throw new IllegalArgumentException(&quot;Converters must not be null&quot;);</span>
+<span class="fc bfc" id="L728" title="All 4 branches covered.">        if (fromString == null || toString == null) {</span>
+<span class="fc" id="L729">            throw new IllegalArgumentException(&quot;Converters must not be null&quot;);</span>
         }
-<span class="fc" id="L704">        register(cls, new TypedStringConverter&lt;T&gt;() {</span>
+<span class="fc" id="L731">        register(cls, new TypedStringConverter&lt;T&gt;() {</span>
             @Override
             public String convertToString(T object) {
-<span class="fc" id="L707">                return toString.convertToString(object);</span>
+<span class="fc" id="L734">                return toString.convertToString(object);</span>
             }
             @Override
             public T convertFromString(Class&lt;? extends T&gt; cls, String str) {
-<span class="fc" id="L711">                return fromString.convertFromString(cls, str);</span>
+<span class="fc" id="L738">                return fromString.convertFromString(cls, str);</span>
             }
             @Override
             public Class&lt;?&gt; getEffectiveType() {
-<span class="nc" id="L715">                return cls;</span>
+<span class="nc" id="L742">                return cls;</span>
             }
         });
-<span class="fc" id="L718">    }</span>
+<span class="fc" id="L745">    }</span>
 
     /**
      * Registers a converter for a specific type by method names.
@@ -737,20 +764,21 @@ public final class StringConvert {
      * @throws IllegalStateException if trying to alter the global singleton
      */
     public &lt;T&gt; void registerMethods(final Class&lt;T&gt; cls, String toStringMethodName, String fromStringMethodName) {
-<span class="fc bfc" id="L740" title="All 2 branches covered.">        if (cls == null) {</span>
-<span class="fc" id="L741">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
+<span class="fc bfc" id="L767" title="All 2 branches covered.">        if (cls == null) {</span>
+<span class="fc" id="L768">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L743" title="All 4 branches covered.">        if (toStringMethodName == null || fromStringMethodName == null) {</span>
-<span class="fc" id="L744">            throw new IllegalArgumentException(&quot;Method names must not be null&quot;);</span>
+<span class="fc bfc" id="L770" title="All 4 branches covered.">        if (toStringMethodName == null || fromStringMethodName == null) {</span>
+<span class="fc" id="L771">            throw new IllegalArgumentException(&quot;Method names must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L746" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
-<span class="fc" id="L747">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
+<span class="fc bfc" id="L773" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
+<span class="fc" id="L774">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
         }
-<span class="fc" id="L749">        Method toString = findToStringMethod(cls, toStringMethodName);</span>
-<span class="fc" id="L750">        Method fromString = findFromStringMethod(cls, fromStringMethodName);</span>
-<span class="fc" id="L751">        MethodsStringConverter&lt;T&gt; converter = new MethodsStringConverter&lt;T&gt;(cls, toString, fromString, cls);</span>
-<span class="fc" id="L752">        registered.putIfAbsent(cls, converter);</span>
-<span class="fc" id="L753">    }</span>
+<span class="fc" id="L776">        Method toString = findToStringMethod(cls, toStringMethodName);</span>
+<span class="fc" id="L777">        Method fromString = findFromStringMethod(cls, fromStringMethodName);</span>
+<span class="fc" id="L778">        TypedFromStringConverter&lt;T&gt; fromStringConverter = new MethodFromStringConverter&lt;T&gt;(cls, fromString, cls);</span>
+<span class="fc" id="L779">        ReflectionStringConverter&lt;T&gt; converter = new ReflectionStringConverter&lt;T&gt;(cls, toString, fromStringConverter);</span>
+<span class="fc" id="L780">        registered.putIfAbsent(cls, converter);</span>
+<span class="fc" id="L781">    }</span>
 
     /**
      * Registers a converter for a specific type by method and constructor.
@@ -771,20 +799,21 @@ public final class StringConvert {
      * @throws IllegalStateException if trying to alter the global singleton
      */
     public &lt;T&gt; void registerMethodConstructor(final Class&lt;T&gt; cls, String toStringMethodName) {
-<span class="fc bfc" id="L774" title="All 2 branches covered.">        if (cls == null) {</span>
-<span class="fc" id="L775">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
+<span class="fc bfc" id="L802" title="All 2 branches covered.">        if (cls == null) {</span>
+<span class="fc" id="L803">            throw new IllegalArgumentException(&quot;Class must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L777" title="All 2 branches covered.">        if (toStringMethodName == null) {</span>
-<span class="fc" id="L778">            throw new IllegalArgumentException(&quot;Method name must not be null&quot;);</span>
+<span class="fc bfc" id="L805" title="All 2 branches covered.">        if (toStringMethodName == null) {</span>
+<span class="fc" id="L806">            throw new IllegalArgumentException(&quot;Method name must not be null&quot;);</span>
         }
-<span class="fc bfc" id="L780" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
-<span class="fc" id="L781">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">        if (this == INSTANCE) {</span>
+<span class="fc" id="L809">            throw new IllegalStateException(&quot;Global singleton cannot be extended&quot;);</span>
         }
-<span class="fc" id="L783">        Method toString = findToStringMethod(cls, toStringMethodName);</span>
-<span class="fc" id="L784">        Constructor&lt;T&gt; fromString = findFromStringConstructorByType(cls);</span>
-<span class="fc" id="L785">        MethodConstructorStringConverter&lt;T&gt; converter = new MethodConstructorStringConverter&lt;T&gt;(cls, toString, fromString);</span>
-<span class="fc" id="L786">        registered.putIfAbsent(cls, converter);</span>
-<span class="fc" id="L787">    }</span>
+<span class="fc" id="L811">        Method toString = findToStringMethod(cls, toStringMethodName);</span>
+<span class="fc" id="L812">        Constructor&lt;T&gt; fromString = findFromStringConstructorByType(cls);</span>
+<span class="fc" id="L813">        TypedFromStringConverter&lt;T&gt; fromStringConverter = new ConstructorFromStringConverter&lt;T&gt;(cls, fromString);</span>
+<span class="fc" id="L814">        ReflectionStringConverter&lt;T&gt; converter = new ReflectionStringConverter&lt;T&gt;(cls, toString, fromStringConverter);</span>
+<span class="fc" id="L815">        registered.putIfAbsent(cls, converter);</span>
+<span class="fc" id="L816">    }</span>
 
     /**
      * Finds the conversion method.
@@ -796,14 +825,14 @@ public final class StringConvert {
     private Method findToStringMethod(Class&lt;?&gt; cls, String methodName) {
         Method m;
         try {
-<span class="fc" id="L799">            m = cls.getMethod(methodName);</span>
-<span class="fc" id="L800">        } catch (NoSuchMethodException ex) {</span>
-<span class="fc" id="L801">            throw new IllegalArgumentException(ex);</span>
-<span class="fc" id="L802">        }</span>
-<span class="fc bfc" id="L803" title="All 2 branches covered.">        if (Modifier.isStatic(m.getModifiers())) {</span>
-<span class="fc" id="L804">            throw new IllegalArgumentException(&quot;Method must not be static: &quot; + methodName);</span>
+<span class="fc" id="L828">            m = cls.getMethod(methodName);</span>
+<span class="fc" id="L829">        } catch (NoSuchMethodException ex) {</span>
+<span class="fc" id="L830">            throw new IllegalArgumentException(ex);</span>
+<span class="fc" id="L831">        }</span>
+<span class="fc bfc" id="L832" title="All 2 branches covered.">        if (Modifier.isStatic(m.getModifiers())) {</span>
+<span class="fc" id="L833">            throw new IllegalArgumentException(&quot;Method must not be static: &quot; + methodName);</span>
         }
-<span class="fc" id="L806">        return m;</span>
+<span class="fc" id="L835">        return m;</span>
     }
 
     /**
@@ -816,18 +845,18 @@ public final class StringConvert {
     private Method findFromStringMethod(Class&lt;?&gt; cls, String methodName) {
         Method m;
         try {
-<span class="fc" id="L819">            m = cls.getMethod(methodName, String.class);</span>
-<span class="fc" id="L820">        } catch (NoSuchMethodException ex) {</span>
+<span class="fc" id="L848">            m = cls.getMethod(methodName, String.class);</span>
+<span class="fc" id="L849">        } catch (NoSuchMethodException ex) {</span>
             try {
-<span class="fc" id="L822">                m = cls.getMethod(methodName, CharSequence.class);</span>
-<span class="fc" id="L823">            } catch (NoSuchMethodException ex2) {</span>
-<span class="fc" id="L824">                throw new IllegalArgumentException(&quot;Method not found&quot;, ex2);</span>
-<span class="fc" id="L825">            }</span>
-<span class="fc" id="L826">        }</span>
-<span class="pc bpc" id="L827" title="1 of 2 branches missed.">        if (Modifier.isStatic(m.getModifiers()) == false) {</span>
-<span class="nc" id="L828">            throw new IllegalArgumentException(&quot;Method must be static: &quot; + methodName);</span>
+<span class="fc" id="L851">                m = cls.getMethod(methodName, CharSequence.class);</span>
+<span class="fc" id="L852">            } catch (NoSuchMethodException ex2) {</span>
+<span class="fc" id="L853">                throw new IllegalArgumentException(&quot;Method not found&quot;, ex2);</span>
+<span class="fc" id="L854">            }</span>
+<span class="fc" id="L855">        }</span>
+<span class="pc bpc" id="L856" title="1 of 2 branches missed.">        if (Modifier.isStatic(m.getModifiers()) == false) {</span>
+<span class="nc" id="L857">            throw new IllegalArgumentException(&quot;Method must be static: &quot; + methodName);</span>
         }
-<span class="fc" id="L830">        return m;</span>
+<span class="fc" id="L859">        return m;</span>
     }
 
     /**
@@ -839,12 +868,12 @@ public final class StringConvert {
      */
     private &lt;T&gt; Constructor&lt;T&gt; findFromStringConstructorByType(Class&lt;T&gt; cls) {
         try {
-<span class="fc" id="L842">            return cls.getDeclaredConstructor(String.class);</span>
-<span class="fc" id="L843">        } catch (NoSuchMethodException ex) {</span>
+<span class="fc" id="L871">            return cls.getDeclaredConstructor(String.class);</span>
+<span class="fc" id="L872">        } catch (NoSuchMethodException ex) {</span>
             try {
-<span class="fc" id="L845">                return cls.getDeclaredConstructor(CharSequence.class);</span>
-<span class="fc" id="L846">            } catch (NoSuchMethodException ex2) {</span>
-<span class="fc" id="L847">                throw new IllegalArgumentException(&quot;Constructor not found&quot;, ex2);</span>
+<span class="fc" id="L874">                return cls.getDeclaredConstructor(CharSequence.class);</span>
+<span class="fc" id="L875">            } catch (NoSuchMethodException ex2) {</span>
+<span class="fc" id="L876">                throw new IllegalArgumentException(&quot;Constructor not found&quot;, ex2);</span>
             }
         }
     }
@@ -853,35 +882,35 @@ public final class StringConvert {
     // loads a type avoiding nulls, context class loader if available
     static Class&lt;?&gt; loadType(String fullName) throws ClassNotFoundException {
         try {
-<span class="fc" id="L856">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
-<span class="pc bpc" id="L857" title="1 of 2 branches missed.">            return loader != null ? loader.loadClass(fullName) : Class.forName(fullName);</span>
-<span class="fc" id="L858">        } catch (ClassNotFoundException ex) {</span>
-<span class="fc" id="L859">            return loadPrimitiveType(fullName, ex);</span>
+<span class="fc" id="L885">            ClassLoader loader = Thread.currentThread().getContextClassLoader();</span>
+<span class="pc bpc" id="L886" title="1 of 4 branches missed.">            return loader != null &amp;&amp; !fullName.startsWith(&quot;[&quot;) ? loader.loadClass(fullName) : Class.forName(fullName);</span>
+<span class="fc" id="L887">        } catch (ClassNotFoundException ex) {</span>
+<span class="fc" id="L888">            return loadPrimitiveType(fullName, ex);</span>
         }
     }
 
     // handle primitive types
     private static Class&lt;?&gt; loadPrimitiveType(String fullName, ClassNotFoundException ex) throws ClassNotFoundException {
-<span class="fc bfc" id="L865" title="All 2 branches covered.">        if (fullName.equals(&quot;int&quot;)) {</span>
-<span class="fc" id="L866">            return int.class;</span>
-<span class="fc bfc" id="L867" title="All 2 branches covered.">        } else if (fullName.equals(&quot;long&quot;)) {</span>
-<span class="fc" id="L868">            return long.class;</span>
-<span class="fc bfc" id="L869" title="All 2 branches covered.">        } else if (fullName.equals(&quot;double&quot;)) {</span>
-<span class="fc" id="L870">            return double.class;</span>
-<span class="fc bfc" id="L871" title="All 2 branches covered.">        } else if (fullName.equals(&quot;boolean&quot;)) {</span>
-<span class="fc" id="L872">            return boolean.class;</span>
-<span class="fc bfc" id="L873" title="All 2 branches covered.">        } else if (fullName.equals(&quot;short&quot;)) {</span>
-<span class="fc" id="L874">            return short.class;</span>
-<span class="fc bfc" id="L875" title="All 2 branches covered.">        } else if (fullName.equals(&quot;byte&quot;)) {</span>
-<span class="fc" id="L876">            return byte.class;</span>
-<span class="fc bfc" id="L877" title="All 2 branches covered.">        } else if (fullName.equals(&quot;char&quot;)) {</span>
-<span class="fc" id="L878">            return char.class;</span>
-<span class="fc bfc" id="L879" title="All 2 branches covered.">        } else if (fullName.equals(&quot;float&quot;)) {</span>
-<span class="fc" id="L880">            return float.class;</span>
-<span class="fc bfc" id="L881" title="All 2 branches covered.">        } else if (fullName.equals(&quot;void&quot;)) {</span>
-<span class="fc" id="L882">            return void.class;</span>
+<span class="fc bfc" id="L894" title="All 2 branches covered.">        if (fullName.equals(&quot;int&quot;)) {</span>
+<span class="fc" id="L895">            return int.class;</span>
+<span class="fc bfc" id="L896" title="All 2 branches covered.">        } else if (fullName.equals(&quot;long&quot;)) {</span>
+<span class="fc" id="L897">            return long.class;</span>
+<span class="fc bfc" id="L898" title="All 2 branches covered.">        } else if (fullName.equals(&quot;double&quot;)) {</span>
+<span class="fc" id="L899">            return double.class;</span>
+<span class="fc bfc" id="L900" title="All 2 branches covered.">        } else if (fullName.equals(&quot;boolean&quot;)) {</span>
+<span class="fc" id="L901">            return boolean.class;</span>
+<span class="fc bfc" id="L902" title="All 2 branches covered.">        } else if (fullName.equals(&quot;short&quot;)) {</span>
+<span class="fc" id="L903">            return short.class;</span>
+<span class="fc bfc" id="L904" title="All 2 branches covered.">        } else if (fullName.equals(&quot;byte&quot;)) {</span>
+<span class="fc" id="L905">            return byte.class;</span>
+<span class="fc bfc" id="L906" title="All 2 branches covered.">        } else if (fullName.equals(&quot;char&quot;)) {</span>
+<span class="fc" id="L907">            return char.class;</span>
+<span class="fc bfc" id="L908" title="All 2 branches covered.">        } else if (fullName.equals(&quot;float&quot;)) {</span>
+<span class="fc" id="L909">            return float.class;</span>
+<span class="fc bfc" id="L910" title="All 2 branches covered.">        } else if (fullName.equals(&quot;void&quot;)) {</span>
+<span class="fc" id="L911">            return void.class;</span>
         }
-<span class="fc" id="L884">        throw ex;</span>
+<span class="fc" id="L913">        throw ex;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -892,8 +921,8 @@ public final class StringConvert {
      */
     @Override
     public String toString() {
-<span class="fc" id="L895">        return getClass().getSimpleName();</span>
+<span class="fc" id="L924">        return getClass().getSimpleName();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

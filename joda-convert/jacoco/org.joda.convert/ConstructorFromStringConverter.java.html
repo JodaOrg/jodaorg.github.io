@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConstructorFromStringConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert</a> &gt; <span class="el_source">ConstructorFromStringConverter.java</span></div><h1>ConstructorFromStringConverter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
+/**
+ * Conversion from a string using a fromString constructor.
+ * &lt;p&gt;
+ * The fromString constructor must take a single {@code String} parameter.
+ * &lt;p&gt;
+ * ConstructorFromStringConverter is thread-safe and immutable.
+ * 
+ * @param &lt;T&gt;  the type of the converter
+ */
+final class ConstructorFromStringConverter&lt;T&gt; implements TypedFromStringConverter&lt;T&gt; {
+
+    /** Conversion from a string. */
+    private final Constructor&lt;T&gt; fromString;
+
+    /**
+     * Creates an instance using a method and a constructor.
+     * 
+     * @param cls  the class this converts for, not null
+     * @param fromString  the fromString method, not null
+     * @throws RuntimeException (or subclass) if the method signatures are invalid
+     */
+<span class="fc" id="L43">    ConstructorFromStringConverter(Class&lt;T&gt; cls, Constructor&lt;T&gt; fromString) {</span>
+<span class="pc bpc" id="L44" title="4 of 8 branches missed.">        if (cls.isInterface() || Modifier.isAbstract(cls.getModifiers()) || cls.isLocalClass() || cls.isMemberClass()) {</span>
+<span class="nc" id="L45">            throw new IllegalArgumentException(&quot;FromString constructor must be on an instantiable class: &quot; + fromString);</span>
+        }
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (fromString.getDeclaringClass() != cls) {</span>
+<span class="nc" id="L48">            throw new IllegalStateException(&quot;FromString constructor must be defined on specified class: &quot; + fromString);</span>
+        }
+<span class="fc" id="L50">        this.fromString = fromString;</span>
+<span class="fc" id="L51">    }</span>
+
+    //-----------------------------------------------------------------------
+    @Override
+    public T convertFromString(Class&lt;? extends T&gt; cls, String str) {
+        try {
+<span class="fc" id="L57">            return fromString.newInstance(str);</span>
+<span class="nc" id="L58">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L59">            throw new IllegalStateException(&quot;Constructor is not accessible: &quot; + fromString);</span>
+<span class="nc" id="L60">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L61">            throw new IllegalStateException(&quot;Constructor is not valid: &quot; + fromString);</span>
+<span class="nc" id="L62">        } catch (InvocationTargetException ex) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">            if (ex.getCause() instanceof RuntimeException) {</span>
+<span class="nc" id="L64">                throw (RuntimeException) ex.getCause();</span>
+            }
+<span class="nc" id="L66">            throw new RuntimeException(ex.getMessage(), ex.getCause());</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    @Override
+    public Class&lt;?&gt; getEffectiveType() {
+<span class="fc" id="L73">        return fromString.getDeclaringClass();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
