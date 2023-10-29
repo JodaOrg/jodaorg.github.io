@@ -1258,6 +1258,21 @@ import org.joda.convert.ToString;
     }
 
     /**
+     * Checks if this monetary value is greater than or equal to another.
+     * &lt;p&gt;
+     * This allows {@code Money} to be compared to any {@code BigMoneyProvider}.
+     * Scale is ignored in the comparison.
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other monetary value, not null
+     * @return true is this is greater than or equal to the specified monetary value
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public boolean isGreaterThanOrEqual(BigMoneyProvider other) {
+<span class="fc" id="L1272">        return money.isGreaterThanOrEqual(other);</span>
+    }
+
+    /**
      * Checks if this monetary value is less than another.
      * &lt;p&gt;
      * This allows {@code Money} to be compared to any {@code BigMoneyProvider}.
@@ -1269,7 +1284,22 @@ import org.joda.convert.ToString;
      * @throws CurrencyMismatchException if the currencies differ
      */
     public boolean isLessThan(BigMoneyProvider other) {
-<span class="fc" id="L1272">        return money.isLessThan(other);</span>
+<span class="fc" id="L1287">        return money.isLessThan(other);</span>
+    }
+
+    /**
+     * Checks if this monetary value is less than or equal to another.
+     * &lt;p&gt;
+     * This allows {@code Money} to be compared to any {@code BigMoneyProvider}.
+     * Scale is ignored in the comparison.
+     * The compared values must be in the same currency.
+     * 
+     * @param other  the other monetary value, not null
+     * @return true is this is less than or equal to the specified monetary value
+     * @throws CurrencyMismatchException if the currencies differ
+     */
+    public boolean isLessThanOrEqual(BigMoneyProvider other) {
+<span class="fc" id="L1302">        return money.isLessThanOrEqual(other);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1284,14 +1314,14 @@ import org.joda.convert.ToString;
      */
     @Override
     public boolean equals(Object other) {
-<span class="fc bfc" id="L1287" title="All 2 branches covered.">        if (this == other) {</span>
-<span class="fc" id="L1288">            return true;</span>
+<span class="fc bfc" id="L1317" title="All 2 branches covered.">        if (this == other) {</span>
+<span class="fc" id="L1318">            return true;</span>
         }
-<span class="fc bfc" id="L1290" title="All 2 branches covered.">        if (other instanceof Money) {</span>
-<span class="fc" id="L1291">            Money otherMoney = (Money) other;</span>
-<span class="fc" id="L1292">            return money.equals(otherMoney.money);</span>
+<span class="fc bfc" id="L1320" title="All 2 branches covered.">        if (other instanceof Money) {</span>
+<span class="fc" id="L1321">            Money otherMoney = (Money) other;</span>
+<span class="fc" id="L1322">            return money.equals(otherMoney.money);</span>
         }
-<span class="fc" id="L1294">        return false;</span>
+<span class="fc" id="L1324">        return false;</span>
     }
 
     /**
@@ -1301,7 +1331,7 @@ import org.joda.convert.ToString;
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1304">        return money.hashCode() + 3;</span>
+<span class="fc" id="L1334">        return money.hashCode() + 3;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1316,7 +1346,7 @@ import org.joda.convert.ToString;
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1319">        return money.toString();</span>
+<span class="fc" id="L1349">        return money.toString();</span>
     }
 
 }
