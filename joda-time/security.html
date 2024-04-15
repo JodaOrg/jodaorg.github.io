@@ -8,10 +8,9 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Joda-Time &#x2013; Java date and time API - Upgrade from 1.3 to 1.4</title>
+		<title>Joda-Time &#x2013; Joda-Time Security</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
-		<meta name="author" content="Stephen Colebourne" />
 		<meta http-equiv="content-language" content="en" />
 
 		<link href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/cosmo/bootstrap.min.css" rel="stylesheet" />
@@ -49,7 +48,7 @@
 		</script>
 		</head>
 
-	<body class="page-upgradeto140 project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-security project-joda-time" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -99,13 +98,13 @@
 									<li ><a href="licenses.html" title="License">License</a></li>
 								</ul>
 							</li>
-							<li class="dropdown">
+							<li class="dropdown active">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li ><a href="changes-report.html" title="Release notes">Release notes</a></li>
 									<li ><a href="installation.html" title="Old release notes">Old release notes</a></li>
 									<li ><a href="dependency-info.html" title="Dependency info">Dependency info</a></li>
-									<li ><a href="security.html" title="Security">Security</a></li>
+									<li class="active"><a href="" title="Security">Security</a></li>
 									<li ><a href="download.html" title="Download">Download</a></li>
 								</ul>
 							</li>
@@ -160,79 +159,27 @@
 		<div class="span12">
 			<div class="body-content">
 <section> 
- <h2 id="Upgrade">Upgrade</h2> 
- <p> These are the release notes and advice for upgrading Joda-Time from version 1.3 to version 1.4. </p> 
- <div class="source"> 
-  <pre>
-Joda-Time version 1.4
----------------------
-
-Joda-Time is a date and time handling library that seeks to replace the JDK
-Date and Calendar classes.
-
-This is the fifth full release of Joda-Time.
-This release focuses on new features, but also include some bug fixes.
-
-We recommend JDK 1.3 or later, and have performed no testing on earlier JDKs.
-
-Joda-Time is licensed under the business-friendly Apache License Version 2.
-This is the same license as all of Apache, plus other open source projects such as Spring.
-The intent is to make the code available to the Java community with the minimum
-of restrictions. If the license causes you problems please contact the mailing list.
-
-*  Please also check out our related projects   *
-* https://www.joda.org/joda-time/related.html *
-
-
-Enhancements since 1.3
-----------------------
-- Years/Months/Weeks/Days/Hours/Minutes/Seconds
-  New group of single field period classes
-  These allow applications to specify a specific field in method signatures and calculations
-  Methods are provided to convert between most of these based on standard length periods
-
-- Period.ZERO
-  Add zero-length constant to Period
-
-- PeriodFormatBuilder.append(PeriodPrinter,PeriodParser)
-  This method completes the API of PeriodFormatBuilder in the style of DateTimeFormatBuilder
-
-
-Compatibility with 1.3
-----------------------
-Binary compatible - Yes
-
-Source compatible - Yes, except
-  If you subclassed AbstractReadableInstantFieldProperty (unlikely) then
-  you now need to override getChronology() to re-enable the equals() and
-  hashCode() methods.
-
-Serialization compatible - Yes
-
-Data compatible - Yes
-  - DateTimeZone data updated to version 2006o
-
-Semantic compatible - Yes
-
-
-Deprecations since 1.3
-----------------------
-
-
-Bug fixes since 1.3
--------------------
-- GJChronology
-  Text value of ReadablePartial fields was always a decimal number.
-
-- Comparisons of Chronology instances by identity  [1576727]
-  Some comparisons of Chronology instances were performed using ==
-  This worked fine in most cases due to agressive caching, however it failed when
-  using LenientChronology and other wrapping chronologies which do not have caching
-  Comparison is now via equals(), and involved adding equals() methods to a number
-  of classes. In addition, subclasses of AbstractReadableInstantFieldProperty must
-  now implement getChronology().
-</pre>
- </div> 
+ <h2 id="Joda-Time_Security">Joda-Time Security</h2>
+ <section> 
+  <h3 id="Security_Policy">Security Policy</h3>
+  <section> 
+   <h4 id="Supported_Versions">Supported Versions</h4> 
+   <p>If a security issue occurs, only the latest version is guaranteed to be patched.</p>
+  </section>
+  <section> 
+   <h4 id="Reporting_a_Vulnerability">Reporting a Vulnerability</h4> 
+   <p>To report a security vulnerability, please use the <a class="externalLink" href="https://tidelift.com/security">Tidelift security contact</a>. Tidelift will coordinate the fix and disclosure.</p>
+  </section>
+ </section>
+ <section> 
+  <h3 id="CVEs">CVEs</h3>
+  <section> 
+   <h4 id="CVE-2024-23080"><a class="externalLink" href="https://nvd.nist.gov/vuln/detail/CVE-2024-23080">CVE-2024-23080</a></h4> 
+   <p>This was raised publicly on 2024-04-10. There was no prior warning or private disclosure.</p> 
+   <p>The CVE is nonsense. It was raised by an AI-driven bot. The CVE describes that a <code>NullPointerException</code> is thrown when <code>null</code> is passed into a method. As any Java developer knows, this is perfectly normal and not a security issue or CVE.</p> 
+   <p>Users of Joda-Time do not need to take any action as the CVE is invalid.</p>
+  </section>
+ </section>
 </section>
 			</div>
 		</div>
@@ -290,8 +237,8 @@ Bug fixes since 1.3
 						<li >
 							<a href="dependency-info.html" title="Dependency info">Dependency info</a>
 						</li>
-						<li >
-							<a href="security.html" title="Security">Security</a>
+						<li class="active">
+							<a href="#" title="Security">Security</a>
 						</li>
 						<li >
 							<a href="download.html" title="Download">Download</a>

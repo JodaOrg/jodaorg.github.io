@@ -495,13 +495,15 @@ Implementation package providing abstract and standard field classes.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#getDurationField--">getDurationField</a></span>()</code>
+<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#getDurationField--">getDurationField</a></span>()</code>
 <div class="block">Returns the duration per unit value of this field.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">RemainderDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#getDurationField--">getDurationField</a></span>()</code>
+<div class="block">Returns the duration per unit value of this field.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
@@ -509,15 +511,22 @@ Implementation package providing abstract and standard field classes.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#getDurationField--">getDurationField</a></span>()</code>
+<td class="colLast"><span class="typeNameLabel">RemainderDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>
 <div class="block">Returns the duration per unit value of this field.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><span class="typeNameLabel">ImpreciseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ImpreciseDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>&nbsp;</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>
-<div class="block">Even though this DateTimeField is unsupported, the duration field might
- be supported.</div>
+<td class="colLast"><span class="typeNameLabel">PreciseDurationDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/PreciseDurationDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>
+<div class="block">Returns the duration per unit value of this field.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -528,23 +537,14 @@ Implementation package providing abstract and standard field classes.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">PreciseDurationDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/PreciseDurationDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>
-<div class="block">Returns the duration per unit value of this field.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>abstract <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>
-<div class="block">Returns the duration per unit value of this field.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DecoratedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ImpreciseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ImpreciseDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getDurationField--">getDurationField</a></span>()</code>
+<div class="block">Even though this DateTimeField is unsupported, the duration field might
+ be supported.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
@@ -559,24 +559,24 @@ Implementation package providing abstract and standard field classes.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">OffsetDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/OffsetDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>
+<div class="block">If this field were to leap, then it would be in units described by the
+ returned duration.</div>
+</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><span class="typeNameLabel">OffsetDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/OffsetDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>
 <div class="block">Always returns null.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>&nbsp;</td>
-</tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">BaseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/BaseDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>
-<div class="block">If this field were to leap, then it would be in units described by the
- returned duration.</div>
-</td>
+<td class="colLast"><span class="typeNameLabel">ZeroIsMaxDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ZeroIsMaxDateTimeField.html#getLeapDurationField--">getLeapDurationField</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
@@ -586,14 +586,14 @@ Implementation package providing abstract and standard field classes.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
+<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
 <div class="block">Returns the range duration of this field.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">RemainderDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
-<div class="block">Returns a scaled version of the wrapped field's unit duration field.</div>
+<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
+<div class="block">Returns the range duration of this field.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -602,19 +602,9 @@ Implementation package providing abstract and standard field classes.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
-<div class="block">Returns the range duration of this field.</div>
+<td class="colLast"><span class="typeNameLabel">RemainderDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/RemainderDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
+<div class="block">Returns a scaled version of the wrapped field's unit duration field.</div>
 </td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
-<div class="block">Always returns null.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DividedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DividedDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
@@ -623,12 +613,22 @@ Implementation package providing abstract and standard field classes.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><span class="typeNameLabel">ImpreciseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ImpreciseDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DividedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DividedDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DecoratedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DecoratedDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>abstract <a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ImpreciseDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/ImpreciseDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
+<td class="colLast"><span class="typeNameLabel">UnsupportedDateTimeField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDateTimeField.html#getRangeDurationField--">getRangeDurationField</a></span>()</code>
+<div class="block">Always returns null.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a></code></td>
@@ -653,13 +653,13 @@ Implementation package providing abstract and standard field classes.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">DelegatedDurationField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDurationField.html#compareTo-org.joda.time.DurationField-">compareTo</a></span>(<a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;durationField)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="typeNameLabel">UnsupportedDurationField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/UnsupportedDurationField.html#compareTo-org.joda.time.DurationField-">compareTo</a></span>(<a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;durationField)</code>
 <div class="block">Always returns zero, indicating that sort order is not relevant.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="typeNameLabel">DelegatedDurationField.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/DelegatedDurationField.html#compareTo-org.joda.time.DurationField-">compareTo</a></span>(<a href="../../../../org/joda/time/DurationField.html" title="class in org.joda.time">DurationField</a>&nbsp;durationField)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>

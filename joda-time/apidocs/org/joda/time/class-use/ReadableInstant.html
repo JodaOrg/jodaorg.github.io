@@ -250,28 +250,28 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isAfter-org.joda.time.ReadableInstant-">isAfter</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<div class="block">Is this time interval after the specified instant.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">ReadableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInstant.html#isAfter-org.joda.time.ReadableInstant-">isAfter</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Is this instant after the instant passed in
  comparing solely by millisecond.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isAfter-org.joda.time.ReadableInstant-">isAfter</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
-<div class="block">Is this time interval after the specified instant.</div>
+<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isBefore-org.joda.time.ReadableInstant-">isBefore</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<div class="block">Is this time interval before the specified instant.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">ReadableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInstant.html#isBefore-org.joda.time.ReadableInstant-">isBefore</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Is this instant before the instant passed in
  comparing solely by millisecond.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadableInterval.html#isBefore-org.joda.time.ReadableInstant-">isBefore</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
-<div class="block">Is this time interval before the specified instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -319,24 +319,17 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setEnd-org.joda.time.ReadableInstant-">setEnd</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
-<div class="block">Sets the end of this time interval as an Instant.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setEnd-org.joda.time.ReadableInstant-">setEnd</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;end)</code>
 <div class="block">Sets the end of this time interval as an Instant.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setInterval-org.joda.time.ReadableInstant-org.joda.time.ReadableInstant-">setInterval</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;startInstant,
-           <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;endInstant)</code>
-<div class="block">Sets this interval from two instants.</div>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setEnd-org.joda.time.ReadableInstant-">setEnd</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<div class="block">Sets the end of this time interval as an Instant.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setInterval-org.joda.time.ReadableInstant-org.joda.time.ReadableInstant-">setInterval</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;start,
            <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;end)</code>
@@ -344,15 +337,22 @@ Provides printing and parsing support for instants and durations.</div>
  that from the start instant.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setInterval-org.joda.time.ReadableInstant-org.joda.time.ReadableInstant-">setInterval</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;startInstant,
+           <a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;endInstant)</code>
+<div class="block">Sets this interval from two instants.</div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#setMillis-org.joda.time.ReadableInstant-">setMillis</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInstant.html#setMillis-org.joda.time.ReadableInstant-">setMillis</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Sets the millisecond instant of this instant from another.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInstant.html#setMillis-org.joda.time.ReadableInstant-">setMillis</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#setMillis-org.joda.time.ReadableInstant-">setMillis</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Sets the millisecond instant of this instant from another.</div>
 </td>
 </tr>
@@ -365,13 +365,13 @@ Provides printing and parsing support for instants and durations.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setStart-org.joda.time.ReadableInstant-">setStart</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setStart-org.joda.time.ReadableInstant-">setStart</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;start)</code>
 <div class="block">Sets the start of this time interval as an Instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setStart-org.joda.time.ReadableInstant-">setStart</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;start)</code>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setStart-org.joda.time.ReadableInstant-">setStart</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Sets the start of this time interval as an Instant.</div>
 </td>
 </tr>
@@ -839,13 +839,13 @@ Provides printing and parsing support for instants and durations.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Compare this field to the same field on another instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractPartialFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractPartialFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
+<td class="colLast"><span class="typeNameLabel">AbstractReadableInstantFieldProperty.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/field/AbstractReadableInstantFieldProperty.html#compareTo-org.joda.time.ReadableInstant-">compareTo</a></span>(<a href="../../../../org/joda/time/ReadableInstant.html" title="interface in org.joda.time">ReadableInstant</a>&nbsp;instant)</code>
 <div class="block">Compare this field to the same field on another instant.</div>
 </td>
 </tr>

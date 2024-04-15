@@ -137,26 +137,26 @@ Implementation package providing abstract and base time classes.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#add-org.joda.time.ReadableDuration-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInstant.html#add-org.joda.time.ReadableDuration-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
 <div class="block">Adds a duration to this instant.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInstant.html#add-org.joda.time.ReadableDuration-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#add-org.joda.time.ReadableDuration-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
 <div class="block">Adds a duration to this instant.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#add-org.joda.time.ReadableDuration-int-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration,
+<td class="colLast"><span class="typeNameLabel">ReadWritableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInstant.html#add-org.joda.time.ReadableDuration-int-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration,
    int&nbsp;scalar)</code>
 <div class="block">Adds a duration to this instant specifying how many times to add.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInstant.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInstant.html#add-org.joda.time.ReadableDuration-int-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration,
+<td class="colLast"><span class="typeNameLabel">MutableDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableDateTime.html#add-org.joda.time.ReadableDuration-int-">add</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration,
    int&nbsp;scalar)</code>
 <div class="block">Adds a duration to this instant specifying how many times to add.</div>
 </td>
@@ -192,9 +192,10 @@ Implementation package providing abstract and base time classes.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#minus-org.joda.time.ReadableDuration-">minus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
-<div class="block">Returns a copy of this datetime with the specified duration taken away.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#minus-org.joda.time.ReadableDuration-">minus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Returns a copy of this date with the specified duration taken away.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -210,10 +211,9 @@ Implementation package providing abstract and base time classes.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#minus-org.joda.time.ReadableDuration-">minus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Returns a copy of this date with the specified duration taken away.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#minus-org.joda.time.ReadableDuration-">minus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<div class="block">Returns a copy of this datetime with the specified duration taken away.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -223,9 +223,10 @@ Implementation package providing abstract and base time classes.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#plus-org.joda.time.ReadableDuration-">plus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
-<div class="block">Returns a copy of this datetime with the specified duration added.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#plus-org.joda.time.ReadableDuration-">plus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Returns a copy of this date with the specified duration added.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -241,33 +242,32 @@ Implementation package providing abstract and base time classes.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#plus-org.joda.time.ReadableDuration-">plus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Returns a copy of this date with the specified duration added.</div>
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#plus-org.joda.time.ReadableDuration-">plus</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<div class="block">Returns a copy of this datetime with the specified duration added.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setDurationAfterStart-org.joda.time.ReadableDuration-">setDurationAfterStart</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
-<div class="block">Sets the duration of this time interval, preserving the start instant.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setDurationAfterStart-org.joda.time.ReadableDuration-">setDurationAfterStart</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
 <div class="block">Sets the duration of this time interval, preserving the start instant.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setDurationAfterStart-org.joda.time.ReadableDuration-">setDurationAfterStart</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<div class="block">Sets the duration of this time interval, preserving the start instant.</div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setDurationBeforeEnd-org.joda.time.ReadableDuration-">setDurationBeforeEnd</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setDurationBeforeEnd-org.joda.time.ReadableDuration-">setDurationBeforeEnd</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
 <div class="block">Sets the duration of this time interval, preserving the end instant.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">MutableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/MutableInterval.html#setDurationBeforeEnd-org.joda.time.ReadableDuration-">setDurationBeforeEnd</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
+<td class="colLast"><span class="typeNameLabel">ReadWritableInterval.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/ReadWritableInterval.html#setDurationBeforeEnd-org.joda.time.ReadableDuration-">setDurationBeforeEnd</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;duration)</code>
 <div class="block">Sets the duration of this time interval, preserving the end instant.</div>
 </td>
 </tr>
@@ -294,10 +294,11 @@ Implementation package providing abstract and base time classes.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
-<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#withDurationAdded-org.joda.time.ReadableDuration-int-">withDurationAdded</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;durationToAdd,
+<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#withDurationAdded-org.joda.time.ReadableDuration-int-">withDurationAdded</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;durationToAdd,
                  int&nbsp;scalar)</code>
-<div class="block">Returns a copy of this datetime with the specified duration added.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Returns a copy of this date with the specified duration added.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -315,11 +316,10 @@ Implementation package providing abstract and base time classes.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/joda/time/DateMidnight.html" title="class in org.joda.time">DateMidnight</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DateMidnight.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/DateMidnight.html#withDurationAdded-org.joda.time.ReadableDuration-int-">withDurationAdded</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;durationToAdd,
+<td class="colFirst"><code><a href="../../../../org/joda/time/LocalDateTime.html" title="class in org.joda.time">LocalDateTime</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LocalDateTime.</span><code><span class="memberNameLink"><a href="../../../../org/joda/time/LocalDateTime.html#withDurationAdded-org.joda.time.ReadableDuration-int-">withDurationAdded</a></span>(<a href="../../../../org/joda/time/ReadableDuration.html" title="interface in org.joda.time">ReadableDuration</a>&nbsp;durationToAdd,
                  int&nbsp;scalar)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Returns a copy of this date with the specified duration added.</div>
+<div class="block">Returns a copy of this datetime with the specified duration added.</div>
 </td>
 </tr>
 <tr class="altColor">
