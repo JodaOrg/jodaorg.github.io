@@ -19,6 +19,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.joda.beans.impl.BasicProperty;
 import org.joda.convert.StringConvert;
@@ -41,7 +42,7 @@ public interface MetaProperty&lt;P&gt; {
      * @return the property, not null
      */
     public default Property&lt;P&gt; createProperty(Bean bean) {
-<span class="fc" id="L44">        return BasicProperty.of(bean, this);</span>
+<span class="fc" id="L45">        return BasicProperty.of(bean, this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -108,7 +109,8 @@ public interface MetaProperty&lt;P&gt; {
      * &lt;p&gt;
      * The annotations are queried from the property.
      * This is typically accomplished by querying the annotations of the underlying
-     * instance variable however any strategy is permitted.
+     * instance variable however any strategy is permitted. If the implementation
+     * does not support annotations, an empty list will be returned.
      * 
      * @return the annotations, unmodifiable, not null
      */
@@ -119,22 +121,45 @@ public interface MetaProperty&lt;P&gt; {
      * &lt;p&gt;
      * The annotations are queried from the property.
      * This is typically accomplished by querying the annotations of the underlying
-     * instance variable however any strategy is permitted..
+     * instance variable however any strategy is permitted.
      * 
      * @param &lt;A&gt;  the annotation type
      * @param annotationClass  the annotation class to find, not null
      * @return the annotation, not null
-     * @throws NoSuchElementException if the annotation is not specified
+     * @throws NoSuchElementException if the annotation is not found
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public default &lt;A extends Annotation&gt; A annotation(Class&lt;A&gt; annotationClass) {
-<span class="nc" id="L131">        List&lt;Annotation&gt; annotations = annotations();</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (Annotation annotation : annotations) {</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
-<span class="nc" id="L134">                return (A) annotation;</span>
+<span class="nc" id="L133">        List&lt;Annotation&gt; annotations = annotations();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        for (Annotation annotation : annotations) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
+<span class="nc" id="L136">                return (A) annotation;</span>
             }
-<span class="nc" id="L136">        }</span>
-<span class="nc" id="L137">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+<span class="nc" id="L138">        }</span>
+<span class="nc" id="L139">        throw new NoSuchElementException(&quot;Unknown annotation: &quot; + annotationClass.getName());</span>
+    }
+
+    /**
+     * Finds an optional annotation from the property.
+     * &lt;p&gt;
+     * The annotations are queried from the property.
+     * This is typically accomplished by querying the annotations of the underlying
+     * instance variable however any strategy is permitted.
+     * 
+     * @param &lt;A&gt;  the annotation type
+     * @param annotationClass  the annotation class to find, not null
+     * @return the annotation, empty if not found
+     * @since 2.11.0
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public default &lt;A extends Annotation&gt; Optional&lt;A&gt; annotationOpt(Class&lt;A&gt; annotationClass) {
+<span class="nc" id="L156">        List&lt;Annotation&gt; annotations = annotations();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        for (Annotation annotation : annotations) {</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">            if (annotationClass.isInstance(annotation)) {</span>
+<span class="nc" id="L159">                return Optional.of((A) annotation);</span>
+            }
+<span class="nc" id="L161">        }</span>
+<span class="nc" id="L162">        return Optional.empty();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -183,9 +208,9 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default P put(Bean bean, Object value) {
-<span class="fc" id="L186">        P old = get(bean);</span>
-<span class="fc" id="L187">        set(bean, value);</span>
-<span class="fc" id="L188">        return old;</span>
+<span class="fc" id="L211">        P old = get(bean);</span>
+<span class="fc" id="L212">        set(bean, value);</span>
+<span class="fc" id="L213">        return old;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -206,7 +231,7 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value cannot be converted to a string (use appropriate subclasses)
      */
     public default String getString(Bean bean) {
-<span class="fc" id="L209">        return getString(bean, JodaBeanUtils.stringConverter());</span>
+<span class="fc" id="L234">        return getString(bean, JodaBeanUtils.stringConverter());</span>
     }
 
     /**
@@ -226,8 +251,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value cannot be converted to a string (use appropriate subclasses)
      */
     public default String getString(Bean bean, StringConvert stringConvert) {
-<span class="fc" id="L229">        P value = get(bean);</span>
-<span class="fc" id="L230">        return stringConvert.convertToString(propertyType(), value);</span>
+<span class="fc" id="L254">        P value = get(bean);</span>
+<span class="fc" id="L255">        return stringConvert.convertToString(propertyType(), value);</span>
     }
 
     /**
@@ -244,8 +269,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void setString(Bean bean, String value) {
-<span class="fc" id="L247">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
-<span class="fc" id="L248">    }</span>
+<span class="fc" id="L272">        setString(bean, value, JodaBeanUtils.stringConverter());</span>
+<span class="fc" id="L273">    }</span>
 
     /**
      * Sets the value of the property on the specified bean from a string by conversion.
@@ -262,8 +287,8 @@ public interface MetaProperty&lt;P&gt; {
      * @throws RuntimeException if the value is rejected by the property (use appropriate subclasses)
      */
     public default void setString(Bean bean, String value, StringConvert stringConvert) {
-<span class="fc" id="L265">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
-<span class="fc" id="L266">    }</span>
+<span class="fc" id="L290">        set(bean, stringConvert.convertFromString(propertyType(), value));</span>
+<span class="fc" id="L291">    }</span>
 
     //-----------------------------------------------------------------------
     /**

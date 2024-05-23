@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropertyPath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Beans</a> &gt; <a href="index.source.html" class="el_package">org.joda.beans</a> &gt; <span class="el_source">PropertyPath.java</span></div><h1>PropertyPath.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2001-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.beans;
+
+import static java.util.stream.Collectors.toList;
+import static org.joda.beans.JodaBeanUtils.notNull;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+/**
+ * A multi-stage property path.
+ * &lt;p&gt;
+ * This accepts a dot-separated path and queries the bean.
+ * Each dot-separated part of the path is resolved to a meta-property.
+ * Thus the path &quot;foo.bar.baz&quot; is equivalent to {@code bean.getFoo().getBar().getBaz()}.
+ * The path lookup works even if the methods are not public.
+ * &lt;p&gt;
+ * Each part of the path may contain a suffix, such as {@code [&lt;iterableIndex&gt;]} or {@code [&lt;mapKey&gt;]}.
+ * The suffix {@code [&lt;iterableIndex&gt;]} accesses the specified numeric index of an {@code Iterable}.
+ * The suffix {@code [&lt;mapKey&gt;]} accesses the specified numeric index of an {@code Map}.
+ * 
+ * @param &lt;P&gt;  the type of the result
+ * @since 2.11.0
+ */
+public final class PropertyPath&lt;P&gt; {
+
+    /**
+     * The path entries.
+     */
+    private final String propertyPath;
+    /**
+     * The result type.
+     */
+    private final Class&lt;P&gt; resultType;
+    /**
+     * The path entries.
+     */
+    private final List&lt;PathEntry&gt; pathEntries;
+
+    /**
+     * Restricted constructor.
+     */
+<span class="fc" id="L61">    private PropertyPath(String propertyPath, Class&lt;P&gt; resultType, List&lt;PathEntry&gt; pathEntries) {</span>
+<span class="fc" id="L62">        this.propertyPath = propertyPath;</span>
+<span class="fc" id="L63">        this.resultType = resultType;</span>
+<span class="fc" id="L64">        this.pathEntries = pathEntries;</span>
+<span class="fc" id="L65">    }</span>
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains an instance from the path.
+     * 
+     * @param &lt;P&gt;  the type of the result
+     * @param propertyPath  the path, not null
+     * @param resultType  the result type, not null
+     * @return the path
+     * @throws IllegalArgumentException if the path has an invalid format
+     */
+    public static &lt;P&gt; PropertyPath&lt;P&gt; of(String propertyPath, Class&lt;P&gt; resultType) {
+<span class="fc" id="L78">        notNull(propertyPath, &quot;propertyPath&quot;);</span>
+<span class="fc" id="L79">        notNull(resultType, &quot;resultType&quot;);</span>
+<span class="fc" id="L80">        List&lt;PathEntry&gt; split = PathEntry.parse(propertyPath);</span>
+<span class="fc" id="L81">        return new PropertyPath&lt;&gt;(propertyPath, resultType, split);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets a value by path from the specified  bean.
+     * &lt;p&gt;
+     * This uses the path to query the bean.
+     * There is special handling for {@code Iterable}, {@code Map} and {@code Optional}.
+     * If the path does not match the structure within the bean, optional empty is returned.
+     * If the path finds any nulls, empty lists or empty maps, optional empty is returned.
+     * 
+     * @param bean  the bean to start from, not null
+     * @return the value, empty if the value is null or the path fails to evaluate correctly
+     */
+    public Optional&lt;P&gt; get(Bean bean) {
+<span class="fc" id="L97">        notNull(bean, &quot;bean&quot;);</span>
+<span class="fc" id="L98">        Bean currentBean = bean;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (int i = 0; i &lt; pathEntries.size() - 1; i++) {</span>
+<span class="fc" id="L100">            PathEntry pathEntry = pathEntries.get(i);</span>
+<span class="fc" id="L101">            Object obj = pathEntry.get(currentBean);</span>
+<span class="fc" id="L102">            obj = pathEntry.extract(obj);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if (obj instanceof Optional&lt;?&gt;) {</span>
+<span class="nc" id="L104">                obj = ((Optional&lt;?&gt;) obj).orElse(null);</span>
+            }
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            if (obj == null) {</span>
+<span class="fc" id="L107">                return Optional.empty();</span>
+            }
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (!(obj instanceof Bean)) {</span>
+<span class="fc" id="L110">                return Optional.empty();</span>
+            }
+<span class="fc" id="L112">            currentBean = (Bean) obj;</span>
+        }
+        // last entry, which allows for possibility that resultType = Optional.class
+<span class="fc" id="L115">        PathEntry pathEntry = pathEntries.get(pathEntries.size() - 1);</span>
+<span class="fc" id="L116">        Object obj = pathEntry.get(currentBean);</span>
+<span class="fc" id="L117">        obj = pathEntry.extract(obj);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L119">            return Optional.empty();</span>
+        }
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (resultType.isInstance(obj)) {</span>
+<span class="fc" id="L122">            return Optional.of(resultType.cast(obj));</span>
+        } else {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (obj instanceof Optional&lt;?&gt;) {</span>
+<span class="nc" id="L125">                obj = ((Optional&lt;?&gt;) obj).orElse(null);</span>
+            }
+<span class="nc bnc" id="L127" title="All 2 branches missed.">            if (resultType.isInstance(obj)) {</span>
+<span class="nc" id="L128">                return Optional.of(resultType.cast(obj));</span>
+            }
+<span class="nc" id="L130">            return Optional.empty();</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the property path.
+     * 
+     * @return the property path
+     */
+    public String propertyPath() {
+<span class="nc" id="L141">        return propertyPath;</span>
+    }
+
+    /**
+     * Gets the result type.
+     * 
+     * @return the result type
+     */
+    public Class&lt;P&gt; resultType() {
+<span class="nc" id="L150">        return resultType;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (obj instanceof PropertyPath&lt;?&gt;) {</span>
+<span class="nc" id="L156">            PropertyPath&lt;?&gt; other = (PropertyPath&lt;?&gt;) obj;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            return this.propertyPath.equals(other.propertyPath) &amp;&amp;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                    this.resultType.equals(other.resultType);</span>
+        }
+<span class="nc" id="L160">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L165">        return propertyPath.hashCode() ^ resultType.hashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L170">        return propertyPath + &quot;: &quot; + resultType.getName();</span>
+    }
+
+    //-------------------------------------------------------------------------
+    private static final class PathEntry {
+        private final String propertyName;
+        private final String key;
+        private final int index;
+
+        static List&lt;PathEntry&gt; parse(String propertyPath) {
+<span class="fc" id="L180">            String[] split = propertyPath.split(&quot;\\.&quot;);</span>
+<span class="fc" id="L181">            return Stream.of(split)</span>
+<span class="fc" id="L182">                    .map(entryStr -&gt; extractEntry(propertyPath, entryStr))</span>
+<span class="fc" id="L183">                    .collect(toList());</span>
+        }
+
+        private static PathEntry extractEntry(String propertyPath, String entryStr) {
+<span class="fc" id="L187">            String propName = entryStr;</span>
+<span class="fc" id="L188">            String key = null;</span>
+<span class="fc" id="L189">            int index = 0;</span>
+<span class="fc" id="L190">            int start = entryStr.lastIndexOf('[');</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">            if (entryStr.endsWith(&quot;]&quot;) &amp;&amp; start &gt; 0) {</span>
+<span class="fc" id="L192">                key = entryStr.substring(start + 1, entryStr.length() - 1);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                if (key.length() == 0) {</span>
+<span class="fc" id="L194">                    throw new IllegalArgumentException(&quot;Invalid property path, empty key: &quot; + propertyPath);</span>
+                }
+<span class="fc" id="L196">                char firstChar = key.charAt(0);</span>
+<span class="fc" id="L197">                index = -1;</span>
+<span class="pc bpc" id="L198" title="1 of 6 branches missed.">                if (firstChar == '-' || (firstChar &gt;= '0' &amp;&amp; firstChar &lt;= '9')) {</span>
+                    try {
+<span class="fc" id="L200">                        index = Integer.parseInt(key);</span>
+<span class="nc" id="L201">                    } catch (NumberFormatException ex) {</span>
+                        // index = -1
+<span class="fc" id="L203">                    }</span>
+                }
+<span class="fc" id="L205">                propName = entryStr.substring(0, start);</span>
+            }
+<span class="fc" id="L207">            return new PathEntry(propName, key, index);</span>
+        }
+
+<span class="fc" id="L210">        private PathEntry(String propertyName, String key, int index) {</span>
+<span class="fc" id="L211">            this.propertyName = propertyName;</span>
+<span class="fc" id="L212">            this.key = key;</span>
+<span class="fc" id="L213">            this.index = index;</span>
+<span class="fc" id="L214">        }</span>
+
+        private Object get(Bean bean) {
+            try {
+<span class="fc" id="L218">                return bean.metaBean().metaProperty(propertyName).get(bean);</span>
+<span class="fc" id="L219">            } catch (RuntimeException ex) {</span>
+<span class="fc" id="L220">                return null;</span>
+            }
+        }
+
+        private Object extract(Object obj) {
+            // maps can be queried using the [key] suffix if desired
+            // an [index] suffix will be queried as a key, not an index
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (obj instanceof Map&lt;?, ?&gt;) {</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">                if (key == null) {</span>
+<span class="fc" id="L229">                    return extract(((Map&lt;?, ?&gt;) obj).values());</span>
+                } else {
+<span class="fc" id="L231">                    Map&lt;?, ?&gt; map = ((Map&lt;?, ?&gt;) obj);</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">                    for (Entry&lt;?, ?&gt; mapEntry : map.entrySet()) {</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">                        if (key.equals(mapEntry.getKey())) {</span>
+<span class="fc" id="L234">                            return mapEntry.getValue();</span>
+                        }
+<span class="fc" id="L236">                    }</span>
+<span class="fc" id="L237">                    return null;</span>
+                }
+            }
+
+            // lists/sets can be queried using the [index] suffix if desired
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            if (obj instanceof Iterable&lt;?&gt;) {</span>
+<span class="fc bfc" id="L243" title="All 4 branches covered.">                if (key != null &amp;&amp; index &lt; 0) {</span>
+<span class="fc" id="L244">                    return null;</span>
+                }
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">                if (obj instanceof List&lt;?&gt;) {</span>
+<span class="fc" id="L247">                    List&lt;?&gt; list = (List&lt;?&gt;) obj;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">                    if (index &lt; list.size()) {</span>
+<span class="fc" id="L249">                        return list.get(index);</span>
+                    }
+<span class="fc" id="L251">                    return null;</span>
+                }
+<span class="nc" id="L253">                Iterator&lt;?&gt; it = ((Iterable&lt;?&gt;) obj).iterator();</span>
+<span class="nc" id="L254">                int i = 0;</span>
+<span class="nc bnc" id="L255" title="All 4 branches missed.">                while (it.hasNext() &amp;&amp; i &lt; index) {</span>
+<span class="nc" id="L256">                    it.next();</span>
+<span class="nc" id="L257">                    i++;</span>
+                }
+<span class="nc bnc" id="L259" title="All 2 branches missed.">                return it.hasNext() ? it.next() : null;</span>
+            }
+
+            // not a collection
+<span class="fc bfc" id="L263" title="All 4 branches covered.">            if (key != null &amp;&amp; !&quot;0&quot;.equals(key)) {</span>
+<span class="fc" id="L264">                return null;</span>
+            }
+<span class="fc" id="L266">            return obj;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

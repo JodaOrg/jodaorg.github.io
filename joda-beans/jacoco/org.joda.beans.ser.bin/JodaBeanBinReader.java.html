@@ -80,8 +80,8 @@ public class JodaBeanBinReader extends MsgPack {
      * @return the bean, not null
      */
     public &lt;T&gt; T read(byte[] input, Class&lt;T&gt; rootType) {
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (input == null) {</span>
-<span class="nc" id="L84">            throw new NullPointerException(&quot;input&quot;);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (input == null) {</span>
+<span class="fc" id="L84">            throw new NullPointerException(&quot;input&quot;);</span>
         }
 <span class="fc" id="L86">        return read(new ByteArrayInputStream(input), rootType);</span>
     }
