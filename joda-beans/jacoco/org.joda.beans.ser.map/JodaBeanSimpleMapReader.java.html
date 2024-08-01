@@ -280,10 +280,10 @@ public class JodaBeanSimpleMapReader {
         }
 <span class="fc bfc" id="L281" title="All 2 branches covered.">        if (input instanceof Long) {</span>
 <span class="fc" id="L282">            Long inputLong = (Long) input;</span>
-<span class="pc bpc" id="L283" title="2 of 4 branches missed.">            if (type == Long.class || type == long.class) {</span>
+<span class="pc bpc" id="L283" title="1 of 4 branches missed.">            if (type == Long.class || type == long.class) {</span>
 <span class="fc" id="L284">                return inputLong;</span>
             } else {
-<span class="nc" id="L286">                return convertInteger(inputLong.longValue(), type);</span>
+<span class="fc" id="L286">                return convertInteger(inputLong.longValue(), type);</span>
             }
         }
 <span class="fc bfc" id="L289" title="All 2 branches covered.">        if (input instanceof Integer) {</span>
@@ -356,12 +356,17 @@ public class JodaBeanSimpleMapReader {
 <span class="nc" id="L356">                throw new IllegalArgumentException(&quot;Invalid data: Value exceeds capacity of float: &quot; + value);</span>
             }
 <span class="nc" id="L358">            return Float.valueOf(fltVal);</span>
-            
-        } else {
-<span class="pc bpc" id="L361" title="2 of 4 branches missed.">            if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+
+<span class="pc bpc" id="L360" title="2 of 4 branches missed.">        } else if (type == Integer.class || type == int.class) {</span>
+<span class="nc bnc" id="L361" title="All 4 branches missed.">            if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
 <span class="nc" id="L362">                throw new IllegalArgumentException(&quot;Invalid data: Expected int, but was &quot; + value);</span>
             }
-<span class="fc" id="L364">            return Integer.valueOf((int) value);</span>
+<span class="nc" id="L364">            return Integer.valueOf((int) value);</span>
+        } else {
+<span class="pc bpc" id="L366" title="1 of 4 branches missed.">            if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+<span class="fc" id="L367">                return Long.valueOf(value);</span>
+            }
+<span class="fc" id="L369">            return Integer.valueOf((int) value);</span>
         }
     }
 

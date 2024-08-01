@@ -384,44 +384,49 @@ abstract class AbstractJsonReader {
                     }
 <span class="fc" id="L385">                    return Float.valueOf(fltVal);</span>
                     
-                } else {
+<span class="fc bfc" id="L387" title="All 4 branches covered.">                } else if (type == Integer.class || type == int.class) {</span>
 <span class="fc bfc" id="L388" title="All 4 branches covered.">                    if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
 <span class="fc" id="L389">                        throw new IllegalArgumentException(&quot;Invalid JSON data: Expected int, but was &quot; + value);</span>
                     }
 <span class="fc" id="L391">                    return Integer.valueOf((int) value);</span>
+                } else {
+<span class="pc bpc" id="L393" title="1 of 4 branches missed.">                    if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+<span class="fc" id="L394">                        return Long.valueOf(value);</span>
+                    }
+<span class="fc" id="L396">                    return Integer.valueOf((int) value);</span>
                 }
             }
             case NUMBER_FLOATING: {
-<span class="fc" id="L395">                double value = input.parseNumberFloating();</span>
-<span class="fc bfc" id="L396" title="All 4 branches covered.">                if (type == Float.class || type == float.class) {</span>
-<span class="fc" id="L397">                    return Float.valueOf((float) value);</span>
+<span class="fc" id="L400">                double value = input.parseNumberFloating();</span>
+<span class="fc bfc" id="L401" title="All 4 branches covered.">                if (type == Float.class || type == float.class) {</span>
+<span class="fc" id="L402">                    return Float.valueOf((float) value);</span>
                 } else {
-<span class="fc" id="L399">                    return Double.valueOf(value);</span>
+<span class="fc" id="L404">                    return Double.valueOf(value);</span>
                 }
             }
             case NULL: {
-<span class="pc bpc" id="L403" title="1 of 4 branches missed.">                if (type == double.class || type == Double.class) {</span>
-<span class="fc" id="L404">                    return Double.NaN;  // leniently accept null for NaN</span>
-<span class="pc bpc" id="L405" title="1 of 4 branches missed.">                } else if (type == float.class || type == Float.class) {</span>
-<span class="fc" id="L406">                    return Float.NaN;  // leniently accept null for NaN</span>
+<span class="pc bpc" id="L408" title="1 of 4 branches missed.">                if (type == double.class || type == Double.class) {</span>
+<span class="fc" id="L409">                    return Double.NaN;  // leniently accept null for NaN</span>
+<span class="pc bpc" id="L410" title="1 of 4 branches missed.">                } else if (type == float.class || type == Float.class) {</span>
+<span class="fc" id="L411">                    return Float.NaN;  // leniently accept null for NaN</span>
                 } else {
-<span class="fc" id="L408">                    return null;</span>
+<span class="fc" id="L413">                    return null;</span>
                 }
             }
             case TRUE:
-<span class="fc" id="L412">                return Boolean.TRUE;</span>
+<span class="fc" id="L417">                return Boolean.TRUE;</span>
             case FALSE:
-<span class="fc" id="L414">                return Boolean.FALSE;</span>
+<span class="fc" id="L419">                return Boolean.FALSE;</span>
             default:
-<span class="fc" id="L416">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected simple type but found &quot; + event);</span>
+<span class="fc" id="L421">                throw new IllegalArgumentException(&quot;Invalid JSON data: Expected simple type but found &quot; + event);</span>
         }
     }
 
     private Object parseText(String text, Class&lt;?&gt; type) {
-<span class="fc bfc" id="L421" title="All 4 branches covered.">        if (type == Object.class || type.isAssignableFrom(String.class)) {</span>
-<span class="fc" id="L422">            return text;</span>
+<span class="fc bfc" id="L426" title="All 4 branches covered.">        if (type == Object.class || type.isAssignableFrom(String.class)) {</span>
+<span class="fc" id="L427">            return text;</span>
         }
-<span class="fc" id="L424">        return settings.getConverter().convertFromString(type, text);</span>
+<span class="fc" id="L429">        return settings.getConverter().convertFromString(type, text);</span>
     }
 
 }
