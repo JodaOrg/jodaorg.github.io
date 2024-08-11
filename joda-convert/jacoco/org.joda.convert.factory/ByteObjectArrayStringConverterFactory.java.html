@@ -74,12 +74,12 @@ public final class ByteObjectArrayStringConverterFactory implements StringConver
 <span class="fc bfc" id="L74" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L75">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L77">                StringBuilder buf = new StringBuilder(array.length);</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">                for (int i = 0; i &lt; array.length; i++) {</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">                    if (array[i] == null) {</span>
+<span class="fc" id="L77">                var buf = new StringBuilder(array.length);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                for (var element : array) {</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                    if (element == null) {</span>
 <span class="fc" id="L80">                        buf.append('-').append('-');</span>
                     } else {
-<span class="fc" id="L82">                        int b = array[i].byteValue();</span>
+<span class="fc" id="L82">                        int b = element.byteValue();</span>
 <span class="fc" id="L83">                        buf.append(HEX.charAt((b &amp; 0xF0) &gt;&gt;&gt; 4)).append(HEX.charAt(b &amp; 0x0F));</span>
                     }
                 }
@@ -93,9 +93,9 @@ public final class ByteObjectArrayStringConverterFactory implements StringConver
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">                if (str.length() % 2 == 1) {</span>
 <span class="nc" id="L94">                    throw new IllegalArgumentException(&quot;Invalid Byte[] string&quot;);</span>
                 }
-<span class="fc" id="L96">                Byte[] array = new Byte[str.length() / 2];</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">                for (int i = 0; i &lt; array.length; i++) {</span>
-<span class="fc" id="L98">                    String in = str.substring(i * 2, i * 2 + 2);</span>
+<span class="fc" id="L96">                var array = new Byte[str.length() / 2];</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                for (var i = 0; i &lt; array.length; i++) {</span>
+<span class="fc" id="L98">                    var in = str.substring(i * 2, i * 2 + 2);</span>
 <span class="fc bfc" id="L99" title="All 2 branches covered.">                    if (in.equals(&quot;--&quot;)) {</span>
 <span class="fc" id="L100">                        array[i] = null;</span>
                     } else {
@@ -114,4 +114,4 @@ public final class ByteObjectArrayStringConverterFactory implements StringConver
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

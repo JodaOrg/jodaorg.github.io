@@ -43,7 +43,6 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
-import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,19 +60,19 @@ final class Types {
 
     /** Returns the array type of {@code componentType}. */
     static Type newArrayType(Type componentType) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (componentType instanceof WildcardType) {</span>
-<span class="nc" id="L65">            WildcardType wildcard = (WildcardType) componentType;</span>
-<span class="nc" id="L66">            Type[] lowerBounds = wildcard.getLowerBounds();</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">            checkArgument(lowerBounds.length &lt;= 1, &quot;Wildcard cannot have more than one lower bounds.&quot;);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">            if (lowerBounds.length == 1) {</span>
-<span class="nc" id="L69">                return supertypeOf(newArrayType(lowerBounds[0]));</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (componentType instanceof WildcardType) {</span>
+<span class="nc" id="L64">            WildcardType wildcard = (WildcardType) componentType;</span>
+<span class="nc" id="L65">            Type[] lowerBounds = wildcard.getLowerBounds();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            checkArgument(lowerBounds.length &lt;= 1, &quot;Wildcard cannot have more than one lower bounds.&quot;);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (lowerBounds.length == 1) {</span>
+<span class="nc" id="L68">                return supertypeOf(newArrayType(lowerBounds[0]));</span>
             } else {
-<span class="nc" id="L71">                Type[] upperBounds = wildcard.getUpperBounds();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">                checkArgument(upperBounds.length == 1, &quot;Wildcard should have only one upper bound.&quot;);</span>
-<span class="nc" id="L73">                return subtypeOf(newArrayType(upperBounds[0]));</span>
+<span class="nc" id="L70">                Type[] upperBounds = wildcard.getUpperBounds();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                checkArgument(upperBounds.length == 1, &quot;Wildcard should have only one upper bound.&quot;);</span>
+<span class="nc" id="L72">                return subtypeOf(newArrayType(upperBounds[0]));</span>
             }
         }
-<span class="nc" id="L76">        return JavaVersion.CURRENT.newArrayType(componentType);</span>
+<span class="nc" id="L75">        return JavaVersion.CURRENT.newArrayType(componentType);</span>
     }
 
     /**
@@ -82,60 +81,60 @@ final class Types {
      */
     static ParameterizedType newParameterizedTypeWithOwner(
             Type ownerType, Class&lt;?&gt; rawType, Type... arguments) {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (ownerType == null) {</span>
-<span class="nc" id="L86">            return newParameterizedType(rawType, arguments);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (ownerType == null) {</span>
+<span class="nc" id="L85">            return newParameterizedType(rawType, arguments);</span>
         }
         // ParameterizedTypeImpl constructor already checks, but we want to throw NPE before IAE
-<span class="nc" id="L89">        checkNotNull(arguments);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        checkArgument(rawType.getEnclosingClass() != null, &quot;Owner type for unenclosed %s&quot;, rawType);</span>
-<span class="nc" id="L91">        return new ParameterizedTypeImpl(ownerType, rawType, arguments);</span>
+<span class="nc" id="L88">        checkNotNull(arguments);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        checkArgument(rawType.getEnclosingClass() != null, &quot;Owner type for unenclosed %s&quot;, rawType);</span>
+<span class="nc" id="L90">        return new ParameterizedTypeImpl(ownerType, rawType, arguments);</span>
     }
 
     /**
      * Returns a type where {@code rawType} is parameterized by {@code arguments}.
      */
     static ParameterizedType newParameterizedType(Class&lt;?&gt; rawType, Type... arguments) {
-<span class="fc" id="L98">        return new ParameterizedTypeImpl(</span>
-<span class="fc" id="L99">                ClassOwnership.JVM_BEHAVIOR.getOwnerType(rawType), rawType, arguments);</span>
+<span class="fc" id="L97">        return new ParameterizedTypeImpl(</span>
+<span class="fc" id="L98">                ClassOwnership.JVM_BEHAVIOR.getOwnerType(rawType), rawType, arguments);</span>
     }
 
     /** Decides what owner type to use for constructing {@link ParameterizedType} from a raw class. */
-<span class="fc" id="L103">    private enum ClassOwnership {</span>
-<span class="fc" id="L104">        OWNED_BY_ENCLOSING_CLASS {</span>
+<span class="fc" id="L102">    private enum ClassOwnership {</span>
+<span class="fc" id="L103">        OWNED_BY_ENCLOSING_CLASS {</span>
 
             @Override
             Class&lt;?&gt; getOwnerType(Class&lt;?&gt; rawType) {
-<span class="fc" id="L108">                return rawType.getEnclosingClass();</span>
+<span class="fc" id="L107">                return rawType.getEnclosingClass();</span>
             }
         },
-<span class="fc" id="L111">        LOCAL_CLASS_HAS_NO_OWNER {</span>
+<span class="fc" id="L110">        LOCAL_CLASS_HAS_NO_OWNER {</span>
 
             @Override
             Class&lt;?&gt; getOwnerType(Class&lt;?&gt; rawType) {
-<span class="fc bfc" id="L115" title="All 2 branches covered.">                if (rawType.isLocalClass()) {</span>
-<span class="fc" id="L116">                    return null;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                if (rawType.isLocalClass()) {</span>
+<span class="fc" id="L115">                    return null;</span>
                 } else {
-<span class="fc" id="L118">                    return rawType.getEnclosingClass();</span>
+<span class="fc" id="L117">                    return rawType.getEnclosingClass();</span>
                 }
             }
         };
 
         abstract Class&lt;?&gt; getOwnerType(Class&lt;?&gt; rawType);
 
-<span class="fc" id="L125">        static final ClassOwnership JVM_BEHAVIOR = detectJvmBehavior();</span>
+<span class="fc" id="L124">        static final ClassOwnership JVM_BEHAVIOR = detectJvmBehavior();</span>
 
         private static ClassOwnership detectJvmBehavior() {
-<span class="fc" id="L128">            class LocalClass&lt;T&gt; {</span>
+<span class="fc" id="L127">            class LocalClass&lt;T&gt; {</span>
             }
-<span class="fc" id="L130">            LocalClass&lt;String&gt; localClass = new LocalClass&lt;String&gt;() {};  // CSIGNORE</span>
-<span class="fc" id="L131">            Class&lt;?&gt; subclass = localClass.getClass();</span>
-<span class="fc" id="L132">            ParameterizedType parameterizedType = (ParameterizedType) subclass.getGenericSuperclass();</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">            for (ClassOwnership behavior : ClassOwnership.values()) {</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">                if (behavior.getOwnerType(LocalClass.class) == parameterizedType.getOwnerType()) {</span>
-<span class="fc" id="L135">                    return behavior;</span>
+<span class="fc" id="L129">            LocalClass&lt;String&gt; localClass = new LocalClass&lt;String&gt;() {};  // CSIGNORE</span>
+<span class="fc" id="L130">            Class&lt;?&gt; subclass = localClass.getClass();</span>
+<span class="fc" id="L131">            ParameterizedType parameterizedType = (ParameterizedType) subclass.getGenericSuperclass();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            for (ClassOwnership behavior : ClassOwnership.values()) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                if (behavior.getOwnerType(LocalClass.class) == parameterizedType.getOwnerType()) {</span>
+<span class="fc" id="L134">                    return behavior;</span>
                 }
             }
-<span class="nc" id="L138">            throw new AssertionError();</span>
+<span class="nc" id="L137">            throw new AssertionError();</span>
         }
     }
 
@@ -145,18 +144,18 @@ final class Types {
      */
     static &lt;D extends GenericDeclaration&gt; TypeVariable&lt;D&gt; newArtificialTypeVariable(
             D declaration, String name, Type... bounds) {
-<span class="nc" id="L148">        return newTypeVariableImpl(</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">                declaration, name, (bounds.length == 0) ? new Type[] {Object.class} : bounds);</span>
+<span class="nc" id="L147">        return newTypeVariableImpl(</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">                declaration, name, (bounds.length == 0) ? new Type[] {Object.class} : bounds);</span>
     }
 
     /** Returns a new {@link WildcardType} with {@code upperBound}. */
     static WildcardType subtypeOf(Type upperBound) {
-<span class="fc" id="L154">        return new WildcardTypeImpl(new Type[0], new Type[] {upperBound});</span>
+<span class="fc" id="L153">        return new WildcardTypeImpl(new Type[0], new Type[] {upperBound});</span>
     }
 
     /** Returns a new {@link WildcardType} with {@code lowerBound}. */
     static WildcardType supertypeOf(Type lowerBound) {
-<span class="fc" id="L159">        return new WildcardTypeImpl(new Type[] {lowerBound}, new Type[] {Object.class});</span>
+<span class="fc" id="L158">        return new WildcardTypeImpl(new Type[] {lowerBound}, new Type[] {Object.class});</span>
     }
 
     /**
@@ -168,46 +167,47 @@ final class Types {
      * &lt;/ul&gt;
      */
     static String toString(Type type) {
-<span class="fc bfc" id="L171" title="All 2 branches covered.">        return (type instanceof Class) ? ((Class&lt;?&gt;) type).getName() : type.toString();</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        return (type instanceof Class) ? ((Class&lt;?&gt;) type).getName() : type.toString();</span>
     }
 
     static Type getComponentType(Type type) {
-<span class="nc" id="L175">        checkNotNull(type);</span>
-<span class="nc" id="L176">        final AtomicReference&lt;Type&gt; result = new AtomicReference&lt;Type&gt;();</span>
-<span class="nc" id="L177">        new TypeVisitor() {</span>
+<span class="nc" id="L174">        checkNotNull(type);</span>
+<span class="nc" id="L175">        final AtomicReference&lt;Type&gt; result = new AtomicReference&lt;Type&gt;();</span>
+<span class="nc" id="L176">        new TypeVisitor() {</span>
             @Override
             void visitTypeVariable(TypeVariable&lt;?&gt; t) {
-<span class="nc" id="L180">                result.set(subtypeOfComponentType(t.getBounds()));</span>
-<span class="nc" id="L181">            }</span>
+<span class="nc" id="L179">                result.set(subtypeOfComponentType(t.getBounds()));</span>
+<span class="nc" id="L180">            }</span>
 
             @Override
             void visitWildcardType(WildcardType t) {
-<span class="nc" id="L185">                result.set(subtypeOfComponentType(t.getUpperBounds()));</span>
-<span class="nc" id="L186">            }</span>
+<span class="nc" id="L184">                result.set(subtypeOfComponentType(t.getUpperBounds()));</span>
+<span class="nc" id="L185">            }</span>
 
             @Override
             void visitGenericArrayType(GenericArrayType t) {
-<span class="nc" id="L190">                result.set(t.getGenericComponentType());</span>
-<span class="nc" id="L191">            }</span>
+<span class="nc" id="L189">                result.set(t.getGenericComponentType());</span>
+<span class="nc" id="L190">            }</span>
 
             @Override
             void visitClass(Class&lt;?&gt; t) {
-<span class="nc" id="L195">                result.set(t.getComponentType());</span>
-<span class="nc" id="L196">            }</span>
-<span class="nc" id="L197">        }.visit(type);</span>
-<span class="nc" id="L198">        return result.get();</span>
+<span class="nc" id="L194">                result.set(t.getComponentType());</span>
+<span class="nc" id="L195">            }</span>
+<span class="nc" id="L196">        }.visit(type);</span>
+<span class="nc" id="L197">        return result.get();</span>
     }
 
     /**
      * Visitor pattern to evaluate {@code Type}.
      */
-<span class="nc" id="L204">    private abstract static class TypeVisitor {</span>
+<span class="nc" id="L203">    private abstract static class TypeVisitor {</span>
 
-<span class="nc" id="L206">        private final Set&lt;Type&gt; visited = new HashSet&lt;Type&gt;();</span>
+<span class="nc" id="L205">        private final Set&lt;Type&gt; visited = new HashSet&lt;Type&gt;();</span>
 
         /**
          * Visits the given types. Null types are ignored. This allows subclasses to call
          * {@code visit(parameterizedType.getOwnerType())} safely without having to check nulls.
+         * @param types the types
          */
         public final void visit(Type... types) {
 <span class="nc bnc" id="L213" title="All 2 branches missed.">            for (Type type : types) {</span>
@@ -435,7 +435,7 @@ final class Types {
 <span class="nc bnc" id="L435" title="All 2 branches missed.">                if (method.getDeclaringClass().equals(TypeVariableImpl.class)) {</span>
                     try {
 <span class="nc" id="L437">                        method.setAccessible(true);</span>
-<span class="nc" id="L438">                    } catch (AccessControlException e) {</span>
+<span class="nc" id="L438">                    } catch (SecurityException e) {</span>
                         // OK: the method is accessible to us anyway. The setAccessible call is only for
                         // unusual execution environments where that might not be true.
 <span class="nc" id="L441">                    }</span>
@@ -536,20 +536,20 @@ final class Types {
 
         @Override
         public Type[] getLowerBounds() {
-<span class="fc" id="L539">            return toArray(lowerBounds);</span>
+<span class="nc" id="L539">            return toArray(lowerBounds);</span>
         }
 
         @Override
         public Type[] getUpperBounds() {
-<span class="fc" id="L544">            return toArray(upperBounds);</span>
+<span class="nc" id="L544">            return toArray(upperBounds);</span>
         }
 
         @Override
         public boolean equals(Object obj) {
-<span class="nc bnc" id="L549" title="All 2 branches missed.">            if (obj instanceof WildcardType) {</span>
-<span class="nc" id="L550">                WildcardType that = (WildcardType) obj;</span>
-<span class="nc bnc" id="L551" title="All 2 branches missed.">                return lowerBounds.equals(Arrays.asList(that.getLowerBounds())) &amp;&amp;</span>
-<span class="nc bnc" id="L552" title="All 2 branches missed.">                        upperBounds.equals(Arrays.asList(that.getUpperBounds()));</span>
+<span class="pc bpc" id="L549" title="1 of 2 branches missed.">            if (obj instanceof WildcardType) {</span>
+<span class="fc" id="L550">                WildcardType that = (WildcardType) obj;</span>
+<span class="pc bpc" id="L551" title="1 of 2 branches missed.">                return lowerBounds.equals(Arrays.asList(that.getLowerBounds())) &amp;&amp;</span>
+<span class="pc bpc" id="L552" title="1 of 2 branches missed.">                        upperBounds.equals(Arrays.asList(that.getUpperBounds()));</span>
             }
 <span class="nc" id="L554">            return false;</span>
         }
@@ -813,4 +813,4 @@ final class Types {
     private Types() {
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypedStringConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Joda-Convert</a> &gt; <a href="index.source.html" class="el_package">org.joda.convert</a> &gt; <span class="el_source">TypedStringConverter.java</span></div><h1>TypedStringConverter.java</h1><pre class="source lang-java linenums">/*
+ *  Copyright 2010-present Stephen Colebourne
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.joda.convert;
+
+/**
+ * Interface defining conversion to and from a {@code String} together with the type.
+ * &lt;p&gt;
+ * TypedStringConverter is an interface and must be implemented with care.
+ * Implementations must be immutable and thread-safe.
+ * 
+ * @param &lt;T&gt;  the type of the converter
+ * @since 1.7
+ */
+public interface TypedStringConverter&lt;T&gt; extends StringConverter&lt;T&gt;, TypedFromStringConverter&lt;T&gt; {
+
+    /**
+     * Gets the effective type that the converter works on.
+     * &lt;p&gt;
+     * For example, if a class declares the {@code FromString} and {@code ToString}
+     * then the effective type of the converter is that class. If a subclass is
+     * queried for a converter, then the effective type is that of the superclass.
+     * 
+     * @return the effective type
+     */
+    @Override
+    public abstract Class&lt;?&gt; getEffectiveType();
+
+    /**
+     * Returns this converter with the generics removed.
+     * &lt;p&gt;
+     * This returns {@code this} cast to remove the generics.
+     * This is designed for framework usage where the generics are unknown'?'.
+     * The returned type is declared with {@code Object} instead of '?' to allow the {@link ToStringConverter} to be invoked.
+     * 
+     * @return this converter, with a different type signature
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public default TypedStringConverter&lt;Object&gt; withoutGenerics() {
+<span class="nc" id="L52">        return (TypedStringConverter&lt;Object&gt;) this;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

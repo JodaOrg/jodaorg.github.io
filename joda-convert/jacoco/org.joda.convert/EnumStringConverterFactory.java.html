@@ -45,7 +45,7 @@ final class EnumStringConverterFactory implements StringConverterFactory {
      */
     @Override
     public StringConverter&lt;?&gt; findConverter(Class&lt;?&gt; cls) {
-<span class="fc" id="L48">        Class&lt;?&gt; sup = cls.getSuperclass();</span>
+<span class="fc" id="L48">        var sup = cls.getSuperclass();</span>
 <span class="fc bfc" id="L49" title="All 2 branches covered.">        if (sup == Enum.class) {</span>
 <span class="fc" id="L50">            return new EnumStringConverter(cls);</span>
 <span class="pc bpc" id="L51" title="1 of 4 branches missed.">        } else if (sup != null &amp;&amp; sup.getSuperclass() == Enum.class) {</span>
@@ -87,4 +87,4 @@ final class EnumStringConverterFactory implements StringConverterFactory {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

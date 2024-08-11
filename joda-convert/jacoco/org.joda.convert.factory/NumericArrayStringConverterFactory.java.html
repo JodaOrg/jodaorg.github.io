@@ -88,9 +88,9 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L88" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L89">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L91">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L91">                var buf = new StringBuilder(array.length * 8);</span>
 <span class="fc" id="L92">                buf.append(array[0]);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc" id="L94">                    buf.append(',').append(array[i]);</span>
                 }
 <span class="fc" id="L96">                return buf.toString();</span>
@@ -100,10 +100,10 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L100" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L101">                    return EMPTY;</span>
                 }
-<span class="fc" id="L103">                int count = 0;</span>
-<span class="fc" id="L104">                int base = 0;</span>
-<span class="fc" id="L105">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L106">                long[] array = new long[str.length() / 2 + 1];</span>
+<span class="fc" id="L103">                var count = 0;</span>
+<span class="fc" id="L104">                var base = 0;</span>
+<span class="fc" id="L105">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L106">                var array = new long[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L107" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L108">                    array[count++] = Long.parseLong(str.substring(base, sep));</span>
 <span class="fc" id="L109">                    base = sep + 1;</span>
@@ -128,9 +128,9 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L128" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L129">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L131">                StringBuilder buf = new StringBuilder(array.length * 6);</span>
+<span class="fc" id="L131">                var buf = new StringBuilder(array.length * 6);</span>
 <span class="fc" id="L132">                buf.append(array[0]);</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc" id="L134">                    buf.append(',').append(array[i]);</span>
                 }
 <span class="fc" id="L136">                return buf.toString();</span>
@@ -140,10 +140,10 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L140" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L141">                    return EMPTY;</span>
                 }
-<span class="fc" id="L143">                int count = 0;</span>
-<span class="fc" id="L144">                int base = 0;</span>
-<span class="fc" id="L145">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L146">                int[] array = new int[str.length() / 2 + 1];</span>
+<span class="fc" id="L143">                var count = 0;</span>
+<span class="fc" id="L144">                var base = 0;</span>
+<span class="fc" id="L145">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L146">                var array = new int[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L147" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L148">                    array[count++] = Integer.parseInt(str.substring(base, sep));</span>
 <span class="fc" id="L149">                    base = sep + 1;</span>
@@ -168,9 +168,9 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L168" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L169">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L171">                StringBuilder buf = new StringBuilder(array.length * 3);</span>
+<span class="fc" id="L171">                var buf = new StringBuilder(array.length * 3);</span>
 <span class="fc" id="L172">                buf.append(array[0]);</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc" id="L174">                    buf.append(',').append(array[i]);</span>
                 }
 <span class="fc" id="L176">                return buf.toString();</span>
@@ -180,10 +180,10 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L180" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L181">                    return EMPTY;</span>
                 }
-<span class="fc" id="L183">                int count = 0;</span>
-<span class="fc" id="L184">                int base = 0;</span>
-<span class="fc" id="L185">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L186">                short[] array = new short[str.length() / 2 + 1];</span>
+<span class="fc" id="L183">                var count = 0;</span>
+<span class="fc" id="L184">                var base = 0;</span>
+<span class="fc" id="L185">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L186">                var array = new short[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L187" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L188">                    array[count++] = Short.parseShort(str.substring(base, sep));</span>
 <span class="fc" id="L189">                    base = sep + 1;</span>
@@ -208,9 +208,9 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L208" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L209">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L211">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L211">                var buf = new StringBuilder(array.length * 8);</span>
 <span class="fc" id="L212">                buf.append(array[0]);</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc" id="L214">                    buf.append(',').append(array[i]);</span>
                 }
 <span class="fc" id="L216">                return buf.toString();</span>
@@ -220,10 +220,10 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L220" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L221">                    return EMPTY;</span>
                 }
-<span class="fc" id="L223">                int count = 0;</span>
-<span class="fc" id="L224">                int base = 0;</span>
-<span class="fc" id="L225">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L226">                double[] array = new double[str.length() / 2 + 1];</span>
+<span class="fc" id="L223">                var count = 0;</span>
+<span class="fc" id="L224">                var base = 0;</span>
+<span class="fc" id="L225">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L226">                var array = new double[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L227" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L228">                    array[count++] = Double.parseDouble(str.substring(base, sep));</span>
 <span class="fc" id="L229">                    base = sep + 1;</span>
@@ -248,9 +248,9 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L248" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L249">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L251">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L251">                var buf = new StringBuilder(array.length * 8);</span>
 <span class="fc" id="L252">                buf.append(array[0]);</span>
-<span class="fc bfc" id="L253" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc" id="L254">                    buf.append(',').append(array[i]);</span>
                 }
 <span class="fc" id="L256">                return buf.toString();</span>
@@ -260,10 +260,10 @@ public final class NumericArrayStringConverterFactory implements StringConverter
 <span class="fc bfc" id="L260" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L261">                    return EMPTY;</span>
                 }
-<span class="fc" id="L263">                int count = 0;</span>
-<span class="fc" id="L264">                int base = 0;</span>
-<span class="fc" id="L265">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L266">                float[] array = new float[str.length() / 2 + 1];</span>
+<span class="fc" id="L263">                var count = 0;</span>
+<span class="fc" id="L264">                var base = 0;</span>
+<span class="fc" id="L265">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L266">                var array = new float[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L267" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
 <span class="fc" id="L268">                    array[count++] = Float.parseFloat(str.substring(base, sep));</span>
 <span class="fc" id="L269">                    base = sep + 1;</span>
@@ -281,4 +281,4 @@ public final class NumericArrayStringConverterFactory implements StringConverter
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"org.joda.convert"}]
+moduleSearchIndex = [{"l":"org.joda.convert"}];updateSearchResults();

@@ -15,13 +15,12 @@
  */
 package org.joda.convert;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
+import com.google.common.reflect.TypeToken;
 
 /**
  * Parse the string format of Guava TypeToken.
  * &lt;p&gt;
- * This is loaded by reflection only when Guava is on the classpath.
+ * This is loaded in a try-catch block, handling Guava as an optional dependency.
  * It relies on internal methods in Guava that could change in any release.
  * &lt;p&gt;
  * This parser is incomplete, but handles common cases.
@@ -30,41 +29,28 @@ import java.lang.reflect.Type;
 final class TypeTokenStringConverter
         implements TypedStringConverter&lt;Object&gt; {
 
-    static final Class&lt;?&gt; TYPE_TOKEN_CLASS;
-    static final Method TYPE_TOKEN_METHOD_OF;
-    static {
-        try {
-            // see StringConvert, which adds the necessary read edge for Java 9
-<span class="fc" id="L38">            TYPE_TOKEN_CLASS = Class.forName(&quot;com.google.common.reflect.TypeToken&quot;);</span>
-<span class="fc" id="L39">            TYPE_TOKEN_METHOD_OF = TYPE_TOKEN_CLASS.getDeclaredMethod(&quot;of&quot;, Type.class);</span>
-
-<span class="nc" id="L41">        } catch (Exception ex) {</span>
-<span class="nc" id="L42">            throw new IllegalStateException(ex);</span>
-<span class="fc" id="L43">        }</span>
-<span class="fc" id="L44">    }</span>
-
-<span class="fc" id="L46">    TypeTokenStringConverter() {</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L32">    TypeTokenStringConverter() {</span>
+<span class="fc" id="L33">    }</span>
 
     @Override
     public String convertToString(Object object) {
-<span class="fc" id="L51">        return object.toString();</span>
+<span class="fc" id="L37">        return object.toString();</span>
     }
 
     @Override
     public Object convertFromString(Class&lt;?&gt; cls, String str) {
-<span class="fc" id="L56">        Type parsed = TypeUtils.parse(str);</span>
+<span class="fc" id="L42">        var parsed = TypeUtils.parse(str);</span>
         try {
-<span class="fc" id="L58">            return TYPE_TOKEN_METHOD_OF.invoke(null, parsed);</span>
-<span class="nc" id="L59">        } catch (Exception ex) {</span>
-<span class="nc" id="L60">            throw new IllegalArgumentException(ex);</span>
+<span class="fc" id="L44">            return TypeToken.of(parsed);</span>
+<span class="nc" id="L45">        } catch (Exception ex) {</span>
+<span class="nc" id="L46">            throw new IllegalArgumentException(ex);</span>
         }
     }
 
     @Override
     public Class&lt;?&gt; getEffectiveType() {
-<span class="fc" id="L66">        return TYPE_TOKEN_CLASS;</span>
+<span class="fc" id="L52">        return TypeToken.class;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

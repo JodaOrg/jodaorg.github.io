@@ -74,9 +74,9 @@ public final class BooleanObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L74" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L75">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L77">                StringBuilder buf = new StringBuilder(array.length);</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">                for (int i = 0; i &lt; array.length; i++) {</span>
-<span class="fc bfc" id="L79" title="All 4 branches covered.">                    buf.append(array[i] == null ? '-' : (array[i].booleanValue() ? 'T' : 'F'));</span>
+<span class="fc" id="L77">                var buf = new StringBuilder(array.length);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                for (var element : array) {</span>
+<span class="fc bfc" id="L79" title="All 4 branches covered.">                    buf.append(element == null ? '-' : (element.booleanValue() ? 'T' : 'F'));</span>
                 }
 <span class="fc" id="L81">                return buf.toString();</span>
             }
@@ -85,9 +85,9 @@ public final class BooleanObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L85" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L86">                    return EMPTY;</span>
                 }
-<span class="fc" id="L88">                Boolean[] array = new Boolean[str.length()];</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">                for (int i = 0; i &lt; array.length; i++) {</span>
-<span class="fc" id="L90">                    char ch = str.charAt(i);</span>
+<span class="fc" id="L88">                var array = new Boolean[str.length()];</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                for (var i = 0; i &lt; array.length; i++) {</span>
+<span class="fc" id="L90">                    var ch = str.charAt(i);</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">                    if (ch == 'T') {</span>
 <span class="fc" id="L92">                        array[i] = Boolean.TRUE;</span>
 <span class="fc bfc" id="L93" title="All 2 branches covered.">                    } else if (ch == 'F') {</span>
@@ -109,4 +109,4 @@ public final class BooleanObjectArrayStringConverterFactory implements StringCon
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

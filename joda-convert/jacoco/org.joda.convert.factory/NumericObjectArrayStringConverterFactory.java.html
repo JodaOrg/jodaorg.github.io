@@ -88,9 +88,9 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L88" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L89">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L91">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L91">                var buf = new StringBuilder(array.length * 8);</span>
 <span class="fc bfc" id="L92" title="All 2 branches covered.">                buf.append(array[0] != null ? array[0] : &quot;-&quot;);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">                    buf.append(',').append(array[i] != null ? array[i] : &quot;-&quot;);</span>
                 }
 <span class="fc" id="L96">                return buf.toString();</span>
@@ -100,17 +100,17 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L100" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L101">                    return EMPTY;</span>
                 }
-<span class="fc" id="L103">                int count = 0;</span>
-<span class="fc" id="L104">                int base = 0;</span>
-<span class="fc" id="L105">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L106">                Long[] array = new Long[str.length() / 2 + 1];</span>
+<span class="fc" id="L103">                var count = 0;</span>
+<span class="fc" id="L104">                var base = 0;</span>
+<span class="fc" id="L105">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L106">                var array = new Long[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L107" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
-<span class="fc" id="L108">                    String split = str.substring(base, sep);</span>
+<span class="fc" id="L108">                    var split = str.substring(base, sep);</span>
 <span class="fc bfc" id="L109" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Long.valueOf(split);</span>
 <span class="fc" id="L110">                    base = sep + 1;</span>
 <span class="fc" id="L111">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L112">                }</span>
-<span class="fc" id="L113">                String split = str.substring(base, str.length());</span>
+<span class="fc" id="L113">                var split = str.substring(base, str.length());</span>
 <span class="fc bfc" id="L114" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Long.valueOf(split);</span>
 <span class="fc" id="L115">                return Arrays.copyOf(array, count);</span>
             }
@@ -130,9 +130,9 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L130" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L131">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L133">                StringBuilder buf = new StringBuilder(array.length * 6);</span>
+<span class="fc" id="L133">                var buf = new StringBuilder(array.length * 6);</span>
 <span class="fc bfc" id="L134" title="All 2 branches covered.">                buf.append(array[0] != null ? array[0] : &quot;-&quot;);</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc bfc" id="L136" title="All 2 branches covered.">                    buf.append(',').append(array[i] != null ? array[i] : &quot;-&quot;);</span>
                 }
 <span class="fc" id="L138">                return buf.toString();</span>
@@ -142,17 +142,17 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L142" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L143">                    return EMPTY;</span>
                 }
-<span class="fc" id="L145">                int count = 0;</span>
-<span class="fc" id="L146">                int base = 0;</span>
-<span class="fc" id="L147">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L148">                Integer[] array = new Integer[str.length() / 2 + 1];</span>
+<span class="fc" id="L145">                var count = 0;</span>
+<span class="fc" id="L146">                var base = 0;</span>
+<span class="fc" id="L147">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L148">                var array = new Integer[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L149" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
-<span class="fc" id="L150">                    String split = str.substring(base, sep);</span>
+<span class="fc" id="L150">                    var split = str.substring(base, sep);</span>
 <span class="fc bfc" id="L151" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Integer.valueOf(split);</span>
 <span class="fc" id="L152">                    base = sep + 1;</span>
 <span class="fc" id="L153">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L154">                }</span>
-<span class="fc" id="L155">                String split = str.substring(base, str.length());</span>
+<span class="fc" id="L155">                var split = str.substring(base, str.length());</span>
 <span class="fc bfc" id="L156" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Integer.valueOf(split);</span>
 <span class="fc" id="L157">                return Arrays.copyOf(array, count);</span>
             }
@@ -172,9 +172,9 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L172" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L173">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L175">                StringBuilder buf = new StringBuilder(array.length * 3);</span>
+<span class="fc" id="L175">                var buf = new StringBuilder(array.length * 3);</span>
 <span class="fc bfc" id="L176" title="All 2 branches covered.">                buf.append(array[0] != null ? array[0] : &quot;-&quot;);</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc bfc" id="L178" title="All 2 branches covered.">                    buf.append(',').append(array[i] != null ? array[i] : &quot;-&quot;);</span>
                 }
 <span class="fc" id="L180">                return buf.toString();</span>
@@ -184,17 +184,17 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L184" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L185">                    return EMPTY;</span>
                 }
-<span class="fc" id="L187">                int count = 0;</span>
-<span class="fc" id="L188">                int base = 0;</span>
-<span class="fc" id="L189">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L190">                Short[] array = new Short[str.length() / 2 + 1];</span>
+<span class="fc" id="L187">                var count = 0;</span>
+<span class="fc" id="L188">                var base = 0;</span>
+<span class="fc" id="L189">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L190">                var array = new Short[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L191" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
-<span class="fc" id="L192">                    String split = str.substring(base, sep);</span>
+<span class="fc" id="L192">                    var split = str.substring(base, sep);</span>
 <span class="fc bfc" id="L193" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Short.valueOf(split);</span>
 <span class="fc" id="L194">                    base = sep + 1;</span>
 <span class="fc" id="L195">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L196">                }</span>
-<span class="fc" id="L197">                String split = str.substring(base, str.length());</span>
+<span class="fc" id="L197">                var split = str.substring(base, str.length());</span>
 <span class="fc bfc" id="L198" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Short.valueOf(split);</span>
 <span class="fc" id="L199">                return Arrays.copyOf(array, count);</span>
             }
@@ -214,9 +214,9 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L214" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L215">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L217">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L217">                var buf = new StringBuilder(array.length * 8);</span>
 <span class="fc bfc" id="L218" title="All 2 branches covered.">                buf.append(array[0] != null ? array[0] : &quot;-&quot;);</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc bfc" id="L220" title="All 2 branches covered.">                    buf.append(',').append(array[i] != null ? array[i] : &quot;-&quot;);</span>
                 }
 <span class="fc" id="L222">                return buf.toString();</span>
@@ -226,17 +226,17 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L226" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L227">                    return EMPTY;</span>
                 }
-<span class="fc" id="L229">                int count = 0;</span>
-<span class="fc" id="L230">                int base = 0;</span>
-<span class="fc" id="L231">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L232">                Double[] array = new Double[str.length() / 2 + 1];</span>
+<span class="fc" id="L229">                var count = 0;</span>
+<span class="fc" id="L230">                var base = 0;</span>
+<span class="fc" id="L231">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L232">                var array = new Double[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L233" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
-<span class="fc" id="L234">                    String split = str.substring(base, sep);</span>
+<span class="fc" id="L234">                    var split = str.substring(base, sep);</span>
 <span class="fc bfc" id="L235" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Double.valueOf(split);</span>
 <span class="fc" id="L236">                    base = sep + 1;</span>
 <span class="fc" id="L237">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L238">                }</span>
-<span class="fc" id="L239">                String split = str.substring(base, str.length());</span>
+<span class="fc" id="L239">                var split = str.substring(base, str.length());</span>
 <span class="fc bfc" id="L240" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Double.valueOf(split);</span>
 <span class="fc" id="L241">                return Arrays.copyOf(array, count);</span>
             }
@@ -256,9 +256,9 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L256" title="All 2 branches covered.">                if (array.length == 0) {</span>
 <span class="fc" id="L257">                    return &quot;&quot;;</span>
                 }
-<span class="fc" id="L259">                StringBuilder buf = new StringBuilder(array.length * 8);</span>
+<span class="fc" id="L259">                var buf = new StringBuilder(array.length * 8);</span>
 <span class="fc bfc" id="L260" title="All 2 branches covered.">                buf.append(array[0] != null ? array[0] : &quot;-&quot;);</span>
-<span class="fc bfc" id="L261" title="All 2 branches covered.">                for (int i = 1; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">                for (var i = 1; i &lt; array.length; i++) {</span>
 <span class="fc bfc" id="L262" title="All 2 branches covered.">                    buf.append(',').append(array[i] != null ? array[i] : &quot;-&quot;);</span>
                 }
 <span class="fc" id="L264">                return buf.toString();</span>
@@ -268,17 +268,17 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
 <span class="fc bfc" id="L268" title="All 2 branches covered.">                if (str.length() == 0) {</span>
 <span class="fc" id="L269">                    return EMPTY;</span>
                 }
-<span class="fc" id="L271">                int count = 0;</span>
-<span class="fc" id="L272">                int base = 0;</span>
-<span class="fc" id="L273">                int sep = str.indexOf(',');</span>
-<span class="fc" id="L274">                Float[] array = new Float[str.length() / 2 + 1];</span>
+<span class="fc" id="L271">                var count = 0;</span>
+<span class="fc" id="L272">                var base = 0;</span>
+<span class="fc" id="L273">                var sep = str.indexOf(',');</span>
+<span class="fc" id="L274">                var array = new Float[str.length() / 2 + 1];</span>
 <span class="fc bfc" id="L275" title="All 2 branches covered.">                while (sep &gt;= 0) {</span>
-<span class="fc" id="L276">                    String split = str.substring(base, sep);</span>
+<span class="fc" id="L276">                    var split = str.substring(base, sep);</span>
 <span class="fc bfc" id="L277" title="All 2 branches covered.">                    array[count++] = split.equals(&quot;-&quot;) ? null : Float.valueOf(split);</span>
 <span class="fc" id="L278">                    base = sep + 1;</span>
 <span class="fc" id="L279">                    sep = str.indexOf(',', sep + 1);</span>
 <span class="fc" id="L280">                }</span>
-<span class="fc" id="L281">                String split = str.substring(base, str.length());</span>
+<span class="fc" id="L281">                var split = str.substring(base, str.length());</span>
 <span class="fc bfc" id="L282" title="All 2 branches covered.">                array[count++] = split.equals(&quot;-&quot;) ? null : Float.valueOf(split);</span>
 <span class="fc" id="L283">                return Arrays.copyOf(array, count);</span>
             }
@@ -291,4 +291,4 @@ public final class NumericObjectArrayStringConverterFactory implements StringCon
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
