@@ -84,7 +84,7 @@
 								<ul class="dropdown-menu">
 									<li ><a href="https://github.com/JodaOrg/joda-convert" title="GitHub" class="externalLink">GitHub</a></li>
 									<li ><a href="https://github.com/JodaOrg/joda-convert/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a></li>
-									<li ><a href="surefire-report.html" title="Test results">Test results</a></li>
+									<li ><a href="surefire.html" title="Test results">Test results</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
@@ -120,12 +120,58 @@
 	<div class="row">
 		<div class="span12">
 			<div class="body-content">
-<section>
- <a name="Maven_Coordinates"></a> 
+<section> 
  <h2 id="Maven_Coordinates">Maven Coordinates</h2>
- <section>
-  <a name="Apache_Maven"></a> 
+ <a name="Maven_Coordinates"></a>
+ <section> 
   <h3 id="Apache_Maven">Apache Maven</h3>
+  <a name="Apache_Maven"></a> 
+  <div> 
+   <pre>&lt;dependency&gt;
+  &lt;groupId&gt;org.joda&lt;/groupId&gt;
+  &lt;artifactId&gt;joda-convert&lt;/artifactId&gt;
+  &lt;version&gt;3.0.1-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+  </div>
+ </section>
+ <section> 
+  <h3 id="Apache_Ivy">Apache Ivy</h3>
+  <a name="Apache_Ivy"></a> 
+  <div> 
+   <pre>&lt;dependency org=&quot;org.joda&quot; name=&quot;joda-convert&quot; rev=&quot;3.0.1-SNAPSHOT&quot;&gt;
+  &lt;artifact name=&quot;joda-convert&quot; type=&quot;jar&quot; /&gt;
+&lt;/dependency&gt;</pre>
+  </div>
+ </section>
+ <section> 
+  <h3 id="Groovy_Grape">Groovy Grape</h3>
+  <a name="Groovy_Grape"></a> 
+  <div> 
+   <pre>@Grapes(
+@Grab(group='org.joda', module='joda-convert', version='3.0.1-SNAPSHOT')
+)</pre>
+  </div>
+ </section>
+ <section> 
+  <h3 id="Gradle.2FGrails">Gradle/Grails</h3>
+  <a name="Gradle.2FGrails"></a> 
+  <div> 
+   <pre>implementation 'org.joda:joda-convert:3.0.1-SNAPSHOT'</pre>
+  </div>
+ </section>
+ <section> 
+  <h3 id="Scala_SBT">Scala SBT</h3>
+  <a name="Scala_SBT"></a> 
+  <div> 
+   <pre>libraryDependencies += &quot;org.joda&quot; % &quot;joda-convert&quot; % &quot;3.0.1-SNAPSHOT&quot;</pre>
+  </div>
+ </section>
+ <section> 
+  <h3 id="Leiningen">Leiningen</h3>
+  <a name="Leiningen"></a> 
+  <div> 
+   <pre>[org.joda/joda-convert &quot;3.0.1-SNAPSHOT&quot;]</pre>
+  </div>
  </section>
 </section>
 			</div>
@@ -181,7 +227,7 @@
 							<a href="https://github.com/JodaOrg/joda-convert/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Test results">Test results</a>
+							<a href="surefire.html" title="Test results">Test results</a>
 						</li>
 					</ul>
 				</div>
@@ -231,7 +277,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2010-2024 <a href="https://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 3.0.0. </span><span class="publishDate">Last Published: 2024-10-05. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 3.0.1-SNAPSHOT. </span><span class="publishDate">Last Published: 2024-10-05. </span></p>
 				<p><a href="https://github.com/JodaOrg/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a>.</p>
 			</div>
 		</div>
