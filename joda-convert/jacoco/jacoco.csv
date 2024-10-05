@@ -1,8 +1,8 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 Joda-Convert,org.joda.convert,Types.ParameterizedTypeImpl,85,66,17,5,18,15,13,5,2,5
 Joda-Convert,org.joda.convert,Types.ClassOwnership,4,52,1,3,1,10,1,3,0,2
-Joda-Convert,org.joda.convert,EnumStringConverterFactory.EnumStringConverter,0,17,0,0,0,6,0,4,0,4
 Joda-Convert,org.joda.convert,TypeStringConverterFactory.TypeStringConverter,4,15,0,0,2,6,0,4,0,4
+Joda-Convert,org.joda.convert,EnumStringConverterFactory.EnumStringConverter,0,17,0,0,0,6,0,4,0,4
 Joda-Convert,org.joda.convert,Types.ClassOwnership.new Types.ClassOwnership.1LocalClass() {...},0,3,0,0,0,1,0,1,0,1
 Joda-Convert,org.joda.convert,Types.ClassOwnership.new Types.ClassOwnership() {...},0,13,0,2,0,4,0,3,0,2
 Joda-Convert,org.joda.convert,Types.ClassOwnership.new Types.ClassOwnership() {...},0,8,0,0,0,2,0,2,0,2
@@ -24,8 +24,8 @@ Joda-Convert,org.joda.convert,TypeUtils,9,272,1,27,4,62,1,20,0,7
 Joda-Convert,org.joda.convert,ReflectionStringConverter,13,70,1,5,3,16,1,7,0,5
 Joda-Convert,org.joda.convert,StringConvert,55,869,14,100,20,206,9,81,0,33
 Joda-Convert,org.joda.convert,TypedStringConverter,2,0,0,0,1,0,1,0,1,0
-Joda-Convert,org.joda.convert,RenameHandler,119,402,19,51,27,115,20,33,2,16
 Joda-Convert,org.joda.convert,Types.TypeVariableImpl,107,0,20,0,23,0,16,0,6,0
+Joda-Convert,org.joda.convert,RenameHandler,119,402,19,51,27,115,20,33,2,16
 Joda-Convert,org.joda.convert,Types.GenericArrayTypeImpl,34,0,2,0,10,0,6,0,5,0
 Joda-Convert,org.joda.convert,Types.NativeTypeVariableEquals,19,0,2,0,4,0,3,0,2,0
 Joda-Convert,org.joda.convert,AnnotationStringConverterFactory,27,405,8,78,6,91,9,45,1,10
@@ -71,5 +71,5 @@ Joda-Convert,org.joda.convert.factory,NumericObjectArrayStringConverterFactory.S
 Joda-Convert,org.joda.convert.factory,BooleanArrayStringConverterFactory.BooleanArrayStringConverter,0,12,0,0,0,3,0,1,0,1
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.ShortArrayStringConverter.new NumericArrayStringConverterFactory.ShortArrayStringConverter() {...},2,101,0,8,1,20,1,7,1,3
 Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory.ShortArrayStringConverter,0,12,0,0,0,3,0,1,0,1
-Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory,4,39,2,12,1,13,3,7,1,2
 Joda-Convert,org.joda.convert.factory,CharObjectArrayStringConverterFactory,4,12,0,2,1,4,1,3,1,2
+Joda-Convert,org.joda.convert.factory,NumericArrayStringConverterFactory,4,39,2,12,1,13,3,7,1,2
