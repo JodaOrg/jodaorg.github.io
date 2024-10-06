@@ -83,7 +83,7 @@
 								<ul class="dropdown-menu">
 									<li ><a href="https://github.com/JodaOrg/joda-collect" title="GitHub" class="externalLink">GitHub</a></li>
 									<li ><a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a></li>
-									<li ><a href="surefire-report.html" title="Test results">Test results</a></li>
+									<li ><a href="surefire.html" title="Test results">Test results</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
@@ -121,10 +121,10 @@
 		<div class="span12">
 			<div class="body-content">
 <a name="Project_Dependencies"></a> 
-<div class="section"> 
+<section> 
  <h2 id="Project_Dependencies">Project Dependencies</h2> 
  <a name="Project_Dependencies_compile"></a> 
- <div class="section"> 
+ <section> 
   <h3 id="compile">compile</h3> 
   <p>The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:</p> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
@@ -139,17 +139,17 @@
    </thead> 
    <tbody> 
     <tr class="b"> 
-     <td>com.google.guava</td> 
+     <td align="left">com.google.guava</td> 
      <td><a class="externalLink" href="https://github.com/google/guava">guava</a></td> 
-     <td>32.1.2-jre</td> 
+     <td>33.3.1-jre</td> 
      <td>jar</td> 
      <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
+ </section> 
  <a name="Project_Dependencies_test"></a> 
- <div class="section"> 
+ <section> 
   <h3 id="test">test</h3> 
   <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
@@ -164,7 +164,7 @@
    </thead> 
    <tbody> 
     <tr class="b"> 
-     <td>junit</td> 
+     <td align="left">junit</td> 
      <td><a class="externalLink" href="http://junit.org">junit</a></td> 
      <td>4.13.2</td> 
      <td>jar</td> 
@@ -172,14 +172,14 @@
     </tr> 
    </tbody> 
   </table> 
- </div> 
-</div> 
+ </section> 
+</section> 
 <a name="Project_Transitive_Dependencies"></a> 
-<div class="section"> 
+<section> 
  <h2 id="Project_Transitive_Dependencies">Project Transitive Dependencies</h2> 
  <p>The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies.</p> 
  <a name="Project_Transitive_Dependencies_compile"></a> 
- <div class="section"> 
+ <section> 
   <h3 id="compile">compile</h3> 
   <p>The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:</p> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
@@ -194,17 +194,17 @@
    </thead> 
    <tbody> 
     <tr class="b"> 
-     <td>com.google.guava</td> 
+     <td align="left">com.google.guava</td> 
      <td><a class="externalLink" href="https://github.com/google/guava/failureaccess">failureaccess</a></td> 
-     <td>1.0.1</td> 
+     <td>1.0.2</td> 
      <td>jar</td> 
      <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
+ </section> 
  <a name="Project_Transitive_Dependencies_test"></a> 
- <div class="section"> 
+ <section> 
   <h3 id="test">test</h3> 
   <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
@@ -219,7 +219,7 @@
    </thead> 
    <tbody> 
     <tr class="b"> 
-     <td>org.hamcrest</td> 
+     <td align="left">org.hamcrest</td> 
      <td><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">hamcrest-core</a></td> 
      <td>1.3</td> 
      <td>jar</td> 
@@ -227,12 +227,12 @@
     </tr> 
    </tbody> 
   </table> 
- </div> 
-</div> 
+ </section> 
+</section> 
 <a name="Project_Dependency_Graph"></a> 
-<div class="section"> 
+<section> 
  <h2 id="Project_Dependency_Graph">Project Dependency Graph</h2> 
- <script language="javascript" type="text/javascript">
+ <script type="text/javascript">
       function toggleDependencyDetails( divId, imgId )
       {
         var div = document.getElementById( divId );
@@ -252,10 +252,10 @@
       }
 </script> 
  <a name="Dependency_Tree"></a> 
- <div class="section"> 
+ <section> 
   <h3 id="Dependency_Tree">Dependency Tree</h3> 
   <ul> 
-   <li>org.joda:joda-collect:jar:1.0.2-SNAPSHOT <button title="Information" class="btn btn-link btn-small" type="button" data-toggle="collapse" data-target="#_dep0"><i class="icon-info-sign"></i></button> 
+   <li>org.joda:joda-collect:jar:2.0.0 <button title="Information" class="btn btn-link btn-small" type="button" data-toggle="collapse" data-target="#_dep0"><i class="icon-info-sign"></i></button> 
     <div id="_dep0" style="" class=" collapse"> 
      <table border="0" class="bodyTable table table-striped table-hover"> 
       <thead> 
@@ -265,13 +265,13 @@
       </thead> 
       <tbody> 
        <tr class="b"> 
-        <td> <p><b>Description: </b>Additional collections, compatible with Java 8</p> <p><b>URL: </b><a class="externalLink" href="https://www.joda.org/joda-collect/">https://www.joda.org/joda-collect/</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache 2</a></p></td> 
+        <td align="left"> <p><b>Description: </b>Additional collections, compatible with Java 21+</p> <p><b>URL: </b><a class="externalLink" href="https://www.joda.org/joda-collect/">https://www.joda.org/joda-collect/</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td> 
        </tr> 
       </tbody> 
      </table> 
     </div> 
     <ul> 
-     <li>com.google.guava:guava:jar:32.1.2-jre (compile) <button title="Information" class="btn btn-link btn-small" type="button" data-toggle="collapse" data-target="#_dep2"><i class="icon-info-sign"></i></button> 
+     <li>com.google.guava:guava:jar:33.3.1-jre (compile) <button title="Information" class="btn btn-link btn-small" type="button" data-toggle="collapse" data-target="#_dep2"><i class="icon-info-sign"></i></button> 
       <div id="_dep2" style="" class=" collapse"> 
        <table border="0" class="bodyTable table table-striped table-hover"> 
         <thead> 
@@ -281,13 +281,13 @@
         </thead> 
         <tbody> 
          <tr class="b"> 
-          <td> <p><b>Description: </b>Guava is a suite of core and expanded libraries that include utility classes, Google's collections, I/O classes, and much more.</p> <p><b>URL: </b><a class="externalLink" href="https://github.com/google/guava">https://github.com/google/guava</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td> 
+          <td align="left"> <p><b>Description: </b>Guava is a suite of core and expanded libraries that include utility classes, Google's collections, I/O classes, and much more.</p> <p><b>URL: </b><a class="externalLink" href="https://github.com/google/guava">https://github.com/google/guava</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td> 
          </tr> 
         </tbody> 
        </table> 
       </div> 
       <ul> 
-       <li>com.google.guava:failureaccess:jar:1.0.1 (compile) <button title="Information" class="btn btn-link btn-small" type="button" data-toggle="collapse" data-target="#_dep4"><i class="icon-info-sign"></i></button> 
+       <li>com.google.guava:failureaccess:jar:1.0.2 (compile) <button title="Information" class="btn btn-link btn-small" type="button" data-toggle="collapse" data-target="#_dep4"><i class="icon-info-sign"></i></button> 
         <div id="_dep4" style="" class=" collapse"> 
          <table border="0" class="bodyTable table table-striped table-hover"> 
           <thead> 
@@ -297,7 +297,7 @@
           </thead> 
           <tbody> 
            <tr class="b"> 
-            <td> <p><b>Description: </b>Contains com.google.common.util.concurrent.internal.InternalFutureFailureAccess and InternalFutures. Most users will never need to use this artifact. Its classes is conceptually a part of Guava, but they're in this separate artifact so that Android libraries can use them without pulling in all of Guava (just as they can use ListenableFuture by depending on the listenablefuture artifact).</p> <p><b>URL: </b><a class="externalLink" href="https://github.com/google/guava/failureaccess">https://github.com/google/guava/failureaccess</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td> 
+            <td align="left"> <p><b>Description: </b>Contains com.google.common.util.concurrent.internal.InternalFutureFailureAccess and InternalFutures. Most users will never need to use this artifact. Its classes are conceptually a part of Guava, but they're in this separate artifact so that Android libraries can use them without pulling in all of Guava (just as they can use ListenableFuture by depending on the listenablefuture artifact).</p> <p><b>URL: </b><a class="externalLink" href="https://github.com/google/guava/failureaccess">https://github.com/google/guava/failureaccess</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td> 
            </tr> 
           </tbody> 
          </table> 
@@ -313,7 +313,7 @@
         </thead> 
         <tbody> 
          <tr class="b"> 
-          <td> <p><b>Description: </b>JUnit is a unit testing framework for Java, created by Erich Gamma and Kent Beck.</p> <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License 1.0</a></p></td> 
+          <td align="left"> <p><b>Description: </b>JUnit is a unit testing framework for Java, created by Erich Gamma and Kent Beck.</p> <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License 1.0</a></p></td> 
          </tr> 
         </tbody> 
        </table> 
@@ -329,7 +329,7 @@
           </thead> 
           <tbody> 
            <tr class="b"> 
-            <td> <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p> <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td> 
+            <td align="left"> <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p> <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p> <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td> 
            </tr> 
           </tbody> 
          </table> 
@@ -337,19 +337,18 @@
       </ul></li> 
     </ul></li> 
   </ul> 
- </div> 
-</div> 
+ </section> 
+</section> 
 <a name="Licenses"></a> 
-<div class="section"> 
+<section> 
  <h2 id="Licenses">Licenses</h2> 
- <p><b>Apache 2: </b>Joda-Collect</p> 
  <p><b>Eclipse Public License 1.0: </b>JUnit</p> 
- <p><b>Apache License, Version 2.0: </b>Guava: Google Core Libraries for Java</p> 
+ <p><b>Apache License, Version 2.0: </b>Guava: Google Core Libraries for Java, Joda-Collect</p> 
  <p><b>New BSD License: </b>Hamcrest Core</p> 
  <p><b>The Apache Software License, Version 2.0: </b>Guava InternalFutureFailureAccess and InternalFutures</p> 
-</div> 
+</section> 
 <a name="Dependency_File_Details"></a> 
-<div class="section"> 
+<section> 
  <h2 id="Dependency_File_Details">Dependency File Details</h2> 
  <table border="0" class="bodyTable table table-striped table-hover"> 
   <thead> 
@@ -376,71 +375,71 @@
   </thead> 
   <tbody> 
    <tr class="b"> 
-    <td>failureaccess-1.0.1.jar</td> 
-    <td>4.6 kB</td> 
-    <td>15</td> 
-    <td>2</td> 
-    <td>1</td> 
-    <td>1.7</td> 
-    <td>Yes</td> 
+    <td align="left">failureaccess-1.0.2.jar</td> 
+    <td align="right">4.7 kB</td> 
+    <td align="right">15</td> 
+    <td align="right">2</td> 
+    <td align="right">1</td> 
+    <td align="center">1.7</td> 
+    <td align="center">Yes</td> 
    </tr> 
    <tr class="a"> 
-    <td>guava-32.1.2-jre.jar</td> 
-    <td>3 MB</td> 
-    <td>2060</td> 
-    <td>2020</td> 
-    <td>18</td> 
-    <td>1.8</td> 
-    <td>Yes</td> 
+    <td align="left">guava-33.3.1-jre.jar</td> 
+    <td align="right">3.1 MB</td> 
+    <td align="right">2056</td> 
+    <td align="right">2017</td> 
+    <td align="right">18</td> 
+    <td align="center">1.8</td> 
+    <td align="center">Yes</td> 
    </tr> 
    <tr class="b"> 
-    <td>junit-4.13.2.jar</td> 
-    <td>384.6 kB</td> 
-    <td>389</td> 
-    <td>350</td> 
-    <td>32</td> 
-    <td>1.5</td> 
-    <td>Yes</td> 
+    <td align="left">junit-4.13.2.jar</td> 
+    <td align="right">384.6 kB</td> 
+    <td align="right">389</td> 
+    <td align="right">350</td> 
+    <td align="right">32</td> 
+    <td align="center">1.5</td> 
+    <td align="center">Yes</td> 
    </tr> 
    <tr class="a"> 
-    <td>hamcrest-core-1.3.jar</td> 
-    <td>45 kB</td> 
-    <td>52</td> 
-    <td>45</td> 
-    <td>3</td> 
-    <td>1.5</td> 
-    <td>Yes</td> 
+    <td align="left">hamcrest-core-1.3.jar</td> 
+    <td align="right">45 kB</td> 
+    <td align="right">52</td> 
+    <td align="right">45</td> 
+    <td align="right">3</td> 
+    <td align="center">1.5</td> 
+    <td align="center">Yes</td> 
    </tr> 
    <tr class="a"> 
-    <td>4</td> 
-    <td>3.5 MB</td> 
-    <td>2516</td> 
-    <td>2417</td> 
-    <td>54</td> 
-    <td>1.8</td> 
-    <td>4</td> 
+    <td align="right">4</td> 
+    <td align="right">3.5 MB</td> 
+    <td align="right">2512</td> 
+    <td align="right">2414</td> 
+    <td align="right">54</td> 
+    <td align="center">1.8</td> 
+    <td align="right">4</td> 
    </tr> 
    <tr class="b"> 
-    <td>compile: 2</td> 
-    <td>compile: 3 MB</td> 
-    <td>compile: 2075</td> 
-    <td>compile: 2022</td> 
-    <td>compile: 19</td> 
-    <td>-</td> 
-    <td>compile: 2</td> 
+    <td align="right">compile: 2</td> 
+    <td align="right">compile: 3.1 MB</td> 
+    <td align="right">compile: 2071</td> 
+    <td align="right">compile: 2019</td> 
+    <td align="right">compile: 19</td> 
+    <td align="center">1.8</td> 
+    <td align="right">compile: 2</td> 
    </tr> 
    <tr class="a"> 
-    <td>test: 2</td> 
-    <td>test: 429.6 kB</td> 
-    <td>test: 441</td> 
-    <td>test: 395</td> 
-    <td>test: 35</td> 
-    <td>-</td> 
-    <td>test: 2</td> 
+    <td align="right">test: 2</td> 
+    <td align="right">test: 429.6 kB</td> 
+    <td align="right">test: 441</td> 
+    <td align="right">test: 395</td> 
+    <td align="right">test: 35</td> 
+    <td align="center">1.5</td> 
+    <td align="right">test: 2</td> 
    </tr> 
   </tbody> 
  </table> 
-</div>
+</section>
 			</div>
 		</div>
 	</div>
@@ -491,7 +490,7 @@
 							<a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Test results">Test results</a>
+							<a href="surefire.html" title="Test results">Test results</a>
 						</li>
 					</ul>
 				</div>
@@ -505,7 +504,7 @@
 							<a href="#" title="Dependencies">Dependencies</a>
 						</li>
 						<li >
-							<a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
+							<a href="dependency-info.html" title="Maven Coordinates">Maven Coordinates</a>
 						</li>
 						<li >
 							<a href="issue-management.html" title="Issue Management">Issue Management</a>
@@ -541,7 +540,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2014-2024 <a href="https://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 1.0.2-SNAPSHOT. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 2.0.0. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
 				<p><a href="https://github.com/JodaOrg/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a>.</p>
 			</div>
 		</div>

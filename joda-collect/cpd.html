@@ -83,7 +83,7 @@
 								<ul class="dropdown-menu">
 									<li ><a href="https://github.com/JodaOrg/joda-collect" title="GitHub" class="externalLink">GitHub</a></li>
 									<li ><a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a></li>
-									<li ><a href="surefire-report.html" title="Test results">Test results</a></li>
+									<li ><a href="surefire.html" title="Test results">Test results</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
@@ -120,32 +120,33 @@
 	<div class="row">
 		<div class="span12">
 			<div class="body-content">
-<div class="section"> 
+<section> 
  <h2 id="CPD_Results">CPD Results</h2> 
- <p>The following document contains the results of PMD's <a class="externalLink" href="http://pmd.sourceforge.net/cpd.html">CPD</a> 6.4.0.</p> 
-</div> 
-<div class="section"> 
- <h2 id="Duplications">Duplications</h2> 
- <table border="0" class="bodyTable table table-striped table-hover">
-  <thead>
-   <tr class="a"> 
-    <th>File</th> 
-    <th>Line</th> 
-   </tr>
-  </thead> 
-  <tbody>  
-   <tr class="b"> 
-    <td>org/joda/collect/grid/DenseGrid.java</td> 
-    <td>146</td> 
-   </tr> 
-   <tr class="a"> 
-    <td>org/joda/collect/grid/DenseImmutableGrid.java</td> 
-    <td>100</td> 
-   </tr> 
-   <tr class="b"> 
-    <td colspan="2"> 
-     <div> 
-      <pre>    private DenseGrid(DenseImmutableGrid&lt;V&gt; grid) {
+ <a name="CPD_Results"></a> 
+ <p>The following document contains the results of PMD's <a class="externalLink" href="https://pmd.github.io/latest/pmd_userdocs_cpd.html">CPD</a> 7.3.0.</p> 
+ <section> 
+  <h3 id="Duplications">Duplications</h3> 
+  <a name="Duplications"></a> 
+  <table border="0" class="bodyTable table table-striped table-hover">
+   <thead>
+    <tr class="a"> 
+     <th>File</th> 
+     <th>Line</th> 
+    </tr>
+   </thead> 
+   <tbody>  
+    <tr class="b"> 
+     <td align="left">org/joda/collect/grid/DenseGrid.java</td> 
+     <td>146</td> 
+    </tr> 
+    <tr class="a"> 
+     <td align="left">org/joda/collect/grid/DenseImmutableGrid.java</td> 
+     <td>100</td> 
+    </tr> 
+    <tr class="b"> 
+     <td colspan="2" align="left"> 
+      <div class="source"> 
+       <pre>private DenseGrid(DenseImmutableGrid&lt;V&gt; grid) {
         this.rowCount = grid.rowCount();
         this.columnCount = grid.columnCount();
         this.size = grid.size();
@@ -213,30 +214,30 @@
      */
     static class Cells&lt;V&gt; extends AbstractSet&lt;Cell&lt;V&gt;&gt; {
         private final DenseGrid&lt;V&gt; grid;</pre> 
-     </div></td> 
-   </tr> 
-  </tbody> 
- </table> 
- <table border="0" class="bodyTable table table-striped table-hover">
-  <thead>
-   <tr class="a"> 
-    <th>File</th> 
-    <th>Line</th> 
-   </tr>
-  </thead> 
-  <tbody>  
-   <tr class="b"> 
-    <td>org/joda/collect/grid/DenseGrid.java</td> 
-    <td>215</td> 
-   </tr> 
-   <tr class="a"> 
-    <td>org/joda/collect/grid/DenseImmutableGrid.java</td> 
-    <td>169</td> 
-   </tr> 
-   <tr class="b"> 
-    <td colspan="2"> 
-     <div> 
-      <pre>        Cells(DenseGrid&lt;V&gt; grid) {
+      </div></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <table border="0" class="bodyTable table table-striped table-hover">
+   <thead>
+    <tr class="a"> 
+     <th>File</th> 
+     <th>Line</th> 
+    </tr>
+   </thead> 
+   <tbody>  
+    <tr class="b"> 
+     <td align="left">org/joda/collect/grid/DenseGrid.java</td> 
+     <td>215</td> 
+    </tr> 
+    <tr class="a"> 
+     <td align="left">org/joda/collect/grid/DenseImmutableGrid.java</td> 
+     <td>169</td> 
+    </tr> 
+    <tr class="b"> 
+     <td colspan="2" align="left"> 
+      <div class="source"> 
+       <pre>Cells(DenseGrid&lt;V&gt; grid) {
             this.grid = grid;
         }
 
@@ -280,30 +281,30 @@
                 }
                 @Override
                 public void remove() {</pre> 
-     </div></td> 
-   </tr> 
-  </tbody> 
- </table> 
- <table border="0" class="bodyTable table table-striped table-hover">
-  <thead>
-   <tr class="a"> 
-    <th>File</th> 
-    <th>Line</th> 
-   </tr>
-  </thead> 
-  <tbody>  
-   <tr class="b"> 
-    <td>org/joda/collect/grid/DenseGrid.java</td> 
-    <td>289</td> 
-   </tr> 
-   <tr class="a"> 
-    <td>org/joda/collect/grid/DenseImmutableGrid.java</td> 
-    <td>216</td> 
-   </tr> 
-   <tr class="b"> 
-    <td colspan="2"> 
-     <div> 
-      <pre>        }
+      </div></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <table border="0" class="bodyTable table table-striped table-hover">
+   <thead>
+    <tr class="a"> 
+     <th>File</th> 
+     <th>Line</th> 
+    </tr>
+   </thead> 
+   <tbody>  
+    <tr class="b"> 
+     <td align="left">org/joda/collect/grid/DenseGrid.java</td> 
+     <td>289</td> 
+    </tr> 
+    <tr class="a"> 
+     <td align="left">org/joda/collect/grid/DenseImmutableGrid.java</td> 
+     <td>216</td> 
+    </tr> 
+    <tr class="b"> 
+     <td colspan="2" align="left"> 
+      <div class="source"> 
+       <pre>}
     }
 
     //-----------------------------------------------------------------------
@@ -346,30 +347,30 @@
 
     static class Outer&lt;V&gt; extends AbstractList&lt;List&lt;V&gt;&gt; {
         private final DenseGrid&lt;V&gt; grid;</pre> 
-     </div></td> 
-   </tr> 
-  </tbody> 
- </table> 
- <table border="0" class="bodyTable table table-striped table-hover">
-  <thead>
-   <tr class="a"> 
-    <th>File</th> 
-    <th>Line</th> 
-   </tr>
-  </thead> 
-  <tbody>  
-   <tr class="b"> 
-    <td>org/joda/collect/grid/DenseGrid.java</td> 
-    <td>458</td> 
-   </tr> 
-   <tr class="a"> 
-    <td>org/joda/collect/grid/DenseImmutableGrid.java</td> 
-    <td>328</td> 
-   </tr> 
-   <tr class="b"> 
-    <td colspan="2"> 
-     <div> 
-      <pre>            DenseGrid&lt;?&gt; other = (DenseGrid&lt;?&gt;) obj;
+      </div></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <table border="0" class="bodyTable table table-striped table-hover">
+   <thead>
+    <tr class="a"> 
+     <th>File</th> 
+     <th>Line</th> 
+    </tr>
+   </thead> 
+   <tbody>  
+    <tr class="b"> 
+     <td align="left">org/joda/collect/grid/DenseGrid.java</td> 
+     <td>458</td> 
+    </tr> 
+    <tr class="a"> 
+     <td align="left">org/joda/collect/grid/DenseImmutableGrid.java</td> 
+     <td>328</td> 
+    </tr> 
+    <tr class="b"> 
+     <td colspan="2" align="left"> 
+      <div class="source"> 
+       <pre>DenseGrid&lt;?&gt; other = (DenseGrid&lt;?&gt;) obj;
             return Arrays.equals(values, other.values);
         }
         return super.equals(obj);
@@ -390,30 +391,30 @@
     }
 
 }</pre> 
-     </div></td> 
-   </tr> 
-  </tbody> 
- </table> 
- <table border="0" class="bodyTable table table-striped table-hover">
-  <thead>
-   <tr class="a"> 
-    <th>File</th> 
-    <th>Line</th> 
-   </tr>
-  </thead> 
-  <tbody>  
-   <tr class="b"> 
-    <td>org/joda/collect/grid/DenseGrid.java</td> 
-    <td>337</td> 
-   </tr> 
-   <tr class="a"> 
-    <td>org/joda/collect/grid/DenseImmutableGrid.java</td> 
-    <td>264</td> 
-   </tr> 
-   <tr class="b"> 
-    <td colspan="2"> 
-     <div> 
-      <pre>        Outer(DenseGrid&lt;V&gt; grid, int size, int gap, int innerSize, int innerGap) {
+      </div></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <table border="0" class="bodyTable table table-striped table-hover">
+   <thead>
+    <tr class="a"> 
+     <th>File</th> 
+     <th>Line</th> 
+    </tr>
+   </thead> 
+   <tbody>  
+    <tr class="b"> 
+     <td align="left">org/joda/collect/grid/DenseGrid.java</td> 
+     <td>337</td> 
+    </tr> 
+    <tr class="a"> 
+     <td align="left">org/joda/collect/grid/DenseImmutableGrid.java</td> 
+     <td>264</td> 
+    </tr> 
+    <tr class="b"> 
+     <td colspan="2" align="left"> 
+      <div class="source"> 
+       <pre>Outer(DenseGrid&lt;V&gt; grid, int size, int gap, int innerSize, int innerGap) {
             this.grid = grid;
             this.size = size;
             this.gap = gap;
@@ -436,11 +437,12 @@
 
     static class Inner&lt;V&gt; extends AbstractList&lt;V&gt; {
         private final DenseGrid&lt;V&gt; grid;</pre> 
-     </div></td> 
-   </tr> 
-  </tbody> 
- </table> 
-</div>
+      </div></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+ </section> 
+</section>
 			</div>
 		</div>
 	</div>
@@ -491,7 +493,7 @@
 							<a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Test results">Test results</a>
+							<a href="surefire.html" title="Test results">Test results</a>
 						</li>
 					</ul>
 				</div>
@@ -511,7 +513,7 @@
 							<a href="apidocs/index.html" title="Javadoc">Javadoc</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
+							<a href="surefire.html" title="Surefire">Surefire</a>
 						</li>
 						<li >
 							<a href="changes-report.html" title="Changes">Changes</a>
@@ -544,7 +546,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2014-2024 <a href="https://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 1.0.2-SNAPSHOT. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 2.0.0. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
 				<p><a href="https://github.com/JodaOrg/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a>.</p>
 			</div>
 		</div>

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"org.joda.collect","l":"org.joda.collect.grid"}]
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.joda.collect","l":"org.joda.collect.grid"}];updateSearchResults();

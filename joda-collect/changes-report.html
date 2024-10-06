@@ -84,7 +84,7 @@
 								<ul class="dropdown-menu">
 									<li ><a href="https://github.com/JodaOrg/joda-collect" title="GitHub" class="externalLink">GitHub</a></li>
 									<li ><a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a></li>
-									<li ><a href="surefire-report.html" title="Test results">Test results</a></li>
+									<li ><a href="surefire.html" title="Test results">Test results</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
@@ -121,9 +121,9 @@
 	<div class="row">
 		<div class="span12">
 			<div class="body-content">
-<div class="section"> 
+<section> 
  <h2 id="Changes">Changes</h2> 
- <div class="section"> 
+ <section> 
   <h3 id="Release_History">Release History</h3> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
    <thead> 
@@ -135,9 +135,9 @@
    </thead> 
    <tbody> 
     <tr class="b"> 
-     <td><a href="#a1.0.2">1.0.2</a></td> 
+     <td><a href="#a2.0.0">2.0.0</a></td> 
      <td>SNAPSHOT</td> 
-     <td>v1.0.2</td> 
+     <td>v2.0.0</td> 
     </tr> 
     <tr class="a"> 
      <td><a href="#a1.0.1">1.0.1</a></td> 
@@ -161,9 +161,9 @@
     </tr> 
    </tbody> 
   </table> 
- </div> 
- <div class="section"> 
-  <h3 id="a1.0.2">Release 1.0.2 – SNAPSHOT</h3> 
+ </section> 
+ <section> 
+  <h3 id="a2.0.0">Release 2.0.0 – SNAPSHOT</h3> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
    <thead> 
     <tr class="a"> 
@@ -175,109 +175,114 @@
    <tbody> 
     <tr class="b"> 
      <td><i class="icon-plus"></i></td> 
-     <td>Add Tidelift commercial support and security policy.</td> 
+     <td>Major version based on Java SE 21. v2.x is compatible with v1.x with one exception - the module definition has changed slightly. Guava is no longer transitively included (because it is an automatic module), and as such end users may need to alter their module declaration to include Guava directly.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
     <tr class="a"> 
+     <td><i class="icon-plus"></i></td> 
+     <td>Add Tidelift commercial support and security policy.</td> 
+     <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
+    </tr> 
+    <tr class="b"> 
      <td><i class="icon-refresh"></i></td> 
      <td>Switch master to main.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
- <div class="section"> 
+ </section> 
+ <section> 
   <h3 id="a1.0.1">Release 1.0.1 – 2018-05-09</h3> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
    <thead> 
-    <tr class="b"> 
+    <tr class="a"> 
      <th>Type</th> 
      <th>Changes</th> 
      <th>By</th> 
     </tr> 
    </thead> 
    <tbody> 
-    <tr class="a"> 
+    <tr class="b"> 
      <td><i class="icon-refresh"></i></td> 
      <td>Update Guava.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
-    <tr class="b"> 
+    <tr class="a"> 
      <td><i class="icon-wrench"></i></td> 
      <td>Fix OSGi information for Java 8.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
- <div class="section"> 
+ </section> 
+ <section> 
   <h3 id="a1.0">Release 1.0 – 2017-12-19</h3> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
    <thead> 
-    <tr class="a"> 
+    <tr class="b"> 
      <th>Type</th> 
      <th>Changes</th> 
      <th>By</th> 
     </tr> 
    </thead> 
    <tbody> 
-    <tr class="b"> 
+    <tr class="a"> 
      <td><i class="icon-plus"></i></td> 
      <td>Add module-info for Java 9.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
-    <tr class="a"> 
+    <tr class="b"> 
      <td><i class="icon-plus"></i></td> 
      <td>Update and redesign build to support Java 9. Switch to require Java 8.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
-    <tr class="b"> 
+    <tr class="a"> 
      <td><i class="icon-refresh"></i></td> 
      <td>Switch from TestNG to JUnit4.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
- <div class="section"> 
+ </section> 
+ <section> 
   <h3 id="a0.8">Release 0.8 – 2017-10-02</h3> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
    <thead> 
-    <tr class="a"> 
+    <tr class="b"> 
      <th>Type</th> 
      <th>Changes</th> 
      <th>By</th> 
     </tr> 
    </thead> 
    <tbody> 
-    <tr class="b"> 
+    <tr class="a"> 
      <td><i class="icon-plus"></i></td> 
      <td>Add automatic module name for Java SE 9.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
- <div class="section"> 
+ </section> 
+ <section> 
   <h3 id="a0.7">Release 0.7 – 2014-03-04</h3> 
   <table border="0" class="bodyTable table table-striped table-hover"> 
    <thead> 
-    <tr class="a"> 
+    <tr class="b"> 
      <th>Type</th> 
      <th>Changes</th> 
      <th>By</th> 
     </tr> 
    </thead> 
    <tbody> 
-    <tr class="b"> 
+    <tr class="a"> 
      <td><i class="icon-plus"></i></td> 
      <td>Initial version.</td> 
      <td><a href="team-list.html#jodastephen">jodastephen</a></td> 
     </tr> 
    </tbody> 
   </table> 
- </div> 
-</div>
+ </section> 
+</section>
 			</div>
 		</div>
 	</div>
@@ -328,7 +333,7 @@
 							<a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Test results">Test results</a>
+							<a href="surefire.html" title="Test results">Test results</a>
 						</li>
 					</ul>
 				</div>
@@ -348,7 +353,7 @@
 							<a href="apidocs/index.html" title="Javadoc">Javadoc</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
+							<a href="surefire.html" title="Surefire">Surefire</a>
 						</li>
 						<li class="active">
 							<a href="#" title="Changes">Changes</a>
@@ -381,7 +386,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2014-2024 <a href="https://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 1.0.2-SNAPSHOT. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 2.0.0. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
 				<p><a href="https://github.com/JodaOrg/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a>.</p>
 			</div>
 		</div>

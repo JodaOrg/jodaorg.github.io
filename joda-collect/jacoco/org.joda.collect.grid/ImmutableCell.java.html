@@ -117,10 +117,11 @@ public final class ImmutableCell&lt;V&gt; extends AbstractCell&lt;V&gt; implemen
      */
     ImmutableCell&lt;V&gt; validateCounts(int rowCount, int columnCount) {
 <span class="fc bfc" id="L119" title="All 4 branches covered.">        if (row &gt;= rowCount || column &gt;= columnCount) {</span>
-<span class="fc" id="L120">            throw new IndexOutOfBoundsException(&quot;Invalid row-column: &quot; + row + &quot;,&quot; + column + &quot; for grid &quot; + rowCount + &quot;x&quot; + columnCount);</span>
+<span class="fc" id="L120">            throw new IndexOutOfBoundsException(</span>
+                    &quot;Invalid row-column: &quot; + row + &quot;,&quot; + column + &quot; for grid &quot; + rowCount + &quot;x&quot; + columnCount);
         }
-<span class="fc" id="L122">        return this;</span>
+<span class="fc" id="L123">        return this;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

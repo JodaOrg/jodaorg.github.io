@@ -82,7 +82,7 @@
 								<ul class="dropdown-menu">
 									<li ><a href="https://github.com/JodaOrg/joda-collect" title="GitHub" class="externalLink">GitHub</a></li>
 									<li ><a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a></li>
-									<li ><a href="surefire-report.html" title="Test results">Test results</a></li>
+									<li ><a href="surefire.html" title="Test results">Test results</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
@@ -122,17 +122,17 @@
 <p><b>Joda-Collect</b> provides collections that are not present in the JDK or <a class="externalLink" href="https://github.com/google/guava">Google Guava</a>.</p>
 <p>The JDK and Guava contain many collection classes, but occasionally there is something missing. This project provides a home for those collections.</p>
 <p>Joda-Collect is licensed under the business-friendly <a href="licenses.html">Apache 2.0 licence</a>.</p>
-<div class="section">    
-</div>
+<section>    
+</section>
 		</div>
 		<div class="span4">
 			<h2 id="Features"><i></i> Features</h2>
 <p>Included collection types:</p>
 <ul> 
- <li>Grid - A grid data structure, providing access to its values by row and column. This is similar to Guava’s <tt>Table</tt>, but uses <tt>int</tt> for the row and column, allowing optimisations. Mutable and immutable implementations are provided in sparse and dense variations.</li> 
+ <li>Grid - A grid data structure, providing access to its values by row and column. This is similar to Guava's <code>Table</code>, but uses <code>int</code> for the row and column, allowing optimisations. Mutable and immutable implementations are provided in sparse and dense variations.</li> 
 </ul>
-<div class="section">    
-</div>
+<section>    
+</section>
 		</div>
 		<div class="span4">
 			<h2 id="Documentation"><i></i> Documentation</h2>
@@ -149,22 +149,23 @@
 	<div class="row">
 		<div class="span8">
 			<div class="body-content">
-				<div class="section"> 
+				<section> 
  <h2 id="Releases"><i></i> Releases</h2> 
- <p><a href="download.html">Release 1.0.1</a> is the current development release intended for feedback. This release is considered stable and worthy of the 1.x tag. It depends on Java SE 8 or later and <a href="dependencies.html">depends</a> on Google Guava.</p> 
+ <p>The 2.x branch (v2.0.0) is compatible with Java SE 21 or later.</p> 
+ <p>The 1.x branch (v1.0.1) is compatible with Java SE 8 or later.</p> 
+ <p>v2.x releases are compatible with v1.x releases - except for the Java SE version and <code>module-info.class</code> file. Guava is a required module, but it cannot be declared as ‘transitive’ because it is an automatic module.</p> 
+ <p>Joda-Collect <a href="dependencies.html">depends</a> on Google Guava.</p> 
  <p>Available in <a class="externalLink" href="https://search.maven.org/search?q=g:org.joda%20AND%20a:joda-collect&amp;core=gav">Maven Central</a>.</p> 
- <div> 
-  <div> 
-   <pre class="source">&lt;dependency&gt;
+ <div class="source"> 
+  <pre><code class="language-xml">&lt;dependency&gt;
   &lt;groupId&gt;org.joda&lt;/groupId&gt;
   &lt;artifactId&gt;joda-collect&lt;/artifactId&gt;
-  &lt;version&gt;1.0.1&lt;/version&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
 &lt;/dependency&gt;
-</pre> 
-  </div> 
+</code></pre> 
  </div> 
- <p>Java module name: <tt>org.joda.collect</tt>.</p>    
-</div>
+ <p>Java module name: <code>org.joda.collect</code>.</p>    
+</section>
 			</div>
 		</div>
 		<div class="span4">
@@ -173,8 +174,8 @@
 <p><a class="externalLink" href="https://tidelift.com/subscription/pkg/maven-org-joda-joda-collect?utm_source=maven-org-joda-joda-collect&amp;utm_medium=referral&amp;utm_campaign=enterprise">Available as part of the Tidelift Subscription</a>.</p>
 <p>Joda and the maintainers of thousands of other packages are working with Tidelift to deliver one enterprise subscription that covers all of the open source you use.</p>
 <p>If you want the flexibility of open source and the confidence of commercial-grade software, this is for you. <a class="externalLink" href="https://tidelift.com/subscription/pkg/maven-org-joda-joda-collect?utm_source=maven-org-joda-joda-collect&amp;utm_medium=referral&amp;utm_campaign=enterprise">Learn more</a>.</p>
-<div class="section">     
-</div>
+<section>     
+</section>
 	<h3 id="Support">Support</h3>
 <p>Please use <a class="externalLink" href="https://stackoverflow.com/search?q=joda-collect">Stack Overflow</a> for general usage questions. GitHub <a class="externalLink" href="https://github.com/JodaOrg/joda-collect/issues">issues</a> and <a class="externalLink" href="https://github.com/JodaOrg/joda-collect/pulls">pull requests</a> should be used when you want to help advance the project.</p>
 <p>Any donations to support the project are accepted via <a class="externalLink" href="https://opencollective.com/joda">OpenCollective</a>.</p>
@@ -229,7 +230,7 @@
 							<a href="https://github.com/JodaOrg/joda-collect/issues" title="Bugs/Issues" class="externalLink">Bugs/Issues</a>
 						</li>
 						<li >
-							<a href="surefire-report.html" title="Test results">Test results</a>
+							<a href="surefire.html" title="Test results">Test results</a>
 						</li>
 					</ul>
 				</div>
@@ -256,7 +257,7 @@
 			<div class="span12">
 				<p class="pull-right"><a href="#">Back to top</a></p>
 				<p class="copyright">Copyright &copy;2014-2024 <a href="https://www.joda.org">Joda.org</a>. All Rights Reserved.</p>
-				<p class="version-date"><span class="projectVersion">Version: 1.0.2-SNAPSHOT. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
+				<p class="version-date"><span class="projectVersion">Version: 2.0.0. </span><span class="publishDate">Last Published: 2024-10-06. </span></p>
 				<p><a href="https://github.com/JodaOrg/reflow-maven-skin" title="Reflow Maven skin">Reflow Maven skin</a>.</p>
 			</div>
 		</div>
