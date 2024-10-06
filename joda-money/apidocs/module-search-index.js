@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"org.joda.money"}]
+moduleSearchIndex = [{"l":"org.joda.money"}];updateSearchResults();

@@ -52,7 +52,7 @@ final class Ser implements Externalizable {
 
     /**
      * Constructor for package.
-     * 
+     *
      * @param type  the type
      * @param object  the object
      */
@@ -73,38 +73,35 @@ final class Ser implements Externalizable {
     public void writeExternal(ObjectOutput out) throws IOException {
 <span class="fc" id="L74">        out.writeByte(type);</span>
 <span class="pc bpc" id="L75" title="1 of 4 branches missed.">        switch (type) {</span>
-            case BIG_MONEY: {
-<span class="fc" id="L77">                BigMoney obj = (BigMoney) object;</span>
+            case BIG_MONEY -&gt; {
+<span class="fc" id="L77">                var obj = (BigMoney) object;</span>
 <span class="fc" id="L78">                writeBigMoney(out, obj);</span>
-<span class="fc" id="L79">                return;</span>
-            }
-            case MONEY: {
-<span class="fc" id="L82">                Money obj = (Money) object;</span>
-<span class="fc" id="L83">                writeBigMoney(out, obj.toBigMoney());</span>
-<span class="fc" id="L84">                return;</span>
-            }
-            case CURRENCY_UNIT: {
-<span class="fc" id="L87">                CurrencyUnit obj = (CurrencyUnit) object;</span>
-<span class="fc" id="L88">                writeCurrency(out, obj);</span>
-<span class="fc" id="L89">                return;</span>
-            }
+<span class="fc" id="L79">            }</span>
+            case MONEY -&gt; {
+<span class="fc" id="L81">                var obj = (Money) object;</span>
+<span class="fc" id="L82">                writeBigMoney(out, obj.toBigMoney());</span>
+<span class="fc" id="L83">            }</span>
+            case CURRENCY_UNIT -&gt; {
+<span class="fc" id="L85">                var obj = (CurrencyUnit) object;</span>
+<span class="fc" id="L86">                writeCurrency(out, obj);</span>
+<span class="fc" id="L87">            }</span>
+<span class="nc" id="L88">            default -&gt; throw new InvalidClassException(&quot;Joda-Money bug: Serialization broken&quot;);</span>
         }
-<span class="nc" id="L92">        throw new InvalidClassException(&quot;Joda-Money bug: Serialization broken&quot;);</span>
-    }
+<span class="fc" id="L90">    }</span>
 
     private void writeBigMoney(ObjectOutput out, BigMoney obj) throws IOException {
-<span class="fc" id="L96">        writeCurrency(out, obj.getCurrencyUnit());</span>
-<span class="fc" id="L97">        byte[] bytes = obj.getAmount().unscaledValue().toByteArray();</span>
-<span class="fc" id="L98">        out.writeInt(bytes.length);</span>
-<span class="fc" id="L99">        out.write(bytes);</span>
-<span class="fc" id="L100">        out.writeInt(obj.getScale());</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L93">        writeCurrency(out, obj.getCurrencyUnit());</span>
+<span class="fc" id="L94">        var bytes = obj.getAmount().unscaledValue().toByteArray();</span>
+<span class="fc" id="L95">        out.writeInt(bytes.length);</span>
+<span class="fc" id="L96">        out.write(bytes);</span>
+<span class="fc" id="L97">        out.writeInt(obj.getScale());</span>
+<span class="fc" id="L98">    }</span>
 
     private void writeCurrency(ObjectOutput out, CurrencyUnit obj) throws IOException {
-<span class="fc" id="L104">        out.writeUTF(obj.getCode());</span>
-<span class="fc" id="L105">        out.writeShort(obj.getNumericCode());</span>
-<span class="fc" id="L106">        out.writeShort(obj.getDecimalPlaces());</span>
-<span class="fc" id="L107">    }</span>
+<span class="fc" id="L101">        out.writeUTF(obj.getCode());</span>
+<span class="fc" id="L102">        out.writeShort(obj.getNumericCode());</span>
+<span class="fc" id="L103">        out.writeShort(obj.getDecimalPlaces());</span>
+<span class="fc" id="L104">    }</span>
 
     /**
      * Outputs the data.
@@ -114,52 +111,49 @@ final class Ser implements Externalizable {
      */
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-<span class="fc" id="L117">        type = in.readByte();</span>
-<span class="pc bpc" id="L118" title="1 of 4 branches missed.">        switch (type) {</span>
-            case BIG_MONEY: {
-<span class="fc" id="L120">                object = readBigMoney(in);</span>
-<span class="fc" id="L121">                return;</span>
-            }
-            case MONEY: {
-<span class="fc" id="L124">                object = new Money(readBigMoney(in));</span>
-<span class="fc" id="L125">                return;</span>
-            }
-            case CURRENCY_UNIT: {
-<span class="fc" id="L128">                object = readCurrency(in);</span>
-<span class="fc" id="L129">                return;</span>
-            }
+<span class="fc" id="L114">        type = in.readByte();</span>
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">        switch (type) {</span>
+            case BIG_MONEY -&gt; {
+<span class="fc" id="L117">                object = readBigMoney(in);</span>
+<span class="fc" id="L118">            }</span>
+            case MONEY -&gt; {
+<span class="fc" id="L120">                object = new Money(readBigMoney(in));</span>
+<span class="fc" id="L121">            }</span>
+            case CURRENCY_UNIT -&gt; {
+<span class="fc" id="L123">                object = readCurrency(in);</span>
+<span class="fc" id="L124">            }</span>
+<span class="nc" id="L125">            default -&gt; throw new StreamCorruptedException(&quot;Serialization input has invalid type&quot;);</span>
         }
-<span class="nc" id="L132">        throw new StreamCorruptedException(&quot;Serialization input has invalid type&quot;);</span>
-    }
+<span class="fc" id="L127">    }</span>
 
     private BigMoney readBigMoney(ObjectInput in) throws IOException {
-<span class="fc" id="L136">        CurrencyUnit currency = readCurrency(in);</span>
-<span class="fc" id="L137">        byte[] bytes = new byte[in.readInt()];</span>
-<span class="fc" id="L138">        in.readFully(bytes);</span>
-<span class="fc" id="L139">        BigDecimal bd = new BigDecimal(new BigInteger(bytes), in.readInt());</span>
-<span class="fc" id="L140">        BigMoney bigMoney = new BigMoney(currency, bd);</span>
-<span class="fc" id="L141">        return bigMoney;</span>
+<span class="fc" id="L130">        var currency = readCurrency(in);</span>
+<span class="fc" id="L131">        var bytes = new byte[in.readInt()];</span>
+<span class="fc" id="L132">        in.readFully(bytes);</span>
+<span class="fc" id="L133">        var bd = new BigDecimal(new BigInteger(bytes), in.readInt());</span>
+<span class="fc" id="L134">        var bigMoney = new BigMoney(currency, bd);</span>
+<span class="fc" id="L135">        return bigMoney;</span>
     }
 
     private CurrencyUnit readCurrency(ObjectInput in) throws IOException {
-<span class="fc" id="L145">        String code = in.readUTF();</span>
-<span class="fc" id="L146">        CurrencyUnit singletonCurrency = CurrencyUnit.of(code);</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (singletonCurrency.getNumericCode() != in.readShort()) {</span>
-<span class="fc" id="L148">            throw new InvalidObjectException(&quot;Deserialization found a mismatch in the numeric code for currency &quot; + code);</span>
+<span class="fc" id="L139">        var code = in.readUTF();</span>
+<span class="fc" id="L140">        var singletonCurrency = CurrencyUnit.of(code);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (singletonCurrency.getNumericCode() != in.readShort()) {</span>
+<span class="fc" id="L142">            throw new InvalidObjectException(&quot;Deserialization found a mismatch in the numeric code for currency &quot; + code);</span>
         }
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (singletonCurrency.getDecimalPlaces() != in.readShort()) {</span>
-<span class="fc" id="L151">            throw new InvalidObjectException(&quot;Deserialization found a mismatch in the decimal places for currency &quot; + code);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (singletonCurrency.getDecimalPlaces() != in.readShort()) {</span>
+<span class="fc" id="L145">            throw new InvalidObjectException(&quot;Deserialization found a mismatch in the decimal places for currency &quot; + code);</span>
         }
-<span class="fc" id="L153">        return singletonCurrency;</span>
+<span class="fc" id="L147">        return singletonCurrency;</span>
     }
 
     /**
      * Returns the object that will replace this one.
-     * 
+     *
      * @return the read object, should never be null
      */
     private Object readResolve() {
-<span class="fc" id="L162">        return object;</span>
+<span class="fc" id="L156">        return object;</span>
     }
 
 }

@@ -49,7 +49,7 @@ final class LiteralPrinterParser implements MoneyPrinter, MoneyParser, Serializa
 
     @Override
     public void parse(MoneyParseContext context) {
-<span class="fc" id="L52">        int endPos = context.getIndex() + literal.length();</span>
+<span class="fc" id="L52">        var endPos = context.getIndex() + literal.length();</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">        if (endPos &lt;= context.getTextLength() &amp;&amp;</span>
 <span class="fc bfc" id="L54" title="All 2 branches covered.">                context.getTextSubstring(context.getIndex(), endPos).equals(literal)) {</span>
 <span class="fc" id="L55">            context.setIndex(endPos);</span>

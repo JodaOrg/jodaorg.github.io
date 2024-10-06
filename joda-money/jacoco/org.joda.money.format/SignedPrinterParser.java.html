@@ -53,19 +53,19 @@ final class SignedPrinterParser implements MoneyPrinter, MoneyParser, Serializab
     //-----------------------------------------------------------------------
     @Override
     public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
-<span class="fc bfc" id="L56" title="All 4 branches covered.">        MoneyFormatter fmt = (money.isZero() ? whenZero : money.isPositive() ? whenPositive : whenNegative);</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">        var fmt = (money.isZero() ? whenZero : money.isPositive() ? whenPositive : whenNegative);</span>
 <span class="fc" id="L57">        fmt.getPrinterParser().print(context, appendable, money);</span>
 <span class="fc" id="L58">    }</span>
 
     @Override
     public void parse(MoneyParseContext context) {
-<span class="fc" id="L62">        MoneyParseContext positiveContext = context.createChild();</span>
+<span class="fc" id="L62">        var positiveContext = context.createChild();</span>
 <span class="fc" id="L63">        whenPositive.getPrinterParser().parse(positiveContext);</span>
-<span class="fc" id="L64">        MoneyParseContext zeroContext = context.createChild();</span>
+<span class="fc" id="L64">        var zeroContext = context.createChild();</span>
 <span class="fc" id="L65">        whenZero.getPrinterParser().parse(zeroContext);</span>
-<span class="fc" id="L66">        MoneyParseContext negativeContext = context.createChild();</span>
+<span class="fc" id="L66">        var negativeContext = context.createChild();</span>
 <span class="fc" id="L67">        whenNegative.getPrinterParser().parse(negativeContext);</span>
-<span class="fc" id="L68">        MoneyParseContext best = null;</span>
+<span class="fc" id="L68">        var best = (MoneyParseContext) null;</span>
 <span class="fc bfc" id="L69" title="All 2 branches covered.">        if (!positiveContext.isError()) {</span>
 <span class="fc" id="L70">            best = positiveContext;</span>
         }

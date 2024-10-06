@@ -51,15 +51,15 @@ final class MultiPrinterParser implements MoneyPrinter, MoneyParser, Serializabl
 
     //-----------------------------------------------------------------------
     boolean isPrinter() {
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        return Arrays.asList(printers).contains(null) == false;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        return !Arrays.asList(printers).contains(null);</span>
     }
 
     boolean isParser() {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        return Arrays.asList(parsers).contains(null) == false;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        return !Arrays.asList(parsers).contains(null);</span>
     }
 
     void appendTo(MoneyFormatterBuilder builder) {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (int i = 0; i &lt; printers.length; i++) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (var i = 0; i &lt; printers.length; i++) {</span>
 <span class="fc" id="L63">            builder.append(printers[i], parsers[i]);</span>
         }
 <span class="fc" id="L65">    }</span>
@@ -84,23 +84,23 @@ final class MultiPrinterParser implements MoneyPrinter, MoneyParser, Serializabl
 
     @Override
     public String toString() {
-<span class="fc" id="L87">        StringBuilder buf1 = new StringBuilder();</span>
+<span class="fc" id="L87">        var buf1 = new StringBuilder();</span>
 <span class="fc bfc" id="L88" title="All 2 branches covered.">        if (isPrinter()) {</span>
 <span class="fc bfc" id="L89" title="All 2 branches covered.">            for (MoneyPrinter printer : printers) {</span>
 <span class="fc" id="L90">                buf1.append(printer.toString());</span>
             }
         }
-<span class="fc" id="L93">        StringBuilder buf2 = new StringBuilder();</span>
+<span class="fc" id="L93">        var buf2 = new StringBuilder();</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">        if (isParser()) {</span>
 <span class="fc bfc" id="L95" title="All 2 branches covered.">            for (MoneyParser parser : parsers) {</span>
 <span class="fc" id="L96">                buf2.append(parser.toString());</span>
             }
         }
-<span class="fc" id="L99">        String str1 = buf1.toString();</span>
-<span class="fc" id="L100">        String str2 = buf2.toString();</span>
-<span class="fc bfc" id="L101" title="All 4 branches covered.">        if (isPrinter() &amp;&amp; isParser() == false) {</span>
+<span class="fc" id="L99">        var str1 = buf1.toString();</span>
+<span class="fc" id="L100">        var str2 = buf2.toString();</span>
+<span class="fc bfc" id="L101" title="All 4 branches covered.">        if (isPrinter() &amp;&amp; !isParser()) {</span>
 <span class="fc" id="L102">            return str1;</span>
-<span class="fc bfc" id="L103" title="All 4 branches covered.">        } else if (isParser() &amp;&amp; isPrinter() == false) {</span>
+<span class="fc bfc" id="L103" title="All 4 branches covered.">        } else if (isParser() &amp;&amp; !isPrinter()) {</span>
 <span class="fc" id="L104">            return str2;</span>
 <span class="fc bfc" id="L105" title="All 2 branches covered.">        } else if (str1.equals(str2)) {</span>
 <span class="fc" id="L106">            return str1;</span>

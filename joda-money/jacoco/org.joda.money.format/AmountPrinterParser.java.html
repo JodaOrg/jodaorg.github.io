@@ -45,7 +45,7 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
     //-----------------------------------------------------------------------
     @Override
     public void print(MoneyPrintContext context, Appendable appendable, BigMoney money) throws IOException {
-<span class="fc" id="L48">        MoneyAmountStyle activeStyle = style.localize(context.getLocale());</span>
+<span class="fc" id="L48">        var activeStyle = style.localize(context.getLocale());</span>
         String str;
 <span class="fc bfc" id="L50" title="All 2 branches covered.">        if (money.isNegative()) {</span>
 <span class="fc bfc" id="L51" title="All 2 branches covered.">            if (!activeStyle.isAbsValue()) {</span>
@@ -55,20 +55,20 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
         } else {
 <span class="fc" id="L56">            str = money.getAmount().toPlainString();</span>
         }
-<span class="fc" id="L58">        char zeroChar = activeStyle.getZeroCharacter();</span>
+<span class="fc" id="L58">        var zeroChar = activeStyle.getZeroCharacter();</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">        if (zeroChar != '0') {</span>
-<span class="fc" id="L60">            int diff = zeroChar - '0';</span>
-<span class="fc" id="L61">            StringBuilder zeroConvert = new StringBuilder(str);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">            for (int i = 0; i &lt; str.length(); i++) {</span>
-<span class="fc" id="L63">                char ch = str.charAt(i);</span>
+<span class="fc" id="L60">            var diff = zeroChar - '0';</span>
+<span class="fc" id="L61">            var zeroConvert = new StringBuilder(str);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            for (var i = 0; i &lt; str.length(); i++) {</span>
+<span class="fc" id="L63">                var ch = str.charAt(i);</span>
 <span class="pc bpc" id="L64" title="1 of 4 branches missed.">                if (ch &gt;= '0' &amp;&amp; ch &lt;= '9') {</span>
 <span class="fc" id="L65">                    zeroConvert.setCharAt(i, (char) (ch + diff));</span>
                 }
             }
 <span class="fc" id="L68">            str = zeroConvert.toString();</span>
         }
-<span class="fc" id="L70">        final int decPoint = str.indexOf('.');</span>
-<span class="fc" id="L71">        final int afterDecPoint = decPoint + 1;</span>
+<span class="fc" id="L70">        var decPoint = str.indexOf('.');</span>
+<span class="fc" id="L71">        var afterDecPoint = decPoint + 1;</span>
 <span class="fc bfc" id="L72" title="All 2 branches covered.">        if (activeStyle.getGroupingStyle() == GroupingStyle.NONE) {</span>
 <span class="fc bfc" id="L73" title="All 2 branches covered.">            if (decPoint &lt; 0) {</span>
 <span class="fc" id="L74">                appendable.append(str);</span>
@@ -80,14 +80,14 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
 <span class="fc" id="L80">                    .append(activeStyle.getDecimalPointCharacter()).append(str.substring(afterDecPoint));</span>
             }
         } else {
-<span class="fc" id="L83">            int groupingSize = activeStyle.getGroupingSize();</span>
-<span class="fc" id="L84">            int extendedGroupingSize = activeStyle.getExtendedGroupingSize();</span>
+<span class="fc" id="L83">            var groupingSize = activeStyle.getGroupingSize();</span>
+<span class="fc" id="L84">            var extendedGroupingSize = activeStyle.getExtendedGroupingSize();</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">            extendedGroupingSize = extendedGroupingSize == 0 ? groupingSize : extendedGroupingSize;</span>
-<span class="fc" id="L86">            char groupingChar = activeStyle.getGroupingCharacter();</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">            int pre = (decPoint &lt; 0 ? str.length() : decPoint);</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">            int post = (decPoint &lt; 0 ? 0 : str.length() - decPoint - 1);</span>
+<span class="fc" id="L86">            var groupingChar = activeStyle.getGroupingCharacter();</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            var pre = (decPoint &lt; 0 ? str.length() : decPoint);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            var post = (decPoint &lt; 0 ? 0 : str.length() - decPoint - 1);</span>
 <span class="fc" id="L89">            appendable.append(str.charAt(0));</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">            for (int i = 1; i &lt; pre; i++) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            for (var i = 1; i &lt; pre; i++) {</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">                if (isPreGroupingPoint(pre - i, groupingSize, extendedGroupingSize)) {</span>
 <span class="fc" id="L92">                    appendable.append(groupingChar);</span>
                 }
@@ -101,7 +101,7 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
 <span class="fc" id="L101">                    appendable.append(str.substring(afterDecPoint));</span>
                 }
             } else {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">                for (int i = 0; i &lt; post; i++) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                for (var i = 0; i &lt; post; i++) {</span>
 <span class="fc" id="L105">                    appendable.append(str.charAt(i + afterDecPoint));</span>
 <span class="fc bfc" id="L106" title="All 2 branches covered.">                    if (isPostGroupingPoint(i, post, groupingSize, extendedGroupingSize)) {</span>
 <span class="fc" id="L107">                        appendable.append(groupingChar);</span>
@@ -119,7 +119,7 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
     }
 
     private boolean isPostGroupingPoint(int i, int post, int groupingSize, int extendedGroupingSize) {
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        boolean atEnd = (i + 1) &gt;= post;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        var atEnd = (i + 1) &gt;= post;</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">        if (i &gt; groupingSize) {</span>
 <span class="fc bfc" id="L124" title="All 4 branches covered.">            return (i - groupingSize) % extendedGroupingSize == (extendedGroupingSize - 1) &amp;&amp; !atEnd;</span>
         }
@@ -128,14 +128,14 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
 
     @Override
     public void parse(MoneyParseContext context) {
-<span class="fc" id="L131">        final int len = context.getTextLength();</span>
-<span class="fc" id="L132">        final MoneyAmountStyle activeStyle = style.localize(context.getLocale());</span>
-<span class="fc" id="L133">        char[] buf = new char[len - context.getIndex()];</span>
-<span class="fc" id="L134">        int bufPos = 0;</span>
-<span class="fc" id="L135">        boolean dpSeen = false;</span>
-<span class="fc" id="L136">        int pos = context.getIndex();</span>
+<span class="fc" id="L131">        var len = context.getTextLength();</span>
+<span class="fc" id="L132">        var activeStyle = style.localize(context.getLocale());</span>
+<span class="fc" id="L133">        var buf = new char[len - context.getIndex()];</span>
+<span class="fc" id="L134">        var bufPos = 0;</span>
+<span class="fc" id="L135">        var dpSeen = false;</span>
+<span class="fc" id="L136">        var pos = context.getIndex();</span>
 <span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (pos &lt; len) {</span>
-<span class="fc" id="L138">            char ch = context.getText().charAt(pos++);</span>
+<span class="fc" id="L138">            var ch = context.getText().charAt(pos++);</span>
 <span class="fc bfc" id="L139" title="All 2 branches covered.">            if (ch == activeStyle.getNegativeSignCharacter()) {</span>
 <span class="fc" id="L140">                buf[bufPos++] = '-';</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">            } else if (ch == activeStyle.getPositiveSignCharacter()) {</span>
@@ -150,17 +150,17 @@ final class AmountPrinterParser implements MoneyPrinter, MoneyParser, Serializab
 <span class="fc" id="L150">                return;</span>
             }
         }
-<span class="fc" id="L153">        boolean lastWasGroup = false;</span>
+<span class="fc" id="L153">        var lastWasGroup = false;</span>
 <span class="fc bfc" id="L154" title="All 2 branches covered.">        for (; pos &lt; len; pos++) {</span>
-<span class="fc" id="L155">            char ch = context.getText().charAt(pos);</span>
+<span class="fc" id="L155">            var ch = context.getText().charAt(pos);</span>
 <span class="fc bfc" id="L156" title="All 4 branches covered.">            if (ch &gt;= activeStyle.getZeroCharacter() &amp;&amp; ch &lt; activeStyle.getZeroCharacter() + 10) {</span>
 <span class="fc" id="L157">                buf[bufPos++] = (char) ('0' + ch - activeStyle.getZeroCharacter());</span>
 <span class="fc" id="L158">                lastWasGroup = false;</span>
-<span class="fc bfc" id="L159" title="All 4 branches covered.">            } else if (ch == activeStyle.getDecimalPointCharacter() &amp;&amp; dpSeen == false) {</span>
+<span class="fc bfc" id="L159" title="All 4 branches covered.">            } else if (ch == activeStyle.getDecimalPointCharacter() &amp;&amp; !dpSeen) {</span>
 <span class="fc" id="L160">                buf[bufPos++] = '.';</span>
 <span class="fc" id="L161">                dpSeen = true;</span>
 <span class="fc" id="L162">                lastWasGroup = false;</span>
-<span class="fc bfc" id="L163" title="All 4 branches covered.">            } else if (ch == activeStyle.getGroupingCharacter() &amp;&amp; lastWasGroup == false) {</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">            } else if (ch == activeStyle.getGroupingCharacter() &amp;&amp; !lastWasGroup) {</span>
 <span class="fc" id="L164">                lastWasGroup = true;</span>
             } else {
                 break;
