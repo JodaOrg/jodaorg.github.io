@@ -2,8 +2,8 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 Joda-Collect,org.joda.collect.grid,EmptyGrid,0,41,0,0,0,18,0,11,0,11
 Joda-Collect,org.joda.collect.grid,MutableCell,0,22,0,0,0,9,0,5,0,5
 Joda-Collect,org.joda.collect.grid,DenseGrid.Cells.new Iterator() {...},0,142,1,11,0,22,1,9,0,4
-Joda-Collect,org.joda.collect.grid,ImmutableCell,0,95,0,14,0,24,0,14,0,7
 Joda-Collect,org.joda.collect.grid,DenseGrid,0,526,0,54,0,106,0,52,0,25
+Joda-Collect,org.joda.collect.grid,ImmutableCell,0,95,0,14,0,24,0,14,0,7
 Joda-Collect,org.joda.collect.grid,DenseImmutableGrid.Cells,0,29,0,0,0,7,0,4,0,4
 Joda-Collect,org.joda.collect.grid,AbstractGrid.Inner,44,40,6,2,9,11,4,4,1,3
 Joda-Collect,org.joda.collect.grid,AbstractCell,0,81,0,14,0,15,0,15,0,8
@@ -12,8 +12,8 @@ Joda-Collect,org.joda.collect.grid,AbstractGrid.Outer,0,34,0,0,0,9,0,3,0,3
 Joda-Collect,org.joda.collect.grid,SingletonGrid,0,91,0,4,0,21,0,13,0,11
 Joda-Collect,org.joda.collect.grid,DenseImmutableGrid.Cells.new Iterator() {...},0,103,1,7,0,15,1,7,0,4
 Joda-Collect,org.joda.collect.grid,SparseGrid.new ForwardingSortedSet() {...},0,19,0,0,0,4,0,4,0,4
-Joda-Collect,org.joda.collect.grid,AbstractCell.new Comparator() {...},0,43,0,10,0,9,0,7,0,2
 Joda-Collect,org.joda.collect.grid,DenseGrid.Inner,50,37,8,0,9,10,5,3,1,3
+Joda-Collect,org.joda.collect.grid,AbstractCell.new Comparator() {...},0,43,0,10,0,9,0,7,0,2
 Joda-Collect,org.joda.collect.grid,DenseImmutableGrid,0,353,0,30,0,68,0,34,0,19
 Joda-Collect,org.joda.collect.grid,ImmutableGrid,0,206,0,22,0,42,0,24,0,13
 Joda-Collect,org.joda.collect.grid,DenseGrid.Outer,0,42,0,0,0,11,0,3,0,3
